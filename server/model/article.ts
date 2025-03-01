@@ -79,6 +79,14 @@ export class ArticleSchema extends DiscardableSchema {
     return example;
   }
 
+  /** 古い履歴データを完全に削除します。
+     * 論理削除ではなく物理削除を行うので、もとには戻せません。*/
+  public static async discardOlds(duration: number): Promise<void> {
+    const date = new Date(Date.now() - duration * 24 * 60 * 60 * 1000);
+    const result = await ArticleModel.deleteMany().lt("removedDate", date);
+    LogUtil.log("model/article/discardOld", {count: result.deletedCount});
+  }
+
   private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
     const examples = await ArticleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1);
     if (examples.length > 0) {

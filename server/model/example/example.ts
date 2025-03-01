@@ -124,6 +124,14 @@ export class ExampleSchema extends DiscardableSchema {
     return example;
   }
 
+  /** 古い履歴データを完全に削除します。
+   * 論理削除ではなく物理削除を行うので、もとには戻せません。*/
+  public static async discardOlds(duration: number): Promise<void> {
+    const date = new Date(Date.now() - duration * 24 * 60 * 60 * 1000);
+    const result = await ExampleModel.deleteMany().lt("removedDate", date);
+    LogUtil.log("model/example/discardOld", {count: result.deletedCount});
+  }
+
   private static async filterWords(dictionary: Dictionary, example: Example): Promise<void> {
     const linkedNumbers = example.words.map((word) => word.number);
     const linkedWords = await WordModel.findExist().where("dictionary", dictionary).where("number", linkedNumbers);
