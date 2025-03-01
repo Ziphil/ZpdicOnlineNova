@@ -319,6 +319,7 @@ dictionaryHeader:
   button:
     addWord: "単語を作成"
     addExample: "例文を作成"
+    addArticle: "記事を作成"
     addCommission: "造語依頼"
     download: "ダウンロード"
   userCount: "<plus>+</plus>{count, number}"
@@ -358,6 +359,15 @@ dictionaryStatisticsView:
     informationAverage: "<number>{value, number, ::.00}</number><unit>項目/語</unit>"
     informationText: "<number>{value, number}</number><unit>文字</unit>"
     informationTextAverage: "<number>{value, number, ::.00}</number><unit>文字/語</unit>"
+editArticleForm:
+  tab:
+    edit: "編集"
+  label:
+    tags: "タグ"
+    title: "タイトル"
+    content: "本文"
+  button:
+    confirm: "決定"
 editExampleDialog:
   button:
     external: "別タブで表示"

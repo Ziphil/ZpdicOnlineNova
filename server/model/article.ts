@@ -24,6 +24,9 @@ export class ArticleSchema extends DiscardableSchema {
   @prop({required: true})
   public number!: number;
 
+  @prop({type: String})
+  public tags!: Array<string>;
+
   @prop({required: true})
   public title!: string;
 

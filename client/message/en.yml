@@ -319,6 +319,7 @@ dictionaryHeader:
   button:
     addWord: "Create word"
     addExample: "Create sentence"
+    addArticle: "Create article"
     addCommission: "Request"
     download: "Download"
   userCount: "<plus>+</plus>{count, number}"
@@ -358,6 +359,15 @@ dictionaryStatisticsView:
     informationAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {item/word} other {items/word}}</unit>"
     informationText: "<number>{value, number}</number><unit>{value, plural, one {char} other {chars}}</unit>"
     informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {char/word} other {chars/word}}</unit>"
+editArticleForm:
+  tab:
+    edit: "Edit"
+  label:
+    tags: "Tags"
+    title: "Title"
+    content: "Content"
+  button:
+    confirm: "Confirm"
 editExampleDialog:
   button:
     external: "Open in new tab"

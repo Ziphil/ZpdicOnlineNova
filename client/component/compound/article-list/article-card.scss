@@ -28,6 +28,13 @@
   margin-inline-end: var(--glob-blank-gap);
 }
 
+.title {
+  @include bold-font;
+  font-size: 6zu;
+  color: var(--glob-primary-heading-text-color);
+  overflow-wrap: break-word;
+}
+
 .footer {
   column-gap: 3zu;
   display: flex;

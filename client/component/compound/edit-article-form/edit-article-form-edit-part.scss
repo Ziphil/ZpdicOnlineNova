@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.main {
+  row-gap: 8zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.control {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.textarea {
+  @supports (field-sizing: content) {
+    min-height: 64zu;
+    max-height: 100zu;
+    >textarea {
+      field-sizing: content;
+    }
+  }
+  @supports not (field-sizing: content) {
+    height: 64zu;
+  }
+}
+
+.button {
+  margin-block-start: 8zu;
+  padding-block-start: 3zu;
+  border-block-start: solid 1zx var(--glob-border-color);
+  display: flex;
+  align-items: center;
+}

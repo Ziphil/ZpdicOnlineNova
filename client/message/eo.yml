@@ -319,6 +319,7 @@ dictionaryHeader:
   button:
     addWord: "Krei vorton"
     addExample: "Krei frazon"
+    addArticle: "Krei artikolon"
     addCommission: "Peti"
     download: "Elŝuti"
   userCount: "<plus>+</plus>{count, number}"
@@ -358,6 +359,15 @@ dictionaryStatisticsView:
     informationAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {ero/vorto} other {eroj/vorto}}</unit>"
     informationText: "<number>{value, number}</number><unit>{value, plural, one {signo} other {signoj}}</unit>"
     informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {signo/vorto} other {signoj/vorto}}</unit>"
+editArticleForm:
+  tab:
+    edit: "Redakti"
+  label:
+    tags: "Etikedoj"
+    title: "Titolo"
+    content: "Enhavo"
+  button:
+    confirm: "Konfirmi"
 editExampleDialog:
   button:
     external: "Malfermi en nova langeto"

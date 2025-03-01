@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-closing-bracket-location */
-//
 
 import {ReactElement} from "react";
 import {Controller} from "react-hook-form";

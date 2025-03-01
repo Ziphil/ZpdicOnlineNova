@@ -7,6 +7,7 @@ import {fakNoteCirclePlus, fakQuotesCirclePlus} from "/client/component/atom/ico
 import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {AddCommissionDialog} from "/client/component/compound/add-commission-dialog";
+import {EditArticleDialog} from "/client/component/compound/edit-article-dialog";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
@@ -69,6 +70,12 @@ export const DictionaryHeaderTop = create(
                   <Button variant="light" {...rest}>
                     <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
                     {trans("button.addExample")}
+                  </Button>
+                )}/>
+                <EditArticleDialog dictionary={dictionary} initialData={null} trigger={(
+                  <Button variant="light" {...rest}>
+                    <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
+                    {trans("button.addArticle")}
                   </Button>
                 )}/>
               </div>
