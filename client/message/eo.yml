@@ -248,6 +248,7 @@ addCommissionDialog:
 articleList:
   empty: "Neniuj artikoloj estas kreitaj"
   button:
+    read: "Legi plenon"
     edit: "Redakti"
     discard: "Forigi"
   dialog:

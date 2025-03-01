@@ -248,6 +248,7 @@ addCommissionDialog:
 articleList:
   empty: "記事は作成されていません"
   button:
+    read: "全文を読む"
     edit: "編集"
     discard: "削除"
   dialog:

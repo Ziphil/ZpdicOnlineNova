@@ -248,6 +248,7 @@ addCommissionDialog:
 articleList:
   empty: "No articles are created"
   button:
+    read: "Read full"
     edit: "Edit"
     discard: "Delete"
   dialog:
