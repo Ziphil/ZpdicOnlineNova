@@ -40,6 +40,20 @@ export class ArticleRestController extends InternalRestController {
     }
   }
 
+  @post("/fetchArticle")
+  @before(checkDictionary())
+  public async [Symbol()](request: Request<"fetchArticle">, response: Response<"fetchArticle">): Promise<void> {
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+    const {articleNumber} = request.body;
+    const article = await dictionary.fetchOneArticleByNumber(articleNumber);
+    if (article) {
+      const body = ArticleCreator.skeletonize(article);
+      InternalRestController.respond(response, body);
+    } else {
+      InternalRestController.respondError(response, "noSuchArticle");
+    }
+  }
+
   @post("/searchArticles")
   @before(checkDictionary())
   public async [Symbol()](request: Request<"searchArticles">, response: Response<"searchArticles">): Promise<void> {

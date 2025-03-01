@@ -847,6 +847,9 @@ contactPage:
 exampleOfferListPage:
   title: "Frazoj"
   heading: "Frazoj"
+dictionaryArticleSinglePart:
+  button:
+    back: "Reiri al listo"
 dictionaryExamplePart:
   heading:
     offer: "Hodiaŭa frazo"

@@ -846,6 +846,9 @@ contactPage:
 exampleOfferListPage:
   title: "例文集"
   heading: "例文集"
+dictionaryArticleSinglePart:
+  button:
+    back: "一覧に戻る"
 dictionaryExamplePart:
   heading:
     offer: "今日の例文"

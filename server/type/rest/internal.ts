@@ -370,6 +370,13 @@ type ServerSpecs = {
       error: never
     }
   },
+  fetchArticle: {
+    request: {number: number, articleNumber: number},
+    response: {
+      success: Article,
+      error: CustomError<"noSuchDictionary" | "noSuchArticle">
+    }
+  },
   searchArticles: {
     request: {number: number, offset?: number, size?: number},
     response: {

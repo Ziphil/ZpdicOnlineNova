@@ -367,6 +367,12 @@ export class DictionarySchema extends DiscardableSchema {
     }
   }
 
+  public async fetchOneArticleByNumber(this: Dictionary, number: number): Promise<Article | null> {
+    const query = ArticleModel.findOneExist().where("dictionary", this).where("number", number);
+    const article = await query.exec();
+    return article;
+  }
+
   public async editArticle(this: Dictionary, example: EditableArticle, user: User): Promise<Article> {
     if (this.status !== "saving") {
       const resultArticle = await ArticleModel.edit(this, example, user);
