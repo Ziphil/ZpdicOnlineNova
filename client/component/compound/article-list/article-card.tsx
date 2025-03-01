@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faEdit, faHashtag, faRight, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import truncateMarkdown from "markdown-truncate";
 import {ReactElement} from "react";
 import {useMatch} from "react-router-dom";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, MultiLineText, Tag, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, Collapsible, CollapsibleBody, GeneralIcon, LinkIconbag, MultiLineText, Tag, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {Markdown} from "/client/component/atom/markdown";
 import {EditArticleDialog} from "/client/component/compound/edit-article-dialog";
@@ -56,9 +57,19 @@ export const ArticleCard = create(
           <MultiLineText styleName="title" is="h3" lineHeight="narrowFixed">
             {article.title}
           </MultiLineText>
-          <Markdown styleName="markdown" mode="article" compact={true} homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
-            {article.content}
-          </Markdown>
+          {(listed) ? (
+            <Collapsible styleName="collapsible">
+              <CollapsibleBody styleName="collapsible-body" height="5rem">
+                <Markdown styleName="markdown" mode="article" compact={true} homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
+                  {truncateMarkdown(article.content, {limit: 200})}
+                </Markdown>
+              </CollapsibleBody>
+            </Collapsible>
+          ) : (
+            <Markdown styleName="markdown" mode="article" compact={true} homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
+              {article.content}
+            </Markdown>
+          )}
         </CardBody>
         {(listed || canEdit) && (
           <CardFooter styleName="footer">

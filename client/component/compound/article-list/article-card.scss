@@ -35,6 +35,14 @@
   overflow-wrap: break-word;
 }
 
+.collapsible {
+  flex: 0 0 auto;
+}
+
+.collapsible-body {
+  flex: 0 0 auto;
+}
+
 .footer {
   column-gap: 3zu;
   display: flex;

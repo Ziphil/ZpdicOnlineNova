@@ -23,3 +23,11 @@ declare module "*.md" {
   export default data;
 
 }
+
+
+declare module "markdown-truncate" {
+
+  function truncateMarkdown(string: string, options: {limit: number, ellipsis?: boolean}): string;
+  export default truncateMarkdown;
+
+}

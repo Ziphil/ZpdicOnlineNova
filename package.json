@@ -78,6 +78,7 @@
     "js-file-download": "^0.4.12",
     "jsonwebtoken": "^9.0.2",
     "lodash.merge": "^4.6.2",
+    "markdown-truncate": "^1.1.1",
     "mongoose": "^6.1.6",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
