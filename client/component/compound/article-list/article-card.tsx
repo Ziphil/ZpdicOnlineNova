@@ -51,7 +51,7 @@ export const ArticleCard = create(
           <MultiLineText styleName="title" is="h3" lineHeight="narrowFixed">
             {article.title}
           </MultiLineText>
-          <Markdown styleName="markdown" mode="normal" compact={true} homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
+          <Markdown styleName="markdown" mode="article" compact={true} homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
             {article.content}
           </Markdown>
         </CardBody>

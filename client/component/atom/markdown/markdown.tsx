@@ -3,6 +3,7 @@
 import {ReactElement, useCallback} from "react";
 import {uriTransformer} from "react-markdown";
 import {AdditionalProps, Markdown as ZographiaMarkdown} from "zographia";
+import {MarkdownHeading} from "/client/component/atom/markdown/markdown-heading";
 import {create} from "/client/component/create";
 import {MarkdownAnchor} from "./markdown-anchor";
 
@@ -16,7 +17,7 @@ export const Markdown = create(
     children,
     ...rest
   }: {
-    mode: "normal" | "document",
+    mode: "normal" | "article" | "document",
     compact?: boolean,
     homePath?: string,
     children: string,
@@ -39,7 +40,15 @@ export const Markdown = create(
         compact={compact}
         skipHtml={false}
         disallowedElements={(mode === "normal") ? ["h1", "h2", "h3", "h4", "h5", "h6", "hr"] : ["hr"]}
-        components={{a: MarkdownAnchor}}
+        components={{
+          a: MarkdownAnchor,
+          h1: (mode === "article") ? (props) => <MarkdownHeading level={1} {...props}/> : undefined,
+          h2: (mode === "article") ? (props) => <MarkdownHeading level={2} {...props}/> : undefined,
+          h3: (mode === "article") ? (props) => <MarkdownHeading level={3} {...props}/> : undefined,
+          h4: (mode === "article") ? (props) => <MarkdownHeading level={4} {...props}/> : undefined,
+          h5: (mode === "article") ? (props) => <MarkdownHeading level={5} {...props}/> : undefined,
+          h6: (mode === "article") ? (props) => <MarkdownHeading level={6} {...props}/> : undefined
+        }}
         transformUrl={transformUrl}
         {...rest}
       >

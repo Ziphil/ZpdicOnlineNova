@@ -55,7 +55,7 @@ export const DictionaryMainPart = create(
         <div styleName="right">
           <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
           {(debouncedQuery.showExplanation && !!dictionary.explanation) && (
-            <Markdown styleName="explanation" mode="normal" homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
+            <Markdown styleName="explanation" mode="article" homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
               {dictionary.explanation}
             </Markdown>
           )}

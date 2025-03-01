@@ -39,7 +39,7 @@ export const EditArticleDialog = create(
     const {trans} = useTrans("editExampleDialog");
 
     const [open, setOpen] = useState(false);
-    const addArticlePageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/example`);
+    const addArticlePageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/article`);
 
     const formRef = useRef<() => EditArticleFormValue>(null);
 
