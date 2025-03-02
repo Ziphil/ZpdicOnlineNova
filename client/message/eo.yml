@@ -318,9 +318,15 @@ dictionaryHeader:
     updatedDate: "Ĝisdatigita je"
     createdDate: "Kreita je"
   button:
-    addWord: "Krei vorton"
-    addExample: "Krei frazon"
-    addArticle: "Krei artikolon"
+    addWord: 
+      long: "Krei vorton"
+      short: "Vorto"
+    addExample: 
+      long: "Krei frazon"
+      short: "Frazo"
+    addArticle: 
+      long: "Krei artikolon"
+      short: "Artikolo"
     addCommission: "Peti"
     download: "Elŝuti"
   userCount: "<plus>+</plus>{count, number}"

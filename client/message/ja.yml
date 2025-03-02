@@ -318,9 +318,15 @@ dictionaryHeader:
     updatedDate: "更新日時"
     createdDate: "作成日時"
   button:
-    addWord: "単語を作成"
-    addExample: "例文を作成"
-    addArticle: "記事を作成"
+    addWord: 
+      long: "単語を作成"
+      short: "単語"
+    addExample: 
+      long: "例文を作成"
+      short: "例文"
+    addArticle: 
+      long: "記事を作成"
+      short: "記事"
     addCommission: "造語依頼"
     download: "ダウンロード"
   userCount: "<plus>+</plus>{count, number}"

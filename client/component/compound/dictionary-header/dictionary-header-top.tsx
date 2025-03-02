@@ -2,7 +2,7 @@
 
 import {faCommentQuestion} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, MultiLineText, SingleLineText, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, MultiLineText, SingleLineText, useResponsiveDevice, useTrans} from "zographia";
 import {fakNoteCirclePlus, fakQuotesCirclePlus, fakScrollCirclePlus} from "/client/component/atom/icon";
 import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
@@ -30,6 +30,8 @@ export const DictionaryHeaderTop = create(
 
     const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
     const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number: dictionary.number, authority: "editOnly"});
+
+    const device = useResponsiveDevice();
 
     return (
       <div styleName="root">
@@ -61,28 +63,28 @@ export const DictionaryHeaderTop = create(
             {(canEdit) && (
               <div styleName="operation-row">
                 <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
-                  <Button variant="light" {...rest}>
+                  <Button variant="light">
                     <ButtonIconbag><GeneralIcon icon={fakNoteCirclePlus}/></ButtonIconbag>
-                    {trans("button.addWord")}
+                    {trans(`button.addWord.${device === "desktop" ? "long" : "short"}`)}
                   </Button>
                 )}/>
                 <EditExampleDialog dictionary={dictionary} initialData={null} trigger={(
-                  <Button variant="light" {...rest}>
+                  <Button variant="light">
                     <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
-                    {trans("button.addExample")}
+                    {trans(`button.addExample.${device === "desktop" ? "long" : "short"}`)}
                   </Button>
                 )}/>
                 <EditArticleDialog dictionary={dictionary} initialData={null} trigger={(
-                  <Button variant="light" {...rest}>
+                  <Button variant="light">
                     <ButtonIconbag><GeneralIcon icon={fakScrollCirclePlus}/></ButtonIconbag>
-                    {trans("button.addArticle")}
+                    {trans(`button.addArticle.${device === "desktop" ? "long" : "short"}`)}
                   </Button>
                 )}/>
               </div>
             )}
             <div styleName="operation-row">
               <AddCommissionDialog dictionary={dictionary} trigger={(
-                <Button scheme="secondary" variant="underline" {...rest}>
+                <Button scheme="secondary" variant="underline">
                   <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
                   {trans("button.addCommission")}
                 </Button>

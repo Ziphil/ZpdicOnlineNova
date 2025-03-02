@@ -318,9 +318,15 @@ dictionaryHeader:
     updatedDate: "Актуализованы"
     createdDate: "Созданы"
   button:
-    addWord: "Create word"
-    addExample: "Create sentence"
-    addArticle: "Create article"
+    addWord:
+      long: "Create word"
+      short: "Word"
+    addExample:
+      long: "Create sentence"
+      short: "Sentence"
+    addArticle:
+      long: "Create article"
+      short: "Article"
     addCommission: "Request"
     download: "Download"
   userCount: "<plus>+</plus>{count, number}"
