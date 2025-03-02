@@ -48,6 +48,12 @@ toast:
       La ekzempla frazo redaktitas.
     discardExample: |-
       La ekzempla frazo forigitas.
+    addArticle: |-
+      Nova artikolo kreitas.
+    changeArticle: |-
+      La artikolo redaktitas.
+    discardArticle: |-
+      La artikolo forigitas.
     addCommission: |-
       Nova peto kreitas.
     discardCommission: |-

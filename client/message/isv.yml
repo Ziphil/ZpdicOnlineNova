@@ -48,6 +48,12 @@ toast:
       The example sentence has been edited.
     discardExample: |-
       The example sentence has been deleted.
+    addArticle: |-
+      A new article has been created.
+    changeArticle: |-
+      The article has been edited.
+    discardArticle: |-
+      The article has been deleted.
     addCommission: |-
       A new request has been sent.
     discardCommission: |-

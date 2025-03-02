@@ -48,6 +48,12 @@ toast:
       例文を編集しました。
     discardExample: |-
       例文を削除しました。
+    addArticle: |-
+      記事を新しく作成しました。
+    changeArticle: |-
+      記事を編集しました。
+    discardArticle: |-
+      記事を削除しました。
     addCommission: |-
       造語依頼を行いました。
     discardCommission: |-

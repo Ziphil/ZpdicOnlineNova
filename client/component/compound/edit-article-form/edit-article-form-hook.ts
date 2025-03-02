@@ -38,9 +38,12 @@ export function useEditArticle(dictionary: Dictionary, initialData: EditArticleI
     const adding = value.number === null;
     const query = getQuery(dictionary, value);
     const response = await request("editArticle", query);
-    await switchResponse(response, async (example) => {
-      form.setValue("number", example.number);
-      await invalidateResponses("searchArticles", (query) => query.number === dictionary.number);
+    await switchResponse(response, async (article) => {
+      form.setValue("number", article.number);
+      await Promise.all([
+        invalidateResponses("searchArticles", (query) => query.number === dictionary.number),
+        invalidateResponses("fetchArticle", (query) => query.number === dictionary.number && query.articleNumber === article.number)
+      ]);
       await onSubmit?.(query.article);
       dispatchSuccessToast((adding) ? "addArticle" : "changeArticle");
     });
