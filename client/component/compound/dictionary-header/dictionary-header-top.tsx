@@ -3,7 +3,7 @@
 import {faCommentQuestion} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, MultiLineText, SingleLineText, useTrans} from "zographia";
-import {fakNoteCirclePlus, fakQuotesCirclePlus} from "/client/component/atom/icon";
+import {fakNoteCirclePlus, fakQuotesCirclePlus, fakScrollCirclePlus} from "/client/component/atom/icon";
 import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {AddCommissionDialog} from "/client/component/compound/add-commission-dialog";
@@ -74,7 +74,7 @@ export const DictionaryHeaderTop = create(
                 )}/>
                 <EditArticleDialog dictionary={dictionary} initialData={null} trigger={(
                   <Button variant="light" {...rest}>
-                    <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
+                    <ButtonIconbag><GeneralIcon icon={fakScrollCirclePlus}/></ButtonIconbag>
                     {trans("button.addArticle")}
                   </Button>
                 )}/>
