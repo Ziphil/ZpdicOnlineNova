@@ -27,8 +27,8 @@ export const ArticleList = create(
       <List styleName="root" items={articles} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
           {(article) => <ArticleCard key={article.id} dictionary={dictionary} article={article}/>}
-          <ListLoadingView/>
-          <ListEmptyView>
+          <ListLoadingView styleName="loading"/>
+          <ListEmptyView styleName="loading">
             {trans("empty")}
           </ListEmptyView>
         </ListBody>
