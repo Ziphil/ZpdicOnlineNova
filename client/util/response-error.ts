@@ -12,12 +12,9 @@ export class ResponseError<N extends ProcessName> extends Error {
   public requestData: RequestData<N>;
   public responseData: ResponseData<N>;
 
-  static {
-    this.prototype.name = "QueryError";
-  }
-
   public constructor(name: N, data: RequestData<N>, response: AxiosResponseSpec<N>) {
     super(`${response.status} ${response.data?.type} <- ${name} ${JSON.stringify(data)}`);
+    this.name = "ResponseError";
     this.queryName = name;
     this.status = response.status;
     this.type = response.data?.type ?? "unexpected";
@@ -29,7 +26,7 @@ export class ResponseError<N extends ProcessName> extends Error {
   }
 
   public static isResponseError(error: unknown): error is ResponseError<ProcessName> {
-    return error instanceof Error && error.name === "QueryError";
+    return error instanceof Error && error.name === "ResponseError";
   }
 
 }
