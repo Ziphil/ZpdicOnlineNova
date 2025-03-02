@@ -78,12 +78,8 @@ export const WordCard = create(
               <WordCardEquivalentList dictionary={dictionary} word={word}/>
               <WordCardInformationList dictionary={dictionary} word={word}/>
               <WordCardExampleList dictionary={dictionary} word={word}/>
-              {(word.variations.length > 0 || word.relations.length > 0) && (
-                <div styleName="group">
-                  <WordCardVariationList dictionary={dictionary} word={word}/>
-                  <WordCardRelationList dictionary={dictionary} word={word}/>
-                </div>
-              )}
+              <WordCardVariationList dictionary={dictionary} word={word}/>
+              <WordCardRelationList dictionary={dictionary} word={word}/>
             </CollapsibleBody>
             <CollapsibleButton styleName="collapsible-button"/>
           </Collapsible>
