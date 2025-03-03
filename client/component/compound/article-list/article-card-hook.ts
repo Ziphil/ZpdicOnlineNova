@@ -20,7 +20,10 @@ export function useDiscardArticle(dictionary: Dictionary, article: Article): () 
     const articleNumber = article.number;
     const response = await request("discardArticle", {number, articleNumber});
     await switchResponse(response, async () => {
-      await invalidateResponses("searchArticles", (query) => query.number === dictionary.number);
+      await Promise.all([
+        invalidateResponses("searchArticles", (query) => query.number === dictionary.number),
+        invalidateResponses("fetchArticle", (query) => query.number === dictionary.number && query.articleNumber === article.number)
+      ]);
       dispatchSuccessToast("discardArticle");
     });
   }, [dictionary.number, article.number, request, dispatchSuccessToast]);
