@@ -14,6 +14,8 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/dictionary/:identifier" lazy={() => import("/client/component/page/dictionary-page")}>
       <Route index={true} lazy={() => import("/client/component/page/dictionary-main-part")}/>
       <Route path="sentences" lazy={() => import("/client/component/page/dictionary-example-part")}/>
+      <Route path="articles" lazy={() => import("/client/component/page/dictionary-article-part")}/>
+      <Route path="articles/:articleNumber" lazy={() => import("/client/component/page/dictionary-article-single-part")}/>
       <Route path="info" lazy={() => import("/client/component/page/dictionary-information-part")}/>
       <Route path="resources" lazy={() => import("/client/component/page/dictionary-resource-part")}/>
       <Route path="requests" lazy={() => import("/client/component/page/dictionary-commission-part")}/>
@@ -25,10 +27,12 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path="permissions" lazy={() => import("/client/component/page/dictionary-setting-authority-part")}/>
       </Route>
     </Route>
-    <Route path="/dictionary/:identifier/word/new" lazy={() => import("/client/component/page/edit-word-page")}/>
-    <Route path="/dictionary/:identifier/word/:wordNumber" lazy={() => import("/client/component/page/edit-word-page")}/>
-    <Route path="/dictionary/:identifier/sentence/new" lazy={() => import("/client/component/page/edit-example-page")}/>
-    <Route path="/dictionary/:identifier/sentence/:exampleNumber" lazy={() => import("/client/component/page/edit-example-page")}/>
+    <Route path="/dictionary/:identifier/edit/word/new" lazy={() => import("/client/component/page/edit-word-page")}/>
+    <Route path="/dictionary/:identifier/edit/word/:wordNumber" lazy={() => import("/client/component/page/edit-word-page")}/>
+    <Route path="/dictionary/:identifier/edit/sentence/new" lazy={() => import("/client/component/page/edit-example-page")}/>
+    <Route path="/dictionary/:identifier/edit/sentence/:exampleNumber" lazy={() => import("/client/component/page/edit-example-page")}/>
+    <Route path="/dictionary/:identifier/edit/article/new" lazy={() => import("/client/component/page/edit-article-page")}/>
+    <Route path="/dictionary/:identifier/edit/article/:articleNumber" lazy={() => import("/client/component/page/edit-article-page")}/>
     <Route path="/user/:name" lazy={() => import("/client/component/page/user-page")}>
       <Route index={true} lazy={() => import("/client/component/page/user-dictionary-part")}/>
       <Route path="notifications" lazy={() => import("/client/component/page/user-notification-part")}/>

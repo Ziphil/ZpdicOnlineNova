@@ -1,10 +1,11 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
-import {ReactElement} from "react";
-import {LoadingIcon, MultiLineText, Tag} from "zographia";
+import {faEdit} from "@fortawesome/sharp-regular-svg-icons";
+import {MouseEvent, ReactElement, useCallback} from "react";
+import {Button, ButtonIconbag, GeneralIcon, LoadingIcon, MultiLineText, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {Dictionary, Word} from "/client/skeleton";
+import {DictionaryWithExecutors, Word} from "/client/skeleton";
 import {createEquivalentNameNode} from "/client/util/dictionary";
 
 
@@ -13,15 +14,27 @@ export const WordPopoverInner = create(
   function ({
     dictionary,
     word,
+    onEdit,
     ...rest
   }: {
-    dictionary: Dictionary,
+    dictionary: DictionaryWithExecutors,
     word: Word | {number: number},
+    onEdit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
     className?: string
   }): ReactElement {
 
+    const {trans} = useTrans("wordPopover");
+
+    const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+
     const [innerWord] = useResponse("fetchWord", (!isFull(word)) && {number: dictionary.number, wordNumber: word.number});
     const actualWord = (!isFull(word)) ? innerWord : word;
+
+    const handleEdit = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
+      if (actualWord !== undefined) {
+        onEdit?.(actualWord, event);
+      }
+    }, [actualWord, onEdit]);
 
     return (actualWord !== undefined) ? (
       <div styleName="root" {...rest}>
@@ -38,6 +51,14 @@ export const WordPopoverInner = create(
             </MultiLineText>
           ))}
         </div>
+        {(canEdit) && (
+          <div styleName="footer">
+            <Button scheme="secondary" variant="underline" onClick={handleEdit}>
+              <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
+              {trans("button.edit")}
+            </Button>
+          </div>
+        )}
       </div>
     ) : (
       <div styleName="root-loading">

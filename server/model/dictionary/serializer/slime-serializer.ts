@@ -100,6 +100,7 @@ export class SlimeSerializer extends Serializer {
       const rawEquivalent = {} as any;
       rawEquivalent["title"] = equivalent.titles[0] ?? "";
       rawEquivalent["forms"] = equivalent.names;
+      rawEquivalent["rawForms"] = equivalent.nameString;
       raw["translations"].push(rawEquivalent);
     }
     raw["tags"] = word.tags;
@@ -164,6 +165,7 @@ export class SlimeSerializer extends Serializer {
     raw["zpdicOnline"] = {};
     raw["zpdicOnline"]["explanation"] = this.dictionary.explanation;
     raw["zpdicOnline"]["punctuations"] = this.dictionary.settings.punctuations;
+    raw["zpdicOnline"]["ignoredPattern"] = this.dictionary.settings.ignoredEquivalentPattern;
     raw["zpdicOnline"]["pronunciationTitle"] = this.dictionary.settings.pronunciationTitle;
     raw["zpdicOnline"]["enableMarkdown"] = this.dictionary.settings.enableMarkdown;
     raw["snoj"] = this.dictionary.settings.akrantiainSource;

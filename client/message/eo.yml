@@ -22,6 +22,8 @@ toast:
         La agordo ŝanĝitas.
       font: |-
         La agordo ŝanĝitas.
+      showEquivalentNumber: |-
+        La agordo ŝanĝitas.
       exampleTitle: |-
         La agordo ŝanĝitas.
       pronunciationTitle: |-
@@ -48,6 +50,12 @@ toast:
       La ekzempla frazo redaktitas.
     discardExample: |-
       La ekzempla frazo forigitas.
+    addArticle: |-
+      Nova artikolo kreitas.
+    changeArticle: |-
+      La artikolo redaktitas.
+    discardArticle: |-
+      La artikolo forigitas.
     addCommission: |-
       Nova peto kreitas.
     discardCommission: |-
@@ -245,6 +253,19 @@ addCommissionDialog:
   error:
     nameRequired: >-
       Enigu la vorton por peti.
+articleList:
+  empty: "Neniuj artikoloj estas kreitaj"
+  button:
+    read: "Legi plenon"
+    edit: "Redakti"
+    discard: "Forigi"
+  dialog:
+    discard:
+      message: >-
+        Tiu artikolo estos forigita konstante.
+        Vi ne povas restaŭri ĝin poste.
+        Ĉu vi vere certas?
+      confirm: "Forigi"
 changeLocaleForm:
   label: "Lingvo"
 changeAppearanceForm:
@@ -296,6 +317,7 @@ dictionaryHeader:
   tab:
     dictionary: "Vortaro"
     example: "Frazoj"
+    article: "Artikoloj"
     resource: "Bildoj"
     information: "Detaloj"
     commission: "Petoj"
@@ -304,8 +326,15 @@ dictionaryHeader:
     updatedDate: "Ĝisdatigita je"
     createdDate: "Kreita je"
   button:
-    addWord: "Krei vorton"
-    addExample: "Krei frazon"
+    addWord: 
+      long: "Krei vorton"
+      short: "Vorto"
+    addExample: 
+      long: "Krei frazon"
+      short: "Frazo"
+    addArticle: 
+      long: "Krei artikolon"
+      short: "Artikolo"
     addCommission: "Peti"
     download: "Elŝuti"
   userCount: "<plus>+</plus>{count, number}"
@@ -345,6 +374,15 @@ dictionaryStatisticsView:
     informationAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {ero/vorto} other {eroj/vorto}}</unit>"
     informationText: "<number>{value, number}</number><unit>{value, plural, one {signo} other {signoj}}</unit>"
     informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {signo/vorto} other {signoj/vorto}}</unit>"
+editArticleForm:
+  tab:
+    edit: "Redakti"
+  label:
+    tags: "Etikedoj"
+    title: "Titolo"
+    content: "Enhavo"
+  button:
+    confirm: "Konfirmi"
 editExampleDialog:
   button:
     external: "Malfermi en nova langeto"
@@ -437,6 +475,10 @@ exampleOfferList:
   button:
     add: "Traduki"
     select: "Elekti"
+examplePopover:
+  button:
+    edit: "Redakti"
+    detail: "Detalo"
 executeAkrantiainDialog:
   label:
     source: "Fontkodo"
@@ -544,6 +586,7 @@ searchWordForm:
 shareMenu:
   label:
     twitter: "X (Twitter)"
+    bluesky: "Bluesky"
     misskey: "Misskey.io"
     copy: "Kopii ligilon"
     other: "Aliaj"
@@ -585,6 +628,9 @@ wordList:
       confirm: "Forigi"
 wordNameFrequencyChart:
   other: "Aliaj"
+wordPopover:
+  button:
+    edit: "Redakti"
 loginForm:
   label:
     name: "Salutnomo"
@@ -727,6 +773,9 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Ebligita"
       false: "Malebligita"
+    showEquivalentNumber:
+      true: "Montri"
+      false: "Ne montri"
   pattern:
     none: "Ne agordi"
     paren: "Ignori internoj de rondaj krampoj"
@@ -822,9 +871,20 @@ contactPage:
 exampleOfferListPage:
   title: "Frazoj"
   heading: "Frazoj"
+dictionaryArticlePart:
+  button:
+    addArticle: "Krei artikolon"
+dictionaryArticleSinglePart:
+  button:
+    back: "Reiri al listo"
+dictionaryCommissionPart:
+  button:
+    addCommission: "Krei peton"
 dictionaryExamplePart:
   heading:
     offer: "Hodiaŭa frazo"
+  button:
+    addExample: "Krei frazon"
 dictionaryInformationPart:
   heading:
     history: "Historio de nombro da vortoj"
@@ -839,6 +899,10 @@ dictionaryResourcePart:
   explanation: >-
     Vi povas uzi la alŝutitajn bildojn en la priskribo de la vortaro kaj la enhavoj de vortoj.
     Kopiu la kodon sub la bildo kaj algluu ĝin en tekstujon.
+dictionaryMainPart:
+  button:
+    addWord: "Krei vorton"
+    addCommission: "Peti"
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"
@@ -910,6 +974,7 @@ dictionarySettingGeneralPart:
     paramName: "Identigilo por retadreso"
     explanation: "Priskribo"
     font: "Tiparo por kapvortoj"
+    showEquivalentNumber: "Numero de tradukaĵoj"
     visibility: "Videbleco"
     discard: "Forigi"
   description:
@@ -921,6 +986,8 @@ dictionarySettingGeneralPart:
     font: >-
       Vi povas ŝanĝi la tiparon por kapvortoj.
       Elektu “Uzi lokan tiparon” por uzi tiparon instalitan en la medio de la vizitanto, aŭ “Alŝuti propran tiparon” por uzi vian propran alŝutitan tiparon.
+    showEquivalentNumber: >-
+      Se vi ebligos tiun funkcion, la numero de tradukaĵoj estos montrata.
     visibility: >-
       Se vi agordos tiun al “Nelistigita”, la vortaro ne aperos en listoj de vortaroj.
       Tamen ĉiu, kiu konas la retadreso de la paĝo de la vortaro, povas ankoraŭ rekte aliri ĝin.

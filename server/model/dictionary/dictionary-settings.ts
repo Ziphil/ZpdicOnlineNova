@@ -34,6 +34,9 @@ export class DictionarySettingsSchema {
   @prop({required: true})
   public enableDuplicateName!: boolean;
 
+  @prop({required: true})
+  public showEquivalentNumber!: boolean;
+
   public static createDefault(): DictionarySettings {
     const font = {type: "none"};
     const punctuations = [",", "、", "。"];
@@ -42,7 +45,8 @@ export class DictionarySettingsSchema {
     const exampleTitle = "Examples";
     const enableMarkdown = false;
     const enableDuplicateName = true;
-    const settings = new DictionarySettingsModel({font, punctuations, ignoredEquivalentPattern, pronunciationTitle, exampleTitle, enableMarkdown, enableDuplicateName});
+    const showEquivalentNumber = false;
+    const settings = new DictionarySettingsModel({font, punctuations, ignoredEquivalentPattern, pronunciationTitle, exampleTitle, enableMarkdown, enableDuplicateName, showEquivalentNumber});
     return settings;
   }
 

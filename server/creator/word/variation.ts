@@ -11,9 +11,10 @@ import {
 export namespace VariationCreator {
 
   export function skeletonize(raw: Variation): VariationSkeleton {
-    const title = raw.title;
-    const name = raw.name;
-    const skeleton = {title, name};
+    const skeleton = {
+      title: raw.title,
+      name: raw.name
+    } satisfies VariationSkeleton;
     return skeleton;
   }
 

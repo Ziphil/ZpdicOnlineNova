@@ -1,8 +1,10 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {ReactElement, useCallback} from "react";
-import {AdditionalProps, Indicator, SingleLineText, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, Indicator, LoadingIcon, SingleLineText, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
+import {fakQuotesCirclePlus} from "/client/component/atom/icon";
+import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
 import {ExampleList} from "/client/component/compound/example-list";
 import {ExampleOfferList} from "/client/component/compound/example-offer-list";
 import {SearchExampleForm} from "/client/component/compound/search-example-form";
@@ -22,14 +24,14 @@ export const DictionaryExamplePart = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionaryExamplePart");
+    const {trans, transNumber} = useTrans("dictionaryExamplePart");
 
     const dictionary = useDictionary();
 
     const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [[hitExamples, hitSize]] = useSuspenseResponse("searchExamples", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
+    const [[hitExamples, hitSize], {isFetching}] = useSuspenseResponse("searchExamples", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
 
     const [[offers] = []] = useResponse("searchExampleOffers", (canEdit) && {parameter: NormalExampleOfferParameter.DAILY, size: 1, offset: 0});
     const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (canEdit && offers !== undefined && offers.length > 0) && {number: dictionary.number, offer: offers[0], size: 1, offset: 0});
@@ -59,7 +61,24 @@ export const DictionaryExamplePart = create(
         </div>
         <div styleName="right">
           <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
-          <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}/>
+          <div styleName="main">
+            <div styleName="header">
+              {(canEdit) ? (
+                <EditExampleDialog dictionary={dictionary} initialData={null} trigger={(
+                  <Button variant="light">
+                    <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
+                    {trans("button.addExample")}
+                  </Button>
+                )}/>
+              ) : (
+                <div/>
+              )}
+              <div styleName="size">
+                {(isFetching) ? <LoadingIcon/> : transNumber(hitSize)}
+              </div>
+            </div>
+            <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}/>
+          </div>
         </div>
       </div>
     );

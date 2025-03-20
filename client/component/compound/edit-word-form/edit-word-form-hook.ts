@@ -57,7 +57,7 @@ export type EditWordSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 export type EditWordFormValue = FormValue;
-export type EditWordInitialData = {type: "word", word: Word | EditableWord, forceAdd?: boolean} | {type: "form", value: EditWordFormValue, forceAdd?: boolean};
+export type EditWordInitialData = ({type: "word", word: Word | EditableWord} | {type: "form", value: EditWordFormValue}) & {forceAdd?: boolean};
 export const getEditWordFormValue = getFormValue;
 
 export function useEditWord(dictionary: Dictionary, initialData: EditWordInitialData | null, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
@@ -82,7 +82,7 @@ export function useEditWord(dictionary: Dictionary, initialData: EditWordInitial
   return {form, handleSubmit};
 }
 
-function getFormValue(initialData: EditWordInitialData | null): FormValue {
+function getFormValue<D extends EditWordInitialData | null>(initialData: D): FormValue {
   if (initialData !== null) {
     if (initialData.type === "word") {
       const word = initialData.word;
@@ -113,12 +113,15 @@ function getFormValue(initialData: EditWordInitialData | null): FormValue {
         }))
       } satisfies FormValue;
       return value;
-    } else {
+    } else if (initialData.type === "form") {
       const value = {
         ...initialData.value,
         number: (initialData.forceAdd) ? null : initialData.value.number
       } satisfies FormValue;
       return value;
+    } else {
+      initialData satisfies never;
+      throw new Error("cannot happen");
     }
   } else {
     return DEFAULT_VALUE;

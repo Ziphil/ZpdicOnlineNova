@@ -86,6 +86,19 @@ export const ChangeDictionarySettingsForm = create(
           <ControlContainer>
             <Input {...register("value")}/>
           </ControlContainer>
+        ) : (propertyName === "showEquivalentNumber") ? (
+          <ControlContainer>
+            <div styleName="radio-group">
+              <CheckableContainer>
+                <Radio value="true" {...register("value")}/>
+                <CheckableLabel>{trans("label.showEquivalentNumber.true")}</CheckableLabel>
+              </CheckableContainer>
+              <CheckableContainer>
+                <Radio value="false" {...register("value")}/>
+                <CheckableLabel>{trans("label.showEquivalentNumber.false")}</CheckableLabel>
+              </CheckableContainer>
+            </div>
+          </ControlContainer>
         ) : null}
         <div>
           <Button variant="light" type="submit" onClick={handleSubmit}>

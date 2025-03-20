@@ -1,7 +1,8 @@
 //
 
 import {faArrowUpRightFromSquare} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, MouseEvent, ReactElement, cloneElement, useCallback, useRef, useState} from "react";
+import {Fragment, MouseEvent, ReactElement, Ref, RefObject, cloneElement, isValidElement, useCallback, useRef, useState} from "react";
+import {UseFormReturn} from "react-hook-form";
 import {useHref} from "react-router-dom";
 import rison from "rison";
 import {
@@ -20,6 +21,7 @@ import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {checkOpeningExternal} from "/client/util/form";
+import {assignRef, isRef} from "/client/util/ref";
 
 
 export const EditWordDialog = create(
@@ -28,20 +30,23 @@ export const EditWordDialog = create(
     dictionary,
     initialData,
     trigger,
+    formRef,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditWordInitialData | null,
-    trigger: ReactElement,
+    trigger: ReactElement | Ref<(event: MouseEvent<HTMLButtonElement>) => void>,
+    formRef?: RefObject<UseFormReturn<EditWordFormValue>>,
     className?: string
   }): ReactElement {
 
     const {trans} = useTrans("editWordDialog");
 
     const [open, setOpen] = useState(false);
-    const addWordPageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/word`);
+    const addWordPageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/edit/word`);
 
-    const formRef = useRef<() => EditWordFormValue>(null);
+    const innerFormRef = useRef<UseFormReturn<EditWordFormValue>>(null);
+    const actualFormRef = formRef ?? innerFormRef;
 
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       if (checkOpeningExternal(event)) {
@@ -58,16 +63,20 @@ export const EditWordDialog = create(
     }, []);
 
     const openExternal = useCallback(function (): void {
-      const value = formRef.current?.();
+      const value = actualFormRef.current?.getValues();
       if (value !== undefined) {
         const addWordPageUrl = addWordPageUrlBase + `/${(initialData?.forceAdd || value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
         window.open(addWordPageUrl);
       }
-    }, [addWordPageUrlBase, initialData]);
+    }, [addWordPageUrlBase, initialData, actualFormRef]);
+
+    if (isRef(trigger)) {
+      assignRef(trigger, openDialog);
+    }
 
     return (
       <Fragment>
-        {cloneElement(trigger, {onClick: openDialog})}
+        {(isValidElement<any>(trigger)) && cloneElement(trigger, {onClick: openDialog})}
         <Dialog open={open} onOpenSet={setOpen} height="full" {...rest}>
           <DialogPane styleName="pane">
             <DialogOutsideButtonContainer>
@@ -78,7 +87,7 @@ export const EditWordDialog = create(
             </DialogOutsideButtonContainer>
             <DialogCloseButton/>
             <DialogBody>
-              <EditWordForm dictionary={dictionary} initialData={initialData} formRef={formRef} onSubmit={closeDialog}/>
+              <EditWordForm dictionary={dictionary} initialData={initialData} formRef={actualFormRef} onSubmit={closeDialog}/>
             </DialogBody>
           </DialogPane>
         </Dialog>

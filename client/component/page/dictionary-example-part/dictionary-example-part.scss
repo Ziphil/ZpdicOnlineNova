@@ -39,3 +39,19 @@
 .indicator {
   width: auto;
 }
+
+.main {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.size {
+  color: var(--glob-mute-text-color);
+}

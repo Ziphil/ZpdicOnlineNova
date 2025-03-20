@@ -12,16 +12,18 @@ import {
 export namespace DictionarySettingsCreator {
 
   export function skeletonize(raw: DictionarySettings): DictionarySettingsSkeleton {
-    const akrantiainSource = raw.akrantiainSource;
-    const zatlinSource = raw.zatlinSource;
-    const font = (raw.font !== undefined) ? DictionaryFontCreator.skeletonize(raw.font) : undefined;
-    const punctuations = raw.punctuations;
-    const ignoredEquivalentPattern = raw.ignoredEquivalentPattern;
-    const pronunciationTitle = raw.pronunciationTitle;
-    const exampleTitle = raw.exampleTitle;
-    const enableMarkdown = raw.enableMarkdown;
-    const enableDuplicateName = raw.enableDuplicateName;
-    const skeleton = {akrantiainSource, zatlinSource, font, punctuations, ignoredEquivalentPattern, pronunciationTitle, exampleTitle, enableMarkdown, enableDuplicateName};
+    const skeleton = {
+      akrantiainSource: raw.akrantiainSource,
+      zatlinSource: raw.zatlinSource,
+      font: (raw.font !== undefined) ? DictionaryFontCreator.skeletonize(raw.font) : undefined,
+      punctuations: raw.punctuations,
+      ignoredEquivalentPattern: raw.ignoredEquivalentPattern,
+      pronunciationTitle: raw.pronunciationTitle,
+      exampleTitle: raw.exampleTitle,
+      enableMarkdown: raw.enableMarkdown,
+      enableDuplicateName: raw.enableDuplicateName,
+      showEquivalentNumber: raw.showEquivalentNumber
+    } satisfies DictionarySettingsSkeleton;
     return skeleton;
   }
 

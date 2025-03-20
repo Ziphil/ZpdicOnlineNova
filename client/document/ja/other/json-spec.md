@@ -8,82 +8,84 @@
 
 ```cddl
 json = {
-  "version": 2
-  "words": [* word]        ; 単語
-  "examples": [* example]  ; 例文
-  settings                 ; 設定
+    "version":  2
+    "words":    [* word]     ; 単語
+    "examples": [* example]  ; 例文
+    settings                 ; 設定
 }
 
 ; 単語関連
 
 word = {
-  "entry": {
-    "id": int     ; 単語 ID
-    "form": text  ; 綴り
-  }
-  "tags": [* tag]                  ; タグ
-  "translations": [* translation]  ; 訳語
-  "contents": [* content]          ; 内容
-  "variations": [* variation]      ; 変化形
-  "relations": [* relation]        ; 関連語
+    "entry": {
+        "id":   int                  ; 単語 ID
+        "form": text                 ; 綴り
+    }
+    "tags":         [* tag]          ; タグ
+    "translations": [* translation]  ; 訳語
+    "contents":     [* content]      ; 内容
+    "variations":   [* variation]    ; 変化形
+    "relations":    [* relation]     ; 関連語
 }
 
 translation = {
-  "title": text      ; 品詞
-  "forms": [* text]  ; 訳語
+    "title":    text      ; 品詞
+    "forms":    [* text]  ; 訳語
+    "rawForms": text      ; 訳語欄に入力された文字列
 }
 
 tag = text
 
 content = {
-  "title": text        ; 見出し
-  "text": text         ; 内容
+    "title": text     ; 見出し
+    "text":  text     ; 内容
 }
 
 variation = {
-  "title": text  ; 種類
-  "form": text   ; 変化形
+    "title": text     ; 種類
+    "form":  text     ; 変化形
 }
 
 relation = {
-  "title": text   ; 分類
-  "entry": {
-    "id": int     ; 関連語の ID
-    "form": text  ; 関連語の綴り
-  }
+    "title": text     ; 分類
+    "entry": {
+        "id":   int   ; 関連語の ID
+        "form": text  ; 関連語の綴り
+    }
 }
 
 ; 例文関連
 
 example = {
-  "id": int                ; 例文 ID
-  "tags": [* tag]          ; タグ
-  "sentence": text         ; この言語での例文
-  "translation": text      ; 自然言語訳
-  ? "supplement": text     ; 補足説明
-  "words": [* linkedWord]  ; 使用単語
-  ? "offer": exampleOffer  ; 関連付け例文
+    "id":          int             ; 例文 ID
+    "tags":        [* tag]         ; タグ
+    "sentence":    text            ; この言語での例文
+    "translation": text            ; 自然言語訳
+  ? "supplement":  text            ; 補足説明
+    "words":       [* linkedWord]  ; 使用単語
+  ? "offer":       exampleOffer    ; 関連付け例文
 }
 
 linkedWord = {
-  "id": int  ; 使用している単語の ID
+    "id": int  ; 使用している単語の ID
 }
 
 exampleOffer = {
-  "catalog": text  ; 例文集タイトル
-  "number": int    ; 例文集内での番号 (1 から)
+    "catalog": text  ; 例文集タイトル
+    "number":  int   ; 例文集内での番号 (1 から)
 }
 
 ; 設定関連
 
 settings = (
-  "zpdicOnline": {
-    ? "explanation": text       ; 説明
-    "punctuations": [* text]    ; 区切り文字
-    "pronunciationTitle": text  ; 発音データの見出し
-  }
-  ? "snoj": text    ; Akrantiain ソースコード
-  ? "zatlin": text  ; Zatlin ソースコード
+    "zpdicOnline": {
+      ? "explanation":        text      ; 説明
+        "punctuations":       [* text]  ; 区切り文字
+      ? "ignoredPattern":     text      ; 訳語で無視するパターン
+        "pronunciationTitle": text      ; 発音データの見出し
+    }
+  ? "snoj": text                        ; Akrantiain ソースコード
+  ? "zatlin": text                      ; Zatlin ソースコード
 )
 ```
 

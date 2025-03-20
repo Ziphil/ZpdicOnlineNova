@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  @include bold-font;
+  color: var(--glob-mute-text-color);
+  &[data-level="1"] {
+    font-size: 5zu;
+    margin-block-end: calc(0.5zu - extrusion(var(--line-height)) * (1 - 4 / 5));
+    &:not(:first-child) {
+      margin-block-start: calc(0.5zu - extrusion(var(--line-height)) * (1 - 4 / 5));
+    }
+  }
+  &:not([data-level="1"]) {
+    font-size: 4zu;
+    margin-block-end: calc(0.5zu - extrusion(var(--line-height)) * (1 - 4 / 4));
+    &:not(:first-child) {
+      margin-block-start: calc(0.5zu - extrusion(var(--line-height)) * (1 - 4 / 4));
+    }
+  }
+}

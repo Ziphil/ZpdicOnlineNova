@@ -11,10 +11,11 @@ import {
 export namespace RelationCreator {
 
   export function skeletonize(raw: Relation): RelationSkeleton {
-    const titles = raw.titles;
-    const number = raw.number;
-    const name = raw.name;
-    const skeleton = {titles, number, name};
+    const skeleton = {
+      titles: raw.titles,
+      number: raw.number,
+      name: raw.name
+    } satisfies RelationSkeleton;
     return skeleton;
   }
 

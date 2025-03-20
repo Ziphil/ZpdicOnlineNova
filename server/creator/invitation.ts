@@ -15,11 +15,12 @@ export namespace InvitationCreator {
   export async function skeletonize(raw: Invitation): Promise<InvitationSkeleton> {
     await raw.populate("dictionary");
     if (isDocument(raw.dictionary)) {
-      const id = raw.id;
-      const type = raw.type;
-      const dictionary = await DictionaryCreator.skeletonizeWithUser(raw.dictionary);
-      const createdDate = raw.createdDate.toISOString();
-      const skeleton = {id, type, dictionary, createdDate};
+      const skeleton = {
+        id: raw.id,
+        type: raw.type,
+        dictionary: await DictionaryCreator.skeletonizeWithUser(raw.dictionary),
+        createdDate: raw.createdDate.toISOString()
+      } satisfies InvitationSkeleton;
       return skeleton;
     } else {
       throw new Error("cannot happen");

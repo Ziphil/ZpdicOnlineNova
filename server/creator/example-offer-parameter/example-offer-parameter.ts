@@ -9,9 +9,9 @@ import {
 } from "/server/model";
 
 
-export class ExampleOfferParameterCreator {
+export namespace ExampleOfferParameterCreator {
 
-  public static enflesh(skeleton: ExampleOfferParameterSkeleton): ExampleOfferParameter {
+  export function enflesh(skeleton: ExampleOfferParameterSkeleton): ExampleOfferParameter {
     const raw = new NormalExampleOfferParameter(skeleton.catalog);
     return raw;
   }

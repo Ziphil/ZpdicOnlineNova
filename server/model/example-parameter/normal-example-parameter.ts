@@ -16,7 +16,7 @@ export class NormalExampleParameter extends ExampleParameter {
   }
 
   public createQuery(dictionary: Dictionary): QueryLike<Array<Example>, Example> {
-    const sortKey = "-createdDate _id";
+    const sortKey = "-createdDate -number _id";
     const query = ExampleModel.findExist().where("dictionary", dictionary).sort(sortKey);
     return query;
   }

@@ -18,19 +18,20 @@ import {
 export namespace WordCreator {
 
   export function skeletonize(raw: Word): WordSkeleton {
-    const id = raw.id || raw["_id"];
-    const number = raw.number;
-    const name = raw.name;
-    const pronunciation = raw.pronunciation;
-    const equivalents = raw.equivalents.map(EquivalentCreator.skeletonize);
-    const tags = raw.tags;
-    const informations = raw.informations.map(InformationCreator.skeletonize);
-    const variations = raw.variations.map(VariationCreator.skeletonize);
-    const relations = raw.relations.map(RelationCreator.skeletonize);
-    const updatedUser = (raw.updatedUser !== undefined) ? {id: raw.updatedUser} : undefined;
-    const createdDate = raw.createdDate?.toISOString() ?? undefined;
-    const updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    const skeleton = {id, number, name, pronunciation, equivalents, tags, informations, variations, relations, updatedUser, createdDate, updatedDate};
+    const skeleton = {
+      id: raw.id || raw["_id"],
+      number: raw.number,
+      name: raw.name,
+      pronunciation: raw.pronunciation,
+      equivalents: raw.equivalents.map(EquivalentCreator.skeletonize),
+      tags: raw.tags,
+      informations: raw.informations.map(InformationCreator.skeletonize),
+      variations: raw.variations.map(VariationCreator.skeletonize),
+      relations: raw.relations.map(RelationCreator.skeletonize),
+      updatedUser: (raw.updatedUser !== undefined) ? {id: raw.updatedUser} : undefined,
+      createdDate: raw.createdDate?.toISOString() ?? undefined,
+      updatedDate: raw.updatedDate?.toISOString() ?? undefined
+    } satisfies WordSkeleton;
     return skeleton;
   }
 

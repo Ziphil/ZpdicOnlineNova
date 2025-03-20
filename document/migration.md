@@ -95,3 +95,9 @@ db.examples.aggregate([
   {$merge: {into: "examples"}}
 ])
 ```
+
+### → ver 3.12.0
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```
+db.dictionaries.updateMany({}, {$set: {"settings.showEquivalentNumber": false}});
+```

@@ -11,14 +11,15 @@ import {
 export namespace ExampleOfferCreator {
 
   export function skeletonize(raw: ExampleOffer): ExampleOfferSkeleton {
-    const id = raw.id;
-    const catalog = raw.catalog;
-    const number = raw.number;
-    const translation = raw.translation;
-    const supplement = raw.supplement;
-    const author = raw.author;
-    const createdDate = raw.createdDate.toISOString();
-    const skeleton = {id, catalog, number, translation, supplement, author, createdDate};
+    const skeleton = {
+      id: raw.id,
+      catalog: raw.catalog,
+      number: raw.number,
+      translation: raw.translation,
+      supplement: raw.supplement,
+      author: raw.author,
+      createdDate: raw.createdDate.toISOString()
+    } satisfies ExampleOfferSkeleton;
     return skeleton;
   }
 

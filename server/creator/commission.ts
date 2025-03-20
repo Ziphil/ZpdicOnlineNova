@@ -11,11 +11,12 @@ import {
 export namespace CommissionCreator {
 
   export function skeletonize(raw: Commission): CommissionSkeleton {
-    const id = raw.id;
-    const name = raw.name;
-    const comment = raw.comment;
-    const createdDate = raw.createdDate.toISOString();
-    const skeleton = {id, name, comment, createdDate};
+    const skeleton = {
+      id: raw.id,
+      name: raw.name,
+      comment: raw.comment,
+      createdDate: raw.createdDate.toISOString()
+    } satisfies CommissionSkeleton;
     return skeleton;
   }
 

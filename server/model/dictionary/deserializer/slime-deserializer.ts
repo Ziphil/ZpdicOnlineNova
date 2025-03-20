@@ -15,6 +15,7 @@ import {Word, WordModel} from "/server/model/word/word";
 export class SlimeDeserializer extends Deserializer {
 
   private pronunciationTitle?: string;
+  private ignoredEquivalentPattern?: string;
 
   public start(): void {
     this.readSettings().then(() => this.readMain()).catch((error) => {
@@ -96,6 +97,10 @@ export class SlimeDeserializer extends Deserializer {
       if (Array.isArray(data["punctuations"]) && data["punctuations"].every((punctuation) => typeof punctuation === "string")) {
         this.emit("settings", "punctuations", data["punctuations"]);
       }
+      if (typeof data["ignoredPattern"] === "string") {
+        this.ignoredEquivalentPattern = data["ignoredPattern"];
+        this.emit("settings", "ignoredEquivalentPattern", data["ignoredPattern"]);
+      }
       if (typeof data["pronunciationTitle"] === "string") {
         this.pronunciationTitle = data["pronunciationTitle"];
         this.emit("settings", "pronunciationTitle", data["pronunciationTitle"]);
@@ -123,7 +128,7 @@ export class SlimeDeserializer extends Deserializer {
     for (const rawEquivalent of raw["translations"] ?? []) {
       const titles = (rawEquivalent["title"]) ? rawEquivalent["title"] : [];
       const names = rawEquivalent["forms"] ?? [];
-      const nameString = names.join(", ");
+      const nameString = (rawEquivalent["rawForms"]) ? rawEquivalent["rawForms"] : names.join(", ");
       const equivalent = new EquivalentModel({titles, names, nameString});
       equivalents.push(equivalent);
     }

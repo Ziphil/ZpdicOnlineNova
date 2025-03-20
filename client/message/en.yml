@@ -22,6 +22,8 @@ toast:
         The setting has been changed.
       font: |-
         The setting has been changed.
+      showEquivalentNumber: |-
+        The setting has been changed.
       exampleTitle: |-
         The setting has been changed.
       pronunciationTitle: |-
@@ -48,6 +50,12 @@ toast:
       The example sentence has been edited.
     discardExample: |-
       The example sentence has been deleted.
+    addArticle: |-
+      A new article has been created.
+    changeArticle: |-
+      The article has been edited.
+    discardArticle: |-
+      The article has been deleted.
     addCommission: |-
       A new request has been sent.
     discardCommission: |-
@@ -245,6 +253,19 @@ addCommissionDialog:
   error:
     nameRequired: >-
       Enter the word to request.
+articleList:
+  empty: "No articles are created"
+  button:
+    read: "Read full"
+    edit: "Edit"
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This article will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
 changeLocaleForm:
   label: "Language"
 changeAppearanceForm:
@@ -296,6 +317,7 @@ dictionaryHeader:
   tab:
     dictionary: "Dictionary"
     example: "Sentences"
+    article: "Articles"
     resource: "Images"
     information: "Details"
     commission: "Requests"
@@ -304,8 +326,15 @@ dictionaryHeader:
     updatedDate: "Updated at"
     createdDate: "Created at"
   button:
-    addWord: "Create word"
-    addExample: "Create sentence"
+    addWord:
+      long: "Create word"
+      short: "Word"
+    addExample:
+      long: "Create sentence"
+      short: "Sentence"
+    addArticle:
+      long: "Create article"
+      short: "Article"
     addCommission: "Request"
     download: "Download"
   userCount: "<plus>+</plus>{count, number}"
@@ -345,6 +374,15 @@ dictionaryStatisticsView:
     informationAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {item/word} other {items/word}}</unit>"
     informationText: "<number>{value, number}</number><unit>{value, plural, one {char} other {chars}}</unit>"
     informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {char/word} other {chars/word}}</unit>"
+editArticleForm:
+  tab:
+    edit: "Edit"
+  label:
+    tags: "Tags"
+    title: "Title"
+    content: "Content"
+  button:
+    confirm: "Confirm"
 editExampleDialog:
   button:
     external: "Open in new tab"
@@ -437,6 +475,10 @@ exampleOfferList:
   button:
     add: "Translate"
     select: "Select"
+examplePopover:
+  button:
+    edit: "Edit"
+    detail: "Detail"
 executeAkrantiainDialog:
   label:
     source: "Source code"
@@ -544,6 +586,7 @@ searchWordForm:
 shareMenu:
   label:
     twitter: "X (Twitter)"
+    bluesky: "Bluesky"
     misskey: "Misskey.io"
     copy: "Copy link"
     other: "Others"
@@ -585,6 +628,9 @@ wordList:
       confirm: "Delete"
 wordNameFrequencyChart:
   other: "Others"
+wordPopover:
+  button:
+    edit: "Edit"
 loginForm:
   label:
     name: "Username"
@@ -727,6 +773,9 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Enabled"
       false: "Disabled"
+    showEquivalentNumber:
+      true: "Show"
+      false: "Don’t show"
   pattern:
     none: "No setting"
     paren: "Ignore inside round brackets (parens)"
@@ -822,9 +871,20 @@ contactPage:
 exampleOfferListPage:
   title: "Sentences"
   heading: "Sentences"
+dictionaryArticlePart:
+  button:
+    addArticle: "Create article"
+dictionaryArticleSinglePart:
+  button:
+    back: "Back to list"
+dictionaryCommissionPart:
+  button:
+    addCommission: "Create request"
 dictionaryExamplePart:
   heading:
     offer: "Today’s sentence"
+  button:
+    addExample: "Create sentence"
 dictionaryInformationPart:
   heading:
     history: "Word count history"
@@ -835,6 +895,10 @@ dictionaryInformationPart:
       The word count is recorded every day at around 14:30 (UTC).
     wordNameFrequency: >-
       The chart below shows how frequent each character appears in the headwords in this dictionary.
+dictionaryMainPart:
+  button:
+    addWord: "Create word"
+    addCommission: "Request"
 dictionaryResourcePart:
   explanation: >-
     You can use the uploaded images in the description of the dictionary and the content of words.
@@ -910,6 +974,7 @@ dictionarySettingGeneralPart:
     paramName: "Identifier for URL"
     explanation: "Description"
     font: "Font for headwords"
+    showEquivalentNumber: "Translation numbering"
     visibility: "Visibility"
     discard: "Delete"
   description:
@@ -921,6 +986,8 @@ dictionarySettingGeneralPart:
     font: >-
       You can change the font for headwords.
       Select ‘Use local font’ to use a font installed in the visiter’s environment, or ‘Upload custom font’ to use your own uploaded font.
+    showEquivalentNumber: >-
+      Enabling this feature will display the index number of each translation.
     visibility: >-
       If you set this to ‘Unlisted’, this dictionary will not appear in dictionary lists.
       However, anyone who knows the URL of the dictionary page can still access it directly.

@@ -12,18 +12,21 @@ import {
 export namespace UserCreator {
 
   export function skeletonize(raw: User): UserSkeleton {
-    const id = raw.id;
-    const name = raw.name;
-    const screenName = raw.screenName;
-    const skeleton = {id, name, screenName};
+    const skeleton = {
+      id: raw.id,
+      name: raw.name,
+      screenName: raw.screenName
+    } satisfies UserSkeleton;
     return skeleton;
   }
 
   export function skeletonizeWithDetail(raw: User): UserSkeletonWithDetail {
     const base = skeletonize(raw);
-    const email = raw.email;
-    const activated = raw.activated;
-    const skeleton = {...base, email, activated};
+    const skeleton = {
+      ...base,
+      email: raw.email,
+      activated: raw.activated
+    } satisfies UserSkeletonWithDetail;
     return skeleton;
   }
 

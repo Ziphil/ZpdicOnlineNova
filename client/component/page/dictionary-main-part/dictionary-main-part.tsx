@@ -1,9 +1,13 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
+import {faCommentQuestion} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, SetStateAction, useCallback} from "react";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, LoadingIcon, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
+import {fakNoteCirclePlus} from "/client/component/atom/icon";
 import {Markdown} from "/client/component/atom/markdown";
+import {AddCommissionDialog} from "/client/component/compound/add-commission-dialog";
+import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {SearchWordForm} from "/client/component/compound/search-word-form";
 import {SuggestionCard} from "/client/component/compound/suggestion-card";
 import {WordList} from "/client/component/compound/word-list";
@@ -24,12 +28,14 @@ export const DictionaryMainPart = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const {trans, transNumber} = useTrans("dictionaryMainPart");
+
     const dictionary = useDictionary();
 
     const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [hitResult] = useSuspenseResponse("searchWords", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
+    const [hitResult, {isFetching}] = useSuspenseResponse("searchWords", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
 
@@ -55,11 +61,31 @@ export const DictionaryMainPart = create(
         <div styleName="right">
           <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
           {(debouncedQuery.showExplanation && !!dictionary.explanation) && (
-            <Markdown styleName="explanation" mode="normal" homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
+            <Markdown styleName="explanation" mode="article" homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
               {dictionary.explanation}
             </Markdown>
           )}
           <div styleName="main">
+            <div styleName="header">
+              {(canEdit) ? (
+                <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
+                  <Button variant="light">
+                    <ButtonIconbag><GeneralIcon icon={fakNoteCirclePlus}/></ButtonIconbag>
+                    {trans("button.addWord")}
+                  </Button>
+                )}/>
+              ) : (
+                <AddCommissionDialog dictionary={dictionary} trigger={(
+                  <Button scheme="gray" variant="light">
+                    <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
+                    {trans("button.addCommission")}
+                  </Button>
+                )}/>
+              )}
+              <div styleName="size">
+                {(isFetching) ? <LoadingIcon/> : transNumber(hitSize)}
+              </div>
+            </div>
             <SuggestionCard dictionary={dictionary} suggestions={hitSuggestions}/>
             <WordList dictionary={dictionary} words={hitWords} emptyType={(hitSuggestions.length > 0) ? "none" : (canEdit) ? "create" : "commission"} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}/>
           </div>

@@ -12,6 +12,7 @@ import {
 import Fuse from "fuse.js";
 import type {
   DictionaryStatistics,
+  EditableArticle,
   EditableExample,
   EditableWord,
   StringLengths,
@@ -19,6 +20,7 @@ import type {
   WordNameFrequencies,
   WordNameFrequency
 } from "/client/skeleton";
+import {Article, ArticleModel} from "/server/model/article";
 import {DiscardableSchema} from "/server/model/base";
 import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil, DictionaryFullAuthority} from "/server/model/dictionary/dictionary-authority";
@@ -365,6 +367,33 @@ export class DictionarySchema extends DiscardableSchema {
     }
   }
 
+  public async fetchOneArticleByNumber(this: Dictionary, number: number): Promise<Article | null> {
+    const query = ArticleModel.findOneExist().where("dictionary", this).where("number", number);
+    const article = await query.exec();
+    return article;
+  }
+
+  public async editArticle(this: Dictionary, example: EditableArticle, user: User): Promise<Article> {
+    if (this.status !== "saving") {
+      const resultArticle = await ArticleModel.edit(this, example, user);
+      this.status = "ready";
+      this.updatedDate = new Date();
+      await this.save();
+      return resultArticle;
+    } else {
+      throw new CustomError("dictionarySaving");
+    }
+  }
+
+  public async discardArticle(this: Dictionary, number: number): Promise<Article> {
+    if (this.status !== "saving") {
+      const example = await ArticleModel.discard(this, number);
+      return example;
+    } else {
+      throw new CustomError("dictionarySaving");
+    }
+  }
+
   /** 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。*/
   public async searchWords(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     const query = parameter.createQuery(this);
@@ -393,6 +422,12 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async searchExamples(this: Dictionary, parameter: ExampleParameter, range?: QueryRange): Promise<WithSize<Example>> {
     const query = parameter.createQuery(this);
+    const examples = await QueryRange.restrictWithSize(query, range);
+    return examples;
+  }
+
+  public async searchArticles(this: Dictionary, range?: QueryRange): Promise<WithSize<Article>> {
+    const query = ArticleModel.findExist().where("dictionary", this).sort("-updatedDate");
     const examples = await QueryRange.restrictWithSize(query, range);
     return examples;
   }
