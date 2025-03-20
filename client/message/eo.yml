@@ -859,12 +859,20 @@ contactPage:
 exampleOfferListPage:
   title: "Frazoj"
   heading: "Frazoj"
+dictionaryArticlePart:
+  button:
+    addArticle: "Krei artikolon"
 dictionaryArticleSinglePart:
   button:
     back: "Reiri al listo"
+dictionaryCommissionPart:
+  button:
+    addCommission: "Krei peton"
 dictionaryExamplePart:
   heading:
     offer: "Hodiaŭa frazo"
+  button:
+    addExample: "Krei frazon"
 dictionaryInformationPart:
   heading:
     history: "Historio de nombro da vortoj"
@@ -879,6 +887,10 @@ dictionaryResourcePart:
   explanation: >-
     Vi povas uzi la alŝutitajn bildojn en la priskribo de la vortaro kaj la enhavoj de vortoj.
     Kopiu la kodon sub la bildo kaj algluu ĝin en tekstujon.
+dictionaryMainPart:
+  button:
+    addWord: "Krei vorton"
+    addCommission: "Peti"
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"

@@ -859,12 +859,20 @@ contactPage:
 exampleOfferListPage:
   title: "Sentences"
   heading: "Sentences"
+dictionaryArticlePart:
+  button:
+    addArticle: "Create article"
 dictionaryArticleSinglePart:
   button:
     back: "Back to list"
+dictionaryCommissionPart:
+  button:
+    addCommission: "Create request"
 dictionaryExamplePart:
   heading:
     offer: "Today’s sentence"
+  button:
+    addExample: "Create sentence"
 dictionaryInformationPart:
   heading:
     history: "Word count history"
@@ -875,6 +883,10 @@ dictionaryInformationPart:
       The word count is recorded every day at around 14:30 (UTC).
     wordNameFrequency: >-
       The chart below shows how frequent each character appears in the headwords in this dictionary.
+dictionaryMainPart:
+  button:
+    addWord: "Create word"
+    addCommission: "Request"
 dictionaryResourcePart:
   explanation: >-
     You can use the uploaded images in the description of the dictionary and the content of words.

@@ -858,12 +858,20 @@ contactPage:
 exampleOfferListPage:
   title: "例文集"
   heading: "例文集"
+dictionaryArticlePart:
+  button:
+    addArticle: "記事を作成"
 dictionaryArticleSinglePart:
   button:
     back: "一覧に戻る"
+dictionaryCommissionPart:
+  button:
+    addCommission: "造語依頼を追加"
 dictionaryExamplePart:
   heading:
     offer: "今日の例文"
+  button:
+    addExample: "例文を作成"
 dictionaryInformationPart:
   heading:
     history: "単語数推移"
@@ -874,6 +882,10 @@ dictionaryInformationPart:
       単語数は毎日 23 時 30 分頃に記録されます。
     wordNameFrequency: >-
       見出し語に使われている各文字の出現頻度です。
+dictionaryMainPart:
+  button:
+    addWord: "単語を作成"
+    addCommission: "造語依頼"
 dictionaryResourcePart:
   explanation: >-
     アップロードした画像は、辞書の説明欄や単語の内容欄で使用することができます。
