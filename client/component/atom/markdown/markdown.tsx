@@ -42,12 +42,12 @@ export const Markdown = create(
         disallowedElements={(mode === "normal") ? ["h1", "h2", "h3", "h4", "h5", "h6", "hr"] : ["hr"]}
         components={{
           a: MarkdownAnchor,
-          h1: (mode === "article") ? (props) => <MarkdownHeading level={1} {...props}/> : undefined,
-          h2: (mode === "article") ? (props) => <MarkdownHeading level={2} {...props}/> : undefined,
-          h3: (mode === "article") ? (props) => <MarkdownHeading level={3} {...props}/> : undefined,
-          h4: (mode === "article") ? (props) => <MarkdownHeading level={4} {...props}/> : undefined,
-          h5: (mode === "article") ? (props) => <MarkdownHeading level={5} {...props}/> : undefined,
-          h6: (mode === "article") ? (props) => <MarkdownHeading level={6} {...props}/> : undefined
+          h1: (mode === "article") ? (props) => <MarkdownHeading level={1} {...props}/> : (props) => <h1 {...props}/>,
+          h2: (mode === "article") ? (props) => <MarkdownHeading level={2} {...props}/> : (props) => <h2 {...props}/>,
+          h3: (mode === "article") ? (props) => <MarkdownHeading level={3} {...props}/> : (props) => <h3 {...props}/>,
+          h4: (mode === "article") ? (props) => <MarkdownHeading level={4} {...props}/> : (props) => <h4 {...props}/>,
+          h5: (mode === "article") ? (props) => <MarkdownHeading level={5} {...props}/> : (props) => <h5 {...props}/>,
+          h6: (mode === "article") ? (props) => <MarkdownHeading level={6} {...props}/> : (props) => <h6 {...props}/>
         }}
         transformUrl={transformUrl}
         {...rest}
