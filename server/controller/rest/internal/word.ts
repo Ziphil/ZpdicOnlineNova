@@ -49,7 +49,7 @@ export class WordRestController extends InternalRestController {
       const results = await Promise.allSettled(specs.map(async ({wordNumber, relation}) => {
         await dictionary.addRelation(wordNumber, relation);
       }));
-      const rejectedResult = results.find((result) => result.status === "rejected") as PromiseRejectedResult | undefined;
+      const rejectedResult = results.find((result) => result.status === "rejected") as any as PromiseRejectedResult | undefined;
       if (rejectedResult === undefined) {
         InternalRestController.respond(response, null);
       } else {

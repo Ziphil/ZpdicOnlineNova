@@ -57,20 +57,20 @@ export class ExampleSchema extends DiscardableSchema {
   public updatedDate?: Date;
 
   public static async fetchByDictionary(dictionary: Dictionary, range?: QueryRange): Promise<WithSize<Example>> {
-    const query = ExampleModel.findExist().where("dictionary", dictionary).sort("-createdDate");
+    const query = ExampleModel.findExist().where("dictionary", dictionary).sort("-createdDate -number");
     const result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
 
   public static async fetchByWord(word: Word): Promise<Array<Example>> {
-    const query = ExampleModel.findExist().where("dictionary", word.dictionary).where("words.number", word.number).sort("-createdDate");
+    const query = ExampleModel.findExist().where("dictionary", word.dictionary).where("words.number", word.number).sort("-createdDate -number");
     const result = await query.exec();
     return result;
   }
 
   public static async fetchByOffer(dictionary: Dictionary | null, offer: {catalog: string, number: number}, range?: QueryRange): Promise<WithSize<Example>> {
     if (dictionary !== null) {
-      const query = ExampleModel.findExist().where("dictionary", dictionary).where("offer.catalog", offer.catalog).where("offer.number", offer.number).sort("-createdDate");
+      const query = ExampleModel.findExist().where("dictionary", dictionary).where("offer.catalog", offer.catalog).where("offer.number", offer.number).sort("-createdDate -number");
       const result = await QueryRange.restrictWithSize(query, range);
       return result;
     } else {
@@ -79,7 +79,7 @@ export class ExampleSchema extends DiscardableSchema {
         localField: "dictionary",
         foreignField: "_id",
         as: "popluatedDictionary"
-      }).unwind("$popluatedDictionary").match({"popluatedDictionary.visibility": "public"}).sort("-createdDate");
+      }).unwind("$popluatedDictionary").match({"popluatedDictionary.visibility": "public"}).sort("-createdDate -number");
       const result = await QueryRange.restrictWithSize(aggregate, range);
       return result;
     }
