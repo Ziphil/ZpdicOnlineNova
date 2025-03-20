@@ -1,7 +1,9 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
+import {faCommentQuestion} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useState} from "react";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {AddCommissionDialog} from "/client/component/compound/add-commission-dialog";
 import {CommissionList} from "/client/component/compound/commission-list";
 import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
@@ -17,6 +19,8 @@ export const DictionaryCommissionPart = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const {trans} = useTrans("dictionaryCommissionPart");
+
     const dictionary = useDictionary();
 
     const [page, setPage] = useState(0);
@@ -24,7 +28,15 @@ export const DictionaryCommissionPart = create(
 
     return (
       <div styleName="root" {...rest}>
-        <CommissionList dictionary={dictionary} commissions={hitCommissions} pageSpec={{size: 50, hitSize, page, onPageSet: setPage}}/>
+        <div styleName="list-container">
+          <AddCommissionDialog dictionary={dictionary} trigger={(
+            <Button styleName="button" variant="light">
+              <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
+              {trans("button.addCommission")}
+            </Button>
+          )}/>
+          <CommissionList dictionary={dictionary} commissions={hitCommissions} pageSpec={{size: 50, hitSize, page, onPageSet: setPage}}/>
+        </div>
       </div>
     );
 

@@ -1,15 +1,9 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faCommentQuestion} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, MultiLineText, SingleLineText, useResponsiveDevice, useTrans} from "zographia";
-import {fakNoteCirclePlus, fakQuotesCirclePlus, fakScrollCirclePlus} from "/client/component/atom/icon";
+import {AdditionalProps, MultiLineText, SingleLineText, useResponsiveDevice, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
-import {AddCommissionDialog} from "/client/component/compound/add-commission-dialog";
-import {EditArticleDialog} from "/client/component/compound/edit-article-dialog";
-import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
-import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
 import {useResponse, useSuspenseResponse} from "/client/hook/request";
 import {DictionaryWithExecutors} from "/client/skeleton";
@@ -57,38 +51,6 @@ export const DictionaryHeaderTop = create(
                   })}
                 </span>
               )}
-            </div>
-          </div>
-          <div styleName="operation">
-            {(canEdit) && (
-              <div styleName="operation-row">
-                <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
-                  <Button variant="light">
-                    <ButtonIconbag><GeneralIcon icon={fakNoteCirclePlus}/></ButtonIconbag>
-                    {trans(`button.addWord.${device === "desktop" ? "long" : "short"}`)}
-                  </Button>
-                )}/>
-                <EditExampleDialog dictionary={dictionary} initialData={null} trigger={(
-                  <Button variant="light">
-                    <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
-                    {trans(`button.addExample.${device === "desktop" ? "long" : "short"}`)}
-                  </Button>
-                )}/>
-                <EditArticleDialog dictionary={dictionary} initialData={null} trigger={(
-                  <Button variant="light">
-                    <ButtonIconbag><GeneralIcon icon={fakScrollCirclePlus}/></ButtonIconbag>
-                    {trans(`button.addArticle.${device === "desktop" ? "long" : "short"}`)}
-                  </Button>
-                )}/>
-              </div>
-            )}
-            <div styleName="operation-row">
-              <AddCommissionDialog dictionary={dictionary} trigger={(
-                <Button scheme="secondary" variant="underline">
-                  <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
-                  {trans("button.addCommission")}
-                </Button>
-              )}/>
             </div>
           </div>
         </div>
