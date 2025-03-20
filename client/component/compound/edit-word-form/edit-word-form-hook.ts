@@ -3,8 +3,8 @@
 import {BaseSyntheticEvent, useMemo} from "react";
 import {noop} from "ts-essentials";
 import {RelationWord} from "/client/component/atom/relation-word-select";
-import {FormDefaultValue, UseFormReturn, useForm} from "/client/hook/form";
-import {fetchResponse, invalidateResponses, useRequest} from "/client/hook/request";
+import {UseFormReturn, useForm} from "/client/hook/form";
+import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {Dictionary, EditableWord, Relation, Word} from "/client/skeleton";
 import {escapeRegexp} from "/client/util/misc";
@@ -57,12 +57,11 @@ export type EditWordSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 export type EditWordFormValue = FormValue;
-export type EditWordInitialData = ({type: "word", word: Word | EditableWord} | {type: "form", value: EditWordFormValue} | {type: "number", number: number}) & {forceAdd?: boolean};
+export type EditWordInitialData = ({type: "word", word: Word | EditableWord} | {type: "form", value: EditWordFormValue}) & {forceAdd?: boolean};
 export const getEditWordFormValue = getFormValue;
-export const getEditWordFormValueFromWord = getFormValueFromWord;
 
 export function useEditWord(dictionary: Dictionary, initialData: EditWordInitialData | null, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
-  const form = useForm<FormValue>(getFormValue(dictionary, initialData), {});
+  const form = useForm<FormValue>(getFormValue(initialData), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -83,11 +82,36 @@ export function useEditWord(dictionary: Dictionary, initialData: EditWordInitial
   return {form, handleSubmit};
 }
 
-function getFormValue<D extends EditWordInitialData | null>(dictionary: Dictionary, initialData: D): FormDefaultValue<FormValue> {
+function getFormValue<D extends EditWordInitialData | null>(initialData: D): FormValue {
   if (initialData !== null) {
     if (initialData.type === "word") {
       const word = initialData.word;
-      const value = getFormValueFromWord(word, initialData.forceAdd);
+      const value = {
+        number: (initialData.forceAdd) ? null : word.number ?? null,
+        name: word.name,
+        pronunciation: word.pronunciation || "",
+        tags: word.tags,
+        equivalents: word.equivalents.map((equivalent) => ({
+          titles: equivalent.titles,
+          nameString: equivalent.nameString
+        })),
+        informations: word.informations.map((information) => ({
+          title: information.title,
+          text: information.text
+        })),
+        variations: word.variations.map((variation) => ({
+          title: variation.title,
+          name: variation.name
+        })),
+        relations: word.relations.map((relation) => ({
+          titles: relation.titles,
+          word: {
+            number: relation.number,
+            name: relation.name
+          },
+          mutual: false
+        }))
+      } satisfies FormValue;
       return value;
     } else if (initialData.type === "form") {
       const value = {
@@ -95,13 +119,6 @@ function getFormValue<D extends EditWordInitialData | null>(dictionary: Dictiona
         number: (initialData.forceAdd) ? null : initialData.value.number
       } satisfies FormValue;
       return value;
-    } else if (initialData.type === "number") {
-      const getValue = async function (): Promise<FormValue> {
-        const word = await fetchResponse("fetchWord", {number: dictionary.number, wordNumber: initialData.number});
-        const value = getFormValueFromWord(word, initialData.forceAdd);
-        return value;
-      };
-      return getValue;
     } else {
       initialData satisfies never;
       throw new Error("cannot happen");
@@ -109,36 +126,6 @@ function getFormValue<D extends EditWordInitialData | null>(dictionary: Dictiona
   } else {
     return DEFAULT_VALUE;
   }
-}
-
-function getFormValueFromWord(word: Word | EditableWord, forceAdd?: boolean): FormValue {
-  const value = {
-    number: (forceAdd) ? null : word.number ?? null,
-    name: word.name,
-    pronunciation: word.pronunciation || "",
-    tags: word.tags,
-    equivalents: word.equivalents.map((equivalent) => ({
-      titles: equivalent.titles,
-      nameString: equivalent.nameString
-    })),
-    informations: word.informations.map((information) => ({
-      title: information.title,
-      text: information.text
-    })),
-    variations: word.variations.map((variation) => ({
-      title: variation.title,
-      name: variation.name
-    })),
-    relations: word.relations.map((relation) => ({
-      titles: relation.titles,
-      word: {
-        number: relation.number,
-        name: relation.name
-      },
-      mutual: false
-    }))
-  } satisfies FormValue;
-  return value;
 }
 
 function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWord"> {

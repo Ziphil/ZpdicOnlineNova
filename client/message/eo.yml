@@ -473,6 +473,10 @@ exampleOfferList:
   button:
     add: "Traduki"
     select: "Elekti"
+examplePopover:
+  button:
+    edit: "Redakti"
+    detail: "Detalo"
 executeAkrantiainDialog:
   label:
     source: "Fontkodo"
@@ -622,6 +626,9 @@ wordList:
       confirm: "Forigi"
 wordNameFrequencyChart:
   other: "Aliaj"
+wordPopover:
+  button:
+    edit: "Redakti"
 loginForm:
   label:
     name: "Salutnomo"

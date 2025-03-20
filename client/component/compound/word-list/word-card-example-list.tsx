@@ -27,7 +27,7 @@ export const WordCardExampleList = create(
           </h4>
           <ul styleName="list">
             {word.examples.map((example, index) => (
-              <WordCardExampleItem key={index} example={example}/>
+              <WordCardExampleItem key={index} dictionary={dictionary} example={example}/>
             ))}
           </ul>
         </section>

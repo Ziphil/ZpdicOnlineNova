@@ -51,8 +51,8 @@
 
 .footer {
   padding-block-start: 2zu;
-  column-gap: 3zu;
+  column-gap: 2zu;
+  font-size: 3.5zu;
   border-block-start: solid 1zx var(--glob-border-color);
   display: flex;
-  justify-content: space-between;
 }

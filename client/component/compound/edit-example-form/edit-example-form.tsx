@@ -1,7 +1,8 @@
 //
 
 import {faBooks, faPen} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, Ref, useCallback, useState} from "react";
+import {ReactElement, Ref, useState} from "react";
+import {UseFormReturn} from "react-hook-form";
 import {AdditionalProps, GeneralIcon, Tab, TabIconbag, TabList, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, EditableExample} from "/client/skeleton";
@@ -22,7 +23,7 @@ export const EditExampleForm = create(
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditExampleInitialData | null,
-    formRef?: Ref<() => EditExampleFormValue>,
+    formRef?: Ref<UseFormReturn<EditExampleFormValue>>,
     onSubmit?: (example: EditableExample) => void,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -34,11 +35,7 @@ export const EditExampleForm = create(
 
     const [tabValue, setTabValue] = useState<"edit" | "offer">("edit");
 
-    const getFormValue = useCallback(function (): EditExampleFormValue {
-      return form.getValues();
-    }, [form]);
-
-    assignRef(formRef, getFormValue);
+    assignRef(formRef, form);
 
     return (
       <div styleName="root" {...rest}>

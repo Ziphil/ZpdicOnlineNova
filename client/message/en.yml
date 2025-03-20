@@ -473,6 +473,10 @@ exampleOfferList:
   button:
     add: "Translate"
     select: "Select"
+examplePopover:
+  button:
+    edit: "Edit"
+    detail: "Detail"
 executeAkrantiainDialog:
   label:
     source: "Source code"
@@ -622,6 +626,9 @@ wordList:
       confirm: "Delete"
 wordNameFrequencyChart:
   other: "Others"
+wordPopover:
+  button:
+    edit: "Edit"
 loginForm:
   label:
     name: "Username"

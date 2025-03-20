@@ -473,6 +473,10 @@ exampleOfferList:
   button:
     add: "翻訳"
     select: "選択"
+examplePopover:
+  button:
+    edit: "編集"
+    detail: "詳細"
 executeAkrantiainDialog:
   label:
     source: "ソースコード"
@@ -622,6 +626,9 @@ wordList:
       confirm: "削除"
 wordNameFrequencyChart:
   other: "その他"
+wordPopover:
+  button:
+    edit: "編集"
 loginForm:
   label:
     name: "ユーザー ID"
