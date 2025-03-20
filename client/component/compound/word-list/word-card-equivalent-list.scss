@@ -10,6 +10,27 @@
   flex: 0 0 auto;
 }
 
+.item {
+  column-gap: 2zu;
+  display: flex;
+  align-items: baseline;
+}
+
+.number {
+  width: 4zu;
+  font-size: 3zu;
+  inset-block-end: 1.5zx;
+  color: var(--glob-mute-text-color);
+  border: solid 1zx var(--glob-mute-text-color);
+  border-radius: var(--glob-border-radius);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex: 0 0 auto;
+}
+
 .punctuation {
   color: var(--glob-mute-text-color);
 }

@@ -9,6 +9,7 @@ import {ChangeDictionaryExplanationForm} from "/client/component/form/change-dic
 import {ChangeDictionaryFontForm} from "/client/component/form/change-dictionary-font-form";
 import {ChangeDictionaryNameForm} from "/client/component/form/change-dictionary-name-form";
 import {ChangeDictionaryParamNameForm} from "/client/component/form/change-dictionary-param-name-form";
+import {ChangeDictionarySettingsForm} from "/client/component/form/change-dictionary-settings-form";
 import {ChangeDictionaryVisibilityForm} from "/client/component/form/change-dictionary-visibility-form";
 import {DiscardDictionaryButton} from "/client/component/form/discard-dictionary-button";
 import {DictionaryWithExecutors} from "/client/skeleton";
@@ -60,6 +61,13 @@ export const DictionarySettingGeneralPart = create(
             </CalloutBody>
           </Callout>
           <ChangeDictionaryFontForm dictionary={dictionary}/>
+        </section>
+        <section styleName="section">
+          <h3 styleName="heading">{trans("heading.showEquivalentNumber")}</h3>
+          <MultiLineText styleName="description">
+            {trans("description.showEquivalentNumber")}
+          </MultiLineText>
+          <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="showEquivalentNumber"/>
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.visibility")}</h3>

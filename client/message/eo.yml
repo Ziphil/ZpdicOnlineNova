@@ -22,6 +22,8 @@ toast:
         La agordo ŝanĝitas.
       font: |-
         La agordo ŝanĝitas.
+      showEquivalentNumber: |-
+        La agordo ŝanĝitas.
       exampleTitle: |-
         La agordo ŝanĝitas.
       pronunciationTitle: |-
@@ -771,6 +773,9 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Ebligita"
       false: "Malebligita"
+    showEquivalentNumber:
+      true: "Montri"
+      false: "Ne montri"
   pattern:
     none: "Ne agordi"
     paren: "Ignori internoj de rondaj krampoj"
@@ -969,6 +974,7 @@ dictionarySettingGeneralPart:
     paramName: "Identigilo por retadreso"
     explanation: "Priskribo"
     font: "Tiparo por kapvortoj"
+    showEquivalentNumber: "Numero de tradukaĵoj"
     visibility: "Videbleco"
     discard: "Forigi"
   description:
@@ -980,6 +986,8 @@ dictionarySettingGeneralPart:
     font: >-
       Vi povas ŝanĝi la tiparon por kapvortoj.
       Elektu “Uzi lokan tiparon” por uzi tiparon instalitan en la medio de la vizitanto, aŭ “Alŝuti propran tiparon” por uzi vian propran alŝutitan tiparon.
+    showEquivalentNumber: >-
+      Se vi ebligos tiun funkcion, la numero de tradukaĵoj estos montrata.
     visibility: >-
       Se vi agordos tiun al “Nelistigita”, la vortaro ne aperos en listoj de vortaroj.
       Tamen ĉiu, kiu konas la retadreso de la paĝo de la vortaro, povas ankoraŭ rekte aliri ĝin.

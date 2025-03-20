@@ -14,5 +14,6 @@ export interface DictionarySettings {
   exampleTitle: string;
   enableMarkdown: boolean;
   enableDuplicateName: boolean;
+  showEquivalentNumber: boolean;
 
 }

@@ -22,6 +22,8 @@ toast:
         The setting has been changed.
       font: |-
         The setting has been changed.
+      showEquivalentNumber: |-
+        The setting has been changed.
       exampleTitle: |-
         The setting has been changed.
       pronunciationTitle: |-
@@ -771,6 +773,9 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Enabled"
       false: "Disabled"
+    showEquivalentNumber:
+      true: "Show"
+      false: "Don’t show"
   pattern:
     none: "No setting"
     paren: "Ignore inside round brackets (parens)"
@@ -960,6 +965,7 @@ dictionarySettingGeneralPart:
     paramName: "Идентификатор дља URL-адресы"
     explanation: "Опис"
     font: "Font for headwords"
+    showEquivalentNumber: "Translation numbering"
     visibility: "Видимост"
     discard: "Delete"
   description:
@@ -971,6 +977,8 @@ dictionarySettingGeneralPart:
     font: >-
       You can change the font for headwords.
       Select ‘Use local font’ to use a font installed in the visiter’s environment, or ‘Upload custom font’ to use your own uploaded font.
+    showEquivalentNumber: >-
+      Enabling this feature will display the index number of each translation.
     visibility: >-
       If you set this to ‘Unlisted’, this dictionary will not appear in dictionary lists.
       However, anyone who knows the URL of the dictionary page can still access it directly.

@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps, MultiLineText, Tag} from "zographia";
+import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
 import {createEquivalentNameNode} from "/client/util/dictionary";
@@ -22,14 +22,21 @@ export const WordCardEquivalentList = create(
     return (word.equivalents.length > 0) ? (
       <div styleName="root" {...rest}>
         {word.equivalents.map((equivalent, index) => (
-          <MultiLineText styleName="text" key={index} is="div">
-            {equivalent.titles.map((title, index) => (!!title) && (
-              <Tag key={index} styleName="tag" variant="light">{title}</Tag>
-            ))}
-            <span>
-              {createEquivalentNameNode(equivalent.nameString, equivalent.ignoredPattern)}
-            </span>
-          </MultiLineText>
+          <li styleName="item" key={index}>
+            {(dictionary.settings.showEquivalentNumber) && (
+              <span styleName="number" {...aria({hidden: true})}>
+                {index + 1}
+              </span>
+            )}
+            <MultiLineText styleName="text" is="div">
+              {equivalent.titles.map((title, index) => (!!title) && (
+                <Tag key={index} styleName="tag" variant="light">{title}</Tag>
+              ))}
+              <span>
+                {createEquivalentNameNode(equivalent.nameString, equivalent.ignoredPattern)}
+              </span>
+            </MultiLineText>
+          </li>
         ))}
       </div>
     ) : null;
