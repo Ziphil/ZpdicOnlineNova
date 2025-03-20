@@ -5,7 +5,7 @@ import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, LoadingIcon, useTra
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {fakScrollCirclePlus} from "/client/component/atom/icon";
 import {ArticleList} from "/client/component/compound/article-list";
-import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
+import {EditArticleDialog} from "/client/component/compound/edit-article-dialog";
 import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
 import {useSuspenseResponse} from "/client/hook/request";
@@ -35,7 +35,7 @@ export const DictionaryArticlePart = create(
         <div styleName="main">
           <div styleName="header">
             {(canEdit) ? (
-              <EditExampleDialog dictionary={dictionary} initialData={null} trigger={(
+              <EditArticleDialog dictionary={dictionary} initialData={null} trigger={(
                 <Button variant="light">
                   <ButtonIconbag><GeneralIcon icon={fakScrollCirclePlus}/></ButtonIconbag>
                   {trans("button.addArticle")}
