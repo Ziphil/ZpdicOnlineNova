@@ -7,7 +7,7 @@ import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors, Word} from "/client/skeleton";
 import {calcOffsetSpec} from "/client/util/misc";
-import {EditWordSpec, getEditWordFormValue} from "./edit-word-form-hook";
+import {EditWordSpec, getEditWordFormValueFromWord} from "./edit-word-form-hook";
 
 
 export const EditWordFormHistoryPart = create(
@@ -33,7 +33,7 @@ export const EditWordFormHistoryPart = create(
     const oldWords = useMemo(() => words?.map((word, index) => ({...word, precedence: page * 50 + index + 1})), [words, page]);
 
     const handleSelect = useCallback(function (word: Word): void {
-      form.reset(getEditWordFormValue({type: "word", word}));
+      form.reset(getEditWordFormValueFromWord(word));
       setTabValue("edit");
     }, [form, setTabValue]);
 

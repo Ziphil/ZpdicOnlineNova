@@ -1,7 +1,7 @@
 //
 
 import {faArrowUpRightFromSquare} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, MouseEvent, ReactElement, cloneElement, useCallback, useRef, useState} from "react";
+import {Fragment, MouseEvent, ReactElement, Ref, cloneElement, isValidElement, useCallback, useRef, useState} from "react";
 import {useHref} from "react-router-dom";
 import rison from "rison";
 import {
@@ -15,11 +15,12 @@ import {
   GeneralIcon,
   useTrans
 } from "zographia";
-import {EditWordForm, EditWordFormValue, EditWordInitialData, getEditWordFormValue} from "/client/component/compound/edit-word-form";
+import {EditWordForm, EditWordFormValue, EditWordInitialData} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {checkOpeningExternal} from "/client/util/form";
+import {assignRef, isRef} from "/client/util/ref";
 
 
 export const EditWordDialog = create(
@@ -32,7 +33,7 @@ export const EditWordDialog = create(
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditWordInitialData | null,
-    trigger: ReactElement,
+    trigger: ReactElement | Ref<(event: MouseEvent<HTMLButtonElement>) => void>,
     className?: string
   }): ReactElement {
 
@@ -45,8 +46,8 @@ export const EditWordDialog = create(
 
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       if (checkOpeningExternal(event)) {
-        const value = getEditWordFormValue(initialData);
-        const addWordPageUrl = addWordPageUrlBase + `/${(initialData?.forceAdd || value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
+        const number = getWordNumber(initialData);
+        const addWordPageUrl = addWordPageUrlBase + `/${(initialData?.forceAdd || number === null) ? "new" : number}?value=${rison.encode(number)}`;
         window.open(addWordPageUrl);
       } else {
         setOpen(true);
@@ -65,9 +66,13 @@ export const EditWordDialog = create(
       }
     }, [addWordPageUrlBase, initialData]);
 
+    if (isRef(trigger)) {
+      assignRef(trigger, openDialog);
+    }
+
     return (
       <Fragment>
-        {cloneElement(trigger, {onClick: openDialog})}
+        {(isValidElement<any>(trigger)) && cloneElement(trigger, {onClick: openDialog})}
         <Dialog open={open} onOpenSet={setOpen} height="full" {...rest}>
           <DialogPane styleName="pane">
             <DialogOutsideButtonContainer>
@@ -87,3 +92,18 @@ export const EditWordDialog = create(
 
   }
 );
+
+
+function getWordNumber(initialData: EditWordInitialData | null): number | null {
+  if (initialData !== null) {
+    if (initialData.type === "word") {
+      return initialData.word.number;
+    } else if (initialData.type === "form") {
+      return initialData.value.number;
+    } else {
+      return initialData.number;
+    }
+  } else {
+    return null;
+  }
+}

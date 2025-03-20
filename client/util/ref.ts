@@ -13,3 +13,7 @@ export function assignRef<T>(ref: Ref<T> | undefined, value: T | null): void {
     }
   }
 }
+
+export function isRef<T>(object: unknown): object is Ref<T> {
+  return typeof object === "function" || (object !== null && typeof object === "object" && "current" in object);
+}

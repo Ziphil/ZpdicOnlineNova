@@ -48,3 +48,11 @@
   font-size: 3.5zu;
   color: var(--glob-mute-text-color);
 }
+
+.footer {
+  padding-block-start: 2zu;
+  column-gap: 3zu;
+  border-block-start: solid 1zx var(--glob-border-color);
+  display: flex;
+  justify-content: space-between;
+}

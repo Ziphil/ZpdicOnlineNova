@@ -127,7 +127,7 @@ export const EditWordFormBasicSection = create(
           <ControlContainer>
             <ControlLabel>{trans("label.tags")}</ControlLabel>
             <Controller name="tags" control={control} render={({field}) => (
-              <TagInput tagVariant="solid" values={field.value} suggest={suggestTag} onSet={field.onChange}/>
+              <TagInput tagVariant="solid" values={field.value ?? []} suggest={suggestTag} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
         </div>
