@@ -11,12 +11,13 @@ import {
 export namespace NotificationCreator {
 
   export function skeletonize(raw: Notification): NotificationSkeleton {
-    const id = raw.id;
-    const type = raw.type;
-    const date = raw.date.toISOString();
-    const title = raw.title;
-    const text = raw.text;
-    const skeleton = {id, type, date, title, text};
+    const skeleton = {
+      id: raw.id,
+      type: raw.type,
+      date: raw.date.toISOString(),
+      title: raw.title,
+      text: raw.text
+    } satisfies NotificationSkeleton;
     return skeleton;
   }
 

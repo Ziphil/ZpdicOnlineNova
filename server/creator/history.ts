@@ -11,10 +11,11 @@ import {
 export namespace HistoryCreator {
 
   export function skeletonize(raw: History): HistorySkeleton {
-    const id = raw.id;
-    const date = raw.date.toISOString();
-    const wordSize = raw.wordSize;
-    const skeleton = {id, date, wordSize};
+    const skeleton = {
+      id: raw.id,
+      date: raw.date.toISOString(),
+      wordSize: raw.wordSize
+    } satisfies HistorySkeleton;
     return skeleton;
   }
 

@@ -12,19 +12,22 @@ export namespace DictionaryFontCreator {
 
   export function skeletonize(raw: DictionaryFont): DictionaryFontSkeleton {
     if (raw.type === "none") {
-      const type = "none" as const;
-      const skeleton = {type};
+      const skeleton = {
+        type: "none"
+      } satisfies DictionaryFontSkeleton;
       return skeleton;
     } else if (raw.type === "local") {
-      const type = "local" as const;
-      const name = raw.name ?? "";
-      const skeleton = {type, name};
+      const skeleton = {
+        type: "local",
+        name: raw.name ?? ""
+      } satisfies DictionaryFontSkeleton;
       return skeleton;
     } else if (raw.type === "custom") {
-      const type = "custom" as const;
-      const name = raw.name;
-      const format = raw.format ?? "";
-      const skeleton = {type, name, format};
+      const skeleton = {
+        type: "custom",
+        name: raw.name ?? "",
+        format: raw.format ?? ""
+      } satisfies DictionaryFontSkeleton;
       return skeleton;
     } else {
       throw new Error("cannot happen");

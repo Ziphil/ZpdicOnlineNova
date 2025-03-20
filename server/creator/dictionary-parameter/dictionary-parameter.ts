@@ -9,9 +9,9 @@ import {
 } from "/server/model";
 
 
-export class DictionaryParameterCreator {
+export namespace DictionaryParameterCreator {
 
-  public static enflesh(skeleton: DictionaryParameterSkeleton): DictionaryParameter {
+  export function enflesh(skeleton: DictionaryParameterSkeleton): DictionaryParameter {
     const raw = new NormalDictionaryParameter(skeleton.text, skeleton.userName, skeleton.order);
     return raw;
   }

@@ -8,8 +8,11 @@ import type {
 export namespace CustomErrorCreator {
 
   export function ofType<E extends string>(type: E, code?: number): CustomErrorSkeleton<E> {
-    const error = "CustomError" as const;
-    const skeleton = {error, type, code};
+    const skeleton = {
+      error: "CustomError",
+      type,
+      code
+    } satisfies CustomErrorSkeleton<E>;
     return skeleton;
   }
 

@@ -11,8 +11,9 @@ import {
 export namespace LinkedWordCreator {
 
   export function skeletonize(raw: LinkedWord): LinkedWordSkeleton {
-    const number = raw.number;
-    const skeleton = {number};
+    const skeleton = {
+      number: raw.number
+    } satisfies LinkedWordSkeleton;
     return skeleton;
   }
 

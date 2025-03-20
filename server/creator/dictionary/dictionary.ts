@@ -17,17 +17,18 @@ import {
 export namespace DictionaryCreator {
 
   export function skeletonize(raw: Dictionary): DictionarySkeleton {
-    const id = raw.id || raw["_id"];
-    const number = raw.number;
-    const paramName = raw.paramName;
-    const name = raw.name;
-    const status = raw.status;
-    const visibility = raw.visibility;
-    const explanation = raw.explanation;
-    const settings = DictionarySettingsCreator.skeletonize(raw.settings);
-    const createdDate = raw.createdDate?.toISOString() ?? undefined;
-    const updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    const skeleton = {id, number, paramName, name, status, visibility, explanation, settings, createdDate, updatedDate};
+    const skeleton = {
+      id: raw.id || raw["_id"],
+      number: raw.number,
+      paramName: raw.paramName,
+      name: raw.name,
+      status: raw.status,
+      visibility: raw.visibility,
+      explanation: raw.explanation,
+      settings: DictionarySettingsCreator.skeletonize(raw.settings),
+      createdDate: raw.createdDate?.toISOString() ?? undefined,
+      updatedDate: raw.updatedDate?.toISOString() ?? undefined
+    } satisfies DictionarySkeleton;
     return skeleton;
   }
 

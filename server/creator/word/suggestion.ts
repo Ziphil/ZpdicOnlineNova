@@ -12,9 +12,10 @@ import {
 export namespace SuggestionCreator {
 
   export function skeletonize(raw: Suggestion): SuggestionSkeleton {
-    const title = raw.title;
-    const word = WordCreator.skeletonize(raw.word);
-    const skeleton = {title, word};
+    const skeleton = {
+      title: raw.title,
+      word: WordCreator.skeletonize(raw.word)
+    } satisfies SuggestionSkeleton;
     return skeleton;
   }
 

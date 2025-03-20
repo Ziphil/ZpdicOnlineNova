@@ -11,14 +11,15 @@ import {
 export namespace ArticleCreator {
 
   export function skeletonize(raw: Article): ArticleSkeleton {
-    const id = raw.id;
-    const number = raw.number;
-    const tags = raw.tags;
-    const title = raw.title;
-    const content = raw.content;
-    const createdDate = raw.createdDate.toISOString();
-    const updatedDate = raw.updatedDate.toISOString();
-    const skeleton = {id, number, tags, title, content, createdDate, updatedDate};
+    const skeleton = {
+      id: raw.id,
+      number: raw.number,
+      tags: raw.tags,
+      title: raw.title,
+      content: raw.content,
+      createdDate: raw.createdDate.toISOString(),
+      updatedDate: raw.updatedDate.toISOString()
+    } satisfies ArticleSkeleton;
     return skeleton;
   }
 
