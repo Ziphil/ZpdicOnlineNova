@@ -9,6 +9,12 @@
   flex-direction: column;
 }
 
+.heading {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;
+}
+
 .tag {
   row-gap: 1.5zu;
   column-gap: 2zu;
@@ -28,11 +34,22 @@
   margin-inline-end: var(--glob-blank-gap);
 }
 
+.title-container {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;
+}
+
 .title {
   @include bold-font;
   font-size: 6zu;
   color: var(--glob-primary-heading-text-color);
   overflow-wrap: break-word;
+}
+
+.date {
+  font-size: 3zu;
+  color: var(--glob-mute-text-color);
 }
 
 .collapsible {

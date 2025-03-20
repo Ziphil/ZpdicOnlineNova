@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faEdit, faHashtag, faRight, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import dayjs from "dayjs";
 import truncateMarkdown from "markdown-truncate";
 import {ReactElement} from "react";
 import {useMatch} from "react-router-dom";
@@ -29,7 +30,7 @@ export const ArticleCard = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNumber} = useTrans("articleList");
+    const {trans, transNumber, transDate} = useTrans("articleList");
 
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
@@ -41,22 +42,29 @@ export const ArticleCard = create(
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
-          {(debug || article.tags.length > 0) && (
-            <div styleName="tag">
-              {(debug) && (
-                <span styleName="number">
-                  <GeneralIcon styleName="number-icon" icon={faHashtag}/>
-                  {transNumber(article.number)}
-                </span>
-              )}
-              {article.tags.map((tag, index) => (
-                <Tag key={index} variant="solid">{tag}</Tag>
-              ))}
+          <div styleName="heading">
+            {(debug || article.tags.length > 0) && (
+              <div styleName="tag">
+                {(debug) && (
+                  <span styleName="number">
+                    <GeneralIcon styleName="number-icon" icon={faHashtag}/>
+                    {transNumber(article.number)}
+                  </span>
+                )}
+                {article.tags.map((tag, index) => (
+                  <Tag key={index} variant="solid">{tag}</Tag>
+                ))}
+              </div>
+            )}
+            <div styleName="title-container">
+              <MultiLineText styleName="title" is="h3" lineHeight="narrowFixed">
+                {article.title}
+              </MultiLineText>
+              <div styleName="date">
+                <time dateTime={dayjs(article.updatedDate).toISOString()}>{transDate(article.updatedDate)}</time>
+              </div>
             </div>
-          )}
-          <MultiLineText styleName="title" is="h3" lineHeight="narrowFixed">
-            {article.title}
-          </MultiLineText>
+          </div>
           {(listed) ? (
             <Collapsible styleName="collapsible">
               <CollapsibleBody styleName="collapsible-body" height="5rem">
