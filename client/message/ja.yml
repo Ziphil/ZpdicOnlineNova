@@ -1092,6 +1092,14 @@ topPage:
 userDeveloperPart:
   heading:
     apiKey: "API キー"
+  description:
+    apiKey: >-
+      API キーを生成することで、API を利用してプログラムから辞書の検索や操作ができるようになります。
+      利用方法の詳細は<link>ドキュメント</link>を参照してください。
+  callout:
+    apiKey: >-
+      API 機能は試験運用中です。
+      予告なしに挙動が変更される可能性があります。
 userSettingPart:
   heading:
     screenName: "ニックネーム"

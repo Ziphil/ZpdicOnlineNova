@@ -1091,6 +1091,14 @@ topPage:
 userDeveloperPart:
   heading:
     apiKey: "API-ŝlosilo"
+  description:
+    apiKey: >-
+      Generi API-ŝlosilon permesos al vi uzi la API por serĉi kaj/aŭ redakti vortarojn el programo.
+      Por detaloj pri la uzo, bonvolu rilati al la <link>dokumentaron</link>.
+  callout:
+    apiKey: >-
+      Tiu funkcio estas ankoraŭ en testado.
+      Bonvolu noti, ke la konduto povas ŝanĝiĝi sen antaŭa averto.
 userSettingPart:
   heading:
     screenName: "Kromnomo"
