@@ -12,9 +12,9 @@ import {ExternalRestController} from "./base";
 
 
 @restController(SERVER_PATH_PREFIX)
-export class DebugExternalRestController extends ExternalRestController {
+export class DictionaryExternalRestController extends ExternalRestController {
 
-  @get("/v0/debug")
+  @get("/v0/dictionary/:identifier/search-words")
   @before(checkMe(), limit(), checkDictionary())
   public async [Symbol()](request: FilledRequest<"debug", "dictionary">, response: Response<"debug">): Promise<void> {
     const {dictionary} = request.middlewareBody;

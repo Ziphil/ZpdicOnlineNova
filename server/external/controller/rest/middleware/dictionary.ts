@@ -8,7 +8,7 @@ import {DictionaryAuthority, DictionaryModel} from "/server/model";
 export function parseDictionary(): RequestHandler {
   const handler = async function (request: Request & {middlewareBody: MiddlewareBody}, response: Response, next: NextFunction): Promise<void> {
     try {
-      const identifier = request.body.identifier ?? request.query.identifier;
+      const identifier = request.params.identifier ?? request.body.identifier ?? request.query.identifier;
       if (identifier !== undefined) {
         const dictionary = await DictionaryModel.fetchOneByIdentifier(identifier);
         request.middlewareBody.dictionary = dictionary;
