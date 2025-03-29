@@ -842,7 +842,7 @@ downloadDictionaryButton:
     error: "失敗"
 generateMyApiKeyForm:
   button:
-    generate: "生成"
+    generate: "新規生成"
     copy: "コピー"
   toast: 
     copy: >-
