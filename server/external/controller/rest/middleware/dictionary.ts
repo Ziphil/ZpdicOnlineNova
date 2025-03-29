@@ -9,7 +9,7 @@ import {DictionaryAuthority, DictionaryModel} from "/server/model";
 export function parseDictionary(): RequestHandler {
   const handler = async function (request: Request & {middlewareBody: MiddlewareBody}, response: Response, next: NextFunction): Promise<void> {
     try {
-      const identifier = request.body.identifier ?? request.body.number ?? request.body.paramName;
+      const identifier = request.body.identifier ?? request.query.identifier;
       if (identifier !== undefined) {
         const dictionary = await DictionaryModel.fetchOneByIdentifier(identifier);
         request.middlewareBody.dictionary = dictionary;
@@ -35,7 +35,7 @@ export function checkDictionary(authority?: DictionaryAuthority | "none"): Array
       const dictionary = request.middlewareBody.dictionary;
       if (dictionary !== undefined) {
         if (dictionary !== null) {
-          const hasAuthority = (me !== null && me !== undefined) ? await dictionary.hasAuthority(me, authority ?? "none") : (authority ?? "none") === "none";
+          const hasAuthority = (me !== null && me !== undefined) ? await dictionary.hasAuthority(me, authority ?? "none") : (authority ?? "none") === "none";;
           if (hasAuthority) {
             next();
           } else {

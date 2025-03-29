@@ -17,6 +17,9 @@ import morgan from "morgan";
 import multer from "multer";
 import {Server} from "socket.io";
 import {
+  DebugExternalRestController
+} from "/server/external/controller/rest";
+import {
   DictionaryJobController,
   RegularJobController
 } from "/server/internal/controller/job";
@@ -143,6 +146,7 @@ export class Main {
       next();
     };
     this.application.use("/internal*", middleware);
+    this.application.use("/api*", middleware);
   }
 
   /** MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
@@ -183,6 +187,7 @@ export class Main {
     UserRestController.use(this.application, this.server, this.agenda);
     WordRestController.use(this.application, this.server, this.agenda);
     DebugRestController.use(this.application, this.server, this.agenda);
+    DebugExternalRestController.use(this.application, this.server, this.agenda);
   }
 
   private useSocketControllers(): void {
@@ -226,6 +231,7 @@ export class Main {
       }
     };
     this.application.use("/internal*", internalHandler);
+    this.application.use("/api*", internalHandler);
     this.application.use(/\/((?!socket.io).)*/, otherHandler);
   }
 
