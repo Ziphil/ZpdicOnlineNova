@@ -8,7 +8,7 @@ import {useToast} from "/client/hook/toast";
 import {Dictionary, DictionarySettings} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 import {validateRegexpPattern} from "/client/util/validation";
-import type {RequestData} from "/server/type/rest/internal";
+import type {RequestData} from "/server/internal/type/rest";
 
 
 type FormValue = {value?: string};

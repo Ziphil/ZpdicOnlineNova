@@ -15,8 +15,8 @@ import {LinkedExampleOfferSchema} from "/server/model/example/linked-example-off
 import {User} from "/server/model/user/user";
 import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {Word, WordModel} from "/server/model/word/word";
-import {WithSize} from "/server/type/common";
 import {LogUtil} from "/server/util/log";
+import {WithSize} from "/server/util/query";
 import {QueryRange} from "/server/util/query";
 
 

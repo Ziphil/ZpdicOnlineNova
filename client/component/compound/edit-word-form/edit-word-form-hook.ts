@@ -9,7 +9,7 @@ import {useToast} from "/client/hook/toast";
 import {Dictionary, EditableWord, Relation, Word} from "/client/skeleton";
 import {escapeRegexp} from "/client/util/misc";
 import {switchResponse} from "/client/util/response";
-import type {RequestData} from "/server/type/rest/internal";
+import type {RequestData} from "/server/internal/type/rest";
 
 
 const DEFAULT_VALUE = {

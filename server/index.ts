@@ -19,7 +19,7 @@ import {Server} from "socket.io";
 import {
   DictionaryJobController,
   RegularJobController
-} from "/server/controller/job/internal";
+} from "/server/internal/controller/job";
 import {
   ArticleRestController,
   CommissionRestController,
@@ -33,10 +33,10 @@ import {
   ResourceRestController,
   UserRestController,
   WordRestController
-} from "/server/controller/rest/internal";
+} from "/server/internal/controller/rest";
 import {
   DictionarySocketController
-} from "/server/controller/socket/internal";
+} from "/server/internal/controller/socket";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
 import {jsonifyRequest} from "/server/util/request";

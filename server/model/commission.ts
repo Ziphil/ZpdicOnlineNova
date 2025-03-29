@@ -8,8 +8,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
-import {WithSize} from "/server/type/common";
-import {QueryRange} from "/server/util/query";
+import {QueryRange, WithSize} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "commissions"}})
