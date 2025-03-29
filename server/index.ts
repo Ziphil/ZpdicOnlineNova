@@ -5,6 +5,7 @@ import * as typegoose from "@typegoose/typegoose";
 import Agenda from "agenda";
 import aws from "aws-sdk";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -78,6 +79,7 @@ export class Main {
     this.addFileMiddleware();
     this.addLogMiddleware();
     this.addCustomMiddlewares();
+    this.setupCors();
     this.setupMongo();
     this.setupSendgrid();
     this.setupAws();
@@ -147,6 +149,10 @@ export class Main {
     };
     this.application.use("/internal*", middleware);
     this.application.use("/api*", middleware);
+  }
+
+  private setupCors(): void {
+    this.application.use("/api*", cors({origin: "*"}));
   }
 
   /** MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。

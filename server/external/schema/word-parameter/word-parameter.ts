@@ -9,8 +9,5 @@ export type WordMode = InferType<typeof WordMode>;
 export const WordType = string().oneOf(["exact", "prefix", "suffix", "part", "regular"]);
 export type WordType = InferType<typeof WordType>;
 
-export const WordOrderMode = string().oneOf(["unicode", "custom", "updatedDate", "createdDate"]);
-export type WordOrderMode = InferType<typeof WordOrderMode>;
-
 export const WordOrderDirection = string().oneOf(["ascending", "descending"]);
 export type WordOrderDirection = InferType<typeof WordOrderDirection>;

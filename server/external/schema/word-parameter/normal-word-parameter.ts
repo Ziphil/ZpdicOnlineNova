@@ -1,14 +1,13 @@
 //
 
 import {InferType, object, string} from "yup";
-import {WordMode, WordOrderDirection, WordOrderMode, WordType} from "/server/external/schema/word-parameter/word-parameter";
+import {WordMode, WordOrderDirection, WordType} from "/server/external/schema/word-parameter/word-parameter";
 
 
 export const NormalWordParameter = object({
   text: string().required(),
-  mode: WordMode,
-  type: WordType,
-  orderMode: WordOrderMode,
-  orderDirection: WordOrderDirection
+  mode: WordMode.default("both"),
+  type: WordType.default("prefix"),
+  orderDirection: WordOrderDirection.default("ascending")
 });
 export type NormalWordParameter = InferType<typeof NormalWordParameter>;
