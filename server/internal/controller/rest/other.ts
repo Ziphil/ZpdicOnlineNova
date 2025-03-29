@@ -1,7 +1,7 @@
 //
 
-import {InternalRestController, Request, Response} from "/server/internal/controller/rest/controller";
-import {before, post, restController} from "/server/internal/controller/rest/decorator";
+import {before, post, restController} from "/server/controller/rest/decorator";
+import {InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {UserModel} from "/server/model";

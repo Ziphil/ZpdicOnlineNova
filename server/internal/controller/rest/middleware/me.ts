@@ -1,7 +1,7 @@
 //
 
 import {NextFunction, Request, RequestHandler, Response} from "express";
-import {MiddlewareBody} from "/server/internal/controller/rest/controller";
+import {MiddlewareBody} from "/server/internal/controller/rest/base";
 import {CustomErrorCreator} from "/server/internal/creator/error";
 import {UserModel} from "/server/model";
 import {verifyJwt} from "/server/util/jwt";

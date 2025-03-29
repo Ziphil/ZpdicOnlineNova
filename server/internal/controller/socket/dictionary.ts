@@ -1,7 +1,7 @@
 //
 
-import {SocketController} from "/server/internal/controller/socket/controller-base";
-import {handler, socketController} from "/server/internal/controller/socket/decorator";
+import {SocketController} from "/server/controller/socket/controller";
+import {handler, socketController} from "/server/controller/socket/decorator";
 import {SOCKET_PATH_PREFIX, SocketRequestData, SocketResponseDataCallback} from "/server/internal/type/socket";
 
 

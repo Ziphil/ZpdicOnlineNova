@@ -1,7 +1,7 @@
 //
 
 import "reflect-metadata";
-import {JobController} from "/server/internal/controller/job/controller-base";
+import {JobController} from "/server/controller/job/controller";
 
 
 const JOB_METADATA_KEY = Symbol("worker");

@@ -1,8 +1,8 @@
 //
 
 import {Job} from "agenda";
-import {JobController} from "/server/internal/controller/job/controller-base";
-import {job, jobController, schedule} from "/server/internal/controller/job/decorator";
+import {JobController} from "/server/controller/job/controller";
+import {job, jobController, schedule} from "/server/controller/job/decorator";
 import {ArticleModel, ExampleModel, ExampleOfferModel, HistoryModel, WordModel} from "/server/model";
 import {LogUtil} from "/server/util/log";
 

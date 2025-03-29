@@ -1,7 +1,7 @@
 //
 
-import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/controller";
-import {before, post, restController} from "/server/internal/controller/rest/decorator";
+import {before, post, restController} from "/server/controller/rest/decorator";
+import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkDictionary, checkMe} from "/server/internal/controller/rest/middleware";
 import {WordCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";

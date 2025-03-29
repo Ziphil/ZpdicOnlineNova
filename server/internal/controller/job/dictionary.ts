@@ -2,8 +2,8 @@
 
 import {Job} from "agenda";
 import fs from "fs/promises";
-import {JobController} from "/server/internal/controller/job/controller-base";
-import {job, jobController} from "/server/internal/controller/job/decorator";
+import {JobController} from "/server/controller/job/controller";
+import {job, jobController} from "/server/controller/job/decorator";
 import {DictionaryModel, createDeserializer, createSerializer} from "/server/model";
 import {LogUtil} from "/server/util/log";
 

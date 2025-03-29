@@ -1,8 +1,8 @@
 //
 
 import {Request, Response} from "express";
-import {InternalRestController} from "/server/internal/controller/rest/controller";
-import {before, post, restController} from "/server/internal/controller/rest/decorator";
+import {before, post, restController} from "/server/controller/rest/decorator";
+import {InternalRestController} from "/server/internal/controller/rest/base";
 import {checkMe, parseMe} from "/server/internal/controller/rest/middleware";
 import {ExampleOfferCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
