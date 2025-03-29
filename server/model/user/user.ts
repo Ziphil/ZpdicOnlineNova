@@ -11,6 +11,7 @@ import Fuse from "fuse.js";
 import {DictionaryModel} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {ResetTokenModel, ResetTokenSchema} from "/server/model/user/reset-token";
+import {createRandomString} from "/server/util/misc";
 import {EMAIL_REGEXP, IDENTIFIER_REGEXP, validatePassword} from "/server/util/validation";
 
 
@@ -40,6 +41,9 @@ export class UserSchema {
 
   @prop()
   public authority?: string;
+
+  @prop({unique: true})
+  public apiKey?: string;
 
   /** 渡された情報からユーザーを作成し、データベースに保存します。
    * このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
@@ -196,6 +200,13 @@ export class UserSchema {
     this.encryptPassword(password);
     await this.save();
     return this;
+  }
+
+  public async generateApiKey(this: User): Promise<string> {
+    const apiKey = createRandomString(64, false);
+    this.apiKey = apiKey;
+    await this.save();
+    return apiKey;
   }
 
   /** 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。

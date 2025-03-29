@@ -518,6 +518,13 @@ type ServerSpecs = {
       error: CustomError<"awsError">
     }
   },
+  generateMyApiKey: {
+    request: {},
+    response: {
+      success: {apiKey: string},
+      error: never
+    }
+  },
   suggestUsers: {
     request: {pattern: string},
     response: {

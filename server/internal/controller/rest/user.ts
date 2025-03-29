@@ -204,6 +204,14 @@ export class UserRestController extends InternalRestController {
     }
   }
 
+  @post("/generateMyApiKey")
+  @before(checkMe())
+  public async [Symbol()](request: Request<"generateMyApiKey">, response: Response<"generateMyApiKey">): Promise<void> {
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
+    const apiKey = await me.generateApiKey();
+    InternalRestController.respond(response, {apiKey});
+  }
+
   @post("/suggestUsers")
   public async [Symbol()](request: Request<"suggestUsers">, response: Response<"suggestUsers">): Promise<void> {
     const {pattern} = request.body;

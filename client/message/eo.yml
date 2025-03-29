@@ -94,6 +94,8 @@ toast:
       Via retpoŝta adreso ŝanĝitas.
     changeMyPassword:
       Via pasvorto ŝanĝitas.
+    generateMyApiKey:
+      Via API-ŝlosilo generitas.
     issueMyActivateToken:
       Ni sendis retpoŝton al vi.
       Bonvolu sekvi la instrukciojn en la retpoŝto.
@@ -601,6 +603,7 @@ userHeader:
     dictionary: "Vortaroj"
     notification: "Sciigoj"
     setting: "Agordoj"
+    developer: "Programado"
     logout: "Elsaluti"
   button:
     issueActivateToken: "Resendi retpoŝton"
@@ -839,6 +842,15 @@ downloadDictionaryButton:
   status:
     loading: "Traktanta"
     error: "Malsukcesinta"
+generateMyApiKeyForm:
+  button:
+    generate: "Generi"
+    copy: "Kopii"
+  toast: 
+    copy: >-
+      Via API-ŝlosilo estas kopiita.
+  caution: >-
+    Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
 uploadDictionaryButton:
   heading: "Importi"
   label:
@@ -1076,6 +1088,9 @@ topPage:
     offer: "Vidi antaŭaj ĉiutagaj frazoj"
     notification: "Legi pli da novaĵoj"
     github: "Vidi ĉe GitHub"
+userDeveloperPart:
+  heading:
+    apiKey: "API-ŝlosilo"
 userSettingPart:
   heading:
     screenName: "Kromnomo"
