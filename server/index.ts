@@ -212,8 +212,12 @@ export class Main {
   }
 
   private addStaticHandlers(): void {
+    const openapiHandler = function (request: Request, response: Response, next: NextFunction): void {
+      response.sendFile(process.cwd() + "/dist/openapi.html");
+    };
     this.application.use("/client", express.static(process.cwd() + "/dist/client"));
     this.application.use("/static", express.static(process.cwd() + "/dist/static"));
+    this.application.get("/api", openapiHandler);
   }
 
   /** ルーターで設定されていない URL にアクセスされたときのフォールバックの設定をします。
