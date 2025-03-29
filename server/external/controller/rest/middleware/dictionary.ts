@@ -2,7 +2,6 @@
 
 import {NextFunction, Request, RequestHandler, Response} from "express";
 import {MiddlewareBody} from "/server/internal/controller/rest/base";
-import {CustomErrorCreator} from "/server/internal/creator/error";
 import {DictionaryAuthority, DictionaryModel} from "/server/model";
 
 
@@ -39,12 +38,10 @@ export function checkDictionary(authority?: DictionaryAuthority | "none"): Array
           if (hasAuthority) {
             next();
           } else {
-            const body = CustomErrorCreator.ofType("notEnoughDictionaryAuthority");
-            response.status(403).send(body).end();
+            response.status(403).end();
           }
         } else {
-          const body = CustomErrorCreator.ofType("noSuchDictionary");
-          response.status(400).send(body).end();
+          response.status(400).end();
         }
       } else {
         next(new Error("cannot happen"));

@@ -2,7 +2,7 @@
 
 import {before, get, restController} from "/server/controller/rest/decorator";
 import {FilledRequest, Response} from "/server/external/controller/rest/base";
-import {checkDictionary, limit} from "/server/external/controller/rest/middleware";
+import {checkDictionary, checkMe, limit} from "/server/external/controller/rest/middleware";
 import {WordParameterCreator} from "/server/external/creator";
 import {SERVER_PATH_PREFIX} from "/server/external/type/rest";
 import {WordCreator} from "/server/internal/creator";
@@ -15,7 +15,7 @@ import {ExternalRestController} from "./base";
 export class DebugExternalRestController extends ExternalRestController {
 
   @get("/v0/debug")
-  @before(limit(), checkDictionary())
+  @before(checkMe(), limit(), checkDictionary())
   public async [Symbol()](request: FilledRequest<"debug", "dictionary">, response: Response<"debug">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {skip, limit, ...rawParameter} = request.query;

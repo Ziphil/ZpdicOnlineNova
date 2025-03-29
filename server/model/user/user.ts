@@ -39,11 +39,11 @@ export class UserSchema {
   @prop()
   public activateToken?: ResetTokenSchema;
 
-  @prop()
-  public authority?: string;
-
   @prop({unique: true})
   public apiKey?: string;
+
+  @prop()
+  public authority?: string;
 
   /** 渡された情報からユーザーを作成し、データベースに保存します。
    * このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
