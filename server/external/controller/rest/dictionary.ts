@@ -3,6 +3,7 @@
 import {before, get, restController} from "/server/controller/rest/decorator";
 import {FilledRequest, Response} from "/server/external/controller/rest/base";
 import {checkDictionary, checkMe, limit} from "/server/external/controller/rest/middleware";
+import {validateQuery} from "/server/external/controller/rest/middleware/validate";
 import {WordParameterCreator} from "/server/external/creator";
 import {SERVER_PATH_PREFIX} from "/server/external/type/rest";
 import {WordCreator} from "/server/internal/creator";
@@ -15,7 +16,7 @@ import {ExternalRestController} from "./base";
 export class DictionaryExternalRestController extends ExternalRestController {
 
   @get("/v0/dictionary/:identifier/search-words")
-  @before(checkMe(), limit(), checkDictionary())
+  @before(checkMe(), limit(), validateQuery("debug"), checkDictionary())
   public async [Symbol()](request: FilledRequest<"debug", "dictionary">, response: Response<"debug">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {skip, limit, ...rawParameter} = request.query;
