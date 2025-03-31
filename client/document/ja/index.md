@@ -14,6 +14,11 @@
 - [構文の詳細](/document/zatlin/syntax)
 - [エラーの種類と対処法](/document/zatlin/error)
 
+## API について
+
+- [API の利用方法](/document/other/api)
+- [API ドキュメント](/api)
+
 ## その他のドキュメント
 
 - [ダウンロード JSON ファイルの仕様](/document/other/json-spec)
