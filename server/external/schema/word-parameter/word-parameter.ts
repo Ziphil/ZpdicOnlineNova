@@ -1,13 +1,12 @@
 //
 
-import {InferType, string} from "yup";
+import {string} from "yup";
 
 
-export const WordMode = string().oneOf(["name", "equivalent", "both", "tag", "information", "variation", "relation", "content"]);
-export type WordMode = InferType<typeof WordMode>;
+export const WORD_MODE = string().oneOf(["name", "equivalent", "both", "tag", "information", "variation", "relation", "content"]);
 
-export const WordType = string().oneOf(["exact", "prefix", "suffix", "part", "regular"]);
-export type WordType = InferType<typeof WordType>;
+export const WORD_TYPE = string().oneOf(["exact", "prefix", "suffix", "part", "regular"]);
 
-export const WordOrderDirection = string().oneOf(["ascending", "descending"]);
-export type WordOrderDirection = InferType<typeof WordOrderDirection>;
+export const WORD_ORDER_MODE = string().oneOf(["unicode", "updatedDate", "createdDate"]);
+
+export const WORD_ORDER_DIRECTION = string().oneOf(["ascending", "descending"]);

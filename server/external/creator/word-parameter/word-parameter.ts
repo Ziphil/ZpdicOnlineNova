@@ -1,7 +1,8 @@
 //
 
+import {InferType} from "yup";
 import type {
-  NormalWordParameter as NormalWordParameterObject
+  NORMAL_WORD_PARAMETER
 } from "/server/external/schema";
 import {
   NormalWordParameter,
@@ -11,13 +12,13 @@ import {
 
 export namespace WordParameterCreator {
 
-  export function enflesh(object: NormalWordParameterObject): WordParameter {
+  export function enflesh(object: InferType<typeof NORMAL_WORD_PARAMETER>): WordParameter {
     const raw = new NormalWordParameter(
       object.text,
       object.mode,
       object.type,
-      {mode: "unicode", direction: object.orderDirection},
-      {ignore: {case: false}, shuffleSeed: null, enableSuggestions: false}
+      {mode: object.orderMode, direction: object.orderDirection},
+      {ignore: {case: object.ignoreCase}, shuffleSeed: null, enableSuggestions: false}
     );
     return raw;
   }

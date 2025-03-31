@@ -1,21 +1,17 @@
 //
 
-import {InferType, mixed, number, object, string} from "yup";
-import {NormalWordParameter} from "/server/external/schema";
+import {InferType, mixed} from "yup";
+import {NORMAL_WORD_PARAMETER, RANGE, WithTotal, Word} from "/server/external/schema";
 
 
 export const SERVER_PATH_PREFIX = "/api";
 
 export const SERVER_SCHEMATA = {
-  debug: {
-    request: object({
-      identifier: string().required(),
-      skip: number().min(0),
-      limit: number().min(1).max(100).default(100)
-    }).concat(NormalWordParameter),
+  searchWords: {
+    request: NORMAL_WORD_PARAMETER.concat(RANGE),
     response: {
-      success: mixed(),
-      error: string()
+      success: mixed<WithTotal<Word>>(),
+      error: mixed()
     }
   }
 } as const;
