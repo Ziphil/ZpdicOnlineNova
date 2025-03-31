@@ -14,7 +14,7 @@ export function validateQuery<N extends ProcessName>(name: N): RequestHandler {
       next();
     } catch (error) {
       if (error instanceof ValidationError) {
-        response.status(400).json({error: error.message}).end();
+        response.status(400).json({error: "invalidRequest", message: error.message}).end();
       } else {
         next(error);
       }
@@ -32,7 +32,7 @@ export function validateBody<N extends ProcessName>(name: N): RequestHandler {
       next();
     } catch (error) {
       if (error instanceof ValidationError) {
-        response.status(400).json({error: error.message}).end();
+        response.status(400).json({error: "invalidRequest", message: error.message}).end();
       } else {
         next(error);
       }

@@ -42,7 +42,7 @@ export class InvitationRestController extends InternalRestController {
         const body = await InvitationCreator.skeletonize(invitation);
         InternalRestController.respond(response, body);
       } catch (error) {
-        if (CustomError.isCustomError(error) && error.type === "forbidden") {
+        if (CustomError.isCustomError(error, "forbidden")) {
           InternalRestController.respondForbiddenError(response);
         } else {
           throw error;

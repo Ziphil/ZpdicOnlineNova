@@ -1,7 +1,7 @@
 //
 
 import {InferType, mixed} from "yup";
-import {NORMAL_WORD_PARAMETER, RANGE, WithTotal, Word} from "/server/external/schema";
+import {EDITABLE_WORD, NORMAL_WORD_PARAMETER, RANGE, WithTotal, Word} from "/server/external/schema";
 
 
 export const SERVER_PATH_PREFIX = "/api";
@@ -11,6 +11,27 @@ export const SERVER_SCHEMATA = {
     request: NORMAL_WORD_PARAMETER.concat(RANGE),
     response: {
       success: mixed<WithTotal<Word>>(),
+      error: mixed()
+    }
+  },
+  addWord: {
+    request: EDITABLE_WORD,
+    response: {
+      success: mixed<Word>(),
+      error: mixed()
+    }
+  },
+  editWord: {
+    request: EDITABLE_WORD,
+    response: {
+      success: mixed<Word>(),
+      error: mixed()
+    }
+  },
+  discardWord: {
+    request: mixed<never>(),
+    response: {
+      success: mixed<Word>(),
       error: mixed()
     }
   }

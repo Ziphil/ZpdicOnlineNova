@@ -24,7 +24,7 @@ export function parseDictionary(): RequestHandler {
 }
 
 /** リクエストされた辞書に対してログイン中のユーザーに権限があるか調べ、権限がある場合にのみ、次の処理を行うようにします。
- * そもそも辞書が存在しない場合は、`noSuchDictionary` 400 エラーを返して終了します。
+ * そもそも辞書が存在しない場合は、`noSuchDictionary` 404 エラーを返して終了します。
  * 辞書は存在していても権限がない場合は、`notEnoughDictionaryAuthority` 403 エラーを返して終了します。*/
 export function checkDictionary(authority?: DictionaryAuthority | "none"): Array<RequestHandler> {
   const beforeHandler = parseDictionary();
@@ -38,10 +38,10 @@ export function checkDictionary(authority?: DictionaryAuthority | "none"): Array
           if (hasAuthority) {
             next();
           } else {
-            response.status(403).end();
+            response.status(403).json({error: "notEnoughDictionaryAuthority"}).end();
           }
         } else {
-          response.status(400).end();
+          response.status(404).json({error: "noSuchDictionary"}).end();
         }
       } else {
         next(new Error("cannot happen"));

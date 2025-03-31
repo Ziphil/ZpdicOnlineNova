@@ -1,16 +1,12 @@
 //
 
-import {Params as ExpressParams, Request as ExpressRequest, Response as ExpressResponse} from "express-serve-static-core";
+import {ParamsDictionary as ExpressParamsDictionary, Request as ExpressRequest, Response as ExpressResponse} from "express-serve-static-core";
 import {RestController} from "/server/controller/rest/controller";
-import {ProcessName, RequestData, ResponseData, SuccessResponseData} from "/server/external/type/rest";
+import {ProcessName, RequestData, ResponseData} from "/server/external/type/rest";
 import {Dictionary, User} from "/server/model";
 
 
 export class ExternalRestController extends RestController {
-
-  protected static respond<N extends ProcessName>(response: Response<N>, body: SuccessResponseData<N>): void {
-    response.json(body).end();
-  }
 
 }
 
@@ -28,7 +24,7 @@ export interface MiddlewareBody {
 }
 
 
-export type Request<N extends ProcessName> = ExpressRequest<ExpressParams, ResponseData<N>, RequestData<N>, RequestData<N>> & {middlewareBody: Required<MiddlewareBody>};
+export type Request<N extends ProcessName> = ExpressRequest<ExpressParamsDictionary, ResponseData<N>, RequestData<N>, RequestData<N>> & {middlewareBody: Required<MiddlewareBody>};
 export type Response<N extends ProcessName> = ExpressResponse<ResponseData<N>, never>;
 
 export type FilledMiddlewareBody<K extends keyof MiddlewareBody> = Required<MiddlewareBody> & {[P in K]-?: NonNullable<MiddlewareBody[P]>};
