@@ -8,9 +8,8 @@ import {
 } from "@typegoose/typegoose";
 import fs from "fs/promises";
 import {ExampleOfferParameter} from "/server/model/example-offer-parameter/example-offer-parameter";
-import {WithSize} from "/server/type/common";
 import {askClaude} from "/server/util/claude";
-import {QueryRange} from "/server/util/query";
+import {QueryRange, WithSize} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "exampleOffers"}})

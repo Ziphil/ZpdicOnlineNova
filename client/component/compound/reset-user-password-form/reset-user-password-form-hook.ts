@@ -6,7 +6,7 @@ import {UseFormReturn, useForm} from "/client/hook/form";
 import {useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
-import type {RequestData} from "/server/type/rest/internal";
+import type {RequestData} from "/server/internal/type/rest";
 
 
 const SCHEMA = object({

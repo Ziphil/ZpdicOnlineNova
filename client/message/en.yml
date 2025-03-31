@@ -94,6 +94,8 @@ toast:
       Your email address has been changed.
     changeMyPassword:
       Your password has been changed.
+    generateMyApiKey: |-
+      Your API key has been generated.
     issueMyActivateToken:
       We sent an email to you.
       Please follow the instructions in the email.
@@ -601,6 +603,7 @@ userHeader:
     dictionary: "Dictionaries"
     notification: "Notifications"
     setting: "Settings"
+    developer: "Developer"
     logout: "Sign out"
   button:
     issueActivateToken: "Resend email"
@@ -839,6 +842,15 @@ downloadDictionaryButton:
   status:
     loading: "Processing"
     error: "Failed"
+generateMyApiKeyForm:
+  button:
+    generate: "Generate"
+    copy: "Copy"
+  toast: 
+    copy: >-
+      Copied your API key.
+  caution: >-
+    Please copy this key now and save it in a safe place, as you will not be able to see it later.
 uploadDictionaryButton:
   heading: "Import"
   label:
@@ -1076,6 +1088,17 @@ topPage:
     offer: "See past daily sentences"
     notification: "Read more news"
     github: "View on GitHub"
+userDeveloperPart:
+  heading:
+    apiKey: "API key"
+  description:
+    apiKey: >-
+      Generating an API key allows you to use the API to search for and/or operate dictionaries from a program.
+      For details on how to use it, please refer to the <link>documentation</link>.
+  callout:
+    apiKey: >-
+      This feature is under testing.
+      Please note that the behaviour may change without prior notice.
 userSettingPart:
   heading:
     screenName: "Nickname"

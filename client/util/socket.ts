@@ -2,7 +2,7 @@
 
 import {io} from "socket.io-client";
 import {VERSION} from "/client/variable";
-import type {SocketMessageData, SocketMessageName, SocketProcessName, SocketRequestData, SocketResponseData} from "/server/type/socket/internal";
+import type {SocketMessageData, SocketMessageName, SocketProcessName, SocketRequestData, SocketResponseData} from "/server/internal/type/socket";
 
 
 export const SOCKET_PATH_PREFIX = "/internal/" + VERSION;

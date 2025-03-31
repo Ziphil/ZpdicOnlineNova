@@ -5,6 +5,7 @@ import * as typegoose from "@typegoose/typegoose";
 import Agenda from "agenda";
 import aws from "aws-sdk";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
@@ -17,9 +18,12 @@ import morgan from "morgan";
 import multer from "multer";
 import {Server} from "socket.io";
 import {
+  DictionaryExternalRestController
+} from "/server/external/controller/rest";
+import {
   DictionaryJobController,
   RegularJobController
-} from "/server/controller/job/internal";
+} from "/server/internal/controller/job";
 import {
   ArticleRestController,
   CommissionRestController,
@@ -33,10 +37,10 @@ import {
   ResourceRestController,
   UserRestController,
   WordRestController
-} from "/server/controller/rest/internal";
+} from "/server/internal/controller/rest";
 import {
   DictionarySocketController
-} from "/server/controller/socket/internal";
+} from "/server/internal/controller/socket";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
 import {jsonifyRequest} from "/server/util/request";
@@ -75,6 +79,7 @@ export class Main {
     this.addFileMiddleware();
     this.addLogMiddleware();
     this.addCustomMiddlewares();
+    this.setupCors();
     this.setupMongo();
     this.setupSendgrid();
     this.setupAws();
@@ -143,6 +148,11 @@ export class Main {
       next();
     };
     this.application.use("/internal*", middleware);
+    this.application.use("/api*", middleware);
+  }
+
+  private setupCors(): void {
+    this.application.use("/api*", cors({origin: "*"}));
   }
 
   /** MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
@@ -183,6 +193,7 @@ export class Main {
     UserRestController.use(this.application, this.server, this.agenda);
     WordRestController.use(this.application, this.server, this.agenda);
     DebugRestController.use(this.application, this.server, this.agenda);
+    DictionaryExternalRestController.use(this.application, this.server, this.agenda);
   }
 
   private useSocketControllers(): void {
@@ -201,8 +212,12 @@ export class Main {
   }
 
   private addStaticHandlers(): void {
+    const openapiHandler = function (request: Request, response: Response, next: NextFunction): void {
+      response.sendFile(process.cwd() + "/dist/openapi.html");
+    };
     this.application.use("/client", express.static(process.cwd() + "/dist/client"));
     this.application.use("/static", express.static(process.cwd() + "/dist/static"));
+    this.application.get("/api", openapiHandler);
   }
 
   /** ルーターで設定されていない URL にアクセスされたときのフォールバックの設定をします。
@@ -226,6 +241,7 @@ export class Main {
       }
     };
     this.application.use("/internal*", internalHandler);
+    this.application.use("/api*", internalHandler);
     this.application.use(/\/((?!socket.io).)*/, otherHandler);
   }
 

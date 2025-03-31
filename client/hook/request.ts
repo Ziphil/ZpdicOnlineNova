@@ -13,7 +13,7 @@ import {
 } from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {ResponseError} from "/client/util/response-error";
-import type {ProcessName, RequestData, ResponseData, SuccessResponseData} from "/server/type/rest/internal";
+import type {ProcessName, RequestData, ResponseData, SuccessResponseData} from "/server/internal/type/rest";
 
 
 export const queryClient = new QueryClient({

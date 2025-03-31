@@ -4,7 +4,7 @@ import axios from "axios";
 import {AxiosRequestConfig, AxiosResponse} from "axios";
 import {appendValueToFormData, toFormData} from "/client/util/form-data";
 import {RECAPTCHA_KEY, VERSION} from "/client/variable";
-import type {ProcessName, RequestData, ResponseData} from "/server/type/rest/internal";
+import type {ProcessName, RequestData, ResponseData} from "/server/internal/type/rest";
 
 
 export const SERVER_PATH_PREFIX = "/internal/" + VERSION;

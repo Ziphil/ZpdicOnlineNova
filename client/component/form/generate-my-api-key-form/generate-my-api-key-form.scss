@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+@forward "../common.scss";
+
+
+.root {
+  @include theme("light") {
+    --caution-text-color: #{leveled-color("red", 5)};
+    --code-background-color: #{leveled-color("gray", 1)};
+  }
+}
+
+.code-container {
+  column-gap: 2zu;
+  display: flex;
+  align-items: center;
+}
+
+.code {
+  padding-block: calc(2zu - extrusion(var(--glob-line-height-narrow)));
+  padding-inline: 2zu;
+  font-size: 3.5zu;
+  font-family: var(--glob-font-family-monospace);
+  font-feature-settings: "palt" 0, "pkna" 0, "lnum" 0, "kern" 0 !important;
+  white-space: pre;
+  text-autospace: no-autospace;
+  line-height: var(--glob-line-height-narrow);
+  background-color: var(--code-background-color);
+  border-radius: var(--glob-border-radius);
+  box-sizing: border-box;
+  overflow: auto;
+  flex: 1 1 auto;
+}
+
+.code-button {
+  flex: 0 0 auto;
+}
+
+.caution {
+  margin-block-start: 2zu;
+  font-size: 3.5zu;
+  color: var(--caution-text-color);
+}

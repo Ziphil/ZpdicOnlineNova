@@ -4,7 +4,7 @@ import "reflect-metadata";
 import {SocketReservedEventsMap} from "socket.io/dist/socket";
 import {ReservedOrUserEventNames, ReservedOrUserListener} from "socket.io/dist/typed-events";
 import {SocketController} from "/server/controller/socket/controller";
-import {SocketEventsFromClient} from "/server/type/socket/internal";
+import {SocketEventsFromClient} from "/server/internal/type/socket";
 
 
 const SOCKET_METADATA_KEY = Symbol("socket");

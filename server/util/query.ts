@@ -1,7 +1,6 @@
 //
 
 import {Aggregate, Query} from "mongoose";
-import {WithSize} from "/server/type/common";
 import {cloneQuery, getModelOfQuery} from "/server/util/mongo";
 
 
@@ -108,3 +107,5 @@ export class QueryRange {
 
 
 export type QueryLike<T, D = any> = Query<T, D> | Aggregate<T> | Promise<T>;
+
+export type WithSize<T> = readonly [Array<T>, number];
