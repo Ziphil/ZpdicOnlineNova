@@ -5,6 +5,8 @@ import {
   EDITABLE_EXAMPLE,
   EDITABLE_WORD,
   Example,
+  ExampleOffer,
+  NORMAL_EXAMPLE_OFFER_PARAMETER,
   NORMAL_WORD_PARAMETER,
   RANGE,
   WithTotal,
@@ -103,6 +105,16 @@ export const SERVER_SCHEMATA = {
     response: {
       ...defaultResponse,
       200: mixed<{example: Example}>()
+    }
+  },
+  searchExampleOffers: {
+    request: {
+      ...defaultRequest,
+      query: NORMAL_EXAMPLE_OFFER_PARAMETER.concat(RANGE)
+    },
+    response: {
+      ...defaultResponse,
+      200: mixed<WithTotal<ExampleOffer, "exampleOffers">>()
     }
   }
 } as const;

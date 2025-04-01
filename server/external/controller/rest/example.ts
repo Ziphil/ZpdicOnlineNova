@@ -1,12 +1,12 @@
 //
 
 import {before, endpoint, restController} from "/server/controller/rest/decorator";
-import {FilledRequest, Response} from "/server/external/controller/rest/base";
+import {FilledRequest, Request, Response} from "/server/external/controller/rest/base";
 import {checkDictionary, checkMe, limit} from "/server/external/controller/rest/middleware";
 import {validateQuery} from "/server/external/controller/rest/middleware/validate";
-import {ExampleCreator} from "/server/external/creator";
+import {ExampleCreator, ExampleOfferCreator, ExampleOfferParameterCreator} from "/server/external/creator";
 import {SERVER_PATH_PREFIX} from "/server/external/type/rest";
-import {CustomError, NormalExampleParameter} from "/server/model";
+import {CustomError, ExampleOfferModel, NormalExampleParameter} from "/server/model";
 import {QueryRange} from "/server/util/query";
 import {mapWithSize} from "/server/util/with-size";
 import {ExternalRestController} from "./base";
@@ -91,6 +91,18 @@ export class ExampleExternalRestController extends ExternalRestController {
         throw error;
       }
     }
+  }
+
+  @endpoint("/v0/example-offers", "get")
+  @before(limit(), checkMe(), validateQuery("searchExampleOffers"))
+  public async [Symbol()](request: Request<"searchExampleOffers">, response: Response<"searchExampleOffers">): Promise<void> {
+    const {skip, limit, ...rawParameter} = request.query;
+    const parameter = ExampleOfferParameterCreator.enflesh(rawParameter);
+    const range = new QueryRange(skip, limit);
+    const hitResult = await ExampleOfferModel.search(parameter, range);
+    const [hitExampleOffers, hitSize] = mapWithSize(hitResult, ExampleOfferCreator.skeletonize);
+    const body = {exampleOffers: hitExampleOffers, total: hitSize};
+    ExternalRestController.respond(response, 200, body);
   }
 
 }
