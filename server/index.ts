@@ -18,7 +18,7 @@ import morgan from "morgan";
 import multer from "multer";
 import {Server} from "socket.io";
 import {
-  DictionaryExternalRestController
+  WordExternalRestController
 } from "/server/external/controller/rest";
 import {
   DictionaryJobController,
@@ -193,7 +193,7 @@ export class Main {
     UserRestController.use(this.application, this.server, this.agenda);
     WordRestController.use(this.application, this.server, this.agenda);
     DebugRestController.use(this.application, this.server, this.agenda);
-    DictionaryExternalRestController.use(this.application, this.server, this.agenda);
+    WordExternalRestController.use(this.application, this.server, this.agenda);
   }
 
   private useSocketControllers(): void {

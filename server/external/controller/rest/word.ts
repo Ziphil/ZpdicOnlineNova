@@ -14,7 +14,7 @@ import {ExternalRestController} from "./base";
 
 
 @restController(SERVER_PATH_PREFIX)
-export class DictionaryExternalRestController extends ExternalRestController {
+export class WordExternalRestController extends ExternalRestController {
 
   @endpoint("/v0/dictionary/:identifier/words", "get")
   @before(limit(), checkMe(), validateQuery("searchWords"), checkDictionary())
