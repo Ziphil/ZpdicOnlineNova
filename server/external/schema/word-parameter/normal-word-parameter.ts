@@ -5,7 +5,7 @@ import {WORD_MODE, WORD_ORDER_DIRECTION, WORD_ORDER_MODE, WORD_TYPE} from "/serv
 
 
 export const NORMAL_WORD_PARAMETER = object({
-  text: string().required(),
+  text: string().defined(),
   mode: WORD_MODE.default("both"),
   type: WORD_TYPE.default("prefix"),
   orderMode: WORD_ORDER_MODE.default("unicode"),

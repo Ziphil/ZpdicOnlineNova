@@ -9,13 +9,13 @@ import {VARIATION, Variation} from "/server/external/schema/word/variation";
 
 
 export const EDITABLE_WORD = object({
-  name: string().required(),
-  pronunciation: string(),
-  equivalents: array().of(EQUIVALENT.required()).default([]),
-  tags: array().of(string().required()).default([]),
-  informations: array().of(INFORMATION.required()).default([]),
-  variations: array().of(VARIATION.required()).default([]),
-  relations: array().of(RELATION.required()).default([])
+  name: string().defined(),
+  pronunciation: string().default(""),
+  equivalents: array().of(EQUIVALENT.defined()).default([]),
+  tags: array().of(string().defined()).default([]),
+  informations: array().of(INFORMATION.defined()).default([]),
+  variations: array().of(VARIATION.defined()).default([]),
+  relations: array().of(RELATION.defined()).default([])
 });
 
 
