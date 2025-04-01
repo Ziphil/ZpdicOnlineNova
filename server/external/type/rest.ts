@@ -1,7 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import {InferType, mixed, object} from "yup";
-import {EDITABLE_WORD, NORMAL_WORD_PARAMETER, RANGE, WithTotal, Word, WordWithExamples} from "/server/external/schema";
+import {
+  EDITABLE_EXAMPLE,
+  EDITABLE_WORD,
+  Example,
+  NORMAL_WORD_PARAMETER,
+  RANGE,
+  WithTotal,
+  Word,
+  WordWithExamples
+} from "/server/external/schema";
 import {defaultRequest, defaultResponse} from "/server/external/type/util";
 
 
@@ -22,7 +31,7 @@ export const SERVER_SCHEMATA = {
     request: {
       ...defaultRequest,
       body: object({
-        word: EDITABLE_WORD
+        word: EDITABLE_WORD.required()
       })
     },
     response: {
@@ -34,7 +43,7 @@ export const SERVER_SCHEMATA = {
     request: {
       ...defaultRequest,
       body: object({
-        word: EDITABLE_WORD
+        word: EDITABLE_WORD.required()
       })
     },
     response: {
@@ -50,6 +59,50 @@ export const SERVER_SCHEMATA = {
     response: {
       ...defaultResponse,
       200: mixed<{word: Word}>()
+    }
+  },
+  searchExamples: {
+    request: {
+      ...defaultRequest,
+      query: RANGE
+    },
+    response: {
+      ...defaultResponse,
+      200: mixed<WithTotal<Example, "examples">>()
+    }
+  },
+  addExample: {
+    request: {
+      ...defaultRequest,
+      body: object({
+        example: EDITABLE_EXAMPLE.required()
+      })
+    },
+    response: {
+      ...defaultResponse,
+      201: mixed<{example: Example}>()
+    }
+  },
+  editExample: {
+    request: {
+      ...defaultRequest,
+      body: object({
+        example: EDITABLE_EXAMPLE.required()
+      })
+    },
+    response: {
+      ...defaultResponse,
+      200: mixed<{example: Example}>()
+    }
+  },
+  discardExample: {
+    request: {
+      ...defaultRequest,
+      body: mixed<never>()
+    },
+    response: {
+      ...defaultResponse,
+      200: mixed<{example: Example}>()
     }
   }
 } as const;

@@ -18,6 +18,7 @@ import morgan from "morgan";
 import multer from "multer";
 import {Server} from "socket.io";
 import {
+  ExampleExternalRestController,
   WordExternalRestController
 } from "/server/external/controller/rest";
 import {
@@ -194,6 +195,7 @@ export class Main {
     WordRestController.use(this.application, this.server, this.agenda);
     DebugRestController.use(this.application, this.server, this.agenda);
     WordExternalRestController.use(this.application, this.server, this.agenda);
+    ExampleExternalRestController.use(this.application, this.server, this.agenda);
   }
 
   private useSocketControllers(): void {

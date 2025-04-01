@@ -11,7 +11,7 @@ export const EDITABLE_EXAMPLE = object({
   supplement: string().default(""),
   tags: array().of(string().required()).default([]),
   words: array().of(LINKED_WORD.required()).default([]),
-  offer: LINKED_EXAMPLE_OFFER
+  offer: LINKED_EXAMPLE_OFFER.nullable().default(null)
 });
 
 
