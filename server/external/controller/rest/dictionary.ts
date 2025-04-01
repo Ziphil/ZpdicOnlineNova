@@ -25,7 +25,7 @@ export class DictionaryExternalRestController extends ExternalRestController {
     const range = new QueryRange(skip, limit);
     const hitResult = await dictionary.searchWords(parameter, range);
     const [hitWords, hitSize] = await mapWithSizeAsync(hitResult.words, WordCreator.skeletonizeWithExamples);
-    const body = {results: hitWords, total: hitSize};
+    const body = {words: hitWords, total: hitSize};
     response.status(200).json(body).end();
   }
 
@@ -33,10 +33,10 @@ export class DictionaryExternalRestController extends ExternalRestController {
   @before(limit(), checkMe(), validateQuery("addWord"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"addWord", "me" | "dictionary">, response: Response<"addWord">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
-    const word = request.body;
+    const {word} = request.body;
     try {
       const resultWord = await dictionary.editWord({number: null, ...word}, me);
-      const body = WordCreator.skeletonize(resultWord);
+      const body = {word: WordCreator.skeletonize(resultWord)};
       response.status(201).json(body).end();
     } catch (error) {
       if (CustomError.isCustomError(error, "dictionarySaving")) {
@@ -52,12 +52,12 @@ export class DictionaryExternalRestController extends ExternalRestController {
   public async [Symbol()](request: FilledRequest<"editWord", "me" | "dictionary">, response: Response<"editWord">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
     const wordNumber = +request.params.wordNumber;
-    const word = request.body;
+    const {word} = request.body;
     try {
       const currentWord = await dictionary.fetchOneWordByNumber(wordNumber);
       if (currentWord) {
         const resultWord = await dictionary.editWord({number: currentWord.number, ...word}, me);
-        const body = WordCreator.skeletonize(resultWord);
+        const body = {word: WordCreator.skeletonize(resultWord)};
         response.status(200).json(body).end();
       } else {
         response.status(404).json({error: "noSuchWord"}).end();
@@ -80,7 +80,7 @@ export class DictionaryExternalRestController extends ExternalRestController {
       const currentWord = await dictionary.fetchOneWordByNumber(wordNumber);
       if (currentWord) {
         const resultWord = await dictionary.discardWord(wordNumber);
-        const body = WordCreator.skeletonize(resultWord);
+        const body = {word: WordCreator.skeletonize(resultWord)};
         response.status(200).json(body).end();
       } else {
         response.status(404).json({error: "noSuchWord"}).end();
