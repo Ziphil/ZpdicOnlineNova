@@ -39,10 +39,10 @@ export function checkMe(authority?: "admin" | "none"): Array<RequestHandler> {
         if (hasAuthority) {
           next();
         } else {
-          response.status(403).end();
+          response.status(403).json({error: "notEnoughUserAuthority"}).end();
         }
       } else {
-        response.status(401).end();
+        response.status(401).json({error: "invalidApiKey"}).end();
       }
     } else {
       next(new Error("cannot happen"));

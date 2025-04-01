@@ -10,6 +10,9 @@ const limiter = rateLimit({
   limit: 5,
   standardHeaders: true,
   legacyHeaders: false,
+  handler: (request, response, next, options) => {
+    response.status(429).json({error: "rateLimitExceeded"}).end();
+  },
   keyGenerator: (request, response) => {
     const apiKey = request.headers["x-api-key"];
     if (apiKey !== undefined && typeof apiKey === "string") {

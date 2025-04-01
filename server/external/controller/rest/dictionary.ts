@@ -26,7 +26,7 @@ export class DictionaryExternalRestController extends ExternalRestController {
     const hitResult = await dictionary.searchWords(parameter, range);
     const [hitWords, hitSize] = await mapWithSizeAsync(hitResult.words, WordCreator.skeletonizeWithExamples);
     const body = {words: hitWords, total: hitSize};
-    response.status(200).json(body).end();
+    ExternalRestController.respond(response, 200, body);
   }
 
   @endpoint("/v0/dictionary/:identifier/word", "post")
@@ -37,10 +37,10 @@ export class DictionaryExternalRestController extends ExternalRestController {
     try {
       const resultWord = await dictionary.editWord({number: null, ...word}, me);
       const body = {word: WordCreator.skeletonize(resultWord)};
-      response.status(201).json(body).end();
+      ExternalRestController.respond(response, 201, body);
     } catch (error) {
       if (CustomError.isCustomError(error, "dictionarySaving")) {
-        response.status(409).json({error: "dictionarySaving"}).end();
+        ExternalRestController.respond(response, 409, {error: "dictionarySaving"});
       } else {
         throw error;
       }
@@ -58,13 +58,13 @@ export class DictionaryExternalRestController extends ExternalRestController {
       if (currentWord) {
         const resultWord = await dictionary.editWord({number: currentWord.number, ...word}, me);
         const body = {word: WordCreator.skeletonize(resultWord)};
-        response.status(200).json(body).end();
+        ExternalRestController.respond(response, 200, body);
       } else {
-        response.status(404).json({error: "noSuchWord"}).end();
+        ExternalRestController.respond(response, 404, {error: "noSuchWord"});
       }
     } catch (error) {
       if (CustomError.isCustomError(error, "dictionarySaving")) {
-        response.status(409).json({error: "dictionarySaving"}).end();
+        ExternalRestController.respond(response, 409, {error: "dictionarySaving"});
       } else {
         throw error;
       }
@@ -81,13 +81,13 @@ export class DictionaryExternalRestController extends ExternalRestController {
       if (currentWord) {
         const resultWord = await dictionary.discardWord(wordNumber);
         const body = {word: WordCreator.skeletonize(resultWord)};
-        response.status(200).json(body).end();
+        ExternalRestController.respond(response, 200, body);
       } else {
-        response.status(404).json({error: "noSuchWord"}).end();
+        ExternalRestController.respond(response, 404, {error: "noSuchWord"});
       }
     } catch (error) {
       if (CustomError.isCustomError(error, "dictionarySaving")) {
-        response.status(409).json({error: "dictionarySaving"}).end();
+        ExternalRestController.respond(response, 409, {error: "dictionarySaving"});
       } else {
         throw error;
       }

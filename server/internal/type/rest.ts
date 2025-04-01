@@ -569,7 +569,7 @@ type ServerSpecs = {
   }
 };
 
-export type Status = "success" | "error";
+export type ResponseStatus = "success" | "error";
 export type ProcessName = keyof ServerSpecs;
 
 export type RequestData<N extends ProcessName> = ServerSpecs[N]["request"];

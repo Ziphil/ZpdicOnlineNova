@@ -6,7 +6,7 @@ import {ProcessName, SERVER_SCHEMATA} from "/server/external/type/rest";
 
 
 export function validateQuery<N extends ProcessName>(name: N): RequestHandler {
-  const schema = SERVER_SCHEMATA[name].request;
+  const schema = SERVER_SCHEMATA[name].request.query;
   const handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
     try {
       const data = await schema.validate(request.query);
@@ -24,7 +24,7 @@ export function validateQuery<N extends ProcessName>(name: N): RequestHandler {
 }
 
 export function validateBody<N extends ProcessName>(name: N): RequestHandler {
-  const schema = SERVER_SCHEMATA[name].request;
+  const schema = SERVER_SCHEMATA[name].request.body;
   const handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
     try {
       const data = await schema.validate(request.body);

@@ -1,52 +1,64 @@
-//
+/* eslint-disable @typescript-eslint/naming-convention */
 
 import {InferType, mixed, object} from "yup";
 import {EDITABLE_WORD, NORMAL_WORD_PARAMETER, RANGE, WithTotal, Word, WordWithExamples} from "/server/external/schema";
+import {defaultRequest, defaultResponse} from "/server/external/type/util";
 
 
 export const SERVER_PATH_PREFIX = "/api";
 
 export const SERVER_SCHEMATA = {
   searchWords: {
-    request: NORMAL_WORD_PARAMETER.concat(RANGE),
+    request: {
+      ...defaultRequest,
+      query: NORMAL_WORD_PARAMETER.concat(RANGE)
+    },
     response: {
-      success: mixed<WithTotal<WordWithExamples, "words">>(),
-      error: mixed()
+      ...defaultResponse,
+      200: mixed<WithTotal<WordWithExamples, "words">>()
     }
   },
   addWord: {
-    request: object({
-      word: EDITABLE_WORD
-    }),
+    request: {
+      ...defaultRequest,
+      body: object({
+        word: EDITABLE_WORD
+      })
+    },
     response: {
-      success: mixed<{word: Word}>(),
-      error: mixed()
+      ...defaultResponse,
+      201: mixed<{word: Word}>()
     }
   },
   editWord: {
-    request: object({
-      word: EDITABLE_WORD
-    }),
+    request: {
+      ...defaultRequest,
+      body: object({
+        word: EDITABLE_WORD
+      })
+    },
     response: {
-      success: mixed<{word: Word}>(),
-      error: mixed()
+      ...defaultResponse,
+      200: mixed<{word: Word}>()
     }
   },
   discardWord: {
-    request: mixed<never>(),
+    request: {
+      ...defaultRequest,
+      body: mixed<never>()
+    },
     response: {
-      success: mixed<{word: Word}>(),
-      error: mixed()
+      ...defaultResponse,
+      200: mixed<{word: Word}>()
     }
   }
 } as const;
 
-export type Status = "success" | "error";
+export type RequestType = "query" | "body";
+export type ResponseCode = keyof typeof defaultResponse;
 export type ProcessName = keyof ServerSpecs;
 
 type ServerSpecs = typeof SERVER_SCHEMATA;
 
-export type RequestData<N extends ProcessName> = InferType<ServerSpecs[N]["request"]>;
-export type ResponseData<N extends ProcessName> = SuccessResponseData<N> | ErrorResponseData<N>;
-export type SuccessResponseData<N extends ProcessName> = InferType<ServerSpecs[N]["response"]["success"]>;
-export type ErrorResponseData<N extends ProcessName> = InferType<ServerSpecs[N]["response"]["error"]>;
+export type RequestData<N extends ProcessName, T extends RequestType> = InferType<ServerSpecs[N]["request"][T]>;
+export type ResponseData<N extends ProcessName, T extends ResponseCode> = InferType<ServerSpecs[N]["response"][T]>;
