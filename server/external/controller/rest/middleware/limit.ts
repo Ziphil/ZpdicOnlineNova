@@ -7,7 +7,7 @@ import {MiddlewareBody} from "/server/external/controller/rest/base";
 
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  limit: 5,
+  limit: 10,
   standardHeaders: true,
   legacyHeaders: false,
   handler: (request, response, next, options) => {
@@ -24,7 +24,7 @@ const limiter = rateLimit({
 });
 
 /** リクエストに呼び出し制限をかけます。
- * 同じ API キーを用いて 1 分間に 5 回より多く呼び出された場合、429 エラーを返して終了します。*/
+ * 同じ API キーを用いて 1 分間に 10 回より多く呼び出された場合、429 エラーを返して終了します。*/
 export function limit(): RequestHandler {
   const handler = async function (request: Request & {middlewareBody: MiddlewareBody}, response: Response, next: NextFunction): Promise<void> {
     try {

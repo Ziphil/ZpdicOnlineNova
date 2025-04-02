@@ -4,8 +4,8 @@ import {number, object, string} from "yup";
 
 
 export const LINKED_EXAMPLE_OFFER = object({
-  catalog: string().required(),
-  number: number().required()
+  catalog: string().defined(),
+  number: number().defined()
 });
 
 

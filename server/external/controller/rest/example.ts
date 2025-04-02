@@ -16,7 +16,7 @@ import {ExternalRestController} from "./base";
 export class ExampleExternalRestController extends ExternalRestController {
 
   @endpoint("/v0/dictionary/:identifier/examples", "get")
-  @before(limit(), checkMe(), validateQuery("searchExamples"), checkDictionary())
+  @before(checkMe(), limit(), validateQuery("searchExamples"), checkDictionary())
   public async [Symbol()](request: FilledRequest<"searchExamples", "dictionary">, response: Response<"searchExamples">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {skip, limit} = request.query;
@@ -29,7 +29,7 @@ export class ExampleExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/example/:exampleNumber", "get")
-  @before(limit(), checkMe(), validateQuery("fetchExample"), checkDictionary())
+  @before(checkMe(), limit(), validateQuery("fetchExample"), checkDictionary())
   public async [Symbol()](request: FilledRequest<"fetchExample", "dictionary">, response: Response<"fetchExample">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const exampleNumber = +request.params.exampleNumber;
@@ -43,7 +43,7 @@ export class ExampleExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/example", "post")
-  @before(limit(), checkMe(), validateQuery("addExample"), checkDictionary("edit"))
+  @before(checkMe(), limit(), validateQuery("addExample"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"addExample", "me" | "dictionary">, response: Response<"addExample">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
     const {example} = request.body;
@@ -61,7 +61,7 @@ export class ExampleExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/example/:exampleNumber", "put")
-  @before(limit(), checkMe(), validateQuery("editExample"), checkDictionary("edit"))
+  @before(checkMe(), limit(), validateQuery("editExample"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"editExample", "me" | "dictionary">, response: Response<"editExample">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
     const exampleNumber = +request.params.exampleNumber;
@@ -85,7 +85,7 @@ export class ExampleExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/example/:exampleNumber", "delete")
-  @before(limit(), checkMe(), validateQuery("discardExample"), checkDictionary("edit"))
+  @before(checkMe(), limit(), validateQuery("discardExample"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"discardExample", "dictionary">, response: Response<"discardExample">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const exampleNumber = +request.params.exampleNumber;
@@ -108,7 +108,7 @@ export class ExampleExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/exampleOffers", "get")
-  @before(limit(), checkMe(), validateQuery("searchExampleOffers"))
+  @before(checkMe(), limit(), validateQuery("searchExampleOffers"))
   public async [Symbol()](request: Request<"searchExampleOffers">, response: Response<"searchExampleOffers">): Promise<void> {
     const {skip, limit, ...rawParameter} = request.query;
     const parameter = ExampleOfferParameterCreator.enflesh(rawParameter);
@@ -120,7 +120,7 @@ export class ExampleExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/exampleOffer/:catalog/:exampleOfferNumber", "get")
-  @before(limit(), checkMe(), validateQuery("fetchExampleOffer"))
+  @before(checkMe(), limit(), validateQuery("fetchExampleOffer"))
   public async [Symbol()](request: FilledRequest<"fetchExampleOffer", "dictionary">, response: Response<"fetchExampleOffer">): Promise<void> {
     const catalog = request.params.catalog;
     const exampleOfferNumber = +request.params.exampleOfferNumber;

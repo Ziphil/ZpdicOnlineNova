@@ -17,7 +17,7 @@ import {ExternalRestController} from "./base";
 export class WordExternalRestController extends ExternalRestController {
 
   @endpoint("/v0/dictionary/:identifier/words", "get")
-  @before(limit(), checkMe(), validateQuery("searchWords"), checkDictionary())
+  @before(checkMe(), limit(), validateQuery("searchWords"), checkDictionary())
   public async [Symbol()](request: FilledRequest<"searchWords", "dictionary">, response: Response<"searchWords">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {skip, limit, ...rawParameter} = request.query;
@@ -30,7 +30,7 @@ export class WordExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/word/:wordNumber", "get")
-  @before(limit(), checkMe(), validateQuery("fetchWord"), checkDictionary())
+  @before(checkMe(), limit(), validateQuery("fetchWord"), checkDictionary())
   public async [Symbol()](request: FilledRequest<"fetchWord", "dictionary">, response: Response<"fetchWord">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const wordNumber = +request.params.wordNumber;
@@ -44,7 +44,7 @@ export class WordExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/word", "post")
-  @before(limit(), checkMe(), validateQuery("addWord"), checkDictionary("edit"))
+  @before(checkMe(), limit(), validateQuery("addWord"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"addWord", "me" | "dictionary">, response: Response<"addWord">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
     const {word} = request.body;
@@ -62,7 +62,7 @@ export class WordExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/word/:wordNumber", "put")
-  @before(limit(), checkMe(), validateQuery("editWord"), checkDictionary("edit"))
+  @before(checkMe(), limit(), validateQuery("editWord"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"editWord", "me" | "dictionary">, response: Response<"editWord">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
     const wordNumber = +request.params.wordNumber;
@@ -86,7 +86,7 @@ export class WordExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/word/:wordNumber", "delete")
-  @before(limit(), checkMe(), validateQuery("discardWord"), checkDictionary("edit"))
+  @before(checkMe(), limit(), validateQuery("discardWord"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"discardWord", "dictionary">, response: Response<"discardWord">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const wordNumber = +request.params.wordNumber;
