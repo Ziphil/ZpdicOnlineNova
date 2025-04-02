@@ -28,6 +28,20 @@ export class ExampleExternalRestController extends ExternalRestController {
     ExternalRestController.respond(response, 200, body);
   }
 
+  @endpoint("/v0/dictionary/:identifier/example/:exampleNumber", "get")
+  @before(limit(), checkMe(), validateQuery("fetchExample"), checkDictionary())
+  public async [Symbol()](request: FilledRequest<"fetchExample", "dictionary">, response: Response<"fetchExample">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
+    const exampleNumber = +request.params.exampleNumber;
+    const example = await dictionary.fetchOneExampleByNumber(exampleNumber);
+    if (example) {
+      const body = {example: ExampleCreator.skeletonize(example)};
+      ExternalRestController.respond(response, 200, body);
+    } else {
+      ExternalRestController.respond(response, 404, {error: "noSuchExample"});
+    }
+  }
+
   @endpoint("/v0/dictionary/:identifier/example", "post")
   @before(limit(), checkMe(), validateQuery("addExample"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"addExample", "me" | "dictionary">, response: Response<"addExample">): Promise<void> {
@@ -93,7 +107,7 @@ export class ExampleExternalRestController extends ExternalRestController {
     }
   }
 
-  @endpoint("/v0/example-offers", "get")
+  @endpoint("/v0/exampleOffers", "get")
   @before(limit(), checkMe(), validateQuery("searchExampleOffers"))
   public async [Symbol()](request: Request<"searchExampleOffers">, response: Response<"searchExampleOffers">): Promise<void> {
     const {skip, limit, ...rawParameter} = request.query;
@@ -103,6 +117,20 @@ export class ExampleExternalRestController extends ExternalRestController {
     const [hitExampleOffers, hitSize] = mapWithSize(hitResult, ExampleOfferCreator.skeletonize);
     const body = {exampleOffers: hitExampleOffers, total: hitSize};
     ExternalRestController.respond(response, 200, body);
+  }
+
+  @endpoint("/v0/exampleOffer/:catalog/:exampleOfferNumber", "get")
+  @before(limit(), checkMe(), validateQuery("fetchExampleOffer"))
+  public async [Symbol()](request: FilledRequest<"fetchExampleOffer", "dictionary">, response: Response<"fetchExampleOffer">): Promise<void> {
+    const catalog = request.params.catalog;
+    const exampleOfferNumber = +request.params.exampleOfferNumber;
+    const exampleOffer = await ExampleOfferModel.fetchOneByNumber(catalog, exampleOfferNumber);
+    if (exampleOffer) {
+      const body = {exampleOffer: ExampleOfferCreator.skeletonize(exampleOffer)};
+      ExternalRestController.respond(response, 200, body);
+    } else {
+      ExternalRestController.respond(response, 404, {error: "noSuchExampleOffer"});
+    }
   }
 
 }

@@ -29,6 +29,20 @@ export class WordExternalRestController extends ExternalRestController {
     ExternalRestController.respond(response, 200, body);
   }
 
+  @endpoint("/v0/dictionary/:identifier/word/:wordNumber", "get")
+  @before(limit(), checkMe(), validateQuery("fetchWord"), checkDictionary())
+  public async [Symbol()](request: FilledRequest<"fetchWord", "dictionary">, response: Response<"fetchWord">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
+    const wordNumber = +request.params.wordNumber;
+    const word = await dictionary.fetchOneWordByNumber(wordNumber);
+    if (word) {
+      const body = {word: await WordCreator.skeletonizeWithExamples(word)};
+      ExternalRestController.respond(response, 200, body);
+    } else {
+      ExternalRestController.respond(response, 404, {error: "noSuchWord"});
+    }
+  }
+
   @endpoint("/v0/dictionary/:identifier/word", "post")
   @before(limit(), checkMe(), validateQuery("addWord"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"addWord", "me" | "dictionary">, response: Response<"addWord">): Promise<void> {

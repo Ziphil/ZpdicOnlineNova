@@ -29,6 +29,16 @@ export const SERVER_SCHEMATA = {
       200: mixed<WithTotal<WordWithExamples, "words">>()
     }
   },
+  fetchWord: {
+    request: {
+      ...defaultRequest,
+      query: mixed<never>()
+    },
+    response: {
+      ...defaultResponse,
+      200: mixed<{word: Word}>()
+    }
+  },
   addWord: {
     request: {
       ...defaultRequest,
@@ -73,6 +83,16 @@ export const SERVER_SCHEMATA = {
       200: mixed<WithTotal<Example, "examples">>()
     }
   },
+  fetchExample: {
+    request: {
+      ...defaultRequest,
+      query: mixed<never>()
+    },
+    response: {
+      ...defaultResponse,
+      200: mixed<{example: Example}>()
+    }
+  },
   addExample: {
     request: {
       ...defaultRequest,
@@ -115,6 +135,16 @@ export const SERVER_SCHEMATA = {
     response: {
       ...defaultResponse,
       200: mixed<WithTotal<ExampleOffer, "exampleOffers">>()
+    }
+  },
+  fetchExampleOffer: {
+    request: {
+      ...defaultRequest,
+      query: mixed<never>()
+    },
+    response: {
+      ...defaultResponse,
+      200: mixed<{exampleOffer: ExampleOffer}>()
     }
   }
 } as const;
