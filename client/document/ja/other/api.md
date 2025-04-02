@@ -24,10 +24,14 @@ API キーを指定せずに API を呼び出した場合は、常に 401 エラ
 この制限を超えると、429 エラーが返されます。
 
 API のレスポンスには、現在のレート制限の状況を示す HTTP ヘッダーが含まれます。
-これらの値は、[RateLimit Header Fields for HTTP](https://datatracker.ietf.org/doc/html/draft-polli-ratelimit-headers-00) 仕様に準拠しています。
+これらの値は、[RateLimit header fields for HTTP](https://datatracker.ietf.org/doc/html/draft-ietf-httpapi-ratelimit-headers-06) 仕様に準拠しています。
 
 - `RateLimit-Limit` — 許可されているリクエスト数
 - `RateLimit-Remaining` — 残りのリクエスト可能回数
 - `RateLimit-Reset` — 制限がリセットされるまでの残り秒数
 
 なお、現在のレート制限は暫定的なものであり、今後のアップデートにより利用状況に応じて緩和する予定です。
+
+## 仕様
+詳細な仕様については [API 仕様](/api)をご覧ください。
+ここから OpenAPI 形式のファイルもダウンロードすることができます。
