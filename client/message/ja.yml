@@ -94,6 +94,8 @@ toast:
       メールアドレスを変更しました。
     changeMyPassword: |-
       パスワードを変更しました。
+    generateMyApiKey: |-
+      API キーを生成しました。
     issueMyActivateToken: |-
       メールを送信しました。
       メールの指示に従って操作を進めてください。
@@ -601,6 +603,7 @@ userHeader:
     dictionary: "辞書"
     notification: "通知"
     setting: "設定"
+    developer: "開発向け"
     logout: "ログアウト"
   button:
     issueActivateToken: "メールを再送信"
@@ -837,6 +840,16 @@ downloadDictionaryButton:
   status:
     loading: "処理中"
     error: "失敗"
+generateMyApiKeyForm:
+  button:
+    generate: "新規生成"
+    copy: "コピー"
+  toast: 
+    copy: >-
+      API キーをコピーしました。
+  caution: >-
+    API キーを後から確認することはできません。
+    今の段階でコピーして保存しておいてください。
 uploadDictionaryButton:
   heading: "インポート"
   label:
@@ -1076,6 +1089,17 @@ topPage:
     offer: "過去の例文を見る"
     notification: "過去のお知らせを見る"
     github: "GitHub で見る"
+userDeveloperPart:
+  heading:
+    apiKey: "API キー"
+  description:
+    apiKey: >-
+      API キーを生成することで、API を利用してプログラムから辞書の検索や操作ができるようになります。
+      利用方法の詳細は<documentLink>ドキュメント</documentLink>や<specificationLink>仕様書</specificationLink>を参照してください。
+  callout:
+    apiKey: >-
+      API 機能は試験運用中です。
+      予告なしに挙動が変更される可能性があります。
 userSettingPart:
   heading:
     screenName: "ニックネーム"

@@ -9,7 +9,7 @@ import {useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
 import {IDENTIFIER_REGEXP} from "/client/util/validation";
-import type {RequestData} from "/server/type/rest/internal";
+import type {RequestData} from "/server/internal/type/rest";
 
 
 const SCHEMA = object({

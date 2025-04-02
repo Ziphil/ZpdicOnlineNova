@@ -3,22 +3,21 @@
 import Agenda from "agenda";
 import {Express, Router} from "express";
 import {Namespace, Server} from "socket.io";
-import {SocketEventsFromClient, SocketEventsFromServer} from "/server/type/socket/internal";
 
 
-export class RestController {
+export class RestController<E extends [Record<string, any>, Record<string, any>] = any> {
 
   public static application: Express;
   public static server: Server;
   public static agenda: Agenda;
   public static router: Router;
-  public static namespace?: Namespace<SocketEventsFromClient, SocketEventsFromServer>;
+  public static namespace?: Namespace;
 
   protected application: Express;
   protected server: Server;
   protected agenda: Agenda;
   protected router: Router;
-  protected namespace?: Namespace<SocketEventsFromClient, SocketEventsFromServer>;
+  protected namespace?: Namespace<E[0], E[1]>;
 
   public constructor() {
     const constructor = this.constructor as typeof RestController;

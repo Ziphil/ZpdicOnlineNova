@@ -6,8 +6,7 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import {WithSize} from "/server/type/common";
-import {QueryRange} from "/server/util/query";
+import {QueryRange, WithSize} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "notifications"}})

@@ -1,6 +1,6 @@
 //
 
-import {WithSize} from "/server/type/common";
+import type {WithSize} from "/server/util/query";
 
 
 export function mapWithSize<T, U>(result: WithSize<T>, callback: (value: T, index: number) => U): WithSize<U> {

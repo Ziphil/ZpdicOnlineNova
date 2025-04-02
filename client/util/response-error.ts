@@ -1,7 +1,7 @@
 //
 
 import {AxiosResponseSpec} from "/client/util/request";
-import type {ProcessName, RequestData, ResponseData} from "/server/type/rest/internal";
+import type {ProcessName, RequestData, ResponseData} from "/server/internal/type/rest";
 
 
 export class ResponseError<N extends ProcessName> extends Error {

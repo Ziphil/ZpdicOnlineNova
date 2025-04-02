@@ -37,10 +37,9 @@ import {Suggestion} from "/server/model/word/suggestion";
 import {Word, WordModel} from "/server/model/word/word";
 import {NormalWordParameter} from "/server/model/word-parameter/normal-word-parameter";
 import {WordParameter} from "/server/model/word-parameter/word-parameter";
-import {WithSize} from "/server/type/common";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 import {LogUtil} from "/server/util/log";
-import {QueryRange} from "/server/util/query";
+import {QueryRange, WithSize} from "/server/util/query";
 import {IDENTIFIER_REGEXP} from "/server/util/validation";
 
 

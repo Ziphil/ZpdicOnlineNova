@@ -12,7 +12,7 @@ type RestMetadata = Array<RequestHandlerSpec>;
 type RequestHandlerSpec = {
   key: string | symbol,
   path: string,
-  method: "get" | "post",
+  method: "get" | "post" | "put" | "delete",
   befores: Array<RequestHandlerParams<any>>,
   afters: Array<RequestHandlerParams<any>>
 };
@@ -59,6 +59,13 @@ export function post(path: string): MethodDecorator {
   return decorator;
 }
 
+export function endpoint(path: string, method: "get" | "post" | "put" | "delete"): MethodDecorator {
+  const decorator = function (target: object, key: string | symbol, descriptor: PropertyDescriptor): void {
+    setPath(target, key, method, path);
+  };
+  return decorator;
+}
+
 export function before(...middlewares: Array<RequestHandlerParams>): MethodDecorator {
   const decorator = function (target: object, key: string | symbol, descriptor: PropertyDescriptor): void {
     pushMiddlewares(target, key, "before", ...middlewares);
@@ -73,7 +80,7 @@ export function after(...middlewares: Array<RequestHandlerParams>): MethodDecora
   return decorator;
 }
 
-function setPath(target: object, key: string | symbol, method: "get" | "post", path: string): void {
+function setPath(target: object, key: string | symbol, method: "get" | "post" | "put" | "delete", path: string): void {
   const spec = findHandlerSpec(target, key);
   spec.method = method;
   spec.path = path;

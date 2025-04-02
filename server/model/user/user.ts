@@ -11,6 +11,7 @@ import Fuse from "fuse.js";
 import {DictionaryModel} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {ResetTokenModel, ResetTokenSchema} from "/server/model/user/reset-token";
+import {createRandomString} from "/server/util/misc";
 import {EMAIL_REGEXP, IDENTIFIER_REGEXP, validatePassword} from "/server/util/validation";
 
 
@@ -37,6 +38,9 @@ export class UserSchema {
 
   @prop()
   public activateToken?: ResetTokenSchema;
+
+  @prop({unique: true})
+  public apiKey?: string;
 
   @prop()
   public authority?: string;
@@ -196,6 +200,13 @@ export class UserSchema {
     this.encryptPassword(password);
     await this.save();
     return this;
+  }
+
+  public async generateApiKey(this: User): Promise<string> {
+    const apiKey = createRandomString(64, false);
+    this.apiKey = apiKey;
+    await this.save();
+    return apiKey;
   }
 
   /** 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。
