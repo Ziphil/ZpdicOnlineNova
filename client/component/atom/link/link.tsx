@@ -27,7 +27,11 @@ export const Link = createWithRef(
       );
     }, [href, useTransition]);
 
-    return (
+    return (href === "/api") ? (
+      <ZographiaLink styleName="root" href={href} {...rest}>
+        {children}
+      </ZographiaLink>
+    ) : (
       <ZographiaLink styleName="root" is={renderComponent} {...rest}>
         {children}
       </ZographiaLink>

@@ -29,7 +29,8 @@ export const UserDeveloperPart = create(
           <h3 styleName="heading">{trans("heading.apiKey")}</h3>
           <MultiLineText styleName="description">
             {transNode("description.apiKey", {
-              link: (parts) => <Link href="/document/other/api" variant="unstyledUnderline">{parts}</Link>
+              documentLink: (parts) => <Link href="/document/other/api" variant="unstyledUnderline">{parts}</Link>,
+              specificationLink: (parts) => <Link href="/api" variant="unstyledUnderline">{parts}</Link>
             })}
           </MultiLineText>
           <Callout styleName="callout">

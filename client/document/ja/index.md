@@ -17,7 +17,7 @@
 ## API について
 
 - [API の利用方法](/document/other/api)
-- [API ドキュメント](/api)
+- [API 仕様書](/api)
 
 ## その他のドキュメント
 

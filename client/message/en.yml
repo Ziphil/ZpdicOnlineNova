@@ -1094,7 +1094,7 @@ userDeveloperPart:
   description:
     apiKey: >-
       Generating an API key allows you to use the API to search for and/or operate dictionaries from a program.
-      For details on how to use it, please refer to the <link>documentation</link>.
+      For details on how to use it, please refer to the <documentLink>documentation</documentLink> and the <specificationLink>specification</specificationLink>.
   callout:
     apiKey: >-
       This feature is under testing.

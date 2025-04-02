@@ -1094,7 +1094,7 @@ userDeveloperPart:
   description:
     apiKey: >-
       Generi API-ŝlosilon permesos al vi uzi la API por serĉi kaj/aŭ redakti vortarojn el programo.
-      Por detaloj pri la uzo, bonvolu rilati al la <link>dokumentaron</link>.
+      Por detaloj pri la uzo, bonvolu rilati al la <documentLink>dokumentaron</documentLink> kaj la <specificationLink>specifigon</specificationLink>.
   callout:
     apiKey: >-
       Tiu funkcio estas ankoraŭ en testado.

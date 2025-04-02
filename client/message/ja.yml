@@ -1095,7 +1095,7 @@ userDeveloperPart:
   description:
     apiKey: >-
       API キーを生成することで、API を利用してプログラムから辞書の検索や操作ができるようになります。
-      利用方法の詳細は<link>ドキュメント</link>を参照してください。
+      利用方法の詳細は<documentLink>ドキュメント</documentLink>や<specificationLink>仕様書</specificationLink>を参照してください。
   callout:
     apiKey: >-
       API 機能は試験運用中です。
