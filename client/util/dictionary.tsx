@@ -1,11 +1,24 @@
 //
 
 import {ReactNode} from "react";
+import {MarkdownSpecialPaths} from "/client/component/atom/markdown";
 import {Dictionary} from "/client/skeleton";
+import {getAwsFileUrl} from "/client/util/aws";
 
 
 export function getDictionaryIdentifier(dictionary: Dictionary): string | number {
   return dictionary.paramName || dictionary.number;
+}
+
+export function getDictionarySpecialPaths(dictionary: Dictionary): MarkdownSpecialPaths {
+  const specialPaths = {
+    home: getAwsFileUrl(`resource/${dictionary.number}/`),
+    at: (uri: string) => {
+      const name = uri.substring(1);
+      return `/dictionary/${getDictionaryIdentifier(dictionary)}?text=${encodeURIComponent(name)}&mode=name&type=exact`;
+    }
+  };
+  return specialPaths;
 }
 
 export function createEquivalentNameNode(nameString: string, ignoredPattern: string | undefined): ReactNode {

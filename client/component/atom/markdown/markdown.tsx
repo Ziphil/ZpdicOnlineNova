@@ -13,27 +13,40 @@ export const Markdown = create(
   function ({
     mode,
     compact = false,
-    homePath,
+    specialPaths,
     children,
     ...rest
   }: {
     mode: "normal" | "article" | "document",
     compact?: boolean,
-    homePath?: string,
+    specialPaths?: MarkdownSpecialPaths,
     children: string,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const transformUrl = useCallback(function (uri: string): string {
+      const homePath = specialPaths?.home;
+      const atPath = specialPaths?.at;
       let nextUri = uriTransformer(uri);
       if (homePath !== undefined) {
-        nextUri = nextUri.replace(/^~/, homePath);
+        if (typeof homePath === "string") {
+          nextUri = nextUri.replace(/^~/, homePath);
+        } else {
+          nextUri = homePath(nextUri);
+        }
+      }
+      if (atPath !== undefined) {
+        if (typeof atPath === "string") {
+          nextUri = nextUri.replace(/^@/, atPath);
+        } else {
+          nextUri = atPath(nextUri);
+        }
       }
       if (nextUri === "javascript:void(0)") {
         nextUri = "";
       }
       return nextUri;
-    }, [homePath]);
+    }, [specialPaths?.home, specialPaths?.at]);
 
     return (
       <ZographiaMarkdown
@@ -58,3 +71,9 @@ export const Markdown = create(
 
   }
 );
+
+
+export type MarkdownSpecialPaths = {
+  home?: string | ((uri: string) => string),
+  at?: string | ((uri: string) => string)
+};
