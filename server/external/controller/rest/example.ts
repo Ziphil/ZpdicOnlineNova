@@ -3,7 +3,7 @@
 import {before, endpoint, restController} from "/server/controller/rest/decorator";
 import {FilledRequest, Request, Response} from "/server/external/controller/rest/base";
 import {checkDictionary, checkMe, limit} from "/server/external/controller/rest/middleware";
-import {validateQuery} from "/server/external/controller/rest/middleware/validate";
+import {validateBody, validateQuery} from "/server/external/controller/rest/middleware/validate";
 import {ExampleCreator, ExampleOfferCreator, ExampleOfferParameterCreator} from "/server/external/creator";
 import {SERVER_PATH_PREFIX} from "/server/external/type/rest";
 import {CustomError, ExampleOfferModel, NormalExampleParameter} from "/server/model";
@@ -43,7 +43,7 @@ export class ExampleExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/example", "post")
-  @before(checkMe(), limit(), validateQuery("addExample"), checkDictionary("edit"))
+  @before(checkMe(), limit(), validateBody("addExample"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"addExample", "me" | "dictionary">, response: Response<"addExample">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
     const {example} = request.body;
@@ -61,7 +61,7 @@ export class ExampleExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/example/:exampleNumber", "put")
-  @before(checkMe(), limit(), validateQuery("editExample"), checkDictionary("edit"))
+  @before(checkMe(), limit(), validateBody("editExample"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"editExample", "me" | "dictionary">, response: Response<"editExample">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
     const exampleNumber = +request.params.exampleNumber;

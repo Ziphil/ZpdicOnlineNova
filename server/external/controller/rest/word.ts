@@ -3,7 +3,7 @@
 import {before, endpoint, restController} from "/server/controller/rest/decorator";
 import {FilledRequest, Response} from "/server/external/controller/rest/base";
 import {checkDictionary, checkMe, limit} from "/server/external/controller/rest/middleware";
-import {validateQuery} from "/server/external/controller/rest/middleware/validate";
+import {validateBody, validateQuery} from "/server/external/controller/rest/middleware/validate";
 import {WordParameterCreator} from "/server/external/creator";
 import {WordCreator} from "/server/external/creator";
 import {SERVER_PATH_PREFIX} from "/server/external/type/rest";
@@ -44,7 +44,7 @@ export class WordExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/word", "post")
-  @before(checkMe(), limit(), validateQuery("addWord"), checkDictionary("edit"))
+  @before(checkMe(), limit(), validateBody("addWord"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"addWord", "me" | "dictionary">, response: Response<"addWord">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
     const {word} = request.body;
@@ -62,7 +62,7 @@ export class WordExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/word/:wordNumber", "put")
-  @before(checkMe(), limit(), validateQuery("editWord"), checkDictionary("edit"))
+  @before(checkMe(), limit(), validateBody("editWord"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"editWord", "me" | "dictionary">, response: Response<"editWord">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
     const wordNumber = +request.params.wordNumber;
