@@ -4,8 +4,7 @@ import {before, endpoint, restController} from "/server/controller/rest/decorato
 import {FilledRequest, Response} from "/server/external/controller/rest/base";
 import {checkDictionary, checkMe, limit} from "/server/external/controller/rest/middleware";
 import {validateBody, validateQuery} from "/server/external/controller/rest/middleware/validate";
-import {WordParameterCreator} from "/server/external/creator";
-import {WordCreator} from "/server/external/creator";
+import {WordCreator, WordParameterCreator} from "/server/external/creator";
 import {SERVER_PATH_PREFIX} from "/server/external/type/rest";
 import {CustomError} from "/server/model";
 import {QueryRange} from "/server/util/query";

@@ -5,8 +5,9 @@ import {FilledRequest, Request, Response} from "/server/external/controller/rest
 import {checkDictionary, checkMe, limit} from "/server/external/controller/rest/middleware";
 import {validateBody, validateQuery} from "/server/external/controller/rest/middleware/validate";
 import {ExampleCreator, ExampleOfferCreator, ExampleOfferParameterCreator} from "/server/external/creator";
+import {ExampleParameterCreator} from "/server/external/creator";
 import {SERVER_PATH_PREFIX} from "/server/external/type/rest";
-import {CustomError, ExampleOfferModel, NormalExampleParameter} from "/server/model";
+import {CustomError, ExampleOfferModel} from "/server/model";
 import {QueryRange} from "/server/util/query";
 import {mapWithSize} from "/server/util/with-size";
 import {ExternalRestController} from "./base";
@@ -19,8 +20,8 @@ export class ExampleExternalRestController extends ExternalRestController {
   @before(checkMe(), limit(), validateQuery("searchExamples"), checkDictionary())
   public async [Symbol()](request: FilledRequest<"searchExamples", "dictionary">, response: Response<"searchExamples">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const {skip, limit} = request.query;
-    const parameter = new NormalExampleParameter();
+    const {skip, limit, ...rawParameter} = request.query;
+    const parameter = ExampleParameterCreator.enflesh(rawParameter);
     const range = new QueryRange(skip, limit);
     const hitResult = await dictionary.searchExamples(parameter, range);
     const [hitExamples, hitSize] = mapWithSize(hitResult, ExampleCreator.skeletonize);
