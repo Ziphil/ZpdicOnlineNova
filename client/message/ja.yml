@@ -227,6 +227,20 @@ exampleOfferTag:
     survival: "今日を生き抜く実用例文"
     weaving: "手袋と辞書を編む 50 文"
   number: "#{number, number}"
+exampleModeSelect:
+  label:
+    sentence: "例文"
+    translation: "訳文"
+    both: "例文＋訳文"
+    tag: "タグ"
+    content: "全文"
+exampleTypeSelect:
+  label:
+    prefix: "前方"
+    suffix: "後方"
+    part: "部分"
+    exact: "完全"
+    regular: "正規"
 wordModeSelect:
   label:
     name: "単語"
@@ -460,7 +474,7 @@ editWordForm:
     generate: "生成"
     confirm: "決定"
 exampleList:
-  empty: "例文は作成されていません"
+  empty: "該当する例文は見つかりませんでした"
   noWord: "使用単語が登録されていません"
   button:
     edit: "編集"
@@ -566,8 +580,8 @@ resourceListDialog:
   button:
     enable: "Markdown を有効化"
 searchExampleForm:
-  information: >-
-    例文検索は今後のアップデートで利用できるようになる予定です。
+  label:
+    ignoreCase: "大小文字の違いを無視"
 searchWordAdvancedDialog:
   label:
     mode: "検索範囲"

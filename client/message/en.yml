@@ -227,6 +227,20 @@ exampleOfferTag:
     survival: "Practical sentences to survive today"
     weaving: "Sentences to weave gloves and dictionaries"
   number: "#{number, number}"
+exampleModeSelect:
+  label:
+    sentence: "Sentence"
+    translation: "Translation"
+    both: "Both"
+    tag: "Tag"
+    content: "Whole"
+exampleTypeSelect:
+  label:
+    prefix: "Prefix"
+    suffix: "Suffix"
+    part: "Partial"
+    exact: "Exact"
+    regular: "Regex"
 wordModeSelect:
   label:
     name: "Headword"
@@ -460,7 +474,7 @@ editWordForm:
     generate: "Generate"
     confirm: "Confirm"
 exampleList:
-  empty: "No example sentences are created"
+  empty: "No matching example sentences were found"
   noWord: "No words specified"
   button:
     edit: "Edit"
@@ -566,8 +580,8 @@ resourceListDialog:
   button:
     enable: "Enable Markdown"
 searchExampleForm:
-  information: >-
-    Searching for example sentences will be available in a future update.
+  label:
+    ignoreCase: "Ignore letter case"
 searchWordAdvancedDialog:
   label:
     mode: "Scope"

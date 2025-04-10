@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {ReactElement, useCallback} from "react";
+import {ReactElement, SetStateAction, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, Indicator, LoadingIcon, SingleLineText, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {fakQuotesCirclePlus} from "/client/component/atom/icon";
@@ -13,7 +13,7 @@ import {useDictionary} from "/client/hook/dictionary";
 import {useResponse, useSuspenseResponse} from "/client/hook/request";
 import {Search, useSearchState} from "/client/hook/search";
 import {ExampleParameter, NormalExampleOfferParameter} from "/client/skeleton";
-import {calcOffsetSpec} from "/client/util/misc";
+import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
 
 
 export const DictionaryExamplePart = create(
@@ -37,6 +37,13 @@ export const DictionaryExamplePart = create(
     const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (canEdit && offers !== undefined && offers.length > 0) && {number: dictionary.number, offer: offers[0], size: 1, offset: 0});
     const showOffer = canEdit && offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
 
+    const handleParameterSet = useCallback(function (parameter: SetStateAction<ExampleParameter>): void {
+      setQuery((prevQuery) => {
+        const nextParameter = resolveStateAction(parameter, prevQuery.parameter);
+        return {parameter: nextParameter, page: 0, showExplanation: false};
+      });
+    }, [setQuery]);
+
     const handlePageSet = useCallback(function (page: number): void {
       setQuery({...query, page});
       window.scrollTo(0, 0);
@@ -46,7 +53,7 @@ export const DictionaryExamplePart = create(
       <div styleName="root" {...rest}>
         <div styleName="left">
           <div styleName="sticky">
-            <SearchExampleForm styleName="form"/>
+            <SearchExampleForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
             {(showOffer) && (
               <section styleName="section">
                 <SingleLineText styleName="heading" is="h3">

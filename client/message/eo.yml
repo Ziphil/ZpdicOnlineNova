@@ -227,6 +227,20 @@ exampleOfferTag:
     survival: "Praktikaj frazoj por pluvivi hodiaŭ"
     weaving: "Frazoj por teksi gantojn kaj vortarojn"
   number: "#{number, number}"
+exampleModeSelect:
+  label:
+    sentence: "Frazo"
+    translation: "Tradukaĵo"
+    both: "Ambaŭ"
+    tag: "Etikedo"
+    content: "Tuto"
+exampleTypeSelect:
+  label:
+    prefix: "Prefiksa"
+    suffix: "Sufiksa"
+    part: "Parta"
+    exact: "Ekzakta"
+    regular: "Regesp"
 wordModeSelect:
   label:
     name: "Kapvorto"
@@ -460,7 +474,7 @@ editWordForm:
     generate: "Generi"
     confirm: "Konfirmi"
 exampleList:
-  empty: "Neniuj ekzemplaj frazoj estas kreitaj"
+  empty: "Neniuj kongruaj ekzemplaj frazoj estis trovitaj"
   noWord: "Neniuj vortoj specifitaj"
   button:
     edit: "Redakti"
@@ -566,8 +580,8 @@ resourceListDialog:
   button:
     enable: "Ebligi Markdown"
 searchExampleForm:
-  information: >-
-    Serĉi ekzemplajn frazojn estos disponebla en estonta ĝisdatigo.
+  label:
+    ignoreCase: "Ignori usklecon"
 searchWordAdvancedDialog:
   label:
     mode: "Gamo"

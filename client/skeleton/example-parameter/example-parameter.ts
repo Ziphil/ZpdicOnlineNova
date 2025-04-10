@@ -37,4 +37,12 @@ export namespace ExampleParameter {
     }
   }
 
+  export function toNormal(parameter: ExampleParameter): NormalExampleParameter {
+    if (parameter.kind === "exact") {
+      return NormalExampleParameter.EMPTY;
+    } else {
+      return parameter;
+    }
+  }
+
 }
