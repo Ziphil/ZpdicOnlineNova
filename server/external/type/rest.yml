@@ -2,7 +2,7 @@ openapi: "3.0.3"
 
 info:
   title: "ZpDIC Online API"
-  version: "0.0.0"
+  version: "0.1.0"
   description: |-
     ### ベース URL
     全ての API のベース URL は `https://zpdic.ziphil.com/api` です。
@@ -269,6 +269,10 @@ paths:
       tags: ["例文"]
       parameters:
         - $ref: "#/components/parameters/identifier"
+        - $ref: "#/components/parameters/text"
+        - $ref: "#/components/parameters/exampleMode"
+        - $ref: "#/components/parameters/exampleType"
+        - $ref: "#/components/parameters/exampleIgnoreCase"
         - $ref: "#/components/parameters/skip"
         - $ref: "#/components/parameters/limit"
       responses:
@@ -668,6 +672,47 @@ components:
         default: "ascending"
 
     wordIgnoreCase:
+      name: "ignoreCase"
+      in: query
+      description: "大小文字の違いを無視するかどうか"
+      required: false
+      schema:
+        type: boolean
+        default: false
+
+    exampleMode:
+      name: "mode"
+      in: query
+      description: |-
+        検索範囲
+        - `"sentence"` — 例文
+        - `"translation"` — 訳文
+        - `"both"` — 例文＋訳文
+        - `"tag"` — タグ
+        - `"content"` — 全文
+      required: false
+      schema:
+        type: string
+        enum: ["sentence", "translation", "both", "tag", "content"] 
+        default: "both"
+ 
+    exampleType:
+      name: "type"
+      in: query
+      description: |-
+        検索方法
+        - `"exact"` — 完全一致
+        - `"prefix"` — 前方一致
+        - `"suffix"` — 後方一致
+        - `"part"` — 部分一致
+        - `"regular"` — 正規表現
+      required: false
+      schema:
+        type: string
+        enum: ["exact", "prefix", "suffix", "part", "regular"]
+        default: "prefix"
+
+    exampleIgnoreCase:
       name: "ignoreCase"
       in: query
       description: "大小文字の違いを無視するかどうか"
