@@ -17,7 +17,7 @@ export namespace ExampleParameterCreator {
       const raw = new ExactExampleParameter(skeleton.number);
       return raw;
     } else {
-      const raw = new NormalExampleParameter();
+      const raw = new NormalExampleParameter(skeleton.text, skeleton.mode, skeleton.type, skeleton.options);
       return raw;
     }
   }

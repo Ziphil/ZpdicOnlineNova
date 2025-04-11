@@ -16,8 +16,20 @@
   color: var(--glob-mute-text-color);
 }
 
-.information {
-  font-size: 3zu;
-  color: var(--glob-mute-text-color);
-  text-align: center;
+.select-group {
+  display: flex;
+  @include device("desktop") {
+    row-gap: 2zu;
+    flex-direction: column;  
+  }
+  @include device("mobile") {
+    column-gap: 4zu;
+    justify-content: center;
+  }
+}
+
+.row {
+  column-gap: 4zu;
+  display: flex;
+  justify-content: center;
 }

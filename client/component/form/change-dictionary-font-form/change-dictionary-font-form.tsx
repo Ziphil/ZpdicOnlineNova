@@ -76,6 +76,7 @@ export const ChangeDictionaryFontForm = create(
             <Controller name="file" control={control} render={({field}) => (
               <FileInput
                 value={field.value}
+                defaultValue={(dictionary.settings.font?.type === "custom") ? dictionary.settings.font?.name : undefined}
                 onSet={field.onChange}
                 error={getFieldState("file").error !== undefined}
                 multiple={false}

@@ -7,6 +7,7 @@ import {
   Example,
   ExampleOffer,
   NORMAL_EXAMPLE_OFFER_PARAMETER,
+  NORMAL_EXAMPLE_PARAMETER,
   NORMAL_WORD_PARAMETER,
   RANGE,
   WithTotal,
@@ -76,7 +77,7 @@ export const SERVER_SCHEMATA = {
   searchExamples: {
     request: {
       ...defaultRequest,
-      query: RANGE
+      query: NORMAL_EXAMPLE_PARAMETER.concat(RANGE)
     },
     response: {
       ...defaultResponse,

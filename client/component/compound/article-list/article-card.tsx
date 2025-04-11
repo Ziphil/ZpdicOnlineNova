@@ -12,7 +12,7 @@ import {EditArticleDialog} from "/client/component/compound/edit-article-dialog"
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {Article, Dictionary} from "/client/skeleton";
-import {getAwsFileUrl} from "/client/util/aws";
+import {getDictionarySpecialPaths} from "/client/util/dictionary";
 import {useDiscardArticle} from "./article-card-hook";
 
 
@@ -68,13 +68,13 @@ export const ArticleCard = create(
           {(listed) ? (
             <Collapsible styleName="collapsible">
               <CollapsibleBody styleName="collapsible-body" height="5rem">
-                <Markdown styleName="markdown" mode="article" compact={true} homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
+                <Markdown styleName="markdown" mode="article" compact={true} specialPaths={getDictionarySpecialPaths(dictionary)}>
                   {truncateMarkdown(article.content, {limit: 200})}
                 </Markdown>
               </CollapsibleBody>
             </Collapsible>
           ) : (
-            <Markdown styleName="markdown" mode="article" compact={true} homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
+            <Markdown styleName="markdown" mode="article" compact={true} specialPaths={getDictionarySpecialPaths(dictionary)}>
               {article.content}
             </Markdown>
           )}

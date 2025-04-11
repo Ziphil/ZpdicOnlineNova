@@ -2,7 +2,7 @@ openapi: "3.0.3"
 
 info:
   title: "ZpDIC Online API"
-  version: "0.0.0"
+  version: "0.1.0"
   description: |-
     ### ベース URL
     全ての API のベース URL は `https://zpdic.ziphil.com/api` です。
@@ -18,11 +18,15 @@ info:
     あらかじめ該当 API のドキュメントを参照して、正しい型情報を確認しておいてください。
 
     ### 必須項目
-    プロパティ名に `required` と書かれているものは必須項目です。
-    リクエストに必須項目が含まれていない場合は、400 エラーが返されます。
-    ネストしているプロパティが必須項目になっていることもあるので、注意してください。
+    プロパティ名に `required` と書かれているプロパティは必須です。
+    リクエストに必須プロパティが含まれていない場合は、400 エラーが返されます。
+    ネストしているプロパティが必須になっていることもあるので、注意してください。
 
-    レスポンスでは、`required` と書かれているかいないかに関わらず、全てのプロパティが返却されます。
+    なお必須プロパティは、そのプロパティの存在が必須であるだけなので、そこにゼロ値を指定することはできます。
+    例えば、文字列型の必須プロパティに空文字列を指定することは可能です。
+
+    プロパティ名に `required` と書かれていないプロパティは省略可能です。
+    その場合は、付記されているデフォルト値が指定されたものと見なされます。
 
 servers:
   - url: "https://zpdic.ziphil.com/api"
@@ -265,6 +269,10 @@ paths:
       tags: ["例文"]
       parameters:
         - $ref: "#/components/parameters/identifier"
+        - $ref: "#/components/parameters/text"
+        - $ref: "#/components/parameters/exampleMode"
+        - $ref: "#/components/parameters/exampleType"
+        - $ref: "#/components/parameters/exampleIgnoreCase"
         - $ref: "#/components/parameters/skip"
         - $ref: "#/components/parameters/limit"
       responses:
@@ -672,10 +680,58 @@ components:
         type: boolean
         default: false
 
+    exampleMode:
+      name: "mode"
+      in: query
+      description: |-
+        検索範囲
+        - `"sentence"` — 例文
+        - `"translation"` — 訳文
+        - `"both"` — 例文＋訳文
+        - `"tag"` — タグ
+        - `"content"` — 全文
+      required: false
+      schema:
+        type: string
+        enum: ["sentence", "translation", "both", "tag", "content"] 
+        default: "both"
+ 
+    exampleType:
+      name: "type"
+      in: query
+      description: |-
+        検索方法
+        - `"exact"` — 完全一致
+        - `"prefix"` — 前方一致
+        - `"suffix"` — 後方一致
+        - `"part"` — 部分一致
+        - `"regular"` — 正規表現
+      required: false
+      schema:
+        type: string
+        enum: ["exact", "prefix", "suffix", "part", "regular"]
+        default: "prefix"
+
+    exampleIgnoreCase:
+      name: "ignoreCase"
+      in: query
+      description: "大小文字の違いを無視するかどうか"
+      required: false
+      schema:
+        type: boolean
+        default: false
+
     catalog.path:
       name: "catalog"
       in: path
-      description: "例文集名"
+      description: |-
+        例文集名
+        - `"zpdicDaily"` — 今日の例文
+        - `"appleAlpha"` — リンゴを食べたい 58 文
+        - `"appleBeta"` — リンゴを食べ足りない 57 文
+        - `"appleGamma"` — リンゴをもっと食べたい 55 文
+        - `"survival"` — 今日を生き抜く実用例文
+        - `"weaving"` — 手袋と辞書を編む 50 文
       required: true
       schema:
         type: string
@@ -683,7 +739,14 @@ components:
     catalog.query:
       name: "catalog"
       in: query
-      description: "例文集名"
+      description: |-
+        例文集名
+        - `"zpdicDaily"` — 今日の例文
+        - `"appleAlpha"` — リンゴを食べたい 58 文
+        - `"appleBeta"` — リンゴを食べ足りない 57 文
+        - `"appleGamma"` — リンゴをもっと食べたい 55 文
+        - `"survival"` — 今日を生き抜く実用例文
+        - `"weaving"` — 手袋と辞書を編む 50 文
       required: true
       schema:
         type: string
