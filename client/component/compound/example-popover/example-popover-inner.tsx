@@ -27,7 +27,7 @@ export const ExamplePopoverInner = create(
 
     const {trans} = useTrans("examplePopover");
 
-    const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [authorities] = useResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
     const filledExample = useFilledExample(dictionary, example);
 
@@ -39,7 +39,7 @@ export const ExamplePopoverInner = create(
 
     return (filledExample !== undefined) ? (
       <div styleName="root" {...rest}>
-        {(canEdit) && (
+        {(authorities?.includes("edit")) && (
           <Button size="small" scheme="secondary" variant="underline" onClick={handleEdit}>
             <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
             {trans("button.edit")}

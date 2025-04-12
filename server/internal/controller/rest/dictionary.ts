@@ -257,8 +257,8 @@ export class DictionaryRestController extends InternalRestController {
   @before(checkDictionary())
   public async [Symbol()](request: FilledRequest<"fetchDictionaryAuthorizedUsers", "dictionary">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const {authority} = request.body;
-    const users = await dictionary.fetchAuthorizedUsers(authority);
+    const {authorityQuery} = request.body;
+    const users = await dictionary.fetchAuthorizedUsers(authorityQuery);
     const body = users.map(UserCreator.skeletonize);
     InternalRestController.respond(response, body);
   }
@@ -295,30 +295,16 @@ export class DictionaryRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
-  @post("/fetchDictionaryAuthorization")
+  @post("/fecthMyDictionaryAuthorities")
   @before(parseMe(), checkDictionary())
-  public async [Symbol()](request: FilledRequest<"fetchDictionaryAuthorization", "dictionary">, response: Response<"fetchDictionaryAuthorization">): Promise<void> {
+  public async [Symbol()](request: FilledRequest<"fecthMyDictionaryAuthorities", "dictionary">, response: Response<"fecthMyDictionaryAuthorities">): Promise<void> {
     const {me, dictionary} = request.middlewareBody ;
-    const {authority} = request.body;
     if (me) {
-      const hasAuthority = await dictionary.hasAuthority(me, authority);
-      const body = hasAuthority;
+      const authorities = await dictionary.fetchAuthorities(me);
+      const body = authorities;
       InternalRestController.respond(response, body);
     } else {
-      InternalRestController.respond(response, false);
-    }
-  }
-
-  @post("/checkDictionaryAuthorization")
-  @before(checkMe(), checkDictionary())
-  public async [Symbol()](request: FilledRequest<"checkDictionaryAuthorization", "me" | "dictionary">, response: Response<"checkDictionaryAuthorization">): Promise<void> {
-    const {me, dictionary} = request.middlewareBody;
-    const {authority} = request.body;
-    const hasAuthority = await dictionary.hasAuthority(me, authority);
-    if (hasAuthority) {
-      InternalRestController.respond(response, null);
-    } else {
-      InternalRestController.respondForbiddenError(response);
+      InternalRestController.respond(response, []);
     }
   }
 

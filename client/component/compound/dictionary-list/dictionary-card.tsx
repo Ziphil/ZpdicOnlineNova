@@ -35,8 +35,9 @@ export const DictionaryCard = create(
 
     const number = dictionary.number;
     const from = useMemo(() => dayjs().subtract(16, "day").toISOString(), []);
+
     const [histories] = useResponse("fetchHistories", (showChart) && {number, from});
-    const [canOwn] = useResponse("fetchDictionaryAuthorization", (showSettingLink) && {identifier: number, authority: "own"});
+    const [authorities] = useResponse("fecthMyDictionaryAuthorities", (showSettingLink) && {identifier: number});
     const [sizes] = useResponse("fetchDictionarySizes", (showChart) && {number});
 
     const device = useResponsiveDevice();
@@ -109,7 +110,7 @@ export const DictionaryCard = create(
             <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
             {trans("button.see")}
           </Link>
-          {(showSettingLink && canOwn) && (
+          {(showSettingLink && authorities?.includes("own")) && (
             <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${getDictionaryIdentifier(dictionary)}/settings`}>
               <LinkIconbag><GeneralIcon icon={faCog}/></LinkIconbag>
               {trans("button.setting")}

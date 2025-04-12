@@ -28,7 +28,8 @@ export const DictionaryExamplePart = create(
 
     const dictionary = useDictionary();
 
-    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [authorities] = useSuspenseResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
+    const canEdit = authorities?.includes("edit");
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
     const [[hitExamples, hitSize], {isFetching}] = useSuspenseResponse("searchExamples", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});

@@ -24,7 +24,7 @@ export const DictionaryAuthorizedUserList = create(
     const {trans} = useTrans("dictionaryAuthorizedUserList");
 
     const number = dictionary.number;
-    const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number, authority: "editOnly"});
+    const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number, authorityQuery: {authority: "edit", exact: true}});
 
     return (
       <UserList users={authorizedUsers} pageSpec={{size: 20}} emptyMessage={trans("empty")} {...rest} renderFooter={(user) => (

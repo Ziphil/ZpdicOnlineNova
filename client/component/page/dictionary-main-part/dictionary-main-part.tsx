@@ -32,7 +32,7 @@ export const DictionaryMainPart = create(
 
     const dictionary = useDictionary();
 
-    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [authorities] = useSuspenseResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
     const [hitResult, {isFetching}] = useSuspenseResponse("searchWords", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
@@ -67,7 +67,7 @@ export const DictionaryMainPart = create(
           )}
           <div styleName="main">
             <div styleName="header">
-              {(canEdit) ? (
+              {(authorities?.includes("edit")) ? (
                 <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
                   <Button variant="light">
                     <ButtonIconbag><GeneralIcon icon={fakNoteCirclePlus}/></ButtonIconbag>
@@ -87,7 +87,12 @@ export const DictionaryMainPart = create(
               </div>
             </div>
             <SuggestionCard dictionary={dictionary} suggestions={hitSuggestions}/>
-            <WordList dictionary={dictionary} words={hitWords} emptyType={(hitSuggestions.length > 0) ? "none" : (canEdit) ? "create" : "commission"} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}/>
+            <WordList
+              dictionary={dictionary}
+              words={hitWords}
+              emptyType={(hitSuggestions.length > 0) ? "none" : (authorities?.includes("edit")) ? "create" : "commission"}
+              pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}
+            />
           </div>
         </div>
       </div>

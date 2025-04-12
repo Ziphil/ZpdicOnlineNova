@@ -35,7 +35,7 @@ import type {
   WordWithExamples
 } from "/client/skeleton";
 import type {WithRecaptcha} from "/server/internal/type/common";
-import type {DictionaryAuthority, DictionaryFullAuthority} from "/server/model";
+import type {DictionaryAuthority, DictionaryAuthorityQuery} from "/server/model";
 import type {WithSize} from "/server/util/query";
 
 
@@ -232,23 +232,16 @@ type ServerSpecs = {
     }
   },
   fetchDictionaryAuthorizedUsers: {
-    request: {number: number, authority: DictionaryFullAuthority},
+    request: {number: number, authorityQuery: DictionaryAuthorityQuery},
     response: {
       success: Array<User>,
       error: CustomError<"noSuchDictionary">
     }
   },
-  fetchDictionaryAuthorization: {
-    request: {identifier: number | string, authority: DictionaryAuthority},
+  fecthMyDictionaryAuthorities: {
+    request: {identifier: number | string},
     response: {
-      success: boolean,
-      error: CustomError<"noSuchDictionary">
-    }
-  },
-  checkDictionaryAuthorization: {
-    request: {identifier: number | string, authority: DictionaryAuthority},
-    response: {
-      success: null,
+      success: Array<DictionaryAuthority>,
       error: CustomError<"noSuchDictionary">
     }
   },

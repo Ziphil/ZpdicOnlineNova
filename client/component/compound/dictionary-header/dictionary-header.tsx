@@ -28,8 +28,7 @@ export const DictionaryHeader = create(
 
     const {trans} = useTrans("dictionaryHeader");
 
-    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
-    const [canOwn] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "own"});
+    const [authorities] = useSuspenseResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
     const [[, commissionSize] = []] = useResponse("fetchCommissions", {number: dictionary.number, size: 1, offset: 0});
 
@@ -52,7 +51,7 @@ export const DictionaryHeader = create(
               <TabIconbag><GeneralIcon icon={faScroll}/></TabIconbag>
               {trans("tab.article")}
             </LinkTab>
-            {(canEdit) && (
+            {(authorities.includes("edit")) && (
               <Indicator styleName="indicator" scheme="secondary" disabled={(commissionSize === undefined || commissionSize <= 0) || tabValue === "commission"} animate={true}>
                 <LinkTab value="commission" href={`/dictionary/${match?.params.identifier}/requests`}>
                   <TabIconbag><GeneralIcon icon={faListCheck}/></TabIconbag>
@@ -60,7 +59,7 @@ export const DictionaryHeader = create(
                 </LinkTab>
               </Indicator>
             )}
-            {(canEdit) && (
+            {(authorities.includes("edit")) && (
               <LinkTab value="resource" href={`/dictionary/${match?.params.identifier}/resources`}>
                 <TabIconbag><GeneralIcon icon={faImage}/></TabIconbag>
                 {trans("tab.resource")}
@@ -70,7 +69,7 @@ export const DictionaryHeader = create(
               <TabIconbag><GeneralIcon icon={faCircleInfo}/></TabIconbag>
               {trans("tab.information")}
             </LinkTab>
-            {(canOwn) && (
+            {(authorities.includes("own")) && (
               <LinkTab value="setting" href={`/dictionary/${match?.params.identifier}/settings`}>
                 <TabIconbag><GeneralIcon icon={faCog}/></TabIconbag>
                 {trans("tab.setting")}

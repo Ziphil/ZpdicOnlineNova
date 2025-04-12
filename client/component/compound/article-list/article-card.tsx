@@ -32,7 +32,7 @@ export const ArticleCard = create(
 
     const {trans, transNumber, transDate} = useTrans("articleList");
 
-    const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [authorities] = useResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
     const match = useMatch("/dictionary/:identifier/:tabPath?/:subTabPath?");
     const debug = location.hostname === "localhost";
@@ -79,7 +79,7 @@ export const ArticleCard = create(
             </Markdown>
           )}
         </CardBody>
-        {(listed || canEdit) && (
+        {(listed || authorities?.includes("edit")) && (
           <CardFooter styleName="footer">
             {(listed) && (
               <Link href={`/dictionary/${match?.params.identifier}/articles/${article.number}`} scheme="secondary" variant="underline">
@@ -87,7 +87,7 @@ export const ArticleCard = create(
                 {trans("button.read")}
               </Link>
             )}
-            {(canEdit) && (
+            {(authorities?.includes("edit")) && (
               <EditArticleDialog dictionary={dictionary} initialData={{type: "article", article}} trigger={(
                 <Button scheme="secondary" variant="underline">
                   <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
@@ -95,7 +95,7 @@ export const ArticleCard = create(
                 </Button>
               )}/>
             )}
-            {(canEdit) && (
+            {(authorities?.includes("edit")) && (
               <Button scheme="red" variant="underline" onClick={discardArticle}>
                 <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
                 {trans("button.discard")}

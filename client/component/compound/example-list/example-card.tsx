@@ -32,7 +32,7 @@ export const ExampleCard = create(
 
     const {trans, transNumber} = useTrans("exampleList");
 
-    const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [authorities] = useResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
     const [offer] = useResponse("fetchExampleOfferOrNull", (example.offer) && example.offer);
 
     const device = useResponsiveDevice();
@@ -99,7 +99,7 @@ export const ExampleCard = create(
             </div>
           )}
         </CardBody>
-        {(canEdit) && (
+        {(authorities?.includes("edit")) && (
           <CardFooter styleName="footer">
             <div styleName="footer-left">
               <EditExampleDialog dictionary={dictionary} initialData={{type: "example", example: filledExample}} trigger={(

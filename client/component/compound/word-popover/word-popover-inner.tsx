@@ -25,7 +25,7 @@ export const WordPopoverInner = create(
 
     const {trans} = useTrans("wordPopover");
 
-    const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [authorities] = useResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
     const [innerWord] = useResponse("fetchWord", (!isFull(word)) && {number: dictionary.number, wordNumber: word.number});
     const actualWord = (!isFull(word)) ? innerWord : word;
@@ -51,7 +51,7 @@ export const WordPopoverInner = create(
             </MultiLineText>
           ))}
         </div>
-        {(canEdit) && (
+        {(authorities?.includes("edit")) && (
           <div styleName="footer">
             <Button scheme="secondary" variant="underline" onClick={handleEdit}>
               <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
