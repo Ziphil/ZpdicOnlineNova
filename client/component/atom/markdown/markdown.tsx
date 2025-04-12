@@ -32,14 +32,18 @@ export const Markdown = create(
         if (typeof homePath === "string") {
           nextUri = nextUri.replace(/^~/, homePath);
         } else {
-          nextUri = homePath(nextUri);
+          if (nextUri.startsWith("~")) {
+            nextUri = homePath(nextUri);
+          }
         }
       }
       if (atPath !== undefined) {
         if (typeof atPath === "string") {
           nextUri = nextUri.replace(/^@/, atPath);
         } else {
-          nextUri = atPath(nextUri);
+          if (nextUri.startsWith("@")) {
+            nextUri = atPath(nextUri);
+          }
         }
       }
       if (nextUri === "javascript:void(0)") {
