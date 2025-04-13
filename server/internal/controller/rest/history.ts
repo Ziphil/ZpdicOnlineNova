@@ -12,7 +12,7 @@ import {HistoryModel} from "/server/model";
 export class HistoryRestController extends InternalRestController {
 
   @post("/fetchHistories")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchHistories">, response: Response<"fetchHistories">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const from = new Date(request.body.from);

@@ -548,11 +548,10 @@ export class DictionarySchema extends DiscardableSchema {
     return {wordCount, wordNameLengths, equivalentNameCount, informationCount, informationTextLengths, exampleCount};
   }
 
-  /** 指定されたユーザーが指定された権限以上の権限をもっているか判定します。 */
-  public async hasAuthority(this: Dictionary, user: User, authority: DictionaryAuthority | "none"): Promise<boolean> {
-    if (authority === "none") {
-      return true;
-    } else {
+  /** 指定されたユーザーが指定された権限以上の権限をもっているか判定します。
+   * `user` が `null` の場合は、匿名ユーザー (限定公開以上の辞書に対して閲覧権限のみがある) として扱います。 */
+  public async hasAuthority(this: Dictionary, user: User | null, authority: DictionaryAuthority): Promise<boolean> {
+    if (user !== null) {
       await this.populate(["user", "editUsers"]);
       if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
         if (user.authority !== "admin") {
@@ -560,7 +559,10 @@ export class DictionarySchema extends DiscardableSchema {
             return this.user.id === user.id;
           } else if (authority === "edit") {
             return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+          } else if (authority === "view") {
+            return this.visibility === "public" || (this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined);
           } else {
+            authority satisfies never;
             throw new Error("cannot happen");
           }
         } else {
@@ -568,6 +570,12 @@ export class DictionarySchema extends DiscardableSchema {
         }
       } else {
         throw new Error("cannot happen");
+      }
+    } else {
+      if (authority !== "view") {
+        return false;
+      } else {
+        return this.visibility === "public";
       }
     }
   }

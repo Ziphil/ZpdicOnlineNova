@@ -42,7 +42,7 @@ export class ExampleRestController extends InternalRestController {
   }
 
   @post("/fetchExample")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchExample">, response: Response<"fetchExample">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {exampleNumber} = request.body;
@@ -56,7 +56,7 @@ export class ExampleRestController extends InternalRestController {
   }
 
   @post("/searchExamples")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: Request<"searchExamples">, response: Response<"searchExamples">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {offset, size} = request.body;

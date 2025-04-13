@@ -61,7 +61,7 @@ export class WordRestController extends InternalRestController {
   }
 
   @post("/fetchWord")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchWord">, response: Response<"fetchWord">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {wordNumber} = request.body;
@@ -75,7 +75,7 @@ export class WordRestController extends InternalRestController {
   }
 
   @post("/fetchWordNames")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {wordNumbers} = request.body;

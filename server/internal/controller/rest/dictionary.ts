@@ -154,7 +154,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/searchWords")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"searchWords", "dictionary">, response: Response<"searchWords">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {offset, size} = request.body;
@@ -169,7 +169,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/searchRelationWords")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"searchRelationWords", "dictionary">, response: Response<"searchRelationWords">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {pattern} = request.body;
@@ -179,7 +179,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/downloadDictionary")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"downloadDictionary", "dictionary">, response: Response<"downloadDictionary">): Promise<void> {
     const {dictionary} = request.middlewareBody ;
     const number = dictionary.number;
@@ -219,7 +219,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionarySizes")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchDictionarySizes", "dictionary">, response: Response<"fetchDictionarySizes">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const [wordCount, exampleCount] = await Promise.all([dictionary.countWords(), dictionary.countExamples()]);
@@ -228,7 +228,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchWordNameFrequencies")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchWordNameFrequencies", "dictionary">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const body = await dictionary.calcWordNameFrequencies();
@@ -236,7 +236,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionaryStatistics")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchDictionaryStatistics", "dictionary">, response: Response<"fetchDictionaryStatistics">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const body = await dictionary.calcStatistics();
@@ -244,7 +244,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/suggestDictionaryTitles")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"suggestDictionaryTitles", "dictionary">, response: Response<"suggestDictionaryTitles">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {propertyName, pattern} = request.body;
@@ -254,7 +254,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionaryAuthorizedUsers")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchDictionaryAuthorizedUsers", "dictionary">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {authorityQuery} = request.body;
@@ -296,7 +296,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fecthMyDictionaryAuthorities")
-  @before(parseMe(), checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fecthMyDictionaryAuthorities", "dictionary">, response: Response<"fecthMyDictionaryAuthorities">): Promise<void> {
     const {me, dictionary} = request.middlewareBody ;
     if (me) {

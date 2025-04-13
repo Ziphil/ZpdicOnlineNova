@@ -24,9 +24,9 @@ export function parseDictionary(): RequestHandler {
 }
 
 /** リクエストされた辞書に対してログイン中のユーザーに権限があるか調べ、権限がある場合にのみ、次の処理を行うようにします。
- * そもそも辞書が存在しない場合は、`noSuchDictionary` 404 エラーを返して終了します。
+ * 辞書が存在しない場合もしくは辞書が非公開の場合は、`noSuchDictionary` 400 エラーを返して終了します。
  * 辞書は存在していても権限がない場合は、`notEnoughDictionaryAuthority` 403 エラーを返して終了します。*/
-export function checkDictionary(authority?: DictionaryAuthority | "none"): Array<RequestHandler> {
+export function checkDictionary(authority: DictionaryAuthority): Array<RequestHandler> {
   const beforeHandler = parseDictionary();
   const handler = async function (request: Request & {middlewareBody: MiddlewareBody}, response: Response, next: NextFunction): Promise<void> {
     try {
@@ -34,11 +34,15 @@ export function checkDictionary(authority?: DictionaryAuthority | "none"): Array
       const dictionary = request.middlewareBody.dictionary;
       if (dictionary !== undefined) {
         if (dictionary !== null) {
-          const hasAuthority = (me !== null && me !== undefined) ? await dictionary.hasAuthority(me, authority ?? "none") : (authority ?? "none") === "none";;
+          const hasAuthority = await dictionary.hasAuthority(me ?? null, authority);
           if (hasAuthority) {
             next();
           } else {
-            response.status(403).json({error: "notEnoughDictionaryAuthority"}).end();
+            if (dictionary.visibility === "private") {
+              response.status(404).json({error: "noSuchDictionary"}).end();
+            } else {
+              response.status(403).json({error: "notEnoughDictionaryAuthority"}).end();
+            }
           }
         } else {
           response.status(404).json({error: "noSuchDictionary"}).end();

@@ -41,7 +41,7 @@ export class ArticleRestController extends InternalRestController {
   }
 
   @post("/fetchArticle")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchArticle">, response: Response<"fetchArticle">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {articleNumber} = request.body;
@@ -55,7 +55,7 @@ export class ArticleRestController extends InternalRestController {
   }
 
   @post("/searchArticles")
-  @before(checkDictionary())
+  @before(checkDictionary("view"))
   public async [Symbol()](request: Request<"searchArticles">, response: Response<"searchArticles">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {offset, size} = request.body;
