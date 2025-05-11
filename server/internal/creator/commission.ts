@@ -1,7 +1,7 @@
 //
 
 import type {
-  Commission as CommissionSkeleton
+  Proposal as CommissionSkeleton
 } from "/client/skeleton";
 import {
   Commission

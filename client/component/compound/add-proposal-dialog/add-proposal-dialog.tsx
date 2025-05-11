@@ -20,11 +20,11 @@ import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {useDialogOpen} from "/client/hook/dialog";
 import {DictionaryWithExecutors} from "/client/skeleton";
-import {useAddCommission} from "./add-commission-dialog-hook";
+import {useAddProposal} from "./add-proposal-dialog-hook";
 
 
-export const AddCommissionDialog = create(
-  require("./add-commission-dialog.scss"), "AddCommissionDialog",
+export const AddProposalDialog = create(
+  require("./add-proposal-dialog.scss"), "AddProposalDialog",
   function ({
     dictionary,
     trigger,
@@ -35,9 +35,9 @@ export const AddCommissionDialog = create(
     className?: string
   }): ReactElement {
 
-    const {trans} = useTrans("addCommissionDialog");
+    const {trans} = useTrans("addProposalDialog");
 
-    const {form, handleSubmit} = useAddCommission(dictionary);
+    const {form, handleSubmit} = useAddProposal(dictionary);
     const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen({handleSubmit, onOpen: form.resetAll});
     const {register, getFieldState, formState: {errors}} = form;
 

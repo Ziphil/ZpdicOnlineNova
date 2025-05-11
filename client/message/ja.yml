@@ -56,9 +56,9 @@ toast:
       記事を編集しました。
     discardArticle: |-
       記事を削除しました。
-    addCommission: |-
+    addProposal: |-
       造語依頼を行いました。
-    discardCommission: |-
+    discardProposal: |-
       造語依頼を削除しました。
     addResource: |-
       画像をアップロードしました。
@@ -174,9 +174,9 @@ toast:
       この招待は存在しません。
     noSuchDictionaryAuthorizedUser: |-
       そのユーザーは権限を保有していません。
-    emptyCommissionName: |-
+    emptyProposalName: |-
       造語依頼する単語が空です。
-    noSuchCommission: |-
+    noSuchProposal: |-
       その造語依頼は存在しません。
     emptyContactText: |-
       お問い合わせ内容が空です。
@@ -259,7 +259,7 @@ wordTypeSelect:
     exact: "完全"
     regular: "正規"
 
-addCommissionDialog:
+addProposalDialog:
   heading: "造語依頼"
   label:
     name: "単語"
@@ -292,7 +292,7 @@ changeAppearanceForm:
   theme:
     light: "ライト"
     dark: "ダーク"
-commissionList:
+proposalList:
   empty: "造語依頼はされていません"
   button:
     add: "造語"
@@ -336,7 +336,7 @@ dictionaryHeader:
     article: "記事"
     resource: "画像"
     information: "詳細情報"
-    commission: "造語依頼"
+    proposal: "造語依頼"
     setting: "設定"
   table:
     updatedDate: "更新日時"
@@ -351,7 +351,7 @@ dictionaryHeader:
     addArticle: 
       long: "記事を作成"
       short: "記事"
-    addCommission: "造語依頼"
+    addProposal: "造語依頼"
     download: "ダウンロード"
   userCount: "<plus>+</plus>{count, number}"
 dictionaryList:
@@ -635,7 +635,7 @@ wordList:
     share: "共有"
     select: "この版に戻す"
     create: "作成"
-    commission: "造語依頼"
+    proposal: "造語依頼"
   dialog:
     discard:
       message: >-
@@ -903,9 +903,9 @@ dictionaryArticlePart:
 dictionaryArticleSinglePart:
   button:
     back: "一覧に戻る"
-dictionaryCommissionPart:
+dictionaryProposalPart:
   button:
-    addCommission: "造語依頼を追加"
+    addProposal: "造語依頼"
 dictionaryExamplePart:
   heading:
     offer: "今日の例文"
@@ -924,7 +924,7 @@ dictionaryInformationPart:
 dictionaryMainPart:
   button:
     addWord: "単語を作成"
-    addCommission: "造語依頼"
+    addProposal: "造語依頼"
 dictionaryResourcePart:
   explanation: >-
     アップロードした画像は、辞書の説明欄や単語の内容欄で使用することができます。

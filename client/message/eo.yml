@@ -259,7 +259,7 @@ wordTypeSelect:
     exact: "Ekzakta"
     regular: "Regesp"
 
-addCommissionDialog:
+addProposalDialog:
   heading: "Peti kreadon de vorto"
   label:
     name: "Vorto"
@@ -268,7 +268,7 @@ addCommissionDialog:
     confirm: "Konfirmi"
   error:
     nameRequired: >-
-      Enigu la vorton por peti.
+      Enigu la vorton kies kreadon vi petas.
 articleList:
   empty: "Neniuj artikoloj estas kreitaj"
   button:
@@ -292,7 +292,7 @@ changeAppearanceForm:
   theme:
     light: "Luma"
     dark: "Malluma"
-commissionList:
+proposalList:
   empty: "Neniuj vortoj estas petitaj"
   button:
     add: "Krei"
@@ -336,7 +336,7 @@ dictionaryHeader:
     article: "Artikoloj"
     resource: "Bildoj"
     information: "Detaloj"
-    commission: "Petoj"
+    proposal: "Petoj"
     setting: "Agordoj"
   table:
     updatedDate: "Ĝisdatigita je"
@@ -351,7 +351,7 @@ dictionaryHeader:
     addArticle: 
       long: "Krei artikolon"
       short: "Artikolo"
-    addCommission: "Peti"
+    addProposal: "Peti"
     download: "Elŝuti"
   userCount: "<plus>+</plus>{count, number}"
 dictionaryList:
@@ -635,7 +635,7 @@ wordList:
     share: "Kunhavigi"
     select: "Reveni al tiu versio"
     create: "Krei"
-    commission: "Peti kreadon"
+    proposal: "Peti kreadon"
   dialog:
     discard:
       message: >-
@@ -903,9 +903,9 @@ dictionaryArticlePart:
 dictionaryArticleSinglePart:
   button:
     back: "Reiri al listo"
-dictionaryCommissionPart:
+dictionaryProposalPart:
   button:
-    addCommission: "Krei peton"
+    addProposal: "Krei peton"
 dictionaryExamplePart:
   heading:
     offer: "Hodiaŭa frazo"

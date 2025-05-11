@@ -56,9 +56,9 @@ toast:
       The article has been edited.
     discardArticle: |-
       The article has been deleted.
-    addCommission: |-
+    addProposal: |-
       A new request has been sent.
-    discardCommission: |-
+    discardProposal: |-
       The request has been deleted.
     addResource: |-
       An image has been uploaded.
@@ -174,9 +174,9 @@ toast:
       This invitation does not exist.
     noSuchDictionaryAuthorizedUser: |-
       The user does not have the permission.
-    emptyCommissionName: |-
+    emptyProposalName: |-
       The word to request is empty.
-    noSuchCommission: |-
+    noSuchProposal: |-
       This request does not exist.
     emptyContactText: |-
       The message is empty.
@@ -259,7 +259,7 @@ wordTypeSelect:
     exact: "Exact"
     regular: "Regex"
 
-addCommissionDialog:
+addProposalDialog:
   heading: "Request word creation"
   label:
     name: "Word"
@@ -292,7 +292,7 @@ changeAppearanceForm:
   theme:
     light: "Light"
     dark: "Dark"
-commissionList:
+proposalList:
   empty: "No words are requested"
   button:
     add: "Create"
@@ -336,7 +336,7 @@ dictionaryHeader:
     article: "Articles"
     resource: "Images"
     information: "Details"
-    commission: "Requests"
+    proposal: "Requests"
     setting: "Settings"
   table:
     updatedDate: "Updated at"
@@ -351,7 +351,7 @@ dictionaryHeader:
     addArticle:
       long: "Create article"
       short: "Article"
-    addCommission: "Request"
+    addProposal: "Request"
     download: "Download"
   userCount: "<plus>+</plus>{count, number}"
 dictionaryList:
@@ -635,7 +635,7 @@ wordList:
     share: "Share"
     select: "Revert to this version"
     create: "Create"
-    commission: "Request creation"
+    proposal: "Request creation"
   dialog:
     discard:
       message: >-
@@ -903,9 +903,9 @@ dictionaryArticlePart:
 dictionaryArticleSinglePart:
   button:
     back: "Back to list"
-dictionaryCommissionPart:
+dictionaryProposalPart:
   button:
-    addCommission: "Create request"
+    addProposal: "Create request"
 dictionaryExamplePart:
   heading:
     offer: "Today’s sentence"
@@ -924,7 +924,7 @@ dictionaryInformationPart:
 dictionaryMainPart:
   button:
     addWord: "Create word"
-    addCommission: "Request"
+    addProposal: "Request"
 dictionaryResourcePart:
   explanation: >-
     You can use the uploaded images in the description of the dictionary and the content of words.
@@ -1033,7 +1033,7 @@ errorPage:
       The page you are looking for could not be found.
       It may have been deleted or moved to another location, so please try looking again from the top page.
     forbidden: >-
-      You don’t have permission to view this page.
+      You don't have permission to view this page.
       Please return to the top page for other contents.
     error: >-
       An unexpected error has occurred.

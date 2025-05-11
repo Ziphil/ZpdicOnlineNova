@@ -1,29 +1,27 @@
-//
-
 import {faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {useCallback} from "react";
 import {useTrans} from "zographia";
 import {useCommonAlert} from "/client/component/atom/common-alert";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Commission, Dictionary} from "/client/skeleton";
+import {Dictionary, Proposal} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 
 
-export function useDiscardCommission(dictionary: Dictionary, commission: Commission): () => void {
-  const {trans} = useTrans("commissionList");
+export function useDiscardProposal(dictionary: Dictionary, proposal: Proposal): () => void {
+  const {trans} = useTrans("proposalList");
   const request = useRequest();
   const openAlert = useCommonAlert();
   const {dispatchSuccessToast} = useToast();
   const doRequest = useCallback(async function (): Promise<void> {
     const number = dictionary.number;
-    const id = commission.id;
-    const response = await request("discardCommission", {number, id});
+    const id = proposal.id;
+    const response = await request("discardProposal", {number, id});
     await switchResponse(response, async () => {
-      await invalidateResponses("fetchCommissions", (query) => query.number === dictionary.number);
-      dispatchSuccessToast("discardCommission");
+      await invalidateResponses("fetchProposals", (query) => query.number === dictionary.number);
+      dispatchSuccessToast("discardProposal");
     });
-  }, [dictionary.number, commission.id, request, dispatchSuccessToast]);
+  }, [dictionary.number, proposal.id, request, dispatchSuccessToast]);
   const execute = useCallback(function (): void {
     openAlert({
       message: trans("dialog.discard.message"),

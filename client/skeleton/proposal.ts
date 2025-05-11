@@ -1,9 +1,7 @@
-//
-
 import {DateString, ObjectId} from "/client/skeleton/common";
 
 
-export interface Commission {
+export interface Proposal {
 
   id: ObjectId;
   name: string;

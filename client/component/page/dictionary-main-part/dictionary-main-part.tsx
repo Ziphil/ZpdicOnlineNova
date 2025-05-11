@@ -6,7 +6,7 @@ import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, LoadingIcon, useTra
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {fakNoteCirclePlus} from "/client/component/atom/icon";
 import {Markdown} from "/client/component/atom/markdown";
-import {AddCommissionDialog} from "/client/component/compound/add-commission-dialog";
+import {AddProposalDialog} from "/client/component/compound/add-proposal-dialog";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {SearchWordForm} from "/client/component/compound/search-word-form";
 import {SuggestionCard} from "/client/component/compound/suggestion-card";
@@ -75,10 +75,10 @@ export const DictionaryMainPart = create(
                   </Button>
                 )}/>
               ) : (
-                <AddCommissionDialog dictionary={dictionary} trigger={(
+                <AddProposalDialog dictionary={dictionary} trigger={(
                   <Button scheme="gray" variant="light">
                     <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
-                    {trans("button.addCommission")}
+                    {trans("button.addProposal")}
                   </Button>
                 )}/>
               )}
@@ -90,7 +90,7 @@ export const DictionaryMainPart = create(
             <WordList
               dictionary={dictionary}
               words={hitWords}
-              emptyType={(hitSuggestions.length > 0) ? "none" : (authorities?.includes("edit")) ? "create" : "commission"}
+              emptyType={(hitSuggestions.length > 0) ? "none" : (authorities?.includes("edit")) ? "create" : "proposal"}
               pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}
             />
           </div>

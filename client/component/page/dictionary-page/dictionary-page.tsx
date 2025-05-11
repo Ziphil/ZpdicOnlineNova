@@ -62,7 +62,7 @@ function getTabValue(tabPath: string | undefined): DictionaryHeaderTabValue {
   } else if (tabPath === "info") {
     return "information";
   } else if (tabPath === "requests") {
-    return "commission";
+    return "proposal";
   } else if (tabPath === "settings") {
     return "setting";
   } else {

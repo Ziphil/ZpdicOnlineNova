@@ -13,9 +13,9 @@ import {mapWithSize} from "/server/util/with-size";
 @restController(SERVER_PATH_PREFIX)
 export class CommissionRestController extends InternalRestController {
 
-  @post("/addCommission")
+  @post("/addProposal")
   @before(checkRecaptcha(), parseDictionary())
-  public async [Symbol()](request: Request<"addCommission">, response: Response<"addCommission">): Promise<void> {
+  public async [Symbol()](request: Request<"addProposal">, response: Response<"addProposal">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {name, comment} = request.body;
     if (name !== "") {
@@ -23,13 +23,13 @@ export class CommissionRestController extends InternalRestController {
       const body = CommissionCreator.skeletonize(commission);
       InternalRestController.respond(response, body);
     } else {
-      InternalRestController.respondError(response, "emptyCommissionName");
+      InternalRestController.respondError(response, "emptyProposalName");
     }
   }
 
-  @post("/discardCommission")
+  @post("/discardProposal")
   @before(checkMe(), checkDictionary("edit"))
-  public async [Symbol()](request: Request<"discardCommission">, response: Response<"discardCommission">): Promise<void> {
+  public async [Symbol()](request: Request<"discardProposal">, response: Response<"discardProposal">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {id} = request.body;
     const commission = await CommissionModel.fetchOneByDictionaryAndId(dictionary, id);
@@ -38,13 +38,13 @@ export class CommissionRestController extends InternalRestController {
       const body = CommissionCreator.skeletonize(commission);
       InternalRestController.respond(response, body);
     } else {
-      InternalRestController.respondError(response, "noSuchCommission");
+      InternalRestController.respondError(response, "noSuchProposal");
     }
   }
 
-  @post("/fetchCommissions")
+  @post("/fetchProposals")
   @before(checkMe(), checkDictionary("edit"))
-  public async [Symbol()](request: Request<"fetchCommissions">, response: Response<"fetchCommissions">): Promise<void> {
+  public async [Symbol()](request: Request<"fetchProposals">, response: Response<"fetchProposals">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {offset, size} = request.body;
     const range = new QueryRange(offset, size);

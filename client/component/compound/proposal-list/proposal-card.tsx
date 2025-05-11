@@ -5,37 +5,37 @@ import {ReactElement, useMemo} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, useTrans} from "zographia";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
-import {Commission, DictionaryWithExecutors, EditableWord} from "/client/skeleton";
-import {useDiscardCommission} from "./commission-card-hook";
+import {DictionaryWithExecutors, EditableWord, Proposal} from "/client/skeleton";
+import {useDiscardProposal} from "./proposal-card-hook";
 
 
-export const CommissionCard = create(
-  require("./commission-card.scss"), "CommissionCard",
+export const ProposalCard = create(
+  require("./proposal-card.scss"), "ProposalCard",
   function ({
     dictionary,
-    commission,
+    proposal,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    commission: Commission,
+    proposal: Proposal,
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("commissionList");
+    const {trans} = useTrans("proposalList");
 
-    const word = useMemo(() => getWord(commission), [commission]);
+    const word = useMemo(() => getWord(proposal), [proposal]);
 
-    const discardCommission = useDiscardCommission(dictionary, commission);
+    const discardProposal = useDiscardProposal(dictionary, proposal);
 
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
           <MultiLineText styleName="name">
-            {commission.name}
+            {proposal.name}
           </MultiLineText>
-          {(!!commission.comment) && (
+          {(!!proposal.comment) && (
             <MultiLineText styleName="comment">
-              {commission.comment}
+              {proposal.comment}
             </MultiLineText>
           )}
         </CardBody>
@@ -46,7 +46,7 @@ export const CommissionCard = create(
               {trans("button.add")}
             </Button>
           )}/>
-          <Button scheme="red" variant="underline" onClick={discardCommission}>
+          <Button scheme="red" variant="underline" onClick={discardProposal}>
             <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
             {trans("button.discard")}
           </Button>
@@ -58,11 +58,11 @@ export const CommissionCard = create(
 );
 
 
-function getWord(commission: Commission): EditableWord {
+function getWord(proposal: Proposal): EditableWord {
   const word = {
     number: null,
     name: "",
-    equivalents: [{titles: [], names: [commission.name], nameString: commission.name}],
+    equivalents: [{titles: [], names: [proposal.name], nameString: proposal.name}],
     tags: [],
     informations: [{title: "", text: ""}],
     variations: [],
