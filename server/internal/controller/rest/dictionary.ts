@@ -207,6 +207,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionary")
+  @before(checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchDictionary">, response: Response<"fetchDictionary">): Promise<void> {
     const {identifier} = request.body;
     const dictionary = await DictionaryModel.fetchOneByIdentifier(identifier);
@@ -296,7 +297,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fecthMyDictionaryAuthorities")
-  @before(parseMe(), checkDictionary("view"))
+  @before(parseMe())
   public async [Symbol()](request: FilledRequest<"fecthMyDictionaryAuthorities", "dictionary">, response: Response<"fecthMyDictionaryAuthorities">): Promise<void> {
     const {me, dictionary} = request.middlewareBody ;
     if (me) {

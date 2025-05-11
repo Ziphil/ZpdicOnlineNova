@@ -35,6 +35,10 @@ export const ChangeDictionaryVisibilityForm = create(
               <Radio value="unlisted" {...register("visibility")}/>
               <CheckableLabel>{trans("label.unlisted")}</CheckableLabel>
             </CheckableContainer>
+            <CheckableContainer>
+              <Radio value="private" {...register("visibility")}/>
+              <CheckableLabel>{trans("label.private")}</CheckableLabel>
+            </CheckableContainer>
           </div>
         </ControlContainer>
         <div>

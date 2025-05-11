@@ -560,7 +560,7 @@ export class DictionarySchema extends DiscardableSchema {
           } else if (authority === "edit") {
             return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
           } else if (authority === "view") {
-            return this.visibility === "public" || (this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined);
+            return (this.visibility === "public" || this.visibility === "unlisted") || this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
           } else {
             authority satisfies never;
             throw new Error("cannot happen");
@@ -575,7 +575,7 @@ export class DictionarySchema extends DiscardableSchema {
       if (authority !== "view") {
         return false;
       } else {
-        return this.visibility === "public";
+        return this.visibility === "public" || this.visibility === "unlisted";
       }
     }
   }
