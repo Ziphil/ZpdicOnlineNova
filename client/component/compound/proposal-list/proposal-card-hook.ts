@@ -1,3 +1,5 @@
+//
+
 import {faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {useCallback} from "react";
 import {useTrans} from "zographia";

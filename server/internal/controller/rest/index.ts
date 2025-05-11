@@ -1,7 +1,7 @@
 //
 
 export * from "./article";
-export * from "./commission";
+export * from "./proposal";
 export * from "./dictionary";
 export * from "./debug";
 export * from "./example";

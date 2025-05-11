@@ -29,7 +29,7 @@ export * from "./word-parameter/advanced-word-parameter";
 export * from "./word-parameter/exact-word-parameter";
 export * from "./word-parameter/normal-word-parameter";
 export * from "./article";
-export * from "./commission";
+export * from "./proposal";
 export * from "./error";
 export * from "./history";
 export * from "./invitation";

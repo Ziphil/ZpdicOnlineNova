@@ -1,22 +1,22 @@
 //
 
 import type {
-  Proposal as CommissionSkeleton
+  Proposal as ProposalSkeleton
 } from "/client/skeleton";
 import {
-  Commission
+  Proposal
 } from "/server/model";
 
 
-export namespace CommissionCreator {
+export namespace ProposalCreator {
 
-  export function skeletonize(raw: Commission): CommissionSkeleton {
+  export function skeletonize(raw: Proposal): ProposalSkeleton {
     const skeleton = {
       id: raw.id,
       name: raw.name,
       comment: raw.comment,
       createdDate: raw.createdDate.toISOString()
-    } satisfies CommissionSkeleton;
+    } satisfies ProposalSkeleton;
     return skeleton;
   }
 
