@@ -90,6 +90,7 @@
     "nprogress": "^0.2.0",
     "oboe": "^2.1.5",
     "query-string": "^7.1.0",
+    "re2js": "^1.1.0",
     "react": "^18.2.0",
     "react-css-modules": "^4.7.11",
     "react-dom": "^18.2.0",

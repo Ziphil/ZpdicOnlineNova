@@ -297,7 +297,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fecthMyDictionaryAuthorities")
-  @before(parseMe())
+  @before(parseMe(), checkDictionary("none"))
   public async [Symbol()](request: FilledRequest<"fecthMyDictionaryAuthorities", "dictionary">, response: Response<"fecthMyDictionaryAuthorities">): Promise<void> {
     const {me, dictionary} = request.middlewareBody ;
     if (me) {

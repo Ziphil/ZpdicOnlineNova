@@ -1,5 +1,6 @@
 //
 
+import {RE2JS as Re2} from "re2js";
 import {BaseSyntheticEvent, useMemo} from "react";
 import {noop} from "ts-essentials";
 import {RelationWord} from "/client/component/atom/relation-word-select";
@@ -175,7 +176,7 @@ function createEquivalentNames(dictionary: Dictionary, rawEquivalent: FormValue[
     const ignoredPattern = dictionary.settings.ignoredEquivalentPattern;
     if (ignoredPattern) {
       try {
-        return new RegExp(ignoredPattern, "g");
+        return Re2.compile(ignoredPattern);
       } catch (error) {
         return undefined;
       }
@@ -183,7 +184,7 @@ function createEquivalentNames(dictionary: Dictionary, rawEquivalent: FormValue[
       return undefined;
     }
   })();
-  const ignoredNameString = (ignoredRegexp) ? rawEquivalent.nameString.replace(ignoredRegexp, "") : rawEquivalent.nameString;
+  const ignoredNameString = (ignoredRegexp) ? ignoredRegexp.matcher(rawEquivalent.nameString).replaceAll("") : rawEquivalent.nameString;
   const names = ignoredNameString.split(punctuationRegexp).map((name) => name.trim()).filter((name) => name);
   return names;
 }
