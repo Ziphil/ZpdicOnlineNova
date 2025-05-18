@@ -7,7 +7,7 @@ import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {Dictionary, DictionarySettings} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
-import {testRegexpPattern} from "/client/util/validation";
+import {testLinearRegexpPattern} from "/client/util/validation";
 import type {RequestData} from "/server/internal/type/rest";
 
 
@@ -35,7 +35,7 @@ export function useChangeDictionarySettings<N extends keyof DictionarySettings>(
 
 function getSchema<N extends keyof DictionarySettings>(propertyName: N): StringSchema {
   if (propertyName === "ignoredEquivalentPattern") {
-    return string().test(testRegexpPattern("invalidPattern"));
+    return string().test(testLinearRegexpPattern("invalidPattern"));
   } else {
     return string();
   }

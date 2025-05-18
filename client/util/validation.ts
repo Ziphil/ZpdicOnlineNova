@@ -1,5 +1,6 @@
 //
 
+import {RE2JS as Re2} from "re2js";
 import {TestConfig} from "yup";
 
 
@@ -50,4 +51,20 @@ export function testRegexpPattern(message?: string): TestConfig<string | undefin
     }
   };
   return {name: "regexpPattern", message, test};
+}
+
+export function testLinearRegexpPattern(message?: string): TestConfig<string | undefined> {
+  const test = function (string: string | undefined): boolean {
+    if (string !== undefined) {
+      try {
+        const regexp = Re2.compile(string);
+        return true;
+      } catch (error) {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+  return {name: "linearRegexpPattern", message, test};
 }
