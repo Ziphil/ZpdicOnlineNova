@@ -8,12 +8,12 @@ import {UseFormReturn, useForm} from "/client/hook/form";
 import {useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
-import {IDENTIFIER_REGEXP} from "/client/util/validation";
+import {testIdentifier} from "/client/util/validation";
 import type {RequestData} from "/server/internal/type/rest";
 
 
 const SCHEMA = object({
-  name: string().matches(IDENTIFIER_REGEXP, "nameInvalid").max(30, "nameTooLong").required("nameRequired"),
+  name: string().test(testIdentifier("nameInvalid")).max(30, "nameTooLong").required("nameRequired"),
   email: string().email("emailInvalid").required("emailRequired"),
   password: string().min(6, "passwordTooShort").max(50, "passwordTooLong").required("passwordRequired"),
   agree: boolean().oneOf([true], "agreeRequired")

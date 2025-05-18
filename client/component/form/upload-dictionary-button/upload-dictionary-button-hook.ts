@@ -8,11 +8,11 @@ import {useToast} from "/client/hook/toast";
 import {Dictionary} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 import {listenSocket, requestSocket} from "/client/util/socket";
-import {validateFileSize} from "/client/util/validation";
+import {testFileSize} from "/client/util/validation";
 
 
 const SCHEMA = object({
-  file: mixed<File>().required("required").test("fileSize", "tooLarge", validateFileSize(5))
+  file: mixed<File>().required("required").test(testFileSize(5, "tooLarge"))
 });
 const DEFAULT_VALUE = {
   file: undefined as any

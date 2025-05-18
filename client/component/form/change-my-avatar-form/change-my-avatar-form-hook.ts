@@ -10,11 +10,11 @@ import {UserWithDetail} from "/client/skeleton";
 import {uploadFileToAws} from "/client/util/aws";
 import {determineAwsErrorToastType} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
-import {validateFileSize} from "/client/util/validation";
+import {testFileSize} from "/client/util/validation";
 
 
 const SCHEMA = object({
-  file: mixed<File>().required("required").test("fileSize", "tooLarge", validateFileSize(1))
+  file: mixed<File>().required("required").test(testFileSize(1, "tooLarge"))
 });
 const DEFAULT_VALUE = {
   file: undefined as any
