@@ -68,7 +68,6 @@ export class ExampleRestController extends InternalRestController {
   }
 
   @post("/fetchExamplesByOffer")
-  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchExamplesByOffer">, response: Response<"fetchExamplesByOffer">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {offer, offset, size} = request.body;
