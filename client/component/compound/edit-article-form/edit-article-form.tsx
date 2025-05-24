@@ -3,10 +3,10 @@
 import {ReactElement, Ref, useCallback, useState} from "react";
 import {AdditionalProps, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {Dictionary, EditableArticle} from "/client/skeleton";
+import {Dictionary} from "/client/skeleton";
 import {assignRef} from "/client/util/ref";
 import {EditArticleFormEditPart} from "./edit-article-form-edit-part";
-import {EditArticleFormValue, EditArticleInitialData, useEditArticle} from "./edit-article-form-hook";
+import {EditArticleFormValue, EditArticleInitialData, EditArticleSpec} from "./edit-article-form-hook";
 
 
 export const EditArticleForm = create(
@@ -14,20 +14,19 @@ export const EditArticleForm = create(
   function ({
     dictionary,
     initialData,
+    formSpec,
     formRef,
-    onSubmit,
     ...rest
   }: {
     dictionary: Dictionary,
     initialData: EditArticleInitialData | null,
+    formSpec: EditArticleSpec,
     formRef?: Ref<() => EditArticleFormValue>,
-    onSubmit?: (example: EditableArticle) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editArticleForm");
 
-    const formSpec = useEditArticle(dictionary, initialData, onSubmit);
     const {form} = formSpec;
 
     const [tabValue, setTabValue] = useState<"edit">("edit");

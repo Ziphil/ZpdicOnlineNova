@@ -390,6 +390,9 @@ dictionaryStatisticsView:
     informationAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {item/word} other {items/word}}</unit>"
     informationText: "<number>{value, number}</number><unit>{value, plural, one {char} other {chars}}</unit>"
     informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {char/word} other {chars/word}}</unit>"
+editArticleDialog:
+  button:
+    confirm: "Confirm"
 editArticleForm:
   tab:
     edit: "Edit"
@@ -401,6 +404,7 @@ editArticleForm:
     confirm: "Confirm"
 editExampleDialog:
   button:
+    confirm: "Confirm"
     external: "Open in new tab"
 editExampleForm:
   tab:
@@ -424,6 +428,7 @@ editExampleForm:
     confirm: "Confirm"
 editWordDialog:
   button:
+    confirm: "Confirm"
     external: "Open in new tab"
 editWordForm:
   tab:
@@ -1024,6 +1029,15 @@ dictionarySettingGeneralPart:
     discard: >-
       Deleting this dictionary will also delete all the relevant data, including words and example sentences.
       Please be certain, as there is no going back.
+editArticlePage:
+  button:
+    confirm: "Confirm"
+editExamplePage:
+  button:
+    confirm: "Confirm"
+editWordPage:
+  button:
+    confirm: "Confirm"
 errorPage:
   heading:
     notFound: "Not\nFound"

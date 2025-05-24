@@ -390,6 +390,9 @@ dictionaryStatisticsView:
     informationAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {ero/vorto} other {eroj/vorto}}</unit>"
     informationText: "<number>{value, number}</number><unit>{value, plural, one {signo} other {signoj}}</unit>"
     informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {signo/vorto} other {signoj/vorto}}</unit>"
+editArticleDialog:
+  button:
+    confirm: "Konfirmi"
 editArticleForm:
   tab:
     edit: "Redakti"
@@ -401,6 +404,7 @@ editArticleForm:
     confirm: "Konfirmi"
 editExampleDialog:
   button:
+    confirm: "Konfirmi"
     external: "Malfermi en nova langeto"
 editExampleForm:
   tab:
@@ -424,6 +428,7 @@ editExampleForm:
     confirm: "Konfirmi"
 editWordDialog:
   button:
+    confirm: "Konfirmi"
     external: "Malfermi en nova langeto"
 editWordForm:
   tab:
@@ -1024,6 +1029,15 @@ dictionarySettingGeneralPart:
     discard: >-
       Forigi tiun vortaron ankaŭ forigos ĉiujn rilatajn datumojn, inkluzive de vortoj kaj ekzemplaj frazoj.
       Bonvolu esti certa, ĉar ne estas reiro.
+editArticlePage:
+  button:
+    confirm: "Konfirmi"
+editExamplePage:
+  button:
+    confirm: "Konfirmi"
+editWordPage:
+  button:
+    confirm: "Konfirmi"
 errorPage:
   heading:
     notFound: "Ne\nTrovita"

@@ -5,10 +5,10 @@ import {ReactElement, Ref, useState} from "react";
 import {UseFormReturn} from "react-hook-form";
 import {AdditionalProps, GeneralIcon, Tab, TabIconbag, TabList, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, EditableExample} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {assignRef} from "/client/util/ref";
 import {EditExampleFormEditPart} from "./edit-example-form-edit-part";
-import {EditExampleFormValue, EditExampleInitialData, useEditExample} from "./edit-example-form-hook";
+import {EditExampleFormValue, EditExampleInitialData, EditExampleSpec} from "./edit-example-form-hook";
 import {EditExampleFormOfferPart} from "./edit-example-form-offer-part";
 
 
@@ -17,20 +17,19 @@ export const EditExampleForm = create(
   function ({
     dictionary,
     initialData,
+    formSpec,
     formRef,
-    onSubmit,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditExampleInitialData | null,
+    formSpec: EditExampleSpec,
     formRef?: Ref<UseFormReturn<EditExampleFormValue>>,
-    onSubmit?: (example: EditableExample) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editExampleForm");
 
-    const formSpec = useEditExample(dictionary, initialData, onSubmit);
     const {form} = formSpec;
 
     const [tabValue, setTabValue] = useState<"edit" | "offer">("edit");

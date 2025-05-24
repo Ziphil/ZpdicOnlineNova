@@ -1,14 +1,17 @@
 //
 
-import {faArrowUpRightFromSquare} from "@fortawesome/sharp-regular-svg-icons";
+import {faArrowUpRightFromSquare, faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, MouseEvent, ReactElement, Ref, RefObject, cloneElement, isValidElement, useCallback, useRef, useState} from "react";
 import {UseFormReturn} from "react-hook-form";
 import {useHref} from "react-router-dom";
 import rison from "rison";
 import {
+  Button,
+  ButtonIconbag,
   Dialog,
   DialogBody,
   DialogCloseButton,
+  DialogFooter,
   DialogOutsideButton,
   DialogOutsideButtonContainer,
   DialogOutsideButtonIconbag,
@@ -16,7 +19,7 @@ import {
   GeneralIcon,
   useTrans
 } from "zographia";
-import {EditExampleForm, EditExampleFormValue, EditExampleInitialData, getEditExampleFormValue} from "/client/component/compound/edit-example-form";
+import {EditExampleForm, EditExampleFormValue, EditExampleInitialData, getEditExampleFormValue, useEditExample} from "/client/component/compound/edit-example-form";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
@@ -71,6 +74,8 @@ export const EditExampleDialog = create(
       }
     }, [addExamplePageUrlBase, actualFormRef]);
 
+    const formSpec = useEditExample(dictionary, initialData, closeDialog);
+
     if (isRef(trigger)) {
       assignRef(trigger, openDialog);
     }
@@ -88,8 +93,14 @@ export const EditExampleDialog = create(
             </DialogOutsideButtonContainer>
             <DialogCloseButton/>
             <DialogBody>
-              <EditExampleForm dictionary={dictionary} initialData={initialData} formRef={actualFormRef} onSubmit={closeDialog}/>
+              <EditExampleForm dictionary={dictionary} initialData={initialData} formSpec={formSpec} formRef={actualFormRef}/>
             </DialogBody>
+            <DialogFooter>
+              <Button onClick={formSpec.handleSubmit}>
+                <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
+                {trans("button.confirm")}
+              </Button>
+            </DialogFooter>
           </DialogPane>
         </Dialog>
       </Fragment>

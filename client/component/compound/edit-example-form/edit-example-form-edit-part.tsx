@@ -1,8 +1,7 @@
 //
 
-import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {AdditionalProps} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {preventDefault} from "/client/util/form";
@@ -23,21 +22,13 @@ export const EditExampleFormEditPart = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("editExampleForm");
-
-    const {form, handleSubmit} = formSpec;
+    const {form} = formSpec;
 
     return (
       <form styleName="root" onSubmit={preventDefault} {...rest}>
         <div styleName="main">
           <EditExampleFormBasicSection dictionary={dictionary} form={form}/>
           <EditExampleFormWordSection dictionary={dictionary} form={form}/>
-        </div>
-        <div styleName="button">
-          <Button onClick={handleSubmit}>
-            <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.confirm")}
-          </Button>
         </div>
       </form>
     );

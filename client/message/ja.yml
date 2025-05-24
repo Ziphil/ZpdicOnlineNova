@@ -390,6 +390,9 @@ dictionaryStatisticsView:
     informationAverage: "<number>{value, number, ::.00}</number><unit>項目/語</unit>"
     informationText: "<number>{value, number}</number><unit>文字</unit>"
     informationTextAverage: "<number>{value, number, ::.00}</number><unit>文字/語</unit>"
+editArticleDialog:
+  button:
+    confirm: "決定"
 editArticleForm:
   tab:
     edit: "編集"
@@ -401,6 +404,7 @@ editArticleForm:
     confirm: "決定"
 editExampleDialog:
   button:
+    confirm: "決定"
     external: "別タブで表示"
 editExampleForm:
   tab:
@@ -424,6 +428,7 @@ editExampleForm:
     confirm: "決定"
 editWordDialog:
   button:
+    confirm: "決定"
     external: "別タブで表示"
 editWordForm:
   tab:
@@ -1025,6 +1030,15 @@ dictionarySettingGeneralPart:
     discard: >-
       この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。
       後からデータを復元することはできないので、慎重に行ってください。
+editArticlePage:
+  button:
+    confirm: "決定"
+editExamplePage:
+  button:
+    confirm: "決定"
+editWordPage:
+  button:
+    confirm: "決定"
 errorPage:
   heading:
     notFound: "Not\nFound"
