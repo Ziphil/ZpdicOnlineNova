@@ -2,7 +2,7 @@
 
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
-import {checkDictionary, checkMe, parseDictionary} from "/server/internal/controller/rest/middleware";
+import {checkDictionary, checkMe, parseMe} from "/server/internal/controller/rest/middleware";
 import {ExampleCreator, ExampleOfferCreator, ExampleOfferParameterCreator, ExampleParameterCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {ExampleModel, ExampleOfferModel} from "/server/model";
@@ -42,7 +42,7 @@ export class ExampleRestController extends InternalRestController {
   }
 
   @post("/fetchExample")
-  @before(checkDictionary("view"))
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchExample">, response: Response<"fetchExample">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {exampleNumber} = request.body;
@@ -56,7 +56,7 @@ export class ExampleRestController extends InternalRestController {
   }
 
   @post("/searchExamples")
-  @before(checkDictionary("view"))
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: Request<"searchExamples">, response: Response<"searchExamples">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {offset, size} = request.body;
@@ -68,7 +68,7 @@ export class ExampleRestController extends InternalRestController {
   }
 
   @post("/fetchExamplesByOffer")
-  @before(parseDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchExamplesByOffer">, response: Response<"fetchExamplesByOffer">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {offer, offset, size} = request.body;

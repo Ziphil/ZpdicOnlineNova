@@ -154,7 +154,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/searchWords")
-  @before(checkDictionary("view"))
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"searchWords", "dictionary">, response: Response<"searchWords">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {offset, size} = request.body;
@@ -169,7 +169,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/searchRelationWords")
-  @before(checkDictionary("view"))
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"searchRelationWords", "dictionary">, response: Response<"searchRelationWords">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {pattern} = request.body;
@@ -179,7 +179,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/downloadDictionary")
-  @before(checkDictionary("view"))
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"downloadDictionary", "dictionary">, response: Response<"downloadDictionary">): Promise<void> {
     const {dictionary} = request.middlewareBody ;
     const number = dictionary.number;
@@ -207,7 +207,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionary")
-  @before(checkDictionary("view"))
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchDictionary">, response: Response<"fetchDictionary">): Promise<void> {
     const {identifier} = request.body;
     const dictionary = await DictionaryModel.fetchOneByIdentifier(identifier);
@@ -220,7 +220,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionarySizes")
-  @before(checkDictionary("view"))
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchDictionarySizes", "dictionary">, response: Response<"fetchDictionarySizes">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const [wordCount, exampleCount] = await Promise.all([dictionary.countWords(), dictionary.countExamples()]);
@@ -229,7 +229,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchWordNameFrequencies")
-  @before(checkDictionary("view"))
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchWordNameFrequencies", "dictionary">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const body = await dictionary.calcWordNameFrequencies();
@@ -237,7 +237,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionaryStatistics")
-  @before(checkDictionary("view"))
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchDictionaryStatistics", "dictionary">, response: Response<"fetchDictionaryStatistics">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const body = await dictionary.calcStatistics();
@@ -245,7 +245,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/suggestDictionaryTitles")
-  @before(checkDictionary("view"))
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"suggestDictionaryTitles", "dictionary">, response: Response<"suggestDictionaryTitles">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {propertyName, pattern} = request.body;
@@ -255,7 +255,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionaryAuthorizedUsers")
-  @before(checkDictionary("view"))
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchDictionaryAuthorizedUsers", "dictionary">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {authorityQuery} = request.body;
