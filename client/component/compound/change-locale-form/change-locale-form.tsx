@@ -47,6 +47,6 @@ export const ChangeLocaleForm = create(
 
 const LOCALE_NAMES = {
   ["ja"]: "日本語",
-  ["en"]: "English",
-  ["eo"]: "Esperanto"
+  ["eo"]: "Esperanto",
+  ["en"]: "English"
 } as Record<string, string>;
