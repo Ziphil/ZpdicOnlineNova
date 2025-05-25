@@ -1,7 +1,7 @@
 //
 
 import {ReactElement, useCallback} from "react";
-import {uriTransformer} from "react-markdown";
+import {uriTransformer as defaultTransformUri} from "react-markdown";
 import {AdditionalProps, Markdown as ZographiaMarkdown} from "zographia";
 import {MarkdownHeading} from "/client/component/atom/markdown/markdown-heading";
 import {create} from "/client/component/create";
@@ -27,7 +27,7 @@ export const Markdown = create(
     const transformUrl = useCallback(function (uri: string): string {
       const homePath = specialPaths?.home;
       const atPath = specialPaths?.at;
-      let nextUri = uriTransformer(uri);
+      let nextUri = defaultTransformUri(uri);
       if (homePath !== undefined) {
         if (typeof homePath === "string") {
           nextUri = nextUri.replace(/^~/, homePath);
