@@ -781,6 +781,16 @@ changeDictionaryFontForm:
     input:
       name: "Font family"
       file: "Font file"
+  labelHelper:
+    type:
+      none: |-
+        The headwords will be displayed in the default font.
+      local: |-
+        The headwords will be displayed in the local font installed in the visitor’s environment.
+        If the specified font is not installed in the visitor’s environment, the headwords will be displayed in the default font instead.
+      custom: |-
+        Upload your own font file to use it for the headwords.
+        This font is used regardless of the visitor’s environment.
   error:
     nameRequired: >-
       Enter a font family.
@@ -810,6 +820,14 @@ changeDictionaryVisibilityForm:
     public: "Public"
     unlisted: "Unlisted"
     private: "Private"
+  labelHelper:
+    public: |-
+      Anyone can freely view this dictionary.
+    unlisted: |-
+      This dictionary will not be displayed in dictionary lists, but anyone who knows the URL of the dictionary page can still access it directly.
+    private: |-
+      Only users with editing permission can view this dictionary.
+      Users without permission cannot access it even if they know the URL.
 changeDictionarySourceForm:
   button:
     try: "Try"

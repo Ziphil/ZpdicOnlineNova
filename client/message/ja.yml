@@ -779,6 +779,16 @@ changeDictionaryFontForm:
     input:
       name: "フォントファミリー名"
       file: "フォントファイル"
+  labelHelper:
+    type:
+      none: |-
+        デフォルトフォントで表示します。
+      local: |-
+        閲覧者の環境に保存されているローカルフォントで表示します。
+        指定されたフォントが閲覧者の環境にインストールされていない場合は、デフォルトフォントが使われます。
+      custom: |-
+        フォントファイルをアップロードすることで、そのフォントで表示します。
+        閲覧者の環境によらず、指定されたフォントで表示することができます。
   error:
     nameRequired: >-
       フォントファミリー名を入力してください。
@@ -808,6 +818,14 @@ changeDictionaryVisibilityForm:
     public: "全体公開"
     unlisted: "限定公開"
     private: "非公開"
+  labelHelper:
+    public: |-
+      誰でも自由に閲覧できます。
+    unlisted: |-
+      辞書一覧などには表示されませんが、辞書ページの URL を知っている人は直接アクセスできます。
+    private: |-
+      編集権限がある人のみ閲覧できます。
+      権限がない人は URL から直接アクセスしても閲覧できません。
 changeDictionarySourceForm:
   button:
     try: "試す"

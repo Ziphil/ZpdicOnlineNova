@@ -781,6 +781,16 @@ changeDictionaryFontForm:
     input:
       name: "Tipara familio"
       file: "Tipara dosiero"
+  labelHelper:
+    type:
+      none: |-
+        La kapvortoj estos montrataj en la defaŭlta tiparo.
+      local: |-
+        La kapvortoj estos montrataj en la loka tiparo instalita en la vizitanta medio.
+        Se la specifita tiparo ne estas instalita en la vizitanta medio, la kapvortoj estos montrataj en la defaŭlta tiparo anstataŭe.
+      custom: |-
+        Alŝutu vian propran tiparan dosieron por uzi ĝin por la kapvortoj.
+        Tiu tiparo estas uzata sendepende de la vizitanta medio.
   error:
     nameRequired: >-
       Enigu tipara familio.
@@ -810,6 +820,14 @@ changeDictionaryVisibilityForm:
     public: "Publika"
     unlisted: "Nelistigita"
     private: "Nepublika"
+  labelHelper:
+    public: |-
+      Ĉiuj povos vidi tiun vortaron.
+    unlisted: |-
+      Tiu vortaro ne aperos en listoj de vortaroj, sed ĉiu kiu scias la retadreson de la vortaro povos ankoraŭ rekte aliri ĝin.
+    private: |-
+      Nur uzantoj kun redakta permeso povos vidi tiun vortaron.
+      Uzantoj sen permeso ne povos aliri ĝin eĉ se ili scias la retadreson.
 changeDictionarySourceForm:
   button:
     try: "Provi"
@@ -1021,7 +1039,7 @@ dictionarySettingGeneralPart:
       Se vi ebligos tiun funkcion, la numero de tradukaĵoj estos montrata.
     visibility: >-
       Se vi agordos tiun al “Nelistigita”, la vortaro ne aperos en listoj de vortaroj.
-      Tamen ĉiu, kiu konas la retadreso de la paĝo de la vortaro, povas ankoraŭ rekte aliri ĝin.
+      Tamen ĉiu kiu scias la retadreson de la paĝo de la vortaro povas ankoraŭ rekte aliri ĝin.
   callout:
     font: >-
       Eble necesas tempo por ke la alŝutita tiparo estus reflektita.

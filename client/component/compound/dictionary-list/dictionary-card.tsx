@@ -4,6 +4,7 @@ import {faCog, faLockKeyhole, faNote, faQuotes, faRight} from "@fortawesome/shar
 import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, SingleLineText, Tag, useResponsiveDevice, useTrans} from "zographia";
+import {fakEyeShield} from "/client/component/atom/icon";
 import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
@@ -57,7 +58,7 @@ export const DictionaryCard = create(
                 )}
                 {(dictionary.visibility !== "public") && (
                   <span styleName="secret">
-                    <GeneralIcon styleName="secret-icon" icon={faLockKeyhole}/>
+                    <GeneralIcon styleName="secret-icon" icon={(dictionary.visibility === "unlisted") ? fakEyeShield : faLockKeyhole}/>
                     {trans(`tag.visibility.${dictionary.visibility}`)}
                   </span>
                 )}
