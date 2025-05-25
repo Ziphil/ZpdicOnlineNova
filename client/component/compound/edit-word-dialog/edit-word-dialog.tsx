@@ -51,19 +51,22 @@ export const EditWordDialog = create(
     const innerFormRef = useRef<UseFormReturn<EditWordFormValue>>(null);
     const actualFormRef = formRef ?? innerFormRef;
 
+    const closeDialog = useCallback(function (): void {
+      setOpen(false);
+    }, []);
+
+    const formSpec = useEditWord(dictionary, initialData, closeDialog);
+
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       if (checkOpeningExternal(event)) {
         const value = getEditWordFormValue(initialData);
         const addWordPageUrl = addWordPageUrlBase + `/${(initialData?.forceAdd || value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
         window.open(addWordPageUrl);
       } else {
+        formSpec.form.reset();
         setOpen(true);
       }
-    }, [addWordPageUrlBase, initialData]);
-
-    const closeDialog = useCallback(function (): void {
-      setOpen(false);
-    }, []);
+    }, [addWordPageUrlBase, initialData, formSpec.form]);
 
     const openExternal = useCallback(function (): void {
       const value = actualFormRef.current?.getValues();
@@ -72,8 +75,6 @@ export const EditWordDialog = create(
         window.open(addWordPageUrl);
       }
     }, [addWordPageUrlBase, initialData, actualFormRef]);
-
-    const formSpec = useEditWord(dictionary, initialData, closeDialog);
 
     if (isRef(trigger)) {
       assignRef(trigger, openDialog);

@@ -46,19 +46,22 @@ export const EditArticleDialog = create(
 
     const formRef = useRef<() => EditArticleFormValue>(null);
 
+    const closeDialog = useCallback(function (): void {
+      setOpen(false);
+    }, []);
+
+    const formSpec = useEditArticle(dictionary, initialData, closeDialog);
+
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       if (checkOpeningExternal(event)) {
         const value = getEditArticleFormValue(initialData);
         const addArticlePageUrl = addArticlePageUrlBase + `/${(value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
         window.open(addArticlePageUrl);
       } else {
+        formSpec.form.reset();
         setOpen(true);
       }
-    }, [addArticlePageUrlBase, initialData]);
-
-    const closeDialog = useCallback(function (): void {
-      setOpen(false);
-    }, []);
+    }, [addArticlePageUrlBase, initialData, formSpec.form]);
 
     const openExternal = useCallback(function (): void {
       const value = formRef.current?.();
@@ -67,8 +70,6 @@ export const EditArticleDialog = create(
         window.open(addArticlePageUrl);
       }
     }, [addArticlePageUrlBase]);
-
-    const formSpec = useEditArticle(dictionary, initialData, closeDialog);
 
     return (
       <Fragment>
