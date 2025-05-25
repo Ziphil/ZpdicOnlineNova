@@ -68,11 +68,21 @@ export class ExampleRestController extends InternalRestController {
   }
 
   @post("/fetchExamplesByOffer")
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchExamplesByOffer">, response: Response<"fetchExamplesByOffer">): Promise<void> {
-    const {dictionary} = request.middlewareBody;
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {offer, offset, size} = request.body;
     const range = new QueryRange(offset, size);
     const hitResult = await ExampleModel.fetchByOffer(dictionary, offer, range);
+    const body = await mapWithSizeAsync(hitResult, ExampleCreator.skeletonizeWithDictionary);
+    InternalRestController.respond(response, body);
+  }
+
+  @post("/fetchAllExamplesByOffer")
+  public async [Symbol()](request: Request<"fetchAllExamplesByOffer">, response: Response<"fetchAllExamplesByOffer">): Promise<void> {
+    const {offer, offset, size} = request.body;
+    const range = new QueryRange(offset, size);
+    const hitResult = await ExampleModel.fetchByOffer(null, offer, range);
     const body = await mapWithSizeAsync(hitResult, ExampleCreator.skeletonizeWithDictionary);
     InternalRestController.respond(response, body);
   }

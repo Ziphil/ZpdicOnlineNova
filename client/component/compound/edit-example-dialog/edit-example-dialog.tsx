@@ -52,19 +52,22 @@ export const EditExampleDialog = create(
     const innerFormRef = useRef<UseFormReturn<EditExampleFormValue>>(null);
     const actualFormRef = formRef ?? innerFormRef;
 
+    const closeDialog = useCallback(function (): void {
+      setOpen(false);
+    }, []);
+
+    const formSpec = useEditExample(dictionary, initialData, closeDialog);
+
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       if (checkOpeningExternal(event)) {
         const value = getEditExampleFormValue(initialData);
         const addExamplePageUrl = addExamplePageUrlBase + `/${(value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
         window.open(addExamplePageUrl);
       } else {
+        formSpec.form.reset();
         setOpen(true);
       }
-    }, [addExamplePageUrlBase, initialData]);
-
-    const closeDialog = useCallback(function (): void {
-      setOpen(false);
-    }, []);
+    }, [addExamplePageUrlBase, initialData, formSpec.form]);
 
     const openExternal = useCallback(function (): void {
       const value = actualFormRef.current?.getValues();
@@ -73,8 +76,6 @@ export const EditExampleDialog = create(
         window.open(addExamplePageUrl);
       }
     }, [addExamplePageUrlBase, actualFormRef]);
-
-    const formSpec = useEditExample(dictionary, initialData, closeDialog);
 
     if (isRef(trigger)) {
       assignRef(trigger, openDialog);
