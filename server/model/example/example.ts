@@ -74,6 +74,7 @@ export class ExampleSchema extends DiscardableSchema {
       const result = await QueryRange.restrictWithSize(query, range);
       return result;
     } else {
+      console.log(dictionary, offer, range);
       const aggregate = ExampleModel.aggregateExist().match({"offer.catalog": offer.catalog, "offer.number": offer.number}).lookup({
         from: "dictionaries",
         localField: "dictionary",
