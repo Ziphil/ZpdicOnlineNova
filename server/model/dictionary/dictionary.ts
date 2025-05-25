@@ -23,7 +23,7 @@ import type {
 import {Article, ArticleModel} from "/server/model/article";
 import {DiscardableSchema} from "/server/model/base";
 import {Deserializer} from "/server/model/dictionary/deserializer";
-import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil, DictionaryFullAuthority} from "/server/model/dictionary/dictionary-authority";
+import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityQuery, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
 import {Serializer} from "/server/model/dictionary/serializer";
 import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
@@ -548,10 +548,10 @@ export class DictionarySchema extends DiscardableSchema {
     return {wordCount, wordNameLengths, equivalentNameCount, informationCount, informationTextLengths, exampleCount};
   }
 
-  public async hasAuthority(this: Dictionary, user: User, authority: DictionaryAuthority | "none"): Promise<boolean> {
-    if (authority === "none") {
-      return true;
-    } else {
+  /** 指定されたユーザーが指定された権限以上の権限をもっているか判定します。
+   * `user` が `null` の場合は、匿名ユーザー (限定公開以上の辞書に対して閲覧権限のみがある) として扱います。 */
+  public async hasAuthority(this: Dictionary, user: User | null, authority: DictionaryAuthority): Promise<boolean> {
+    if (user !== null) {
       await this.populate(["user", "editUsers"]);
       if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
         if (user.authority !== "admin") {
@@ -559,7 +559,10 @@ export class DictionarySchema extends DiscardableSchema {
             return this.user.id === user.id;
           } else if (authority === "edit") {
             return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+          } else if (authority === "view") {
+            return (this.visibility === "public" || this.visibility === "unlisted") || this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
           } else {
+            authority satisfies never;
             throw new Error("cannot happen");
           }
         } else {
@@ -568,9 +571,17 @@ export class DictionarySchema extends DiscardableSchema {
       } else {
         throw new Error("cannot happen");
       }
+    } else {
+      if (authority !== "view") {
+        return false;
+      } else {
+        return this.visibility === "public" || this.visibility === "unlisted";
+      }
     }
   }
 
+  /** 指定されたユーザーがこの辞書に対してもっている権限を全て返します。
+   * 例えば、own 権限をもっているユーザーに対しては `["own", "edit"]` を返します。 */
   public async fetchAuthorities(this: Dictionary, user: User): Promise<Array<DictionaryAuthority>> {
     const authorities = await Promise.all(DICTIONARY_AUTHORITIES.map(async (authority) => {
       const predicate = await this.hasAuthority(user, authority);
@@ -580,17 +591,28 @@ export class DictionarySchema extends DiscardableSchema {
     return filteredAuthorities;
   }
 
-  public async fetchAuthorizedUsers(this: Dictionary, authority: DictionaryFullAuthority): Promise<Array<User>> {
+  public async fetchAuthorizedUsers(this: Dictionary, authorityQuery: DictionaryAuthorityQuery): Promise<Array<User>> {
     await this.populate(["user", "editUsers"]);
     if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
-      if (authority === "own") {
-        return [this.user];
-      } else if (authority === "edit") {
-        return [this.user, ...this.editUsers];
-      } else if (authority === "editOnly") {
-        return this.editUsers;
+      const authority = authorityQuery.authority;
+      if (authorityQuery.exact) {
+        if (authority === "own") {
+          return [this.user];
+        } else if (authority === "edit") {
+          return this.editUsers;
+        } else {
+          authority satisfies never;
+          throw new Error("cannot happen");
+        }
       } else {
-        throw new Error("cannot happen");
+        if (authority === "own") {
+          return [this.user];
+        } else if (authority === "edit") {
+          return [this.user, ...this.editUsers];
+        } else {
+          authority satisfies never;
+          throw new Error("cannot happen");
+        }
       }
     } else {
       throw new Error("cannot happen");

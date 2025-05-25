@@ -27,7 +27,6 @@ import {
 } from "/server/internal/controller/job";
 import {
   ArticleRestController,
-  CommissionRestController,
   DebugRestController,
   DictionaryRestController,
   ExampleRestController,
@@ -35,6 +34,7 @@ import {
   InvitationRestController,
   NotificationRestController,
   OtherRestController,
+  ProposalRestController,
   ResourceRestController,
   UserRestController,
   WordRestController
@@ -182,7 +182,7 @@ export class Main {
   /** ルーターの設定を行います。
    * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
   private useRestControllers(): void {
-    CommissionRestController.use(this.application, this.server, this.agenda);
+    ProposalRestController.use(this.application, this.server, this.agenda);
     DictionaryRestController.use(this.application, this.server, this.agenda);
     ExampleRestController.use(this.application, this.server, this.agenda);
     ArticleRestController.use(this.application, this.server, this.agenda);

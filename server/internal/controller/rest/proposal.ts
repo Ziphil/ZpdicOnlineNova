@@ -3,53 +3,53 @@
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkDictionary, checkMe, checkRecaptcha, parseDictionary} from "/server/internal/controller/rest/middleware";
-import {CommissionCreator} from "/server/internal/creator";
+import {ProposalCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
-import {CommissionModel} from "/server/model";
+import {ProposalModel} from "/server/model";
 import {QueryRange} from "/server/util/query";
 import {mapWithSize} from "/server/util/with-size";
 
 
 @restController(SERVER_PATH_PREFIX)
-export class CommissionRestController extends InternalRestController {
+export class ProposalRestController extends InternalRestController {
 
-  @post("/addCommission")
+  @post("/addProposal")
   @before(checkRecaptcha(), parseDictionary())
-  public async [Symbol()](request: Request<"addCommission">, response: Response<"addCommission">): Promise<void> {
+  public async [Symbol()](request: Request<"addProposal">, response: Response<"addProposal">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {name, comment} = request.body;
     if (name !== "") {
-      const commission = await CommissionModel.add(dictionary, name, comment);
-      const body = CommissionCreator.skeletonize(commission);
+      const proposal = await ProposalModel.add(dictionary, name, comment);
+      const body = ProposalCreator.skeletonize(proposal);
       InternalRestController.respond(response, body);
     } else {
-      InternalRestController.respondError(response, "emptyCommissionName");
+      InternalRestController.respondError(response, "emptyProposalName");
     }
   }
 
-  @post("/discardCommission")
+  @post("/discardProposal")
   @before(checkMe(), checkDictionary("edit"))
-  public async [Symbol()](request: Request<"discardCommission">, response: Response<"discardCommission">): Promise<void> {
+  public async [Symbol()](request: Request<"discardProposal">, response: Response<"discardProposal">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {id} = request.body;
-    const commission = await CommissionModel.fetchOneByDictionaryAndId(dictionary, id);
-    if (commission) {
-      await commission.discard();
-      const body = CommissionCreator.skeletonize(commission);
+    const proposal = await ProposalModel.fetchOneByDictionaryAndId(dictionary, id);
+    if (proposal) {
+      await proposal.discard();
+      const body = ProposalCreator.skeletonize(proposal);
       InternalRestController.respond(response, body);
     } else {
-      InternalRestController.respondError(response, "noSuchCommission");
+      InternalRestController.respondError(response, "noSuchProposal");
     }
   }
 
-  @post("/fetchCommissions")
+  @post("/fetchProposals")
   @before(checkMe(), checkDictionary("edit"))
-  public async [Symbol()](request: Request<"fetchCommissions">, response: Response<"fetchCommissions">): Promise<void> {
+  public async [Symbol()](request: Request<"fetchProposals">, response: Response<"fetchProposals">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {offset, size} = request.body;
     const range = new QueryRange(offset, size);
-    const hitResult = await CommissionModel.fetchByDictionary(dictionary, range);
-    const body = mapWithSize(hitResult, CommissionCreator.skeletonize);
+    const hitResult = await ProposalModel.fetchByDictionary(dictionary, range);
+    const body = mapWithSize(hitResult, ProposalCreator.skeletonize);
     return InternalRestController.respond(response, body);
   }
 

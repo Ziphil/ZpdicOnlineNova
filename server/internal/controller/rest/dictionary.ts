@@ -154,7 +154,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/searchWords")
-  @before(checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"searchWords", "dictionary">, response: Response<"searchWords">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {offset, size} = request.body;
@@ -169,7 +169,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/searchRelationWords")
-  @before(checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"searchRelationWords", "dictionary">, response: Response<"searchRelationWords">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {pattern} = request.body;
@@ -179,7 +179,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/downloadDictionary")
-  @before(checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"downloadDictionary", "dictionary">, response: Response<"downloadDictionary">): Promise<void> {
     const {dictionary} = request.middlewareBody ;
     const number = dictionary.number;
@@ -207,6 +207,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionary")
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchDictionary">, response: Response<"fetchDictionary">): Promise<void> {
     const {identifier} = request.body;
     const dictionary = await DictionaryModel.fetchOneByIdentifier(identifier);
@@ -219,7 +220,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionarySizes")
-  @before(checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchDictionarySizes", "dictionary">, response: Response<"fetchDictionarySizes">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const [wordCount, exampleCount] = await Promise.all([dictionary.countWords(), dictionary.countExamples()]);
@@ -228,7 +229,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchWordNameFrequencies")
-  @before(checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchWordNameFrequencies", "dictionary">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const body = await dictionary.calcWordNameFrequencies();
@@ -236,7 +237,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionaryStatistics")
-  @before(checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchDictionaryStatistics", "dictionary">, response: Response<"fetchDictionaryStatistics">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const body = await dictionary.calcStatistics();
@@ -244,7 +245,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/suggestDictionaryTitles")
-  @before(checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"suggestDictionaryTitles", "dictionary">, response: Response<"suggestDictionaryTitles">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {propertyName, pattern} = request.body;
@@ -254,11 +255,11 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionaryAuthorizedUsers")
-  @before(checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchDictionaryAuthorizedUsers", "dictionary">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const {authority} = request.body;
-    const users = await dictionary.fetchAuthorizedUsers(authority);
+    const {authorityQuery} = request.body;
+    const users = await dictionary.fetchAuthorizedUsers(authorityQuery);
     const body = users.map(UserCreator.skeletonize);
     InternalRestController.respond(response, body);
   }
@@ -295,30 +296,16 @@ export class DictionaryRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
-  @post("/fetchDictionaryAuthorization")
-  @before(parseMe(), checkDictionary())
-  public async [Symbol()](request: FilledRequest<"fetchDictionaryAuthorization", "dictionary">, response: Response<"fetchDictionaryAuthorization">): Promise<void> {
+  @post("/fecthMyDictionaryAuthorities")
+  @before(parseMe(), checkDictionary("none"))
+  public async [Symbol()](request: FilledRequest<"fecthMyDictionaryAuthorities", "dictionary">, response: Response<"fecthMyDictionaryAuthorities">): Promise<void> {
     const {me, dictionary} = request.middlewareBody ;
-    const {authority} = request.body;
     if (me) {
-      const hasAuthority = await dictionary.hasAuthority(me, authority);
-      const body = hasAuthority;
+      const authorities = await dictionary.fetchAuthorities(me);
+      const body = authorities;
       InternalRestController.respond(response, body);
     } else {
-      InternalRestController.respond(response, false);
-    }
-  }
-
-  @post("/checkDictionaryAuthorization")
-  @before(checkMe(), checkDictionary())
-  public async [Symbol()](request: FilledRequest<"checkDictionaryAuthorization", "me" | "dictionary">, response: Response<"checkDictionaryAuthorization">): Promise<void> {
-    const {me, dictionary} = request.middlewareBody;
-    const {authority} = request.body;
-    const hasAuthority = await dictionary.hasAuthority(me, authority);
-    if (hasAuthority) {
-      InternalRestController.respond(response, null);
-    } else {
-      InternalRestController.respondForbiddenError(response);
+      InternalRestController.respond(response, []);
     }
   }
 

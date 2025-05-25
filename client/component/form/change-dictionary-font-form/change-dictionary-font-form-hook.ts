@@ -9,7 +9,7 @@ import {Dictionary, DictionaryFont} from "/client/skeleton";
 import {uploadFileToAws} from "/client/util/aws";
 import {determineAwsErrorToastType} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
-import {validateFileSize} from "/client/util/validation";
+import {testFileSize} from "/client/util/validation";
 
 
 const SCHEMA = object({
@@ -18,7 +18,7 @@ const SCHEMA = object({
     is: "local",
     then: (schema) => schema.required("nameRequired")
   }),
-  file: mixed<File>().test("fileSize", "fileTooLarge", validateFileSize(1))
+  file: mixed<File>().test(testFileSize(1, "fileTooLarge"))
 });
 type FormValue = Asserts<typeof SCHEMA>;
 

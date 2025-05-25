@@ -2,7 +2,7 @@
 
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
-import {checkDictionary, checkMe} from "/server/internal/controller/rest/middleware";
+import {checkDictionary, checkMe, parseMe} from "/server/internal/controller/rest/middleware";
 import {WordCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {QueryRange} from "/server/util/query";
@@ -61,7 +61,7 @@ export class WordRestController extends InternalRestController {
   }
 
   @post("/fetchWord")
-  @before(checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchWord">, response: Response<"fetchWord">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {wordNumber} = request.body;
@@ -75,7 +75,7 @@ export class WordRestController extends InternalRestController {
   }
 
   @post("/fetchWordNames")
-  @before(checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {wordNumbers} = request.body;

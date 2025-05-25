@@ -1,9 +1,8 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {Controller} from "react-hook-form";
-import {AdditionalProps, Button, ButtonIconbag, ControlContainer, ControlLabel, GeneralIcon, Input, TagInput, Textarea, useTrans} from "zographia";
+import {AdditionalProps, ControlContainer, ControlLabel, Input, TagInput, Textarea, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {Dictionary} from "/client/skeleton";
 import {preventDefault} from "/client/util/form";
@@ -24,7 +23,7 @@ export const EditArticleFormEditPart = create(
 
     const {trans} = useTrans("editArticleForm");
 
-    const {form, handleSubmit} = formSpec;
+    const {form} = formSpec;
     const {register, control} = form;
 
     return (
@@ -46,12 +45,6 @@ export const EditArticleFormEditPart = create(
               <Textarea styleName="textarea" {...register("content")}/>
             </ControlContainer>
           </div>
-        </div>
-        <div styleName="button">
-          <Button onClick={handleSubmit}>
-            <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.confirm")}
-          </Button>
         </div>
       </form>
     );

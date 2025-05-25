@@ -9,11 +9,11 @@ export async function loadDictionarySettingPart({params}: LoaderFunctionArgs): P
   const {identifier} = params;;
   if (identifier !== undefined) {
     try {
-      const [dictionary, canOwn] = await Promise.all([
+      const [dictionary, authorities] = await Promise.all([
         fetchResponse("fetchDictionary", {identifier}),
-        fetchResponse("fetchDictionaryAuthorization", {identifier, authority: "own"})
+        fetchResponse("fecthMyDictionaryAuthorities", {identifier})
       ]);
-      if (canOwn) {
+      if (authorities.includes("own")) {
         return null;
       } else {
         throw new Response(null, {status: 403});

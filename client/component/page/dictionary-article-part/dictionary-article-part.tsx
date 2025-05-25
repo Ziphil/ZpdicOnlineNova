@@ -24,7 +24,7 @@ export const DictionaryArticlePart = create(
 
     const dictionary = useDictionary();
 
-    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [authorities] = useSuspenseResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
     const [page, setPage] = useState(0);
     const [[hitArticles, hitSize], {isFetching}] = useSuspenseResponse("searchArticles", {number: dictionary.number, ...calcOffsetSpec(page, 50)}, {keepPreviousData: true});
@@ -34,7 +34,7 @@ export const DictionaryArticlePart = create(
         <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
         <div styleName="main">
           <div styleName="header">
-            {(canEdit) ? (
+            {(authorities?.includes("edit")) ? (
               <EditArticleDialog dictionary={dictionary} initialData={null} trigger={(
                 <Button variant="light">
                   <ButtonIconbag><GeneralIcon icon={fakScrollCirclePlus}/></ButtonIconbag>

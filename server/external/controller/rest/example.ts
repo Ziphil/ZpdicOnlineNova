@@ -17,7 +17,7 @@ import {ExternalRestController} from "./base";
 export class ExampleExternalRestController extends ExternalRestController {
 
   @endpoint("/v0/dictionary/:identifier/examples", "get")
-  @before(checkMe(), limit(), validateQuery("searchExamples"), checkDictionary())
+  @before(checkMe(), limit(), validateQuery("searchExamples"), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"searchExamples", "dictionary">, response: Response<"searchExamples">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {skip, limit, ...rawParameter} = request.query;
@@ -30,7 +30,7 @@ export class ExampleExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/example/:exampleNumber", "get")
-  @before(checkMe(), limit(), validateQuery("fetchExample"), checkDictionary())
+  @before(checkMe(), limit(), validateQuery("fetchExample"), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchExample", "dictionary">, response: Response<"fetchExample">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const exampleNumber = +request.params.exampleNumber;

@@ -56,9 +56,9 @@ toast:
       記事を編集しました。
     discardArticle: |-
       記事を削除しました。
-    addCommission: |-
+    addProposal: |-
       造語依頼を行いました。
-    discardCommission: |-
+    discardProposal: |-
       造語依頼を削除しました。
     addResource: |-
       画像をアップロードしました。
@@ -174,9 +174,9 @@ toast:
       この招待は存在しません。
     noSuchDictionaryAuthorizedUser: |-
       そのユーザーは権限を保有していません。
-    emptyCommissionName: |-
+    emptyProposalName: |-
       造語依頼する単語が空です。
-    noSuchCommission: |-
+    noSuchProposal: |-
       その造語依頼は存在しません。
     emptyContactText: |-
       お問い合わせ内容が空です。
@@ -259,7 +259,7 @@ wordTypeSelect:
     exact: "完全"
     regular: "正規"
 
-addCommissionDialog:
+addProposalDialog:
   heading: "造語依頼"
   label:
     name: "単語"
@@ -292,7 +292,7 @@ changeAppearanceForm:
   theme:
     light: "ライト"
     dark: "ダーク"
-commissionList:
+proposalList:
   empty: "造語依頼はされていません"
   button:
     add: "造語"
@@ -336,7 +336,7 @@ dictionaryHeader:
     article: "記事"
     resource: "画像"
     information: "詳細情報"
-    commission: "造語依頼"
+    proposal: "造語依頼"
     setting: "設定"
   table:
     updatedDate: "更新日時"
@@ -351,7 +351,7 @@ dictionaryHeader:
     addArticle: 
       long: "記事を作成"
       short: "記事"
-    addCommission: "造語依頼"
+    addProposal: "造語依頼"
     download: "ダウンロード"
   userCount: "<plus>+</plus>{count, number}"
 dictionaryList:
@@ -390,6 +390,9 @@ dictionaryStatisticsView:
     informationAverage: "<number>{value, number, ::.00}</number><unit>項目/語</unit>"
     informationText: "<number>{value, number}</number><unit>文字</unit>"
     informationTextAverage: "<number>{value, number, ::.00}</number><unit>文字/語</unit>"
+editArticleDialog:
+  button:
+    confirm: "決定"
 editArticleForm:
   tab:
     edit: "編集"
@@ -401,6 +404,7 @@ editArticleForm:
     confirm: "決定"
 editExampleDialog:
   button:
+    confirm: "決定"
     external: "別タブで表示"
 editExampleForm:
   tab:
@@ -424,6 +428,7 @@ editExampleForm:
     confirm: "決定"
 editWordDialog:
   button:
+    confirm: "決定"
     external: "別タブで表示"
 editWordForm:
   tab:
@@ -635,7 +640,7 @@ wordList:
     share: "共有"
     select: "この版に戻す"
     create: "作成"
-    commission: "造語依頼"
+    proposal: "造語依頼"
   dialog:
     discard:
       message: >-
@@ -774,6 +779,16 @@ changeDictionaryFontForm:
     input:
       name: "フォントファミリー名"
       file: "フォントファイル"
+  labelHelper:
+    type:
+      none: |-
+        デフォルトフォントで表示します。
+      local: |-
+        閲覧者の環境に保存されているローカルフォントで表示します。
+        指定されたフォントが閲覧者の環境にインストールされていない場合は、デフォルトフォントが使われます。
+      custom: |-
+        フォントファイルをアップロードすることで、そのフォントで表示します。
+        閲覧者の環境によらず、指定されたフォントで表示することができます。
   error:
     nameRequired: >-
       フォントファミリー名を入力してください。
@@ -803,6 +818,14 @@ changeDictionaryVisibilityForm:
     public: "全体公開"
     unlisted: "限定公開"
     private: "非公開"
+  labelHelper:
+    public: |-
+      誰でも自由に閲覧できます。
+    unlisted: |-
+      辞書一覧などには表示されませんが、辞書ページの URL を知っている人は直接アクセスできます。
+    private: |-
+      編集権限がある人のみ閲覧できます。
+      権限がない人は URL から直接アクセスしても閲覧できません。
 changeDictionarySourceForm:
   button:
     try: "試す"
@@ -903,9 +926,9 @@ dictionaryArticlePart:
 dictionaryArticleSinglePart:
   button:
     back: "一覧に戻る"
-dictionaryCommissionPart:
+dictionaryProposalPart:
   button:
-    addCommission: "造語依頼を追加"
+    addProposal: "造語依頼"
 dictionaryExamplePart:
   heading:
     offer: "今日の例文"
@@ -924,7 +947,7 @@ dictionaryInformationPart:
 dictionaryMainPart:
   button:
     addWord: "単語を作成"
-    addCommission: "造語依頼"
+    addProposal: "造語依頼"
 dictionaryResourcePart:
   explanation: >-
     アップロードした画像は、辞書の説明欄や単語の内容欄で使用することができます。
@@ -1025,6 +1048,15 @@ dictionarySettingGeneralPart:
     discard: >-
       この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。
       後からデータを復元することはできないので、慎重に行ってください。
+editArticlePage:
+  button:
+    confirm: "決定"
+editExamplePage:
+  button:
+    confirm: "決定"
+editWordPage:
+  button:
+    confirm: "決定"
 errorPage:
   heading:
     notFound: "Not\nFound"

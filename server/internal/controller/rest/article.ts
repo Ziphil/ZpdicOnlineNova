@@ -2,7 +2,7 @@
 
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
-import {checkDictionary, checkMe} from "/server/internal/controller/rest/middleware";
+import {checkDictionary, checkMe, parseMe} from "/server/internal/controller/rest/middleware";
 import {ArticleCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {QueryRange} from "/server/util/query";
@@ -41,7 +41,7 @@ export class ArticleRestController extends InternalRestController {
   }
 
   @post("/fetchArticle")
-  @before(checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: Request<"fetchArticle">, response: Response<"fetchArticle">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {articleNumber} = request.body;
@@ -55,7 +55,7 @@ export class ArticleRestController extends InternalRestController {
   }
 
   @post("/searchArticles")
-  @before(checkDictionary())
+  @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: Request<"searchArticles">, response: Response<"searchArticles">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {offset, size} = request.body;

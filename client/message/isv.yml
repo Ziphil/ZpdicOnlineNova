@@ -259,7 +259,7 @@ wordTypeSelect:
     exact: "Точны"
     regular: "Регекс"
 
-addCommissionDialog:
+addProposalDialog:
   heading: "Request word creation"
   label:
     name: "Word"
@@ -292,7 +292,7 @@ changeAppearanceForm:
   theme:
     light: "Light"
     dark: "Dark"
-commissionList:
+proposalList:
   empty: "No words are requested"
   button:
     add: "Create"
@@ -336,7 +336,7 @@ dictionaryHeader:
     article: "Articles"
     resource: "Images"
     information: "Подробности"
-    commission: "Просбы"
+    proposal: "Просбы"
     setting: "Настројкы"
   table:
     updatedDate: "Актуализованы"
@@ -346,8 +346,8 @@ dictionaryHeader:
       long: "Create word"
       short: "Word"
     addExample:
-      long: "Create sentence"
-      short: "Sentence"
+      long: "Stvoriti rěčenje"
+      short: "Rěčenje"
     addArticle:
       long: "Create article"
       short: "Article"
@@ -635,7 +635,7 @@ wordList:
     share: "Share"
     select: "Revert to this version"
     create: "Create"
-    commission: "Request creation"
+    proposal: "Request creation"
   dialog:
     discard:
       message: >-
@@ -903,9 +903,9 @@ dictionaryArticlePart:
 dictionaryArticleSinglePart:
   button:
     back: "Back to list"
-dictionaryCommissionPart:
+dictionaryProposalPart:
   button:
-    addCommission: "Create request"
+    addProposal: "Create request"
 dictionaryExamplePart:
   heading:
     offer: "Today’s sentence"
@@ -1024,7 +1024,7 @@ errorPage:
       Страница ктору вы ишчете не была најдена.
       Она можно была одстрањена или прємєшчена в ино мєсто, затом прошу попробујте поискати ју опет из главној странице.
     forbidden: >-
-      You don’t have permission to view this page.
+      You don't have permission to view this page.
       Please return to the top page for other contents.
     error: >-
       An unexpected error has occurred.

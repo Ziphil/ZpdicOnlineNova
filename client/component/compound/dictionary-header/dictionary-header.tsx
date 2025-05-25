@@ -28,10 +28,9 @@ export const DictionaryHeader = create(
 
     const {trans} = useTrans("dictionaryHeader");
 
-    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
-    const [canOwn] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "own"});
+    const [authorities] = useSuspenseResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
-    const [[, commissionSize] = []] = useResponse("fetchCommissions", {number: dictionary.number, size: 1, offset: 0});
+    const [[, proposalSize] = []] = useResponse("fetchProposals", {number: dictionary.number, size: 1, offset: 0});
 
     const match = useMatch("/dictionary/:identifier/:tabPath?/:subTabPath?");
 
@@ -52,15 +51,15 @@ export const DictionaryHeader = create(
               <TabIconbag><GeneralIcon icon={faScroll}/></TabIconbag>
               {trans("tab.article")}
             </LinkTab>
-            {(canEdit) && (
-              <Indicator styleName="indicator" scheme="secondary" disabled={(commissionSize === undefined || commissionSize <= 0) || tabValue === "commission"} animate={true}>
-                <LinkTab value="commission" href={`/dictionary/${match?.params.identifier}/requests`}>
+            {(authorities.includes("edit")) && (
+              <Indicator styleName="indicator" scheme="secondary" disabled={(proposalSize === undefined || proposalSize <= 0) || tabValue === "proposal"} animate={true}>
+                <LinkTab value="proposal" href={`/dictionary/${match?.params.identifier}/requests`}>
                   <TabIconbag><GeneralIcon icon={faListCheck}/></TabIconbag>
-                  {trans("tab.commission")}
+                  {trans("tab.proposal")}
                 </LinkTab>
               </Indicator>
             )}
-            {(canEdit) && (
+            {(authorities.includes("edit")) && (
               <LinkTab value="resource" href={`/dictionary/${match?.params.identifier}/resources`}>
                 <TabIconbag><GeneralIcon icon={faImage}/></TabIconbag>
                 {trans("tab.resource")}
@@ -70,7 +69,7 @@ export const DictionaryHeader = create(
               <TabIconbag><GeneralIcon icon={faCircleInfo}/></TabIconbag>
               {trans("tab.information")}
             </LinkTab>
-            {(canOwn) && (
+            {(authorities.includes("own")) && (
               <LinkTab value="setting" href={`/dictionary/${match?.params.identifier}/settings`}>
                 <TabIconbag><GeneralIcon icon={faCog}/></TabIconbag>
                 {trans("tab.setting")}
@@ -85,4 +84,4 @@ export const DictionaryHeader = create(
 );
 
 
-export type DictionaryHeaderTabValue = "dictionary" | "example" | "article" | "resource" | "information" | "commission" | "setting" | null;
+export type DictionaryHeaderTabValue = "dictionary" | "example" | "article" | "resource" | "information" | "proposal" | "setting" | null;

@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faCheck, faPlus, faUserPen} from "@fortawesome/sharp-regular-svg-icons";
+import {faCreativeCommonsZero} from "@fortawesome/free-brands-svg-icons";
+import {faCheck, faCopyright, faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement, useCallback, useMemo} from "react";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, data, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, Link, LinkIconbag, MultiLineText, data, useTrans} from "zographia";
 import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
 import {ExampleOfferCardExampleItem} from "/client/component/compound/example-offer-list/example-offer-card-example-item";
@@ -52,10 +53,17 @@ export const ExampleOfferCard = create(
             {(headerType === "tag") ? (
               <div styleName="header">
                 <ExampleOfferTag offer={offer} scheme="primary" variant="solid"/>
-                <span styleName="author">
-                  <GeneralIcon styleName="author-icon" icon={faUserPen}/>
-                  {offer.author}
-                </span>
+                {offer.catalog === "zpdicDaily" ? (
+                  <Link styleName="author" href={"/document/other/exmaple-offer-licence"} scheme="gray" variant="simple">
+                    <LinkIconbag><GeneralIcon styleName="author-icon" icon={faCreativeCommonsZero}/></LinkIconbag>
+                    CC0 ({offer.author})
+                  </Link>
+                ) : (
+                  <Link styleName="author" href={"/document/other/exmaple-offer-licence"} scheme="gray" variant="simple">
+                    <LinkIconbag><GeneralIcon styleName="author-icon" icon={faCopyright}/></LinkIconbag>
+                    {offer.author}
+                  </Link>
+                )}
               </div>
             ) : (
               <div styleName="date">

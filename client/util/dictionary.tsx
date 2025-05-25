@@ -1,5 +1,6 @@
 //
 
+import {RE2JS as Re2} from "re2js";
 import {ReactNode} from "react";
 import {MarkdownSpecialPaths} from "/client/component/atom/markdown";
 import {Dictionary} from "/client/skeleton";
@@ -24,14 +25,16 @@ export function getDictionarySpecialPaths(dictionary: Dictionary): MarkdownSpeci
 export function createEquivalentNameNode(nameString: string, ignoredPattern: string | undefined): ReactNode {
   if (ignoredPattern) {
     try {
-      const regexp = new RegExp(ignoredPattern, "g");
+      const regexp = Re2.compile(ignoredPattern);
+      const matcher = regexp.matcher(nameString);
       const nodes = [];
       let index = 0;
-      let match;
-      while ((match = regexp.exec(nameString)) !== null) {
-        nodes.push(<span key={nodes.length}>{nameString.substring(index, match.index)}</span>);
-        nodes.push(<span styleName="ignored" key={nodes.length}>{match[0]}</span>);
-        index = match.index + match[0].length;
+      let matchCount = 0;
+      while (matcher.find() && matchCount < 100) {
+        nodes.push(<span key={nodes.length}>{nameString.substring(index, +matcher.start())}</span>);
+        nodes.push(<span styleName="ignored" key={nodes.length}>{nameString.substring(+matcher.start(), +matcher.end())}</span>);
+        index = +matcher.end();
+        matchCount ++;
       }
       nodes.push(<span key={nodes.length}>{nameString.substring(index)}</span>);
       return nodes;

@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {ReactElement} from "react";
-import {AdditionalProps, MultiLineText, SingleLineText, useResponsiveDevice, useTrans} from "zographia";
+import {AdditionalProps, MultiLineText, SingleLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
-import {useResponse, useSuspenseResponse} from "/client/hook/request";
+import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {DictionaryHeaderStatusView} from "./dictionary-header-status-view";
 
@@ -22,10 +22,7 @@ export const DictionaryHeaderTop = create(
 
     const {trans, transNode} = useTrans("dictionaryHeader");
 
-    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
-    const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number: dictionary.number, authority: "editOnly"});
-
-    const device = useResponsiveDevice();
+    const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number: dictionary.number, authorityQuery: {authority: "edit", exact: true}});
 
     return (
       <div styleName="root">

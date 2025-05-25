@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faEdit} from "@fortawesome/sharp-regular-svg-icons";
-import {MouseEvent, ReactElement, useCallback} from "react";
+import {MouseEvent, ReactElement, useCallback, useMemo} from "react";
 import {Button, ButtonIconbag, GeneralIcon, LoadingIcon, MultiLineText, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
@@ -25,7 +25,7 @@ export const WordPopoverInner = create(
 
     const {trans} = useTrans("wordPopover");
 
-    const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [authorities] = useResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
     const [innerWord] = useResponse("fetchWord", (!isFull(word)) && {number: dictionary.number, wordNumber: word.number});
     const actualWord = (!isFull(word)) ? innerWord : word;
@@ -46,12 +46,12 @@ export const WordPopoverInner = create(
                 <Tag key={index} styleName="tag" variant="light">{title}</Tag>
               ))}
               <span>
-                {createEquivalentNameNode(equivalent.nameString, equivalent.ignoredPattern)}
+                {useMemo(() => createEquivalentNameNode(equivalent.nameString, equivalent.ignoredPattern), [equivalent.nameString, equivalent.ignoredPattern])}
               </span>
             </MultiLineText>
           ))}
         </div>
-        {(canEdit) && (
+        {(authorities?.includes("edit")) && (
           <div styleName="footer">
             <Button scheme="secondary" variant="underline" onClick={handleEdit}>
               <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>

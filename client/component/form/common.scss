@@ -23,10 +23,25 @@
 
 .radio-group {
   column-gap: 4zu;
-  row-gap: 2zu;
   display: flex;
   align-items: center;
+  &[data-vertical] {
+    flex-direction: column;
+    align-items: flex-start;
+    &:not([data-vertical="wide"]) {
+      row-gap: 2zu;
+    }
+    &[data-vertical="wide"] {
+      row-gap: 2.5zu;
+    }
+  }
   &[data-mobile-vertical] {
+    &:not([data-vertical="wide"]) {
+      row-gap: 2zu;
+    }
+    &[data-vertical="wide"] {
+      row-gap: 2.5zu;
+    }
     @include device("mobile") {
       flex-direction: column;
       align-items: flex-start;    
@@ -40,6 +55,21 @@
 
 .textarea {
   height: 64zu;
+}
+
+.label {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;  
+}
+
+.label-icon {
+  margin-inline-end: var(--glob-blank-gap);
+}
+
+.label-helper {
+  font-size: 3.5zu;
+  color: var(--glob-mute-text-color);
 }
 
 .button {

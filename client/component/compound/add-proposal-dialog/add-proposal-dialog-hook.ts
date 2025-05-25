@@ -19,33 +19,33 @@ const DEFAULT_VALUE = {
 } satisfies FormValue;
 type FormValue = Asserts<typeof SCHEMA>;
 
-export type AddCommissionSpec = {
+export type AddProposalSpec = {
   form: UseFormReturn<FormValue>,
   handleSubmit: (event: BaseSyntheticEvent, onSubmit?: () => unknown) => Promise<void>
 };
 
-export function useAddCommission(dictionary: Dictionary): AddCommissionSpec {
+export function useAddProposal(dictionary: Dictionary): AddProposalSpec {
   const form = useForm<FormValue>(SCHEMA, DEFAULT_VALUE, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useCallback(async function (event: BaseSyntheticEvent, onSubmit?: () => unknown): Promise<void> {
     form.handleSubmit(async (value) => {
-      const response = await request("addCommission", getQuery(dictionary, value), {useRecaptcha: true});
+      const response = await request("addProposal", getQuery(dictionary, value), {useRecaptcha: true});
       await switchResponse(response, async () => {
-        await invalidateResponses("fetchCommissions", (query) => query.number === dictionary.number);
+        await invalidateResponses("fetchProposals", (query) => query.number === dictionary.number);
         await onSubmit?.();
-        dispatchSuccessToast("addCommission");
+        dispatchSuccessToast("addProposal");
       });
     })(event);
   }, [dictionary, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};
 }
 
-function getQuery(dictionary: Dictionary, value: FormValue): Omit<RequestData<"addCommission">, "recaptchaToken"> {
+function getQuery(dictionary: Dictionary, value: FormValue): Omit<RequestData<"addProposal">, "recaptchaToken"> {
   const query = {
     number: dictionary.number,
     name: value.name,
     comment: value.comment
-  } satisfies Omit<RequestData<"addCommission">, "recaptchaToken">;
+  } satisfies Omit<RequestData<"addProposal">, "recaptchaToken">;
   return query;
 }

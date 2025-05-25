@@ -53,7 +53,7 @@ export const WordCard = create(
 
     const {trans} = useTrans("wordList");
 
-    const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [authorities] = useResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
     const device = useResponsiveDevice();
 
@@ -93,7 +93,7 @@ export const WordCard = create(
               </Button>
             </div>
           </CardFooter>
-        ) : (canEdit) && (
+        ) : (authorities?.includes("edit")) && (
           <CardFooter styleName="footer">
             <div styleName="footer-left">
               <EditWordDialog dictionary={dictionary} initialData={{type: "word", word}} trigger={(

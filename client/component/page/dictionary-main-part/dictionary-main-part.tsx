@@ -6,7 +6,7 @@ import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, LoadingIcon, useTra
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {fakNoteCirclePlus} from "/client/component/atom/icon";
 import {Markdown} from "/client/component/atom/markdown";
-import {AddCommissionDialog} from "/client/component/compound/add-commission-dialog";
+import {AddProposalDialog} from "/client/component/compound/add-proposal-dialog";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {SearchWordForm} from "/client/component/compound/search-word-form";
 import {SuggestionCard} from "/client/component/compound/suggestion-card";
@@ -32,7 +32,7 @@ export const DictionaryMainPart = create(
 
     const dictionary = useDictionary();
 
-    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [authorities] = useSuspenseResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
     const [hitResult, {isFetching}] = useSuspenseResponse("searchWords", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
@@ -67,7 +67,7 @@ export const DictionaryMainPart = create(
           )}
           <div styleName="main">
             <div styleName="header">
-              {(canEdit) ? (
+              {(authorities?.includes("edit")) ? (
                 <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
                   <Button variant="light">
                     <ButtonIconbag><GeneralIcon icon={fakNoteCirclePlus}/></ButtonIconbag>
@@ -75,10 +75,10 @@ export const DictionaryMainPart = create(
                   </Button>
                 )}/>
               ) : (
-                <AddCommissionDialog dictionary={dictionary} trigger={(
+                <AddProposalDialog dictionary={dictionary} trigger={(
                   <Button scheme="gray" variant="light">
                     <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
-                    {trans("button.addCommission")}
+                    {trans("button.addProposal")}
                   </Button>
                 )}/>
               )}
@@ -87,7 +87,12 @@ export const DictionaryMainPart = create(
               </div>
             </div>
             <SuggestionCard dictionary={dictionary} suggestions={hitSuggestions}/>
-            <WordList dictionary={dictionary} words={hitWords} emptyType={(hitSuggestions.length > 0) ? "none" : (canEdit) ? "create" : "commission"} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}/>
+            <WordList
+              dictionary={dictionary}
+              words={hitWords}
+              emptyType={(hitSuggestions.length > 0) ? "none" : (authorities?.includes("edit")) ? "create" : "proposal"}
+              pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}
+            />
           </div>
         </div>
       </div>

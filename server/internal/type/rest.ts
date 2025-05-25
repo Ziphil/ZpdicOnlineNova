@@ -3,7 +3,6 @@
 import type {
   Aggregation,
   Article,
-  Commission,
   CustomError,
   Dictionary,
   DictionaryParameter,
@@ -25,6 +24,7 @@ import type {
   InvitationType,
   Notification,
   ObjectId,
+  Proposal,
   Relation,
   Suggestion,
   User,
@@ -35,7 +35,7 @@ import type {
   WordWithExamples
 } from "/client/skeleton";
 import type {WithRecaptcha} from "/server/internal/type/common";
-import type {DictionaryAuthority, DictionaryFullAuthority} from "/server/model";
+import type {DictionaryAuthority, DictionaryAuthorityQuery} from "/server/model";
 import type {WithSize} from "/server/util/query";
 
 
@@ -168,24 +168,24 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "noSuchArticle" | "dictionarySaving">
     }
   },
-  addCommission: {
+  addProposal: {
     request: WithRecaptcha<{number: number, name: string, comment?: string}>,
     response: {
-      success: Commission,
-      error: CustomError<"noSuchDictionary" | "emptyCommissionName">
+      success: Proposal,
+      error: CustomError<"noSuchDictionary" | "emptyProposalName">
     }
   },
-  discardCommission: {
+  discardProposal: {
     request: {number: number, id: ObjectId},
     response: {
-      success: Commission,
-      error: CustomError<"noSuchDictionary" | "noSuchCommission">
+      success: Proposal,
+      error: CustomError<"noSuchDictionary" | "noSuchProposal">
     }
   },
-  fetchCommissions: {
+  fetchProposals: {
     request: {number: number, offset?: number, size?: number},
     response: {
-      success: WithSize<Commission>,
+      success: WithSize<Proposal>,
       error: CustomError<"noSuchDictionary">
     }
   },
@@ -232,23 +232,16 @@ type ServerSpecs = {
     }
   },
   fetchDictionaryAuthorizedUsers: {
-    request: {number: number, authority: DictionaryFullAuthority},
+    request: {number: number, authorityQuery: DictionaryAuthorityQuery},
     response: {
       success: Array<User>,
       error: CustomError<"noSuchDictionary">
     }
   },
-  fetchDictionaryAuthorization: {
-    request: {identifier: number | string, authority: DictionaryAuthority},
+  fecthMyDictionaryAuthorities: {
+    request: {identifier: number | string},
     response: {
-      success: boolean,
-      error: CustomError<"noSuchDictionary">
-    }
-  },
-  checkDictionaryAuthorization: {
-    request: {identifier: number | string, authority: DictionaryAuthority},
-    response: {
-      success: null,
+      success: Array<DictionaryAuthority>,
       error: CustomError<"noSuchDictionary">
     }
   },

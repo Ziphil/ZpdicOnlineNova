@@ -259,7 +259,7 @@ wordTypeSelect:
     exact: "Ekzakta"
     regular: "Regesp"
 
-addCommissionDialog:
+addProposalDialog:
   heading: "Peti kreadon de vorto"
   label:
     name: "Vorto"
@@ -268,7 +268,7 @@ addCommissionDialog:
     confirm: "Konfirmi"
   error:
     nameRequired: >-
-      Enigu la vorton por peti.
+      Enigu la vorton kies kreadon vi petas.
 articleList:
   empty: "Neniuj artikoloj estas kreitaj"
   button:
@@ -292,7 +292,7 @@ changeAppearanceForm:
   theme:
     light: "Luma"
     dark: "Malluma"
-commissionList:
+proposalList:
   empty: "Neniuj vortoj estas petitaj"
   button:
     add: "Krei"
@@ -336,7 +336,7 @@ dictionaryHeader:
     article: "Artikoloj"
     resource: "Bildoj"
     information: "Detaloj"
-    commission: "Petoj"
+    proposal: "Petoj"
     setting: "Agordoj"
   table:
     updatedDate: "Ĝisdatigita je"
@@ -351,7 +351,7 @@ dictionaryHeader:
     addArticle: 
       long: "Krei artikolon"
       short: "Artikolo"
-    addCommission: "Peti"
+    addProposal: "Peti"
     download: "Elŝuti"
   userCount: "<plus>+</plus>{count, number}"
 dictionaryList:
@@ -390,6 +390,9 @@ dictionaryStatisticsView:
     informationAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {ero/vorto} other {eroj/vorto}}</unit>"
     informationText: "<number>{value, number}</number><unit>{value, plural, one {signo} other {signoj}}</unit>"
     informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {signo/vorto} other {signoj/vorto}}</unit>"
+editArticleDialog:
+  button:
+    confirm: "Konfirmi"
 editArticleForm:
   tab:
     edit: "Redakti"
@@ -401,6 +404,7 @@ editArticleForm:
     confirm: "Konfirmi"
 editExampleDialog:
   button:
+    confirm: "Konfirmi"
     external: "Malfermi en nova langeto"
 editExampleForm:
   tab:
@@ -424,6 +428,7 @@ editExampleForm:
     confirm: "Konfirmi"
 editWordDialog:
   button:
+    confirm: "Konfirmi"
     external: "Malfermi en nova langeto"
 editWordForm:
   tab:
@@ -635,7 +640,7 @@ wordList:
     share: "Kunhavigi"
     select: "Reveni al tiu versio"
     create: "Krei"
-    commission: "Peti kreadon"
+    proposal: "Peti kreadon"
   dialog:
     discard:
       message: >-
@@ -776,6 +781,16 @@ changeDictionaryFontForm:
     input:
       name: "Tipara familio"
       file: "Tipara dosiero"
+  labelHelper:
+    type:
+      none: |-
+        La kapvortoj estos montrataj en la defaŭlta tiparo.
+      local: |-
+        La kapvortoj estos montrataj en la loka tiparo instalita en la vizitanta medio.
+        Se la specifita tiparo ne estas instalita en la vizitanta medio, la kapvortoj estos montrataj en la defaŭlta tiparo anstataŭe.
+      custom: |-
+        Alŝutu vian propran tiparan dosieron por uzi ĝin por la kapvortoj.
+        Tiu tiparo estas uzata sendepende de la vizitanta medio.
   error:
     nameRequired: >-
       Enigu tipara familio.
@@ -805,6 +820,14 @@ changeDictionaryVisibilityForm:
     public: "Publika"
     unlisted: "Nelistigita"
     private: "Nepublika"
+  labelHelper:
+    public: |-
+      Ĉiuj povos vidi tiun vortaron.
+    unlisted: |-
+      Tiu vortaro ne aperos en listoj de vortaroj, sed ĉiu kiu scias la retadreson de la vortaro povos ankoraŭ rekte aliri ĝin.
+    private: |-
+      Nur uzantoj kun redakta permeso povos vidi tiun vortaron.
+      Uzantoj sen permeso ne povos aliri ĝin eĉ se ili scias la retadreson.
 changeDictionarySourceForm:
   button:
     try: "Provi"
@@ -903,9 +926,9 @@ dictionaryArticlePart:
 dictionaryArticleSinglePart:
   button:
     back: "Reiri al listo"
-dictionaryCommissionPart:
+dictionaryProposalPart:
   button:
-    addCommission: "Krei peton"
+    addProposal: "Krei peton"
 dictionaryExamplePart:
   heading:
     offer: "Hodiaŭa frazo"
@@ -1016,7 +1039,7 @@ dictionarySettingGeneralPart:
       Se vi ebligos tiun funkcion, la numero de tradukaĵoj estos montrata.
     visibility: >-
       Se vi agordos tiun al “Nelistigita”, la vortaro ne aperos en listoj de vortaroj.
-      Tamen ĉiu, kiu konas la retadreso de la paĝo de la vortaro, povas ankoraŭ rekte aliri ĝin.
+      Tamen ĉiu kiu scias la retadreson de la paĝo de la vortaro povas ankoraŭ rekte aliri ĝin.
   callout:
     font: >-
       Eble necesas tempo por ke la alŝutita tiparo estus reflektita.
@@ -1024,6 +1047,15 @@ dictionarySettingGeneralPart:
     discard: >-
       Forigi tiun vortaron ankaŭ forigos ĉiujn rilatajn datumojn, inkluzive de vortoj kaj ekzemplaj frazoj.
       Bonvolu esti certa, ĉar ne estas reiro.
+editArticlePage:
+  button:
+    confirm: "Konfirmi"
+editExamplePage:
+  button:
+    confirm: "Konfirmi"
+editWordPage:
+  button:
+    confirm: "Konfirmi"
 errorPage:
   heading:
     notFound: "Ne\nTrovita"

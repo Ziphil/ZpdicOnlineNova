@@ -14,6 +14,7 @@ import {
   FileInput,
   GeneralIcon,
   Input,
+  MultiLineText,
   Radio,
   data,
   useTrans
@@ -44,18 +45,27 @@ export const ChangeDictionaryFontForm = create(
     return (
       <form styleName="root" {...rest}>
         <ControlContainer>
-          <div styleName="radio-group" {...data({mobileVertical: true})}>
+          <div styleName="radio-group" {...data({vertical: "wide"})}>
             <CheckableContainer>
               <Radio value="none" {...register("type")}/>
-              <CheckableLabel>{trans("label.type.none")}</CheckableLabel>
+              <CheckableLabel styleName="label">
+                <div styleName="label-main">{trans("label.type.none")}</div>
+                <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.type.none")}</MultiLineText>
+              </CheckableLabel>
             </CheckableContainer>
             <CheckableContainer>
               <Radio value="local" {...register("type")}/>
-              <CheckableLabel>{trans("label.type.local")}</CheckableLabel>
+              <CheckableLabel styleName="label">
+                <div styleName="label-main">{trans("label.type.local")}</div>
+                <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.type.local")}</MultiLineText>
+              </CheckableLabel>
             </CheckableContainer>
             <CheckableContainer>
               <Radio value="custom" {...register("type")}/>
-              <CheckableLabel>{trans("label.type.custom")}</CheckableLabel>
+              <CheckableLabel styleName="label">
+                <div styleName="label-main">{trans("label.type.custom")}</div>
+                <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.type.custom")}</MultiLineText>
+              </CheckableLabel>
             </CheckableContainer>
           </div>
         </ControlContainer>

@@ -1,13 +1,16 @@
 //
 
-import {faArrowUpRightFromSquare} from "@fortawesome/sharp-regular-svg-icons";
+import {faArrowUpRightFromSquare, faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, MouseEvent, ReactElement, cloneElement, useCallback, useRef, useState} from "react";
 import {useHref} from "react-router-dom";
 import rison from "rison";
 import {
+  Button,
+  ButtonIconbag,
   Dialog,
   DialogBody,
   DialogCloseButton,
+  DialogFooter,
   DialogOutsideButton,
   DialogOutsideButtonContainer,
   DialogOutsideButtonIconbag,
@@ -15,7 +18,7 @@ import {
   GeneralIcon,
   useTrans
 } from "zographia";
-import {EditArticleForm, EditArticleFormValue, EditArticleInitialData, getEditArticleFormValue} from "/client/component/compound/edit-article-form";
+import {EditArticleForm, EditArticleFormValue, EditArticleInitialData, getEditArticleFormValue, useEditArticle} from "/client/component/compound/edit-article-form";
 import {create} from "/client/component/create";
 import {Dictionary} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
@@ -65,6 +68,8 @@ export const EditArticleDialog = create(
       }
     }, [addArticlePageUrlBase]);
 
+    const formSpec = useEditArticle(dictionary, initialData, closeDialog);
+
     return (
       <Fragment>
         {cloneElement(trigger, {onClick: openDialog})}
@@ -78,8 +83,14 @@ export const EditArticleDialog = create(
             </DialogOutsideButtonContainer>
             <DialogCloseButton/>
             <DialogBody>
-              <EditArticleForm dictionary={dictionary} initialData={initialData} formRef={formRef} onSubmit={closeDialog}/>
+              <EditArticleForm dictionary={dictionary} initialData={initialData} formSpec={formSpec} formRef={formRef}/>
             </DialogBody>
+            <DialogFooter>
+              <Button onClick={formSpec.handleSubmit}>
+                <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
+                {trans("button.confirm")}
+              </Button>
+            </DialogFooter>
           </DialogPane>
         </Dialog>
       </Fragment>

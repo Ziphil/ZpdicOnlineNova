@@ -5,11 +5,11 @@ import {ReactElement, Ref, useState} from "react";
 import {UseFormReturn} from "react-hook-form";
 import {AdditionalProps, GeneralIcon, Tab, TabIconbag, TabList, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, EditableWord} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {assignRef} from "/client/util/ref";
 import {EditWordFormEditPart} from "./edit-word-form-edit-part";
 import {EditWordFormHistoryPart} from "./edit-word-form-history-part";
-import {EditWordFormValue, EditWordInitialData, useEditWord} from "./edit-word-form-hook";
+import {EditWordFormValue, EditWordInitialData, EditWordSpec} from "./edit-word-form-hook";
 
 
 export const EditWordForm = create(
@@ -17,20 +17,19 @@ export const EditWordForm = create(
   function ({
     dictionary,
     initialData,
+    formSpec,
     formRef,
-    onSubmit,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditWordInitialData | null,
+    formSpec: EditWordSpec,
     formRef?: Ref<UseFormReturn<EditWordFormValue>>,
-    onSubmit?: (word: EditableWord) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
-    const formSpec = useEditWord(dictionary, initialData, onSubmit);
     const {form} = formSpec;
     const editing = form.watch("number") !== null;
 

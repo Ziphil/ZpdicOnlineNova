@@ -1,8 +1,7 @@
 //
 
-import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {AdditionalProps} from "zographia";
 import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
@@ -26,9 +25,7 @@ export const EditWordFormEditPart = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("editWordForm");
-
-    const {form, handleSubmit} = formSpec;
+    const {form} = formSpec;
 
     return (
       <form styleName="root" onSubmit={preventDefault} {...rest}>
@@ -38,12 +35,6 @@ export const EditWordFormEditPart = create(
           <EditWordFormInformationSection dictionary={dictionary} form={form}/>
           <EditWordFormVariationSection dictionary={dictionary} form={form}/>
           <EditWordFormRelationSection dictionary={dictionary} form={form}/>
-        </div>
-        <div styleName="button">
-          <Button onClick={handleSubmit}>
-            <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.confirm")}
-          </Button>
         </div>
       </form>
     );

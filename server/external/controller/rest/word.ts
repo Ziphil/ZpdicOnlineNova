@@ -16,7 +16,7 @@ import {ExternalRestController} from "./base";
 export class WordExternalRestController extends ExternalRestController {
 
   @endpoint("/v0/dictionary/:identifier/words", "get")
-  @before(checkMe(), limit(), validateQuery("searchWords"), checkDictionary())
+  @before(checkMe(), limit(), validateQuery("searchWords"), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"searchWords", "dictionary">, response: Response<"searchWords">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {skip, limit, ...rawParameter} = request.query;
@@ -29,7 +29,7 @@ export class WordExternalRestController extends ExternalRestController {
   }
 
   @endpoint("/v0/dictionary/:identifier/word/:wordNumber", "get")
-  @before(checkMe(), limit(), validateQuery("fetchWord"), checkDictionary())
+  @before(checkMe(), limit(), validateQuery("fetchWord"), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchWord", "dictionary">, response: Response<"fetchWord">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const wordNumber = +request.params.wordNumber;
