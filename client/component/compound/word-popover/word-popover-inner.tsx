@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faEdit} from "@fortawesome/sharp-regular-svg-icons";
-import {MouseEvent, ReactElement, useCallback, useMemo} from "react";
+import {MouseEvent, ReactElement, useCallback} from "react";
 import {Button, ButtonIconbag, GeneralIcon, LoadingIcon, MultiLineText, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
@@ -46,7 +46,7 @@ export const WordPopoverInner = create(
                 <Tag key={index} styleName="tag" variant="light">{title}</Tag>
               ))}
               <span>
-                {useMemo(() => createEquivalentNameNode(equivalent.nameString, equivalent.ignoredPattern), [equivalent.nameString, equivalent.ignoredPattern])}
+                {createEquivalentNameNode(equivalent.nameString, equivalent.ignoredPattern)}
               </span>
             </MultiLineText>
           ))}
