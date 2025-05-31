@@ -1060,6 +1060,7 @@ errorPage:
   heading:
     notFound: "Ne\nTrovita"
     forbidden: "Aliro\nMalpermesita"
+    timeout: "Peto\nEltempiĝa"
   message:
     notFound: >-
       La paĝo kiun vi serĉas ne estis trovita.
@@ -1067,11 +1068,15 @@ errorPage:
     forbidden: >-
       Vi ne havas permeson vidi tiun paĝon.
       Bonvolu reveni al la ĉefpaĝo por aliaj enhavoj.
+    timeout: >-
+      Daŭras tro longe por ricevi respondon de la servilo.
+      Bonvolu reprovi poste en pli bona reta medio.
     error: >-
       Neatendita eraro okazis.
       Bonvolu kontakti la administranton kun la jena erara mesaĝo.
   button:
     back: "Reiri al ĉefpaĝo"
+    refresh: "Reŝargi paĝon"
 examplePage:
   add: "Krei novan frazon"
 loginPage:

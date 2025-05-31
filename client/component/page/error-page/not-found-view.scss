@@ -36,6 +36,7 @@
   font-size: 6zu;
   color: var(--text-color);
   white-space: pre-wrap;
+  font-variant-caps: small-caps;
   flex: 1 1 0zu;
 }
 
@@ -50,6 +51,7 @@
   max-width: 120zu;
   margin-block-start: 10zu;
   align-self: center;
+  text-align: center;
 }
 
 .error {
@@ -71,6 +73,7 @@
 }
 
 .button {
+  column-gap: 4zu;
   margin-block-start: 6zu;
   display: flex;
   justify-content: center;

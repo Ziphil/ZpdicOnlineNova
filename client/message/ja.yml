@@ -1061,6 +1061,7 @@ errorPage:
   heading:
     notFound: "Not\nFound"
     forbidden: "Access\nDenied"
+    timeout: "Request\nTimeout"
   message:
     notFound: >-
       お探しのページが見つかりませんでした。
@@ -1068,11 +1069,15 @@ errorPage:
     forbidden: >-
       このページにアクセスする権限がありません。
       トップページに戻り、他のコンテンツをお探しください。
+    timeout: >-
+      サーバーからの応答を受信するのに時間がかかっています。
+      通信環境の良い場所で再度お試しください。
     error: >-
       原因不明のエラーが発生しました。
       お手数ですが、以下のエラーメッセージとともに管理者にご連絡ください。
   button:
     back: "トップページへ"
+    refresh: "ページを再読み込み"
 examplePage:
   add: "新しい単語を作成"
 loginPage:

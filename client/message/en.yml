@@ -1060,6 +1060,7 @@ errorPage:
   heading:
     notFound: "Not\nFound"
     forbidden: "Access\nDenied"
+    timeout: "Request\nTimeout"
   message:
     notFound: >-
       The page you are looking for could not be found.
@@ -1067,11 +1068,15 @@ errorPage:
     forbidden: >-
       You don't have permission to view this page.
       Please return to the top page for other contents.
+    timeout: >-
+      It is taking too long to receive a response from the server.
+      Please try again later in a better network environment.
     error: >-
       An unexpected error has occurred.
       Please contact the administrator with the following error message.
   button:
     back: "Back to top page"
+    refresh: "Refresh page"
 examplePage:
   add: "Create new sentence"
 loginPage:

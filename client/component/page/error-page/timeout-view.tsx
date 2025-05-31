@@ -1,19 +1,17 @@
 //
 
-import {faArrowsRotate, faBomb, faLeft} from "@fortawesome/sharp-regular-svg-icons";
+import {faArrowsRotate, faLeft, faPawSimple} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, GeneralIcon, LinkIconbag, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
 
 
-export const ErrorView = create(
-  require("./not-found-view.scss"), "ErrorView",
+export const TimeoutView = create(
+  require("./not-found-view.scss"), "TimeoutView",
   function ({
-    error,
     ...rest
   }: {
-    error: unknown,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -22,24 +20,23 @@ export const ErrorView = create(
     return (
       <div styleName="root" {...rest}>
         <div styleName="top">
-          <div styleName="code"/>
+          <div styleName="code">408</div>
           <div styleName="icon">
-            <GeneralIcon icon={faBomb}/>
+            <GeneralIcon icon={faPawSimple}/>
           </div>
-          <div styleName="heading"/>
+          <MultiLineText styleName="heading" is="div" lineHeight="narrowFixed">
+            {trans("heading.timeout")}
+          </MultiLineText>
         </div>
         <MultiLineText styleName="message">
-          {trans("message.error")}
+          {trans("message.timeout")}
         </MultiLineText>
-        <pre styleName="error">
-          {(error instanceof Error) ? `Error ${error.name}\n${error.message}\n\n${error.stack}` : JSON.stringify(error, null, 2)}
-        </pre>
         <div styleName="button">
-          <Link href="/" variant="solid">
+          <Link href="/" variant="light">
             <LinkIconbag><GeneralIcon icon={faLeft}/></LinkIconbag>
             {trans("button.back")}
           </Link>
-          <Button variant="light" onClick={() => window.location.reload()}>
+          <Button variant="solid" onClick={() => window.location.reload()}>
             <LinkIconbag><GeneralIcon icon={faArrowsRotate}/></LinkIconbag>
             {trans("button.refresh")}
           </Button>
