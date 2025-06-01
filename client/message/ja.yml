@@ -284,14 +284,6 @@ articleList:
       confirm: "削除"
 changeLocaleForm:
   label: "言語"
-changeAppearanceForm:
-  label: "テーマ"
-  appearance:
-    normal: "通常色"
-    dimmed: "淡色"
-  theme:
-    light: "ライト"
-    dark: "ダーク"
 proposalList:
   empty: "造語依頼はされていません"
   button:
@@ -761,6 +753,14 @@ addResourceButton:
     tooLarge: >-
       ファイルのサイズが大きすぎます。
       1 MB より大きなファイルはアップロードすることができません。
+changeAppearanceForm:
+  label: "テーマ"
+  appearance:
+    normal: "通常色"
+    dimmed: "淡色"
+  theme:
+    light: "ライト"
+    dark: "ダーク"
 changeDictionaryNameForm:
   error:
     required: >-

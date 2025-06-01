@@ -284,14 +284,6 @@ articleList:
       confirm: "Forigi"
 changeLocaleForm:
   label: "Lingvo"
-changeAppearanceForm:
-  label: "Šajno"
-  appearance:
-    normal: "Normala"
-    dimmed: "Malbrila"
-  theme:
-    light: "Luma"
-    dark: "Malluma"
 proposalList:
   empty: "Neniuj vortoj estas petitaj"
   button:
@@ -762,6 +754,14 @@ addResourceButton:
     tooLarge: >-
       La dosiero estas tro granda.
       Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
+changeAppearanceForm:
+  label: "Šajno"
+  appearance:
+    normal: "Normala"
+    dimmed: "Malbrila"
+  theme:
+    light: "Luma"
+    dark: "Malluma"
 changeDictionaryNameForm:
   error:
     required: >-

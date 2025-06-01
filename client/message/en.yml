@@ -284,14 +284,6 @@ articleList:
       confirm: "Delete"
 changeLocaleForm:
   label: "Language"
-changeAppearanceForm:
-  label: "Appearance"
-  appearance:
-    normal: "Normal"
-    dimmed: "Dimmed"
-  theme:
-    light: "Light"
-    dark: "Dark"
 proposalList:
   empty: "No words are requested"
   button:
@@ -762,6 +754,14 @@ addResourceButton:
     tooLarge: >-
       The file is too large.
       You cannot upload files larger than 1 MB.
+changeAppearanceForm:
+  label: "Appearance"
+  appearance:
+    normal: "Normal"
+    dimmed: "Dimmed"
+  theme:
+    light: "Light"
+    dark: "Dark"
 changeDictionaryNameForm:
   error:
     required: >-
