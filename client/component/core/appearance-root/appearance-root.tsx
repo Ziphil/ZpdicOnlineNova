@@ -3,7 +3,7 @@
 import {ReactElement, ReactNode} from "react";
 import {Root as ZographiaRoot} from "zographia";
 import {create} from "/client/component/create";
-import {useColorDefinitions} from "/client/hook/appearance";
+import {useColorDefinitions, useStyleDefinitions} from "/client/hook/appearance";
 import {messageInventory} from "/client/message";
 
 
@@ -16,9 +16,10 @@ export const AppearanceRoot = create(
   }): ReactElement | null {
 
     const colorDefinitions = useColorDefinitions();
+    const styleDefinitions = useStyleDefinitions();
 
     return (
-      <ZographiaRoot colorDefinitions={colorDefinitions} messageInventory={messageInventory}>
+      <ZographiaRoot colorDefinitions={colorDefinitions} styleDefinitions={styleDefinitions} messageInventory={messageInventory}>
         {children}
       </ZographiaRoot>
     );

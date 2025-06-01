@@ -1,6 +1,6 @@
 //
 
-import {ColorDefinitions, createColor, createColorDefinition} from "zographia";
+import {ColorDefinitions, StyleDefinitions, createColor, createColorDefinition} from "zographia";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 
@@ -46,6 +46,23 @@ export const COLOR_DEFINITIONS = {
     stainDark: createColor("black")
   }
 } satisfies Record<string, ColorDefinitions>;
+
+export const STYLE_DEFINITIONS = {
+  sans: {
+    fontFamily: {
+      main: "'Noto Sans Display', 'Noto Sans JP', sans-serif",
+      bold: "'Noto Sans Display', 'Noto Sans JP', sans-serif",
+      monospace: "'Noto Sans Mono', 'Noto Sans JP', monospace"
+    }
+  },
+  serif: {
+    fontFamily: {
+      main: "'Noto Serif', 'Noto Serif JP', serif",
+      bold: "'Noto Serif', 'Noto Serif JP', serif",
+      monospace: "'Noto Sans Mono', 'Noto Sans JP', monospace"
+    }
+  }
+} satisfies Record<string, Partial<StyleDefinitions>>;
 
 export type Appearance = {
   theme: Theme,
