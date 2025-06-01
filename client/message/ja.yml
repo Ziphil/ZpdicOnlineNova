@@ -622,6 +622,7 @@ userHeader:
     dictionary: "辞書"
     notification: "通知"
     setting: "設定"
+    appearance: "外観"
     developer: "開発向け"
     logout: "ログアウト"
   button:

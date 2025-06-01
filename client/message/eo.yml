@@ -622,6 +622,7 @@ userHeader:
     dictionary: "Vortaroj"
     notification: "Sciigoj"
     setting: "Agordoj"
+    appearance: "Šajno"
     developer: "Programado"
     logout: "Elsaluti"
   button:

@@ -54,6 +54,8 @@ function getTabValue(tabPath: string | undefined): UserHeaderTabValue {
     return "notification";
   } else if (tabPath === "settings") {
     return "setting";
+  } else if (tabPath === "appearance") {
+    return "appearance";
   } else if (tabPath === "developer") {
     return "developer";
   } else {

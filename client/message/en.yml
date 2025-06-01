@@ -622,6 +622,7 @@ userHeader:
     dictionary: "Dictionaries"
     notification: "Notifications"
     setting: "Settings"
+    appearance: "Appearance"
     developer: "Developer"
     logout: "Sign out"
   button:
