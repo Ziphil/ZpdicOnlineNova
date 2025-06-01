@@ -94,6 +94,8 @@ toast:
       Via retpoŝta adreso ŝanĝitas.
     changeMyPassword:
       Via pasvorto ŝanĝitas.
+    changeAppearance: |-
+      La ŝajno ŝanĝitas.
     generateMyApiKey:
       Via API-ŝlosilo generitas.
     issueMyActivateToken:
@@ -755,13 +757,18 @@ addResourceButton:
       La dosiero estas tro granda.
       Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
 changeAppearanceForm:
-  label: "Šajno"
-  appearance:
-    normal: "Normala"
-    dimmed: "Malbrila"
-  theme:
-    light: "Luma"
-    dark: "Malluma"
+  label: 
+    font:
+      label: "Tiparo"
+      sans: "Senserifa"
+      serif: "Serifa"
+    scheme:
+      normal: "Normala"
+      dimmed: "Malbrila"
+    theme:
+      label: "Kolora skemo"
+      light: "Luma"
+      dark: "Malluma"
 changeDictionaryNameForm:
   error:
     required: >-
@@ -1140,6 +1147,9 @@ topPage:
     offer: "Vidi antaŭaj ĉiutagaj frazoj"
     notification: "Legi pli da novaĵoj"
     github: "Vidi ĉe GitHub"
+userAppearancePart:
+  heading:
+    appearance: "Ŝajno"
 userDeveloperPart:
   heading:
     apiKey: "API-ŝlosilo"

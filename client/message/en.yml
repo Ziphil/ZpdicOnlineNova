@@ -94,6 +94,8 @@ toast:
       Your email address has been changed.
     changeMyPassword:
       Your password has been changed.
+    changeAppearance: |-
+      The appearance has been changed.
     generateMyApiKey: |-
       Your API key has been generated.
     issueMyActivateToken:
@@ -755,13 +757,18 @@ addResourceButton:
       The file is too large.
       You cannot upload files larger than 1 MB.
 changeAppearanceForm:
-  label: "Appearance"
-  appearance:
-    normal: "Normal"
-    dimmed: "Dimmed"
-  theme:
-    light: "Light"
-    dark: "Dark"
+  label: 
+    font:
+      label: "Font"
+      sans: "Sans-serif"
+      serif: "Serif"
+    scheme:
+      normal: "Normal"
+      dimmed: "Dimmed"
+    theme:
+      label: "Color theme"
+      light: "Light"
+      dark: "Dark"
 changeDictionaryNameForm:
   error:
     required: >-
@@ -1140,6 +1147,9 @@ topPage:
     offer: "See past daily sentences"
     notification: "Read more news"
     github: "View on GitHub"
+userAppearancePart:
+  heading:
+    appearance: "Appearance"
 userDeveloperPart:
   heading:
     apiKey: "API key"

@@ -3,7 +3,7 @@
 import {useCallback} from "react";
 import {atom, useRecoilValue, useSetRecoilState} from "recoil";
 import {ColorDefinitions, useChangeTheme, useTheme} from "zographia";
-import {Appearance, AppearanceFontUtil, AppearanceSchemeUtil, COLOR_DEFINITIONS} from "/client/constant/appearance";
+import {Appearance, AppearanceFontUtil, AppearanceSchemeUtil, COLOR_DEFINITIONS, Theme} from "/client/constant/appearance";
 
 
 const appearanceAtom = atom<Omit<Appearance, "theme">>({
@@ -21,7 +21,7 @@ export function useColorDefinitions(): ColorDefinitions {
 
 export function useAppearance(): Appearance {
   const appearance = useRecoilValue(appearanceAtom);
-  const theme = useTheme();
+  const theme = useTheme() as Theme;
   return {...appearance, theme};
 }
 

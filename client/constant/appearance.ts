@@ -48,7 +48,7 @@ export const COLOR_DEFINITIONS = {
 } satisfies Record<string, ColorDefinitions>;
 
 export type Appearance = {
-  theme: string,
+  theme: Theme,
   scheme: AppearanceScheme,
   font: AppearanceFont
 };
@@ -57,7 +57,7 @@ export const APPEARANCE_SCHEMES = ["normal", "dimmed"] as const;
 export type AppearanceScheme = LiteralType<typeof APPEARANCE_SCHEMES>;
 export const AppearanceSchemeUtil = LiteralUtilType.create(APPEARANCE_SCHEMES);
 
-export const APPEARANCE_FONTS = ["serif", "sans"] as const;
+export const APPEARANCE_FONTS = ["sans", "serif"] as const;
 export type AppearanceFont = LiteralType<typeof APPEARANCE_FONTS>;
 export const AppearanceFontUtil = LiteralUtilType.create(APPEARANCE_FONTS);
 

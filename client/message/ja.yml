@@ -94,6 +94,8 @@ toast:
       メールアドレスを変更しました。
     changeMyPassword: |-
       パスワードを変更しました。
+    changeAppearance: |-
+      外観を変更しました。
     generateMyApiKey: |-
       API キーを生成しました。
     issueMyActivateToken: |-
@@ -754,13 +756,18 @@ addResourceButton:
       ファイルのサイズが大きすぎます。
       1 MB より大きなファイルはアップロードすることができません。
 changeAppearanceForm:
-  label: "テーマ"
-  appearance:
-    normal: "通常色"
-    dimmed: "淡色"
-  theme:
-    light: "ライト"
-    dark: "ダーク"
+  label: 
+    font:
+      label: "フォント"
+      sans: "ゴシック体"
+      serif: "明朝体"
+    scheme:
+      normal: "通常色"
+      dimmed: "淡色"
+    theme:
+      label: "配色テーマ"
+      light: "ライト"
+      dark: "ダーク"
 changeDictionaryNameForm:
   error:
     required: >-
@@ -1141,6 +1148,9 @@ topPage:
     offer: "過去の例文を見る"
     notification: "過去のお知らせを見る"
     github: "GitHub で見る"
+userAppearancePart:
+  heading:
+    appearance: "外観"
 userDeveloperPart:
   heading:
     apiKey: "API キー"
