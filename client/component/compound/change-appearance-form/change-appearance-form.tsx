@@ -1,17 +1,16 @@
 /* eslint-disable react/jsx-closing-bracket-location, no-useless-computed-key */
 
 import {faAngleDown, faPalette} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback} from "react";
+import {ReactElement} from "react";
 import {
   AdditionalProps,
   GeneralIcon,
   Menu,
   MenuItem,
-  useChangeTheme,
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {APPEARANCES, Appearance, THEMES, Theme} from "/client/constant/appearance";
+import {APPEARANCE_SCHEMES, THEMES} from "/client/constant/appearance";
 import {useChangeAppearance} from "/client/hook/appearance";
 
 
@@ -26,12 +25,6 @@ export const ChangeAppearanceForm = create(
     const {trans} = useTrans("changeAppearanceForm");
 
     const changeAppearance = useChangeAppearance();
-    const changeTheme = useChangeTheme();
-
-    const changeAppearanceAndTheme = useCallback(function (colorDefinitionType: Appearance, theme: Theme): void {
-      changeAppearance(colorDefinitionType);
-      changeTheme(theme);
-    }, [changeAppearance, changeTheme]);
 
     return (
       <Menu styleName="root" triggerType="click" placement="bottom-end" {...rest} trigger={(
@@ -41,8 +34,8 @@ export const ChangeAppearanceForm = create(
           <GeneralIcon styleName="angle" icon={faAngleDown}/>
         </button>
       )}>
-        {APPEARANCES.map((appearance) => THEMES.map((theme) => (
-          <MenuItem styleName="item" key={`${appearance}-${theme}`} onClick={() => changeAppearanceAndTheme(appearance, theme)}>
+        {APPEARANCE_SCHEMES.map((appearance) => THEMES.map((theme) => (
+          <MenuItem styleName="item" key={`${appearance}-${theme}`}>
             {trans(`appearance.${appearance}`)} · {trans(`theme.${theme}`)}
           </MenuItem>
         )))}
