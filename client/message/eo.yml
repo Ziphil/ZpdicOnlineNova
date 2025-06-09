@@ -434,6 +434,7 @@ editWordForm:
     informations: "Enhavoj"
     variations: "Variaĵaj formoj"
     relations: "Rilataj vortoj"
+    template: "Ŝablona agordoj"
   label:
     name: "Literumo"
     pronunciation: "Elparolo"
@@ -451,6 +452,7 @@ editWordForm:
       titles: "Specoj"
       name: "Vorto"
       mutual: "Fari tiun rilaton reciproka"
+    title: "Ŝablona titolo"
   absent:
     equivalent: "Neniuj tradukaĵoj"
     information: "Neniuj enhavoj"
@@ -1056,6 +1058,11 @@ dictionarySettingGeneralPart:
     discard: >-
       Forigi tiun vortaron ankaŭ forigos ĉiujn rilatajn datumojn, inkluzive de vortoj kaj ekzemplaj frazoj.
       Bonvolu esti certa, ĉar ne estas reiro.
+dictionarySettingTemplatePart:
+  heading:
+    templateWords: "Ŝablonoj"
+  button:
+    addTemplateWord: "Krei ŝablonon"
 editArticlePage:
   button:
     confirm: "Konfirmi"

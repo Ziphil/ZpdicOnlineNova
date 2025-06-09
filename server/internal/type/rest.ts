@@ -106,7 +106,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
-  deleteDictionaryTemplateWord: {
+  discardDictionaryTemplateWord: {
     request: {number: number, id: ObjectId},
     response: {
       success: Dictionary,

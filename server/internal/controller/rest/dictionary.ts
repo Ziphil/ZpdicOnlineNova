@@ -153,9 +153,9 @@ export class DictionaryRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
-  @post("/deleteDictionaryTemplateWord")
+  @post("/discardDictionaryTemplateWord")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: FilledRequest<"deleteDictionaryTemplateWord", "me" | "dictionary">, response: Response<"deleteDictionaryTemplateWord">): Promise<void> {
+  public async [Symbol()](request: FilledRequest<"discardDictionaryTemplateWord", "me" | "dictionary">, response: Response<"discardDictionaryTemplateWord">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {id} = request.body;
     await dictionary.deleteTemplateWord(id);

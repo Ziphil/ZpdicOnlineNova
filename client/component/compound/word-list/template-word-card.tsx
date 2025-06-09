@@ -12,10 +12,11 @@ import {
   GeneralIcon,
   useTrans
 } from "zographia";
-import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
+import {EditTemplateWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors, TemplateWord} from "/client/skeleton";
+import {useDiscardTemplateWord} from "./template-word-card-hook";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardHeading} from "./word-card-heading";
 import {WordCardInformationList} from "./word-card-information-list";
@@ -39,6 +40,8 @@ export const TemplateWordCard = create(
 
     const [authorities] = useResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
+    const discardWord = useDiscardTemplateWord(dictionary, word);
+
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
@@ -51,13 +54,13 @@ export const TemplateWordCard = create(
         {(authorities?.includes("own")) && (
           <CardFooter styleName="footer">
             <div styleName="footer-left">
-              <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
+              <EditTemplateWordDialog dictionary={dictionary} initialData={{type: "word", word}} trigger={(
                 <Button scheme="secondary" variant="underline">
                   <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
                   {trans("button.edit")}
                 </Button>
               )}/>
-              <Button scheme="red" variant="underline" onClick={undefined}>
+              <Button scheme="red" variant="underline" onClick={discardWord}>
                 <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
                 {trans("button.discard")}
               </Button>

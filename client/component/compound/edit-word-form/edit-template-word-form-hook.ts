@@ -56,7 +56,7 @@ export type EditTemplateWordFormValue = FormValue;
 export type EditTemplateWordInitialData = ({type: "word", word: TemplateWord | EditableTemplateWord} | {type: "form", value: EditTemplateWordFormValue}) & {forceAdd?: boolean};
 export const getEditTemplateWordFormValue = getFormValue;
 
-export function useTemplateEditWord(dictionary: Dictionary, initialData: EditTemplateWordInitialData | null, onSubmit?: () => unknown): EditTemplateWordSpec {
+export function useEditTemplateWord(dictionary: Dictionary, initialData: EditTemplateWordInitialData | null, onSubmit?: () => unknown): EditTemplateWordSpec {
   const form = useForm<FormValue>(getFormValue(initialData), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();

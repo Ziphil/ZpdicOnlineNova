@@ -434,6 +434,7 @@ editWordForm:
     informations: "内容"
     variations: "変化形"
     relations: "関連語"
+    template: "テンプレート設定"
   label:
     name: "綴り"
     pronunciation: "発音記号"
@@ -451,6 +452,7 @@ editWordForm:
       titles: "分類"
       name: "関連語"
       mutual: "この関連語を双方向にする"
+    title: "テンプレート名"
   absent:
     equivalent: "訳語が登録されていません"
     information: "内容が登録されていません"
@@ -1057,6 +1059,11 @@ dictionarySettingGeneralPart:
     discard: >-
       この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。
       後からデータを復元することはできないので、慎重に行ってください。
+dictionarySettingTemplatePart:
+  heading:
+    templateWords: "テンプレート"
+  button:
+    addTemplateWord: "テンプレートを追加"
 editArticlePage:
   button:
     confirm: "決定"

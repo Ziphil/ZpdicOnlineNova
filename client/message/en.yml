@@ -434,6 +434,7 @@ editWordForm:
     informations: "Contents"
     variations: "Variation forms"
     relations: "Related words"
+    template: "Template settings"
   label:
     name: "Spelling"
     pronunciation: "Pronunciation"
@@ -451,6 +452,7 @@ editWordForm:
       titles: "Kinds"
       name: "Word"
       mutual: "Make this relation mutual"
+    title: "Template name"
   absent:
     equivalent: "No translations"
     information: "No contents"
@@ -1056,6 +1058,11 @@ dictionarySettingGeneralPart:
     discard: >-
       Deleting this dictionary will also delete all the relevant data, including words and example sentences.
       Please be certain, as there is no going back.
+dictionarySettingTemplatePart:
+  heading:
+    templateWords: "Templates"
+  button:
+    addTemplateWord: "Add template"
 editArticlePage:
   button:
     confirm: "Confirm"

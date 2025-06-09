@@ -2,16 +2,15 @@
 
 import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
+import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
   IconButton,
-  Input,
   SuggestionSpec,
-  Textarea,
+  TagInput,
   data,
   useTrans
 } from "zographia";
@@ -19,24 +18,23 @@ import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
-import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
+import {EditTemplateWordSpec} from "./edit-template-word-form-hook";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
-import {EditWordFormValue} from "./edit-word-form-hook";
 
 
-export const EditWordFormInformationItem = create(
-  require("./edit-word-form-equivalent-item.scss"), "EditWordFormInformationItem",
+export const EditTemplateWordFormRelationItem = create(
+  require("./edit-word-form-equivalent-item.scss"), "EditTemplateWordFormRelationItem",
   function ({
     dictionary,
     form,
-    informationOperations,
+    relationOperations,
     dndId,
     index,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    informationOperations: Omit<UseFieldArrayReturn<any, "informations">, "fields">,
+    form: EditTemplateWordSpec["form"],
+    relationOperations: Omit<UseFieldArrayReturn<any, "relations">, "fields">,
     dndId: string,
     index: number,
     className?: string
@@ -47,10 +45,10 @@ export const EditWordFormInformationItem = create(
     const {register} = form;
     const {paneProps, gripProps, dragging} = useEditWordFormDndItem(dndId);
 
-    const suggestInformationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
+    const suggestRelationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
       try {
-        const response = await request("suggestDictionaryTitles", {number, pattern, propertyName: "information"}, {ignoreError: true});
+        const response = await request("suggestDictionaryTitles", {number, pattern, propertyName: "relation"}, {ignoreError: true});
         return switchResponse(response, (titles) => {
           const suggestions = titles.map((title) => ({replacement: title, node: title}));
           return suggestions;
@@ -69,16 +67,14 @@ export const EditWordFormInformationItem = create(
         </div>
         <fieldset styleName="field-list">
           <ControlContainer>
-            <ControlLabel>{trans("label.information.title")}</ControlLabel>
-            <Input suggest={suggestInformationTitle} {...register(`informations.${index}.title`)}/>
-          </ControlContainer>
-          <ControlContainer>
-            <ControlLabel>{trans("label.information.text")}</ControlLabel>
-            <Textarea styleName="textarea" {...register(`informations.${index}.text`)}/>
+            <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
+            <Controller name={`relations.${index}.titles`} control={form.control} render={({field}) => (
+              <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
+            )}/>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.information")} onClick={() => informationOperations.remove(index)}>
+          <IconButton scheme="gray" variant="light" label={trans("discard.relation")} onClick={() => relationOperations.remove(index)}>
             <GeneralIcon icon={faMinus}/>
           </IconButton>
         </div>

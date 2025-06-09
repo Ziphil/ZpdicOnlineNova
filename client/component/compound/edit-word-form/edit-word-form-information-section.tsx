@@ -2,7 +2,7 @@
 
 import {faImage, faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {useFieldArray} from "react-hook-form";
+import {UseFormReturn, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -13,8 +13,9 @@ import {
 import {ResourceListDialog} from "/client/component/compound/resource-list-dialog";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
+import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
-import {EditWordSpec} from "./edit-word-form-hook";
+import {EditWordFormValue} from "./edit-word-form-hook";
 import {EditWordFormInformationItem} from "./edit-word-form-information-item";
 
 
@@ -26,7 +27,7 @@ export const EditWordFormInformationSection = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    form: EditWordSpec["form"],
+    form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
     className?: string
   } & AdditionalProps): ReactElement {
 
