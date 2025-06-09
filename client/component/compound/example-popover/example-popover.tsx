@@ -1,10 +1,9 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {MouseEvent, ReactElement, useCallback, useRef} from "react";
-import {UseFormReturn} from "react-hook-form";
 import {Popover} from "zographia";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
-import {EditExampleFormValue, getEditExampleFormValue} from "/client/component/compound/edit-example-form";
+import {EditExampleInitialData} from "/client/component/compound/edit-example-form";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Example} from "/client/skeleton";
 import {ExamplePopoverInner} from "./example-popover-inner";
@@ -24,14 +23,10 @@ export const ExamplePopover = create(
     className?: string
   }): ReactElement {
 
-    const formRef = useRef<UseFormReturn<EditExampleFormValue>>(null);
-    const triggerRef = useRef<(event: MouseEvent<HTMLButtonElement>) => void>(null);
+    const triggerRef = useRef<(initialData: EditExampleInitialData | null, event: MouseEvent<HTMLButtonElement>) => void>(null);
 
     const handleEdit = useCallback(function (example: Example, event: MouseEvent<HTMLButtonElement>): void {
-      triggerRef.current?.(event);
-      requestAnimationFrame(() => {
-        formRef.current?.reset(getEditExampleFormValue({type: "example", example}));
-      });
+      triggerRef.current?.({type: "example", example}, event);
     }, []);
 
     return (
@@ -39,7 +34,7 @@ export const ExamplePopover = create(
         <Popover styleName="root" trigger={trigger} triggerType="hover" triggerRest={500} placement="bottom-start" {...rest}>
           <ExamplePopoverInner dictionary={dictionary} example={example} onEdit={handleEdit}/>
         </Popover>
-        <EditExampleDialog dictionary={dictionary} initialData={null} trigger={triggerRef} formRef={formRef}/>
+        <EditExampleDialog dictionary={dictionary} initialData={null} trigger={triggerRef}/>
       </>
     );
 

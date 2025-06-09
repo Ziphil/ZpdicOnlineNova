@@ -1,7 +1,7 @@
 //
 
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, MouseEvent, ReactElement, Ref, RefObject, cloneElement, isValidElement, useCallback, useRef, useState} from "react";
+import {Fragment, MouseEvent, ReactElement, RefObject, cloneElement, isValidElement, useCallback, useRef, useState} from "react";
 import {UseFormReturn} from "react-hook-form";
 import {
   Button,
@@ -17,7 +17,7 @@ import {
 import {EditTemplateWordForm, EditTemplateWordFormValue, EditTemplateWordInitialData, useEditTemplateWord} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
-import {assignRef, isRef} from "/client/util/ref";
+import {assignRef} from "/client/util/ref";
 
 
 export const EditTemplateWordDialog = create(
@@ -31,7 +31,7 @@ export const EditTemplateWordDialog = create(
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditTemplateWordInitialData | null,
-    trigger: ReactElement | Ref<(event: MouseEvent<HTMLButtonElement>) => void>,
+    trigger: ReactElement,
     formRef?: RefObject<UseFormReturn<EditTemplateWordFormValue>>,
     className?: string
   }): ReactElement {
@@ -54,10 +54,6 @@ export const EditTemplateWordDialog = create(
       formSpec.form.reset();
       setOpen(true);
     }, [formSpec.form]);
-
-    if (isRef(trigger)) {
-      assignRef(trigger, openDialog);
-    }
 
     return (
       <Fragment>

@@ -38,7 +38,7 @@ export const EditWordDialog = create(
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditWordInitialData | null,
-    trigger: ReactElement | Ref<(event: MouseEvent<HTMLButtonElement>) => void>,
+    trigger: ReactElement | Ref<(initialData: EditWordInitialData | null, event: MouseEvent<HTMLButtonElement>) => void>,
     formRef?: RefObject<UseFormReturn<EditWordFormValue>>,
     className?: string
   }): ReactElement {
@@ -69,6 +69,14 @@ export const EditWordDialog = create(
       }
     }, [addWordPageUrlBase, initialData, formSpec.form]);
 
+    const triggerOpenDialog = useCallback(function (initialData: EditWordInitialData | null, event: MouseEvent<HTMLButtonElement>): void {
+      formSpec.form.reset(getEditWordFormValue(initialData));
+      setOpen(true);
+    }, [formSpec.form]);
+    if (isRef(trigger)) {
+      assignRef(trigger, triggerOpenDialog);
+    }
+
     const openExternal = useCallback(function (): void {
       const value = actualFormRef.current?.getValues();
       if (value !== undefined) {
@@ -76,10 +84,6 @@ export const EditWordDialog = create(
         window.open(addWordPageUrl);
       }
     }, [addWordPageUrlBase, initialData, actualFormRef]);
-
-    if (isRef(trigger)) {
-      assignRef(trigger, openDialog);
-    }
 
     return (
       <Fragment>

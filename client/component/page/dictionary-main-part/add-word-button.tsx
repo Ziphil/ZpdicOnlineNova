@@ -2,11 +2,10 @@
 
 import {faAngleDown} from "@fortawesome/sharp-regular-svg-icons";
 import {MouseEvent, ReactElement, useCallback, useRef} from "react";
-import {UseFormReturn} from "react-hook-form";
 import {AdditionalProps, Button, ButtonIconbag, ControlGroup, GeneralIcon, IconButton, Menu, MenuItem, useTrans} from "zographia";
 import {fakNoteCirclePlus} from "/client/component/atom/icon";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
-import {EditWordFormValue, getEditWordFormValue} from "/client/component/compound/edit-word-form";
+import {EditWordInitialData} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, TemplateWord} from "/client/skeleton";
 
@@ -23,18 +22,14 @@ export const AddWordButton = create(
 
     const {trans} = useTrans("dictionaryMainPart");
 
-    const formRef = useRef<UseFormReturn<EditWordFormValue>>(null);
-    const triggerRef = useRef<(event: MouseEvent<HTMLButtonElement>) => void>(null);
+    const triggerRef = useRef<(initialData: EditWordInitialData | null, event: MouseEvent<HTMLButtonElement>) => void>(null);
 
     const handleAddFromTemplate = useCallback(function (word: TemplateWord, event: MouseEvent<HTMLButtonElement>): void {
-      triggerRef.current?.(event);
-      requestAnimationFrame(() => {
-        formRef.current?.reset(getEditWordFormValue({type: "templateWord", word}));
-      });
+      triggerRef.current?.({type: "templateWord", word}, event);
     }, []);
 
     const handleAdd = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
-      triggerRef.current?.(event);
+      triggerRef.current?.(null, event);
     }, []);
 
     return (
@@ -58,7 +53,7 @@ export const AddWordButton = create(
             </Menu>
           )}
         </ControlGroup>
-        <EditWordDialog dictionary={dictionary} initialData={null} trigger={triggerRef} formRef={formRef}/>
+        <EditWordDialog dictionary={dictionary} initialData={null} trigger={triggerRef}/>
       </>
     );
 

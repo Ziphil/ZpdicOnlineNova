@@ -39,7 +39,7 @@ export const EditExampleDialog = create(
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditExampleInitialData | null,
-    trigger: ReactElement | Ref<(event: MouseEvent<HTMLButtonElement>) => void>,
+    trigger: ReactElement | Ref<(initialData: EditExampleInitialData | null, event: MouseEvent<HTMLButtonElement>) => void>,
     formRef?: RefObject<UseFormReturn<EditExampleFormValue>>,
     className?: string
   }): ReactElement {
@@ -70,6 +70,14 @@ export const EditExampleDialog = create(
       }
     }, [addExamplePageUrlBase, initialData, formSpec.form]);
 
+    const triggerOpenDialog = useCallback(function (initialData: EditExampleInitialData | null, event: MouseEvent<HTMLButtonElement>): void {
+      formSpec.form.reset(getEditExampleFormValue(initialData));
+      setOpen(true);
+    }, [formSpec.form]);
+    if (isRef(trigger)) {
+      assignRef(trigger, triggerOpenDialog);
+    }
+
     const openExternal = useCallback(function (): void {
       const value = actualFormRef.current?.getValues();
       if (value !== undefined) {
@@ -77,10 +85,6 @@ export const EditExampleDialog = create(
         window.open(addExamplePageUrl);
       }
     }, [addExamplePageUrlBase, actualFormRef]);
-
-    if (isRef(trigger)) {
-      assignRef(trigger, openDialog);
-    }
 
     return (
       <Fragment>
