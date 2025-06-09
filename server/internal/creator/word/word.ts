@@ -22,7 +22,7 @@ export namespace WordCreator {
       id: raw.id || raw["_id"],
       number: raw.number,
       name: raw.name,
-      pronunciation: raw.pronunciation,
+      pronunciation: raw.pronunciation ?? "",
       equivalents: raw.equivalents.map(EquivalentCreator.skeletonize),
       tags: raw.tags,
       informations: raw.informations.map(InformationCreator.skeletonize),

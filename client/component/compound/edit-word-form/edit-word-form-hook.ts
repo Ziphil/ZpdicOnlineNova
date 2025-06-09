@@ -90,7 +90,7 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
       const value = {
         number: (initialData.forceAdd) ? null : word.number ?? null,
         name: word.name,
-        pronunciation: word.pronunciation || "",
+        pronunciation: word.pronunciation,
         tags: word.tags,
         equivalents: word.equivalents.map((equivalent) => ({
           titles: equivalent.titles,
