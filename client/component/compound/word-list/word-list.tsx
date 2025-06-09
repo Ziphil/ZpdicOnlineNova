@@ -7,6 +7,7 @@ import {AddProposalDialog} from "/client/component/compound/add-proposal-dialog"
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, OldWord, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
+import {TemplateWordCard} from "./template-word-card";
 import {WordCard} from "./word-card";
 
 
@@ -39,11 +40,17 @@ export const WordList = create(
     return (
       <List styleName="root" items={words} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(word) => <WordCard key={word.id} dictionary={dictionary} word={word} showHeader={showHeader} showSelectButton={showSelectButton} onSelect={onSelect}/>}
+          {(word, index) => (template) ? (
+            <TemplateWordCard key={index} dictionary={dictionary} word={word}/>
+          ) : (
+            <WordCard key={word.id} dictionary={dictionary} word={word} showHeader={showHeader} showSelectButton={showSelectButton} onSelect={onSelect}/>
+          )}
           <ListLoadingView/>
           {(emptyType !== "none") ? (
             <ListEmptyView styleName="empty">
-              <span>{trans("empty")}</span>
+              <span>
+                {trans("empty")}
+              </span>
               {(emptyType === "create") ? (
                 <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
                   <Button scheme="gray" variant="light">
