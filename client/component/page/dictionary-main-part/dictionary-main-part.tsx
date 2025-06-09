@@ -4,10 +4,8 @@ import {faCommentQuestion} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, SetStateAction, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, LoadingIcon, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
-import {fakNoteCirclePlus} from "/client/component/atom/icon";
 import {Markdown} from "/client/component/atom/markdown";
 import {AddProposalDialog} from "/client/component/compound/add-proposal-dialog";
-import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {SearchWordForm} from "/client/component/compound/search-word-form";
 import {SuggestionCard} from "/client/component/compound/suggestion-card";
 import {WordList} from "/client/component/compound/word-list";
@@ -18,6 +16,7 @@ import {Search, useSearchState} from "/client/hook/search";
 import {WordParameter} from "/client/skeleton";
 import {getDictionarySpecialPaths} from "/client/util/dictionary";
 import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
+import {AddWordButton} from "./add-word-button";
 
 
 export const DictionaryMainPart = create(
@@ -68,12 +67,7 @@ export const DictionaryMainPart = create(
           <div styleName="main">
             <div styleName="header">
               {(authorities?.includes("edit")) ? (
-                <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
-                  <Button variant="light">
-                    <ButtonIconbag><GeneralIcon icon={fakNoteCirclePlus}/></ButtonIconbag>
-                    {trans("button.addWord")}
-                  </Button>
-                )}/>
+                <AddWordButton dictionary={dictionary}/>
               ) : (
                 <AddProposalDialog dictionary={dictionary} trigger={(
                   <Button scheme="gray" variant="light">

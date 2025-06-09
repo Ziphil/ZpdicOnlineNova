@@ -7,7 +7,7 @@ import {RelationWord} from "/client/component/atom/relation-word-select";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, EditableWord, Relation, Word} from "/client/skeleton";
+import {Dictionary, EditableWord, Relation, TemplateWord, Word} from "/client/skeleton";
 import {escapeRegexp} from "/client/util/misc";
 import {switchResponse} from "/client/util/response";
 import type {RequestData} from "/server/internal/type/rest";
@@ -58,7 +58,7 @@ export type EditWordSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 export type EditWordFormValue = FormValue;
-export type EditWordInitialData = ({type: "word", word: Word | EditableWord} | {type: "form", value: EditWordFormValue}) & {forceAdd?: boolean};
+export type EditWordInitialData = ({type: "word", word: Word | EditableWord} | {type: "templateWord", word: TemplateWord} | {type: "form", value: EditWordFormValue}) & {forceAdd?: boolean};
 export const getEditWordFormValue = getFormValue;
 
 export function useEditWord(dictionary: Dictionary, initialData: EditWordInitialData | null, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
@@ -110,6 +110,32 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
             number: relation.number,
             name: relation.name
           },
+          mutual: false
+        }))
+      } satisfies FormValue;
+      return value;
+    } else if (initialData.type === "templateWord") {
+      const word = initialData.word;
+      const value = {
+        number: null,
+        name: word.name,
+        pronunciation: word.pronunciation,
+        tags: word.tags,
+        equivalents: word.equivalents.map((equivalent) => ({
+          titles: equivalent.titles,
+          nameString: equivalent.nameString
+        })),
+        informations: word.informations.map((information) => ({
+          title: information.title,
+          text: information.text
+        })),
+        variations: word.variations.map((variation) => ({
+          title: variation.title,
+          name: variation.name
+        })),
+        relations: word.relations.map((relation) => ({
+          titles: relation.titles,
+          word: null,
           mutual: false
         }))
       } satisfies FormValue;

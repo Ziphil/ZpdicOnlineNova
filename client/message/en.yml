@@ -957,6 +957,7 @@ dictionaryInformationPart:
 dictionaryMainPart:
   button:
     addWord: "Create word"
+    addWordFromTemplate: "Create word from template"
     addProposal: "Request"
 dictionaryResourcePart:
   explanation: >-

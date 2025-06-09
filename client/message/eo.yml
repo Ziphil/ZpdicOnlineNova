@@ -961,6 +961,7 @@ dictionaryResourcePart:
 dictionaryMainPart:
   button:
     addWord: "Krei vorton"
+    addWordFromTemplate: "Krei vorton de ŝablono"
     addCommission: "Peti"
 dictionarySettingPart:
   tab:

@@ -957,6 +957,7 @@ dictionaryInformationPart:
 dictionaryMainPart:
   button:
     addWord: "単語を作成"
+    addWordFromTemplate: "テンプレートから単語を作成"
     addProposal: "造語依頼"
 dictionaryResourcePart:
   explanation: >-
