@@ -40,8 +40,8 @@ export const WordList = create(
     return (
       <List styleName="root" items={words} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(word, index) => (template) ? (
-            <TemplateWordCard key={index} dictionary={dictionary} word={word}/>
+          {(word) => (template) ? (
+            <TemplateWordCard key={word.id} dictionary={dictionary} word={word}/>
           ) : (
             <WordCard key={word.id} dictionary={dictionary} word={word} showHeader={showHeader} showSelectButton={showSelectButton} onSelect={onSelect}/>
           )}
