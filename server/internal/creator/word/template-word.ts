@@ -3,9 +3,9 @@
 import type {
   TemplateWord as TemplateWordSkeleton
 } from "/client/skeleton";
-import {EquivalentCreator} from "/server/internal/creator/word/equivalent";
 import {InformationCreator} from "/server/internal/creator/word/information";
-import {RelationCreator} from "/server/internal/creator/word/relation";
+import {TemplateEquivalentCreator} from "/server/internal/creator/word/template-equivalent";
+import {TemplateRelationCreator} from "/server/internal/creator/word/template-relation";
 import {VariationCreator} from "/server/internal/creator/word/variation";
 import {
   TemplateWord
@@ -16,14 +16,15 @@ export namespace TemplateWordCreator {
 
   export function skeletonize(raw: TemplateWord): TemplateWordSkeleton {
     const skeleton = {
+      id: (raw as any)["_id"],
       title: raw.title,
       name: raw.name,
       pronunciation: raw.pronunciation ?? "",
-      equivalents: raw.equivalents.map(EquivalentCreator.skeletonize),
+      equivalents: raw.equivalents.map(TemplateEquivalentCreator.skeletonize),
       tags: raw.tags,
       informations: raw.informations.map(InformationCreator.skeletonize),
       variations: raw.variations.map(VariationCreator.skeletonize),
-      relations: raw.relations.map(RelationCreator.skeletonize)
+      relations: raw.relations.map(TemplateRelationCreator.skeletonize)
     } satisfies TemplateWordSkeleton;
     return skeleton;
   }

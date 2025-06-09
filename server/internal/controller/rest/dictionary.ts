@@ -143,6 +143,26 @@ export class DictionaryRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
+  @post("/editDictionaryTemplateWord")
+  @before(checkMe(), checkDictionary("own"))
+  public async [Symbol()](request: FilledRequest<"editDictionaryTemplateWord", "me" | "dictionary">, response: Response<"editDictionaryTemplateWord">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
+    const {word} = request.body;
+    await dictionary.editTemplateWord(word);
+    const body = DictionaryCreator.skeletonize(dictionary);
+    InternalRestController.respond(response, body);
+  }
+
+  @post("/deleteDictionaryTemplateWord")
+  @before(checkMe(), checkDictionary("own"))
+  public async [Symbol()](request: FilledRequest<"deleteDictionaryTemplateWord", "me" | "dictionary">, response: Response<"deleteDictionaryTemplateWord">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
+    const {id} = request.body;
+    await dictionary.deleteTemplateWord(id);
+    const body = DictionaryCreator.skeletonize(dictionary);
+    InternalRestController.respond(response, body);
+  }
+
   @post("/searchDictionaries")
   public async [Symbol()](request: Request<"searchDictionaries">, response: Response<"searchDictionaries">): Promise<void> {
     const {offset, size} = request.body;

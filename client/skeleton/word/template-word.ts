@@ -1,28 +1,31 @@
 //
 
-import {Equivalent} from "/client/skeleton/word/equivalent";
+import {ObjectId} from "/client/skeleton/common";
 import {Information} from "/client/skeleton/word/information";
-import {Relation} from "/client/skeleton/word/relation";
+import {TemplateEquivalent} from "/client/skeleton/word/template-equivalent";
+import {TemplateRelation} from "/client/skeleton/word/template-relation";
 import {Variation} from "/client/skeleton/word/variation";
 
 
-export interface TemplateWord {
+export interface EditableTemplateWord {
 
+  id: ObjectId | null;
   title: string;
   name: string;
   pronunciation: string;
-  equivalents: Array<Equivalent>;
+  equivalents: Array<TemplateEquivalent>;
   tags: Array<string>;
   informations: Array<Information>;
   variations: Array<Variation>;
-  relations: Array<Relation>;
+  relations: Array<TemplateRelation>;
 
 }
 
 
-export namespace TemplateWord {
+export namespace EditableTemplateWord {
 
   export const EMPTY = {
+    id: null,
     title: "",
     name: "",
     pronunciation: "",
@@ -31,6 +34,21 @@ export namespace TemplateWord {
     informations: [],
     variations: [],
     relations: []
-  } satisfies TemplateWord;
+  } satisfies EditableTemplateWord;
+
+}
+
+
+export interface TemplateWord {
+
+  id: ObjectId;
+  title: string;
+  name: string;
+  pronunciation: string;
+  equivalents: Array<TemplateEquivalent>;
+  tags: Array<string>;
+  informations: Array<Information>;
+  variations: Array<Variation>;
+  relations: Array<TemplateRelation>;
 
 }

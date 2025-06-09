@@ -19,6 +19,8 @@ export * from "./word/information";
 export * from "./word/linked-word";
 export * from "./word/relation";
 export * from "./word/suggestion";
+export * from "./word/template-equivalent";
+export * from "./word/template-relation";
 export * from "./word/template-word";
 export * from "./word/variation";
 export * from "./word/word";

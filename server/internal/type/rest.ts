@@ -13,6 +13,7 @@ import type {
   DictionaryWithUser,
   EditableArticle,
   EditableExample,
+  EditableTemplateWord,
   EditableWord,
   Example,
   ExampleOffer,
@@ -96,6 +97,20 @@ type ServerSpecs = {
     response: {
       success: Dictionary,
       error: CustomError<"noSuchDictionary">
+    }
+  },
+  editDictionaryTemplateWord: {
+    request: {number: number, word: EditableTemplateWord},
+    response: {
+      success: Dictionary,
+      error: CustomError<"noSuchDictionary">
+    }
+  },
+  deleteDictionaryTemplateWord: {
+    request: {number: number, id: ObjectId},
+    response: {
+      success: Dictionary,
+      error: CustomError<"noSuchDictionary" | "noSuchTemplateWord">
     }
   },
   discardDictionaryAuthorizedUser: {

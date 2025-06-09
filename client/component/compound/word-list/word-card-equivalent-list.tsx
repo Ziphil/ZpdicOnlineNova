@@ -1,6 +1,6 @@
 //
 
-import {ReactElement, useMemo} from "react";
+import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
@@ -33,7 +33,7 @@ export const WordCardEquivalentList = create(
                 <Tag key={index} styleName="tag" variant="light">{title}</Tag>
               ))}
               <span>
-                {useMemo(() => createEquivalentNameNode(equivalent.nameString, equivalent.ignoredPattern), [equivalent.nameString, equivalent.ignoredPattern])}
+                {createEquivalentNameNode(equivalent.nameString, ("ignoredPattern" in equivalent) ? equivalent.ignoredPattern : dictionary.settings.ignoredEquivalentPattern)}
               </span>
             </MultiLineText>
           </li>
