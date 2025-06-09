@@ -158,9 +158,13 @@ export class DictionaryRestController extends InternalRestController {
   public async [Symbol()](request: FilledRequest<"discardDictionaryTemplateWord", "me" | "dictionary">, response: Response<"discardDictionaryTemplateWord">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {id} = request.body;
-    await dictionary.deleteTemplateWord(id);
-    const body = DictionaryCreator.skeletonize(dictionary);
-    InternalRestController.respond(response, body);
+    try {
+      await dictionary.deleteTemplateWord(id);
+      const body = DictionaryCreator.skeletonize(dictionary);
+      InternalRestController.respond(response, body);
+    } catch (error) {
+      InternalRestController.respondByCustomError(response, ["noSuchDictionaryTemplateWord"], error);
+    }
   }
 
   @post("/searchDictionaries")

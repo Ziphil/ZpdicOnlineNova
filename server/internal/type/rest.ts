@@ -110,7 +110,7 @@ type ServerSpecs = {
     request: {number: number, id: ObjectId},
     response: {
       success: Dictionary,
-      error: CustomError<"noSuchDictionary" | "noSuchTemplateWord">
+      error: CustomError<"noSuchDictionary" | "noSuchDictionaryTemplateWord">
     }
   },
   discardDictionaryAuthorizedUser: {

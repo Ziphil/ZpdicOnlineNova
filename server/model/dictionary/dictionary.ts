@@ -313,7 +313,7 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async editTemplateWord(this: Dictionary, word: EditableTemplateWord): Promise<Dictionary> {
     const currentTemplateWords = this.settings.templateWords ?? [];
-    const index = currentTemplateWords.findIndex((templateWord) => (templateWord as any)["_id"] === word.id);
+    const index = currentTemplateWords.findIndex((templateWord) => (templateWord as any)["_id"].toString() === word.id);
     if (index >= 0) {
       currentTemplateWords[index] = word;
     } else {
@@ -326,11 +326,12 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async deleteTemplateWord(this: Dictionary, id: ObjectId): Promise<Dictionary> {
     const currentTemplateWords = this.settings.templateWords ?? [];
-    const index = currentTemplateWords.findIndex((templateWord) => (templateWord as any)["_id"] === id);
+    console.log(currentTemplateWords);
+    const index = currentTemplateWords.findIndex((templateWord) => (templateWord as any)["_id"].toString() === id);
     if (index >= 0) {
       currentTemplateWords.splice(index, 1);
     } else {
-      throw new CustomError("noSuchTemplateWord");
+      throw new CustomError("noSuchDictionaryTemplateWord");
     }
     this.settings.templateWords = currentTemplateWords;
     await this.save();
