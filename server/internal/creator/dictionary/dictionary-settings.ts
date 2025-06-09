@@ -4,6 +4,7 @@ import type {
   DictionarySettings as DictionarySettingsSkeleton
 } from "/client/skeleton";
 import {DictionaryFontCreator} from "/server/internal/creator/dictionary/dictionary-font";
+import {TemplateWordCreator} from "/server/internal/creator/word/template-word";
 import {
   DictionarySettings
 } from "/server/model";
@@ -16,6 +17,7 @@ export namespace DictionarySettingsCreator {
       akrantiainSource: raw.akrantiainSource,
       zatlinSource: raw.zatlinSource,
       font: (raw.font !== undefined) ? DictionaryFontCreator.skeletonize(raw.font) : undefined,
+      templateWords: (raw.templateWords !== undefined) ? raw.templateWords.map(TemplateWordCreator.skeletonize) : [],
       punctuations: raw.punctuations,
       ignoredEquivalentPattern: raw.ignoredEquivalentPattern,
       pronunciationTitle: raw.pronunciationTitle,
