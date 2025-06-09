@@ -1,7 +1,8 @@
 //
 
 import {faArrowUpRightFromSquare, faCheck} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, MouseEvent, ReactElement, cloneElement, useCallback, useRef, useState} from "react";
+import {Fragment, MouseEvent, ReactElement, RefObject, cloneElement, useCallback, useRef, useState} from "react";
+import {UseFormReturn} from "react-hook-form";
 import {useHref} from "react-router-dom";
 import rison from "rison";
 import {
@@ -23,6 +24,7 @@ import {create} from "/client/component/create";
 import {Dictionary} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {checkOpeningExternal} from "/client/util/form";
+import {assignRef} from "/client/util/ref";
 
 
 export const EditArticleDialog = create(
@@ -31,11 +33,13 @@ export const EditArticleDialog = create(
     dictionary,
     initialData,
     trigger,
+    formRef,
     ...rest
   }: {
     dictionary: Dictionary,
     initialData: EditArticleInitialData | null,
     trigger: ReactElement,
+    formRef?: RefObject<UseFormReturn<EditArticleFormValue>>,
     className?: string
   }): ReactElement {
 
@@ -44,13 +48,15 @@ export const EditArticleDialog = create(
     const [open, setOpen] = useState(false);
     const addArticlePageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/edit/article`);
 
-    const formRef = useRef<() => EditArticleFormValue>(null);
-
     const closeDialog = useCallback(function (): void {
       setOpen(false);
     }, []);
 
+    const innerFormRef = useRef<UseFormReturn<EditArticleFormValue>>(null);
+    const actualFormRef = formRef ?? innerFormRef;
+
     const formSpec = useEditArticle(dictionary, initialData, closeDialog);
+    assignRef(actualFormRef, formSpec.form);
 
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       if (checkOpeningExternal(event)) {
@@ -64,12 +70,12 @@ export const EditArticleDialog = create(
     }, [addArticlePageUrlBase, initialData, formSpec.form]);
 
     const openExternal = useCallback(function (): void {
-      const value = formRef.current?.();
+      const value = actualFormRef.current?.getValues();
       if (value !== undefined) {
         const addArticlePageUrl = addArticlePageUrlBase + `/${(value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
         window.open(addArticlePageUrl);
       }
-    }, [addArticlePageUrlBase]);
+    }, [addArticlePageUrlBase, actualFormRef]);
 
     return (
       <Fragment>
@@ -84,7 +90,7 @@ export const EditArticleDialog = create(
             </DialogOutsideButtonContainer>
             <DialogCloseButton/>
             <DialogBody>
-              <EditArticleForm dictionary={dictionary} initialData={initialData} formSpec={formSpec} formRef={formRef}/>
+              <EditArticleForm dictionary={dictionary} initialData={initialData} formSpec={formSpec}/>
             </DialogBody>
             <DialogFooter>
               <Button onClick={formSpec.handleSubmit}>

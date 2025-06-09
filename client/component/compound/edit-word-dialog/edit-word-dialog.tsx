@@ -48,14 +48,15 @@ export const EditWordDialog = create(
     const [open, setOpen] = useState(false);
     const addWordPageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/edit/word`);
 
-    const innerFormRef = useRef<UseFormReturn<EditWordFormValue>>(null);
-    const actualFormRef = formRef ?? innerFormRef;
-
     const closeDialog = useCallback(function (): void {
       setOpen(false);
     }, []);
 
+    const innerFormRef = useRef<UseFormReturn<EditWordFormValue>>(null);
+    const actualFormRef = formRef ?? innerFormRef;
+
     const formSpec = useEditWord(dictionary, initialData, closeDialog);
+    assignRef(actualFormRef, formSpec.form);
 
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       if (checkOpeningExternal(event)) {
@@ -93,7 +94,7 @@ export const EditWordDialog = create(
             </DialogOutsideButtonContainer>
             <DialogCloseButton/>
             <DialogBody>
-              <EditWordForm dictionary={dictionary} initialData={initialData} formSpec={formSpec} formRef={actualFormRef}/>
+              <EditWordForm dictionary={dictionary} initialData={initialData} formSpec={formSpec}/>
             </DialogBody>
             <DialogFooter>
               <Button onClick={formSpec.handleSubmit}>

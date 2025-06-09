@@ -49,14 +49,15 @@ export const EditExampleDialog = create(
     const [open, setOpen] = useState(false);
     const addExamplePageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/edit/sentence`);
 
-    const innerFormRef = useRef<UseFormReturn<EditExampleFormValue>>(null);
-    const actualFormRef = formRef ?? innerFormRef;
-
     const closeDialog = useCallback(function (): void {
       setOpen(false);
     }, []);
 
+    const innerFormRef = useRef<UseFormReturn<EditExampleFormValue>>(null);
+    const actualFormRef = formRef ?? innerFormRef;
+
     const formSpec = useEditExample(dictionary, initialData, closeDialog);
+    assignRef(actualFormRef, formSpec.form);
 
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       if (checkOpeningExternal(event)) {
@@ -94,7 +95,7 @@ export const EditExampleDialog = create(
             </DialogOutsideButtonContainer>
             <DialogCloseButton/>
             <DialogBody>
-              <EditExampleForm dictionary={dictionary} initialData={initialData} formSpec={formSpec} formRef={actualFormRef}/>
+              <EditExampleForm dictionary={dictionary} initialData={initialData} formSpec={formSpec}/>
             </DialogBody>
             <DialogFooter>
               <Button onClick={formSpec.handleSubmit}>
