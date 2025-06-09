@@ -1,6 +1,6 @@
 //
 
-import {faFile, faPen, faSliders, faUsers} from "@fortawesome/sharp-regular-svg-icons";
+import {faFile, faMemo, faPen, faSliders, faUsers} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {Outlet, useMatch} from "react-router-dom";
 import {AdditionalProps, GeneralIcon, TabIconbag, TabList, useTrans} from "zographia";
@@ -35,6 +35,10 @@ export const DictionarySettingPart = create(
             <TabIconbag><GeneralIcon icon={faPen}/></TabIconbag>
             {trans("tab.editing")}
           </LinkTab>
+          <LinkTab value="template" href={`/dictionary/${match?.params.identifier}/settings/template`}>
+            <TabIconbag><GeneralIcon icon={faMemo}/></TabIconbag>
+            {trans("tab.template")}
+          </LinkTab>
           <LinkTab value="file" href={`/dictionary/${match?.params.identifier}/settings/file`}>
             <TabIconbag><GeneralIcon icon={faFile}/></TabIconbag>
             {trans("tab.file")}
@@ -57,6 +61,8 @@ function getTabValue(tabPath: string | undefined): string | null {
     return "general";
   } else if (tabPath === "editing") {
     return "editing";
+  } else if (tabPath === "template") {
+    return "template";
   } else if (tabPath === "file") {
     return "file";
   } else if (tabPath === "permissions") {

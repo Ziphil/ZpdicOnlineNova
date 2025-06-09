@@ -964,6 +964,7 @@ dictionarySettingPart:
   tab:
     general: "Ĝenerala"
     editing: "Redaktado"
+    template: "Ŝablonoj"
     authority: "Permesoj"
     file: "Dosiero"
 dictionarySettingAuthorityPart:

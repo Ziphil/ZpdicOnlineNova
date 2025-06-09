@@ -964,6 +964,7 @@ dictionarySettingPart:
   tab:
     general: "General"
     editing: "Editing"
+    template: "Templates"
     authority: "Permissions"
     file: "File"
 dictionarySettingAuthorityPart:

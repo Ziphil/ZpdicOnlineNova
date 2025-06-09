@@ -964,6 +964,7 @@ dictionarySettingPart:
   tab:
     general: "一般"
     editing: "編集"
+    template: "テンプレート"
     authority: "権限"
     file: "ファイル"
 dictionarySettingAuthorityPart:
