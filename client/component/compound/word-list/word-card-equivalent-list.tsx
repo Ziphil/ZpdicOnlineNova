@@ -3,7 +3,7 @@
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
 import {createEquivalentNameNode} from "/client/util/dictionary";
 
 
@@ -15,7 +15,7 @@ export const WordCardEquivalentList = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | WordWithExamples,
+    word: Word | TemplateWord | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement | null {
 

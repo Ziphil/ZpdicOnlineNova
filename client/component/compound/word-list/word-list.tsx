@@ -6,7 +6,7 @@ import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, List, ListBody, Lis
 import {AddProposalDialog} from "/client/component/compound/add-proposal-dialog";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, OldWord, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
 import {WordCard} from "./word-card";
 
 
@@ -19,16 +19,18 @@ export const WordList = create(
     emptyType,
     showHeader = false,
     showSelectButton = false,
+    template = false,
     onSelect,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    words?: Array<Word | OldWord | WordWithExamples>,
+    words?: Array<Word | OldWord | TemplateWord | WordWithExamples>,
     pageSpec: PageSpec,
     emptyType: "create" | "proposal" | "history" | "none",
     showHeader?: boolean,
     showSelectButton?: boolean,
-    onSelect?: (offer: Word) => void,
+    template?: boolean,
+    onSelect?: (word: Word) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 

@@ -4,7 +4,7 @@ import {faHashtag} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, GeneralIcon, MultiLineText, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
 
 
 export const WordCardHeading = create(
@@ -15,7 +15,7 @@ export const WordCardHeading = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | WordWithExamples,
+    word: Word | TemplateWord | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -30,7 +30,7 @@ export const WordCardHeading = create(
       <div styleName="root" {...rest}>
         {(debug || word.tags.length > 0) && (
           <div styleName="tag">
-            {(debug) && (
+            {(debug && "number" in word) && (
               <span styleName="number">
                 <GeneralIcon styleName="number-icon" icon={faHashtag}/>
                 {transNumber(word.number)}
@@ -63,7 +63,7 @@ export const WordCardHeading = create(
 );
 
 
-function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | WordWithExamples): string | undefined {
+function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | TemplateWord | WordWithExamples): string | undefined {
   if (!!word.pronunciation) {
     if (word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
       return word.pronunciation.trim();

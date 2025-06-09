@@ -47,7 +47,7 @@ export const WordCard = create(
     word: Word | OldWord | WordWithExamples,
     showHeader: boolean,
     showSelectButton: boolean,
-    onSelect?: (offer: Word) => void,
+    onSelect?: (word: Word) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
