@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faHandPointRight, faHashtag, faShare, faTrashAlt, faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
+import {faEdit, faHandPointRight, faShare, faTrashAlt, faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {useHref} from "react-router-dom";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, Tag, aria, useResponsiveDevice, useTrans} from "zographia";
@@ -48,14 +48,8 @@ export const ExampleCard = create(
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
-          {(debug || example.offer !== null || example.tags.length > 0) && (
+          {(example.offer !== null || example.tags.length > 0) && (
             <div styleName="tag">
-              {(debug) && (
-                <span styleName="number">
-                  <GeneralIcon styleName="number-icon" icon={faHashtag}/>
-                  {transNumber(example.number)}
-                </span>
-              )}
               {(example.offer !== null) && (
                 <ExampleOfferTag offer={offer}/>
               )}
