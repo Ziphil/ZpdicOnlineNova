@@ -27,8 +27,8 @@ export const TemplateWordList = create(
       <List styleName="root" items={words} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
           {(word) => <TemplateWordCard key={word.id} dictionary={dictionary} word={word}/>}
-          <ListLoadingView/>
-          <ListEmptyView styleName="empty">
+          <ListLoadingView styleName="loading"/>
+          <ListEmptyView styleName="loading">
             {trans("empty")}
           </ListEmptyView>
         </ListBody>

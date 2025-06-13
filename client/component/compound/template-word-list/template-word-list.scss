@@ -15,10 +15,8 @@
   }
 }
 
-.empty {
-  row-gap: 2zu;
-  display: flex;
-  flex-direction: column;
+.loading {
+  grid-column: 1 / -1;
 }
 
 .pagination {
