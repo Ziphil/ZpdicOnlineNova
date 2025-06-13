@@ -11,7 +11,7 @@ import {switchResponse} from "/client/util/response";
 
 
 export function useDiscardTemplateWord(dictionary: Dictionary, word: TemplateWord): () => void {
-  const {trans} = useTrans("wordList");
+  const {trans} = useTrans("templateWordList");
   const request = useRequest();
   const openAlert = useCommonAlert();
   const {dispatchSuccessToast} = useToast();

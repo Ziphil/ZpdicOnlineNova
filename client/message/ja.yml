@@ -646,6 +646,23 @@ wordList:
         削除した後にデータを戻すことはできません。
         本当によろしいですか?
       confirm: "削除"
+templateWordList:
+  empty: "テンプレートは作成されていません"
+  button:
+    edit: "詳細 · 編集"
+    discard: "削除"
+  label:
+    equivalent: "訳語 ×{count}"
+    information: "内容 ×{count}"
+    variation: "変化形 ×{count}"
+    relation: "関連語 ×{count}"
+  dialog:
+    discard:
+      message: >-
+        このテンプレートを削除します。
+        削除した後にデータを戻すことはできません。
+        本当によろしいですか?
+      confirm: "削除"
 wordNameFrequencyChart:
   other: "その他"
 wordPopover:

@@ -646,6 +646,23 @@ wordList:
         You cannot restore it afterwards.
         Are you really sure?
       confirm: "Delete"
+templateWordList:
+  empty: "No templates are created"
+  button:
+    edit: "Detail · Edit"
+    discard: "Delete"
+  label:
+    equivalent: "Translations ×{count}"
+    information: "Contents ×{count}"
+    variation: "Variation forms ×{count}"
+    relation: "Related words ×{count}"
+  dialog:
+    discard:
+      message: >-
+        This template will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
 wordNameFrequencyChart:
   other: "Others"
 wordPopover:

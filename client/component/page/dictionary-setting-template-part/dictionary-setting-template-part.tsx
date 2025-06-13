@@ -5,7 +5,7 @@ import {ReactElement} from "react";
 import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {EditTemplateWordDialog} from "/client/component/compound/edit-word-dialog";
-import {WordList} from "/client/component/compound/word-list";
+import {TemplateWordList} from "/client/component/compound/template-word-list";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
 
@@ -35,7 +35,7 @@ export const DictionarySettingTemplatePart = create(
                 </Button>
               )}/>
             </div>
-            <WordList dictionary={dictionary} words={dictionary.settings.templateWords} pageSpec={{size: 20}} emptyType="history" template={true}/>
+            <TemplateWordList dictionary={dictionary} words={dictionary.settings.templateWords} pageSpec={{size: 20}}/>
           </div>
         </section>
       </div>

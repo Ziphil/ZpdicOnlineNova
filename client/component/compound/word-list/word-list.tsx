@@ -6,8 +6,7 @@ import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, List, ListBody, Lis
 import {AddProposalDialog} from "/client/component/compound/add-proposal-dialog";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, OldWord, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
-import {TemplateWordCard} from "./template-word-card";
+import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/client/skeleton";
 import {WordCard} from "./word-card";
 
 
@@ -20,17 +19,15 @@ export const WordList = create(
     emptyType,
     showHeader = false,
     showSelectButton = false,
-    template = false,
     onSelect,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    words?: Array<Word | OldWord | TemplateWord | WordWithExamples>,
+    words?: Array<Word | OldWord | WordWithExamples>,
     pageSpec: PageSpec,
     emptyType: "create" | "proposal" | "history" | "none",
     showHeader?: boolean,
     showSelectButton?: boolean,
-    template?: boolean,
     onSelect?: (word: Word) => void,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -40,11 +37,7 @@ export const WordList = create(
     return (
       <List styleName="root" items={words} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(word) => (template) ? (
-            <TemplateWordCard key={word.id} dictionary={dictionary} word={word}/>
-          ) : (
-            <WordCard key={word.id} dictionary={dictionary} word={word} showHeader={showHeader} showSelectButton={showSelectButton} onSelect={onSelect}/>
-          )}
+          {(word) => <WordCard key={word.id} dictionary={dictionary} word={word} showHeader={showHeader} showSelectButton={showSelectButton} onSelect={onSelect}/>}
           <ListLoadingView/>
           {(emptyType !== "none") ? (
             <ListEmptyView styleName="empty">

@@ -646,6 +646,23 @@ wordList:
         Vi ne povas restaŭri ĝin poste.
         Ĉu vi vere certas?
       confirm: "Forigi"
+templateWordList:
+  empty: "Neniuj ŝablonoj estas kreitaj"
+  button:
+    edit: "Detalo · Redakti"
+    discard: "Forigi"
+  label:
+    equivalent: "Tradukaĵoj ×{count}"
+    information: "Enhavoj ×{count}"
+    variation: "Variaĵaj formoj ×{count}"
+    relation: "Rilataj vortoj ×{count}"
+  dialog:
+    discard:
+      message: >-
+        Tiu ŝablono estos forigita konstante.
+        Vi ne povas restaŭri ĝin poste.
+        Ĉu vi vere certas?
+      confirm: "Forigi"
 wordNameFrequencyChart:
   other: "Aliaj"
 wordPopover:
