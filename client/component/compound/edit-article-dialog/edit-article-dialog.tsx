@@ -21,6 +21,7 @@ import {
 } from "zographia";
 import {EditArticleForm, EditArticleFormValue, EditArticleInitialData, getEditArticleFormValue, useEditArticle} from "/client/component/compound/edit-article-form";
 import {create} from "/client/component/create";
+import {useConfirmAlert} from "/client/hook/window";
 import {Dictionary} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {checkOpeningExternal} from "/client/util/form";
@@ -43,7 +44,7 @@ export const EditArticleDialog = create(
     className?: string
   }): ReactElement {
 
-    const {trans} = useTrans("editExampleDialog");
+    const {trans} = useTrans("editArticleDialog");
 
     const [open, setOpen] = useState(false);
     const addArticlePageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/edit/article`);
@@ -69,6 +70,18 @@ export const EditArticleDialog = create(
       }
     }, [addArticlePageUrlBase, initialData, formSpec.form]);
 
+    const showConfirmAlert = useConfirmAlert();
+    const changeDialogOpen = useCallback(function (open: boolean): void {
+      if (!open && actualFormRef.current?.formState.isDirty) {
+        const confirmed = showConfirmAlert();
+        if (confirmed) {
+          setOpen(open);
+        }
+      } else {
+        setOpen(open);
+      }
+    }, [showConfirmAlert, actualFormRef]);
+
     const openExternal = useCallback(function (): void {
       const value = actualFormRef.current?.getValues();
       if (value !== undefined) {
@@ -80,7 +93,7 @@ export const EditArticleDialog = create(
     return (
       <Fragment>
         {cloneElement(trigger, {onClick: openDialog})}
-        <Dialog open={open} onOpenSet={setOpen} height="full" {...rest}>
+        <Dialog open={open} onOpenSet={changeDialogOpen} height="full" {...rest}>
           <DialogPane styleName="pane">
             <DialogOutsideButtonContainer>
               <DialogOutsideButton onClick={openExternal}>

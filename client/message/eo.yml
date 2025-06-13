@@ -1181,3 +1181,8 @@ userSettingPart:
     discard: >-
       Forigi vian konton ankaŭ forigos ĉiujn vortarojn kiujn vi posedas.
       Bonvolu esti certa, ĉar ne estas reiro.
+
+alert:
+  message: |-
+    La ŝanĝoj kiujn vi faris ne estos konservitaj.
+    Ĉu vi certas?

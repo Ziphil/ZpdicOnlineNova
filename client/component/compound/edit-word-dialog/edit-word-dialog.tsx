@@ -21,6 +21,7 @@ import {
 } from "zographia";
 import {EditWordForm, EditWordFormValue, EditWordInitialData, getEditWordFormValue, useEditWord} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
+import {useConfirmAlert} from "/client/hook/window";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {checkOpeningExternal} from "/client/util/form";
@@ -77,6 +78,18 @@ export const EditWordDialog = create(
       assignRef(trigger, triggerOpenDialog);
     }
 
+    const showConfirmAlert = useConfirmAlert();
+    const changeDialogOpen = useCallback(function (open: boolean): void {
+      if (!open && actualFormRef.current?.formState.isDirty) {
+        const confirmed = showConfirmAlert();
+        if (confirmed) {
+          setOpen(open);
+        }
+      } else {
+        setOpen(open);
+      }
+    }, [showConfirmAlert, actualFormRef]);
+
     const openExternal = useCallback(function (): void {
       const value = actualFormRef.current?.getValues();
       if (value !== undefined) {
@@ -88,7 +101,7 @@ export const EditWordDialog = create(
     return (
       <Fragment>
         {(isValidElement<any>(trigger)) && cloneElement(trigger, {onClick: openDialog})}
-        <Dialog open={open} onOpenSet={setOpen} height="full" {...rest}>
+        <Dialog open={open} onOpenSet={changeDialogOpen} height="full" {...rest}>
           <DialogPane styleName="pane">
             <DialogOutsideButtonContainer>
               <DialogOutsideButton onClick={openExternal}>

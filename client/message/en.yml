@@ -1181,3 +1181,8 @@ userSettingPart:
     discard: >-
       Deleting your account will also delete all the dictionaries you own.
       Please be certain, as there is no going back.
+
+alert:
+  message: |-
+    The changes you made will not be saved.
+    Are you sure?
