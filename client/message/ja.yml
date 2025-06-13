@@ -387,6 +387,7 @@ dictionaryStatisticsView:
 editArticleDialog:
   button:
     confirm: "決定"
+    external: "別タブで表示"
 editArticleForm:
   tab:
     edit: "編集"

@@ -387,6 +387,7 @@ dictionaryStatisticsView:
 editArticleDialog:
   button:
     confirm: "Confirm"
+    external: "Open in new tab"
 editArticleForm:
   tab:
     edit: "Edit"

@@ -387,6 +387,7 @@ dictionaryStatisticsView:
 editArticleDialog:
   button:
     confirm: "Konfirmi"
+    external: "Malfermi en nova langeto"
 editArticleForm:
   tab:
     edit: "Redakti"
