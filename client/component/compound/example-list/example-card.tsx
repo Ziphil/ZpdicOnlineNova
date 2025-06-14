@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faHandPointRight, faShare, faTrashAlt, faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
+import {faCircleEllipsis, faEdit, faHandPointRight, faShare, faTrashAlt, faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {useHref} from "react-router-dom";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, Tag, aria, useResponsiveDevice, useTrans} from "zographia";
@@ -16,6 +16,7 @@ import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors, Example} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {useDiscardExample} from "./example-card-hook";
+import {ExampleCardInfoPopover} from "./example-card-info-popover";
 
 
 export const ExampleCard = create(
@@ -23,21 +24,22 @@ export const ExampleCard = create(
   function ({
     dictionary,
     example,
+    showInfo,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     example: Example,
+    showInfo: boolean,
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNumber} = useTrans("exampleList");
+    const {trans} = useTrans("exampleList");
 
     const [authorities] = useResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
     const [offer] = useResponse("fetchExampleOfferOrNull", (example.offer) && example.offer);
 
     const device = useResponsiveDevice();
 
-    const debug = location.hostname === "localhost";
     const shareText = `${example.sentence} — ${example.translation}\n#ZpDIC`;
     const shareUrl = location.origin + useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/sentences?kind=exact&number=${example.number}`);
 
@@ -118,6 +120,18 @@ export const ExampleCard = create(
                   <GeneralIcon icon={faShare}/>
                 </Button>
               )}/>
+              {(showInfo) && (
+                <ExampleCardInfoPopover example={example} trigger={(device === "desktop") ? (
+                  <Button scheme="secondary" variant="underline">
+                    <ButtonIconbag><GeneralIcon icon={faCircleEllipsis}/></ButtonIconbag>
+                    {trans("button.info")}
+                  </Button>
+                ) : (
+                  <Button scheme="secondary" variant="underline">
+                    <GeneralIcon icon={faCircleEllipsis}/>
+                  </Button>
+                )}/>
+              )}
             </div>
           </CardFooter>
         )}

@@ -85,7 +85,7 @@ export const DictionaryExamplePart = create(
                 {(isFetching) ? <LoadingIcon/> : transNumber(hitSize)}
               </div>
             </div>
-            <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}/>
+            <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}} showInfo={true}/>
           </div>
         </div>
       </div>

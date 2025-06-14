@@ -12,11 +12,13 @@ export const ExampleList = create(
   function ({
     dictionary,
     examples,
+    showInfo = false,
     pageSpec,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     examples: Array<Example>,
+    showInfo?: boolean,
     pageSpec: PageSpec,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -26,7 +28,7 @@ export const ExampleList = create(
     return (
       <List styleName="root" items={examples} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(example) => <ExampleCard key={example.id} dictionary={dictionary} example={example}/>}
+          {(example) => <ExampleCard key={example.id} dictionary={dictionary} example={example} showInfo={showInfo}/>}
           <ListLoadingView/>
           <ListEmptyView>
             {trans("empty")}
