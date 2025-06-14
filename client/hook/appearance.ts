@@ -1,39 +1,43 @@
 //
 
-import {useCallback, useEffect} from "react";
+import {useCallback} from "react";
 import {atom, useRecoilValue, useSetRecoilState} from "recoil";
-import {ColorDefinitions} from "zographia";
-import {Appearance, AppearanceUtil, COLOR_DEFINITIONS} from "/client/constant/appearance";
+import {ColorDefinitions, StyleDefinitions, useChangeTheme, useTheme} from "zographia";
+import {Appearance, AppearanceFontUtil, AppearanceSchemeUtil, COLOR_DEFINITIONS, STYLE_DEFINITIONS, Theme} from "/client/constant/appearance";
 
 
-const appearanceAtom = atom<Appearance>({
-  key: "colorDefinitionType",
-  default: AppearanceUtil.cast(localStorage.getItem("zp-appearance") ?? "normal")
+const appearanceAtom = atom<Omit<Appearance, "theme">>({
+  key: "appearance",
+  default: {
+    scheme: AppearanceSchemeUtil.cast(localStorage.getItem("zp-appearance") ?? "normal"),
+    font: AppearanceFontUtil.cast(localStorage.getItem("zp-font") ?? "sans")
+  }
 });
 
 export function useColorDefinitions(): ColorDefinitions {
-  const type = useRecoilValue(appearanceAtom);
-  return COLOR_DEFINITIONS[type];
+  const appearance = useRecoilValue(appearanceAtom);
+  return COLOR_DEFINITIONS[appearance.scheme];
+}
+
+export function useStyleDefinitions(): Partial<StyleDefinitions> {
+  const appearance = useRecoilValue(appearanceAtom);
+  return STYLE_DEFINITIONS[appearance.font];
 }
 
 export function useAppearance(): Appearance {
   const appearance = useRecoilValue(appearanceAtom);
-  return appearance;
+  const theme = useTheme() as Theme;
+  return {...appearance, theme};
 }
 
 export function useChangeAppearance(): (appearance: Appearance) => void {
   const setAppearance = useSetRecoilState(appearanceAtom);
+  const chageTheme = useChangeTheme();
   const changeAppearance = useCallback(function (appearance: Appearance): void {
     setAppearance(appearance);
-    localStorage.setItem("zp-appearance", appearance);
-  }, [setAppearance]);
+    chageTheme(appearance.theme);
+    localStorage.setItem("zp-appearance", appearance.scheme);
+    localStorage.setItem("zp-font", appearance.font);
+  }, [setAppearance, chageTheme]);
   return changeAppearance;
-}
-
-export function useInitializeAppearance(initialAppearance: string): void {
-  const changeAppearance = useChangeAppearance();
-  useEffect(() => {
-    const appearance = AppearanceUtil.cast(localStorage.getItem("zp-appearance") ?? "normal");
-    changeAppearance(appearance);
-  }, [initialAppearance, changeAppearance]);
 }

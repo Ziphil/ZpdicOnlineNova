@@ -36,6 +36,12 @@ toast:
         The setting has been changed.
       ignoredEquivalentPattern: |-
         The setting has been changed.
+    addDictionaryTemplateWord: |-
+      A new template has been created.
+    changeDictionaryTemplateWord: |-
+      The template has been edited.
+    discardDictionaryTemplateWord: |-
+      The template has been deleted.
     discardDictionaryAuthorizedUser: |-
       The permission has been revoked.
     addWord: |-
@@ -94,6 +100,8 @@ toast:
       Your email address has been changed.
     changeMyPassword:
       Your password has been changed.
+    changeAppearance: |-
+      The appearance has been changed.
     generateMyApiKey: |-
       Your API key has been generated.
     issueMyActivateToken:
@@ -284,14 +292,6 @@ articleList:
       confirm: "Delete"
 changeLocaleForm:
   label: "Language"
-changeAppearanceForm:
-  label: "Appearance"
-  appearance:
-    normal: "Normal"
-    dimmed: "Dimmed"
-  theme:
-    light: "Light"
-    dark: "Dark"
 proposalList:
   empty: "No words are requested"
   button:
@@ -393,6 +393,7 @@ dictionaryStatisticsView:
 editArticleDialog:
   button:
     confirm: "Confirm"
+    external: "Open in new tab"
 editArticleForm:
   tab:
     edit: "Edit"
@@ -440,6 +441,7 @@ editWordForm:
     informations: "Contents"
     variations: "Variation forms"
     relations: "Related words"
+    template: "Template settings"
   label:
     name: "Spelling"
     pronunciation: "Pronunciation"
@@ -457,6 +459,7 @@ editWordForm:
       titles: "Kinds"
       name: "Word"
       mutual: "Make this relation mutual"
+    title: "Template name"
   absent:
     equivalent: "No translations"
     information: "No contents"
@@ -485,6 +488,10 @@ exampleList:
     edit: "Edit"
     discard: "Delete"
     share: "Share"
+    info: "Details"
+  table:
+    updatedDate: "Updated at"
+    createdDate: "Created at"
   dialog:
     discard:
       message: >-
@@ -622,6 +629,7 @@ userHeader:
     dictionary: "Dictionaries"
     notification: "Notifications"
     setting: "Settings"
+    appearance: "Appearance"
     developer: "Developer"
     logout: "Sign out"
   button:
@@ -641,10 +649,31 @@ wordList:
     select: "Revert to this version"
     create: "Create"
     proposal: "Request creation"
+    info: "Details"
+  table:
+    updatedDate: "Updated at"
+    createdDate: "Created at"
   dialog:
     discard:
       message: >-
         This word will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
+templateWordList:
+  empty: "No templates are created"
+  button:
+    edit: "Detail · Edit"
+    discard: "Delete"
+  label:
+    equivalent: "Translations ×{count}"
+    information: "Contents ×{count}"
+    variation: "Variation forms ×{count}"
+    relation: "Related words ×{count}"
+  dialog:
+    discard:
+      message: >-
+        This template will be deleted permanently.
         You cannot restore it afterwards.
         Are you really sure?
       confirm: "Delete"
@@ -761,6 +790,19 @@ addResourceButton:
     tooLarge: >-
       The file is too large.
       You cannot upload files larger than 1 MB.
+changeAppearanceForm:
+  label: 
+    font:
+      label: "Font"
+      sans: "Sans-serif"
+      serif: "Serif"
+    scheme:
+      normal: "Normal"
+      dimmed: "Dimmed"
+    theme:
+      label: "Color theme"
+      light: "Light"
+      dark: "Dark"
 changeDictionaryNameForm:
   error:
     required: >-
@@ -947,6 +989,7 @@ dictionaryInformationPart:
 dictionaryMainPart:
   button:
     addWord: "Create word"
+    addWordFromTemplate: "Create word from template"
     addProposal: "Request"
 dictionaryResourcePart:
   explanation: >-
@@ -956,6 +999,7 @@ dictionarySettingPart:
   tab:
     general: "General"
     editing: "Editing"
+    template: "Templates"
     authority: "Permissions"
     file: "File"
 dictionarySettingAuthorityPart:
@@ -1047,6 +1091,11 @@ dictionarySettingGeneralPart:
     discard: >-
       Deleting this dictionary will also delete all the relevant data, including words and example sentences.
       Please be certain, as there is no going back.
+dictionarySettingTemplatePart:
+  heading:
+    templateWords: "Templates"
+  button:
+    addTemplateWord: "Add template"
 editArticlePage:
   button:
     confirm: "Confirm"
@@ -1060,6 +1109,7 @@ errorPage:
   heading:
     notFound: "Not\nFound"
     forbidden: "Access\nDenied"
+    timeout: "Request\nTimeout"
   message:
     notFound: >-
       The page you are looking for could not be found.
@@ -1067,11 +1117,15 @@ errorPage:
     forbidden: >-
       You don't have permission to view this page.
       Please return to the top page for other contents.
+    timeout: >-
+      It is taking too long to receive a response from the server.
+      Please try again later in a better network environment.
     error: >-
       An unexpected error has occurred.
       Please contact the administrator with the following error message.
   button:
     back: "Back to top page"
+    refresh: "Refresh page"
 examplePage:
   add: "Create new sentence"
 loginPage:
@@ -1134,6 +1188,9 @@ topPage:
     offer: "See past daily sentences"
     notification: "Read more news"
     github: "View on GitHub"
+userAppearancePart:
+  heading:
+    appearance: "Appearance"
 userDeveloperPart:
   heading:
     apiKey: "API key"
@@ -1156,3 +1213,8 @@ userSettingPart:
     discard: >-
       Deleting your account will also delete all the dictionaries you own.
       Please be certain, as there is no going back.
+
+alert:
+  message: |-
+    The changes you made will not be saved.
+    Are you sure?

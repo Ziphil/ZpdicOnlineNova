@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faEdit, faHashtag, faRight, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {faEdit, faRight, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import truncateMarkdown from "markdown-truncate";
 import {ReactElement} from "react";
@@ -30,12 +30,11 @@ export const ArticleCard = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNumber, transDate} = useTrans("articleList");
+    const {trans, transDate} = useTrans("articleList");
 
     const [authorities] = useResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
     const match = useMatch("/dictionary/:identifier/:tabPath?/:subTabPath?");
-    const debug = location.hostname === "localhost";
 
     const discardArticle = useDiscardArticle(dictionary, article);
 
@@ -43,14 +42,8 @@ export const ArticleCard = create(
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
           <div styleName="heading">
-            {(debug || article.tags.length > 0) && (
+            {(article.tags.length > 0) && (
               <div styleName="tag">
-                {(debug) && (
-                  <span styleName="number">
-                    <GeneralIcon styleName="number-icon" icon={faHashtag}/>
-                    {transNumber(article.number)}
-                  </span>
-                )}
                 {article.tags.map((tag, index) => (
                   <Tag key={index} variant="solid">{tag}</Tag>
                 ))}

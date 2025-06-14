@@ -1,8 +1,8 @@
 //
 
-import {faBomb, faLeft} from "@fortawesome/sharp-regular-svg-icons";
+import {faArrowsRotate, faBomb, faLeft} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, GeneralIcon, LinkIconbag, MultiLineText, useTrans} from "zographia";
+import {AdditionalProps, Button, GeneralIcon, LinkIconbag, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
 
@@ -39,6 +39,10 @@ export const ErrorView = create(
             <LinkIconbag><GeneralIcon icon={faLeft}/></LinkIconbag>
             {trans("button.back")}
           </Link>
+          <Button variant="light" onClick={() => window.location.reload()}>
+            <LinkIconbag><GeneralIcon icon={faArrowsRotate}/></LinkIconbag>
+            {trans("button.refresh")}
+          </Button>
         </div>
       </div>
     );

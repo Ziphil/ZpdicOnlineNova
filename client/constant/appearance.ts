@@ -1,6 +1,6 @@
 //
 
-import {ColorDefinitions, createColor, createColorDefinition} from "zographia";
+import {ColorDefinitions, StyleDefinitions, createColor, createColorDefinition} from "zographia";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 
@@ -47,9 +47,36 @@ export const COLOR_DEFINITIONS = {
   }
 } satisfies Record<string, ColorDefinitions>;
 
-export const APPEARANCES = ["normal", "dimmed"] as const;
-export type Appearance = LiteralType<typeof APPEARANCES>;
-export const AppearanceUtil = LiteralUtilType.create(APPEARANCES);
+export const STYLE_DEFINITIONS = {
+  sans: {
+    fontFamily: {
+      main: "'Noto Sans Display', 'Noto Sans JP', sans-serif",
+      bold: "'Noto Sans Display', 'Noto Sans JP', sans-serif",
+      monospace: "'Noto Sans Mono', 'Noto Sans JP', monospace"
+    }
+  },
+  serif: {
+    fontFamily: {
+      main: "'Noto Serif', 'Noto Serif JP', serif",
+      bold: "'Noto Serif', 'Noto Serif JP', serif",
+      monospace: "'Noto Sans Mono', 'Noto Sans JP', monospace"
+    }
+  }
+} satisfies Record<string, Partial<StyleDefinitions>>;
+
+export type Appearance = {
+  theme: Theme,
+  scheme: AppearanceScheme,
+  font: AppearanceFont
+};
+
+export const APPEARANCE_SCHEMES = ["normal", "dimmed"] as const;
+export type AppearanceScheme = LiteralType<typeof APPEARANCE_SCHEMES>;
+export const AppearanceSchemeUtil = LiteralUtilType.create(APPEARANCE_SCHEMES);
+
+export const APPEARANCE_FONTS = ["sans", "serif"] as const;
+export type AppearanceFont = LiteralType<typeof APPEARANCE_FONTS>;
+export const AppearanceFontUtil = LiteralUtilType.create(APPEARANCE_FONTS);
 
 export const THEMES = ["light"] as const;
 export type Theme = (typeof THEMES)[number];

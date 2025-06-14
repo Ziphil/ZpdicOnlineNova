@@ -1,15 +1,13 @@
 //
 
 import {faClockRotateLeft, faPen} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, Ref, useState} from "react";
-import {UseFormReturn} from "react-hook-form";
+import {ReactElement, useState} from "react";
 import {AdditionalProps, GeneralIcon, Tab, TabIconbag, TabList, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
-import {assignRef} from "/client/util/ref";
 import {EditWordFormEditPart} from "./edit-word-form-edit-part";
 import {EditWordFormHistoryPart} from "./edit-word-form-history-part";
-import {EditWordFormValue, EditWordInitialData, EditWordSpec} from "./edit-word-form-hook";
+import {EditWordInitialData, EditWordSpec} from "./edit-word-form-hook";
 
 
 export const EditWordForm = create(
@@ -18,13 +16,11 @@ export const EditWordForm = create(
     dictionary,
     initialData,
     formSpec,
-    formRef,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditWordInitialData | null,
     formSpec: EditWordSpec,
-    formRef?: Ref<UseFormReturn<EditWordFormValue>>,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -34,8 +30,6 @@ export const EditWordForm = create(
     const editing = form.watch("number") !== null;
 
     const [tabValue, setTabValue] = useState<"edit" | "history">("edit");
-
-    assignRef(formRef, form);
 
     return (
       <div styleName="root" {...rest}>

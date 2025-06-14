@@ -21,6 +21,7 @@ import {
 } from "zographia";
 import {EditWordForm, EditWordFormValue, EditWordInitialData, getEditWordFormValue, useEditWord} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
+import {useConfirmAlert} from "/client/hook/window";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {checkOpeningExternal} from "/client/util/form";
@@ -38,7 +39,7 @@ export const EditWordDialog = create(
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditWordInitialData | null,
-    trigger: ReactElement | Ref<(event: MouseEvent<HTMLButtonElement>) => void>,
+    trigger: ReactElement | Ref<(initialData: EditWordInitialData | null, event: MouseEvent<HTMLButtonElement>) => void>,
     formRef?: RefObject<UseFormReturn<EditWordFormValue>>,
     className?: string
   }): ReactElement {
@@ -48,14 +49,15 @@ export const EditWordDialog = create(
     const [open, setOpen] = useState(false);
     const addWordPageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/edit/word`);
 
-    const innerFormRef = useRef<UseFormReturn<EditWordFormValue>>(null);
-    const actualFormRef = formRef ?? innerFormRef;
-
     const closeDialog = useCallback(function (): void {
       setOpen(false);
     }, []);
 
+    const innerFormRef = useRef<UseFormReturn<EditWordFormValue>>(null);
+    const actualFormRef = formRef ?? innerFormRef;
+
     const formSpec = useEditWord(dictionary, initialData, closeDialog);
+    assignRef(actualFormRef, formSpec.form);
 
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       if (checkOpeningExternal(event)) {
@@ -68,6 +70,26 @@ export const EditWordDialog = create(
       }
     }, [addWordPageUrlBase, initialData, formSpec.form]);
 
+    const triggerOpenDialog = useCallback(function (initialData: EditWordInitialData | null, event: MouseEvent<HTMLButtonElement>): void {
+      formSpec.form.reset(getEditWordFormValue(initialData));
+      setOpen(true);
+    }, [formSpec.form]);
+    if (isRef(trigger)) {
+      assignRef(trigger, triggerOpenDialog);
+    }
+
+    const showConfirmAlert = useConfirmAlert();
+    const changeDialogOpen = useCallback(function (open: boolean): void {
+      if (!open && actualFormRef.current?.formState.isDirty) {
+        const confirmed = showConfirmAlert();
+        if (confirmed) {
+          setOpen(open);
+        }
+      } else {
+        setOpen(open);
+      }
+    }, [showConfirmAlert, actualFormRef]);
+
     const openExternal = useCallback(function (): void {
       const value = actualFormRef.current?.getValues();
       if (value !== undefined) {
@@ -76,14 +98,10 @@ export const EditWordDialog = create(
       }
     }, [addWordPageUrlBase, initialData, actualFormRef]);
 
-    if (isRef(trigger)) {
-      assignRef(trigger, openDialog);
-    }
-
     return (
       <Fragment>
         {(isValidElement<any>(trigger)) && cloneElement(trigger, {onClick: openDialog})}
-        <Dialog open={open} onOpenSet={setOpen} height="full" {...rest}>
+        <Dialog open={open} onOpenSet={changeDialogOpen} height="full" {...rest}>
           <DialogPane styleName="pane">
             <DialogOutsideButtonContainer>
               <DialogOutsideButton onClick={openExternal}>
@@ -93,7 +111,7 @@ export const EditWordDialog = create(
             </DialogOutsideButtonContainer>
             <DialogCloseButton/>
             <DialogBody>
-              <EditWordForm dictionary={dictionary} initialData={initialData} formSpec={formSpec} formRef={actualFormRef}/>
+              <EditWordForm dictionary={dictionary} initialData={initialData} formSpec={formSpec}/>
             </DialogBody>
             <DialogFooter>
               <Button onClick={formSpec.handleSubmit}>

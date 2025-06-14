@@ -18,17 +18,6 @@
   flex-wrap: wrap;
 }
 
-.number {
-  font-size: 3zu;
-  color: var(--glob-mute-text-color);
-  display: flex;
-  align-items: center;
-}
-
-.number-icon {
-  margin-inline-end: var(--glob-blank-gap);
-}
-
 .name-container {
   column-gap: 2zu;
   row-gap: calc(4zu * (var(--glob-line-height-narrow) - 1)); 

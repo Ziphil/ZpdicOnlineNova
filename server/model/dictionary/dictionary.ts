@@ -14,7 +14,9 @@ import type {
   DictionaryStatistics,
   EditableArticle,
   EditableExample,
+  EditableTemplateWord,
   EditableWord,
+  ObjectId,
   StringLengths,
   WholeAverage,
   WordNameFrequencies,
@@ -305,6 +307,32 @@ export class DictionarySchema extends DiscardableSchema {
         anySettings[key] = value;
       }
     }
+    await this.save();
+    return this;
+  }
+
+  public async editTemplateWord(this: Dictionary, word: EditableTemplateWord): Promise<Dictionary> {
+    const currentTemplateWords = this.settings.templateWords ?? [];
+    const index = currentTemplateWords.findIndex((currentTemplateWord) => (currentTemplateWord as any)["_id"].toString() === word.id);
+    if (index >= 0) {
+      currentTemplateWords[index] = word;
+    } else {
+      currentTemplateWords.push(word);
+    }
+    this.settings.templateWords = currentTemplateWords;
+    await this.save();
+    return this;
+  }
+
+  public async deleteTemplateWord(this: Dictionary, id: ObjectId): Promise<Dictionary> {
+    const currentTemplateWords = this.settings.templateWords ?? [];
+    const index = currentTemplateWords.findIndex((currentTemplateWord) => (currentTemplateWord as any)["_id"].toString() === id);
+    if (index >= 0) {
+      currentTemplateWords.splice(index, 1);
+    } else {
+      throw new CustomError("noSuchDictionaryTemplateWord");
+    }
+    this.settings.templateWords = currentTemplateWords;
     await this.save();
     return this;
   }

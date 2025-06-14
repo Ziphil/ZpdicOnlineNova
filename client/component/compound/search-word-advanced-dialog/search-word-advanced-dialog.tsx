@@ -8,6 +8,7 @@ import {
   Dialog,
   DialogBody,
   DialogCloseButton,
+  DialogFooter,
   DialogPane,
   GeneralIcon,
   useTrans
@@ -35,7 +36,6 @@ export const SearchWordAdvancedDialog = create(
     const {trans} = useTrans("searchWordAdvancedDialog");
 
     const {form, handleSubmit} = useSearchWordAdvanced();
-    const {register, formState: {errors}} = form;
 
     const [open, setOpen] = useState(false);
 
@@ -58,13 +58,13 @@ export const SearchWordAdvancedDialog = create(
             <DialogCloseButton/>
             <DialogBody>
               <SearchWordAdvancedDialogElementSection form={form}/>
-              <div styleName="button">
-                <Button type="submit" onClick={handleSubmitAndClose}>
-                  <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-                  {trans("button.confirm")}
-                </Button>
-              </div>
             </DialogBody>
+            <DialogFooter>
+              <Button onClick={handleSubmitAndClose}>
+                <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
+                {trans("button.confirm")}
+              </Button>
+            </DialogFooter>
           </DialogPane>
         </Dialog>
       </Fragment>

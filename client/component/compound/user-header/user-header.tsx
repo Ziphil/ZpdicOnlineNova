@@ -1,6 +1,6 @@
 //
 
-import {faBell, faBook, faCode, faCog, faSignOutAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {faBell, faBook, faCode, faCog, faPalette, faSignOutAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {useNavigate} from "react-router-dom";
 import {AdditionalProps, Badge, GeneralIcon, SingleLineText, Tab, TabIconbag, TabList, useTrans} from "zographia";
@@ -92,6 +92,12 @@ export const UserHeader = create(
               </LinkTab>
             )}
             {(user.id === me?.id) && (
+              <LinkTab value="appearance" href={`/user/${user.name}/appearance`}>
+                <TabIconbag><GeneralIcon icon={faPalette}/></TabIconbag>
+                {trans("tab.appearance")}
+              </LinkTab>
+            )}
+            {(user.id === me?.id) && (
               <LinkTab value="setting" href={`/user/${user.name}/settings`}>
                 <TabIconbag><GeneralIcon icon={faCog}/></TabIconbag>
                 {trans("tab.setting")}
@@ -112,4 +118,4 @@ export const UserHeader = create(
 );
 
 
-export type UserHeaderTabValue = "dictionary" | "notification" | "setting" | "developer" | null;
+export type UserHeaderTabValue = "dictionary" | "notification" | "setting" | "appearance" | "developer" | null;

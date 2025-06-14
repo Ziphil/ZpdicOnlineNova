@@ -21,6 +21,7 @@ import {
 } from "zographia";
 import {EditExampleForm, EditExampleFormValue, EditExampleInitialData, getEditExampleFormValue, useEditExample} from "/client/component/compound/edit-example-form";
 import {create} from "/client/component/create";
+import {useConfirmAlert} from "/client/hook/window";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {checkOpeningExternal} from "/client/util/form";
@@ -39,7 +40,7 @@ export const EditExampleDialog = create(
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditExampleInitialData | null,
-    trigger: ReactElement | Ref<(event: MouseEvent<HTMLButtonElement>) => void>,
+    trigger: ReactElement | Ref<(initialData: EditExampleInitialData | null, event: MouseEvent<HTMLButtonElement>) => void>,
     formRef?: RefObject<UseFormReturn<EditExampleFormValue>>,
     className?: string
   }): ReactElement {
@@ -49,14 +50,15 @@ export const EditExampleDialog = create(
     const [open, setOpen] = useState(false);
     const addExamplePageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/edit/sentence`);
 
-    const innerFormRef = useRef<UseFormReturn<EditExampleFormValue>>(null);
-    const actualFormRef = formRef ?? innerFormRef;
-
     const closeDialog = useCallback(function (): void {
       setOpen(false);
     }, []);
 
+    const innerFormRef = useRef<UseFormReturn<EditExampleFormValue>>(null);
+    const actualFormRef = formRef ?? innerFormRef;
+
     const formSpec = useEditExample(dictionary, initialData, closeDialog);
+    assignRef(actualFormRef, formSpec.form);
 
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       if (checkOpeningExternal(event)) {
@@ -69,6 +71,26 @@ export const EditExampleDialog = create(
       }
     }, [addExamplePageUrlBase, initialData, formSpec.form]);
 
+    const triggerOpenDialog = useCallback(function (initialData: EditExampleInitialData | null, event: MouseEvent<HTMLButtonElement>): void {
+      formSpec.form.reset(getEditExampleFormValue(initialData));
+      setOpen(true);
+    }, [formSpec.form]);
+    if (isRef(trigger)) {
+      assignRef(trigger, triggerOpenDialog);
+    }
+
+    const showConfirmAlert = useConfirmAlert();
+    const changeDialogOpen = useCallback(function (open: boolean): void {
+      if (!open && actualFormRef.current?.formState.isDirty) {
+        const confirmed = showConfirmAlert();
+        if (confirmed) {
+          setOpen(open);
+        }
+      } else {
+        setOpen(open);
+      }
+    }, [showConfirmAlert, actualFormRef]);
+
     const openExternal = useCallback(function (): void {
       const value = actualFormRef.current?.getValues();
       if (value !== undefined) {
@@ -77,14 +99,10 @@ export const EditExampleDialog = create(
       }
     }, [addExamplePageUrlBase, actualFormRef]);
 
-    if (isRef(trigger)) {
-      assignRef(trigger, openDialog);
-    }
-
     return (
       <Fragment>
         {(isValidElement<any>(trigger)) && cloneElement(trigger, {onClick: openDialog})}
-        <Dialog open={open} onOpenSet={setOpen} height="full" {...rest}>
+        <Dialog open={open} onOpenSet={changeDialogOpen} height="full" {...rest}>
           <DialogPane styleName="pane">
             <DialogOutsideButtonContainer>
               <DialogOutsideButton onClick={openExternal}>
@@ -94,7 +112,7 @@ export const EditExampleDialog = create(
             </DialogOutsideButtonContainer>
             <DialogCloseButton/>
             <DialogBody>
-              <EditExampleForm dictionary={dictionary} initialData={initialData} formSpec={formSpec} formRef={actualFormRef}/>
+              <EditExampleForm dictionary={dictionary} initialData={initialData} formSpec={formSpec}/>
             </DialogBody>
             <DialogFooter>
               <Button onClick={formSpec.handleSubmit}>

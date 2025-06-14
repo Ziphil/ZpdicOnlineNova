@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faCheck, faClone, faEdit, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {faCheck, faCircleEllipsis, faClone, faEdit, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {useHref} from "react-router";
 import {
@@ -20,10 +20,11 @@ import {
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {ShareMenu} from "/client/component/compound/share-menu";
 import {WordCardHeader} from "/client/component/compound/word-list/word-card-header";
+import {WordCardInfoPopover} from "/client/component/compound/word-list/word-card-info-popover";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/client/skeleton";
-import {getDictionaryIdentifier} from "/client/util/dictionary";
+import {getWordHref} from "/client/util/dictionary";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardExampleList} from "./word-card-example-list";
 import {WordCardHeading} from "./word-card-heading";
@@ -39,6 +40,7 @@ export const WordCard = create(
     dictionary,
     word,
     showHeader,
+    showInfo,
     showSelectButton,
     onSelect,
     ...rest
@@ -46,8 +48,9 @@ export const WordCard = create(
     dictionary: DictionaryWithExecutors,
     word: Word | OldWord | WordWithExamples,
     showHeader: boolean,
+    showInfo: boolean,
     showSelectButton: boolean,
-    onSelect?: (offer: Word) => void,
+    onSelect?: (word: Word) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -58,7 +61,7 @@ export const WordCard = create(
     const device = useResponsiveDevice();
 
     const shareText = `${word.name}\n#ZpDIC`;
-    const shareUrl = location.origin + useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${word.number}`);
+    const shareUrl = location.origin + useHref(getWordHref(dictionary, word.number));
 
     const discardWord = useDiscardWord(dictionary, word);
 
@@ -124,6 +127,18 @@ export const WordCard = create(
                   <GeneralIcon icon={faShare}/>
                 </Button>
               )}/>
+              {(showInfo) && (
+                <WordCardInfoPopover word={word} trigger={(device === "desktop") ? (
+                  <Button scheme="secondary" variant="underline">
+                    <ButtonIconbag><GeneralIcon icon={faCircleEllipsis}/></ButtonIconbag>
+                    {trans("button.info")}
+                  </Button>
+                ) : (
+                  <Button scheme="secondary" variant="underline">
+                    <GeneralIcon icon={faCircleEllipsis}/>
+                  </Button>
+                )}/>
+              )}
             </div>
           </CardFooter>
         )}

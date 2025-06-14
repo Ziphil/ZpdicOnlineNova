@@ -1,0 +1,1 @@
+export {UserAppearancePart as Component} from "./user-appearance-part";

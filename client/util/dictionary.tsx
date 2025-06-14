@@ -16,10 +16,36 @@ export function getDictionarySpecialPaths(dictionary: Dictionary): MarkdownSpeci
     home: getAwsFileUrl(`resource/${dictionary.number}/`),
     at: (uri: string) => {
       const name = uri.substring(1);
-      return `/dictionary/${getDictionaryIdentifier(dictionary)}?text=${encodeURIComponent(name)}&mode=name&type=exact`;
+      if (name.startsWith("#")) {
+        const number = name.substring(1);
+        return `/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${number}`;
+      } else {
+        return `/dictionary/${getDictionaryIdentifier(dictionary)}?text=${encodeURIComponent(name)}&mode=name&type=exact`;
+      }
     }
   };
   return specialPaths;
+}
+
+export function getWordHref(dictionary: Dictionary, number: number): string {
+  return `/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${number}`;
+}
+
+export function checkWordHref(dictionary: Dictionary, href: string): number | undefined {
+  const match = href.match(/^\/dictionary\/(.+)\?kind=exact&number=(\d+)$/);
+  if (match) {
+    if (match[1] === dictionary.paramName || match[1] === dictionary.number.toString()) {
+      return +match[2];
+    } else {
+      return undefined;
+    }
+  } else {
+    return undefined;
+  }
+}
+
+export function getExampleHref(dictionary: Dictionary, number: number): string {
+  return `/dictionary/${getDictionaryIdentifier(dictionary)}/sentences?kind=exact&number=${number}`;
 }
 
 export function createEquivalentNameNode(nameString: string, ignoredPattern: string | undefined): ReactNode {

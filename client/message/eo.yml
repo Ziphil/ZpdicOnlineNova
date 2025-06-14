@@ -36,6 +36,12 @@ toast:
         La agordo ŝanĝitas.
       ignoredEquivalentPattern: |-
         La agordo ŝanĝitas.
+    addDictionaryTemplateWord: |-
+      Nova ŝablono kreitas.
+    changeDictionaryTemplateWord: |-
+      La ŝablono redaktitas.
+    discardDictionaryTemplateWord: |-
+      La ŝablono forigitas.
     discardDictionaryAuthorizedUser: |-
       La permeso revokitas.
     addWord: |-
@@ -94,6 +100,8 @@ toast:
       Via retpoŝta adreso ŝanĝitas.
     changeMyPassword:
       Via pasvorto ŝanĝitas.
+    changeAppearance: |-
+      La ŝajno ŝanĝitas.
     generateMyApiKey:
       Via API-ŝlosilo generitas.
     issueMyActivateToken:
@@ -284,14 +292,6 @@ articleList:
       confirm: "Forigi"
 changeLocaleForm:
   label: "Lingvo"
-changeAppearanceForm:
-  label: "Šajno"
-  appearance:
-    normal: "Normala"
-    dimmed: "Malbrila"
-  theme:
-    light: "Luma"
-    dark: "Malluma"
 proposalList:
   empty: "Neniuj vortoj estas petitaj"
   button:
@@ -393,6 +393,7 @@ dictionaryStatisticsView:
 editArticleDialog:
   button:
     confirm: "Konfirmi"
+    external: "Malfermi en nova langeto"
 editArticleForm:
   tab:
     edit: "Redakti"
@@ -440,6 +441,7 @@ editWordForm:
     informations: "Enhavoj"
     variations: "Variaĵaj formoj"
     relations: "Rilataj vortoj"
+    template: "Ŝablona agordoj"
   label:
     name: "Literumo"
     pronunciation: "Elparolo"
@@ -457,6 +459,7 @@ editWordForm:
       titles: "Specoj"
       name: "Vorto"
       mutual: "Fari tiun rilaton reciproka"
+    title: "Ŝablona titolo"
   absent:
     equivalent: "Neniuj tradukaĵoj"
     information: "Neniuj enhavoj"
@@ -485,6 +488,10 @@ exampleList:
     edit: "Redakti"
     discard: "Forigi"
     share: "Kunhavigi"
+    info: "Detaloj"
+  table:
+    updatedDate: "Ĝisdatigita je"
+    createdDate: "Kreita je"
   dialog:
     discard:
       message: >-
@@ -622,6 +629,7 @@ userHeader:
     dictionary: "Vortaroj"
     notification: "Sciigoj"
     setting: "Agordoj"
+    appearance: "Šajno"
     developer: "Programado"
     logout: "Elsaluti"
   button:
@@ -641,10 +649,31 @@ wordList:
     select: "Reveni al tiu versio"
     create: "Krei"
     proposal: "Peti kreadon"
+    info: "Detaloj"
+  table:
+    updatedDate: "Ĝisdatigita je"
+    createdDate: "Kreita je"
   dialog:
     discard:
       message: >-
         Tiu vorto estos forigita konstante.
+        Vi ne povas restaŭri ĝin poste.
+        Ĉu vi vere certas?
+      confirm: "Forigi"
+templateWordList:
+  empty: "Neniuj ŝablonoj estas kreitaj"
+  button:
+    edit: "Detalo · Redakti"
+    discard: "Forigi"
+  label:
+    equivalent: "Tradukaĵoj ×{count}"
+    information: "Enhavoj ×{count}"
+    variation: "Variaĵaj formoj ×{count}"
+    relation: "Rilataj vortoj ×{count}"
+  dialog:
+    discard:
+      message: >-
+        Tiu ŝablono estos forigita konstante.
         Vi ne povas restaŭri ĝin poste.
         Ĉu vi vere certas?
       confirm: "Forigi"
@@ -761,6 +790,19 @@ addResourceButton:
     tooLarge: >-
       La dosiero estas tro granda.
       Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
+changeAppearanceForm:
+  label: 
+    font:
+      label: "Tiparo"
+      sans: "Senserifa"
+      serif: "Serifa"
+    scheme:
+      normal: "Normala"
+      dimmed: "Malbrila"
+    theme:
+      label: "Kolora skemo"
+      light: "Luma"
+      dark: "Malluma"
 changeDictionaryNameForm:
   error:
     required: >-
@@ -951,11 +993,13 @@ dictionaryResourcePart:
 dictionaryMainPart:
   button:
     addWord: "Krei vorton"
+    addWordFromTemplate: "Krei vorton de ŝablono"
     addCommission: "Peti"
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"
     editing: "Redaktado"
+    template: "Ŝablonoj"
     authority: "Permesoj"
     file: "Dosiero"
 dictionarySettingAuthorityPart:
@@ -1047,6 +1091,11 @@ dictionarySettingGeneralPart:
     discard: >-
       Forigi tiun vortaron ankaŭ forigos ĉiujn rilatajn datumojn, inkluzive de vortoj kaj ekzemplaj frazoj.
       Bonvolu esti certa, ĉar ne estas reiro.
+dictionarySettingTemplatePart:
+  heading:
+    templateWords: "Ŝablonoj"
+  button:
+    addTemplateWord: "Krei ŝablonon"
 editArticlePage:
   button:
     confirm: "Konfirmi"
@@ -1060,6 +1109,7 @@ errorPage:
   heading:
     notFound: "Ne\nTrovita"
     forbidden: "Aliro\nMalpermesita"
+    timeout: "Peto\nEltempiĝa"
   message:
     notFound: >-
       La paĝo kiun vi serĉas ne estis trovita.
@@ -1067,11 +1117,15 @@ errorPage:
     forbidden: >-
       Vi ne havas permeson vidi tiun paĝon.
       Bonvolu reveni al la ĉefpaĝo por aliaj enhavoj.
+    timeout: >-
+      Daŭras tro longe por ricevi respondon de la servilo.
+      Bonvolu reprovi poste en pli bona reta medio.
     error: >-
       Neatendita eraro okazis.
       Bonvolu kontakti la administranton kun la jena erara mesaĝo.
   button:
     back: "Reiri al ĉefpaĝo"
+    refresh: "Reŝargi paĝon"
 examplePage:
   add: "Krei novan frazon"
 loginPage:
@@ -1134,6 +1188,9 @@ topPage:
     offer: "Vidi antaŭaj ĉiutagaj frazoj"
     notification: "Legi pli da novaĵoj"
     github: "Vidi ĉe GitHub"
+userAppearancePart:
+  heading:
+    appearance: "Ŝajno"
 userDeveloperPart:
   heading:
     apiKey: "API-ŝlosilo"
@@ -1156,3 +1213,8 @@ userSettingPart:
     discard: >-
       Forigi vian konton ankaŭ forigos ĉiujn vortarojn kiujn vi posedas.
       Bonvolu esti certa, ĉar ne estas reiro.
+
+alert:
+  message: |-
+    La ŝanĝoj kiujn vi faris ne estos konservitaj.
+    Ĉu vi certas?

@@ -7,8 +7,8 @@ import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Relation, Word, WordWithExamples} from "/client/skeleton";
-import {getDictionaryIdentifier} from "/client/util/dictionary";
+import {DictionaryWithExecutors, Relation, TemplateRelation, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
+import {getWordHref} from "/client/util/dictionary";
 
 
 export const WordCardRelationList = create(
@@ -19,7 +19,7 @@ export const WordCardRelationList = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | WordWithExamples,
+    word: Word | TemplateWord | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
@@ -36,12 +36,12 @@ export const WordCardRelationList = create(
               {titles.map((title, index) => (!!title) && (
                 <Tag key={index} styleName="tag" variant="light">{title}</Tag>
               ))}
-              {relations.map((relation, index) => (
+              {relations.map((relation, index) => ("name" in relation) && (
                 <Fragment key={index}>
                   {(index > 0) && <span styleName="punctuation">, </span>}
                   <WordPopover dictionary={dictionary} word={relation} trigger={(
                     <span>
-                      <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${relation.number}`} scheme="secondary" variant="underline">
+                      <Link href={getWordHref(dictionary, relation.number)} scheme="secondary" variant="underline">
                         {relation.name}
                       </Link>
                     </span>
@@ -58,8 +58,8 @@ export const WordCardRelationList = create(
 );
 
 
-function getGroupedRelations(word: Word | WordWithExamples): Array<[string, [Array<string>, Array<Relation>]]> {
-  const groupedRelations = new Map<string, [Array<string>, Array<Relation>]>();
+function getGroupedRelations(word: Word | TemplateWord | WordWithExamples): Array<[string, [Array<string>, Array<Relation | TemplateRelation>]]> {
+  const groupedRelations = new Map<string, [Array<string>, Array<Relation | TemplateRelation>]>();
   for (const relation of word.relations) {
     const titles = relation.titles;
     const titleString = titles.join("\n");

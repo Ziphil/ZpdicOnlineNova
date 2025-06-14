@@ -31,9 +31,9 @@ export const EditWordFormEditPart = create(
       <form styleName="root" onSubmit={preventDefault} {...rest}>
         <div styleName="main">
           <EditWordFormBasicSection dictionary={dictionary} form={form}/>
-          <EditWordFormEquivalentSection dictionary={dictionary} form={form}/>
-          <EditWordFormInformationSection dictionary={dictionary} form={form}/>
-          <EditWordFormVariationSection dictionary={dictionary} form={form}/>
+          <EditWordFormEquivalentSection dictionary={dictionary} form={form as any}/>
+          <EditWordFormInformationSection dictionary={dictionary} form={form as any}/>
+          <EditWordFormVariationSection dictionary={dictionary} form={form as any}/>
           <EditWordFormRelationSection dictionary={dictionary} form={form}/>
         </div>
       </form>

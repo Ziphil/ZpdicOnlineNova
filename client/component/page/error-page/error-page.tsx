@@ -9,6 +9,7 @@ import {create} from "/client/component/create";
 import {ForbiddenView} from "/client/component/page/error-page/forbidden-view";
 import {ErrorView} from "./error-view";
 import {NotFoundView} from "./not-found-view";
+import {TimeoutView} from "./timeout-view";
 
 
 export const ErrorPage = create(
@@ -28,6 +29,8 @@ export const ErrorPage = create(
             <NotFoundView/>
           ) : (isRouteErrorResponse(error) && error.status === 403) ? (
             <ForbiddenView/>
+          ) : (isRouteErrorResponse(error) && error.status === 408) ? (
+            <TimeoutView/>
           ) : (
             <ErrorView error={error}/>
           )}

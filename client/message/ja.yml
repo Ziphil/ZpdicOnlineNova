@@ -36,6 +36,12 @@ toast:
         設定を変更しました。
       ignoredEquivalentPattern: |-
         設定を変更しました。
+    addDictionaryTemplateWord: |-
+      テンプレートを新しく作成しました。
+    changeDictionaryTemplateWord: |-
+      テンプレートを編集しました。
+    discardDictionaryTemplateWord: |-
+      テンプレートを削除しました。
     discardDictionaryAuthorizedUser: |-
       編集権限を解除しました。
     addWord: |-
@@ -94,6 +100,8 @@ toast:
       メールアドレスを変更しました。
     changeMyPassword: |-
       パスワードを変更しました。
+    changeAppearance: |-
+      外観を変更しました。
     generateMyApiKey: |-
       API キーを生成しました。
     issueMyActivateToken: |-
@@ -284,14 +292,6 @@ articleList:
       confirm: "削除"
 changeLocaleForm:
   label: "言語"
-changeAppearanceForm:
-  label: "テーマ"
-  appearance:
-    normal: "通常色"
-    dimmed: "淡色"
-  theme:
-    light: "ライト"
-    dark: "ダーク"
 proposalList:
   empty: "造語依頼はされていません"
   button:
@@ -393,6 +393,7 @@ dictionaryStatisticsView:
 editArticleDialog:
   button:
     confirm: "決定"
+    external: "別タブで表示"
 editArticleForm:
   tab:
     edit: "編集"
@@ -440,6 +441,7 @@ editWordForm:
     informations: "内容"
     variations: "変化形"
     relations: "関連語"
+    template: "テンプレート設定"
   label:
     name: "綴り"
     pronunciation: "発音記号"
@@ -457,6 +459,7 @@ editWordForm:
       titles: "分類"
       name: "関連語"
       mutual: "この関連語を双方向にする"
+    title: "テンプレート名"
   absent:
     equivalent: "訳語が登録されていません"
     information: "内容が登録されていません"
@@ -485,6 +488,10 @@ exampleList:
     edit: "編集"
     discard: "削除"
     share: "共有"
+    info: "詳細"
+  table:
+    updatedDate: "更新日時"
+    createdDate: "作成日時"
   dialog:
     discard:
       message: >-
@@ -622,6 +629,7 @@ userHeader:
     dictionary: "辞書"
     notification: "通知"
     setting: "設定"
+    appearance: "外観"
     developer: "開発向け"
     logout: "ログアウト"
   button:
@@ -641,10 +649,31 @@ wordList:
     select: "この版に戻す"
     create: "作成"
     proposal: "造語依頼"
+    info: "詳細"
+  table:
+    updatedDate: "更新日時"
+    createdDate: "作成日時"
   dialog:
     discard:
       message: >-
         この単語を削除します。
+        削除した後にデータを戻すことはできません。
+        本当によろしいですか?
+      confirm: "削除"
+templateWordList:
+  empty: "テンプレートは作成されていません"
+  button:
+    edit: "詳細 · 編集"
+    discard: "削除"
+  label:
+    equivalent: "訳語 ×{count}"
+    information: "内容 ×{count}"
+    variation: "変化形 ×{count}"
+    relation: "関連語 ×{count}"
+  dialog:
+    discard:
+      message: >-
+        このテンプレートを削除します。
         削除した後にデータを戻すことはできません。
         本当によろしいですか?
       confirm: "削除"
@@ -760,6 +789,19 @@ addResourceButton:
     tooLarge: >-
       ファイルのサイズが大きすぎます。
       1 MB より大きなファイルはアップロードすることができません。
+changeAppearanceForm:
+  label: 
+    font:
+      label: "フォント"
+      sans: "ゴシック体"
+      serif: "明朝体"
+    scheme:
+      normal: "通常色"
+      dimmed: "淡色"
+    theme:
+      label: "配色テーマ"
+      light: "ライト"
+      dark: "ダーク"
 changeDictionaryNameForm:
   error:
     required: >-
@@ -947,6 +989,7 @@ dictionaryInformationPart:
 dictionaryMainPart:
   button:
     addWord: "単語を作成"
+    addWordFromTemplate: "テンプレートから単語を作成"
     addProposal: "造語依頼"
 dictionaryResourcePart:
   explanation: >-
@@ -956,6 +999,7 @@ dictionarySettingPart:
   tab:
     general: "一般"
     editing: "編集"
+    template: "テンプレート"
     authority: "権限"
     file: "ファイル"
 dictionarySettingAuthorityPart:
@@ -1048,6 +1092,11 @@ dictionarySettingGeneralPart:
     discard: >-
       この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。
       後からデータを復元することはできないので、慎重に行ってください。
+dictionarySettingTemplatePart:
+  heading:
+    templateWords: "テンプレート"
+  button:
+    addTemplateWord: "テンプレートを追加"
 editArticlePage:
   button:
     confirm: "決定"
@@ -1061,6 +1110,7 @@ errorPage:
   heading:
     notFound: "Not\nFound"
     forbidden: "Access\nDenied"
+    timeout: "Request\nTimeout"
   message:
     notFound: >-
       お探しのページが見つかりませんでした。
@@ -1068,11 +1118,15 @@ errorPage:
     forbidden: >-
       このページにアクセスする権限がありません。
       トップページに戻り、他のコンテンツをお探しください。
+    timeout: >-
+      サーバーからの応答を受信するのに時間がかかっています。
+      通信環境の良い場所で再度お試しください。
     error: >-
       原因不明のエラーが発生しました。
       お手数ですが、以下のエラーメッセージとともに管理者にご連絡ください。
   button:
     back: "トップページへ"
+    refresh: "ページを再読み込み"
 examplePage:
   add: "新しい単語を作成"
 loginPage:
@@ -1135,6 +1189,9 @@ topPage:
     offer: "過去の例文を見る"
     notification: "過去のお知らせを見る"
     github: "GitHub で見る"
+userAppearancePart:
+  heading:
+    appearance: "外観"
 userDeveloperPart:
   heading:
     apiKey: "API キー"
@@ -1157,3 +1214,8 @@ userSettingPart:
     discard: >-
       アカウントを削除すると、所有している辞書も全て削除されます。
       後からデータを復元することはできないので、慎重に行ってください。
+
+alert:
+  message: |-
+    行った変更が保存されない可能性があります。
+    よろしいですか?

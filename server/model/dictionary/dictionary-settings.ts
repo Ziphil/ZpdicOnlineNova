@@ -2,6 +2,7 @@
 
 import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
 import {DictionaryFontSchema} from "/server/model/dictionary/dictionary-font";
+import {TemplateWordSchema} from "/server/model/word/template-word";
 
 
 @modelOptions({schemaOptions: {autoCreate: false, collection: "dictionarySettings"}})
@@ -15,6 +16,9 @@ export class DictionarySettingsSchema {
 
   @prop()
   public font?: DictionaryFontSchema;
+
+  @prop({type: TemplateWordSchema})
+  public templateWords?: Array<TemplateWordSchema>;
 
   @prop({required: true, type: String})
   public punctuations!: Array<string>;
@@ -41,8 +45,8 @@ export class DictionarySettingsSchema {
     const font = {type: "none"};
     const punctuations = [",", "、", "。"];
     const ignoredEquivalentPattern = "[\\(（].*?[\\)）]";
-    const pronunciationTitle = "Pronunciation";
-    const exampleTitle = "Examples";
+    const pronunciationTitle = "発音";
+    const exampleTitle = "例文";
     const enableMarkdown = false;
     const enableDuplicateName = true;
     const showEquivalentNumber = false;

@@ -2,7 +2,7 @@
 
 import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {Controller, UseFieldArrayReturn} from "react-hook-form";
+import {Controller, UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
   AdditionalProps,
   ControlContainer,
@@ -19,8 +19,9 @@ import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
-import {EditWordSpec} from "./edit-word-form-hook";
+import {EditWordFormValue} from "./edit-word-form-hook";
 
 
 export const EditWordFormEquivalentItem = create(
@@ -34,7 +35,7 @@ export const EditWordFormEquivalentItem = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    form: EditWordSpec["form"],
+    form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
     equivalentOperations: Omit<UseFieldArrayReturn<any, "equivalents">, "fields">,
     dndId: string,
     index: number,

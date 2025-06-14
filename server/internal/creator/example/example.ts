@@ -23,7 +23,10 @@ export namespace ExampleCreator {
       sentence: raw.sentence,
       translation: raw.translation,
       supplement: raw.supplement,
-      offer: raw.offer ?? null
+      offer: raw.offer ?? null,
+      updatedUser: (raw.updatedUser !== undefined) ? {id: raw.updatedUser} : undefined,
+      createdDate: raw.createdDate?.toISOString() ?? undefined,
+      updatedDate: raw.updatedDate?.toISOString() ?? undefined
     } satisfies ExampleSkeleton;
     return skeleton;
   }

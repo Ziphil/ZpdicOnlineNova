@@ -1,10 +1,9 @@
 //
 
-import {faHashtag} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useMemo} from "react";
-import {AdditionalProps, GeneralIcon, MultiLineText, Tag, useTrans} from "zographia";
+import {AdditionalProps, MultiLineText, Tag} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
 
 
 export const WordCardHeading = create(
@@ -15,55 +14,48 @@ export const WordCardHeading = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | WordWithExamples,
+    word: Word | TemplateWord | WordWithExamples,
     className?: string
-  } & AdditionalProps): ReactElement {
+  } & AdditionalProps): ReactElement | null {
 
-    const {transNumber} = useTrans("wordCard");
-
-    const debug = location.hostname === "localhost";
     const hasFont = dictionary.settings.font !== undefined && dictionary.settings.font.type !== "none";
     const pronunciation = useMemo(() => getPronunciation(dictionary, word), [dictionary, word]);
     const nameFontFamily = useMemo(() => getNameFontFamily(dictionary), [dictionary]);
 
-    return (
+    return (word.tags.length > 0 || !!word.name) ? (
       <div styleName="root" {...rest}>
-        {(debug || word.tags.length > 0) && (
+        {(word.tags.length > 0) && (
           <div styleName="tag">
-            {(debug) && (
-              <span styleName="number">
-                <GeneralIcon styleName="number-icon" icon={faHashtag}/>
-                {transNumber(word.number)}
-              </span>
-            )}
             {word.tags.map((tag, index) => (
               <Tag key={index} variant="solid">{tag}</Tag>
             ))}
           </div>
         )}
-        <div styleName="name-container">
-          <MultiLineText styleName="name" is="h3" lineHeight="narrowFixed" {...{style: {fontFamily: nameFontFamily}}}>
-            {word.name}
-          </MultiLineText>
-          {(hasFont) && (
-            <MultiLineText styleName="small-name" is="span" lineHeight="narrowFixed">
+        {(!!word.name) && (
+          <div styleName="name-container">
+            <MultiLineText styleName="name" is="h3" lineHeight="narrowFixed" {...{style: {fontFamily: nameFontFamily}}}>
               {word.name}
             </MultiLineText>
-          )}
-          {(!!pronunciation) && (
-            <MultiLineText styleName="pronunciation" lineHeight="narrow">
-              {pronunciation}
-            </MultiLineText>
-          )}
-        </div>
+            {(hasFont) && (
+              <MultiLineText styleName="small-name" is="span" lineHeight="narrowFixed">
+                {word.name}
+              </MultiLineText>
+            )}
+            {(!!pronunciation) && (
+              <MultiLineText styleName="pronunciation" lineHeight="narrow">
+                {pronunciation}
+              </MultiLineText>
+            )}
+          </div>
+        )}
       </div>
-    );
+    ) : null;
 
   }
 );
 
 
-function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | WordWithExamples): string | undefined {
+function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | TemplateWord | WordWithExamples): string | undefined {
   if (!!word.pronunciation) {
     if (word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
       return word.pronunciation.trim();

@@ -62,6 +62,7 @@ function getWord(proposal: Proposal): EditableWord {
   const word = {
     number: null,
     name: "",
+    pronunciation: "",
     equivalents: [{titles: [], names: [proposal.name], nameString: proposal.name}],
     tags: [],
     informations: [{title: "", text: ""}],

@@ -12,7 +12,7 @@ export interface EditableWord {
 
   number: number | null;
   name: string;
-  pronunciation?: string;
+  pronunciation: string;
   equivalents: Array<Equivalent>;
   tags: Array<string>;
   informations: Array<Information>;
@@ -27,6 +27,7 @@ export namespace EditableWord {
   export const EMPTY = {
     number: null,
     name: "",
+    pronunciation: "",
     equivalents: [],
     tags: [],
     informations: [],
@@ -42,7 +43,7 @@ export interface Word {
   id: ObjectId;
   number: number;
   name: string;
-  pronunciation?: string;
+  pronunciation: string;
   equivalents: Array<Equivalent>;
   tags: Array<string>;
   informations: Array<Information>;

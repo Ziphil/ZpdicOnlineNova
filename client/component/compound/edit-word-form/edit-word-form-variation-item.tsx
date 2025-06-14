@@ -2,7 +2,7 @@
 
 import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {UseFieldArrayReturn} from "react-hook-form";
+import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
   AdditionalProps,
   ControlContainer,
@@ -19,7 +19,8 @@ import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
-import {EditWordSpec} from "./edit-word-form-hook";
+import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
+import {EditWordFormValue} from "./edit-word-form-hook";
 
 
 export const EditWordFormVariationItem = create(
@@ -33,7 +34,7 @@ export const EditWordFormVariationItem = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    form: EditWordSpec["form"],
+    form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
     variationOperations: Omit<UseFieldArrayReturn<any, "variations">, "fields">,
     dndId: string,
     index: number,
