@@ -24,7 +24,7 @@ import {WordCardInfoPopover} from "/client/component/compound/word-list/word-car
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/client/skeleton";
-import {getDictionaryIdentifier} from "/client/util/dictionary";
+import {getWordHref} from "/client/util/dictionary";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardExampleList} from "./word-card-example-list";
 import {WordCardHeading} from "./word-card-heading";
@@ -61,7 +61,7 @@ export const WordCard = create(
     const device = useResponsiveDevice();
 
     const shareText = `${word.name}\n#ZpDIC`;
-    const shareUrl = location.origin + useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${word.number}`);
+    const shareUrl = location.origin + useHref(getWordHref(dictionary, word.number));
 
     const discardWord = useDiscardWord(dictionary, word);
 

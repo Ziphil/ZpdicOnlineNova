@@ -6,6 +6,7 @@ import {Markdown} from "/client/component/atom/markdown";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
 import {getDictionarySpecialPaths} from "/client/util/dictionary";
+import {WordCardAnchor} from "./word-card-anchor";
 
 
 export const WordCardInformationList = create(
@@ -30,7 +31,15 @@ export const WordCardInformationList = create(
               </h4>
             )}
             {(dictionary.settings.enableMarkdown) ? (
-              <Markdown styleName="markdown" mode="normal" compact={true} specialPaths={getDictionarySpecialPaths(dictionary)}>
+              <Markdown
+                styleName="markdown"
+                mode="normal"
+                compact={true}
+                specialPaths={getDictionarySpecialPaths(dictionary)}
+                components={{
+                  a: (props) => <WordCardAnchor dictionary={dictionary} {...props}/>
+                }}
+              >
                 {information.text}
               </Markdown>
             ) : (

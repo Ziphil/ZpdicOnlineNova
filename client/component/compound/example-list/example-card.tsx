@@ -14,7 +14,7 @@ import {create} from "/client/component/create";
 import {useFilledExample} from "/client/hook/example";
 import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors, Example} from "/client/skeleton";
-import {getDictionaryIdentifier} from "/client/util/dictionary";
+import {getExampleHref, getWordHref} from "/client/util/dictionary";
 import {useDiscardExample} from "./example-card-hook";
 import {ExampleCardInfoPopover} from "./example-card-info-popover";
 
@@ -41,7 +41,7 @@ export const ExampleCard = create(
     const device = useResponsiveDevice();
 
     const shareText = `${example.sentence} — ${example.translation}\n#ZpDIC`;
-    const shareUrl = location.origin + useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/sentences?kind=exact&number=${example.number}`);
+    const shareUrl = location.origin + useHref(getExampleHref(dictionary, example.number));
 
     const filledExample = useFilledExample(dictionary, example);
 
@@ -84,7 +84,7 @@ export const ExampleCard = create(
                     {(index > 0) && <span styleName="punctuation">, </span>}
                     <WordPopover dictionary={dictionary} word={word} trigger={(
                       <span>
-                        <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${word.number}`} scheme="secondary" variant="underline">
+                        <Link href={getWordHref(dictionary, word.number)} scheme="secondary" variant="underline">
                           {(word.name === undefined) ? <LoadingIcon/> : (word.name === null) ? <GeneralIcon icon={faTriangleExclamation}/> : word.name}
                         </Link>
                       </span>

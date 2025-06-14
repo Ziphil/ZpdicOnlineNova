@@ -8,7 +8,7 @@ import {create} from "/client/component/create";
 import {useFilledExample} from "/client/hook/example";
 import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors, Example} from "/client/skeleton";
-import {getDictionaryIdentifier} from "/client/util/dictionary";
+import {getExampleHref} from "/client/util/dictionary";
 
 
 export const ExamplePopoverInner = create(
@@ -45,7 +45,7 @@ export const ExamplePopoverInner = create(
             {trans("button.edit")}
           </Button>
         )}
-        <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}/sentences?kind=exact&number=${filledExample.number}`} scheme="secondary" variant="underline">
+        <Link href={getExampleHref(dictionary, filledExample.number)} scheme="secondary" variant="underline">
           <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
           {trans("button.detail")}
         </Link>

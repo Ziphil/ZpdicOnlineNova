@@ -1,6 +1,6 @@
 //
 
-import {ReactElement, useCallback} from "react";
+import {ComponentProps, ReactElement, useCallback} from "react";
 import {uriTransformer as defaultTransformUri} from "react-markdown";
 import {AdditionalProps, Markdown as ZographiaMarkdown} from "zographia";
 import {MarkdownHeading} from "/client/component/atom/markdown/markdown-heading";
@@ -14,12 +14,14 @@ export const Markdown = create(
     mode,
     compact = false,
     specialPaths,
+    components,
     children,
     ...rest
   }: {
     mode: "normal" | "article" | "document",
     compact?: boolean,
     specialPaths?: MarkdownSpecialPaths,
+    components?: ComponentProps<typeof ZographiaMarkdown>["components"],
     children: string,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -64,7 +66,8 @@ export const Markdown = create(
           h3: (mode === "article") ? (props) => <MarkdownHeading level={3} {...props}/> : (props) => <h3 {...props}/>,
           h4: (mode === "article") ? (props) => <MarkdownHeading level={4} {...props}/> : (props) => <h4 {...props}/>,
           h5: (mode === "article") ? (props) => <MarkdownHeading level={5} {...props}/> : (props) => <h5 {...props}/>,
-          h6: (mode === "article") ? (props) => <MarkdownHeading level={6} {...props}/> : (props) => <h6 {...props}/>
+          h6: (mode === "article") ? (props) => <MarkdownHeading level={6} {...props}/> : (props) => <h6 {...props}/>,
+          ...components
         }}
         transformUrl={transformUrl}
         {...rest}

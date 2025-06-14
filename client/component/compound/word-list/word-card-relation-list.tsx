@@ -8,7 +8,7 @@ import {Link} from "/client/component/atom/link";
 import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Relation, TemplateRelation, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
-import {getDictionaryIdentifier} from "/client/util/dictionary";
+import {getWordHref} from "/client/util/dictionary";
 
 
 export const WordCardRelationList = create(
@@ -41,7 +41,7 @@ export const WordCardRelationList = create(
                   {(index > 0) && <span styleName="punctuation">, </span>}
                   <WordPopover dictionary={dictionary} word={relation} trigger={(
                     <span>
-                      <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${relation.number}`} scheme="secondary" variant="underline">
+                      <Link href={getWordHref(dictionary, relation.number)} scheme="secondary" variant="underline">
                         {relation.name}
                       </Link>
                     </span>
