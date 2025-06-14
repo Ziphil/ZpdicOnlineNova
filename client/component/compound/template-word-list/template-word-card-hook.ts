@@ -23,7 +23,7 @@ export function useDiscardTemplateWord(dictionary: Dictionary, word: TemplateWor
       await Promise.all([
         invalidateResponses("fetchDictionary", (query) => +query.identifier === dictionary.number || query.identifier === dictionary.paramName)
       ]);
-      dispatchSuccessToast("changeDictionarySettings");
+      dispatchSuccessToast("discardDictionaryTemplateWord");
     });
   }, [dictionary.number, dictionary.paramName, word.id, request, dispatchSuccessToast]);
   const execute = useCallback(function (): void {

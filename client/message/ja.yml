@@ -36,6 +36,12 @@ toast:
         設定を変更しました。
       ignoredEquivalentPattern: |-
         設定を変更しました。
+    addDictionaryTemplateWord: |-
+      テンプレートを新しく作成しました。
+    changeDictionaryTemplateWord: |-
+      テンプレートを編集しました。
+    discardDictionaryTemplateWord: |-
+      テンプレートを削除しました。
     discardDictionaryAuthorizedUser: |-
       編集権限を解除しました。
     addWord: |-

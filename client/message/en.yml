@@ -36,6 +36,12 @@ toast:
         The setting has been changed.
       ignoredEquivalentPattern: |-
         The setting has been changed.
+    addDictionaryTemplateWord: |-
+      A new template has been created.
+    changeDictionaryTemplateWord: |-
+      The template has been edited.
+    discardDictionaryTemplateWord: |-
+      The template has been deleted.
     discardDictionaryAuthorizedUser: |-
       The permission has been revoked.
     addWord: |-

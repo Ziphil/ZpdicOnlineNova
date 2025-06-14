@@ -36,6 +36,12 @@ toast:
         La agordo ŝanĝitas.
       ignoredEquivalentPattern: |-
         La agordo ŝanĝitas.
+    addDictionaryTemplateWord: |-
+      Nova ŝablono kreitas.
+    changeDictionaryTemplateWord: |-
+      La ŝablono redaktitas.
+    discardDictionaryTemplateWord: |-
+      La ŝablono forigitas.
     discardDictionaryAuthorizedUser: |-
       La permeso revokitas.
     addWord: |-

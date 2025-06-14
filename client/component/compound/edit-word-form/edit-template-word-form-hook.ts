@@ -61,13 +61,14 @@ export function useEditTemplateWord(dictionary: Dictionary, initialData: EditTem
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
+    const adding = value.id === null;
     const response = await request("editDictionaryTemplateWord", {number: dictionary.number, word: value});
     await switchResponse(response, async () => {
       await Promise.all([
         invalidateResponses("fetchDictionary", (query) => +query.identifier === dictionary.number || query.identifier === dictionary.paramName)
       ]);
       await onSubmit?.();
-      dispatchSuccessToast("changeDictionarySettings");
+      dispatchSuccessToast((adding) ? "addDictionaryTemplateWord" : "changeDictionaryTemplateWord");
     });
   }), [dictionary, onSubmit, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};
