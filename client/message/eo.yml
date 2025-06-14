@@ -639,6 +639,10 @@ wordList:
     select: "Reveni al tiu versio"
     create: "Krei"
     proposal: "Peti kreadon"
+    info: "Detaloj"
+  table:
+    updatedDate: "Ĝisdatigita je"
+    createdDate: "Kreita je"
   dialog:
     discard:
       message: >-

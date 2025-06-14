@@ -639,6 +639,10 @@ wordList:
     select: "この版に戻す"
     create: "作成"
     proposal: "造語依頼"
+    info: "詳細"
+  table:
+    updatedDate: "更新日時"
+    createdDate: "作成日時"
   dialog:
     discard:
       message: >-

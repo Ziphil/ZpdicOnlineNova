@@ -639,6 +639,10 @@ wordList:
     select: "Revert to this version"
     create: "Create"
     proposal: "Request creation"
+    info: "Details"
+  table:
+    updatedDate: "Updated at"
+    createdDate: "Created at"
   dialog:
     discard:
       message: >-

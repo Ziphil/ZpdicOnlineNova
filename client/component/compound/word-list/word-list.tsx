@@ -18,6 +18,7 @@ export const WordList = create(
     pageSpec,
     emptyType,
     showHeader = false,
+    showInfo = false,
     showSelectButton = false,
     onSelect,
     ...rest
@@ -27,6 +28,7 @@ export const WordList = create(
     pageSpec: PageSpec,
     emptyType: "create" | "proposal" | "history" | "none",
     showHeader?: boolean,
+    showInfo?: boolean,
     showSelectButton?: boolean,
     onSelect?: (word: Word) => void,
     className?: string
@@ -37,7 +39,17 @@ export const WordList = create(
     return (
       <List styleName="root" items={words} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(word) => <WordCard key={word.id} dictionary={dictionary} word={word} showHeader={showHeader} showSelectButton={showSelectButton} onSelect={onSelect}/>}
+          {(word) => (
+            <WordCard
+              key={word.id}
+              dictionary={dictionary}
+              word={word}
+              showHeader={showHeader}
+              showInfo={showInfo}
+              showSelectButton={showSelectButton}
+              onSelect={onSelect}
+            />
+          )}
           <ListLoadingView/>
           {(emptyType !== "none") ? (
             <ListEmptyView styleName="empty">

@@ -84,6 +84,7 @@ export const DictionaryMainPart = create(
             <WordList
               dictionary={dictionary}
               words={hitWords}
+              showInfo={true}
               emptyType={(hitSuggestions.length > 0) ? "none" : (authorities?.includes("edit")) ? "create" : "proposal"}
               pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}
             />
