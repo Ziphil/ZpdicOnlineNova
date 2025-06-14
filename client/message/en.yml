@@ -482,6 +482,10 @@ exampleList:
     edit: "Edit"
     discard: "Delete"
     share: "Share"
+    info: "Details"
+  table:
+    updatedDate: "Updated at"
+    createdDate: "Created at"
   dialog:
     discard:
       message: >-

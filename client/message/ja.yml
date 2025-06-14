@@ -482,6 +482,10 @@ exampleList:
     edit: "編集"
     discard: "削除"
     share: "共有"
+    info: "詳細"
+  table:
+    updatedDate: "更新日時"
+    createdDate: "作成日時"
   dialog:
     discard:
       message: >-

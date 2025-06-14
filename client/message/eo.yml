@@ -482,6 +482,10 @@ exampleList:
     edit: "Redakti"
     discard: "Forigi"
     share: "Kunhavigi"
+    info: "Detaloj"
+  table:
+    updatedDate: "Ĝisdatigita je"
+    createdDate: "Kreita je"
   dialog:
     discard:
       message: >-

@@ -1,7 +1,7 @@
 //
 
 import {Dictionary} from "/client/skeleton";
-import {ObjectId} from "/client/skeleton/common";
+import {DateString, ObjectId} from "/client/skeleton/common";
 import {LinkedExampleOffer} from "/client/skeleton/example/linked-example-offer";
 import {LinkedWord} from "/client/skeleton/word/linked-word";
 
@@ -44,6 +44,9 @@ export interface Example {
   tags: Array<string>;
   words: Array<LinkedWord>;
   offer: LinkedExampleOffer | null;
+  updatedUser?: {id: ObjectId};
+  createdDate?: DateString;
+  updatedDate?: DateString;
 
 }
 
