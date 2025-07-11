@@ -49,6 +49,30 @@
   }
 }
 
+.card-group {
+  column-gap: 3zu;
+  row-gap: 3zu;
+  display: flex;
+  @include device("desktop") {
+    flex-direction: row;
+  }
+  @include device("mobile") {
+    flex-direction: column;
+  }
+}
+
+.card {
+  @include device("desktop") {
+    flex: 1 1 0zu;
+  }
+}
+
+.card-body {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
 .input {
   align-items: baseline;
 }

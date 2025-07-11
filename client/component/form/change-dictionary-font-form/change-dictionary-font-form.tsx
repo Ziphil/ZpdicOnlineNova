@@ -7,8 +7,8 @@ import {
   AdditionalProps,
   Button,
   ButtonIconbag,
-  CheckableContainer,
-  CheckableLabel,
+  CheckableCard,
+  CheckableCardBody,
   ControlContainer,
   ControlLabel,
   FileInput,
@@ -38,63 +38,63 @@ export const ChangeDictionaryFontForm = create(
     const {trans} = useTrans("changeDictionaryFontForm");
 
     const {form, handleSubmit} = useChangeDictionaryFont(dictionary);
-    const {control, register, watch, getFieldState, formState: {errors}} = form;
-
-    const type = watch("type");
+    const {control, register, getFieldState, formState: {errors}} = form;
 
     return (
       <form styleName="root" {...rest}>
         <ControlContainer>
-          <div styleName="radio-group" {...data({vertical: "wide"})}>
-            <CheckableContainer>
+          <div styleName="card-group" {...data({vertical: "wide"})}>
+            <CheckableCard styleName="card">
               <Radio value="none" {...register("type")}/>
-              <CheckableLabel styleName="label">
-                <div styleName="label-main">{trans("label.type.none")}</div>
-                <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.type.none")}</MultiLineText>
-              </CheckableLabel>
-            </CheckableContainer>
-            <CheckableContainer>
+              <CheckableCardBody styleName="card-body">
+                <div styleName="label">
+                  <div styleName="label-main">{trans("label.type.none")}</div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.type.none")}</MultiLineText>
+                </div>
+              </CheckableCardBody>
+            </CheckableCard>
+            <CheckableCard styleName="card">
               <Radio value="local" {...register("type")}/>
-              <CheckableLabel styleName="label">
-                <div styleName="label-main">{trans("label.type.local")}</div>
-                <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.type.local")}</MultiLineText>
-              </CheckableLabel>
-            </CheckableContainer>
-            <CheckableContainer>
+              <CheckableCardBody styleName="card-body">
+                <div styleName="label">
+                  <div styleName="label-main">{trans("label.type.local")}</div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.type.local")}</MultiLineText>
+                </div>
+                <ControlContainer>
+                  <ControlLabel>
+                    {trans("label.input.name")}
+                  </ControlLabel>
+                  <Input error={!!getFieldState("name").error} {...register("name")}/>
+                  <ControlErrorMessage name="name" form={form} trans={trans}/>
+                </ControlContainer>
+              </CheckableCardBody>
+            </CheckableCard>
+            <CheckableCard styleName="card">
               <Radio value="custom" {...register("type")}/>
-              <CheckableLabel styleName="label">
-                <div styleName="label-main">{trans("label.type.custom")}</div>
-                <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.type.custom")}</MultiLineText>
-              </CheckableLabel>
-            </CheckableContainer>
+              <CheckableCardBody styleName="card-body">
+                <div styleName="label">
+                  <div styleName="label-main">{trans("label.type.custom")}</div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.type.custom")}</MultiLineText>
+                </div>
+                <ControlContainer>
+                  <ControlLabel>
+                    {trans("label.input.file")}
+                  </ControlLabel>
+                  <Controller name="file" control={control} render={({field}) => (
+                    <FileInput
+                      value={field.value}
+                      defaultValue={(dictionary.settings.font?.type === "custom") ? dictionary.settings.font?.name : undefined}
+                      onSet={field.onChange}
+                      error={getFieldState("file").error !== undefined}
+                      multiple={false}
+                    />
+                  )}/>
+                  <ControlErrorMessage name="file" form={form} trans={trans}/>
+                </ControlContainer>
+              </CheckableCardBody>
+            </CheckableCard>
           </div>
         </ControlContainer>
-        {(type === "local") && (
-          <ControlContainer>
-            <ControlLabel>
-              {trans("label.input.name")}
-            </ControlLabel>
-            <Input error={!!getFieldState("name").error} {...register("name")}/>
-            <ControlErrorMessage name="name" form={form} trans={trans}/>
-          </ControlContainer>
-        )}
-        {(type === "custom") && (
-          <ControlContainer>
-            <ControlLabel>
-              {trans("label.input.file")}
-            </ControlLabel>
-            <Controller name="file" control={control} render={({field}) => (
-              <FileInput
-                value={field.value}
-                defaultValue={(dictionary.settings.font?.type === "custom") ? dictionary.settings.font?.name : undefined}
-                onSet={field.onChange}
-                error={getFieldState("file").error !== undefined}
-                multiple={false}
-              />
-            )}/>
-            <ControlErrorMessage name="file" form={form} trans={trans}/>
-          </ControlContainer>
-        )}
         <div>
           <Button variant="light" type="submit" onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
