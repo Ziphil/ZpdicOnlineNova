@@ -4,6 +4,7 @@ import type {
   TemplateWord as TemplateWordSkeleton
 } from "/client/skeleton";
 import {InformationCreator} from "/server/internal/creator/word/information";
+import {PhraseCreator} from "/server/internal/creator/word/phrase";
 import {TemplateEquivalentCreator} from "/server/internal/creator/word/template-equivalent";
 import {TemplateRelationCreator} from "/server/internal/creator/word/template-relation";
 import {VariationCreator} from "/server/internal/creator/word/variation";
@@ -23,6 +24,7 @@ export namespace TemplateWordCreator {
       equivalents: raw.equivalents.map(TemplateEquivalentCreator.skeletonize),
       tags: raw.tags,
       informations: raw.informations.map(InformationCreator.skeletonize),
+      phrases: raw.phrases?.map(PhraseCreator.skeletonize) ?? [],
       variations: raw.variations.map(VariationCreator.skeletonize),
       relations: raw.relations.map(TemplateRelationCreator.skeletonize)
     } satisfies TemplateWordSkeleton;

@@ -26,6 +26,7 @@ const DEFAULT_VALUE = {
     title: "",
     text: ""
   }],
+  phrases: [],
   variations: [],
   relations: []
 } satisfies FormValue;
@@ -41,6 +42,11 @@ type FormValue = {
   informations: Array<{
     title: string,
     text: string
+  }>,
+  phrases: Array<{
+    titles: Array<string>,
+    form: string,
+    translations: Array<string>
   }>,
   variations: Array<{
     title: string,
@@ -100,6 +106,11 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
           title: information.title,
           text: information.text
         })),
+        phrases: word.phrases.map((phrase) => ({
+          titles: phrase.titles,
+          form: phrase.form,
+          translations: phrase.translations
+        })),
         variations: word.variations.map((variation) => ({
           title: variation.title,
           name: variation.name
@@ -132,6 +143,11 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
         variations: word.variations.map((variation) => ({
           title: variation.title,
           name: variation.name
+        })),
+        phrases: word.phrases.map((phrase) => ({
+          titles: phrase.titles,
+          form: phrase.form,
+          translations: phrase.translations
         })),
         relations: word.relations.map((relation) => ({
           titles: relation.titles,
@@ -170,6 +186,7 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
         ignoredPattern: dictionary.settings.ignoredEquivalentPattern
       })),
       informations: value.informations,
+      phrases: value.phrases,
       variations: value.variations,
       relations: value.relations.filter((rawRelation) => rawRelation.word !== null).map((rawRelation) => ({
         titles: rawRelation.titles,

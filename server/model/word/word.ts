@@ -14,6 +14,7 @@ import {CustomError} from "/server/model/error";
 import {User} from "/server/model/user/user";
 import {EquivalentSchema} from "/server/model/word/equivalent";
 import {InformationSchema} from "/server/model/word/information";
+import {PhraseSchema} from "/server/model/word/phrase";
 import {Relation, RelationSchema} from "/server/model/word/relation";
 import {VariationSchema} from "/server/model/word/variation";
 import {LogUtil} from "/server/util/log";
@@ -42,6 +43,9 @@ export class WordSchema extends DiscardableSchema {
 
   @prop({required: true, type: InformationSchema})
   public informations!: Array<InformationSchema>;
+
+  @prop({type: PhraseSchema})
+  public phrases?: Array<PhraseSchema>;
 
   @prop({required: true, type: VariationSchema})
   public variations!: Array<VariationSchema>;

@@ -48,7 +48,7 @@ export class WordExternalRestController extends ExternalRestController {
     const {me, dictionary} = request.middlewareBody;
     const {word} = request.body;
     try {
-      const resultWord = await dictionary.editWord({number: null, ...word}, me);
+      const resultWord = await dictionary.editWord({number: null, phrases: [], ...word}, me);
       const body = {word: WordCreator.skeletonize(resultWord)};
       ExternalRestController.respond(response, 201, body);
     } catch (error) {
@@ -69,7 +69,7 @@ export class WordExternalRestController extends ExternalRestController {
     try {
       const currentWord = await dictionary.fetchOneWordByNumber(wordNumber);
       if (currentWord) {
-        const resultWord = await dictionary.editWord({number: currentWord.number, ...word}, me);
+        const resultWord = await dictionary.editWord({number: currentWord.number, phrases: [], ...word}, me);
         const body = {word: WordCreator.skeletonize(resultWord)};
         ExternalRestController.respond(response, 200, body);
       } else {

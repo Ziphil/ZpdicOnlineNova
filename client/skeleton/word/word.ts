@@ -4,6 +4,7 @@ import {DateString, ObjectId} from "/client/skeleton/common";
 import {Example} from "/client/skeleton/example/example";
 import {Equivalent} from "/client/skeleton/word/equivalent";
 import {Information} from "/client/skeleton/word/information";
+import {Phrase} from "/client/skeleton/word/phrase";
 import {Relation} from "/client/skeleton/word/relation";
 import {Variation} from "/client/skeleton/word/variation";
 
@@ -16,6 +17,7 @@ export interface EditableWord {
   equivalents: Array<Equivalent>;
   tags: Array<string>;
   informations: Array<Information>;
+  phrases: Array<Phrase>;
   variations: Array<Variation>;
   relations: Array<Relation>;
 
@@ -31,6 +33,7 @@ export namespace EditableWord {
     equivalents: [],
     tags: [],
     informations: [],
+    phrases: [],
     variations: [],
     relations: []
   } satisfies EditableWord;
@@ -47,6 +50,7 @@ export interface Word {
   equivalents: Array<Equivalent>;
   tags: Array<string>;
   informations: Array<Information>;
+  phrases: Array<Phrase>;
   variations: Array<Variation>;
   relations: Array<Relation>;
   updatedUser?: {id: ObjectId};
