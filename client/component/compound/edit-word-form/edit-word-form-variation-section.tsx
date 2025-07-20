@@ -38,7 +38,8 @@ export const EditWordFormVariationSection = create(
     const addVariation = useCallback(function (): void {
       variationOperations.append({
         title: "",
-        name: ""
+        name: "",
+        pronunciation: ""
       });
     }, [variationOperations]);
 

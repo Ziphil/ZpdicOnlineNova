@@ -1,9 +1,9 @@
 //
 
-import {ReactElement} from "react";
+import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
 import {createEquivalentNameNode} from "/client/util/dictionary";
 
 
@@ -15,13 +15,15 @@ export const WordCardEquivalentList = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | TemplateWord | WordWithExamples,
+    word: Word | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    return (word.equivalents.length > 0) ? (
+    const visibleEquivalents = useMemo(() => word.equivalents.filter((equivalent) => !equivalent.hidden), [word.equivalents]);
+
+    return (visibleEquivalents.length > 0) ? (
       <div styleName="root" {...rest}>
-        {word.equivalents.map((equivalent, index) => (
+        {visibleEquivalents.map((equivalent, index) => (
           <li styleName="item" key={index}>
             {(dictionary.settings.showEquivalentNumber) && (
               <span styleName="number" {...aria({hidden: true})}>

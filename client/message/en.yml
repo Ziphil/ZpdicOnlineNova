@@ -450,6 +450,7 @@ editWordForm:
     equivalent:
       titles: "Parts of speech"
       names: "Translations"
+      hidden: "Used only for search (hidden on word cards)"
     information:
       title: "Heading"
       text: "Content"
@@ -460,6 +461,7 @@ editWordForm:
     variation:
       title: "Kind"
       name: "Form"
+      pronunciation: "Pronunciation"
     relation:
       titles: "Kinds"
       name: "Word"

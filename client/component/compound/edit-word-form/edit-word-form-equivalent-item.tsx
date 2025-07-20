@@ -5,11 +5,15 @@ import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
   AdditionalProps,
+  CheckableContainer,
+  CheckableLabel,
+  Checkbox,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
   IconButton,
   Input,
+  MultiLineText,
   SuggestionSpec,
   TagInput,
   data,
@@ -81,6 +85,12 @@ export const EditWordFormEquivalentItem = create(
               })}
             </ControlLabel>
             <Input {...register(`equivalents.${index}.nameString`)}/>
+          </ControlContainer>
+          <ControlContainer>
+            <CheckableContainer>
+              <Checkbox {...register(`equivalents.${index}.hidden`)}/>
+              <CheckableLabel><MultiLineText>{trans("label.equivalent.hidden")}</MultiLineText></CheckableLabel>
+            </CheckableContainer>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">

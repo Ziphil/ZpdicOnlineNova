@@ -38,7 +38,8 @@ export const EditWordFormEquivalentSection = create(
     const addEquivalent = useCallback(function (): void {
       equivalentOperations.append({
         titles: [],
-        nameString: ""
+        nameString: "",
+        hidden: false
       });
     }, [equivalentOperations]);
 

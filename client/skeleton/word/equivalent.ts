@@ -7,6 +7,7 @@ export interface Equivalent {
   names: Array<string>;
   nameString: string;
   ignoredPattern?: string;
+  hidden: boolean;
 
 }
 
@@ -16,7 +17,8 @@ export namespace Equivalent {
   export const EMPTY = {
     titles: [],
     names: [],
-    nameString: ""
+    nameString: "",
+    hidden: false
   } satisfies Equivalent;
 
 }

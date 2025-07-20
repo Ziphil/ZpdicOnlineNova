@@ -15,7 +15,8 @@ export namespace EquivalentCreator {
       titles: raw.titles,
       names: raw.names,
       nameString: raw.nameString ?? raw.names.join(", "),
-      ignoredPattern: raw.ignoredPattern ?? ""
+      ignoredPattern: raw.ignoredPattern ?? "",
+      hidden: raw.hidden ?? false
     } satisfies EquivalentSkeleton;
     return skeleton;
   }

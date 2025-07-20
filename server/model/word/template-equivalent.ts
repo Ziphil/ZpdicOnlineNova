@@ -12,6 +12,9 @@ export class TemplateEquivalentSchema {
   @prop({required: true})
   public nameString!: string;
 
+  @prop()
+  public hidden?: boolean;
+
 }
 
 

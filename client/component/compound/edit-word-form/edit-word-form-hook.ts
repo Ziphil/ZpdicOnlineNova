@@ -20,7 +20,8 @@ const DEFAULT_VALUE = {
   tags: [],
   equivalents: [{
     titles: [],
-    nameString: ""
+    nameString: "",
+    hidden: false
   }],
   informations: [],
   phrases: [],
@@ -34,7 +35,8 @@ type FormValue = {
   tags: Array<string>,
   equivalents: Array<{
     titles: Array<string>,
-    nameString: string
+    nameString: string,
+    hidden: boolean
   }>,
   informations: Array<{
     title: string,
@@ -47,7 +49,8 @@ type FormValue = {
   }>,
   variations: Array<{
     title: string,
-    name: string
+    name: string,
+    pronunciation: string
   }>,
   relations: Array<{
     titles: Array<string>,
@@ -97,7 +100,8 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
         tags: word.tags,
         equivalents: word.equivalents.map((equivalent) => ({
           titles: equivalent.titles,
-          nameString: equivalent.nameString
+          nameString: equivalent.nameString,
+          hidden: equivalent.hidden
         })),
         informations: word.informations.map((information) => ({
           title: information.title,
@@ -110,7 +114,8 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
         })),
         variations: word.variations.map((variation) => ({
           title: variation.title,
-          name: variation.name
+          name: variation.name,
+          pronunciation: variation.pronunciation
         })),
         relations: word.relations.map((relation) => ({
           titles: relation.titles,
@@ -131,7 +136,8 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
         tags: word.tags,
         equivalents: word.equivalents.map((equivalent) => ({
           titles: equivalent.titles,
-          nameString: equivalent.nameString
+          nameString: equivalent.nameString,
+          hidden: equivalent.hidden
         })),
         informations: word.informations.map((information) => ({
           title: information.title,
@@ -139,7 +145,8 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
         })),
         variations: word.variations.map((variation) => ({
           title: variation.title,
-          name: variation.name
+          name: variation.name,
+          pronunciation: variation.pronunciation
         })),
         phrases: word.phrases.map((phrase) => ({
           titles: phrase.titles,
@@ -180,7 +187,8 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
         titles: rawEquivalent.titles,
         names: createEquivalentNames(dictionary, rawEquivalent),
         nameString: rawEquivalent.nameString,
-        ignoredPattern: dictionary.settings.ignoredEquivalentPattern
+        ignoredPattern: dictionary.settings.ignoredEquivalentPattern,
+        hidden: rawEquivalent.hidden
       })),
       informations: value.informations,
       phrases: value.phrases.map((phrase) => ({

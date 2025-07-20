@@ -450,6 +450,7 @@ editWordForm:
     equivalent:
       titles: "Vortospecoj"
       names: "Tradukaĵoj"
+      hidden: "Uzata nur por serĉo (ne montrata en vortokarto)"
     information:
       title: "Titlo"
       text: "Enhavo"
@@ -460,6 +461,7 @@ editWordForm:
     variation:
       title: "Speco"
       name: "Formo"
+      pronunciation: "Elparolo"
     relation:
       titles: "Specoj"
       name: "Vorto"

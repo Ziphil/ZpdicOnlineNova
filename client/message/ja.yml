@@ -450,6 +450,7 @@ editWordForm:
     equivalent:
       titles: "品詞"
       names: "訳語"
+      hidden: "検索にのみ用いる (単語カードでは非表示にする)"
     information:
       title: "見出し"
       text: "内容"
@@ -460,6 +461,7 @@ editWordForm:
     variation:
       title: "種類"
       name: "変化形"
+      pronunciation: "発音記号"
     relation:
       titles: "分類"
       name: "関連語"
