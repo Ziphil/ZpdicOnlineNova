@@ -439,6 +439,7 @@ editWordForm:
     basic: "基本情報"
     equivalents: "訳語"
     informations: "内容"
+    phrases: "成句"
     variations: "変化形"
     relations: "関連語"
     template: "テンプレート設定"
@@ -452,6 +453,10 @@ editWordForm:
     information:
       title: "見出し"
       text: "内容"
+    phrase:
+      titles: "分類"
+      form: "成句表現"
+      translations: "訳語"
     variation:
       title: "種類"
       name: "変化形"
@@ -463,6 +468,7 @@ editWordForm:
   absent:
     equivalent: "訳語が登録されていません"
     information: "内容が登録されていません"
+    phrase: "成句が登録されていません"
     variation: "変化形が登録されていません"
     relation: "関連語が登録されていません"
   duplicateName: >-
@@ -471,11 +477,13 @@ editWordForm:
     add:
       equivalent: "訳語を追加"
       information: "内容を追加"
+      phrase: "成句を追加"
       variation: "変化形を追加"
       relation: "関連語を追加"
     discard:
       equivalent: "削除"
       information: "削除"
+      phrase: "削除"
       variation: "削除"
       relation: "削除"
     resource: "画像"

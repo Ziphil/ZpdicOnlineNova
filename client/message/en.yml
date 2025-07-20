@@ -439,6 +439,7 @@ editWordForm:
     basic: "Basic information"
     equivalents: "Translations"
     informations: "Contents"
+    phrases: "Idiomatic expressions"
     variations: "Variation forms"
     relations: "Related words"
     template: "Template settings"
@@ -452,6 +453,10 @@ editWordForm:
     information:
       title: "Heading"
       text: "Content"
+    phrase:
+      titles: "Kinds"
+      form: "Expression"
+      translations: "Translations"
     variation:
       title: "Kind"
       name: "Form"
@@ -463,6 +468,7 @@ editWordForm:
   absent:
     equivalent: "No translations"
     information: "No contents"
+    phrase: "No idiomatic expressions"
     variation: "No variation forms"
     relation: "No related words"
   duplicateName: >-
@@ -471,11 +477,13 @@ editWordForm:
     add:
       equivalent: "Add translation"
       information: "Add content"
+      phrase: "Add idiomatic expression"
       variation: "Add variation form"
       relation: "Add related word"
     discard:
       equivalent: "Remove"
       information: "Remove"
+      phrase: "Remove"
       variation: "Remove"
       relation: "Remove"
     resource: "Images"

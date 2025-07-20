@@ -439,6 +439,7 @@ editWordForm:
     basic: "Bazaj informoj"
     equivalents: "Tradukaĵoj"
     informations: "Enhavoj"
+    phrases: "Idiomaĵoj"
     variations: "Variaĵaj formoj"
     relations: "Rilataj vortoj"
     template: "Ŝablona agordoj"
@@ -452,6 +453,10 @@ editWordForm:
     information:
       title: "Titlo"
       text: "Enhavo"
+    phrase:
+      titles: "Specoj"
+      form: "Idiomaĵo"
+      translations: "Tradukaĵoj"
     variation:
       title: "Speco"
       name: "Formo"
@@ -463,6 +468,7 @@ editWordForm:
   absent:
     equivalent: "Neniuj tradukaĵoj"
     information: "Neniuj enhavoj"
+    phrase: "Neniuj idiomaĵoj"
     variation: "Neniuj variaĵaj formoj"
     relation: "Neniuj rilataj vortoj"
   duplicateName: >-
@@ -471,11 +477,13 @@ editWordForm:
     add:
       equivalent: "Aldoni tradukaĵon"
       information: "Aldoni enhavon"
+      phrase: "Aldoni idiomaĵon"
       variation: "Aldoni variaĵan formon"
       relation: "Aldoni rilatan vorton"
     discard:
       equivalent: "Forigi"
       information: "Forigi"
+      phrase: "Forigi"
       variation: "Forigi"
       relation: "Forigi"
     resource: "Bildoj"
