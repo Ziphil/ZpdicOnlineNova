@@ -46,6 +46,7 @@ export const TemplateWordCard = create(
           <ul styleName="count-list">
             {(word.equivalents.length > 0) && <li>{trans("label.equivalent", {count: word.equivalents.length})}</li>}
             {(word.informations.length > 0) && <li>{trans("label.information", {count: word.informations.length})}</li>}
+            {(word.phrases.length > 0) && <li>{trans("label.phrase", {count: word.phrases.length})}</li>}
             {(word.variations.length > 0) && <li>{trans("label.variation", {count: word.variations.length})}</li>}
             {(word.relations.length > 0) && <li>{trans("label.relation", {count: word.relations.length})}</li>}
           </ul>

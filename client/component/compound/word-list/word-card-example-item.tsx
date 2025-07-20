@@ -34,7 +34,7 @@ export const WordCardExampleItem = create(
             <span>
               {example.sentence}
             </span>
-            <span styleName="separator"> — </span>
+            <span styleName="separator" {...aria({hidden: true})}/>
             <span>
               {(example.offer !== null) ? offer?.translation : example.translation}
             </span>

@@ -676,6 +676,7 @@ templateWordList:
   label:
     equivalent: "Tradukaĵoj ×{count}"
     information: "Enhavoj ×{count}"
+    phrase: "Idiomaĵoj ×{count}"
     variation: "Variaĵaj formoj ×{count}"
     relation: "Rilataj vortoj ×{count}"
   dialog:

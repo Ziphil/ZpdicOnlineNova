@@ -676,6 +676,7 @@ templateWordList:
   label:
     equivalent: "Translations ×{count}"
     information: "Contents ×{count}"
+    phrase: "Idiomatic expressions ×{count}"
     variation: "Variation forms ×{count}"
     relation: "Related words ×{count}"
   dialog:

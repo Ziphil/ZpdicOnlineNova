@@ -676,6 +676,7 @@ templateWordList:
   label:
     equivalent: "訳語 ×{count}"
     information: "内容 ×{count}"
+    phrase: "成句 ×{count}"
     variation: "変化形 ×{count}"
     relation: "関連語 ×{count}"
   dialog:

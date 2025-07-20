@@ -30,6 +30,7 @@ import {WordCardExampleList} from "./word-card-example-list";
 import {WordCardHeading} from "./word-card-heading";
 import {useDiscardWord} from "./word-card-hook";
 import {WordCardInformationList} from "./word-card-information-list";
+import {WordCardPhraseList} from "./word-card-phrase-list";
 import {WordCardRelationList} from "./word-card-relation-list";
 import {WordCardVariationList} from "./word-card-variation-list";
 
@@ -80,6 +81,7 @@ export const WordCard = create(
             <CollapsibleBody styleName="collapsible-body" height="20rem">
               <WordCardEquivalentList dictionary={dictionary} word={word}/>
               <WordCardInformationList dictionary={dictionary} word={word}/>
+              <WordCardPhraseList dictionary={dictionary} word={word}/>
               <WordCardExampleList dictionary={dictionary} word={word}/>
               <WordCardVariationList dictionary={dictionary} word={word}/>
               <WordCardRelationList dictionary={dictionary} word={word}/>
