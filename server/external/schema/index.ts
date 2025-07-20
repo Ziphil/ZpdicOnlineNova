@@ -1,8 +1,8 @@
 //
 
 export * from "./example/example";
-export * from "./example/example-offer";
-export * from "./example/linked-example-offer";
+export * from "./example-offer/example-offer";
+export * from "./example-offer/linked-example-offer";
 export * from "./example-parameter/example-parameter";
 export * from "./example-parameter/normal-example-parameter";
 export * from "./example-offer-parameter/normal-example-offer-parameter";

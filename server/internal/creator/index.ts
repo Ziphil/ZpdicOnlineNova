@@ -5,7 +5,7 @@ export * from "./dictionary/dictionary";
 export * from "./dictionary-parameter/dictionary-parameter";
 export * from "./user/user";
 export * from "./example/example";
-export * from "./example/example-offer";
+export * from "./example-offer/example-offer";
 export * from "./example-parameter/example-parameter";
 export * from "./example-offer-parameter/example-offer-parameter";
 export * from "./word/equivalent";

@@ -11,7 +11,7 @@ import type {EditableExample} from "/client/skeleton";
 import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
-import {LinkedExampleOfferSchema} from "/server/model/example/linked-example-offer";
+import {LinkedExampleOfferSchema} from "../example-offer/linked-example-offer";
 import {User} from "/server/model/user/user";
 import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {Word, WordModel} from "/server/model/word/word";

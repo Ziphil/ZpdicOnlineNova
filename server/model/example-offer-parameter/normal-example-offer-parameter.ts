@@ -1,6 +1,6 @@
 //
 
-import {ExampleOffer, ExampleOfferModel} from "/server/model/example/example-offer";
+import {ExampleOffer, ExampleOfferModel} from "/server/model/example-offer/example-offer";
 import {ExampleOfferParameter} from "/server/model/example-offer-parameter/example-offer-parameter";
 import {QueryLike} from "/server/util/query";
 

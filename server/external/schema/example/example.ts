@@ -1,7 +1,7 @@
 //
 
 import {array, object, string} from "yup";
-import {LINKED_EXAMPLE_OFFER, LinkedExampleOffer} from "/server/external/schema/example/linked-example-offer";
+import {LINKED_EXAMPLE_OFFER, LinkedExampleOffer} from "/server/external/schema/example-offer/linked-example-offer";
 import {LINKED_WORD, LinkedWord} from "/server/external/schema/word/linked-word";
 
 

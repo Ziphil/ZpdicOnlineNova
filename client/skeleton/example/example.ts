@@ -2,7 +2,7 @@
 
 import {Dictionary} from "/client/skeleton";
 import {DateString, ObjectId} from "/client/skeleton/common";
-import {LinkedExampleOffer} from "/client/skeleton/example/linked-example-offer";
+import {LinkedExampleOffer} from "../example-offer/linked-example-offer";
 import {LinkedWord} from "/client/skeleton/word/linked-word";
 
 
