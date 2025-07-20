@@ -18,10 +18,7 @@ const DEFAULT_VALUE = {
     titles: [],
     nameString: ""
   }],
-  informations: [{
-    title: "",
-    text: ""
-  }],
+  informations: [],
   phrases: [],
   variations: [],
   relations: []
@@ -43,7 +40,7 @@ type FormValue = {
   phrases: Array<{
     titles: Array<string>,
     form: string,
-    translations: Array<string>
+    translationString: string
   }>,
   variations: Array<{
     title: string,
@@ -101,7 +98,7 @@ function getFormValue<D extends EditTemplateWordInitialData | null>(initialData:
         phrases: word.phrases.map((phrase) => ({
           titles: phrase.titles,
           form: phrase.form,
-          translations: phrase.translations
+          translationString: phrase.translationString
         })),
         variations: word.variations.map((variation) => ({
           title: variation.title,

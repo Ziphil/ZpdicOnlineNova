@@ -2,8 +2,8 @@
 
 import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
 import {InformationSchema} from "/server/model/word/information";
-import {PhraseSchema} from "/server/model/word/phrase";
 import {TemplateEquivalentSchema} from "/server/model/word/template-equivalent";
+import {TemplatePhraseSchema} from "/server/model/word/template-phrase";
 import {TemplateRelationSchema} from "/server/model/word/template-relation";
 import {VariationSchema} from "/server/model/word/variation";
 
@@ -29,8 +29,8 @@ export class TemplateWordSchema {
   @prop({required: true, type: InformationSchema})
   public informations!: Array<InformationSchema>;
 
-  @prop({required: true, type: PhraseSchema})
-  public phrases!: Array<PhraseSchema>;
+  @prop({required: true, type: TemplatePhraseSchema})
+  public phrases!: Array<TemplatePhraseSchema>;
 
   @prop({required: true, type: VariationSchema})
   public variations!: Array<VariationSchema>;

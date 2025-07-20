@@ -22,10 +22,7 @@ const DEFAULT_VALUE = {
     titles: [],
     nameString: ""
   }],
-  informations: [{
-    title: "",
-    text: ""
-  }],
+  informations: [],
   phrases: [],
   variations: [],
   relations: []
@@ -46,7 +43,7 @@ type FormValue = {
   phrases: Array<{
     titles: Array<string>,
     form: string,
-    translations: Array<string>
+    translationString: string
   }>,
   variations: Array<{
     title: string,
@@ -109,7 +106,7 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
         phrases: word.phrases.map((phrase) => ({
           titles: phrase.titles,
           form: phrase.form,
-          translations: phrase.translations
+          translationString: phrase.translationString
         })),
         variations: word.variations.map((variation) => ({
           title: variation.title,
@@ -147,7 +144,7 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
         phrases: word.phrases.map((phrase) => ({
           titles: phrase.titles,
           form: phrase.form,
-          translations: phrase.translations
+          translationString: phrase.translationString
         })),
         relations: word.relations.map((relation) => ({
           titles: relation.titles,
@@ -186,7 +183,13 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
         ignoredPattern: dictionary.settings.ignoredEquivalentPattern
       })),
       informations: value.informations,
-      phrases: value.phrases,
+      phrases: value.phrases.map((phrase) => ({
+        titles: phrase.titles,
+        form: phrase.form,
+        translations: createPhraseTranslations(dictionary, phrase),
+        translationString: phrase.translationString,
+        ignoredPattern: dictionary.settings.ignoredEquivalentPattern
+      })),
       variations: value.variations,
       relations: value.relations.filter((rawRelation) => rawRelation.word !== null).map((rawRelation) => ({
         titles: rawRelation.titles,
@@ -215,19 +218,28 @@ function getQueryForRelations(dictionary: Dictionary, editedWord: Word, value: F
 
 function createEquivalentNames(dictionary: Dictionary, rawEquivalent: FormValue["equivalents"][0]): Array<string> {
   const punctuationRegexp = new RegExp(`[${escapeRegexp(dictionary.settings.punctuations.join(""))}]`);
-  const ignoredRegexp = (() => {
-    const ignoredPattern = dictionary.settings.ignoredEquivalentPattern;
-    if (ignoredPattern) {
-      try {
-        return Re2.compile(ignoredPattern);
-      } catch (error) {
-        return undefined;
-      }
-    } else {
-      return undefined;
-    }
-  })();
+  const ignoredRegexp = compileIgnoredPattern(dictionary.settings.ignoredEquivalentPattern);
   const ignoredNameString = (ignoredRegexp) ? ignoredRegexp.matcher(rawEquivalent.nameString).replaceAll("") : rawEquivalent.nameString;
   const names = ignoredNameString.split(punctuationRegexp).map((name) => name.trim()).filter((name) => name);
   return names;
+}
+
+function createPhraseTranslations(dictionary: Dictionary, rawPhrase: FormValue["phrases"][0]): Array<string> {
+  const punctuationRegexp = new RegExp(`[${escapeRegexp(dictionary.settings.punctuations.join(""))}]`);
+  const ignoredRegexp = compileIgnoredPattern(dictionary.settings.ignoredEquivalentPattern);
+  const ignoredTranslationString = (ignoredRegexp) ? ignoredRegexp.matcher(rawPhrase.translationString).replaceAll("") : rawPhrase.translationString;
+  const translations = ignoredTranslationString.split(punctuationRegexp).map((translation) => translation.trim()).filter((translation) => translation);
+  return translations;
+}
+
+function compileIgnoredPattern(ignoredPattern: string | undefined): Re2 | undefined {
+  if (ignoredPattern) {
+    try {
+      return Re2.compile(ignoredPattern);
+    } catch (error) {
+      return undefined;
+    }
+  } else {
+    return undefined;
+  }
 }

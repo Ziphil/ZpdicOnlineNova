@@ -3,8 +3,8 @@
 import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
 
 
-@modelOptions({schemaOptions: {autoCreate: false, collection: "phrases"}})
-export class PhraseSchema {
+@modelOptions({schemaOptions: {autoCreate: false, collection: "templatePhrases"}})
+export class TemplatePhraseSchema {
 
   @prop({required: true, type: String})
   public titles!: Array<string>;
@@ -13,10 +13,7 @@ export class PhraseSchema {
   public form!: string;
 
   @prop({required: true})
-  public translations!: Array<string>;
-
-  @prop()
-  public translationString?: string;
+  public translationString!: string;
 
   @prop()
   public ignoredPattern?: string;
@@ -24,5 +21,5 @@ export class PhraseSchema {
 }
 
 
-export type Phrase = PhraseSchema;
-export const PhraseModel = getModelForClass(PhraseSchema);
+export type TemplatePhrase = TemplatePhraseSchema;
+export const TemplatePhraseModel = getModelForClass(TemplatePhraseSchema);

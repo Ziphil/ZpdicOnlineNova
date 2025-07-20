@@ -473,6 +473,8 @@ export class DictionarySchema extends DiscardableSchema {
         return "tags";
       } else if (propertyName === "information") {
         return "informations.title";
+      } else if (propertyName === "phrase") {
+        return "phrases.titles";
       } else if (propertyName === "variation") {
         return "variations.title";
       } else if (propertyName === "relation") {

@@ -2,8 +2,8 @@
 
 import {ObjectId} from "/client/skeleton/common";
 import {Information} from "/client/skeleton/word/information";
-import {Phrase} from "/client/skeleton/word/phrase";
 import {TemplateEquivalent} from "/client/skeleton/word/template-equivalent";
+import {TemplatePhrase} from "/client/skeleton/word/template-phrase";
 import {TemplateRelation} from "/client/skeleton/word/template-relation";
 import {Variation} from "/client/skeleton/word/variation";
 
@@ -17,7 +17,7 @@ export interface EditableTemplateWord {
   equivalents: Array<TemplateEquivalent>;
   tags: Array<string>;
   informations: Array<Information>;
-  phrases: Array<Phrase>;
+  phrases: Array<TemplatePhrase>;
   variations: Array<Variation>;
   relations: Array<TemplateRelation>;
 
@@ -51,7 +51,7 @@ export interface TemplateWord {
   equivalents: Array<TemplateEquivalent>;
   tags: Array<string>;
   informations: Array<Information>;
-  phrases: Array<Phrase>;
+  phrases: Array<TemplatePhrase>;
   variations: Array<Variation>;
   relations: Array<TemplateRelation>;
 
