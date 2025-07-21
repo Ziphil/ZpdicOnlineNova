@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {faGripVertical, faMinus, faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
   AdditionalProps,
+  Button,
+  ButtonIconbag,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
@@ -46,6 +48,17 @@ export const EditWordFormVariationItem = create(
     const {register} = form;
     const {paneProps, gripProps, dragging} = useEditWordFormDndItem(dndId);
 
+    const generatePronunciation = useCallback(function (): void {
+      if (dictionary.akrantiain !== null) {
+        try {
+          const value = form.getValues();
+          form.setValue(`variations.${index}.pronunciation`, dictionary.akrantiain.convert(value.variations[index].name));
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }, [dictionary, form, index]);
+
     const suggestVariationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
       try {
@@ -74,6 +87,18 @@ export const EditWordFormVariationItem = create(
           <ControlContainer>
             <ControlLabel>{trans("label.variation.name")}</ControlLabel>
             <Input {...register(`variations.${index}.name`)}/>
+          </ControlContainer>
+          <ControlContainer>
+            <ControlLabel>{trans("label.variation.pronunciation")}</ControlLabel>
+            <div styleName="row">
+              <Input {...register(`variations.${index}.pronunciation`)}/>
+              {(dictionary.akrantiain !== null) && (
+                <Button variant="light" onClick={generatePronunciation}>
+                  <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
+                  {trans("button.generate")}
+                </Button>
+              )}
+            </div>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
