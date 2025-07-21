@@ -6,8 +6,8 @@ import {AdditionalProps, GeneralIcon, aria} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {createWithRef} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {Dictionary} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
+import {Dictionary} from "/server/internal/skeleton";
 
 
 export const DictionaryBadge = createWithRef(

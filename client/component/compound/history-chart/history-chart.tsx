@@ -7,7 +7,7 @@ import {AxisDomain} from "recharts/types/util/types";
 import {AdditionalProps, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
-import {Dictionary, History} from "/client/skeleton";
+import {Dictionary, History} from "/server/internal/skeleton";
 import {HistoryChartTooltip} from "./history-chart-tooltip";
 
 

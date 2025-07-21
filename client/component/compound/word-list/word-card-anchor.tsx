@@ -4,8 +4,8 @@ import {AnchorHTMLAttributes, ReactElement, ReactNode} from "react";
 import {Link} from "/client/component/atom/link";
 import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors} from "/client/skeleton";
 import {checkWordHref} from "/client/util/dictionary";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
 export const WordCardAnchor = create(

@@ -1,6 +1,6 @@
 //
 
-import {Word} from "/client/skeleton/word/word";
+import {Word} from "/server/internal/skeleton/word/word";
 
 
 export interface Suggestion {

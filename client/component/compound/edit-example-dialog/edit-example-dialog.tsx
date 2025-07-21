@@ -22,11 +22,11 @@ import {
 import {EditExampleForm, EditExampleFormValue, EditExampleInitialData, getEditExampleFormValue, useEditExample} from "/client/component/compound/edit-example-form";
 import {create} from "/client/component/create";
 import {useConfirmAlert} from "/client/hook/window";
-import {DictionaryWithExecutors} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {checkOpeningExternal} from "/client/util/form";
 import {assignRef} from "/client/util/ref";
 import {isRef} from "/client/util/ref";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
 export const EditExampleDialog = create(

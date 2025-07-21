@@ -6,7 +6,7 @@ import {AdditionalProps, ControlContainer, ControlLabel, TagInput, Textarea, Tex
 import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditExampleSpec} from "./edit-example-form-hook";
 
 

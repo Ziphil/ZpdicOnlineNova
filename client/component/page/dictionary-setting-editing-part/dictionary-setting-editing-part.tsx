@@ -7,7 +7,7 @@ import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
 import {ChangeDictionarySettingsForm} from "/client/component/form/change-dictionary-settings-form";
 import {ChangeDictionarySourceForm} from "/client/component/form/change-dictionary-source-form";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
 export const DictionarySettingEditingPart = create(

@@ -2,7 +2,7 @@
 
 import type {
   WordParameter as WordParameterSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   AdvancedWordParameter,
   AdvancedWordParameterElement,

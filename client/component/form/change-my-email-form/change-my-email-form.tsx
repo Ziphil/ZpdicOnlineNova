@@ -5,7 +5,7 @@ import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Input, useTrans} from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
-import {UserWithDetail} from "/client/skeleton";
+import {UserWithDetail} from "/server/internal/skeleton";
 import {useChangeMyEmail} from "./change-my-email-form-hook";
 
 

@@ -23,8 +23,8 @@ import {WordCardHeader} from "/client/component/compound/word-list/word-card-hea
 import {WordCardInfoPopover} from "/client/component/compound/word-list/word-card-info-popover";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/client/skeleton";
 import {getWordHref} from "/client/util/dictionary";
+import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/server/internal/skeleton";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardExampleList} from "./word-card-example-list";
 import {WordCardHeading} from "./word-card-heading";

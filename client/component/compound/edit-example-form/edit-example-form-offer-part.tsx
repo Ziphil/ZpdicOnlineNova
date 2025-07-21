@@ -6,8 +6,8 @@ import {ExampleOfferList} from "/client/component/compound/example-offer-list";
 import {SearchExampleOfferForm} from "/client/component/compound/search-example-offer-form";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, ExampleOffer, ExampleOfferParameter, NormalExampleOfferParameter} from "/client/skeleton";
 import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
+import {DictionaryWithExecutors, ExampleOffer, ExampleOfferParameter, NormalExampleOfferParameter} from "/server/internal/skeleton";
 import {EditExampleSpec} from "./edit-example-form-hook";
 
 

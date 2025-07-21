@@ -3,7 +3,7 @@
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, TemplateWord, Word, WordWithExamples} from "/server/internal/skeleton";
 
 
 export const WordCardHeading = create(

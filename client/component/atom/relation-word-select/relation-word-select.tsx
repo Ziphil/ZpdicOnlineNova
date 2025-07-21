@@ -4,9 +4,9 @@ import {faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {AsyncSelect, GeneralIcon, LoadingIcon} from "zographia";
 import {create} from "/client/component/create";
-import {Dictionary, Word} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {Dictionary, Word} from "/server/internal/skeleton";
 import {RelationWordSelectOption} from "./relation-word-select-option";
 
 

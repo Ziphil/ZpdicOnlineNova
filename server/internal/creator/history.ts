@@ -2,7 +2,7 @@
 
 import type {
   History as HistorySkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   History
 } from "/server/model";

@@ -1,7 +1,7 @@
 //
 
-import {DateString} from "/client/skeleton/common";
-import {LinkedDictionary} from "/client/skeleton/dictionary/linked-dictionary";
+import {DateString} from "/server/internal/skeleton/common";
+import {LinkedDictionary} from "/server/internal/skeleton/dictionary/linked-dictionary";
 
 
 export interface ActivityWord {

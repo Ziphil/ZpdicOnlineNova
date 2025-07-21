@@ -7,8 +7,8 @@ import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
 import {useFilledExample} from "/client/hook/example";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, Example} from "/client/skeleton";
 import {getExampleHref} from "/client/util/dictionary";
+import {DictionaryWithExecutors, Example} from "/server/internal/skeleton";
 
 
 export const ExamplePopoverInner = create(

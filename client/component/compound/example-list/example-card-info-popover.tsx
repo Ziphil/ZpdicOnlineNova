@@ -10,7 +10,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {Example} from "/client/skeleton";
+import {Example} from "/server/internal/skeleton";
 
 
 export const ExampleCardInfoPopover = create(

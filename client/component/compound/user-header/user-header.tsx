@@ -10,7 +10,7 @@ import {MainContainer} from "/client/component/compound/page";
 import {create} from "/client/component/create";
 import {useLogoutRequest, useMe} from "/client/hook/auth";
 import {useResponse} from "/client/hook/request";
-import {User} from "/client/skeleton";
+import {User} from "/server/internal/skeleton";
 import {ActivateMeCallout} from "./activate-me-callout";
 
 

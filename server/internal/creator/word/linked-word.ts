@@ -2,7 +2,7 @@
 
 import type {
   LinkedWord as LinkedWordSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   LinkedWord
 } from "/server/model";

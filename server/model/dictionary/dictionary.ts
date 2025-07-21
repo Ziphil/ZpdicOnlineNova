@@ -21,7 +21,7 @@ import type {
   WholeAverage,
   WordNameFrequencies,
   WordNameFrequency
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {Article, ArticleModel} from "/server/model/article";
 import {DiscardableSchema} from "/server/model/base";
 import {Deserializer} from "/server/model/dictionary/deserializer";

@@ -1,12 +1,12 @@
 //
 
 import {isDocument} from "@typegoose/typegoose";
+import {DictionaryCreator} from "/server/internal/creator/dictionary/dictionary";
+import {LinkedWordCreator} from "/server/internal/creator/word/linked-word";
 import type {
   Example as ExampleSkeleton,
   ExampleWithDictionary as ExampleSkeletonWithDictionary
-} from "/client/skeleton";
-import {DictionaryCreator} from "/server/internal/creator/dictionary/dictionary";
-import {LinkedWordCreator} from "/server/internal/creator/word/linked-word";
+} from "/server/internal/skeleton";
 import {
   Example
 } from "/server/model";

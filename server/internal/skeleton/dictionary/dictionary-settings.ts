@@ -1,7 +1,7 @@
 //
 
-import {DictionaryFont} from "/client/skeleton/dictionary/dictionary-font";
-import {TemplateWord} from "/client/skeleton/word/template-word";
+import {DictionaryFont} from "/server/internal/skeleton/dictionary/dictionary-font";
+import {TemplateWord} from "/server/internal/skeleton/word/template-word";
 
 
 export interface DictionarySettings {

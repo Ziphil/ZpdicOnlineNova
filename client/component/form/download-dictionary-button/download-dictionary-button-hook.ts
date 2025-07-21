@@ -4,9 +4,9 @@ import downloadFile from "js-file-download";
 import {BaseSyntheticEvent, MutableRefObject, useCallback, useRef, useState} from "react";
 import {useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 import {listenSocket, requestSocket} from "/client/util/socket";
+import {Dictionary} from "/server/internal/skeleton";
 
 
 export type DownloadDictionarySpec = {

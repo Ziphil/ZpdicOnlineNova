@@ -5,8 +5,8 @@ import {Asserts, mixed, object} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, User} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
+import {Dictionary, User} from "/server/internal/skeleton";
 
 
 const SCHEMA = object({

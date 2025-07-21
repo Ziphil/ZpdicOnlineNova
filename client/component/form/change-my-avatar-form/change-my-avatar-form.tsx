@@ -15,7 +15,7 @@ import {
 import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
-import {UserWithDetail} from "/client/skeleton";
+import {UserWithDetail} from "/server/internal/skeleton";
 import {useChangeMyAvatar} from "./change-my-avatar-form-hook";
 
 

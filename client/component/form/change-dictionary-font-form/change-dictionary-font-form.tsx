@@ -21,7 +21,7 @@ import {
 } from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
-import {Dictionary} from "/client/skeleton";
+import {Dictionary} from "/server/internal/skeleton";
 import {useChangeDictionaryFont} from "./change-dictionary-font-form-hook";
 
 

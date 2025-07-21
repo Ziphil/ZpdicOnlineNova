@@ -9,8 +9,8 @@ import {SearchExampleOfferForm} from "/client/component/compound/search-example-
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
 import {Search, useSearchState} from "/client/hook/search";
-import {ExampleOfferParameter} from "/client/skeleton";
 import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
+import {ExampleOfferParameter} from "/server/internal/skeleton";
 
 
 export const ExampleOfferListPage = create(

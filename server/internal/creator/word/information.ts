@@ -2,7 +2,7 @@
 
 import type {
   Information as InformationSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   Information
 } from "/server/model";

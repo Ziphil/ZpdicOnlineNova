@@ -1,13 +1,13 @@
 //
 
 import {isDocument} from "@typegoose/typegoose";
+import {DictionarySettingsCreator} from "/server/internal/creator/dictionary/dictionary-settings";
+import {UserCreator} from "/server/internal/creator/user/user";
 import type {
   Dictionary as DictionarySkeleton,
   DictionaryWithAuthorities as DictionarySkeletonWithAuthorities,
   DictionaryWithUser as DictionarySkeletonWithUser
-} from "/client/skeleton";
-import {DictionarySettingsCreator} from "/server/internal/creator/dictionary/dictionary-settings";
-import {UserCreator} from "/server/internal/creator/user/user";
+} from "/server/internal/skeleton";
 import {
   Dictionary,
   User

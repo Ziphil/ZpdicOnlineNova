@@ -34,7 +34,7 @@ import type {
   WordNameFrequencies,
   WordParameter,
   WordWithExamples
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import type {WithRecaptcha} from "/server/internal/type/common";
 import type {DictionaryAuthority, DictionaryAuthorityQuery} from "/server/model";
 import type {WithSize} from "/server/util/query";

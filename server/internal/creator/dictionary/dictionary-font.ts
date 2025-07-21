@@ -2,7 +2,7 @@
 
 import type {
   DictionaryFont as DictionaryFontSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   DictionaryFont
 } from "/server/model";

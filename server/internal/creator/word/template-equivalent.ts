@@ -2,7 +2,7 @@
 
 import type {
   TemplateEquivalent as TemplateEquivalentSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   TemplateEquivalent
 } from "/server/model";

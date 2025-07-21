@@ -2,7 +2,7 @@
 
 import type {
   CustomError as CustomErrorSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 
 
 export namespace CustomErrorCreator {

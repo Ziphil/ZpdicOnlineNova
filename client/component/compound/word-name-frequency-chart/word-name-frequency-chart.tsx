@@ -6,7 +6,7 @@ import {Cell, Pie, PieChart, ResponsiveContainer} from "recharts";
 import {AdditionalProps, useLeveledColor} from "zographia";
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
-import {Dictionary, WordNameFrequencies} from "/client/skeleton";
+import {Dictionary, WordNameFrequencies} from "/server/internal/skeleton";
 import {WordNameFrequencyChartLabel} from "./word-name-frequency-chart-label";
 
 

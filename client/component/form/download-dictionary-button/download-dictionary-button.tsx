@@ -4,7 +4,7 @@ import {faDownload, faExclamation, faFileExport} from "@fortawesome/sharp-regula
 import {ReactElement} from "react";
 import {AdditionalProps, Badge, BadgeIconbag, Button, ButtonIconbag, GeneralIcon, LoadingIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithUser} from "/client/skeleton";
+import {DictionaryWithUser} from "/server/internal/skeleton";
 import {useDownloadDictionary, useDownloadDictionaryFile} from "./download-dictionary-button-hook";
 
 

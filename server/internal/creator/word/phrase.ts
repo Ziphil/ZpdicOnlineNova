@@ -2,7 +2,7 @@
 
 import type {
   Phrase as PhraseSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   Phrase
 } from "/server/model";

@@ -11,7 +11,7 @@ import {
   WordOrderModeUtil,
   WordType,
   WordTypeUtil
-} from "/client/skeleton/word-parameter/word-parameter";
+} from "/server/internal/skeleton/word-parameter/word-parameter";
 
 
 export interface NormalWordParameter {

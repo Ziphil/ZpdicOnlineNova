@@ -4,7 +4,7 @@ import {ReactElement} from "react";
 import {AdditionalProps} from "zographia";
 import {WordCardExampleItem} from "/client/component/compound/word-list/word-card-example-item";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
 
 
 export const WordCardExampleList = create(

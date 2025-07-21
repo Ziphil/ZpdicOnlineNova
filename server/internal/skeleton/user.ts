@@ -1,6 +1,6 @@
 //
 
-import {ObjectId} from "/client/skeleton/common";
+import {ObjectId} from "/server/internal/skeleton/common";
 
 
 export interface User {

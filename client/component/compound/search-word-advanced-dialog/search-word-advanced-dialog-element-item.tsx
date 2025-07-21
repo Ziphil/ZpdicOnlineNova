@@ -15,7 +15,7 @@ import {
 import {WordModeSelect} from "/client/component/atom/word-mode-select";
 import {WordTypeSelect} from "/client/component/atom/word-type-select";
 import {create} from "/client/component/create";
-import {WORD_TYPES} from "/client/skeleton";
+import {WORD_TYPES} from "/server/internal/skeleton";
 import {SearchWordAdvancedSpec} from "./search-word-advanced-dialog-hook";
 
 

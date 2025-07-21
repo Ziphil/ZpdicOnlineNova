@@ -4,8 +4,8 @@ import {ReactElement} from "react";
 import {Controller} from "react-hook-form";
 import {AdditionalProps, ControlContainer, ControlLabel, Input, TagInput, Textarea, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {Dictionary} from "/client/skeleton";
 import {preventDefault} from "/client/util/form";
+import {Dictionary} from "/server/internal/skeleton";
 import {EditArticleSpec} from "./edit-article-form-hook";
 
 

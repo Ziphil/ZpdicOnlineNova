@@ -6,8 +6,8 @@ import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText, aria} from "zographia";
 import {DictionaryBadge} from "/client/component/atom/dictionary-badge";
 import {create} from "/client/component/create";
-import {ExampleWithDictionary} from "/client/skeleton";
 import {getExampleHref} from "/client/util/dictionary";
+import {ExampleWithDictionary} from "/server/internal/skeleton";
 
 
 export const ExampleOfferCardExampleItem = create(

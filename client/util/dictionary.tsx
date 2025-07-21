@@ -3,8 +3,8 @@
 import {RE2JS as Re2} from "re2js";
 import {ReactNode} from "react";
 import {MarkdownSpecialPaths} from "/client/component/atom/markdown";
-import {Dictionary} from "/client/skeleton";
 import {getAwsFileUrl} from "/client/util/aws";
+import {Dictionary} from "/server/internal/skeleton";
 
 
 export function getDictionaryIdentifier(dictionary: Dictionary): string | number {

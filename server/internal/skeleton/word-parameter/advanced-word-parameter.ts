@@ -2,7 +2,7 @@
 
 import rison from "rison";
 import {Search} from "/client/hook/search";
-import {WordType} from "/client/skeleton/word-parameter/word-parameter";
+import {WordType} from "/server/internal/skeleton/word-parameter/word-parameter";
 import {LiteralType} from "/server/util/literal-type";
 
 

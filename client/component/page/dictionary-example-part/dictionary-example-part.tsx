@@ -12,8 +12,8 @@ import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
 import {useResponse, useSuspenseResponse} from "/client/hook/request";
 import {Search, useSearchState} from "/client/hook/search";
-import {ExampleParameter, NormalExampleOfferParameter} from "/client/skeleton";
 import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
+import {ExampleParameter, NormalExampleOfferParameter} from "/server/internal/skeleton";
 
 
 export const DictionaryExamplePart = create(

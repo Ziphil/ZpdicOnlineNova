@@ -4,8 +4,8 @@ import {BaseSyntheticEvent, useMemo} from "react";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, EditableTemplateWord, ObjectId, TemplateWord} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
+import {Dictionary, EditableTemplateWord, ObjectId, TemplateWord} from "/server/internal/skeleton";
 
 
 const DEFAULT_VALUE = {

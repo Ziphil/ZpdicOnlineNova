@@ -4,7 +4,7 @@ import {faBooks, faPen} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useState} from "react";
 import {AdditionalProps, GeneralIcon, Tab, TabIconbag, TabList, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditExampleFormEditPart} from "./edit-example-form-edit-part";
 import {EditExampleInitialData, EditExampleSpec} from "./edit-example-form-hook";
 import {EditExampleFormOfferPart} from "./edit-example-form-offer-part";

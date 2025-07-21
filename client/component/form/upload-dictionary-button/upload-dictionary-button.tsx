@@ -23,7 +23,7 @@ import {
 import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {useDialogOpen} from "/client/hook/dialog";
-import {DictionaryWithUser} from "/client/skeleton";
+import {DictionaryWithUser} from "/server/internal/skeleton";
 import {useUploadDictionary} from "./upload-dictionary-button-hook";
 
 

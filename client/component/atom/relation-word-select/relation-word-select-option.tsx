@@ -3,7 +3,7 @@
 import {ReactElement, useMemo} from "react";
 import {AsyncSelectOption, MultiLineText, SingleLineText} from "zographia";
 import {create} from "/client/component/create";
-import {Dictionary, Word} from "/client/skeleton";
+import {Dictionary, Word} from "/server/internal/skeleton";
 import {RelationWord} from "./relation-word-select";
 
 

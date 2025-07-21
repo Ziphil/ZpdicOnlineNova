@@ -1,9 +1,9 @@
 //
 
 import {Params as ExpressParams, Request as ExpressRequest, Response as ExpressResponse} from "express-serve-static-core";
-import type {CustomErrorType} from "/client/skeleton";
 import {RestController} from "/server/controller/rest/controller";
 import {CustomErrorCreator} from "/server/internal/creator/error";
+import type {CustomErrorType} from "/server/internal/skeleton";
 import {ErrorResponseData, ProcessName, RequestData, ResponseData, SuccessResponseData} from "/server/internal/type/rest";
 import {SocketEventsFromClient, SocketEventsFromServer} from "/server/internal/type/socket";
 import {CustomError, Dictionary, User} from "/server/model";

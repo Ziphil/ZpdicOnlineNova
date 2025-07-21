@@ -5,7 +5,7 @@ import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, CheckableCard, CheckableCardBody, ControlContainer, GeneralIcon, MultiLineText, Radio, data, useTrans} from "zographia";
 import {fakEyeShield} from "/client/component/atom/icon";
 import {create} from "/client/component/create";
-import {Dictionary} from "/client/skeleton";
+import {Dictionary} from "/server/internal/skeleton";
 import {useChangeDictionaryVisibility} from "./change-dictionary-visibility-form-hook";
 
 

@@ -1,7 +1,7 @@
 //
 
-import {DateString, ObjectId} from "/client/skeleton/common";
-import {DictionaryWithUser} from "/client/skeleton/dictionary/dictionary";
+import {DateString, ObjectId} from "/server/internal/skeleton/common";
+import {DictionaryWithUser} from "/server/internal/skeleton/dictionary/dictionary";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 

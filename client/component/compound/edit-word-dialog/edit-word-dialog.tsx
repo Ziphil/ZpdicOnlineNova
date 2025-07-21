@@ -22,10 +22,10 @@ import {
 import {EditWordForm, EditWordFormValue, EditWordInitialData, getEditWordFormValue, useEditWord} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
 import {useConfirmAlert} from "/client/hook/window";
-import {DictionaryWithExecutors} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {checkOpeningExternal} from "/client/util/form";
 import {assignRef, isRef} from "/client/util/ref";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
 export const EditWordDialog = create(

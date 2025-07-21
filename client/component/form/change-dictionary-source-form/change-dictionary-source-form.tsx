@@ -6,7 +6,7 @@ import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, T
 import {ExecuteAkrantiainDialog} from "/client/component/compound/execute-akrantiain-dialog";
 import {ExecuteZatlinDialog} from "/client/component/compound/execute-zatlin-dialog";
 import {create} from "/client/component/create";
-import {Dictionary} from "/client/skeleton";
+import {Dictionary} from "/server/internal/skeleton";
 import {useChangeDictionarySource} from "./change-dictionary-source-form-hook";
 
 

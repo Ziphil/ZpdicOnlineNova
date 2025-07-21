@@ -1,11 +1,11 @@
 //
 
-import {ObjectId} from "/client/skeleton/common";
-import {Information} from "/client/skeleton/word/information";
-import {TemplateEquivalent} from "/client/skeleton/word/template-equivalent";
-import {TemplatePhrase} from "/client/skeleton/word/template-phrase";
-import {TemplateRelation} from "/client/skeleton/word/template-relation";
-import {Variation} from "/client/skeleton/word/variation";
+import {ObjectId} from "/server/internal/skeleton/common";
+import {Information} from "/server/internal/skeleton/word/information";
+import {TemplateEquivalent} from "/server/internal/skeleton/word/template-equivalent";
+import {TemplatePhrase} from "/server/internal/skeleton/word/template-phrase";
+import {TemplateRelation} from "/server/internal/skeleton/word/template-relation";
+import {Variation} from "/server/internal/skeleton/word/variation";
 
 
 export interface EditableTemplateWord {

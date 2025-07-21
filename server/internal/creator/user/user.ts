@@ -3,7 +3,7 @@
 import type {
   User as UserSkeleton,
   UserWithDetail as UserSkeletonWithDetail
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   User
 } from "/server/model";

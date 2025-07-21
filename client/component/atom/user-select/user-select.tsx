@@ -3,9 +3,9 @@
 import {ReactElement, useCallback} from "react";
 import {AsyncSelect} from "zographia";
 import {create} from "/client/component/create";
-import {User} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {User} from "/server/internal/skeleton";
 import {UserSelectOption} from "./user-select-option";
 
 

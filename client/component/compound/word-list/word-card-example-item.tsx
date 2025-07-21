@@ -7,7 +7,7 @@ import {AdditionalProps, MultiLineText, aria} from "zographia";
 import {ExamplePopover} from "/client/component/compound/example-popover";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, Example} from "/client/skeleton";
+import {DictionaryWithExecutors, Example} from "/server/internal/skeleton";
 
 
 export const WordCardExampleItem = create(

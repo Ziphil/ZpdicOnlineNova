@@ -5,7 +5,7 @@ import {Popover} from "zographia";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
 import {EditExampleInitialData} from "/client/component/compound/edit-example-form";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Example} from "/client/skeleton";
+import {DictionaryWithExecutors, Example} from "/server/internal/skeleton";
 import {ExamplePopoverInner} from "./example-popover-inner";
 
 

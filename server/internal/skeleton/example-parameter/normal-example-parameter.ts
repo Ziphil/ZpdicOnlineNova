@@ -8,7 +8,7 @@ import {
   ExampleModeUtil,
   ExampleType,
   ExampleTypeUtil
-} from "/client/skeleton/example-parameter/example-parameter";
+} from "/server/internal/skeleton/example-parameter/example-parameter";
 
 
 export interface NormalExampleParameter {

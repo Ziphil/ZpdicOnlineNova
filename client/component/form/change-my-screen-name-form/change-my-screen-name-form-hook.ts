@@ -6,8 +6,8 @@ import {useRefetchMe} from "/client/hook/auth";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {UserWithDetail} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
+import {UserWithDetail} from "/server/internal/skeleton";
 
 
 const SCHEMA = object({

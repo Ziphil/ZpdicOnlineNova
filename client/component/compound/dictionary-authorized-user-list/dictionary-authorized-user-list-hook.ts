@@ -6,8 +6,8 @@ import {useTrans} from "zographia";
 import {useCommonAlert} from "/client/component/atom/common-alert";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, User} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
+import {Dictionary, User} from "/server/internal/skeleton";
 
 
 export function useDiscardDictionaryAuthorizedUser(dictionary: Dictionary, user: User): () => void {

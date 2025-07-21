@@ -4,8 +4,8 @@ import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText} from "zographia";
 import {Markdown} from "/client/component/atom/markdown";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
 import {getDictionarySpecialPaths} from "/client/util/dictionary";
+import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
 import {WordCardAnchor} from "./word-card-anchor";
 
 

@@ -2,7 +2,7 @@
 
 import type {
   TemplateRelation as TemplateRelationSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   TemplateRelation
 } from "/server/model";

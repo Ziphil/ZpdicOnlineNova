@@ -1,9 +1,9 @@
 //
 
-import {Dictionary} from "/client/skeleton";
-import {DateString, ObjectId} from "/client/skeleton/common";
+import {Dictionary} from "/server/internal/skeleton";
+import {DateString, ObjectId} from "/server/internal/skeleton/common";
+import {LinkedWord} from "/server/internal/skeleton/word/linked-word";
 import {LinkedExampleOffer} from "../example-offer/linked-example-offer";
-import {LinkedWord} from "/client/skeleton/word/linked-word";
 
 
 export interface EditableExample {

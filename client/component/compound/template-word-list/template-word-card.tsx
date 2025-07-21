@@ -16,7 +16,7 @@ import {
 import {EditTemplateWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, TemplateWord} from "/client/skeleton";
+import {DictionaryWithExecutors, TemplateWord} from "/server/internal/skeleton";
 import {useDiscardTemplateWord} from "./template-word-card-hook";
 
 export const TemplateWordCard = create(

@@ -7,7 +7,7 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import type {EditableWord} from "/client/skeleton";
+import type {EditableWord} from "/server/internal/skeleton";
 import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";

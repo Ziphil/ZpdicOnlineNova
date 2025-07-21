@@ -1,6 +1,6 @@
 //
 
-import {DateString, ObjectId} from "/client/skeleton/common";
+import {DateString, ObjectId} from "/server/internal/skeleton/common";
 
 
 export interface Notification {

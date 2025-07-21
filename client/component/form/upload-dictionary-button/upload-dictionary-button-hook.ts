@@ -5,10 +5,10 @@ import {Asserts, mixed, object} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {useRequestFile} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 import {listenSocket, requestSocket} from "/client/util/socket";
 import {testFileSize} from "/client/util/validation";
+import {Dictionary} from "/server/internal/skeleton";
 
 
 const SCHEMA = object({

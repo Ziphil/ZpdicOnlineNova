@@ -1,7 +1,7 @@
 //
 
 import type {Search} from "/client/hook/search";
-import {NormalDictionaryParameter} from "/client/skeleton/dictionary-parameter/normal-dictionary-parameter";
+import {NormalDictionaryParameter} from "/server/internal/skeleton/dictionary-parameter/normal-dictionary-parameter";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 

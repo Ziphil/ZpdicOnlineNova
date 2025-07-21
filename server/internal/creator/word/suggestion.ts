@@ -1,9 +1,9 @@
 //
 
+import {WordCreator} from "/server/internal/creator/word/word";
 import type {
   Suggestion as SuggestionSkeleton
-} from "/client/skeleton";
-import {WordCreator} from "/server/internal/creator/word/word";
+} from "/server/internal/skeleton";
 import {
   Suggestion
 } from "/server/model";

@@ -13,9 +13,9 @@ import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
 import {useSuspenseResponse} from "/client/hook/request";
 import {Search, useSearchState} from "/client/hook/search";
-import {WordParameter} from "/client/skeleton";
 import {getDictionarySpecialPaths} from "/client/util/dictionary";
 import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
+import {WordParameter} from "/server/internal/skeleton";
 import {AddWordButton} from "./add-word-button";
 
 

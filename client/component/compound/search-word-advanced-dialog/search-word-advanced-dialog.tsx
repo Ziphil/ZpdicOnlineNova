@@ -14,7 +14,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {WordParameter} from "/client/skeleton";
+import {WordParameter} from "/server/internal/skeleton";
 import {SearchWordAdvancedDialogElementSection} from "./search-word-advanced-dialog-element-section";
 import {useSearchWordAdvanced} from "./search-word-advanced-dialog-hook";
 

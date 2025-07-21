@@ -2,7 +2,7 @@
 
 import merge from "lodash.merge";
 import type {Search} from "/client/hook/search";
-import {DictionaryOrder, DictionaryOrderDirectionUtil, DictionaryOrderModeUtil} from "/client/skeleton/dictionary-parameter/dictionary-parameter";
+import {DictionaryOrder, DictionaryOrderDirectionUtil, DictionaryOrderModeUtil} from "/server/internal/skeleton/dictionary-parameter/dictionary-parameter";
 
 
 export interface NormalDictionaryParameter {

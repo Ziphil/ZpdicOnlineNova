@@ -2,7 +2,7 @@
 
 import type {
   Equivalent as EquivalentSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   Equivalent
 } from "/server/model";

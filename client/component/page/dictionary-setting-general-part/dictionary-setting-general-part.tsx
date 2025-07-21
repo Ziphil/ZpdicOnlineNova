@@ -12,7 +12,7 @@ import {ChangeDictionaryParamNameForm} from "/client/component/form/change-dicti
 import {ChangeDictionarySettingsForm} from "/client/component/form/change-dictionary-settings-form";
 import {ChangeDictionaryVisibilityForm} from "/client/component/form/change-dictionary-visibility-form";
 import {DiscardDictionaryButton} from "/client/component/form/discard-dictionary-button";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
 export const DictionarySettingGeneralPart = create(

@@ -5,8 +5,8 @@ import {ReactElement, Ref} from "react";
 import {AdditionalProps, Avatar, AvatarFallbackIconContainer, GeneralIcon} from "zographia";
 import {createWithRef} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {User} from "/client/skeleton";
 import {getAwsFileUrl} from "/client/util/aws";
+import {User} from "/server/internal/skeleton";
 
 
 export const UserAvatar = createWithRef(

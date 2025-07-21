@@ -1,9 +1,9 @@
 //
 
 import {Search} from "/client/hook/search";
-import {AdvancedWordParameter} from "/client/skeleton/word-parameter/advanced-word-parameter";
-import {ExactWordParameter} from "/client/skeleton/word-parameter/exact-word-parameter";
-import {NormalWordParameter} from "/client/skeleton/word-parameter/normal-word-parameter";
+import {AdvancedWordParameter} from "/server/internal/skeleton/word-parameter/advanced-word-parameter";
+import {ExactWordParameter} from "/server/internal/skeleton/word-parameter/exact-word-parameter";
+import {NormalWordParameter} from "/server/internal/skeleton/word-parameter/normal-word-parameter";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 

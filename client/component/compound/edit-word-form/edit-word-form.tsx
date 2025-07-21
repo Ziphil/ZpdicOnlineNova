@@ -4,7 +4,7 @@ import {faClockRotateLeft, faPen} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useState} from "react";
 import {AdditionalProps, GeneralIcon, Tab, TabIconbag, TabList, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditWordFormEditPart} from "./edit-word-form-edit-part";
 import {EditWordFormHistoryPart} from "./edit-word-form-history-part";
 import {EditWordInitialData, EditWordSpec} from "./edit-word-form-hook";

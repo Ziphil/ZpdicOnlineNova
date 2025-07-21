@@ -6,7 +6,7 @@ import {ReactElement} from "react";
 import {AdditionalProps, Card, CardBody, GeneralIcon, MultiLineText, Tag, useTrans} from "zographia";
 import {Markdown} from "/client/component/atom/markdown";
 import {create} from "/client/component/create";
-import {Notification} from "/client/skeleton";
+import {Notification} from "/server/internal/skeleton";
 
 
 export const NotificationCard = create(

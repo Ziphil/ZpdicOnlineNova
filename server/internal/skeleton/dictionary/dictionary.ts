@@ -2,9 +2,9 @@
 
 import {Akrantiain} from "akrantiain";
 import {Zatlin} from "zatlin";
-import {ObjectId} from "/client/skeleton/common";
-import {DictionarySettings} from "/client/skeleton/dictionary/dictionary-settings";
-import {User} from "/client/skeleton/user";
+import {ObjectId} from "/server/internal/skeleton/common";
+import {DictionarySettings} from "/server/internal/skeleton/dictionary/dictionary-settings";
+import {User} from "/server/internal/skeleton/user";
 import type {DictionaryAuthority} from "/server/model";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 

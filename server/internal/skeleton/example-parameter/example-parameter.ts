@@ -1,8 +1,8 @@
 //
 
 import {Search} from "/client/hook/search";
-import {ExactExampleParameter} from "/client/skeleton/example-parameter/exact-example-parameter";
-import {NormalExampleParameter} from "/client/skeleton/example-parameter/normal-example-parameter";
+import {ExactExampleParameter} from "/server/internal/skeleton/example-parameter/exact-example-parameter";
+import {NormalExampleParameter} from "/server/internal/skeleton/example-parameter/normal-example-parameter";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 

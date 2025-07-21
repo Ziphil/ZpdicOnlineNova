@@ -7,8 +7,8 @@ import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Relation, Word, WordWithExamples} from "/client/skeleton";
 import {getWordHref} from "/client/util/dictionary";
+import {DictionaryWithExecutors, Relation, Word, WordWithExamples} from "/server/internal/skeleton";
 
 
 export const WordCardRelationList = create(

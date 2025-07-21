@@ -2,7 +2,7 @@
 
 import type {
   ExampleOffer as ExampleOfferSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   ExampleOffer
 } from "/server/model";

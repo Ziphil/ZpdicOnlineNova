@@ -7,9 +7,9 @@ import {RelationWord} from "/client/component/atom/relation-word-select";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, EditableWord, Relation, TemplateWord, Word} from "/client/skeleton";
 import {escapeRegexp} from "/client/util/misc";
 import {switchResponse} from "/client/util/response";
+import {Dictionary, EditableWord, Relation, TemplateWord, Word} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
 
 

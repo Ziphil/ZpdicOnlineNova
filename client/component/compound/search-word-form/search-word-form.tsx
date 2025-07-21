@@ -23,8 +23,8 @@ import {OrderDirection, OrderDirectionSelect} from "/client/component/compound/o
 import {OrderModeSelect} from "/client/component/compound/order-mode-select";
 import {SearchWordAdvancedDialog} from "/client/component/compound/search-word-advanced-dialog";
 import {create} from "/client/component/create";
-import {NormalWordParameter, WordModeUtil, WordOrderMode, WordParameter, WordTypeUtil} from "/client/skeleton";
 import {preventDefault} from "/client/util/form";
+import {NormalWordParameter, WordModeUtil, WordOrderMode, WordParameter, WordTypeUtil} from "/server/internal/skeleton";
 
 
 export const SearchWordForm = create(

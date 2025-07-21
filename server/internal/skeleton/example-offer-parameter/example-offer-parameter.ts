@@ -1,7 +1,7 @@
 //
 
 import {Search} from "/client/hook/search";
-import {NormalExampleOfferParameter} from "/client/skeleton/example-offer-parameter/normal-example-offer-parameter";
+import {NormalExampleOfferParameter} from "/server/internal/skeleton/example-offer-parameter/normal-example-offer-parameter";
 
 
 export type ExampleOfferParameter = NormalExampleOfferParameter;

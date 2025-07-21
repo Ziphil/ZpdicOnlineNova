@@ -1,10 +1,10 @@
 //
 
-import type {
-  DictionarySettings as DictionarySettingsSkeleton
-} from "/client/skeleton";
 import {DictionaryFontCreator} from "/server/internal/creator/dictionary/dictionary-font";
 import {TemplateWordCreator} from "/server/internal/creator/word/template-word";
+import type {
+  DictionarySettings as DictionarySettingsSkeleton
+} from "/server/internal/skeleton";
 import {
   DictionarySettings
 } from "/server/model";

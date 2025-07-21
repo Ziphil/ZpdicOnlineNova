@@ -2,7 +2,7 @@
 
 import type {
   Notification as NotificationSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   Notification
 } from "/server/model";

@@ -2,7 +2,7 @@
 
 import type {
   Variation as VariationSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   Variation
 } from "/server/model";

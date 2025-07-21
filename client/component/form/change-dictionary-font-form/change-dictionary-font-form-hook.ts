@@ -5,11 +5,11 @@ import {Asserts, mixed, object, string} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, DictionaryFont} from "/client/skeleton";
 import {uploadFileToAws} from "/client/util/aws";
 import {determineAwsErrorToastType} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {testFileSize} from "/client/util/validation";
+import {Dictionary, DictionaryFont} from "/server/internal/skeleton";
 
 
 const SCHEMA = object({

@@ -6,7 +6,7 @@ import {useHref} from "react-router-dom";
 import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Input, InputAddon, useTrans} from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
-import {Dictionary} from "/client/skeleton";
+import {Dictionary} from "/server/internal/skeleton";
 import {useChangeDictionaryParamName} from "./change-dictionary-param-name-form-hook";
 
 

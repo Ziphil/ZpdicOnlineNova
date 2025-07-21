@@ -2,7 +2,7 @@
 
 import type {
   TemplatePhrase as TemplatePhraseSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   TemplatePhrase
 } from "/server/model";

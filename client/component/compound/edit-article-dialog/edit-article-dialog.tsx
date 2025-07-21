@@ -22,10 +22,10 @@ import {
 import {EditArticleForm, EditArticleFormValue, EditArticleInitialData, getEditArticleFormValue, useEditArticle} from "/client/component/compound/edit-article-form";
 import {create} from "/client/component/create";
 import {useConfirmAlert} from "/client/hook/window";
-import {Dictionary} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {checkOpeningExternal} from "/client/util/form";
 import {assignRef} from "/client/util/ref";
+import {Dictionary} from "/server/internal/skeleton";
 
 
 export const EditArticleDialog = create(

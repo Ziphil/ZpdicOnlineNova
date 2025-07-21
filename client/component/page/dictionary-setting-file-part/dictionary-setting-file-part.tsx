@@ -8,7 +8,7 @@ import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
 import {DownloadDictionaryButton} from "/client/component/form/download-dictionary-button";
 import {UploadDictionaryButton} from "/client/component/form/upload-dictionary-button";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
 export const DictionarySettingFilePart = create(

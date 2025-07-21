@@ -1,15 +1,15 @@
 //
 
-import type {
-  Word as WordSkeleton,
-  WordWithExamples as WordSkeletonWithExamples
-} from "/client/skeleton";
 import {ExampleCreator} from "/server/internal/creator/example/example";
 import {EquivalentCreator} from "/server/internal/creator/word/equivalent";
 import {InformationCreator} from "/server/internal/creator/word/information";
 import {PhraseCreator} from "/server/internal/creator/word/phrase";
 import {RelationCreator} from "/server/internal/creator/word/relation";
 import {VariationCreator} from "/server/internal/creator/word/variation";
+import type {
+  Word as WordSkeleton,
+  WordWithExamples as WordSkeletonWithExamples
+} from "/server/internal/skeleton";
 import {
   ExampleModel,
   Word
