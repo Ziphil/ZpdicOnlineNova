@@ -39,7 +39,8 @@ export const EditWordFormInformationSection = create(
     const addInformation = useCallback(function (): void {
       informationOperations.append({
         title: "",
-        text: ""
+        text: "",
+        hidden: false
       });
     }, [informationOperations]);
 

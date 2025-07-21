@@ -13,7 +13,8 @@ export namespace InformationCreator {
   export function skeletonize(raw: Information): InformationSkeleton {
     const skeleton = {
       title: raw.title,
-      text: raw.text
+      text: raw.text,
+      hidden: raw.hidden ?? false
     } satisfies InformationSkeleton;
     return skeleton;
   }

@@ -1,6 +1,6 @@
 //
 
-import {ReactElement} from "react";
+import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText} from "zographia";
 import {Markdown} from "/client/component/atom/markdown";
 import {create} from "/client/component/create";
@@ -21,9 +21,11 @@ export const WordCardInformationList = create(
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    return (word.informations.length > 0) ? (
+    const visibleInformations = useMemo(() => word.informations.filter((information) => !information.hidden), [word.informations]);
+
+    return (visibleInformations.length > 0) ? (
       <div styleName="root" {...rest}>
-        {word.informations.map((information, index) => (
+        {visibleInformations.map((information, index) => (
           <section key={index}>
             {(!!information.title) && (
               <h4 styleName="heading">

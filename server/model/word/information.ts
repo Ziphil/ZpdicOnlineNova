@@ -12,6 +12,9 @@ export class InformationSchema {
   @prop({required: true})
   public text!: string;
 
+  @prop()
+  public hidden?: boolean;
+
 }
 
 

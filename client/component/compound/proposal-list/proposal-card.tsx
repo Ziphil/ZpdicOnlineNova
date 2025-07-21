@@ -65,7 +65,7 @@ function getWord(proposal: Proposal): EditableWord {
     pronunciation: "",
     equivalents: [{titles: [], names: [proposal.name], nameString: proposal.name, hidden: false}],
     tags: [],
-    informations: [{title: "", text: ""}],
+    informations: [],
     phrases: [],
     variations: [],
     relations: []

@@ -37,7 +37,8 @@ type FormValue = {
   }>,
   informations: Array<{
     title: string,
-    text: string
+    text: string,
+    hidden: boolean
   }>,
   phrases: Array<{
     titles: Array<string>,
@@ -97,7 +98,8 @@ function getFormValue<D extends EditTemplateWordInitialData | null>(initialData:
         })),
         informations: word.informations.map((information) => ({
           title: information.title,
-          text: information.text
+          text: information.text,
+          hidden: information.hidden
         })),
         phrases: word.phrases.map((phrase) => ({
           titles: phrase.titles,
