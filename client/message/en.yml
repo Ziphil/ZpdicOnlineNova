@@ -238,6 +238,8 @@ exampleOfferTag:
     appleGamma: "Sentences to eat more apples"
     survival: "Practical sentences to survive today"
     weaving: "Sentences to weave gloves and dictionaries"
+    shaleianAlpha: "Daily Shaleian I"
+    shaleianBeta: "Daily Shaleian II"
   number: "#{number, number}"
 exampleModeSelect:
   label:

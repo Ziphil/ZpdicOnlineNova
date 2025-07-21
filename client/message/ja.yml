@@ -236,6 +236,8 @@ exampleOfferTag:
     appleGamma: "リンゴをもっと食べたい 55 文"
     survival: "今日を生き抜く実用例文"
     weaving: "手袋と辞書を編む 50 文"
+    shaleianAlpha: "今日のシャレイア語 I"
+    shaleianBeta: "今日のシャレイア語 II"
   number: "#{number, number}"
 exampleModeSelect:
   label:

@@ -238,6 +238,8 @@ exampleOfferTag:
     appleGamma: "Frazoj por manĝi pli da pomoj"
     survival: "Praktikaj frazoj por pluvivi hodiaŭ"
     weaving: "Frazoj por teksi gantojn kaj vortarojn"
+    shaleianAlpha: "Ĉiutagaj ŝalejaj frazoj I"
+    shaleianBeta: "Ĉiutagaj ŝalejaj frazoj II"
   number: "#{number, number}"
 exampleModeSelect:
   label:
