@@ -456,6 +456,7 @@ editWordForm:
     information:
       title: "見出し"
       text: "内容"
+      hidden: "単語カードでは非表示にする"
     phrase:
       titles: "分類"
       form: "成句表現"

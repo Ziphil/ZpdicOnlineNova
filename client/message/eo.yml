@@ -454,10 +454,11 @@ editWordForm:
     equivalent:
       titles: "Vortospecoj"
       names: "Tradukaĵoj"
-      hidden: "Uzata nur por serĉo (ne montrata en vortokarto)"
+      hidden: "Uzi nur por serĉo (ne montrata en vortokartoj)"
     information:
       title: "Titlo"
       text: "Enhavo"
+      hidden: "Ne montri en vortokartoj"
     phrase:
       titles: "Specoj"
       form: "Idiomaĵo"

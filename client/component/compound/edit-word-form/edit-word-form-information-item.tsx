@@ -5,11 +5,15 @@ import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
   AdditionalProps,
+  CheckableContainer,
+  CheckableLabel,
+  Checkbox,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
   IconButton,
   Input,
+  MultiLineText,
   SuggestionSpec,
   Textarea,
   data,
@@ -75,6 +79,12 @@ export const EditWordFormInformationItem = create(
           <ControlContainer>
             <ControlLabel>{trans("label.information.text")}</ControlLabel>
             <Textarea styleName="textarea" {...register(`informations.${index}.text`)}/>
+          </ControlContainer>
+          <ControlContainer>
+            <CheckableContainer>
+              <Checkbox {...register(`informations.${index}.hidden`)}/>
+              <CheckableLabel><MultiLineText>{trans("label.information.hidden")}</MultiLineText></CheckableLabel>
+            </CheckableContainer>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
