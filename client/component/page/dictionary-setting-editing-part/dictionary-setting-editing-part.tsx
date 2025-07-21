@@ -6,7 +6,9 @@ import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
 import {ChangeDictionarySettingsForm} from "/client/component/form/change-dictionary-settings-form";
+import {ChangeDictionarySlimeTitlesForm} from "/client/component/form/change-dictionary-slime-titles-form";
 import {ChangeDictionarySourceForm} from "/client/component/form/change-dictionary-source-form";
+import {ChangeDictionaryWordCardTitlesForm} from "/client/component/form/change-dictionary-word-card-titles-form";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
@@ -71,18 +73,18 @@ export const DictionarySettingEditingPart = create(
           <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="ignoredEquivalentPattern"/>
         </section>
         <section styleName="section">
-          <h3 styleName="heading">{trans("heading.exampleTitle")}</h3>
+          <h3 styleName="heading">{trans("heading.wordCardTitles")}</h3>
           <MultiLineText styleName="description">
-            {trans("description.exampleTitle")}
+            {trans("description.wordCardTitles")}
           </MultiLineText>
-          <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="exampleTitle"/>
+          <ChangeDictionaryWordCardTitlesForm dictionary={dictionary}/>
         </section>
         <section styleName="section">
-          <h3 styleName="heading">{trans("heading.pronunciationTitle")}</h3>
+          <h3 styleName="heading">{trans("heading.slimeTitles")}</h3>
           <MultiLineText styleName="description">
-            {trans("description.pronunciationTitle")}
+            {trans("description.slimeTitles")}
           </MultiLineText>
-          <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="pronunciationTitle"/>
+          <ChangeDictionarySlimeTitlesForm dictionary={dictionary}/>
         </section>
       </div>
     );

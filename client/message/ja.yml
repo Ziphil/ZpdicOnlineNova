@@ -13,6 +13,10 @@ toast:
       識別子を変更しました。
     changeDictionaryExplanation: |-
       説明を変更しました。
+    changeDictionaryWordCardTitles: |-
+      設定を変更しました。
+    changeDictionarySlimeTitles: |-
+      設定を変更しました。
     changeDictionaryVisibility: |-
       設定を変更しました。
     changeDictionarySettings:
@@ -23,8 +27,6 @@ toast:
       font: |-
         設定を変更しました。
       showEquivalentNumber: |-
-        設定を変更しました。
-      exampleTitle: |-
         設定を変更しました。
       pronunciationTitle: |-
         設定を変更しました。
@@ -866,6 +868,13 @@ changeDictionarySettingsForm:
   error:
     invalidPattern: >-
       正規表現として有効なパターンを入力してください。
+changeDictionarySlimeTitlesForm:
+  label:
+    pronunciationTitle: "発音"
+changeDictionaryWordCardTitlesForm:
+  label:
+    phraseTitle: "成句"
+    exampleTitle: "例文"
 changeDictionaryVisibilityForm:
   label:
     public: "全体公開"
@@ -1029,8 +1038,8 @@ dictionarySettingEditingPart:
     enableDuplicateName: "重複綴りチェック"
     punctuations: "区切り文字"
     ignoredEquivalentPattern: "訳語で無視するパターン"
-    exampleTitle: "例文データの見出し"
-    pronunciationTitle: "発音データの見出し"
+    wordCardTitles: "単語カードでの見出し"
+    slimeTitles: "OTM-JSON 形式での見出し"
   description:
     akrantiainSource: >-
       Akrantiain とは、単語の綴りから発音記号を自動生成するためのシステムです。 
@@ -1053,10 +1062,10 @@ dictionarySettingEditingPart:
       訳語欄に入力されたテキストから訳語を抽出する際に、ここで設定された正規表現パターンにマッチした部分は無視されます。
       そのため、マッチした部分は訳語検索の対象外となります。
       例えば、訳語欄に動詞の格の取り方を明示したいが訳語検索の対象にはしたくない場合などに利用できます。
-    exampleTitle: >-
-      単語カードに例文を表示する際の見出しです。
-    pronunciationTitle: >-
-      辞書を OTM-JSON 形式で出力したときに発音データが格納される内容欄の見出しです。
+    wordCardTitles: >-
+      単語カードに各種項目を表示する際の見出しです。
+    slimeTitles: >-
+      辞書を OTM-JSON 形式で出力したときに各種項目が格納される内容欄の見出しです。
 dictionarySettingFilePart:
   heading:
     upload: "インポート"

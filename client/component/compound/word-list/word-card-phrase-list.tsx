@@ -25,7 +25,7 @@ export const WordCardPhraseList = create(
       <div styleName="root" {...rest}>
         <section>
           <h4 styleName="heading">
-            {"成句"}
+            {dictionary.settings.phraseTitle}
           </h4>
           <ul styleName="list">
             {word.phrases.map((phrase, index) => (

@@ -13,6 +13,7 @@ export interface DictionarySettings {
   punctuations: Array<string>;
   ignoredEquivalentPattern?: string;
   pronunciationTitle: string;
+  phraseTitle: string;
   exampleTitle: string;
   enableMarkdown: boolean;
   enableDuplicateName: boolean;

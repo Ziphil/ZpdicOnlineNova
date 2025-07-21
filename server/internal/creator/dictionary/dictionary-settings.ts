@@ -21,7 +21,8 @@ export namespace DictionarySettingsCreator {
       punctuations: raw.punctuations,
       ignoredEquivalentPattern: raw.ignoredEquivalentPattern,
       pronunciationTitle: raw.pronunciationTitle,
-      exampleTitle: raw.exampleTitle,
+      phraseTitle: raw.phraseTitle ?? "成句",
+      exampleTitle: raw.exampleTitle ?? "例文",
       enableMarkdown: raw.enableMarkdown,
       enableDuplicateName: raw.enableDuplicateName,
       showEquivalentNumber: raw.showEquivalentNumber

@@ -13,6 +13,10 @@ toast:
       La identigilo ŝanĝitas.
     changeDictionaryExplanation: |-
       La priskribo ŝanĝitas.
+    changeDictionaryWordCardTitles: |-
+      La agordo ŝanĝitas.
+    changeDictionarySlimeTitles: |-
+      La agordo ŝanĝitas.
     changeDictionaryVisibility: |-
       La agordo ŝanĝitas.
     changeDictionarySettings:
@@ -868,6 +872,13 @@ changeDictionarySettingsForm:
   error:
     invalidPattern: >-
       Enigu validan regulan esprimon.
+changeDictionarySlimeTitlesForm:
+  label:
+    pronunciationTitle: "Por elparoloj"
+changeDictionaryWordCardTitlesForm:
+  label:
+    phraseTitle: "Por idiomaĵoj"
+    exampleTitle: "Por ekzemplaj frazoj"
 changeDictionaryVisibilityForm:
   label:
     public: "Publika"
@@ -1029,8 +1040,8 @@ dictionarySettingEditingPart:
     enableDuplicateName: "Kontrolon de duoblan literumon"
     punctuations: "Disigiloj"
     ignoredEquivalentPattern: "Regulesprimo ignorota en tradukaĵoj"
-    exampleTitle: "Titolo por frazoj"
-    pronunciationTitle: "Titolo por elparoloj"
+    wordCardTitles: "Titoloj en vortokartoj"
+    slimeTitles: "Titoloj en formato OTM-JSON"
   description:
     akrantiainSource: >-
       Akrantiain estas aparato kiu aŭtomate generas fonetikajn simbolojn surbaze de la literumo de vortoj.
@@ -1053,10 +1064,10 @@ dictionarySettingEditingPart:
       Kiam oni ĉerpas tradukaĵojn el la teksto enigita en la tradukaĵa kampo, la partoj kongruaj kun tiu regulesprimo estas ignorataj.
       La kongruoj do ne estos inkluzivitaj en la tradukaĵa serĉo.
       Tio ekzemple povas esti uzata, se oni volas montri la kazan strukturon de verbo en la tradukaĵa kampo, sed ne volas ke ĝi estus inkluzivita en la tradukaĵa serĉo.
-    exampleTitle: >-
-      Jen la titolo de sekcioj de ekzemplaj frazoj, kiu estas montrata en kartoj de vorto.
-    pronunciationTitle: >-
-      Jen la titolo de sekcioj de elparolo, kiu estos uzata kiam la vortaro estos eligita en formato OTM-JSON.
+    wordCardTitles: >-
+      Jen la titoloj de sekcioj, kiuj estas montrataj en kartoj de vorto.
+    slimeTitles: >-
+      Jen la titoloj de sekcioj, kiuj estos uzataj kiam la vortaro estos eligita en formato OTM-JSON.
 dictionarySettingFilePart:
   heading:
     upload: "Importi"

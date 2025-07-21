@@ -13,6 +13,10 @@ toast:
       The identifier has been changed.
     changeDictionaryExplanation: |-
       The description has been changed.
+    changeDictionaryWordCardTitles: |-
+      The setting has been changed.
+    changeDictionarySlimeTitles: |-
+      The setting has been changed.
     changeDictionaryVisibility: |-
       The setting has been changed.
     changeDictionarySettings:
@@ -868,6 +872,13 @@ changeDictionarySettingsForm:
   error:
     invalidPattern: >-
       Enter a valid regular expression.
+changeDictionarySlimeTitlesForm:
+  label:
+    pronunciationTitle: "For pronunciations"
+changeDictionaryWordCardTitlesForm:
+  label:
+    phraseTitle: "For idiomatic expressions"
+    exampleTitle: "For example sentences"
 changeDictionaryVisibilityForm:
   label:
     public: "Public"
@@ -1029,8 +1040,8 @@ dictionarySettingEditingPart:
     enableDuplicateName: "Duplicate spelling check"
     punctuations: "Delimiters"
     ignoredEquivalentPattern: "Pattern to be ignored in translations"
-    exampleTitle: "Heading for sentences"
-    pronunciationTitle: "Heading for pronunciations"
+    wordCardTitles: "Headings in word cards"
+    slimeTitles: "Headings in OTM-JSON format"
   description:
     akrantiainSource: >-
       Akrantiain is a system that automatically generates phonetic symbols based on the spelling of words.
@@ -1053,10 +1064,10 @@ dictionarySettingEditingPart:
       When extracting translation terms from the text entered in the translation field, the parts matching this regexp pattern are ignored.
       The matches therefore will not be included in the translation search.
       This can be used, for example, if you want to show the case structure of a verb in the translation field, but do not want it to be included in the translation search.
-    exampleTitle: >-
-      The heading of example sentence sections, which is displayed in word cards.
-    pronunciationTitle: >-
-      The heading of pronunciation sections, which will be used when the dictionary is output in OTM-JSON format.
+    wordCardTitles: >-
+      The headings of some sections, which are displayed in word cards.
+    slimeTitles: >-
+      The headings of some sections, which will be used when the dictionary is output in OTM-JSON format.
 dictionarySettingFilePart:
   heading:
     upload: "Import"
