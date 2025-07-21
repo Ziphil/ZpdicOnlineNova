@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.punctuation {
+}
+
+.pronunciation {
+  margin-inline-start: var(--glob-blank-gap);
+  font-size: 3zu;
+  color: var(--glob-mute-text-color);
+  word-break: break-all;
+}

@@ -2,10 +2,11 @@
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleRight} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, ReactElement, useMemo} from "react";
+import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Variation, Word, WordWithExamples} from "/server/internal/skeleton";
+import {WordCardVariationView} from "./word-card-variation-view";
 
 
 export const WordCardVariationList = create(
@@ -34,10 +35,7 @@ export const WordCardVariationList = create(
                 <Tag styleName="tag" variant="light">{title}</Tag>
               )}
               {variations.map((variation, index) => (
-                <Fragment key={index}>
-                  {(index > 0) && <span styleName="punctuation">, </span>}
-                  <span>{variation.name}</span>
-                </Fragment>
+                <WordCardVariationView key={index} dictionary={dictionary} variation={variation} index={index}/>
               ))}
             </MultiLineText>
           </div>
