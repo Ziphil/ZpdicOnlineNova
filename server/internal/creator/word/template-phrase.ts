@@ -14,7 +14,7 @@ export namespace TemplatePhraseCreator {
     const skeleton = {
       titles: raw.titles,
       form: raw.form,
-      translationString: raw.translationString
+      termString: raw.termString
     } satisfies TemplatePhraseSkeleton;
     return skeleton;
   }

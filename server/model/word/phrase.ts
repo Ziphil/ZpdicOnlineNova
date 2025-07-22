@@ -13,10 +13,10 @@ export class PhraseSchema {
   public form!: string;
 
   @prop({required: true})
-  public translations!: Array<string>;
+  public terms!: Array<string>;
 
   @prop()
-  public translationString?: string;
+  public termString?: string;
 
   @prop()
   public ignoredPattern?: string;

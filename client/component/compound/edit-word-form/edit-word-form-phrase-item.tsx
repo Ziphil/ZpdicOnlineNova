@@ -79,10 +79,8 @@ export const EditWordFormPhraseItem = create(
             <Input {...register(`phrases.${index}.form`)}/>
           </ControlContainer>
           <ControlContainer>
-            <ControlLabel>
-              {transNode("label.phrase.translations")}
-            </ControlLabel>
-            <Input {...register(`phrases.${index}.translationString`)}/>
+            <ControlLabel>{transNode("label.phrase.terms")}</ControlLabel>
+            <Input {...register(`phrases.${index}.termString`)}/>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">

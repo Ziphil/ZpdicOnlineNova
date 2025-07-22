@@ -5,7 +5,7 @@ import {faCaretRight} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
-import {createEquivalentNameNode} from "/client/util/dictionary";
+import {createTermNode} from "/client/util/dictionary";
 import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
 
 
@@ -42,7 +42,7 @@ export const WordCardPhraseList = create(
                   </span>
                   <span styleName="separator" {...aria({hidden: true})}/>
                   <span>
-                    {createEquivalentNameNode(phrase.translationString, ("ignoredPattern" in phrase) ? phrase.ignoredPattern : dictionary.settings.ignoredEquivalentPattern)}
+                    {createTermNode(phrase.termString, phrase.ignoredPattern)}
                   </span>
                 </MultiLineText>
               </li>

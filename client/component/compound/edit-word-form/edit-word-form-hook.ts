@@ -46,7 +46,7 @@ type FormValue = {
   phrases: Array<{
     titles: Array<string>,
     form: string,
-    translationString: string
+    termString: string
   }>,
   variations: Array<{
     title: string,
@@ -112,7 +112,7 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
         phrases: word.phrases.map((phrase) => ({
           titles: phrase.titles,
           form: phrase.form,
-          translationString: phrase.translationString
+          termString: phrase.termString
         })),
         variations: word.variations.map((variation) => ({
           title: variation.title,
@@ -154,7 +154,7 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
         phrases: word.phrases.map((phrase) => ({
           titles: phrase.titles,
           form: phrase.form,
-          translationString: phrase.translationString
+          termString: phrase.termString
         })),
         relations: word.relations.map((relation) => ({
           titles: relation.titles,
@@ -197,8 +197,8 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
       phrases: value.phrases.map((phrase) => ({
         titles: phrase.titles,
         form: phrase.form,
-        translations: createPhraseTranslations(dictionary, phrase),
-        translationString: phrase.translationString,
+        terms: createPhraseTerms(dictionary, phrase),
+        termString: phrase.termString,
         ignoredPattern: dictionary.settings.ignoredEquivalentPattern
       })),
       variations: value.variations,
@@ -235,12 +235,12 @@ function createEquivalentNames(dictionary: Dictionary, rawEquivalent: FormValue[
   return names;
 }
 
-function createPhraseTranslations(dictionary: Dictionary, rawPhrase: FormValue["phrases"][0]): Array<string> {
+function createPhraseTerms(dictionary: Dictionary, rawPhrase: FormValue["phrases"][0]): Array<string> {
   const punctuationRegexp = new RegExp(`[${escapeRegexp(dictionary.settings.punctuations.join(""))}]`);
   const ignoredRegexp = compileIgnoredPattern(dictionary.settings.ignoredEquivalentPattern);
-  const ignoredTranslationString = (ignoredRegexp) ? ignoredRegexp.matcher(rawPhrase.translationString).replaceAll("") : rawPhrase.translationString;
-  const translations = ignoredTranslationString.split(punctuationRegexp).map((translation) => translation.trim()).filter((translation) => translation);
-  return translations;
+  const ignoredTermString = (ignoredRegexp) ? ignoredRegexp.matcher(rawPhrase.termString).replaceAll("") : rawPhrase.termString;
+  const terms = ignoredTermString.split(punctuationRegexp).map((term) => term.trim()).filter((term) => term);
+  return terms;
 }
 
 function compileIgnoredPattern(ignoredPattern: string | undefined): Re2 | undefined {

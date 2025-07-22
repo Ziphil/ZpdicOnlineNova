@@ -14,8 +14,8 @@ export namespace PhraseCreator {
     const skeleton = {
       titles: raw.titles,
       form: raw.form,
-      translations: raw.translations,
-      translationString: raw.translationString ?? raw.translations.join(", "),
+      terms: raw.terms,
+      termString: raw.termString ?? raw.terms.join(", "),
       ignoredPattern: raw.ignoredPattern
     } satisfies PhraseSkeleton;
     return skeleton;

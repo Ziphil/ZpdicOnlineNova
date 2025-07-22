@@ -6,8 +6,8 @@ import {array, object, string} from "yup";
 export const PHRASE = object({
   titles: array().of(string().defined()).default([]),
   form: string().default(""),
-  translations: array().of(string().defined()).default([]),
-  translationString: string().default(""),
+  terms: array().of(string().defined()).default([]),
+  termString: string().default(""),
   ignoredPattern: string().default("")
 });
 
@@ -16,8 +16,8 @@ export interface Phrase {
 
   titles: Array<string>;
   form: string;
-  translations: Array<string>;
-  translationString: string;
+  terms: Array<string>;
+  termString: string;
   ignoredPattern: string;
 
 }

@@ -39,7 +39,7 @@ export const EditWordFormPhraseSection = create(
       phraseOperations.append({
         titles: [],
         form: "",
-        translationString: ""
+        termString: ""
       });
     }, [phraseOperations]);
 

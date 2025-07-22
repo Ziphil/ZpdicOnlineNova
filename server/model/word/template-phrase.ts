@@ -13,7 +13,7 @@ export class TemplatePhraseSchema {
   public form!: string;
 
   @prop({required: true})
-  public translationString!: string;
+  public termString!: string;
 
   @prop()
   public ignoredPattern?: string;

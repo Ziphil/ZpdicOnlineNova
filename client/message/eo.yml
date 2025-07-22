@@ -466,7 +466,7 @@ editWordForm:
     phrase:
       titles: "Specoj"
       form: "Idiomaĵo"
-      translations: "Tradukaĵoj"
+      terms: "Tradukaĵoj"
     variation:
       title: "Speco"
       name: "Formo"

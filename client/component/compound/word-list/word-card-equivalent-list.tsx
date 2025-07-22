@@ -3,7 +3,7 @@
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
-import {createEquivalentNameNode} from "/client/util/dictionary";
+import {createTermNode} from "/client/util/dictionary";
 import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
 
 
@@ -35,7 +35,7 @@ export const WordCardEquivalentList = create(
                 <Tag key={index} styleName="tag" variant="light">{title}</Tag>
               ))}
               <span>
-                {createEquivalentNameNode(equivalent.nameString, ("ignoredPattern" in equivalent) ? equivalent.ignoredPattern : dictionary.settings.ignoredEquivalentPattern)}
+                {createTermNode(equivalent.nameString, equivalent.ignoredPattern)}
               </span>
             </MultiLineText>
           </li>

@@ -464,7 +464,7 @@ editWordForm:
     phrase:
       titles: "分類"
       form: "成句表現"
-      translations: "訳語"
+      terms: "訳語"
     variation:
       title: "種類"
       name: "変化形"

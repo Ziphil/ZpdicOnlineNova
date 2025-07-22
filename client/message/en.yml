@@ -466,7 +466,7 @@ editWordForm:
     phrase:
       titles: "Kinds"
       form: "Expression"
-      translations: "Translations"
+      terms: "Translations"
     variation:
       title: "Kind"
       name: "Form"
