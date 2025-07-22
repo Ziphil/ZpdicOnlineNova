@@ -1,13 +1,14 @@
 //
 
-import {array, object, string} from "yup";
+import {array, boolean, object, string} from "yup";
 
 
 export const EQUIVALENT = object({
   titles: array().of(string().defined()).default([]),
   names: array().of(string().defined()).default([]),
   nameString: string().default(""),
-  ignoredPattern: string()
+  ignoredPattern: string().default(""),
+  hidden: boolean().default(false)
 });
 
 
@@ -17,5 +18,6 @@ export interface Equivalent {
   names: Array<string>;
   nameString: string;
   ignoredPattern: string;
+  hidden: boolean;
 
 }

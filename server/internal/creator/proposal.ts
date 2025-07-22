@@ -2,7 +2,7 @@
 
 import type {
   Proposal as ProposalSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   Proposal
 } from "/server/model";

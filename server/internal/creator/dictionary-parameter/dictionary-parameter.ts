@@ -2,7 +2,7 @@
 
 import type {
   DictionaryParameter as DictionaryParameterSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   DictionaryParameter,
   NormalDictionaryParameter

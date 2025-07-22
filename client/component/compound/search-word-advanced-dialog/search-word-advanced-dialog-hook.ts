@@ -3,7 +3,7 @@
 import {BaseSyntheticEvent, useCallback} from "react";
 import {AsyncOrSync} from "ts-essentials";
 import {UseFormReturn, useForm} from "/client/hook/form";
-import {AdvancedWordMode, AdvancedWordParameter, WordType} from "/client/skeleton";
+import {AdvancedWordMode, AdvancedWordParameter, WordType} from "/server/internal/skeleton";
 
 
 const DEFAULT_VALUE = {

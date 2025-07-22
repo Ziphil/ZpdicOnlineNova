@@ -11,8 +11,8 @@ import {Markdown} from "/client/component/atom/markdown";
 import {EditArticleDialog} from "/client/component/compound/edit-article-dialog";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {Article, Dictionary} from "/client/skeleton";
 import {getDictionarySpecialPaths} from "/client/util/dictionary";
+import {Article, Dictionary} from "/server/internal/skeleton";
 import {useDiscardArticle} from "./article-card-hook";
 
 

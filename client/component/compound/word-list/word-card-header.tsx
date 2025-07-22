@@ -6,7 +6,7 @@ import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, useTrans} from "zographia";
 import {UserView} from "/client/component/atom/user-view";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/server/internal/skeleton";
 
 
 export const WordCardHeader = create(

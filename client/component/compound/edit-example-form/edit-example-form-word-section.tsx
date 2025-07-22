@@ -11,7 +11,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditExampleFormDndContext} from "./edit-example-form-dnd";
 import {EditExampleSpec} from "./edit-example-form-hook";
 import {EditExampleFormWordItem} from "./edit-example-form-word-item";

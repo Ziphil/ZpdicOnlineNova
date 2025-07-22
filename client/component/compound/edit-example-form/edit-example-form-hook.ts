@@ -5,8 +5,8 @@ import {RelationWord} from "/client/component/atom/relation-word-select";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, EditableExample, Example, ExampleOffer, LinkedExampleOffer} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
+import {Dictionary, EditableExample, Example, ExampleOffer, LinkedExampleOffer} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
 
 

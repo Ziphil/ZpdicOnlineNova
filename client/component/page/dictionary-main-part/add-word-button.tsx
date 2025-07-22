@@ -7,7 +7,7 @@ import {fakNoteCirclePlus} from "/client/component/atom/icon";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {EditWordInitialData} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, TemplateWord} from "/client/skeleton";
+import {DictionaryWithExecutors, TemplateWord} from "/server/internal/skeleton";
 
 
 export const AddWordButton = create(

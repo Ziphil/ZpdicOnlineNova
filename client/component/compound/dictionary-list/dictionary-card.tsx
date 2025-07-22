@@ -9,8 +9,8 @@ import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithAuthorities, DictionaryWithUser} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
+import {DictionaryWithAuthorities, DictionaryWithUser} from "/server/internal/skeleton";
 import {DictionaryCardHistoryChart} from "./dictionary-card-history-chart";
 
 

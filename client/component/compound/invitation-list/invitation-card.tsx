@@ -19,8 +19,8 @@ import {
 import {Link} from "/client/component/atom/link";
 import {UserView} from "/client/component/atom/user-view";
 import {create} from "/client/component/create";
-import {Invitation} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
+import {Invitation} from "/server/internal/skeleton";
 import {useAcceptInvitation, useRejectInvitation} from "./invitation-card-hook";
 
 

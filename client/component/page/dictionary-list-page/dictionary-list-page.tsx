@@ -9,8 +9,8 @@ import {SearchDictionaryForm} from "/client/component/compound/search-dictionary
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
 import {Search, useSearchState} from "/client/hook/search";
-import {DictionaryParameter} from "/client/skeleton";
 import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
+import {DictionaryParameter} from "/server/internal/skeleton";
 
 
 export const DictionaryListPage = create(

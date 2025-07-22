@@ -10,7 +10,7 @@ import {EditExampleDialog} from "/client/component/compound/edit-example-dialog"
 import {ExampleOfferCardExampleItem} from "/client/component/compound/example-offer-list/example-offer-card-example-item";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, ExampleOffer} from "/client/skeleton";
+import {DictionaryWithExecutors, ExampleOffer} from "/server/internal/skeleton";
 
 
 export const ExampleOfferCard = create(

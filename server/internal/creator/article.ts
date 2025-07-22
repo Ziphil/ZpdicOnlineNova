@@ -2,7 +2,7 @@
 
 import type {
   Article as ArticleSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   Article
 } from "/server/model";

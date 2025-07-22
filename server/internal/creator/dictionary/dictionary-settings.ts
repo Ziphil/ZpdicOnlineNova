@@ -1,10 +1,10 @@
 //
 
-import type {
-  DictionarySettings as DictionarySettingsSkeleton
-} from "/client/skeleton";
 import {DictionaryFontCreator} from "/server/internal/creator/dictionary/dictionary-font";
 import {TemplateWordCreator} from "/server/internal/creator/word/template-word";
+import type {
+  DictionarySettings as DictionarySettingsSkeleton
+} from "/server/internal/skeleton";
 import {
   DictionarySettings
 } from "/server/model";
@@ -21,7 +21,8 @@ export namespace DictionarySettingsCreator {
       punctuations: raw.punctuations,
       ignoredEquivalentPattern: raw.ignoredEquivalentPattern,
       pronunciationTitle: raw.pronunciationTitle,
-      exampleTitle: raw.exampleTitle,
+      phraseTitle: raw.phraseTitle ?? "成句",
+      exampleTitle: raw.exampleTitle ?? "例文",
       enableMarkdown: raw.enableMarkdown,
       enableDuplicateName: raw.enableDuplicateName,
       showEquivalentNumber: raw.showEquivalentNumber

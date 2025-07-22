@@ -8,7 +8,7 @@ import {LinkTab} from "/client/component/atom/tab";
 import {MainContainer} from "/client/component/compound/page";
 import {create} from "/client/component/create";
 import {useResponse, useSuspenseResponse} from "/client/hook/request";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {DictionaryHeaderTop} from "./dictionary-header-top";
 
 

@@ -7,9 +7,9 @@ import {RelationWord} from "/client/component/atom/relation-word-select";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, EditableWord, Relation, TemplateWord, Word} from "/client/skeleton";
 import {escapeRegexp} from "/client/util/misc";
 import {switchResponse} from "/client/util/response";
+import {Dictionary, EditableWord, Relation, TemplateWord, Word} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
 
 
@@ -20,12 +20,11 @@ const DEFAULT_VALUE = {
   tags: [],
   equivalents: [{
     titles: [],
-    nameString: ""
+    nameString: "",
+    hidden: false
   }],
-  informations: [{
-    title: "",
-    text: ""
-  }],
+  informations: [],
+  phrases: [],
   variations: [],
   relations: []
 } satisfies FormValue;
@@ -36,15 +35,23 @@ type FormValue = {
   tags: Array<string>,
   equivalents: Array<{
     titles: Array<string>,
-    nameString: string
+    nameString: string,
+    hidden: boolean
   }>,
   informations: Array<{
     title: string,
-    text: string
+    text: string,
+    hidden: boolean
+  }>,
+  phrases: Array<{
+    titles: Array<string>,
+    form: string,
+    termString: string
   }>,
   variations: Array<{
     title: string,
-    name: string
+    name: string,
+    pronunciation: string
   }>,
   relations: Array<{
     titles: Array<string>,
@@ -94,15 +101,23 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
         tags: word.tags,
         equivalents: word.equivalents.map((equivalent) => ({
           titles: equivalent.titles,
-          nameString: equivalent.nameString
+          nameString: equivalent.nameString,
+          hidden: equivalent.hidden
         })),
         informations: word.informations.map((information) => ({
           title: information.title,
-          text: information.text
+          text: information.text,
+          hidden: information.hidden
+        })),
+        phrases: word.phrases.map((phrase) => ({
+          titles: phrase.titles,
+          form: phrase.form,
+          termString: phrase.termString
         })),
         variations: word.variations.map((variation) => ({
           title: variation.title,
-          name: variation.name
+          name: variation.name,
+          pronunciation: variation.pronunciation
         })),
         relations: word.relations.map((relation) => ({
           titles: relation.titles,
@@ -123,15 +138,23 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
         tags: word.tags,
         equivalents: word.equivalents.map((equivalent) => ({
           titles: equivalent.titles,
-          nameString: equivalent.nameString
+          nameString: equivalent.nameString,
+          hidden: equivalent.hidden
         })),
         informations: word.informations.map((information) => ({
           title: information.title,
-          text: information.text
+          text: information.text,
+          hidden: information.hidden
         })),
         variations: word.variations.map((variation) => ({
           title: variation.title,
-          name: variation.name
+          name: variation.name,
+          pronunciation: variation.pronunciation
+        })),
+        phrases: word.phrases.map((phrase) => ({
+          titles: phrase.titles,
+          form: phrase.form,
+          termString: phrase.termString
         })),
         relations: word.relations.map((relation) => ({
           titles: relation.titles,
@@ -167,9 +190,17 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
         titles: rawEquivalent.titles,
         names: createEquivalentNames(dictionary, rawEquivalent),
         nameString: rawEquivalent.nameString,
-        ignoredPattern: dictionary.settings.ignoredEquivalentPattern
+        ignoredPattern: dictionary.settings.ignoredEquivalentPattern,
+        hidden: rawEquivalent.hidden
       })),
       informations: value.informations,
+      phrases: value.phrases.map((phrase) => ({
+        titles: phrase.titles,
+        form: phrase.form,
+        terms: createPhraseTerms(dictionary, phrase),
+        termString: phrase.termString,
+        ignoredPattern: dictionary.settings.ignoredEquivalentPattern
+      })),
       variations: value.variations,
       relations: value.relations.filter((rawRelation) => rawRelation.word !== null).map((rawRelation) => ({
         titles: rawRelation.titles,
@@ -198,19 +229,28 @@ function getQueryForRelations(dictionary: Dictionary, editedWord: Word, value: F
 
 function createEquivalentNames(dictionary: Dictionary, rawEquivalent: FormValue["equivalents"][0]): Array<string> {
   const punctuationRegexp = new RegExp(`[${escapeRegexp(dictionary.settings.punctuations.join(""))}]`);
-  const ignoredRegexp = (() => {
-    const ignoredPattern = dictionary.settings.ignoredEquivalentPattern;
-    if (ignoredPattern) {
-      try {
-        return Re2.compile(ignoredPattern);
-      } catch (error) {
-        return undefined;
-      }
-    } else {
-      return undefined;
-    }
-  })();
+  const ignoredRegexp = compileIgnoredPattern(dictionary.settings.ignoredEquivalentPattern);
   const ignoredNameString = (ignoredRegexp) ? ignoredRegexp.matcher(rawEquivalent.nameString).replaceAll("") : rawEquivalent.nameString;
   const names = ignoredNameString.split(punctuationRegexp).map((name) => name.trim()).filter((name) => name);
   return names;
+}
+
+function createPhraseTerms(dictionary: Dictionary, rawPhrase: FormValue["phrases"][0]): Array<string> {
+  const punctuationRegexp = new RegExp(`[${escapeRegexp(dictionary.settings.punctuations.join(""))}]`);
+  const ignoredRegexp = compileIgnoredPattern(dictionary.settings.ignoredEquivalentPattern);
+  const ignoredTermString = (ignoredRegexp) ? ignoredRegexp.matcher(rawPhrase.termString).replaceAll("") : rawPhrase.termString;
+  const terms = ignoredTermString.split(punctuationRegexp).map((term) => term.trim()).filter((term) => term);
+  return terms;
+}
+
+function compileIgnoredPattern(ignoredPattern: string | undefined): Re2 | undefined {
+  if (ignoredPattern) {
+    try {
+      return Re2.compile(ignoredPattern);
+    } catch (error) {
+      return undefined;
+    }
+  } else {
+    return undefined;
+  }
 }

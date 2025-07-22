@@ -7,8 +7,8 @@ import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Relation, TemplateRelation, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
 import {getWordHref} from "/client/util/dictionary";
+import {DictionaryWithExecutors, Relation, Word, WordWithExamples} from "/server/internal/skeleton";
 
 
 export const WordCardRelationList = create(
@@ -19,7 +19,7 @@ export const WordCardRelationList = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | TemplateWord | WordWithExamples,
+    word: Word | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
@@ -54,12 +54,13 @@ export const WordCardRelationList = create(
       </div>
     ) : null;
 
-  }
+  },
+  {memo: true}
 );
 
 
-function getGroupedRelations(word: Word | TemplateWord | WordWithExamples): Array<[string, [Array<string>, Array<Relation | TemplateRelation>]]> {
-  const groupedRelations = new Map<string, [Array<string>, Array<Relation | TemplateRelation>]>();
+function getGroupedRelations(word: Word | WordWithExamples): Array<[string, [Array<string>, Array<Relation>]]> {
+  const groupedRelations = new Map<string, [Array<string>, Array<Relation>]>();
   for (const relation of word.relations) {
     const titles = relation.titles;
     const titleString = titles.join("\n");

@@ -2,7 +2,7 @@
 
 import type {
   ExampleParameter as ExampleParameterSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   ExactExampleParameter,
   ExampleParameter,

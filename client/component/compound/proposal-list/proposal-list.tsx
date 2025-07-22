@@ -3,7 +3,7 @@
 import {ReactElement} from "react";
 import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Proposal} from "/client/skeleton";
+import {DictionaryWithExecutors, Proposal} from "/server/internal/skeleton";
 import {ProposalCard} from "./proposal-card";
 
 

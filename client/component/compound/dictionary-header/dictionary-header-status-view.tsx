@@ -6,7 +6,7 @@ import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
 export const DictionaryHeaderStatusView = create(

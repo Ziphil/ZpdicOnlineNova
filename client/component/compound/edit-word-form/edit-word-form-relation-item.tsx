@@ -19,9 +19,9 @@ import {
 } from "zographia";
 import {RelationWordSelect} from "/client/component/atom/relation-word-select";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
 import {EditWordSpec} from "./edit-word-form-hook";
 

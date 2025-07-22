@@ -3,7 +3,7 @@
 import {ReactElement} from "react";
 import {AdditionalProps} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormEditPart} from "./edit-template-word-form-edit-part";
 import {EditTemplateWordInitialData, EditTemplateWordSpec} from "./edit-template-word-form-hook";
 

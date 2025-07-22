@@ -5,20 +5,24 @@ import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
   AdditionalProps,
+  CheckableContainer,
+  CheckableLabel,
+  Checkbox,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
   IconButton,
   Input,
+  MultiLineText,
   SuggestionSpec,
   TagInput,
   data,
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
 import {EditWordFormValue} from "./edit-word-form-hook";
@@ -81,6 +85,12 @@ export const EditWordFormEquivalentItem = create(
               })}
             </ControlLabel>
             <Input {...register(`equivalents.${index}.nameString`)}/>
+          </ControlContainer>
+          <ControlContainer>
+            <CheckableContainer>
+              <Checkbox {...register(`equivalents.${index}.hidden`)}/>
+              <CheckableLabel><MultiLineText>{trans("label.equivalent.hidden")}</MultiLineText></CheckableLabel>
+            </CheckableContainer>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">

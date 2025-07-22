@@ -13,6 +13,10 @@ toast:
       The identifier has been changed.
     changeDictionaryExplanation: |-
       The description has been changed.
+    changeDictionaryWordCardTitles: |-
+      The setting has been changed.
+    changeDictionarySlimeTitles: |-
+      The setting has been changed.
     changeDictionaryVisibility: |-
       The setting has been changed.
     changeDictionarySettings:
@@ -234,6 +238,11 @@ exampleOfferTag:
     appleGamma: "Sentences to eat more apples"
     survival: "Practical sentences to survive today"
     weaving: "Sentences to weave gloves and dictionaries"
+    shaleianAlpha: "Daily Shaleian I"
+    shaleianBeta: "Daily Shaleian II"
+    meat: "Meat sentences for ancient tribes"
+    arithmetic: "Arithmetic sentences"
+    adposition: "Sentences for cases and adpositions"
   number: "#{number, number}"
 exampleModeSelect:
   label:
@@ -439,6 +448,7 @@ editWordForm:
     basic: "Basic information"
     equivalents: "Translations"
     informations: "Contents"
+    phrases: "Idiomatic expressions"
     variations: "Variation forms"
     relations: "Related words"
     template: "Template settings"
@@ -449,12 +459,19 @@ editWordForm:
     equivalent:
       titles: "Parts of speech"
       names: "Translations"
+      hidden: "Use only for search (hidden on word cards)"
     information:
       title: "Heading"
       text: "Content"
+      hidden: "Hide on word cards"
+    phrase:
+      titles: "Kinds"
+      form: "Expression"
+      terms: "Translations"
     variation:
       title: "Kind"
       name: "Form"
+      pronunciation: "Pronunciation"
     relation:
       titles: "Kinds"
       name: "Word"
@@ -463,6 +480,7 @@ editWordForm:
   absent:
     equivalent: "No translations"
     information: "No contents"
+    phrase: "No idiomatic expressions"
     variation: "No variation forms"
     relation: "No related words"
   duplicateName: >-
@@ -471,11 +489,13 @@ editWordForm:
     add:
       equivalent: "Add translation"
       information: "Add content"
+      phrase: "Add idiomatic expression"
       variation: "Add variation form"
       relation: "Add related word"
     discard:
       equivalent: "Remove"
       information: "Remove"
+      phrase: "Remove"
       variation: "Remove"
       relation: "Remove"
     resource: "Images"
@@ -668,6 +688,7 @@ templateWordList:
   label:
     equivalent: "Translations ×{count}"
     information: "Contents ×{count}"
+    phrase: "Idiomatic expressions ×{count}"
     variation: "Variation forms ×{count}"
     relation: "Related words ×{count}"
   dialog:
@@ -857,6 +878,13 @@ changeDictionarySettingsForm:
   error:
     invalidPattern: >-
       Enter a valid regular expression.
+changeDictionarySlimeTitlesForm:
+  label:
+    pronunciationTitle: "For pronunciations"
+changeDictionaryWordCardTitlesForm:
+  label:
+    phraseTitle: "For idiomatic expressions"
+    exampleTitle: "For example sentences"
 changeDictionaryVisibilityForm:
   label:
     public: "Public"
@@ -1018,8 +1046,8 @@ dictionarySettingEditingPart:
     enableDuplicateName: "Duplicate spelling check"
     punctuations: "Delimiters"
     ignoredEquivalentPattern: "Pattern to be ignored in translations"
-    exampleTitle: "Heading for sentences"
-    pronunciationTitle: "Heading for pronunciations"
+    wordCardTitles: "Headings in word cards"
+    slimeTitles: "Headings in OTM-JSON format"
   description:
     akrantiainSource: >-
       Akrantiain is a system that automatically generates phonetic symbols based on the spelling of words.
@@ -1042,10 +1070,10 @@ dictionarySettingEditingPart:
       When extracting translation terms from the text entered in the translation field, the parts matching this regexp pattern are ignored.
       The matches therefore will not be included in the translation search.
       This can be used, for example, if you want to show the case structure of a verb in the translation field, but do not want it to be included in the translation search.
-    exampleTitle: >-
-      The heading of example sentence sections, which is displayed in word cards.
-    pronunciationTitle: >-
-      The heading of pronunciation sections, which will be used when the dictionary is output in OTM-JSON format.
+    wordCardTitles: >-
+      The headings of some sections, which are displayed in word cards.
+    slimeTitles: >-
+      The headings of some sections, which will be used when the dictionary is output in OTM-JSON format.
 dictionarySettingFilePart:
   heading:
     upload: "Import"

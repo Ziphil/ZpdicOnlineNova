@@ -5,7 +5,7 @@ import {Popover} from "zographia";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {EditWordInitialData} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Word} from "/client/skeleton";
+import {DictionaryWithExecutors, Word} from "/server/internal/skeleton";
 import {WordPopoverInner} from "./word-popover-inner";
 
 

@@ -3,6 +3,7 @@
 import {ExampleCreator} from "/server/external/creator/example/example";
 import {EquivalentCreator} from "/server/external/creator/word/equivalent";
 import {InformationCreator} from "/server/external/creator/word/information";
+import {PhraseCreator} from "/server/external/creator/word/phrase";
 import {RelationCreator} from "/server/external/creator/word/relation";
 import {VariationCreator} from "/server/external/creator/word/variation";
 import type {
@@ -26,6 +27,7 @@ export namespace WordCreator {
       equivalents: raw.equivalents.map(EquivalentCreator.skeletonize),
       tags: raw.tags,
       informations: raw.informations.map(InformationCreator.skeletonize),
+      phrases: raw.phrases?.map(PhraseCreator.skeletonize) ?? [],
       variations: raw.variations.map(VariationCreator.skeletonize),
       relations: raw.relations.map(RelationCreator.skeletonize)
     } satisfies WordSkeleton;

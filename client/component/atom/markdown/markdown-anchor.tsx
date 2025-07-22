@@ -22,5 +22,6 @@ export const MarkdownAnchor = create(
       </Link>
     );
 
-  }
+  },
+  {memo: true}
 );

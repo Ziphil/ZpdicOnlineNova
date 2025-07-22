@@ -5,8 +5,8 @@ import {AdditionalProps} from "zographia";
 import {WordList} from "/client/component/compound/word-list";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, Word} from "/client/skeleton";
 import {calcOffsetSpec} from "/client/util/misc";
+import {DictionaryWithExecutors, Word} from "/server/internal/skeleton";
 import {EditWordSpec, getEditWordFormValue} from "./edit-word-form-hook";
 
 

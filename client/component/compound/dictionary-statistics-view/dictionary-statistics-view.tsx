@@ -4,7 +4,7 @@ import {ReactElement, ReactNode, useState} from "react";
 import {AdditionalProps, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
-import {Dictionary} from "/client/skeleton";
+import {Dictionary} from "/server/internal/skeleton";
 
 
 export const DictionaryStatisticsView = create(

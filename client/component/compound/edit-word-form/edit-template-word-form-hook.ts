@@ -4,8 +4,8 @@ import {BaseSyntheticEvent, useMemo} from "react";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, EditableTemplateWord, ObjectId, TemplateWord} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
+import {Dictionary, EditableTemplateWord, ObjectId, TemplateWord} from "/server/internal/skeleton";
 
 
 const DEFAULT_VALUE = {
@@ -16,12 +16,11 @@ const DEFAULT_VALUE = {
   tags: [],
   equivalents: [{
     titles: [],
-    nameString: ""
+    nameString: "",
+    hidden: false
   }],
-  informations: [{
-    title: "",
-    text: ""
-  }],
+  informations: [],
+  phrases: [],
   variations: [],
   relations: []
 } satisfies FormValue;
@@ -33,15 +32,23 @@ type FormValue = {
   tags: Array<string>,
   equivalents: Array<{
     titles: Array<string>,
-    nameString: string
+    nameString: string,
+    hidden: boolean
   }>,
   informations: Array<{
     title: string,
-    text: string
+    text: string,
+    hidden: boolean
+  }>,
+  phrases: Array<{
+    titles: Array<string>,
+    form: string,
+    termString: string
   }>,
   variations: Array<{
     title: string,
-    name: string
+    name: string,
+    pronunciation: string
   }>,
   relations: Array<{
     titles: Array<string>
@@ -86,15 +93,23 @@ function getFormValue<D extends EditTemplateWordInitialData | null>(initialData:
         tags: word.tags,
         equivalents: word.equivalents.map((equivalent) => ({
           titles: equivalent.titles,
-          nameString: equivalent.nameString
+          nameString: equivalent.nameString,
+          hidden: equivalent.hidden
         })),
         informations: word.informations.map((information) => ({
           title: information.title,
-          text: information.text
+          text: information.text,
+          hidden: information.hidden
+        })),
+        phrases: word.phrases.map((phrase) => ({
+          titles: phrase.titles,
+          form: phrase.form,
+          termString: phrase.termString
         })),
         variations: word.variations.map((variation) => ({
           title: variation.title,
-          name: variation.name
+          name: variation.name,
+          pronunciation: variation.pronunciation
         })),
         relations: word.relations.map((relation) => ({
           titles: relation.titles

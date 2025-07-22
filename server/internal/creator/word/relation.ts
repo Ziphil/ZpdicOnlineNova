@@ -2,7 +2,7 @@
 
 import type {
   Relation as RelationSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   Relation
 } from "/server/model";

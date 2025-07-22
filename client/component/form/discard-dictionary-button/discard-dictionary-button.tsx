@@ -4,7 +4,7 @@ import {faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithUser} from "/client/skeleton";
+import {DictionaryWithUser} from "/server/internal/skeleton";
 import {useDiscardDictionary} from "./discard-dictionary-button-hook";
 
 

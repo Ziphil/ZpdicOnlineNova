@@ -7,7 +7,7 @@ import {DictionaryAuthorizedUserList} from "/client/component/compound/dictionar
 import {create} from "/client/component/create";
 import {AddEditInvitationButton} from "/client/component/form/add-edit-invitation-button";
 import {AddTransferInvitationButton} from "/client/component/form/add-transfer-invitation-button";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
 export const DictionarySettingAuthorityPart = create(

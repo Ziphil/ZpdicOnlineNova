@@ -3,7 +3,7 @@
 import {ReactElement, useState} from "react";
 import {AdditionalProps, data} from "zographia";
 import {create} from "/client/component/create";
-import {Dictionary} from "/client/skeleton";
+import {Dictionary} from "/server/internal/skeleton";
 import {EditArticleFormEditPart} from "./edit-article-form-edit-part";
 import {EditArticleInitialData, EditArticleSpec} from "./edit-article-form-hook";
 

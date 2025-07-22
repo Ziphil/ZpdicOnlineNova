@@ -4,7 +4,7 @@ import {faBan} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, User} from "/client/skeleton";
+import {DictionaryWithExecutors, User} from "/server/internal/skeleton";
 import {useDiscardDictionaryAuthorizedUser} from "./dictionary-authorized-user-list-hook";
 
 

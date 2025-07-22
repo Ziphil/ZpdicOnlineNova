@@ -4,7 +4,7 @@ import {ReactElement} from "react";
 import {AsyncSelectOption, SingleLineText} from "zographia";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
-import {User} from "/client/skeleton";
+import {User} from "/server/internal/skeleton";
 
 
 export const UserSelectOption = create(

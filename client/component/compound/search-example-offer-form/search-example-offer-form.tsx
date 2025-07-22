@@ -3,8 +3,8 @@
 import {Dispatch, ReactElement, SetStateAction, useCallback} from "react";
 import {AdditionalProps, Select, SelectOption, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {ExampleOfferParameter} from "/client/skeleton";
 import {preventDefault} from "/client/util/form";
+import {ExampleOfferParameter} from "/server/internal/skeleton";
 
 
 export const SearchExampleOfferForm = create(
@@ -43,4 +43,4 @@ export const SearchExampleOfferForm = create(
 );
 
 
-const CATALOGS = ["zpdicDaily", "appleAlpha", "appleBeta", "appleGamma", "survival", "weaving"];
+const CATALOGS = ["zpdicDaily", "appleAlpha", "appleBeta", "appleGamma", "survival", "weaving", "shaleianAlpha", "shaleianBeta", "meat", "arithmetic", "adposition"];

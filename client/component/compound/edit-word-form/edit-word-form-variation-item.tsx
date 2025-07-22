@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {faGripVertical, faMinus, faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
   AdditionalProps,
+  Button,
+  ButtonIconbag,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
@@ -16,9 +18,9 @@ import {
 } from "zographia";
 import {useEditWordFormDndItem} from "/client/component/compound/edit-word-form/edit-word-form-dnd";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormValue} from "./edit-word-form-hook";
 
@@ -45,6 +47,17 @@ export const EditWordFormVariationItem = create(
 
     const {register} = form;
     const {paneProps, gripProps, dragging} = useEditWordFormDndItem(dndId);
+
+    const generatePronunciation = useCallback(function (): void {
+      if (dictionary.akrantiain !== null) {
+        try {
+          const value = form.getValues();
+          form.setValue(`variations.${index}.pronunciation`, dictionary.akrantiain.convert(value.variations[index].name));
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }, [dictionary, form, index]);
 
     const suggestVariationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
@@ -74,6 +87,18 @@ export const EditWordFormVariationItem = create(
           <ControlContainer>
             <ControlLabel>{trans("label.variation.name")}</ControlLabel>
             <Input {...register(`variations.${index}.name`)}/>
+          </ControlContainer>
+          <ControlContainer>
+            <ControlLabel>{trans("label.variation.pronunciation")}</ControlLabel>
+            <div styleName="row">
+              <Input {...register(`variations.${index}.pronunciation`)}/>
+              {(dictionary.akrantiain !== null) && (
+                <Button variant="light" onClick={generatePronunciation}>
+                  <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
+                  {trans("button.generate")}
+                </Button>
+              )}
+            </div>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">

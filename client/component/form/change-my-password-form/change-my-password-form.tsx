@@ -5,7 +5,7 @@ import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, ControlContainer, ControlLabel, GeneralIcon, PasswordInput, useTrans} from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
-import {UserWithDetail} from "/client/skeleton";
+import {UserWithDetail} from "/server/internal/skeleton";
 import {useChangeMyPassword} from "./change-my-password-form-hook";
 
 

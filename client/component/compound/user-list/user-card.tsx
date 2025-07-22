@@ -6,7 +6,7 @@ import {AdditionalProps, Card, CardBody, CardFooter, SingleLineText, useTrans} f
 import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
-import {Notification, User} from "/client/skeleton";
+import {Notification, User} from "/server/internal/skeleton";
 
 
 export const UserCard = create(

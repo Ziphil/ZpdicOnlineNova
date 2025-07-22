@@ -48,6 +48,17 @@
   font-weight: normal;
 }
 
+.row {
+  column-gap: 2zu;
+  display: flex;
+  >:nth-child(1) {
+    flex: 1 1 auto;
+  }
+  >:nth-child(2) {
+    flex: 0 0 auto;
+  }
+}
+
 .textarea {
   @supports (field-sizing: content) {
     min-height: 40zu;

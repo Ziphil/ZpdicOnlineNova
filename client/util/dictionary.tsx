@@ -3,8 +3,8 @@
 import {RE2JS as Re2} from "re2js";
 import {ReactNode} from "react";
 import {MarkdownSpecialPaths} from "/client/component/atom/markdown";
-import {Dictionary} from "/client/skeleton";
 import {getAwsFileUrl} from "/client/util/aws";
+import {Dictionary} from "/server/internal/skeleton";
 
 
 export function getDictionaryIdentifier(dictionary: Dictionary): string | number {
@@ -48,26 +48,26 @@ export function getExampleHref(dictionary: Dictionary, number: number): string {
   return `/dictionary/${getDictionaryIdentifier(dictionary)}/sentences?kind=exact&number=${number}`;
 }
 
-export function createEquivalentNameNode(nameString: string, ignoredPattern: string | undefined): ReactNode {
+export function createTermNode(termString: string, ignoredPattern: string | undefined): ReactNode {
   if (ignoredPattern) {
     try {
       const regexp = Re2.compile(ignoredPattern);
-      const matcher = regexp.matcher(nameString);
+      const matcher = regexp.matcher(termString);
       const nodes = [];
       let index = 0;
       let matchCount = 0;
       while (matcher.find() && matchCount < 100) {
-        nodes.push(<span key={nodes.length}>{nameString.substring(index, +matcher.start())}</span>);
-        nodes.push(<span styleName="ignored" key={nodes.length}>{nameString.substring(+matcher.start(), +matcher.end())}</span>);
+        nodes.push(<span key={nodes.length}>{termString.substring(index, +matcher.start())}</span>);
+        nodes.push(<span styleName="ignored" key={nodes.length}>{termString.substring(+matcher.start(), +matcher.end())}</span>);
         index = +matcher.end();
         matchCount ++;
       }
-      nodes.push(<span key={nodes.length}>{nameString.substring(index)}</span>);
+      nodes.push(<span key={nodes.length}>{termString.substring(index)}</span>);
       return nodes;
     } catch (error) {
-      return nameString;
+      return termString;
     }
   } else {
-    return nameString;
+    return termString;
   }
 }

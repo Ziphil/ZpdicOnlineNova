@@ -6,7 +6,7 @@ import {Area, AreaChart, ResponsiveContainer, XAxis, YAxis} from "recharts";
 import {AxisDomain} from "recharts/types/util/types";
 import {AdditionalProps} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithUser, History, DictionaryWithAuthorities} from "/client/skeleton";
+import {DictionaryWithAuthorities, DictionaryWithUser, History} from "/server/internal/skeleton";
 
 
 export const DictionaryCardHistoryChart = create(

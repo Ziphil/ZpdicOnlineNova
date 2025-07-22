@@ -8,8 +8,8 @@ import {AdditionalProps, CheckableContainer, CheckableLabel, Checkbox, GeneralIc
 import {ExampleModeSelect} from "/client/component/atom/example-mode-select";
 import {ExampleTypeSelect} from "/client/component/atom/example-type-select";
 import {create} from "/client/component/create";
-import {ExampleModeUtil, ExampleParameter, ExampleTypeUtil, NormalExampleParameter} from "/client/skeleton";
 import {preventDefault} from "/client/util/form";
+import {ExampleModeUtil, ExampleParameter, ExampleTypeUtil, NormalExampleParameter} from "/server/internal/skeleton";
 
 
 export const SearchExampleForm = create(

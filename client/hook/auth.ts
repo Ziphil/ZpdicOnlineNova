@@ -4,9 +4,9 @@ import axios from "axios";
 import {useCallback} from "react";
 import {atom, useRecoilValue, useSetRecoilState} from "recoil";
 import {invalidateAllResponses, useRequest} from "/client/hook/request";
-import {UserWithDetail} from "/client/skeleton";
 import {setAnalyticsProperties} from "/client/util/gtag";
 import {AxiosResponseSpec, RequestConfig, SERVER_PATH_PREFIX} from "/client/util/request";
+import {UserWithDetail} from "/server/internal/skeleton";
 import type {RequestData, ResponseData} from "/server/internal/type/rest";
 
 

@@ -13,8 +13,8 @@ import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
 import {useFilledExample} from "/client/hook/example";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, Example} from "/client/skeleton";
 import {getExampleHref, getWordHref} from "/client/util/dictionary";
+import {DictionaryWithExecutors, Example} from "/server/internal/skeleton";
 import {useDiscardExample} from "./example-card-hook";
 import {ExampleCardInfoPopover} from "./example-card-info-popover";
 

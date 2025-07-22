@@ -3,7 +3,7 @@
 import {ReactElement, ReactNode} from "react";
 import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec} from "zographia";
 import {create} from "/client/component/create";
-import {User} from "/client/skeleton/user";
+import {User} from "/server/internal/skeleton/user";
 import {UserCard} from "./user-card";
 
 

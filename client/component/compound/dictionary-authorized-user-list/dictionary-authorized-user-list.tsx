@@ -5,7 +5,7 @@ import {AdditionalProps, PageSpec, useTrans} from "zographia";
 import {UserList} from "/client/component/compound/user-list";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {DictionaryAuthorizedUserFooter} from "./dictionary-authorized-user-footer";
 
 

@@ -13,6 +13,10 @@ toast:
       La identigilo ŝanĝitas.
     changeDictionaryExplanation: |-
       La priskribo ŝanĝitas.
+    changeDictionaryWordCardTitles: |-
+      La agordo ŝanĝitas.
+    changeDictionarySlimeTitles: |-
+      La agordo ŝanĝitas.
     changeDictionaryVisibility: |-
       La agordo ŝanĝitas.
     changeDictionarySettings:
@@ -234,6 +238,11 @@ exampleOfferTag:
     appleGamma: "Frazoj por manĝi pli da pomoj"
     survival: "Praktikaj frazoj por pluvivi hodiaŭ"
     weaving: "Frazoj por teksi gantojn kaj vortarojn"
+    shaleianAlpha: "Ĉiutagaj ŝalejaj frazoj I"
+    shaleianBeta: "Ĉiutagaj ŝalejaj frazoj II"
+    meat: "Viandaj frazoj por antikvaj triboj"
+    arithmetic: "Aritmetikaj frazoj"
+    adposition: "Frazoj por kazoj kaj adpozicioj"
   number: "#{number, number}"
 exampleModeSelect:
   label:
@@ -439,6 +448,7 @@ editWordForm:
     basic: "Bazaj informoj"
     equivalents: "Tradukaĵoj"
     informations: "Enhavoj"
+    phrases: "Idiomaĵoj"
     variations: "Variaĵaj formoj"
     relations: "Rilataj vortoj"
     template: "Ŝablona agordoj"
@@ -449,12 +459,19 @@ editWordForm:
     equivalent:
       titles: "Vortospecoj"
       names: "Tradukaĵoj"
+      hidden: "Uzi nur por serĉo (ne montrata en vortokartoj)"
     information:
       title: "Titlo"
       text: "Enhavo"
+      hidden: "Ne montri en vortokartoj"
+    phrase:
+      titles: "Specoj"
+      form: "Idiomaĵo"
+      terms: "Tradukaĵoj"
     variation:
       title: "Speco"
       name: "Formo"
+      pronunciation: "Elparolo"
     relation:
       titles: "Specoj"
       name: "Vorto"
@@ -463,6 +480,7 @@ editWordForm:
   absent:
     equivalent: "Neniuj tradukaĵoj"
     information: "Neniuj enhavoj"
+    phrase: "Neniuj idiomaĵoj"
     variation: "Neniuj variaĵaj formoj"
     relation: "Neniuj rilataj vortoj"
   duplicateName: >-
@@ -471,11 +489,13 @@ editWordForm:
     add:
       equivalent: "Aldoni tradukaĵon"
       information: "Aldoni enhavon"
+      phrase: "Aldoni idiomaĵon"
       variation: "Aldoni variaĵan formon"
       relation: "Aldoni rilatan vorton"
     discard:
       equivalent: "Forigi"
       information: "Forigi"
+      phrase: "Forigi"
       variation: "Forigi"
       relation: "Forigi"
     resource: "Bildoj"
@@ -668,6 +688,7 @@ templateWordList:
   label:
     equivalent: "Tradukaĵoj ×{count}"
     information: "Enhavoj ×{count}"
+    phrase: "Idiomaĵoj ×{count}"
     variation: "Variaĵaj formoj ×{count}"
     relation: "Rilataj vortoj ×{count}"
   dialog:
@@ -857,6 +878,13 @@ changeDictionarySettingsForm:
   error:
     invalidPattern: >-
       Enigu validan regulan esprimon.
+changeDictionarySlimeTitlesForm:
+  label:
+    pronunciationTitle: "Por elparoloj"
+changeDictionaryWordCardTitlesForm:
+  label:
+    phraseTitle: "Por idiomaĵoj"
+    exampleTitle: "Por ekzemplaj frazoj"
 changeDictionaryVisibilityForm:
   label:
     public: "Publika"
@@ -1018,8 +1046,8 @@ dictionarySettingEditingPart:
     enableDuplicateName: "Kontrolon de duoblan literumon"
     punctuations: "Disigiloj"
     ignoredEquivalentPattern: "Regulesprimo ignorota en tradukaĵoj"
-    exampleTitle: "Titolo por frazoj"
-    pronunciationTitle: "Titolo por elparoloj"
+    wordCardTitles: "Titoloj en vortokartoj"
+    slimeTitles: "Titoloj en formato OTM-JSON"
   description:
     akrantiainSource: >-
       Akrantiain estas aparato kiu aŭtomate generas fonetikajn simbolojn surbaze de la literumo de vortoj.
@@ -1042,10 +1070,10 @@ dictionarySettingEditingPart:
       Kiam oni ĉerpas tradukaĵojn el la teksto enigita en la tradukaĵa kampo, la partoj kongruaj kun tiu regulesprimo estas ignorataj.
       La kongruoj do ne estos inkluzivitaj en la tradukaĵa serĉo.
       Tio ekzemple povas esti uzata, se oni volas montri la kazan strukturon de verbo en la tradukaĵa kampo, sed ne volas ke ĝi estus inkluzivita en la tradukaĵa serĉo.
-    exampleTitle: >-
-      Jen la titolo de sekcioj de ekzemplaj frazoj, kiu estas montrata en kartoj de vorto.
-    pronunciationTitle: >-
-      Jen la titolo de sekcioj de elparolo, kiu estos uzata kiam la vortaro estos eligita en formato OTM-JSON.
+    wordCardTitles: >-
+      Jen la titoloj de sekcioj, kiuj estas montrataj en kartoj de vorto.
+    slimeTitles: >-
+      Jen la titoloj de sekcioj, kiuj estos uzataj kiam la vortaro estos eligita en formato OTM-JSON.
 dictionarySettingFilePart:
   heading:
     upload: "Importi"

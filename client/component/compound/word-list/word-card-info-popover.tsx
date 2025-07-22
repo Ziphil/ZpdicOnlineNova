@@ -10,7 +10,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {Word, WordWithExamples} from "/client/skeleton";
+import {Word, WordWithExamples} from "/server/internal/skeleton";
 
 
 export const WordCardInfoPopover = create(

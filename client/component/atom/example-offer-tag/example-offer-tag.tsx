@@ -6,7 +6,7 @@ import {ReactElement} from "react";
 import {GeneralIcon, LeveledColorScheme, LoadingIcon, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {ExampleOffer, LinkedExampleOffer} from "/client/skeleton";
+import {ExampleOffer, LinkedExampleOffer} from "/server/internal/skeleton";
 
 
 export const ExampleOfferTag = create(

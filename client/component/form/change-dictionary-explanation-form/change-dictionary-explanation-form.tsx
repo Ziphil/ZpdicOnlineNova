@@ -4,7 +4,7 @@ import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Textarea, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {Dictionary} from "/client/skeleton";
+import {Dictionary} from "/server/internal/skeleton";
 import {useChangeDictionaryExplanation} from "./change-dictionary-explanation-form-hook";
 
 

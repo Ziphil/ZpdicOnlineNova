@@ -6,8 +6,8 @@ import {ReactElement} from "react";
 import {AdditionalProps, Card, CardBody, MultiLineText, aria, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Suggestion} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
+import {DictionaryWithExecutors, Suggestion} from "/server/internal/skeleton";
 
 
 export const SuggestionCard = create(

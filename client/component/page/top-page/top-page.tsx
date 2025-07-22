@@ -11,7 +11,7 @@ import {MainContainer, Page} from "/client/component/compound/page";
 import {create} from "/client/component/create";
 import {DiscordButton} from "/client/component/page/top-page/discord-button";
 import {useResponse} from "/client/hook/request";
-import {NormalExampleOfferParameter} from "/client/skeleton";
+import {NormalExampleOfferParameter} from "/server/internal/skeleton";
 import {GiftView} from "./gift-view";
 import {GithubStarButton} from "./github-star-button";
 import {Hero} from "./hero";

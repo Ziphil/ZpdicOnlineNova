@@ -3,7 +3,7 @@
 import {useMemo} from "react";
 import {useParams} from "react-router-dom";
 import {useSuspenseResponse} from "/client/hook/request";
-import {Dictionary, DictionaryWithExecutors} from "/client/skeleton";
+import {Dictionary, DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
 export function useDictionary(): DictionaryWithExecutors {

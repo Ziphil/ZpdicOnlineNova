@@ -16,7 +16,7 @@ import {
 } from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
-import {Dictionary, DictionarySettings} from "/client/skeleton";
+import {Dictionary, DictionarySettings} from "/server/internal/skeleton";
 import {useChangeDictionarySettings} from "./change-dictionary-settings-form-hook";
 import {IgnoredPatternInput} from "./ignored-pattern-input";
 

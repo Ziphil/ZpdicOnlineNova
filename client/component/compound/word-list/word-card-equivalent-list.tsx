@@ -1,10 +1,10 @@
 //
 
-import {ReactElement} from "react";
+import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
-import {createEquivalentNameNode} from "/client/util/dictionary";
+import {createTermNode} from "/client/util/dictionary";
+import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
 
 
 export const WordCardEquivalentList = create(
@@ -15,13 +15,15 @@ export const WordCardEquivalentList = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | TemplateWord | WordWithExamples,
+    word: Word | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    return (word.equivalents.length > 0) ? (
+    const visibleEquivalents = useMemo(() => word.equivalents.filter((equivalent) => !equivalent.hidden), [word.equivalents]);
+
+    return (visibleEquivalents.length > 0) ? (
       <div styleName="root" {...rest}>
-        {word.equivalents.map((equivalent, index) => (
+        {visibleEquivalents.map((equivalent, index) => (
           <li styleName="item" key={index}>
             {(dictionary.settings.showEquivalentNumber) && (
               <span styleName="number" {...aria({hidden: true})}>
@@ -33,7 +35,7 @@ export const WordCardEquivalentList = create(
                 <Tag key={index} styleName="tag" variant="light">{title}</Tag>
               ))}
               <span>
-                {createEquivalentNameNode(equivalent.nameString, ("ignoredPattern" in equivalent) ? equivalent.ignoredPattern : dictionary.settings.ignoredEquivalentPattern)}
+                {createTermNode(equivalent.nameString, equivalent.ignoredPattern)}
               </span>
             </MultiLineText>
           </li>
@@ -41,5 +43,6 @@ export const WordCardEquivalentList = create(
       </div>
     ) : null;
 
-  }
+  },
+  {memo: true}
 );

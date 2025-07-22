@@ -5,7 +5,7 @@ import {ReactElement, useMemo} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, useTrans} from "zographia";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, EditableWord, Proposal} from "/client/skeleton";
+import {DictionaryWithExecutors, EditableWord, Proposal} from "/server/internal/skeleton";
 import {useDiscardProposal} from "./proposal-card-hook";
 
 
@@ -63,9 +63,10 @@ function getWord(proposal: Proposal): EditableWord {
     number: null,
     name: "",
     pronunciation: "",
-    equivalents: [{titles: [], names: [proposal.name], nameString: proposal.name}],
+    equivalents: [{titles: [], names: [proposal.name], nameString: proposal.name, hidden: false}],
     tags: [],
-    informations: [{title: "", text: ""}],
+    informations: [],
+    phrases: [],
     variations: [],
     relations: []
   };

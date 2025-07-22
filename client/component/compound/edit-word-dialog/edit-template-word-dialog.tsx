@@ -16,8 +16,8 @@ import {
 } from "zographia";
 import {EditTemplateWordForm, EditTemplateWordFormValue, EditTemplateWordInitialData, useEditTemplateWord} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors} from "/client/skeleton";
 import {assignRef} from "/client/util/ref";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
 export const EditTemplateWordDialog = create(

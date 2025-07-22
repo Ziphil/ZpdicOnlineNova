@@ -2,7 +2,7 @@
 
 import type {
   ExampleOfferParameter as ExampleOfferParameterSkeleton
-} from "/client/skeleton";
+} from "/server/internal/skeleton";
 import {
   ExampleOfferParameter,
   NormalExampleOfferParameter

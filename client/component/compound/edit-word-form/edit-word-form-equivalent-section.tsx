@@ -11,7 +11,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordFormEquivalentItem} from "./edit-word-form-equivalent-item";
@@ -38,7 +38,8 @@ export const EditWordFormEquivalentSection = create(
     const addEquivalent = useCallback(function (): void {
       equivalentOperations.append({
         titles: [],
-        nameString: ""
+        nameString: "",
+        hidden: false
       });
     }, [equivalentOperations]);
 

@@ -4,8 +4,8 @@ import {BaseSyntheticEvent, useMemo} from "react";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Article, Dictionary, EditableArticle} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
+import {Article, Dictionary, EditableArticle} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
 
 

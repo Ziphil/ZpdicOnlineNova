@@ -16,9 +16,9 @@ import {
 } from "zographia";
 import {create} from "/client/component/create";
 import {useToast} from "/client/hook/toast";
-import {Dictionary} from "/client/skeleton";
 import {getAwsFileUrl} from "/client/util/aws";
 import {copyToClipboard} from "/client/util/clipboard";
+import {Dictionary} from "/server/internal/skeleton";
 import {useDiscardResource} from "./resource-card-hook";
 
 

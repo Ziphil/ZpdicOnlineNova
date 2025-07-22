@@ -29,6 +29,9 @@ export class DictionarySettingsSchema {
   @prop({required: true})
   public pronunciationTitle!: string;
 
+  @prop()
+  public phraseTitle?: string;
+
   @prop({required: true})
   public exampleTitle!: string;
 
@@ -46,11 +49,12 @@ export class DictionarySettingsSchema {
     const punctuations = [",", "、", "。"];
     const ignoredEquivalentPattern = "[\\(（].*?[\\)）]";
     const pronunciationTitle = "発音";
+    const phraseTitle = "成句";
     const exampleTitle = "例文";
     const enableMarkdown = false;
     const enableDuplicateName = true;
     const showEquivalentNumber = false;
-    const settings = new DictionarySettingsModel({font, punctuations, ignoredEquivalentPattern, pronunciationTitle, exampleTitle, enableMarkdown, enableDuplicateName, showEquivalentNumber});
+    const settings = new DictionarySettingsModel({font, punctuations, ignoredEquivalentPattern, pronunciationTitle, phraseTitle, exampleTitle, enableMarkdown, enableDuplicateName, showEquivalentNumber});
     return settings;
   }
 

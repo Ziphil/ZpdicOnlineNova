@@ -19,8 +19,8 @@ import {
 import {ResourceList} from "/client/component/compound/resource-list/resource-list";
 import {create} from "/client/component/create";
 import {invalidateResponses, useRequest, useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
 export const ResourceListDialog = create(

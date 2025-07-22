@@ -4,8 +4,8 @@ import {LoaderFunctionArgs} from "react-router-dom";
 import rison from "rison";
 import {EditExampleInitialData} from "/client/component/compound/edit-example-form";
 import {fetchResponse} from "/client/hook/request";
-import {DictionaryWithUser} from "/client/skeleton";
 import {ResponseError} from "/client/util/response-error";
+import {DictionaryWithUser} from "/server/internal/skeleton";
 
 
 export type EditExamplePageLoaderData = {

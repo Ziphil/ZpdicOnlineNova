@@ -20,4 +20,7 @@
 
 .separator {
   color: var(--glob-mute-text-color);
+  &::before {
+    content: " — ";
+  }
 }

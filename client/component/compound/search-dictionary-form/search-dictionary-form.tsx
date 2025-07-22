@@ -7,8 +7,8 @@ import {AdditionalProps, ControlGroup, GeneralIcon, Input, InputAddon} from "zog
 import {OrderDirection, OrderDirectionSelect} from "/client/component/compound/order-direction-select";
 import {OrderModeSelect} from "/client/component/compound/order-mode-select";
 import {create} from "/client/component/create";
-import {DICTIONARY_ORDER_MODES, DictionaryOrderMode, DictionaryParameter} from "/client/skeleton";
 import {preventDefault} from "/client/util/form";
+import {DICTIONARY_ORDER_MODES, DictionaryOrderMode, DictionaryParameter} from "/server/internal/skeleton";
 
 
 export const SearchDictionaryForm = create(

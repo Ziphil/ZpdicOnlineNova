@@ -2,7 +2,7 @@ openapi: "3.0.3"
 
 info:
   title: "ZpDIC Online API"
-  version: "0.1.0"
+  version: "0.2.0"
   description: |-
     ### ベース URL
     全ての API のベース URL は `https://zpdic.ziphil.com/api` です。
@@ -732,6 +732,11 @@ components:
         - `"appleGamma"` — リンゴをもっと食べたい 55 文
         - `"survival"` — 今日を生き抜く実用例文
         - `"weaving"` — 手袋と辞書を編む 50 文
+        - `"shaleianAlpha"` — 今日のシャレイア語 I
+        - `"shaleianBeta"` — 今日のシャレイア語 II
+        - `"meat"` — 古代の民族のためのお肉例文
+        - `"arithmetic"` — 算数例文
+        - `"adposition"` — 格や接置詞のための例文集
       required: true
       schema:
         type: string
@@ -747,6 +752,11 @@ components:
         - `"appleGamma"` — リンゴをもっと食べたい 55 文
         - `"survival"` — 今日を生き抜く実用例文
         - `"weaving"` — 手袋と辞書を編む 50 文
+        - `"shaleianAlpha"` — 今日のシャレイア語 I
+        - `"shaleianBeta"` — 今日のシャレイア語 II
+        - `"meat"` — 古代の民族のためのお肉例文
+        - `"arithmetic"` — 算数例文
+        - `"adposition"` — 格や接置詞のための例文集
       required: true
       schema:
         type: string
@@ -791,6 +801,11 @@ components:
           items:
             $ref: "#/components/schemas/Information.res"
           description: "内容 (OTM-JSON での `contents`)"
+        phrases:
+          type: array
+          items:
+            $ref: "#/components/schemas/Phrase.res"
+          description: "成句"
         variations:
           type: array
           items:
@@ -846,6 +861,12 @@ components:
             $ref: "#/components/schemas/Information.req"
           description: "内容 (OTM-JSON での `contents`)"
           default: []
+        phrases:
+          type: array
+          items:
+            $ref: "#/components/schemas/Phrase.req"
+          description: "成句"
+          default: []
         variations:
           type: array
           items:
@@ -897,6 +918,10 @@ components:
             > 単語の編集時に、辞書全体に設定された無視パターンがそのまま格納されます。
             > そのため、辞書の無視パターンを途中で変更した場合、それ以降に編集された単語でのみ新しい無視パターンが格納され、それ以前に編集された単語には以前の無視パターンが格納されたままになります。
           example: "[\\(（].*?[\\)）]"
+        hidden:
+          type: boolean
+          description: "検索にのみ用いる (単語カードでは非表示にする) かどうか"
+          example: false
 
     Equivalent.req:
       title: "Equivalent"
@@ -936,6 +961,11 @@ components:
             > `nameString` から `names` を取得する際に利用されます。
           example: "[\\(（].*?[\\)）]"
           default: ""
+        hidden:
+          type: boolean
+          description: "検索にのみ用いる (単語カードでは非表示にする) かどうか"
+          example: false
+          default: false
 
     Information.res:
       title: "Information"
@@ -949,6 +979,10 @@ components:
           type: string
           description: "内容"
           example: "自然言語や人工言語の辞典を指す。単なる単語帳は含まれない。"
+        hidden:
+          type: boolean
+          description: "単語カードでは非表示にするかどうか"
+          example: false
 
     Information.req:
       title: "Information"
@@ -964,6 +998,96 @@ components:
           description: "内容"
           example: "自然言語や人工言語の辞典を指す。単なる単語帳は含まれない。"
           default: ""
+        hidden:
+          type: boolean
+          description: "単語カードでは非表示にするかどうか"
+          example: false
+          default: false
+
+    Phrase.res:
+      title: "Phrase"
+      type: object
+      properties:
+        titles:
+          type: array
+          items:
+            type: string
+          description: "分類"
+          example: ["慣用句", "格言"]
+        form:
+          type: string
+          description: "成句表現"
+          example: "go on"
+        terms:
+          type: array
+          items:
+            type: string
+          description: |-
+            訳語
+            > 訳語検索の際に参照されます。
+          example: ["進む", "続ける"]
+        termString:
+          type: string
+          description: |-
+            訳語の生文字列
+            > ZpDIC 上で単語カードの成句欄にそのまま表示されます。
+            > その際、`ignoredPattern` にマッチする部分は薄く表示されます。
+            >
+            > ここから `ignoredPattern` にマッチする部分を削除して適切に区切ったものが `terms` です。
+          example: "進む, 続ける"
+        ignoredPattern:
+          type: string
+          description: |-
+            訳語の生文字列から訳語リストを取得する際に無視するパターン (正規表現)
+            > `termString` から `terms` を取得する際に利用されます。
+            >
+            > 単語の編集時に、辞書全体に設定された無視パターンがそのまま格納されます。
+            > そのため、辞書の無視パターンを途中で変更した場合、それ以降に編集された単語でのみ新しい無視パターンが格納され、それ以前に編集された単語には以前の無視パターンが格納されたままになります。
+          example: "[\\(（].*?[\\)）]"
+
+    Phrase.req:
+      title: "Phrase"
+      type: object
+      properties:
+        titles:
+          type: array
+          items:
+            type: string
+          description: "分類"
+          example: ["慣用句", "格言"]
+          default: []
+        form:
+          type: string
+          description: "成句表現"
+          example: "go on"
+          default: ""
+        terms:
+          type: array
+          items:
+            type: string
+          description: |-
+            訳語
+            > 訳語検索の際に参照されます。
+            >
+            > `termString` から `ignoredPattern` にマッチする部分を削除して句読点で区切ったものを指定してください。
+            > それ以外の文字列リストを指定すると、ZpDIC 上で単語カードに表示される訳語と検索で使われる訳語が一致せず、混乱を招く可能性があります。
+          example: ["進む", "続ける"]
+          default: []
+        termString:
+          type: string
+          description: |-
+            訳語の生文字列
+            > ZpDIC 上で単語カードの成句欄にそのまま表示されます。
+            > その際、`ignoredPattern` にマッチする部分は薄く表示されます。
+          example: "進む, 続ける"
+          default: ""
+        ignoredPattern:
+          type: string
+          description: |-
+            訳語の生文字列から訳語リストを取得する際に無視するパターン (正規表現)
+            > `termString` から `terms` を取得する際に利用されます。
+          example: "[\\(（].*?[\\)）]"
+          default: ""
  
     Variation.res:
       title: "Variation"
@@ -977,6 +1101,10 @@ components:
           type: string
           description: "変化形 (OTM-JSON での `form`)"
           example: "dictionaries"
+        pronunciation:
+          type: string
+          description: "発音記号"
+          example: "dɪk.ʃə.nə.ɹiz"
 
     Variation.req:
       title: "Variation"
@@ -991,6 +1119,11 @@ components:
           type: string
           description: "変化形 (OTM-JSON での `form`)"
           example: "dictionaries"
+          default: ""
+        pronunciation:
+          type: string
+          description: "発音記号"
+          example: "dɪk.ʃə.nə.ɹiz"
           default: ""
 
     Relation.res:
@@ -1160,6 +1293,11 @@ components:
             - `"appleGamma"` — リンゴをもっと食べたい 55 文
             - `"survival"` — 今日を生き抜く実用例文
             - `"weaving"` — 手袋と辞書を編む 50 文
+            - `"shaleianAlpha"` — 今日のシャレイア語 I
+            - `"shaleianBeta"` — 今日のシャレイア語 II
+            - `"meat"` — 古代の民族のためのお肉例文
+            - `"arithmetic"` — 算数例文
+            - `"adposition"` — 格や接置詞のための例文集
           example: "zpdicDaily"
         number:
           type: integer
@@ -1192,6 +1330,11 @@ components:
             - `"appleGamma"` — リンゴをもっと食べたい 55 文
             - `"survival"` — 今日を生き抜く実用例文
             - `"weaving"` — 手袋と辞書を編む 50 文
+            - `"shaleianAlpha"` — 今日のシャレイア語 I
+            - `"shaleianBeta"` — 今日のシャレイア語 II
+            - `"meat"` — 古代の民族のためのお肉例文
+            - `"arithmetic"` — 算数例文
+            - `"adposition"` — 格や接置詞のための例文集
           example: "zpdicDaily"
         number:
           type: integer
@@ -1214,6 +1357,11 @@ components:
             - `"appleGamma"` — リンゴをもっと食べたい 55 文
             - `"survival"` — 今日を生き抜く実用例文
             - `"weaving"` — 手袋と辞書を編む 50 文
+            - `"shaleianAlpha"` — 今日のシャレイア語 I
+            - `"shaleianBeta"` — 今日のシャレイア語 II
+            - `"meat"` — 古代の民族のためのお肉例文
+            - `"arithmetic"` — 算数例文
+            - `"adposition"` — 格や接置詞のための例文集
 
             > 上記のいずれかを指定してください。
             > これ以外の例文集名が指定されている場合、ZpDIC 上での表示がおかしくなる可能性があります。

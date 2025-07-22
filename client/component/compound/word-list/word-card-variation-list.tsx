@@ -2,10 +2,11 @@
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleRight} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, ReactElement, useMemo} from "react";
+import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, TemplateWord, Variation, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, Variation, Word, WordWithExamples} from "/server/internal/skeleton";
+import {WordCardVariationView} from "./word-card-variation-view";
 
 
 export const WordCardVariationList = create(
@@ -16,7 +17,7 @@ export const WordCardVariationList = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | TemplateWord | WordWithExamples,
+    word: Word | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
@@ -34,10 +35,7 @@ export const WordCardVariationList = create(
                 <Tag styleName="tag" variant="light">{title}</Tag>
               )}
               {variations.map((variation, index) => (
-                <Fragment key={index}>
-                  {(index > 0) && <span styleName="punctuation">, </span>}
-                  <span>{variation.name}</span>
-                </Fragment>
+                <WordCardVariationView key={index} dictionary={dictionary} variation={variation} index={index}/>
               ))}
             </MultiLineText>
           </div>
@@ -45,11 +43,12 @@ export const WordCardVariationList = create(
       </div>
     ) : null;
 
-  }
+  },
+  {memo: true}
 );
 
 
-function getGroupedVariations(word: Word | TemplateWord | WordWithExamples): Array<[string, [string, Array<Variation>]]> {
+function getGroupedVariations(word: Word | WordWithExamples): Array<[string, [string, Array<Variation>]]> {
   const groupedVariations = new Map<string, [string, Array<Variation>]>();
   for (const variation of word.variations) {
     const title = variation.title;

@@ -3,8 +3,8 @@
 import {ReactElement} from "react";
 import {Helmet} from "react-helmet";
 import {create} from "/client/component/create";
-import {Dictionary} from "/client/skeleton";
 import {getAwsFileUrl} from "/client/util/aws";
+import {Dictionary} from "/server/internal/skeleton";
 
 
 export const DictionaryFontStyle = create(

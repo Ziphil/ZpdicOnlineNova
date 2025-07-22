@@ -3,7 +3,7 @@
 import {ReactElement} from "react";
 import {CheckableContainer, CheckableLabel, Radio, RadioGroup, Select, SelectOption, useResponsiveDevice, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {ExampleType} from "/client/skeleton";
+import {ExampleType} from "/server/internal/skeleton";
 
 
 export const ExampleTypeSelect = create(

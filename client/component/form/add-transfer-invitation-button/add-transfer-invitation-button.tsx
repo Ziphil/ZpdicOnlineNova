@@ -20,7 +20,7 @@ import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {UserSelect} from "/client/component/atom/user-select";
 import {create} from "/client/component/create";
 import {useDialogOpen} from "/client/hook/dialog";
-import {Dictionary} from "/client/skeleton";
+import {Dictionary} from "/server/internal/skeleton";
 import {useAddTransferInvitation} from "./add-transfer-invitation-button-hook";
 
 

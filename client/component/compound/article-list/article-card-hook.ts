@@ -6,8 +6,8 @@ import {useTrans} from "zographia";
 import {useCommonAlert} from "/client/component/atom/common-alert";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Article, Dictionary} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
+import {Article, Dictionary} from "/server/internal/skeleton";
 
 
 export function useDiscardArticle(dictionary: Dictionary, article: Article): () => void {

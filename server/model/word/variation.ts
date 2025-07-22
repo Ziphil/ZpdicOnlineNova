@@ -12,6 +12,9 @@ export class VariationSchema {
   @prop({required: true})
   public name!: string;
 
+  @prop()
+  public pronunciation?: string;
+
 }
 
 

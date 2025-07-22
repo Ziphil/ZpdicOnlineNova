@@ -6,7 +6,7 @@ import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {createWithRef} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {ObjectId, User} from "/client/skeleton";
+import {ObjectId, User} from "/server/internal/skeleton";
 
 
 export const UserView = createWithRef(

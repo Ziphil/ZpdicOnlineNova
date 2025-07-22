@@ -3,7 +3,7 @@
 import {ReactElement} from "react";
 import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, TemplateWord} from "/client/skeleton";
+import {DictionaryWithExecutors, TemplateWord} from "/server/internal/skeleton";
 import {TemplateWordCard} from "./template-word-card";
 
 

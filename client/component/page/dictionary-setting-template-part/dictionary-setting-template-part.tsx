@@ -7,7 +7,7 @@ import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zog
 import {EditTemplateWordDialog} from "/client/component/compound/edit-word-dialog";
 import {TemplateWordList} from "/client/component/compound/template-word-list";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
 export const DictionarySettingTemplatePart = create(

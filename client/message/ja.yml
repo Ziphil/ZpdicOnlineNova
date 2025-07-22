@@ -13,6 +13,10 @@ toast:
       識別子を変更しました。
     changeDictionaryExplanation: |-
       説明を変更しました。
+    changeDictionaryWordCardTitles: |-
+      設定を変更しました。
+    changeDictionarySlimeTitles: |-
+      設定を変更しました。
     changeDictionaryVisibility: |-
       設定を変更しました。
     changeDictionarySettings:
@@ -23,8 +27,6 @@ toast:
       font: |-
         設定を変更しました。
       showEquivalentNumber: |-
-        設定を変更しました。
-      exampleTitle: |-
         設定を変更しました。
       pronunciationTitle: |-
         設定を変更しました。
@@ -234,6 +236,11 @@ exampleOfferTag:
     appleGamma: "リンゴをもっと食べたい 55 文"
     survival: "今日を生き抜く実用例文"
     weaving: "手袋と辞書を編む 50 文"
+    shaleianAlpha: "今日のシャレイア語 I"
+    shaleianBeta: "今日のシャレイア語 II"
+    meat: "古代の民族のためのお肉例文"
+    arithmetic: "算数例文"
+    adposition: "格や接置詞のための例文集"
   number: "#{number, number}"
 exampleModeSelect:
   label:
@@ -439,6 +446,7 @@ editWordForm:
     basic: "基本情報"
     equivalents: "訳語"
     informations: "内容"
+    phrases: "成句"
     variations: "変化形"
     relations: "関連語"
     template: "テンプレート設定"
@@ -449,12 +457,19 @@ editWordForm:
     equivalent:
       titles: "品詞"
       names: "訳語"
+      hidden: "検索にのみ用いる (単語カードでは非表示にする)"
     information:
       title: "見出し"
       text: "内容"
+      hidden: "単語カードでは非表示にする"
+    phrase:
+      titles: "分類"
+      form: "成句表現"
+      terms: "訳語"
     variation:
       title: "種類"
       name: "変化形"
+      pronunciation: "発音記号"
     relation:
       titles: "分類"
       name: "関連語"
@@ -463,6 +478,7 @@ editWordForm:
   absent:
     equivalent: "訳語が登録されていません"
     information: "内容が登録されていません"
+    phrase: "成句が登録されていません"
     variation: "変化形が登録されていません"
     relation: "関連語が登録されていません"
   duplicateName: >-
@@ -471,11 +487,13 @@ editWordForm:
     add:
       equivalent: "訳語を追加"
       information: "内容を追加"
+      phrase: "成句を追加"
       variation: "変化形を追加"
       relation: "関連語を追加"
     discard:
       equivalent: "削除"
       information: "削除"
+      phrase: "削除"
       variation: "削除"
       relation: "削除"
     resource: "画像"
@@ -668,6 +686,7 @@ templateWordList:
   label:
     equivalent: "訳語 ×{count}"
     information: "内容 ×{count}"
+    phrase: "成句 ×{count}"
     variation: "変化形 ×{count}"
     relation: "関連語 ×{count}"
   dialog:
@@ -855,6 +874,13 @@ changeDictionarySettingsForm:
   error:
     invalidPattern: >-
       正規表現として有効なパターンを入力してください。
+changeDictionarySlimeTitlesForm:
+  label:
+    pronunciationTitle: "発音"
+changeDictionaryWordCardTitlesForm:
+  label:
+    phraseTitle: "成句"
+    exampleTitle: "例文"
 changeDictionaryVisibilityForm:
   label:
     public: "全体公開"
@@ -1018,8 +1044,8 @@ dictionarySettingEditingPart:
     enableDuplicateName: "重複綴りチェック"
     punctuations: "区切り文字"
     ignoredEquivalentPattern: "訳語で無視するパターン"
-    exampleTitle: "例文データの見出し"
-    pronunciationTitle: "発音データの見出し"
+    wordCardTitles: "単語カードでの見出し"
+    slimeTitles: "OTM-JSON 形式での見出し"
   description:
     akrantiainSource: >-
       Akrantiain とは、単語の綴りから発音記号を自動生成するためのシステムです。 
@@ -1042,10 +1068,10 @@ dictionarySettingEditingPart:
       訳語欄に入力されたテキストから訳語を抽出する際に、ここで設定された正規表現パターンにマッチした部分は無視されます。
       そのため、マッチした部分は訳語検索の対象外となります。
       例えば、訳語欄に動詞の格の取り方を明示したいが訳語検索の対象にはしたくない場合などに利用できます。
-    exampleTitle: >-
-      単語カードに例文を表示する際の見出しです。
-    pronunciationTitle: >-
-      辞書を OTM-JSON 形式で出力したときに発音データが格納される内容欄の見出しです。
+    wordCardTitles: >-
+      単語カードに各種項目を表示する際の見出しです。
+    slimeTitles: >-
+      辞書を OTM-JSON 形式で出力したときに各種項目が格納される内容欄の見出しです。
 dictionarySettingFilePart:
   heading:
     upload: "インポート"

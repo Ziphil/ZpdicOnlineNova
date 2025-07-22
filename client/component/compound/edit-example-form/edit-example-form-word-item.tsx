@@ -13,7 +13,7 @@ import {
 } from "zographia";
 import {RelationWordSelect} from "/client/component/atom/relation-word-select";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {useEditExampleFormDndItem} from "./edit-example-form-dnd";
 import {EditExampleSpec} from "./edit-example-form-hook";
 

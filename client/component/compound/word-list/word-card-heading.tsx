@@ -3,7 +3,7 @@
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, TemplateWord, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
 
 
 export const WordCardHeading = create(
@@ -14,7 +14,7 @@ export const WordCardHeading = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | TemplateWord | WordWithExamples,
+    word: Word | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
@@ -42,7 +42,7 @@ export const WordCardHeading = create(
               </MultiLineText>
             )}
             {(!!pronunciation) && (
-              <MultiLineText styleName="pronunciation" lineHeight="narrow">
+              <MultiLineText styleName="pronunciation" is="span" lineHeight="narrow">
                 {pronunciation}
               </MultiLineText>
             )}
@@ -55,7 +55,7 @@ export const WordCardHeading = create(
 );
 
 
-function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | TemplateWord | WordWithExamples): string | undefined {
+function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | WordWithExamples): string | undefined {
   if (!!word.pronunciation) {
     if (word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
       return word.pronunciation.trim();

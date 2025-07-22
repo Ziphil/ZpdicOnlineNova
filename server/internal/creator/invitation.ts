@@ -1,10 +1,10 @@
 //
 
 import {isDocument} from "@typegoose/typegoose";
+import {DictionaryCreator} from "/server/internal/creator/dictionary/dictionary";
 import type {
   Invitation as InvitationSkeleton
-} from "/client/skeleton";
-import {DictionaryCreator} from "/server/internal/creator/dictionary/dictionary";
+} from "/server/internal/skeleton";
 import {
   Invitation
 } from "/server/model";

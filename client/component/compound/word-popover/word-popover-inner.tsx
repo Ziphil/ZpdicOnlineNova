@@ -5,8 +5,8 @@ import {MouseEvent, ReactElement, useCallback} from "react";
 import {Button, ButtonIconbag, GeneralIcon, LoadingIcon, MultiLineText, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, Word} from "/client/skeleton";
-import {createEquivalentNameNode} from "/client/util/dictionary";
+import {createTermNode} from "/client/util/dictionary";
+import {DictionaryWithExecutors, Word} from "/server/internal/skeleton";
 
 
 export const WordPopoverInner = create(
@@ -46,7 +46,7 @@ export const WordPopoverInner = create(
                 <Tag key={index} styleName="tag" variant="light">{title}</Tag>
               ))}
               <span>
-                {createEquivalentNameNode(equivalent.nameString, equivalent.ignoredPattern)}
+                {createTermNode(equivalent.nameString, equivalent.ignoredPattern)}
               </span>
             </MultiLineText>
           ))}

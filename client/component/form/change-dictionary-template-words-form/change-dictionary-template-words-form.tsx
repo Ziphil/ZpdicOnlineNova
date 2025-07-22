@@ -3,7 +3,7 @@
 import {ReactElement} from "react";
 import {AdditionalProps, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {Dictionary} from "/client/skeleton";
+import {Dictionary} from "/server/internal/skeleton";
 
 
 export const ChangeDictionaryTemplateWordsForm = create(

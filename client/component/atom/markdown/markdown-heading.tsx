@@ -22,5 +22,6 @@ export const MarkdownHeading = create(
       </div>
     );
 
-  }
+  },
+  {memo: true}
 );
