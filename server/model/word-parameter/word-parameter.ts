@@ -20,9 +20,9 @@ export abstract class WordParameter {
     if (mode === "name") {
       return ["name"];
     } else if (mode === "equivalent") {
-      return ["equivalents.names", "phrases.translations"];
+      return ["equivalents.names", "phrases.terms"];
     } else if (mode === "both") {
-      return ["name", "equivalents.names", "phrases.translations"];
+      return ["name", "equivalents.names", "phrases.terms"];
     } else if (mode === "tag") {
       return ["tags"];
     } else if (mode === "information") {
@@ -32,7 +32,7 @@ export abstract class WordParameter {
     } else if (mode === "relation") {
       return ["relations.name"];
     } else if (mode === "content") {
-      return ["name", "equivalents.names", "phrases.translations", "informations.text", "variations.name", "relations.name"];
+      return ["name", "equivalents.names", "phrases.terms", "informations.text", "variations.name", "relations.name"];
     } else {
       const dummy = mode satisfies never;
       throw new Error("cannot happen");
