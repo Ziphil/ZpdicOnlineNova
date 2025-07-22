@@ -43,7 +43,8 @@ export const WordCardVariationList = create(
       </div>
     ) : null;
 
-  }
+  },
+  {memo: true}
 );
 
 

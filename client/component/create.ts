@@ -19,10 +19,10 @@ export function createWithRef<C extends FunctionComponentWithRef<any, any>>(css:
   if (css !== null && css !== undefined) {
     component = cssModules(component, css.default, {allowMultiple: true, handleNotFoundStyleName: "ignore"});
   }
+  let forwardedComponent = forwardRef((props, ref) => component({...props, ref}));
   if (options?.memo) {
-    component = memo(component) as any;
+    forwardedComponent = memo(forwardedComponent) as any;
   }
-  const forwardedComponent = forwardRef((props, ref) => component({...props, ref}));
   forwardedComponent.displayName = name ?? "<unknown>";
   return forwardedComponent as any;
 }

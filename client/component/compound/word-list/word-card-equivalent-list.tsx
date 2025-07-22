@@ -43,5 +43,6 @@ export const WordCardEquivalentList = create(
       </div>
     ) : null;
 
-  }
+  },
+  {memo: true}
 );

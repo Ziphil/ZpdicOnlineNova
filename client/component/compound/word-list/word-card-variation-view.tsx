@@ -34,7 +34,8 @@ export const WordCardVariationView = create(
       </Fragment>
     );
 
-  }
+  },
+  {memo: true}
 );
 
 

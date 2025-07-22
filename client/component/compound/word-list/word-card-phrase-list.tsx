@@ -52,5 +52,6 @@ export const WordCardPhraseList = create(
       </div>
     ) : null;
 
-  }
+  },
+  {memo: true}
 );

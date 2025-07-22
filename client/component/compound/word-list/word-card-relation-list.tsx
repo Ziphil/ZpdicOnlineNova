@@ -54,7 +54,8 @@ export const WordCardRelationList = create(
       </div>
     ) : null;
 
-  }
+  },
+  {memo: true}
 );
 
 

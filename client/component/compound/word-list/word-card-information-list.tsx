@@ -54,5 +54,6 @@ export const WordCardInformationList = create(
       </div>
     ) : null;
 
-  }
+  },
+  {memo: true}
 );

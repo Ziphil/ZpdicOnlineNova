@@ -76,7 +76,8 @@ export const Markdown = create(
       </ZographiaMarkdown>
     );
 
-  }
+  },
+  {memo: true}
 );
 
 
