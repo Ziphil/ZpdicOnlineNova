@@ -242,6 +242,7 @@ exampleOfferTag:
     shaleianBeta: "Ĉiutagaj ŝalejaj frazoj II"
     meat: "Viandaj frazoj por antikvaj triboj"
     arithmetic: "Aritmetikaj frazoj"
+    adposition: "Frazoj por kazoj kaj adpozicioj"
   number: "#{number, number}"
 exampleModeSelect:
   label:

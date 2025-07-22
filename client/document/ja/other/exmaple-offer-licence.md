@@ -20,5 +20,6 @@ ZpDIC Online で提供している例文集の原文 (日本語のもの) には
 - 今日のシャレイア語 II — [Ziphil](https://x.com/Ziphil)
 - 古代の民族のためのお肉例文 — [夕向奏 様](https://migdal.jp/yuuzakikanade/%E5%8F%A4%E4%BB%A3%E3%81%AE%E6%B0%91%E6%97%8F%E3%81%AE%E7%82%BA%E3%81%AE%E3%81%8A%E8%82%89%E4%BE%8B%E6%96%87-62-%E6%96%87-3co7)
 - 算数例文 — [ツナホシ 様](https://migdal.jp/tsunahoshi/%E7%AE%97%E6%95%B0%E4%BE%8B%E6%96%87-1d0g)
+- 格や接置詞のための例文集 — [矛盾と混沌 様](https://migdal.jp/mujunkonton/%E6%A0%BC%E3%82%84%E6%8E%A5%E7%BD%AE%E8%A9%9E%E3%81%AE%E7%82%BA%E3%81%AE%E4%BE%8B%E6%96%87%E9%9B%86-35fb)
 
 なお、例文集の例文に対してユーザーが投稿した人工言語文は、そのユーザーが著作者となります。

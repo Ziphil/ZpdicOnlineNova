@@ -240,6 +240,7 @@ exampleOfferTag:
     shaleianBeta: "今日のシャレイア語 II"
     meat: "古代の民族のためのお肉例文"
     arithmetic: "算数例文"
+    adposition: "格や接置詞のための例文集"
   number: "#{number, number}"
 exampleModeSelect:
   label:

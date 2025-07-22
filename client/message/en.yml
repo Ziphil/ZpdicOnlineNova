@@ -242,6 +242,7 @@ exampleOfferTag:
     shaleianBeta: "Daily Shaleian II"
     meat: "Meat sentences for ancient tribes"
     arithmetic: "Arithmetic sentences"
+    adposition: "Sentences for cases and adpositions"
   number: "#{number, number}"
 exampleModeSelect:
   label:
