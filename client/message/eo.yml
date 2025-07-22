@@ -240,6 +240,8 @@ exampleOfferTag:
     weaving: "Frazoj por teksi gantojn kaj vortarojn"
     shaleianAlpha: "Ĉiutagaj ŝalejaj frazoj I"
     shaleianBeta: "Ĉiutagaj ŝalejaj frazoj II"
+    meat: "Viandaj frazoj por antikvaj triboj"
+    arithmetic: "Aritmetikaj frazoj"
   number: "#{number, number}"
 exampleModeSelect:
   label:

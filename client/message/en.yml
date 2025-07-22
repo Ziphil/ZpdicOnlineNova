@@ -240,6 +240,8 @@ exampleOfferTag:
     weaving: "Sentences to weave gloves and dictionaries"
     shaleianAlpha: "Daily Shaleian I"
     shaleianBeta: "Daily Shaleian II"
+    meat: "Meat sentences for ancient tribes"
+    arithmetic: "Arithmetic sentences"
   number: "#{number, number}"
 exampleModeSelect:
   label:
