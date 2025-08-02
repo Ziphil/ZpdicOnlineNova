@@ -1,6 +1,7 @@
 //
 
 import {ReactElement} from "react";
+import {useFieldArray} from "react-hook-form";
 import {AdditionalProps} from "zographia";
 import {create} from "/client/component/create";
 import {preventDefault} from "/client/util/form";
@@ -27,14 +28,21 @@ export const EditTemplateWordFormEditPart = create(
 
     const {form} = formSpec;
 
+    const {control} = form;
+    const {fields: sections, ...sectionOperations} = useFieldArray({control, name: "sections"});
+
     return (
       <form styleName="root" onSubmit={preventDefault} {...rest}>
         <div styleName="main">
           <EditTemplateWordFormBasicSection dictionary={dictionary} form={form}/>
-          <EditWordFormEquivalentSection dictionary={dictionary} form={form as any}/>
-          <EditWordFormInformationSection dictionary={dictionary} form={form as any}/>
-          <EditWordFormVariationSection dictionary={dictionary} form={form as any}/>
-          <EditTemplateWordFormRelationSection dictionary={dictionary} form={form}/>
+          {sections.map((section, sectionIndex) => (
+            <div styleName="section" key={section.id}>
+              <EditWordFormEquivalentSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
+              <EditWordFormInformationSection dictionary={dictionary} form={form as any}/>
+              <EditWordFormVariationSection dictionary={dictionary} form={form as any}/>
+              <EditTemplateWordFormRelationSection dictionary={dictionary} form={form}/>
+            </div>
+          ))}
         </div>
       </form>
     );

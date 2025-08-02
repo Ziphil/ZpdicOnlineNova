@@ -9,6 +9,12 @@
   flex-direction: column;
 }
 
+.section {
+  row-gap: 8zu;
+  display: flex;
+  flex-direction: column;
+}
+
 .button {
   margin-block-start: 8zu;
   padding-block-start: 3zu;

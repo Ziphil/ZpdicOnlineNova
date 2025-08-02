@@ -24,6 +24,7 @@ import {WordCardInfoPopover} from "/client/component/compound/word-list/word-car
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {getWordHref} from "/client/util/dictionary";
+import {toRoman} from "/client/util/misc";
 import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/server/internal/skeleton";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardExampleList} from "./word-card-example-list";
@@ -79,15 +80,20 @@ export const WordCard = create(
           <WordCardHeading dictionary={dictionary} word={word}/>
           <Collapsible styleName="collapsible">
             <CollapsibleBody styleName="collapsible-body" height="20rem">
-              {(word.sections.length > 0) && (
-                <>
-                  <WordCardEquivalentList dictionary={dictionary} section={word.sections[0]}/>
-                  <WordCardInformationList dictionary={dictionary} section={word.sections[0]}/>
-                  <WordCardPhraseList dictionary={dictionary} section={word.sections[0]}/>
-                  <WordCardVariationList dictionary={dictionary} section={word.sections[0]}/>
-                  <WordCardRelationList dictionary={dictionary} section={word.sections[0]}/>
-                </>
-              )}
+              <div styleName="section-list">
+                {word.sections.map((section, index) => (
+                  <div styleName="section-item" key={index}>
+                    <div styleName="section-number">{toRoman(index + 1)}</div>
+                    <div styleName="section-main">
+                      <WordCardEquivalentList dictionary={dictionary} section={section}/>
+                      <WordCardInformationList dictionary={dictionary} section={section}/>
+                      <WordCardPhraseList dictionary={dictionary} section={section}/>
+                      <WordCardVariationList dictionary={dictionary} section={section}/>
+                      <WordCardRelationList dictionary={dictionary} section={section}/>
+                    </div>
+                  </div>
+                ))}
+              </div>
               <WordCardExampleList dictionary={dictionary} word={word}/>
             </CollapsibleBody>
             <CollapsibleButton styleName="collapsible-button"/>

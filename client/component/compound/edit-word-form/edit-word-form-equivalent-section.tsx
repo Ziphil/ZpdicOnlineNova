@@ -2,7 +2,7 @@
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {UseFormReturn, useFieldArray} from "react-hook-form";
+import {UseFieldArrayReturn, UseFormReturn, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -23,29 +23,29 @@ export const EditWordFormEquivalentSection = create(
   function ({
     dictionary,
     form,
+    sectionOperations,
+    sectionIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
+    sectionOperations: Omit<UseFieldArrayReturn<any, "sections">, "fields">,
+    sectionIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans, transNode} = useTrans("editWordForm");
 
-    const {control, getValues, setValue} = form;
-    const {fields: equivalents, ...equivalentOperations} = useFieldArray({control, name: "sections.0.equivalents"});
+    const {control, getValues} = form;
+    const {fields: equivalents, ...equivalentOperations} = useFieldArray({control, name: `sections.${sectionIndex}.equivalents`});
 
     const addEquivalent = useCallback(function (): void {
-      equivalentOperations.append({
-        titles: [],
-        nameString: "",
-        hidden: false
-      });
+      equivalentOperations.append({titles: [], nameString: "", hidden: false});
     }, [equivalentOperations]);
 
     const setEquivalents = useCallback(function (update: (equivalents: Array<any>) => Array<any>): void {
-      setValue("sections.0.equivalents", update(getValues("sections.0.equivalents")));
-    }, [getValues, setValue]);
+      sectionOperations.update(sectionIndex, update(getValues(`sections.${sectionIndex}.equivalents`)));
+    }, [sectionIndex, getValues, sectionOperations]);
 
     return (
       <section styleName="root" {...rest}>
@@ -53,7 +53,7 @@ export const EditWordFormEquivalentSection = create(
         <div styleName="list">
           {(equivalents.length > 0) ? (
             <EditWordFormDndContext values={equivalents} setValues={setEquivalents}>
-              {equivalents.map((equivalent, index) => (
+              {equivalents.map((equivalent, equivalentIndex) => (
                 <EditWordFormEquivalentItem
                   styleName="item"
                   key={equivalent.id}
@@ -61,7 +61,8 @@ export const EditWordFormEquivalentSection = create(
                   form={form}
                   equivalentOperations={equivalentOperations as any}
                   dndId={equivalent.id}
-                  index={index}
+                  sectionIndex={sectionIndex}
+                  equivalentIndex={equivalentIndex}
                 />
               ))}
             </EditWordFormDndContext>

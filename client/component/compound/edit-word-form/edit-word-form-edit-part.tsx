@@ -1,7 +1,9 @@
 //
 
-import {ReactElement} from "react";
-import {AdditionalProps} from "zographia";
+import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {ReactElement, useCallback} from "react";
+import {useFieldArray} from "react-hook-form";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon} from "zographia";
 import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client/component/create";
 import {preventDefault} from "/client/util/form";
@@ -28,15 +30,37 @@ export const EditWordFormEditPart = create(
 
     const {form} = formSpec;
 
+    const {control} = form;
+    const {fields: sections, ...sectionOperations} = useFieldArray({control, name: "sections"});
+
+    const addSection = useCallback(function (): void {
+      sectionOperations.append({
+        equivalents: [{titles: [], nameString: "", hidden: false}],
+        informations: [],
+        phrases: [],
+        variations: [],
+        relations: []
+      });
+    }, [sectionOperations]);
+
     return (
       <form styleName="root" onSubmit={preventDefault} {...rest}>
         <div styleName="main">
           <EditWordFormBasicSection dictionary={dictionary} form={form}/>
-          <EditWordFormEquivalentSection dictionary={dictionary} form={form as any}/>
-          <EditWordFormInformationSection dictionary={dictionary} form={form as any}/>
-          <EditWordFormPhraseSection dictionary={dictionary} form={form as any}/>
-          <EditWordFormVariationSection dictionary={dictionary} form={form as any}/>
-          <EditWordFormRelationSection dictionary={dictionary} form={form}/>
+          {sections.map((section, sectionIndex) => (
+            <div styleName="section" key={section.id}>
+              <EditWordFormEquivalentSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
+              <EditWordFormInformationSection dictionary={dictionary} form={form as any}/>
+              <EditWordFormPhraseSection dictionary={dictionary} form={form as any}/>
+              <EditWordFormVariationSection dictionary={dictionary} form={form as any}/>
+              <EditWordFormRelationSection dictionary={dictionary} form={form}/>
+            </div>
+          ))}
+          <div styleName="plus">
+            <Button scheme="gray" variant="light" onClick={addSection}>
+              <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+            </Button>
+          </div>
         </div>
       </form>
     );

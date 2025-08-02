@@ -35,14 +35,16 @@ export const EditWordFormEquivalentItem = create(
     form,
     equivalentOperations,
     dndId,
-    index,
+    sectionIndex,
+    equivalentIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
     equivalentOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.equivalents`>, "fields">,
     dndId: string,
-    index: number,
+    sectionIndex: number,
+    equivalentIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -74,7 +76,7 @@ export const EditWordFormEquivalentItem = create(
         <fieldset styleName="field-list">
           <ControlContainer>
             <ControlLabel>{trans("label.equivalent.titles")}</ControlLabel>
-            <Controller name={`sections.0.equivalents.${index}.titles`} control={form.control} render={({field}) => (
+            <Controller name={`sections.${sectionIndex}.equivalents.${equivalentIndex}.titles`} control={form.control} render={({field}) => (
               <TagInput values={field.value} suggest={suggestEquivalentTitle} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
@@ -84,17 +86,17 @@ export const EditWordFormEquivalentItem = create(
                 note: (parts) => <span styleName="note">{parts}</span>
               })}
             </ControlLabel>
-            <Input {...register(`sections.0.equivalents.${index}.nameString`)}/>
+            <Input {...register(`sections.${sectionIndex}.equivalents.${equivalentIndex}.nameString`)}/>
           </ControlContainer>
           <ControlContainer>
             <CheckableContainer>
-              <Checkbox {...register(`sections.0.equivalents.${index}.hidden`)}/>
+              <Checkbox {...register(`sections.${sectionIndex}.equivalents.${equivalentIndex}.hidden`)}/>
               <CheckableLabel><MultiLineText>{trans("label.equivalent.hidden")}</MultiLineText></CheckableLabel>
             </CheckableContainer>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.equivalent")} onClick={() => equivalentOperations.remove(index)}>
+          <IconButton scheme="gray" variant="light" label={trans("discard.equivalent")} onClick={() => equivalentOperations.remove(equivalentIndex)}>
             <GeneralIcon icon={faMinus}/>
           </IconButton>
         </div>
