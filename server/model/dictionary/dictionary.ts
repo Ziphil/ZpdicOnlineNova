@@ -467,18 +467,18 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async suggestTitles(propertyName: string, pattern: string): Promise<Array<string>> {
     const key = (() => {
-      if (propertyName === "equivalent") {
-        return "equivalents.titles";
-      } else if (propertyName === "tag") {
+      if (propertyName === "tag") {
         return "tags";
+      } else if (propertyName === "equivalent") {
+        return "sections.equivalents.titles";
       } else if (propertyName === "information") {
-        return "informations.title";
+        return "sections.informations.title";
       } else if (propertyName === "phrase") {
-        return "phrases.titles";
+        return "sections.phrases.titles";
       } else if (propertyName === "variation") {
-        return "variations.title";
+        return "sections.variations.title";
       } else if (propertyName === "relation") {
-        return "relations.titles";
+        return "sections.relations.titles";
       } else {
         return "";
       }
