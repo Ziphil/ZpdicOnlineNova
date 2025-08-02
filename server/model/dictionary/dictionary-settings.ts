@@ -2,7 +2,7 @@
 
 import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
 import {DictionaryFontSchema} from "/server/model/dictionary/dictionary-font";
-import {TemplateWordSchema} from "/server/model/word/template-word";
+import {TemplateWordSchema} from "/server/model/template-word/template-word";
 
 
 @modelOptions({schemaOptions: {autoCreate: false, collection: "dictionarySettings"}})

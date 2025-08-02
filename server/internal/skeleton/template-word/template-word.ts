@@ -1,10 +1,10 @@
 //
 
 import {ObjectId} from "/server/internal/skeleton/common";
+import {TemplateEquivalent} from "/server/internal/skeleton/template-word/template-equivalent";
+import {TemplatePhrase} from "/server/internal/skeleton/template-word/template-phrase";
+import {TemplateRelation} from "/server/internal/skeleton/template-word/template-relation";
 import {Information} from "/server/internal/skeleton/word/information";
-import {TemplateEquivalent} from "/server/internal/skeleton/word/template-equivalent";
-import {TemplatePhrase} from "/server/internal/skeleton/word/template-phrase";
-import {TemplateRelation} from "/server/internal/skeleton/word/template-relation";
 import {Variation} from "/server/internal/skeleton/word/variation";
 
 

@@ -1,9 +1,9 @@
 //
 
+import {TemplateEquivalentCreator} from "/server/internal/creator/template-word/template-equivalent";
+import {TemplatePhraseCreator} from "/server/internal/creator/template-word/template-phrase";
+import {TemplateRelationCreator} from "/server/internal/creator/template-word/template-relation";
 import {InformationCreator} from "/server/internal/creator/word/information";
-import {TemplateEquivalentCreator} from "/server/internal/creator/word/template-equivalent";
-import {TemplatePhraseCreator} from "/server/internal/creator/word/template-phrase";
-import {TemplateRelationCreator} from "/server/internal/creator/word/template-relation";
 import {VariationCreator} from "/server/internal/creator/word/variation";
 import type {
   TemplateWord as TemplateWordSkeleton

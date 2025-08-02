@@ -1,10 +1,10 @@
 //
 
 import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
+import {TemplateEquivalentSchema} from "/server/model/template-word/template-equivalent";
+import {TemplatePhraseSchema} from "/server/model/template-word/template-phrase";
+import {TemplateRelationSchema} from "/server/model/template-word/template-relation";
 import {InformationSchema} from "/server/model/word/information";
-import {TemplateEquivalentSchema} from "/server/model/word/template-equivalent";
-import {TemplatePhraseSchema} from "/server/model/word/template-phrase";
-import {TemplateRelationSchema} from "/server/model/word/template-relation";
 import {VariationSchema} from "/server/model/word/variation";
 
 
