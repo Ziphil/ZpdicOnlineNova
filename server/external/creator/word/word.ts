@@ -24,12 +24,12 @@ export namespace WordCreator {
       number: raw.number,
       name: raw.name,
       pronunciation: raw.pronunciation ?? "",
-      equivalents: raw.equivalents.map(EquivalentCreator.skeletonize),
       tags: raw.tags,
-      informations: raw.informations.map(InformationCreator.skeletonize),
-      phrases: raw.phrases?.map(PhraseCreator.skeletonize) ?? [],
-      variations: raw.variations.map(VariationCreator.skeletonize),
-      relations: raw.relations.map(RelationCreator.skeletonize)
+      equivalents: raw.sections[0]?.equivalents.map(EquivalentCreator.skeletonize) ?? [],
+      informations: raw.sections[0]?.informations.map(InformationCreator.skeletonize) ?? [],
+      phrases: raw.sections[0]?.phrases?.map(PhraseCreator.skeletonize) ?? [],
+      variations: raw.sections[0]?.variations.map(VariationCreator.skeletonize) ?? [],
+      relations: raw.sections[0]?.relations.map(RelationCreator.skeletonize) ?? []
     } satisfies WordSkeleton;
     return skeleton;
   }

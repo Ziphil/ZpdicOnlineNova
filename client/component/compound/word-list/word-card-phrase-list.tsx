@@ -6,29 +6,29 @@ import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
 import {createTermNode} from "/client/util/dictionary";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
+import {DictionaryWithExecutors, Section} from "/server/internal/skeleton";
 
 
 export const WordCardPhraseList = create(
   require("./word-card-phrase-list.scss"), "WordCardPhraseList",
   function ({
     dictionary,
-    word,
+    section,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | WordWithExamples,
+    section: Section,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    return (word.phrases.length > 0) ? (
+    return (section.phrases.length > 0) ? (
       <div styleName="root" {...rest}>
         <section>
           <h4 styleName="heading">
             {dictionary.settings.phraseTitle}
           </h4>
           <ul styleName="list">
-            {word.phrases.map((phrase, index) => (
+            {section.phrases.map((phrase, index) => (
               <li styleName="item" key={index}>
                 <span styleName="icon" {...aria({hidden: true})}>
                   <FontAwesomeIcon icon={faCaretRight}/>

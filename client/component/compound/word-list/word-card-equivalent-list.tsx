@@ -4,22 +4,22 @@ import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
 import {createTermNode} from "/client/util/dictionary";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
+import {DictionaryWithExecutors, Section} from "/server/internal/skeleton";
 
 
 export const WordCardEquivalentList = create(
   require("./word-card-equivalent-list.scss"), "WordCardEquivalentList",
   function ({
     dictionary,
-    word,
+    section,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | WordWithExamples,
+    section: Section,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    const visibleEquivalents = useMemo(() => word.equivalents.filter((equivalent) => !equivalent.hidden), [word.equivalents]);
+    const visibleEquivalents = useMemo(() => section.equivalents.filter((equivalent) => !equivalent.hidden), [section.equivalents]);
 
     return (visibleEquivalents.length > 0) ? (
       <div styleName="root" {...rest}>

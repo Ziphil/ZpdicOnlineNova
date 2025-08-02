@@ -37,7 +37,7 @@ export const EditWordFormVariationItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    variationOperations: Omit<UseFieldArrayReturn<any, "variations">, "fields">,
+    variationOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.variations`>, "fields">,
     dndId: string,
     index: number,
     className?: string
@@ -52,7 +52,7 @@ export const EditWordFormVariationItem = create(
       if (dictionary.akrantiain !== null) {
         try {
           const value = form.getValues();
-          form.setValue(`variations.${index}.pronunciation`, dictionary.akrantiain.convert(value.variations[index].name));
+          form.setValue(`sections.0.variations.${index}.pronunciation`, dictionary.akrantiain.convert(value.sections[0].variations[index].name));
         } catch (error) {
           console.log(error);
         }
@@ -82,16 +82,16 @@ export const EditWordFormVariationItem = create(
         <fieldset styleName="field-list">
           <ControlContainer>
             <ControlLabel>{trans("label.variation.title")}</ControlLabel>
-            <Input suggest={suggestVariationTitle} {...register(`variations.${index}.title`)}/>
+            <Input suggest={suggestVariationTitle} {...register(`sections.0.variations.${index}.title`)}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.variation.name")}</ControlLabel>
-            <Input {...register(`variations.${index}.name`)}/>
+            <Input {...register(`sections.0.variations.${index}.name`)}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.variation.pronunciation")}</ControlLabel>
             <div styleName="row">
-              <Input {...register(`variations.${index}.pronunciation`)}/>
+              <Input {...register(`sections.0.variations.${index}.pronunciation`)}/>
               {(dictionary.akrantiain !== null) && (
                 <Button variant="light" onClick={generatePronunciation}>
                   <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>

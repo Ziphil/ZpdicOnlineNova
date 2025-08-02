@@ -12,11 +12,8 @@ import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {User} from "/server/model/user/user";
-import {EquivalentSchema} from "/server/model/word/equivalent";
-import {InformationSchema} from "/server/model/word/information";
-import {PhraseSchema} from "/server/model/word/phrase";
-import {Relation, RelationSchema} from "/server/model/word/relation";
-import {VariationSchema} from "/server/model/word/variation";
+import {Relation} from "/server/model/word/relation";
+import {SectionModel, SectionSchema} from "/server/model/word/section";
 import {LogUtil} from "/server/util/log";
 
 
@@ -35,23 +32,11 @@ export class WordSchema extends DiscardableSchema {
   @prop()
   public pronunciation?: string;
 
-  @prop({required: true, type: EquivalentSchema})
-  public equivalents!: Array<EquivalentSchema>;
-
   @prop({required: true, type: String})
   public tags!: Array<string>;
 
-  @prop({required: true, type: InformationSchema})
-  public informations!: Array<InformationSchema>;
-
-  @prop({type: PhraseSchema})
-  public phrases?: Array<PhraseSchema>;
-
-  @prop({required: true, type: VariationSchema})
-  public variations!: Array<VariationSchema>;
-
-  @prop({required: true, type: RelationSchema})
-  public relations!: Array<RelationSchema>;
+  @prop({required: true, type: SectionSchema})
+  public sections!: Array<SectionSchema>;
 
   @prop({ref: "UserSchema"})
   public updatedUser?: Ref<User>;
@@ -109,13 +94,21 @@ export class WordSchema extends DiscardableSchema {
     return word;
   }
 
+  /** 指定された番号の単語データに関連語を新たに追加します。
+   * 指定された単語データにセクションが存在しない場合は、新たにセクションを作成し、そこに関連語を追加します。
+   * 指定された単語データにセクションが存在する場合は、最初のセクションに関連語を追加します。 */
   public static async addRelation(dictionary: Dictionary, number: number, relation: Relation): Promise<Word | null> {
     const currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", number);
     if (currentWord) {
-      const existRelation = currentWord.relations.some((existingRelation) => existingRelation.number === relation.number);
+      const existRelation = currentWord.sections.some((existingSection) => existingSection.relations.some((existingRelation) => existingRelation.number === relation.number));
       if (!existRelation) {
         const resultWord = currentWord.copy();
-        resultWord.relations.push(relation);
+        if (resultWord.sections.length <= 0) {
+          const section = new SectionModel({equivalents: [], informations: [], phrases: [], variations: [], relations: [relation]});
+          resultWord.sections.push(section);
+        } else {
+          resultWord.sections[0].relations.push(relation);
+        }
         resultWord.createdDate = currentWord.createdDate;
         resultWord.updatedDate = new Date();
         await currentWord.flagDiscarded();
@@ -130,7 +123,7 @@ export class WordSchema extends DiscardableSchema {
     }
   }
 
-  /** 古い履歴データを完全に削除します。
+  /** 古い単語履歴データを完全に削除します。
    * 論理削除ではなく物理削除を行うので、もとには戻せません。*/
   public static async discardOlds(duration: number): Promise<void> {
     const date = new Date(Date.now() - duration * 24 * 60 * 60 * 1000);
@@ -141,19 +134,24 @@ export class WordSchema extends DiscardableSchema {
   /** `word` に渡された単語データ内の関連語データのうち、現在存在していないものを削除します。
    * この処理は、`word` 内の関連語データを上書きします。*/
   private static async filterRelations(dictionary: Dictionary, word: Word): Promise<void> {
-    const relationNumbers = word.relations.map((relation) => relation.number);
+    const relationNumbers = word.sections.flatMap((section) => section.relations.map((relation) => relation.number));
     const relationWords = await WordModel.findExist().where("dictionary", dictionary).where("number", relationNumbers);
-    word.relations = word.relations.filter((relation) => relationWords.some((relationWord) => relationWord.number === relation.number));
+    word.sections = word.sections.map((section) => {
+      section.relations = section.relations.filter((relation) => relationWords.some((relationWord) => relationWord.number === relation.number));
+      return section;
+    });
   }
 
   /** 単語データの編集によって単語の綴りが変化した場合に、それによって起こり得る関連語データの不整合を修正します。
    * この処理では、既存の単語データを上書きするので、編集履歴は残りません。*/
   private static async correctRelationsByEdit(dictionary: Dictionary, word: Word): Promise<void> {
-    const affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("relations.number", word.number);
+    const affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("sections.relations.number", word.number);
     for (const affectedWord of affectedWords) {
-      for (const relation of affectedWord.relations) {
-        if (relation.number === word.number) {
-          relation.name = word.name;
+      for (const section of affectedWord.sections) {
+        for (const relation of section.relations) {
+          if (relation.number === word.number) {
+            relation.name = word.name;
+          }
         }
       }
     }
@@ -166,11 +164,14 @@ export class WordSchema extends DiscardableSchema {
    * この処理では、修正が必要な既存の単語データを論理削除した上で、関連語データの不整合を修正した新しい単語データを作成します。
    * そのため、この処理の内容は、修正を行った単語データに編集履歴として残ります。*/
   private static async correctRelationsByDiscard(dictionary: Dictionary, word: Word): Promise<void> {
-    const affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("relations.number", word.number);
+    const affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("sections.relations.number", word.number);
     const changedWords = [];
     for (const affectedWord of affectedWords) {
       const changedWord = affectedWord.copy();
-      changedWord.relations = affectedWord.relations.filter((relation) => relation.number !== word.number);
+      changedWord.sections = affectedWord.sections.map((section) => {
+        section.relations = section.relations.filter((relation) => relation.number !== word.number);
+        return section;
+      });
       changedWord.updatedDate = new Date();
       changedWords.push(changedWord);
     }
@@ -182,17 +183,15 @@ export class WordSchema extends DiscardableSchema {
 
   /** この単語データをコピーした新しい単語データを返します。*/
   public copy(this: Word): Word {
-    const dictionary = this.dictionary;
-    const number = this.number;
-    const name = this.name;
-    const pronunciation = this.pronunciation;
-    const equivalents = this.equivalents;
-    const tags = this.tags;
-    const informations = this.informations;
-    const variations = this.variations;
-    const relations = this.relations;
-    const createdDate = this.createdDate;
-    const word = new WordModel({dictionary, number, name, pronunciation, equivalents, tags, informations, variations, relations, createdDate});
+    const word = new WordModel({
+      dictionary: this.dictionary,
+      number: this.number,
+      name: this.name,
+      pronunciation: this.pronunciation,
+      tags: this.tags,
+      sections: this.sections.map((section) => new SectionModel(section)),
+      createdDate: this.createdDate
+    });
     return word;
   }
 

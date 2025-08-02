@@ -40,7 +40,7 @@ export const EditWordFormEquivalentItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    equivalentOperations: Omit<UseFieldArrayReturn<any, "equivalents">, "fields">,
+    equivalentOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.equivalents`>, "fields">,
     dndId: string,
     index: number,
     className?: string
@@ -74,7 +74,7 @@ export const EditWordFormEquivalentItem = create(
         <fieldset styleName="field-list">
           <ControlContainer>
             <ControlLabel>{trans("label.equivalent.titles")}</ControlLabel>
-            <Controller name={`equivalents.${index}.titles`} control={form.control} render={({field}) => (
+            <Controller name={`sections.0.equivalents.${index}.titles`} control={form.control} render={({field}) => (
               <TagInput values={field.value} suggest={suggestEquivalentTitle} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
@@ -84,11 +84,11 @@ export const EditWordFormEquivalentItem = create(
                 note: (parts) => <span styleName="note">{parts}</span>
               })}
             </ControlLabel>
-            <Input {...register(`equivalents.${index}.nameString`)}/>
+            <Input {...register(`sections.0.equivalents.${index}.nameString`)}/>
           </ControlContainer>
           <ControlContainer>
             <CheckableContainer>
-              <Checkbox {...register(`equivalents.${index}.hidden`)}/>
+              <Checkbox {...register(`sections.0.equivalents.${index}.hidden`)}/>
               <CheckableLabel><MultiLineText>{trans("label.equivalent.hidden")}</MultiLineText></CheckableLabel>
             </CheckableContainer>
           </ControlContainer>

@@ -8,22 +8,22 @@ import {Link} from "/client/component/atom/link";
 import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
 import {getWordHref} from "/client/util/dictionary";
-import {DictionaryWithExecutors, Relation, Word, WordWithExamples} from "/server/internal/skeleton";
+import {DictionaryWithExecutors, Relation, Section} from "/server/internal/skeleton";
 
 
 export const WordCardRelationList = create(
   require("./word-card-relation-list.scss"), "WordCardRelationList",
   function ({
     dictionary,
-    word,
+    section,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | WordWithExamples,
+    section: Section,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    const groupedRelations = useMemo(() => getGroupedRelations(word), [word]);
+    const groupedRelations = useMemo(() => getGroupedRelations(section), [section]);
 
     return (groupedRelations.length > 0) ? (
       <div styleName="root" {...rest}>
@@ -59,9 +59,9 @@ export const WordCardRelationList = create(
 );
 
 
-function getGroupedRelations(word: Word | WordWithExamples): Array<[string, [Array<string>, Array<Relation>]]> {
+function getGroupedRelations(section: Section): Array<[string, [Array<string>, Array<Relation>]]> {
   const groupedRelations = new Map<string, [Array<string>, Array<Relation>]>();
-  for (const relation of word.relations) {
+  for (const relation of section.relations) {
     const titles = relation.titles;
     const titleString = titles.join("\n");
     if (groupedRelations.get(titleString) === undefined) {

@@ -49,8 +49,8 @@ export class NormalWordParameter extends WordParameter {
       if ((mode === "name" || mode === "both") && (type === "exact" || type === "prefix")) {
         const needle = WordParameter.createNeedle(this.text, "exact", {case: false});
         let aggregate = WordModel.aggregate();
-        aggregate = aggregate.match(WordModel.findExist().where("dictionary", dictionary["_id"]).where("variations.name", needle).getFilter());
-        aggregate = aggregate.addFields({"oldVariations": "$variations"});
+        aggregate = aggregate.match(WordModel.findExist().where("dictionary", dictionary["_id"]).where("sections.variations.name", needle).getFilter());
+        aggregate = aggregate.addFields({"oldVariations": "$sections.variations"});
         aggregate = aggregate.unwind("$oldVariations");
         aggregate = aggregate.match(WordModel.where("oldVariations.name", needle).getFilter());
         aggregate = aggregate.project({"title": "$oldVariations.title", "word": "$$CURRENT"});

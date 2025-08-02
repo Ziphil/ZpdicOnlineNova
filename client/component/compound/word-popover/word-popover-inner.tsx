@@ -40,7 +40,7 @@ export const WordPopoverInner = create(
       <div styleName="root" {...rest}>
         <div styleName="name">{actualWord.name}</div>
         <div styleName="equivalent-list">
-          {actualWord.equivalents.map((equivalent, index) => (
+          {actualWord.sections.flatMap((section) => section.equivalents).map((equivalent, index) => (
             <MultiLineText styleName="equivalent-text" key={index} is="div">
               {equivalent.titles.map((title, index) => (!!title) && (
                 <Tag key={index} styleName="tag" variant="light">{title}</Tag>

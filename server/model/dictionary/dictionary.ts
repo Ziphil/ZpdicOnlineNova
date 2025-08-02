@@ -541,14 +541,16 @@ export class DictionarySchema extends DiscardableSchema {
       wholeWordNameLengths.kept += [...word.name].length;
       wholeWordNameLengths.nfd += [...word.name.normalize("NFD")].length;
       wholeWordNameLengths.nfc += [...word.name.normalize("NFC")].length;
-      for (const equivalent of word.equivalents) {
-        wholeEquivalentNameCount += equivalent.names.length;
-      }
-      for (const information of word.informations) {
-        wholeInformationCount ++;
-        wholeInformationTextLengths.kept += [...information.text].length;
-        wholeInformationTextLengths.nfd += [...information.text.normalize("NFD")].length;
-        wholeInformationTextLengths.nfc += [...information.text.normalize("NFC")].length;
+      for (const section of word.sections) {
+        for (const equivalent of section.equivalents) {
+          wholeEquivalentNameCount += equivalent.names.length;
+        }
+        for (const information of section.informations) {
+          wholeInformationCount ++;
+          wholeInformationTextLengths.kept += [...information.text].length;
+          wholeInformationTextLengths.nfd += [...information.text.normalize("NFD")].length;
+          wholeInformationTextLengths.nfc += [...information.text.normalize("NFC")].length;
+        }
       }
     }
     for await (const example of exampleQuery) {

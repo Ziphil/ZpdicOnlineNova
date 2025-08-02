@@ -38,7 +38,7 @@ export const EditWordFormRelationItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: EditWordSpec["form"],
-    relationOperations: Omit<UseFieldArrayReturn<any, "relations">, "fields">,
+    relationOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.relations`>, "fields">,
     dndId: string,
     index: number,
     className?: string
@@ -72,19 +72,19 @@ export const EditWordFormRelationItem = create(
         <fieldset styleName="field-list">
           <ControlContainer>
             <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
-            <Controller name={`relations.${index}.titles`} control={form.control} render={({field}) => (
+            <Controller name={`sections.0.relations.${index}.titles`} control={form.control} render={({field}) => (
               <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.relation.name")}</ControlLabel>
-            <Controller name={`relations.${index}.word`} control={form.control} render={({field}) => (
+            <Controller name={`sections.0.relations.${index}.word`} control={form.control} render={({field}) => (
               <RelationWordSelect dictionary={dictionary} word={field.value} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
           <ControlContainer>
             <CheckableContainer>
-              <Checkbox {...register(`relations.${index}.mutual`)}/>
+              <Checkbox {...register(`sections.0.relations.${index}.mutual`)}/>
               <CheckableLabel>{trans("label.relation.mutual")}</CheckableLabel>
             </CheckableContainer>
           </ControlContainer>

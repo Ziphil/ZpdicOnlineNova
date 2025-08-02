@@ -36,7 +36,7 @@ export const EditWordFormPhraseItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    phraseOperations: Omit<UseFieldArrayReturn<any, "phrases">, "fields">,
+    phraseOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.phrases`>, "fields">,
     dndId: string,
     index: number,
     className?: string
@@ -70,17 +70,17 @@ export const EditWordFormPhraseItem = create(
         <fieldset styleName="field-list">
           <ControlContainer>
             <ControlLabel>{trans("label.phrase.titles")}</ControlLabel>
-            <Controller name={`phrases.${index}.titles`} control={form.control} render={({field}) => (
+            <Controller name={`sections.0.phrases.${index}.titles`} control={form.control} render={({field}) => (
               <TagInput values={field.value} suggest={suggestPhraseTitle} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.phrase.form")}</ControlLabel>
-            <Input {...register(`phrases.${index}.form`)}/>
+            <Input {...register(`sections.0.phrases.${index}.form`)}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{transNode("label.phrase.terms")}</ControlLabel>
-            <Input {...register(`phrases.${index}.termString`)}/>
+            <Input {...register(`sections.0.phrases.${index}.termString`)}/>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">

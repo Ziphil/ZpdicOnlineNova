@@ -34,7 +34,7 @@ export const EditTemplateWordFormRelationItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: EditTemplateWordSpec["form"],
-    relationOperations: Omit<UseFieldArrayReturn<any, "relations">, "fields">,
+    relationOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.relations`>, "fields">,
     dndId: string,
     index: number,
     className?: string
@@ -68,7 +68,7 @@ export const EditTemplateWordFormRelationItem = create(
         <fieldset styleName="field-list">
           <ControlContainer>
             <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
-            <Controller name={`relations.${index}.titles`} control={form.control} render={({field}) => (
+            <Controller name={`sections.0.relations.${index}.titles`} control={form.control} render={({field}) => (
               <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
             )}/>
           </ControlContainer>

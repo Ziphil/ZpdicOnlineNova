@@ -63,12 +63,14 @@ function getWord(proposal: Proposal): EditableWord {
     number: null,
     name: "",
     pronunciation: "",
-    equivalents: [{titles: [], names: [proposal.name], nameString: proposal.name, hidden: false}],
     tags: [],
-    informations: [],
-    phrases: [],
-    variations: [],
-    relations: []
+    sections: [{
+      equivalents: [{titles: [], names: [proposal.name], nameString: proposal.name, hidden: false}],
+      informations: [],
+      phrases: [],
+      variations: [],
+      relations: []
+    }]
   };
   return word;
 }

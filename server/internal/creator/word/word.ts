@@ -1,11 +1,7 @@
 //
 
 import {ExampleCreator} from "/server/internal/creator/example/example";
-import {EquivalentCreator} from "/server/internal/creator/word/equivalent";
-import {InformationCreator} from "/server/internal/creator/word/information";
-import {PhraseCreator} from "/server/internal/creator/word/phrase";
-import {RelationCreator} from "/server/internal/creator/word/relation";
-import {VariationCreator} from "/server/internal/creator/word/variation";
+import {SectionCreator} from "/server/internal/creator/word/section";
 import type {
   Word as WordSkeleton,
   WordWithExamples as WordSkeletonWithExamples
@@ -24,12 +20,8 @@ export namespace WordCreator {
       number: raw.number,
       name: raw.name,
       pronunciation: raw.pronunciation ?? "",
-      equivalents: raw.equivalents.map(EquivalentCreator.skeletonize),
       tags: raw.tags,
-      informations: raw.informations.map(InformationCreator.skeletonize),
-      phrases: raw.phrases?.map(PhraseCreator.skeletonize) ?? [],
-      variations: raw.variations.map(VariationCreator.skeletonize),
-      relations: raw.relations.map(RelationCreator.skeletonize),
+      sections: raw.sections.map(SectionCreator.skeletonize),
       updatedUser: (raw.updatedUser !== undefined) ? {id: raw.updatedUser} : undefined,
       createdDate: raw.createdDate?.toISOString() ?? undefined,
       updatedDate: raw.updatedDate?.toISOString() ?? undefined

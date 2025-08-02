@@ -33,7 +33,7 @@ export const EditWordFormPhraseSection = create(
     const {trans, transNode} = useTrans("editWordForm");
 
     const {control, getValues, setValue} = form;
-    const {fields: phrases, ...phraseOperations} = useFieldArray({control, name: "phrases"});
+    const {fields: phrases, ...phraseOperations} = useFieldArray({control, name: "sections.0.phrases"});
 
     const addPhrase = useCallback(function (): void {
       phraseOperations.append({
@@ -44,7 +44,7 @@ export const EditWordFormPhraseSection = create(
     }, [phraseOperations]);
 
     const setPhrases = useCallback(function (update: (phrases: Array<any>) => Array<any>): void {
-      setValue("phrases", update(getValues("phrases")));
+      setValue("sections.0.phrases", update(getValues("sections.0.phrases")));
     }, [getValues, setValue]);
 
     return (
@@ -59,7 +59,7 @@ export const EditWordFormPhraseSection = create(
                   key={phrase.id}
                   dictionary={dictionary}
                   form={form}
-                  phraseOperations={phraseOperations}
+                  phraseOperations={phraseOperations as any}
                   dndId={phrase.id}
                   index={index}
                 />

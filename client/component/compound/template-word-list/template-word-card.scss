@@ -20,6 +20,12 @@
   list-style: none;
 }
 
+.count-section-item {
+  &:not(:first-child)::before {
+    content: " · ";
+  }
+}
+
 .footer {
   column-gap: 3zu;
   display: flex;

@@ -32,7 +32,7 @@ export const EditWordFormRelationSection = create(
     const {trans} = useTrans("editWordForm");
 
     const {control, getValues, setValue} = form;
-    const {fields: relations, ...relationOperations} = useFieldArray({control, name: "relations"});
+    const {fields: relations, ...relationOperations} = useFieldArray({control, name: "sections.0.relations"});
 
     const addRelation = useCallback(function (): void {
       relationOperations.append({
@@ -43,7 +43,7 @@ export const EditWordFormRelationSection = create(
     }, [relationOperations]);
 
     const setRelations = useCallback(function (update: (relations: Array<any>) => Array<any>): void {
-      setValue("relations", update(getValues("relations")));
+      setValue("sections.0.relations", update(getValues("sections.0.relations")));
     }, [getValues, setValue]);
 
     return (
@@ -58,7 +58,7 @@ export const EditWordFormRelationSection = create(
                   key={relation.id}
                   dictionary={dictionary}
                   form={form}
-                  relationOperations={relationOperations}
+                  relationOperations={relationOperations as any}
                   dndId={relation.id}
                   index={index}
                 />

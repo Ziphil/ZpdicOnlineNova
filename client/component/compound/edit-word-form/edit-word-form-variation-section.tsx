@@ -33,7 +33,7 @@ export const EditWordFormVariationSection = create(
     const {trans} = useTrans("editWordForm");
 
     const {control, getValues, setValue} = form;
-    const {fields: variations, ...variationOperations} = useFieldArray({control, name: "variations"});
+    const {fields: variations, ...variationOperations} = useFieldArray({control, name: "sections.0.variations"});
 
     const addVariation = useCallback(function (): void {
       variationOperations.append({
@@ -44,7 +44,7 @@ export const EditWordFormVariationSection = create(
     }, [variationOperations]);
 
     const setVariations = useCallback(function (update: (variations: Array<any>) => Array<any>): void {
-      setValue("variations", update(getValues("variations")));
+      setValue("sections.0.variations", update(getValues("sections.0.variations")));
     }, [getValues, setValue]);
 
     return (
@@ -59,7 +59,7 @@ export const EditWordFormVariationSection = create(
                   key={variation.id}
                   dictionary={dictionary}
                   form={form}
-                  variationOperations={variationOperations}
+                  variationOperations={variationOperations as any}
                   dndId={variation.id}
                   index={index}
                 />

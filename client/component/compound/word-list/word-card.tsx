@@ -79,12 +79,16 @@ export const WordCard = create(
           <WordCardHeading dictionary={dictionary} word={word}/>
           <Collapsible styleName="collapsible">
             <CollapsibleBody styleName="collapsible-body" height="20rem">
-              <WordCardEquivalentList dictionary={dictionary} word={word}/>
-              <WordCardInformationList dictionary={dictionary} word={word}/>
-              <WordCardPhraseList dictionary={dictionary} word={word}/>
+              {(word.sections.length > 0) && (
+                <>
+                  <WordCardEquivalentList dictionary={dictionary} section={word.sections[0]}/>
+                  <WordCardInformationList dictionary={dictionary} section={word.sections[0]}/>
+                  <WordCardPhraseList dictionary={dictionary} section={word.sections[0]}/>
+                  <WordCardVariationList dictionary={dictionary} section={word.sections[0]}/>
+                  <WordCardRelationList dictionary={dictionary} section={word.sections[0]}/>
+                </>
+              )}
               <WordCardExampleList dictionary={dictionary} word={word}/>
-              <WordCardVariationList dictionary={dictionary} word={word}/>
-              <WordCardRelationList dictionary={dictionary} word={word}/>
             </CollapsibleBody>
             <CollapsibleButton styleName="collapsible-button"/>
           </Collapsible>

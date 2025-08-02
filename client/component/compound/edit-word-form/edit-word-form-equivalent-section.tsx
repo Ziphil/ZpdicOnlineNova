@@ -33,7 +33,7 @@ export const EditWordFormEquivalentSection = create(
     const {trans, transNode} = useTrans("editWordForm");
 
     const {control, getValues, setValue} = form;
-    const {fields: equivalents, ...equivalentOperations} = useFieldArray({control, name: "equivalents"});
+    const {fields: equivalents, ...equivalentOperations} = useFieldArray({control, name: "sections.0.equivalents"});
 
     const addEquivalent = useCallback(function (): void {
       equivalentOperations.append({
@@ -44,7 +44,7 @@ export const EditWordFormEquivalentSection = create(
     }, [equivalentOperations]);
 
     const setEquivalents = useCallback(function (update: (equivalents: Array<any>) => Array<any>): void {
-      setValue("equivalents", update(getValues("equivalents")));
+      setValue("sections.0.equivalents", update(getValues("sections.0.equivalents")));
     }, [getValues, setValue]);
 
     return (
@@ -59,7 +59,7 @@ export const EditWordFormEquivalentSection = create(
                   key={equivalent.id}
                   dictionary={dictionary}
                   form={form}
-                  equivalentOperations={equivalentOperations}
+                  equivalentOperations={equivalentOperations as any}
                   dndId={equivalent.id}
                   index={index}
                 />

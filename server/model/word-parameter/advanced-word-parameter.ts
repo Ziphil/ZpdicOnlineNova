@@ -52,13 +52,13 @@ export class AdvancedWordParameterElement extends WordParameter {
       let eachQuery = WordModel.find().where(key, needle);
       if (this.title) {
         if (this.mode === "equivalent") {
-          eachQuery = eachQuery.where("equivalents.titles", this.title);
+          eachQuery = eachQuery.where("sections.equivalents.titles", this.title);
         } else if (this.mode === "information") {
-          eachQuery = eachQuery.where("informations.title", this.title);
+          eachQuery = eachQuery.where("sections.informations.title", this.title);
         } else if (this.mode === "variation") {
-          eachQuery = eachQuery.where("variations.title", this.title);
+          eachQuery = eachQuery.where("sections.variations.title", this.title);
         } else if (this.mode === "relation") {
-          eachQuery = eachQuery.where("relations.titles", this.title);
+          eachQuery = eachQuery.where("sections.relations.titles", this.title);
         }
       }
       const eachFilter = eachQuery.getFilter();

@@ -40,7 +40,7 @@ export const EditWordFormInformationItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    informationOperations: Omit<UseFieldArrayReturn<any, "informations">, "fields">,
+    informationOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.informations`>, "fields">,
     dndId: string,
     index: number,
     className?: string
@@ -74,15 +74,15 @@ export const EditWordFormInformationItem = create(
         <fieldset styleName="field-list">
           <ControlContainer>
             <ControlLabel>{trans("label.information.title")}</ControlLabel>
-            <Input suggest={suggestInformationTitle} {...register(`informations.${index}.title`)}/>
+            <Input suggest={suggestInformationTitle} {...register(`sections.0.informations.${index}.title`)}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.information.text")}</ControlLabel>
-            <Textarea styleName="textarea" {...register(`informations.${index}.text`)}/>
+            <Textarea styleName="textarea" {...register(`sections.0.informations.${index}.text`)}/>
           </ControlContainer>
           <ControlContainer>
             <CheckableContainer>
-              <Checkbox {...register(`informations.${index}.hidden`)}/>
+              <Checkbox {...register(`sections.0.informations.${index}.hidden`)}/>
               <CheckableLabel><MultiLineText>{trans("label.information.hidden")}</MultiLineText></CheckableLabel>
             </CheckableContainer>
           </ControlContainer>

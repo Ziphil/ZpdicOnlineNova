@@ -1,11 +1,7 @@
 //
 
 import {ObjectId} from "/server/internal/skeleton/common";
-import {TemplateEquivalent} from "/server/internal/skeleton/template-word/template-equivalent";
-import {TemplatePhrase} from "/server/internal/skeleton/template-word/template-phrase";
-import {TemplateRelation} from "/server/internal/skeleton/template-word/template-relation";
-import {Information} from "/server/internal/skeleton/word/information";
-import {Variation} from "/server/internal/skeleton/word/variation";
+import {TemplateSection} from "/server/internal/skeleton/template-word/template-section";
 
 
 export interface EditableTemplateWord {
@@ -14,12 +10,8 @@ export interface EditableTemplateWord {
   title: string;
   name: string;
   pronunciation: string;
-  equivalents: Array<TemplateEquivalent>;
   tags: Array<string>;
-  informations: Array<Information>;
-  phrases: Array<TemplatePhrase>;
-  variations: Array<Variation>;
-  relations: Array<TemplateRelation>;
+  sections: Array<TemplateSection>;
 
 }
 
@@ -31,12 +23,8 @@ export namespace EditableTemplateWord {
     title: "",
     name: "",
     pronunciation: "",
-    equivalents: [],
     tags: [],
-    informations: [],
-    phrases: [],
-    variations: [],
-    relations: []
+    sections: []
   } satisfies EditableTemplateWord;
 
 }
@@ -48,11 +36,7 @@ export interface TemplateWord {
   title: string;
   name: string;
   pronunciation: string;
-  equivalents: Array<TemplateEquivalent>;
   tags: Array<string>;
-  informations: Array<Information>;
-  phrases: Array<TemplatePhrase>;
-  variations: Array<Variation>;
-  relations: Array<TemplateRelation>;
+  sections: Array<TemplateSection>;
 
 }

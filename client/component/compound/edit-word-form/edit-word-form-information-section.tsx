@@ -34,7 +34,7 @@ export const EditWordFormInformationSection = create(
     const {trans} = useTrans("editWordForm");
 
     const {control, getValues, setValue} = form;
-    const {fields: informations, ...informationOperations} = useFieldArray({control, name: "informations"});
+    const {fields: informations, ...informationOperations} = useFieldArray({control, name: "sections.0.informations"});
 
     const addInformation = useCallback(function (): void {
       informationOperations.append({
@@ -45,7 +45,7 @@ export const EditWordFormInformationSection = create(
     }, [informationOperations]);
 
     const setInformations = useCallback(function (update: (informations: Array<any>) => Array<any>): void {
-      setValue("informations", update(getValues("informations")));
+      setValue("sections.0.informations", update(getValues("sections.0.informations")));
     }, [getValues, setValue]);
 
     return (
@@ -60,7 +60,7 @@ export const EditWordFormInformationSection = create(
                   key={information.id}
                   dictionary={dictionary}
                   form={form}
-                  informationOperations={informationOperations}
+                  informationOperations={informationOperations as any}
                   dndId={information.id}
                   index={index}
                 />

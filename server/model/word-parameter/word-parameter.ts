@@ -20,19 +20,19 @@ export abstract class WordParameter {
     if (mode === "name") {
       return ["name"];
     } else if (mode === "equivalent") {
-      return ["equivalents.names", "phrases.terms"];
+      return ["sections.equivalents.names", "sections.phrases.terms"];
     } else if (mode === "both") {
-      return ["name", "equivalents.names", "phrases.terms"];
+      return ["name", "sections.equivalents.names", "sections.phrases.terms"];
     } else if (mode === "tag") {
       return ["tags"];
     } else if (mode === "information") {
-      return ["informations.text"];
+      return ["sections.informations.text"];
     } else if (mode === "variation") {
-      return ["variations.name"];
+      return ["sections.variations.name"];
     } else if (mode === "relation") {
-      return ["relations.name"];
+      return ["sections.relations.name"];
     } else if (mode === "content") {
-      return ["name", "equivalents.names", "phrases.terms", "informations.text", "variations.name", "relations.name"];
+      return ["name", "sections.equivalents.names", "sections.phrases.terms", "sections.informations.text", "sections.variations.name", "sections.relations.name"];
     } else {
       const dummy = mode satisfies never;
       throw new Error("cannot happen");

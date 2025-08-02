@@ -15,7 +15,7 @@ export const RelationWordSelectOption = create(
     ...rest
   }: {
     dictionary: Dictionary,
-    word: Word,
+    word: RelationWord | Word,
     className?: string
   }): ReactElement {
 
@@ -39,8 +39,8 @@ export const RelationWordSelectOption = create(
 
 
 function getEquivalentString(word: RelationWord | Word): string | null {
-  if ("equivalents" in word) {
-    return word.equivalents.map((equivalent) => equivalent.names.join(", ")).join(", ");
+  if ("sections" in word) {
+    return word.sections.flatMap((section) => section.equivalents.map((equivalent) => equivalent.names)).join(", ");
   } else {
     return null;
   }

@@ -6,6 +6,7 @@ import {Dictionary} from "/server/model/dictionary/dictionary";
 import {Equivalent} from "/server/model/word/equivalent";
 import {Information, InformationModel} from "/server/model/word/information";
 import {Relation} from "/server/model/word/relation";
+import {SectionModel} from "/server/model/word/section";
 import {Variation} from "/server/model/word/variation";
 import {Word, WordModel} from "/server/model/word/word";
 import {LogUtil} from "/server/util/log";
@@ -108,7 +109,13 @@ export class BinaryDeserializer extends Deserializer {
       informations.push(...informations);
     }
     const updatedDate = new Date();
-    const word = new WordModel({dictionary, number, name, equivalents, tags, informations, variations, relations, updatedDate});
+    const section = new SectionModel({
+      equivalents,
+      informations,
+      variations,
+      relations
+    });
+    const word = new WordModel({dictionary, number, name, tags, sections: [section], updatedDate});
     return [word, nameBytes];
   }
 

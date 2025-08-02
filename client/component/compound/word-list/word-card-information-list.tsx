@@ -5,7 +5,7 @@ import {AdditionalProps, MultiLineText} from "zographia";
 import {Markdown} from "/client/component/atom/markdown";
 import {create} from "/client/component/create";
 import {getDictionarySpecialPaths} from "/client/util/dictionary";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
+import {DictionaryWithExecutors, Section} from "/server/internal/skeleton";
 import {WordCardAnchor} from "./word-card-anchor";
 
 
@@ -13,15 +13,15 @@ export const WordCardInformationList = create(
   require("./word-card-information-list.scss"), "WordCardInformationList",
   function ({
     dictionary,
-    word,
+    section,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | WordWithExamples,
+    section: Section,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    const visibleInformations = useMemo(() => word.informations.filter((information) => !information.hidden), [word.informations]);
+    const visibleInformations = useMemo(() => section.informations.filter((information) => !information.hidden), [section.informations]);
 
     return (visibleInformations.length > 0) ? (
       <div styleName="root" {...rest}>
