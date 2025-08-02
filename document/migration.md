@@ -11,20 +11,20 @@ ver 2.19.0 以前からのマイグレーションには何らかの処理は必
 
 ### ver 2.19.1 → ver 2.20.0
 Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
-```
+```js
 db.dictionaries.updateMany({}, {$rename: {"snoj": "settings.akrantiainSource"}});
 ```
 
 ### ver 2.22.9 → ver 2.23.0
 Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
-```
+```js
 db.dictionaries.updateMany({}, {$set: {"settings.exampleTitle": "Examples"}});
 ```
 
 ### ver 2.30.0 → ver 2.31.0
 ユーザーのメールアドレスを照合するようにし、照合済みかどうかを `activated` プロパティで保持するように変更しました。
 すでに存在する全てのユーザーを照合済みとしたい場合は、Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
-```
+```js
 db.users.updateMany({}, {$set: {"activated": true}});
 ```
 
@@ -33,7 +33,7 @@ db.users.updateMany({}, {$set: {"activated": true}});
 
 ### ver 2.38.0 → ver 2.39.0
 Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
-```
+```js
 db.dictionaries.updateMany({}, {$set: {"settings.enableDuplicateName": true}});
 db.words.updateMany({}, [{$set: {
   "equivalents": {$map: {
@@ -51,7 +51,7 @@ db.words.updateMany({}, [{$set: {
 
 ### → ver 3.4.0
 Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
-```
+```js
 db.exampleOffers.updateMany({}, {$rename: {
   "position.name": "catalog",
   "position.index": "number"
@@ -65,7 +65,7 @@ db.dictionaries.updateMany({"secret": true}, {$set: {"visibility": "unlisted"}})
 
 ### → ver 3.10.0
 Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
-```
+```js
 db.examples.aggregate([
   {$match: {
     "offer": {$ne: null}
@@ -98,6 +98,38 @@ db.examples.aggregate([
 
 ### → ver 3.12.0
 Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
-```
+```js
 db.dictionaries.updateMany({}, {$set: {"settings.showEquivalentNumber": false}});
+```
+
+### → ver 3.18.0
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+db.words.updateMany({}, [{$set: {
+  "sections": [{
+    "equivalents": "$equivalents",
+    "informations": "$informations",
+    "phrases": "$phrases",
+    "variations": "$variations",
+    "relations": "$relations"
+  }]
+}}])
+db.dictionaries.updateMany({"settings.templateWords": {$exists: true}}, [{$set: {
+  "settings.templateWords": {$map: {
+    input: "$settings.templateWords",
+    in: {
+      "title": "$$this.title",
+      "name": "$$this.name",
+      "pronunciation": "$$this.pronunciation",
+      "tags": "$$this.tags",
+      "sections": [{
+        "equivalents": "$$this.equivalents",
+        "informations": "$$this.informations",
+        "phrases": "$$this.phrases",
+        "variations": "$$this.variations",
+        "relations": "$$this.relations"
+      }]
+    }
+  }}
+}}])
 ```
