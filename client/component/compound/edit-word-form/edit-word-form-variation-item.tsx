@@ -32,14 +32,16 @@ export const EditWordFormVariationItem = create(
     form,
     variationOperations,
     dndId,
-    index,
+    sectionIndex,
+    variationIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
     variationOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.variations`>, "fields">,
     dndId: string,
-    index: number,
+    sectionIndex: number,
+    variationIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -52,12 +54,12 @@ export const EditWordFormVariationItem = create(
       if (dictionary.akrantiain !== null) {
         try {
           const value = form.getValues();
-          form.setValue(`sections.0.variations.${index}.pronunciation`, dictionary.akrantiain.convert(value.sections[0].variations[index].name));
+          form.setValue(`sections.${sectionIndex}.variations.${variationIndex}.pronunciation`, dictionary.akrantiain.convert(value.sections[sectionIndex].variations[variationIndex].name));
         } catch (error) {
           console.log(error);
         }
       };
-    }, [dictionary, form, index]);
+    }, [dictionary, form, sectionIndex, variationIndex]);
 
     const suggestVariationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
@@ -82,18 +84,18 @@ export const EditWordFormVariationItem = create(
         <fieldset styleName="field-list">
           <ControlContainer>
             <ControlLabel>{trans("label.variation.title")}</ControlLabel>
-            <Input suggest={suggestVariationTitle} {...register(`sections.0.variations.${index}.title`)}/>
+            <Input suggest={suggestVariationTitle} {...register(`sections.${sectionIndex}.variations.${variationIndex}.title`)}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.variation.name")}</ControlLabel>
-            <Input {...register(`sections.0.variations.${index}.name`)}/>
+            <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.name`)}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.variation.pronunciation")}</ControlLabel>
             <div styleName="row">
-              <Input {...register(`sections.0.variations.${index}.pronunciation`)}/>
+              <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.pronunciation`)}/>
               {(dictionary.akrantiain !== null) && (
-                <Button variant="light" onClick={generatePronunciation}>
+                <Button scheme="gray" onClick={generatePronunciation}>
                   <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
                   {trans("button.generate")}
                 </Button>
@@ -102,7 +104,7 @@ export const EditWordFormVariationItem = create(
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.variation")} onClick={() => variationOperations.remove(index)}>
+          <IconButton scheme="gray" variant="light" label={trans("discard.variation")} onClick={() => variationOperations.remove(variationIndex)}>
             <GeneralIcon icon={faMinus}/>
           </IconButton>
         </div>

@@ -446,6 +446,7 @@ editWordForm:
     old: "Historio"
   heading:
     basic: "Bazaj informoj"
+    section: "Seksio {numberString}"
     equivalents: "Tradukaĵoj"
     informations: "Enhavoj"
     phrases: "Idiomaĵoj"
@@ -487,6 +488,7 @@ editWordForm:
     Vorto kun la sama literumo jam estas registrita.
   button:
     add:
+      section: "Aldoni seksion"
       equivalent: "Aldoni tradukaĵon"
       information: "Aldoni enhavon"
       phrase: "Aldoni idiomaĵon"

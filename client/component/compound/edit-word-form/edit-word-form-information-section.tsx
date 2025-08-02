@@ -2,7 +2,7 @@
 
 import {faImage, faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {UseFormReturn, useFieldArray} from "react-hook-form";
+import {UseFieldArrayReturn, UseFormReturn, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -24,33 +24,33 @@ export const EditWordFormInformationSection = create(
   function ({
     dictionary,
     form,
+    sectionOperations,
+    sectionIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
+    sectionOperations: Omit<UseFieldArrayReturn<any, "sections">, "fields">,
+    sectionIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
-    const {control, getValues, setValue} = form;
-    const {fields: informations, ...informationOperations} = useFieldArray({control, name: "sections.0.informations"});
+    const {control, getValues} = form;
+    const {fields: informations, ...informationOperations} = useFieldArray({control, name: `sections.${sectionIndex}.informations`});
 
     const addInformation = useCallback(function (): void {
-      informationOperations.append({
-        title: "",
-        text: "",
-        hidden: false
-      });
+      informationOperations.append({title: "", text: "", hidden: false});
     }, [informationOperations]);
 
     const setInformations = useCallback(function (update: (informations: Array<any>) => Array<any>): void {
-      setValue("sections.0.informations", update(getValues("sections.0.informations")));
-    }, [getValues, setValue]);
+      sectionOperations.update(sectionIndex, {...getValues(`sections.${sectionIndex}`), informations: update(getValues(`sections.${sectionIndex}.informations`))});
+    }, [sectionIndex, getValues, sectionOperations]);
 
     return (
       <section styleName="root" {...rest}>
-        <h3 styleName="heading">{trans("heading.informations")}</h3>
+        <h4 styleName="heading">{trans("heading.informations")}</h4>
         <div styleName="list">
           {(informations.length > 0) ? (
             <EditWordFormDndContext values={informations} setValues={setInformations}>
@@ -62,7 +62,8 @@ export const EditWordFormInformationSection = create(
                   form={form}
                   informationOperations={informationOperations as any}
                   dndId={information.id}
-                  index={index}
+                  sectionIndex={sectionIndex}
+                  informationIndex={index}
                 />
               ))}
             </EditWordFormDndContext>

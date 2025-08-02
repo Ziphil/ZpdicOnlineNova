@@ -2,7 +2,7 @@
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {UseFormReturn, useFieldArray} from "react-hook-form";
+import {UseFieldArrayReturn, UseFormReturn, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -23,45 +23,46 @@ export const EditWordFormVariationSection = create(
   function ({
     dictionary,
     form,
+    sectionOperations,
+    sectionIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
+    sectionOperations: Omit<UseFieldArrayReturn<any, "sections">, "fields">,
+    sectionIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
-    const {control, getValues, setValue} = form;
-    const {fields: variations, ...variationOperations} = useFieldArray({control, name: "sections.0.variations"});
+    const {control, getValues} = form;
+    const {fields: variations, ...variationOperations} = useFieldArray({control, name: `sections.${sectionIndex}.variations`});
 
     const addVariation = useCallback(function (): void {
-      variationOperations.append({
-        title: "",
-        name: "",
-        pronunciation: ""
-      });
+      variationOperations.append({title: "", name: "", pronunciation: ""});
     }, [variationOperations]);
 
     const setVariations = useCallback(function (update: (variations: Array<any>) => Array<any>): void {
-      setValue("sections.0.variations", update(getValues("sections.0.variations")));
-    }, [getValues, setValue]);
+      sectionOperations.update(sectionIndex, {...getValues(`sections.${sectionIndex}`), variations: update(getValues(`sections.${sectionIndex}.variations`))});
+    }, [sectionIndex, getValues, sectionOperations]);
 
     return (
       <section styleName="root" {...rest}>
-        <h3 styleName="heading">{trans("heading.variations")}</h3>
+        <h4 styleName="heading">{trans("heading.variations")}</h4>
         <div styleName="list">
           {(variations.length > 0) ? (
             <EditWordFormDndContext values={variations} setValues={setVariations}>
               {variations.map((variation, index) => (
                 <EditWordFormVariationItem
-                  className="item"
+                  styleName="item"
                   key={variation.id}
                   dictionary={dictionary}
                   form={form}
                   variationOperations={variationOperations as any}
                   dndId={variation.id}
-                  index={index}
+                  sectionIndex={sectionIndex}
+                  variationIndex={index}
                 />
               ))}
             </EditWordFormDndContext>

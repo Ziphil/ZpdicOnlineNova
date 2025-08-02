@@ -2,7 +2,7 @@
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {useFieldArray} from "react-hook-form";
+import {UseFieldArrayReturn, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -22,17 +22,21 @@ export const EditTemplateWordFormRelationSection = create(
   function ({
     dictionary,
     form,
+    sectionOperations,
+    sectionIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: EditTemplateWordSpec["form"],
+    sectionOperations: Omit<UseFieldArrayReturn<any, "sections">, "fields">,
+    sectionIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
-    const {control, getValues, setValue} = form;
-    const {fields: relations, ...relationOperations} = useFieldArray({control, name: "sections.0.relations"});
+    const {control, getValues} = form;
+    const {fields: relations, ...relationOperations} = useFieldArray({control, name: `sections.${sectionIndex}.relations`});
 
     const addRelation = useCallback(function (): void {
       relationOperations.append({
@@ -41,12 +45,12 @@ export const EditTemplateWordFormRelationSection = create(
     }, [relationOperations]);
 
     const setRelations = useCallback(function (update: (relations: Array<any>) => Array<any>): void {
-      setValue("sections.0.relations", update(getValues("sections.0.relations")));
-    }, [getValues, setValue]);
+      sectionOperations.update(sectionIndex, {...getValues(`sections.${sectionIndex}`), relations: update(getValues(`sections.${sectionIndex}.relations`))});
+    }, [sectionIndex, getValues, sectionOperations]);
 
     return (
       <section styleName="root" {...rest}>
-        <h3 styleName="heading">{trans("heading.relations")}</h3>
+        <h4 styleName="heading">{trans("heading.relations")}</h4>
         <div styleName="list">
           {(relations.length > 0) ? (
             <EditWordFormDndContext values={relations} setValues={setRelations}>
@@ -58,6 +62,7 @@ export const EditTemplateWordFormRelationSection = create(
                   form={form}
                   relationOperations={relationOperations as any}
                   dndId={relation.id}
+                  sectionIndex={sectionIndex}
                   index={index}
                 />
               ))}

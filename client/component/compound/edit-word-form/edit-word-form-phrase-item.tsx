@@ -31,14 +31,16 @@ export const EditWordFormPhraseItem = create(
     form,
     phraseOperations,
     dndId,
-    index,
+    sectionIndex,
+    phraseIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
     phraseOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.phrases`>, "fields">,
     dndId: string,
-    index: number,
+    sectionIndex: number,
+    phraseIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -70,21 +72,21 @@ export const EditWordFormPhraseItem = create(
         <fieldset styleName="field-list">
           <ControlContainer>
             <ControlLabel>{trans("label.phrase.titles")}</ControlLabel>
-            <Controller name={`sections.0.phrases.${index}.titles`} control={form.control} render={({field}) => (
+            <Controller name={`sections.${sectionIndex}.phrases.${phraseIndex}.titles`} control={form.control} render={({field}) => (
               <TagInput values={field.value} suggest={suggestPhraseTitle} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.phrase.form")}</ControlLabel>
-            <Input {...register(`sections.0.phrases.${index}.form`)}/>
+            <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.form`)}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{transNode("label.phrase.terms")}</ControlLabel>
-            <Input {...register(`sections.0.phrases.${index}.termString`)}/>
+            <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.termString`)}/>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.phrase")} onClick={() => phraseOperations.remove(index)}>
+          <IconButton scheme="gray" variant="light" label={trans("discard.phrase")} onClick={() => phraseOperations.remove(phraseIndex)}>
             <GeneralIcon icon={faMinus}/>
           </IconButton>
         </div>

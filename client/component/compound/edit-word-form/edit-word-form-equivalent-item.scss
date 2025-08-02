@@ -7,8 +7,7 @@
   padding-block: 3zu;
   padding-inline-end: 3zu;
   border-radius: var(--glob-border-radius);
-  border: solid 1zx var(--border-color);
-  background-color: var(--background-color);
+  border: solid 1zx var(--glob-border-color);
   display: flex;
   &[data-dragging] {
     z-index: 1;
@@ -19,7 +18,7 @@
   margin-block: -3zu;
   margin-inline-end: 3zu;
   padding-inline: 1zu;
-  background-color: var(--border-color);
+  background-color: var(--glob-border-color);
   color: var(--glob-mute-text-color);
   display: flex;
   align-items: center;

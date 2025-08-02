@@ -35,14 +35,16 @@ export const EditWordFormInformationItem = create(
     form,
     informationOperations,
     dndId,
-    index,
+    sectionIndex,
+    informationIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
     informationOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.informations`>, "fields">,
     dndId: string,
-    index: number,
+    sectionIndex: number,
+    informationIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -74,21 +76,21 @@ export const EditWordFormInformationItem = create(
         <fieldset styleName="field-list">
           <ControlContainer>
             <ControlLabel>{trans("label.information.title")}</ControlLabel>
-            <Input suggest={suggestInformationTitle} {...register(`sections.0.informations.${index}.title`)}/>
+            <Input suggest={suggestInformationTitle} {...register(`sections.${sectionIndex}.informations.${informationIndex}.title`)}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.information.text")}</ControlLabel>
-            <Textarea styleName="textarea" {...register(`sections.0.informations.${index}.text`)}/>
+            <Textarea styleName="textarea" {...register(`sections.${sectionIndex}.informations.${informationIndex}.text`)}/>
           </ControlContainer>
           <ControlContainer>
             <CheckableContainer>
-              <Checkbox {...register(`sections.0.informations.${index}.hidden`)}/>
+              <Checkbox {...register(`sections.${sectionIndex}.informations.${informationIndex}.hidden`)}/>
               <CheckableLabel><MultiLineText>{trans("label.information.hidden")}</MultiLineText></CheckableLabel>
             </CheckableContainer>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.information")} onClick={() => informationOperations.remove(index)}>
+          <IconButton scheme="gray" variant="light" label={trans("discard.information")} onClick={() => informationOperations.remove(informationIndex)}>
             <GeneralIcon icon={faMinus}/>
           </IconButton>
         </div>

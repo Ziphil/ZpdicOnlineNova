@@ -33,14 +33,16 @@ export const EditWordFormRelationItem = create(
     form,
     relationOperations,
     dndId,
-    index,
+    sectionIndex,
+    relationIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: EditWordSpec["form"],
     relationOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.relations`>, "fields">,
     dndId: string,
-    index: number,
+    sectionIndex: number,
+    relationIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -72,25 +74,25 @@ export const EditWordFormRelationItem = create(
         <fieldset styleName="field-list">
           <ControlContainer>
             <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
-            <Controller name={`sections.0.relations.${index}.titles`} control={form.control} render={({field}) => (
+            <Controller name={`sections.${sectionIndex}.relations.${relationIndex}.titles`} control={form.control} render={({field}) => (
               <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.relation.name")}</ControlLabel>
-            <Controller name={`sections.0.relations.${index}.word`} control={form.control} render={({field}) => (
+            <Controller name={`sections.${sectionIndex}.relations.${relationIndex}.word`} control={form.control} render={({field}) => (
               <RelationWordSelect dictionary={dictionary} word={field.value} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
           <ControlContainer>
             <CheckableContainer>
-              <Checkbox {...register(`sections.0.relations.${index}.mutual`)}/>
+              <Checkbox {...register(`sections.${sectionIndex}.relations.${relationIndex}.mutual`)}/>
               <CheckableLabel>{trans("label.relation.mutual")}</CheckableLabel>
             </CheckableContainer>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.relation")} onClick={() => relationOperations.remove(index)}>
+          <IconButton scheme="gray" variant="light" label={trans("discard.relation")} onClick={() => relationOperations.remove(relationIndex)}>
             <GeneralIcon icon={faMinus}/>
           </IconButton>
         </div>

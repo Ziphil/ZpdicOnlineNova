@@ -4,6 +4,12 @@
 
 
 .root {
+  @include theme("light") {
+    --section-border-color: #{leveled-color("primary", 1)};
+  }
+}
+
+.root {
   display: flex;
   flex-direction: column;
 }

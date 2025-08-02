@@ -446,6 +446,7 @@ editWordForm:
     old: "History"
   heading:
     basic: "Basic information"
+    section: "Section {numberString}"
     equivalents: "Translations"
     informations: "Contents"
     phrases: "Idiomatic expressions"
@@ -487,6 +488,7 @@ editWordForm:
     A word with the same spelling has already been registered.
   button:
     add:
+      section: "Add section"
       equivalent: "Add translation"
       information: "Add content"
       phrase: "Add idiomatic expression"

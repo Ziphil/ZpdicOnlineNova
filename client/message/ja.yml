@@ -444,6 +444,7 @@ editWordForm:
     old: "履歴"
   heading:
     basic: "基本情報"
+    section: "セクション {numberString}"
     equivalents: "訳語"
     informations: "内容"
     phrases: "成句"
@@ -485,6 +486,7 @@ editWordForm:
     同じ綴りの単語がすでに登録されています。
   button:
     add:
+      section: "セクションを追加"
       equivalent: "訳語を追加"
       information: "内容を追加"
       phrase: "成句を追加"

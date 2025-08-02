@@ -49,7 +49,7 @@ export const EditWordFormEquivalentSection = create(
 
     return (
       <section styleName="root" {...rest}>
-        <h3 styleName="heading">{trans("heading.equivalents")}</h3>
+        <h4 styleName="heading">{trans("heading.equivalents")}</h4>
         <div styleName="list">
           {(equivalents.length > 0) ? (
             <EditWordFormDndContext values={equivalents} setValues={setEquivalents}>

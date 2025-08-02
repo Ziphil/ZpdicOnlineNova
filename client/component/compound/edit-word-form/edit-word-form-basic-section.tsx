@@ -100,7 +100,7 @@ export const EditWordFormBasicSection = create(
             <div styleName="row">
               <Input {...register("name", {onChange: handleNameChange})}/>
               {(dictionary.zatlin !== null) && (
-                <Button variant="light" onClick={generateName}>
+                <Button scheme="gray" onClick={generateName}>
                   <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
                   {trans("button.generate")}
                 </Button>
@@ -117,7 +117,7 @@ export const EditWordFormBasicSection = create(
             <div styleName="row">
               <Input {...register("pronunciation")}/>
               {(dictionary.akrantiain !== null) && (
-                <Button variant="light" onClick={generatePronunciation}>
+                <Button scheme="gray" onClick={generatePronunciation}>
                   <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
                   {trans("button.generate")}
                 </Button>

@@ -9,16 +9,36 @@
   flex-direction: column;
 }
 
-.section {
-  row-gap: 8zu;
+.section-list {
   display: flex;
   flex-direction: column;
 }
 
-.button {
-  margin-block-start: 8zu;
-  padding-block-start: 3zu;
-  border-block-start: solid 1zx var(--glob-border-color);
+.section-item {
+  border: solid 1zx var(--section-border-color);
+  border-radius: var(--glob-border-radius);
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.section-heading {
+  @include bold-font;
+  padding-block: 2zu;
+  padding-inline: 3zu;
+  font-size: 3.5zu;
+  color: var(--glob-primary-heading-text-color);
+  background-color: var(--section-border-color);
+}
+
+.section-main {
+  padding-block: 6zu;
+  padding-inline: 3zu;
+  row-gap: 6zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-plus {
+  margin-block-start: 3zu;
 }

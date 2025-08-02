@@ -38,9 +38,9 @@ export const EditTemplateWordFormEditPart = create(
           {sections.map((section, sectionIndex) => (
             <div styleName="section" key={section.id}>
               <EditWordFormEquivalentSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
-              <EditWordFormInformationSection dictionary={dictionary} form={form as any}/>
-              <EditWordFormVariationSection dictionary={dictionary} form={form as any}/>
-              <EditTemplateWordFormRelationSection dictionary={dictionary} form={form}/>
+              <EditWordFormInformationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
+              <EditWordFormVariationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
+              <EditTemplateWordFormRelationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form}/>
             </div>
           ))}
         </div>

@@ -2,7 +2,7 @@
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {UseFormReturn, useFieldArray} from "react-hook-form";
+import {UseFieldArrayReturn, UseFormReturn, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -23,33 +23,33 @@ export const EditWordFormPhraseSection = create(
   function ({
     dictionary,
     form,
+    sectionOperations,
+    sectionIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
+    sectionOperations: Omit<UseFieldArrayReturn<any, "sections">, "fields">,
+    sectionIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans, transNode} = useTrans("editWordForm");
 
-    const {control, getValues, setValue} = form;
-    const {fields: phrases, ...phraseOperations} = useFieldArray({control, name: "sections.0.phrases"});
+    const {control, getValues} = form;
+    const {fields: phrases, ...phraseOperations} = useFieldArray({control, name: `sections.${sectionIndex}.phrases`});
 
     const addPhrase = useCallback(function (): void {
-      phraseOperations.append({
-        titles: [],
-        form: "",
-        termString: ""
-      });
+      phraseOperations.append({titles: [], form: "", termString: ""});
     }, [phraseOperations]);
 
     const setPhrases = useCallback(function (update: (phrases: Array<any>) => Array<any>): void {
-      setValue("sections.0.phrases", update(getValues("sections.0.phrases")));
-    }, [getValues, setValue]);
+      sectionOperations.update(sectionIndex, {...getValues(`sections.${sectionIndex}`), phrases: update(getValues(`sections.${sectionIndex}.phrases`))});
+    }, [sectionIndex, getValues, sectionOperations]);
 
     return (
       <section styleName="root" {...rest}>
-        <h3 styleName="heading">{trans("heading.phrases")}</h3>
+        <h4 styleName="heading">{trans("heading.phrases")}</h4>
         <div styleName="list">
           {(phrases.length > 0) ? (
             <EditWordFormDndContext values={phrases} setValues={setPhrases}>
@@ -61,7 +61,8 @@ export const EditWordFormPhraseSection = create(
                   form={form}
                   phraseOperations={phraseOperations as any}
                   dndId={phrase.id}
-                  index={index}
+                  sectionIndex={sectionIndex}
+                  phraseIndex={index}
                 />
               ))}
             </EditWordFormDndContext>

@@ -3,10 +3,11 @@
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {useFieldArray} from "react-hook-form";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client/component/create";
 import {preventDefault} from "/client/util/form";
+import {toRoman} from "/client/util/misc";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
 import {EditWordFormEquivalentSection} from "./edit-word-form-equivalent-section";
@@ -28,6 +29,8 @@ export const EditWordFormEditPart = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const {trans} = useTrans("editWordForm");
+
     const {form} = formSpec;
 
     const {control} = form;
@@ -47,19 +50,25 @@ export const EditWordFormEditPart = create(
       <form styleName="root" onSubmit={preventDefault} {...rest}>
         <div styleName="main">
           <EditWordFormBasicSection dictionary={dictionary} form={form}/>
-          {sections.map((section, sectionIndex) => (
-            <div styleName="section" key={section.id}>
-              <EditWordFormEquivalentSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
-              <EditWordFormInformationSection dictionary={dictionary} form={form as any}/>
-              <EditWordFormPhraseSection dictionary={dictionary} form={form as any}/>
-              <EditWordFormVariationSection dictionary={dictionary} form={form as any}/>
-              <EditWordFormRelationSection dictionary={dictionary} form={form}/>
+          <div styleName="section-list">
+            {sections.map((section, sectionIndex) => (
+              <section styleName="section-item" key={section.id}>
+                <h3 styleName="section-heading">{trans("heading.section", {numberString: toRoman(sectionIndex + 1)})}</h3>
+                <div styleName="section-main">
+                  <EditWordFormEquivalentSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
+                  <EditWordFormInformationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
+                  <EditWordFormPhraseSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
+                  <EditWordFormVariationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
+                  <EditWordFormRelationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form}/>
+                </div>
+              </section>
+            ))}
+            <div styleName="section-plus">
+              <Button variant="light" onClick={addSection}>
+                <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+                {trans("button.add.section")}
+              </Button>
             </div>
-          ))}
-          <div styleName="plus">
-            <Button scheme="gray" variant="light" onClick={addSection}>
-              <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-            </Button>
           </div>
         </div>
       </form>
