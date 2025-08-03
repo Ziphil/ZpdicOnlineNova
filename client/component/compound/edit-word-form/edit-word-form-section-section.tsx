@@ -1,8 +1,10 @@
 //
 
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAngleDown, faAngleUp} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
-import {AdditionalProps, useTrans} from "zographia";
+import {AdditionalProps, data, useTrans} from "zographia";
 import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client/component/create";
 import {toRoman} from "/client/util/misc";
@@ -20,22 +22,22 @@ export const EditWordFormSectionSection = create(
     dictionary,
     form,
     sectionOperations,
-    sectionName,
     sectionIndex
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue>,
     sectionOperations: Omit<UseFieldArrayReturn<any, "sections">, "fields">,
-    sectionName: string,
     sectionIndex: number
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
     return (
-      <details styleName="root" name={sectionName} open={sectionIndex <= 0}>
+      <details styleName="root" open={sectionIndex <= 0}>
         <summary styleName="heading">
           <h3>{trans("heading.section", {numberString: toRoman(sectionIndex + 1)})}</h3>
+          <FontAwesomeIcon styleName="angle" icon={faAngleDown} {...data({when: "closed"})}/>
+          <FontAwesomeIcon styleName="angle" icon={faAngleUp} {...data({when: "open"})}/>
         </summary>
         <div styleName="main">
           <EditWordFormEquivalentSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>

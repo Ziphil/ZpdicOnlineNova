@@ -1,7 +1,7 @@
 //
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback, useId} from "react";
+import {ReactElement, useCallback} from "react";
 import {useFieldArray} from "react-hook-form";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
@@ -31,8 +31,6 @@ export const EditWordFormEditPart = create(
     const {control} = form;
     const {fields: sections, ...sectionOperations} = useFieldArray({control, name: "sections"});
 
-    const sectionName = useId();
-
     const addSection = useCallback(function (): void {
       sectionOperations.append({
         equivalents: [{titles: [], nameString: "", hidden: false}],
@@ -54,7 +52,6 @@ export const EditWordFormEditPart = create(
                 dictionary={dictionary}
                 form={form}
                 sectionOperations={sectionOperations}
-                sectionName={sectionName}
                 sectionIndex={sectionIndex}
               />
             ))}
