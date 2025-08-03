@@ -56,7 +56,7 @@ export const EditWordFormEditPart = create(
               />
             ))}
             <div styleName="section-plus">
-              <Button variant="light" onClick={addSection}>
+              <Button scheme="secondary" variant="light" onClick={addSection}>
                 <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
                 {trans("button.add.section")}
               </Button>

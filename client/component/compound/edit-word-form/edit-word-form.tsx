@@ -34,7 +34,7 @@ export const EditWordForm = create(
     return (
       <div styleName="root" {...rest}>
         {(editing) && (
-          <TabList styleName="tab-list" value={tabValue} scheme="primary">
+          <TabList styleName="tab-list" value={tabValue} scheme="secondary">
             <Tab value="edit" onClick={() => setTabValue("edit")}>
               <TabIconbag><GeneralIcon icon={faPen}/></TabIconbag>
               {trans("tab.edit")}
