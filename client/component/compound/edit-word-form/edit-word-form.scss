@@ -6,6 +6,7 @@
 .root {
   @include theme("light") {
     --section-border-color: #{leveled-color("primary", 1)};
+    --section-heading-background-color: #{leveled-color("primary", 0)};
   }
 }
 
