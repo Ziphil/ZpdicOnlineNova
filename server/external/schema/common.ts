@@ -3,7 +3,7 @@
 import {number, object} from "yup";
 
 
-export const RANGE = object({
+export const Range = object({
   skip: number().min(0),
   limit: number().min(1).max(100).default(100)
 });

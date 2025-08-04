@@ -2,32 +2,32 @@
 
 import {InferType, mixed, object} from "yup";
 import {
-  EDITABLE_EXAMPLE,
-  EDITABLE_WORD,
-  Example,
-  ExampleOffer,
-  NORMAL_EXAMPLE_OFFER_PARAMETER,
-  NORMAL_EXAMPLE_PARAMETER,
-  NORMAL_WORD_PARAMETER,
-  RANGE,
+  EditableExample$In,
+  EditableWord$In,
+  Example$Out,
+  ExampleOffer$Out,
+  NormalExampleOfferParameter$In,
+  NormalExampleParameter$In,
+  NormalWordParameter$In,
+  Range,
   WithTotal,
-  Word,
-  WordWithExamples
+  Word$Out,
+  WordWithExamples$Out
 } from "/server/external/schema";
 import {defaultRequest, defaultResponse} from "/server/external/type/util";
 
 
-export const SERVER_PATH_PREFIX = "/api";
+export const SERVER_PATH_PREFIX = "/api/v0";
 
 export const SERVER_SCHEMATA = {
   searchWords: {
     request: {
       ...defaultRequest,
-      query: NORMAL_WORD_PARAMETER.concat(RANGE)
+      query: NormalWordParameter$In.concat(Range)
     },
     response: {
       ...defaultResponse,
-      200: mixed<WithTotal<WordWithExamples, "words">>()
+      200: mixed<WithTotal<WordWithExamples$Out, "words">>()
     }
   },
   fetchWord: {
@@ -37,31 +37,31 @@ export const SERVER_SCHEMATA = {
     },
     response: {
       ...defaultResponse,
-      200: mixed<{word: Word}>()
+      200: mixed<{word: Word$Out}>()
     }
   },
   addWord: {
     request: {
       ...defaultRequest,
       body: object({
-        word: EDITABLE_WORD.required()
+        word: EditableWord$In.required()
       })
     },
     response: {
       ...defaultResponse,
-      201: mixed<{word: Word}>()
+      201: mixed<{word: Word$Out}>()
     }
   },
   editWord: {
     request: {
       ...defaultRequest,
       body: object({
-        word: EDITABLE_WORD.required()
+        word: EditableWord$In.required()
       })
     },
     response: {
       ...defaultResponse,
-      200: mixed<{word: Word}>()
+      200: mixed<{word: Word$Out}>()
     }
   },
   discardWord: {
@@ -71,17 +71,17 @@ export const SERVER_SCHEMATA = {
     },
     response: {
       ...defaultResponse,
-      200: mixed<{word: Word}>()
+      200: mixed<{word: Word$Out}>()
     }
   },
   searchExamples: {
     request: {
       ...defaultRequest,
-      query: NORMAL_EXAMPLE_PARAMETER.concat(RANGE)
+      query: NormalExampleParameter$In.concat(Range)
     },
     response: {
       ...defaultResponse,
-      200: mixed<WithTotal<Example, "examples">>()
+      200: mixed<WithTotal<Example$Out, "examples">>()
     }
   },
   fetchExample: {
@@ -91,31 +91,31 @@ export const SERVER_SCHEMATA = {
     },
     response: {
       ...defaultResponse,
-      200: mixed<{example: Example}>()
+      200: mixed<{example: Example$Out}>()
     }
   },
   addExample: {
     request: {
       ...defaultRequest,
       body: object({
-        example: EDITABLE_EXAMPLE.required()
+        example: EditableExample$In.required()
       })
     },
     response: {
       ...defaultResponse,
-      201: mixed<{example: Example}>()
+      201: mixed<{example: Example$Out}>()
     }
   },
   editExample: {
     request: {
       ...defaultRequest,
       body: object({
-        example: EDITABLE_EXAMPLE.required()
+        example: EditableExample$In.required()
       })
     },
     response: {
       ...defaultResponse,
-      200: mixed<{example: Example}>()
+      200: mixed<{example: Example$Out}>()
     }
   },
   discardExample: {
@@ -125,17 +125,17 @@ export const SERVER_SCHEMATA = {
     },
     response: {
       ...defaultResponse,
-      200: mixed<{example: Example}>()
+      200: mixed<{example: Example$Out}>()
     }
   },
   searchExampleOffers: {
     request: {
       ...defaultRequest,
-      query: NORMAL_EXAMPLE_OFFER_PARAMETER.concat(RANGE)
+      query: NormalExampleOfferParameter$In.concat(Range)
     },
     response: {
       ...defaultResponse,
-      200: mixed<WithTotal<ExampleOffer, "exampleOffers">>()
+      200: mixed<WithTotal<ExampleOffer$Out, "exampleOffers">>()
     }
   },
   fetchExampleOffer: {
@@ -145,7 +145,7 @@ export const SERVER_SCHEMATA = {
     },
     response: {
       ...defaultResponse,
-      200: mixed<{exampleOffer: ExampleOffer}>()
+      200: mixed<{exampleOffer: ExampleOffer$Out}>()
     }
   }
 } as const;

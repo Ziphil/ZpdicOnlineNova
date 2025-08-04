@@ -1,19 +1,24 @@
 //
 
-import {boolean, object, string} from "yup";
+import {InferType, boolean, object, string} from "yup";
 
 
-export const INFORMATION = object({
+export const Information$In = object({
+
   title: string().default(""),
   text: string().default(""),
   hidden: boolean().default(false)
+
 });
 
 
-export interface Information {
+export interface Information$Out {
 
   title: string;
   text: string;
   hidden: boolean;
 
 }
+
+
+export type Information$In = InferType<typeof Information$In>;

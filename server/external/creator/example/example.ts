@@ -2,7 +2,7 @@
 
 import {LinkedWordCreator} from "/server/external/creator/word/linked-word";
 import type {
-  Example as ExampleSkeleton
+  Example$Out
 } from "/server/external/schema";
 import {
   Example
@@ -11,7 +11,7 @@ import {
 
 export namespace ExampleCreator {
 
-  export function skeletonize(raw: Example): ExampleSkeleton {
+  export function skeletonize(raw: Example): Example$Out {
     const skeleton = {
       id: raw.id || raw["_id"],
       number: raw.number,
@@ -21,7 +21,7 @@ export namespace ExampleCreator {
       translation: raw.translation,
       supplement: raw.supplement ?? "",
       offer: raw.offer ?? null
-    } satisfies ExampleSkeleton;
+    } satisfies Example$Out;
     return skeleton;
   }
 

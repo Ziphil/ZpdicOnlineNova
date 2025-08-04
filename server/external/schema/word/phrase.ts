@@ -1,18 +1,20 @@
 //
 
-import {array, object, string} from "yup";
+import {InferType, array, object, string} from "yup";
 
 
-export const PHRASE = object({
+export const Phrase$In = object({
+
   titles: array().of(string().defined()).default([]),
   form: string().default(""),
   terms: array().of(string().defined()).default([]),
   termString: string().default(""),
   ignoredPattern: string().default("")
+
 });
 
 
-export interface Phrase {
+export interface Phrase$Out {
 
   titles: Array<string>;
   form: string;
@@ -21,3 +23,6 @@ export interface Phrase {
   ignoredPattern: string;
 
 }
+
+
+export type Phrase$In = InferType<typeof Phrase$In>;

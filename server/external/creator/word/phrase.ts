@@ -1,7 +1,7 @@
 //
 
 import type {
-  Phrase as PhraseSkeleton
+  Phrase$Out
 } from "/server/external/schema";
 import {
   Phrase
@@ -10,14 +10,14 @@ import {
 
 export namespace PhraseCreator {
 
-  export function skeletonize(raw: Phrase): PhraseSkeleton {
+  export function skeletonize(raw: Phrase): Phrase$Out {
     const skeleton = {
       titles: raw.titles,
       form: raw.form,
       terms: raw.terms,
       termString: raw.termString ?? raw.terms.join(", "),
       ignoredPattern: raw.ignoredPattern ?? ""
-    } satisfies PhraseSkeleton;
+    } satisfies Phrase$Out;
     return skeleton;
   }
 

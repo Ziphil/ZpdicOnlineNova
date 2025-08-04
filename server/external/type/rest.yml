@@ -67,7 +67,7 @@ paths:
                   words:
                     type: array
                     items:
-                      $ref: "#/components/schemas/WordWithExamples.res"
+                      $ref: "#/components/schemas/WordWithExamples@res"
                     description: "検索結果"
                   total:
                     type: integer
@@ -99,7 +99,7 @@ paths:
               type: object
               properties:
                 word:
-                  $ref: "#/components/schemas/EditableWord.req"
+                  $ref: "#/components/schemas/EditableWord@req"
               required:
                 - word
       responses:
@@ -111,7 +111,7 @@ paths:
                 type: object
                 properties:
                   word:
-                    $ref: "#/components/schemas/Word.res"
+                    $ref: "#/components/schemas/Word@res"
         403:
           description: "辞書の編集権限がない場合"
           content:
@@ -153,7 +153,7 @@ paths:
                 type: object
                 properties:
                   word:
-                    $ref: "#/components/schemas/WordWithExamples.res"
+                    $ref: "#/components/schemas/WordWithExamples@res"
         404:
           description: "辞書もしくは単語が存在しない場合"
           content:
@@ -181,7 +181,7 @@ paths:
               type: object
               properties:
                 word:
-                  $ref: "#/components/schemas/EditableWord.req"
+                  $ref: "#/components/schemas/EditableWord@req"
               required:
                 - word
       responses:
@@ -193,7 +193,7 @@ paths:
                 type: object
                 properties:
                   word:
-                    $ref: "#/components/schemas/Word.res"
+                    $ref: "#/components/schemas/Word@res"
         403:
           description: "辞書の編集権限がない場合"
           content:
@@ -235,7 +235,7 @@ paths:
                 type: object
                 properties:
                   word:
-                    $ref: "#/components/schemas/Word.res"
+                    $ref: "#/components/schemas/Word@res"
         403:
           description: "辞書の編集権限がない場合"
           content:
@@ -286,7 +286,7 @@ paths:
                   examples:
                     type: array
                     items:
-                      $ref: "#/components/schemas/Example.res"
+                      $ref: "#/components/schemas/Example@res"
                     description: "検索結果"
                   total:
                     type: integer
@@ -318,7 +318,7 @@ paths:
               type: object
               properties:
                 example:
-                  $ref: "#/components/schemas/EditableExample.req"
+                  $ref: "#/components/schemas/EditableExample@req"
               required:
                 - example
       responses:
@@ -330,7 +330,7 @@ paths:
                 type: object
                 properties:
                   example:
-                    $ref: "#/components/schemas/Example.res"
+                    $ref: "#/components/schemas/Example@res"
         403:
           description: "辞書の編集権限がない場合"
           content:
@@ -372,7 +372,7 @@ paths:
                 type: object
                 properties:
                   example:
-                    $ref: "#/components/schemas/Example.res"
+                    $ref: "#/components/schemas/Example@res"
         404:
           description: "辞書もしくは例文が存在しない場合"
           content:
@@ -400,7 +400,7 @@ paths:
               type: object
               properties:
                 example:
-                  $ref: "#/components/schemas/EditableExample.req"
+                  $ref: "#/components/schemas/EditableExample@req"
               required:
                 - example
       responses:
@@ -412,7 +412,7 @@ paths:
                 type: object
                 properties:
                   example:
-                    $ref: "#/components/schemas/Example.res"
+                    $ref: "#/components/schemas/Example@res"
         403:
           description: "辞書の編集権限がない場合"
           content:
@@ -454,7 +454,7 @@ paths:
                 type: object
                 properties:
                   example:
-                    $ref: "#/components/schemas/Example.res"
+                    $ref: "#/components/schemas/Example@res"
         403:
           description: "辞書の編集権限がない場合"
           content:
@@ -487,7 +487,7 @@ paths:
       summary: "例文集の例文を検索する"
       tags: ["例文集"]
       parameters:
-        - $ref: "#/components/parameters/catalog.query"
+        - $ref: "#/components/parameters/catalog@query"
         - $ref: "#/components/parameters/skip"
         - $ref: "#/components/parameters/limit"
       responses:
@@ -501,7 +501,7 @@ paths:
                   exampleOffers:
                     type: array
                     items:
-                      $ref: "#/components/schemas/ExampleOffer.res"
+                      $ref: "#/components/schemas/ExampleOffer@res"
                     description: "検索結果"
                   total:
                     type: integer
@@ -519,7 +519,7 @@ paths:
       summary: "例文集の例文を取得する (1 件)"
       tags: ["例文集"]
       parameters:
-        - $ref: "#/components/parameters/catalog.path"
+        - $ref: "#/components/parameters/catalog@path"
         - $ref: "#/components/parameters/exampleOfferNumber"
       responses:
         200:
@@ -530,7 +530,7 @@ paths:
                 type: object
                 properties:
                   exampleOffer:
-                    $ref: "#/components/schemas/ExampleOffer.res"
+                    $ref: "#/components/schemas/ExampleOffer@res"
         404:
           description: "例文集もしくは例文が存在しない場合"
           content:
@@ -721,7 +721,7 @@ components:
         type: boolean
         default: false
 
-    catalog.path:
+    catalog@path:
       name: "catalog"
       in: path
       description: |-
@@ -741,7 +741,7 @@ components:
       schema:
         type: string
 
-    catalog.query:
+    catalog@query:
       name: "catalog"
       in: query
       description: |-
@@ -764,7 +764,7 @@ components:
 
   schemas:
 
-    Word.res:
+    Word@res:
       title: "Word"
       type: object
       properties:
@@ -788,7 +788,7 @@ components:
         equivalents:
           type: array
           items:
-            $ref: "#/components/schemas/Equivalent.res"
+            $ref: "#/components/schemas/Equivalent@res"
           description: "訳語 (OTM-JSON での `translations`)"
         tags:
           type: array
@@ -799,37 +799,37 @@ components:
         informations:
           type: array
           items:
-            $ref: "#/components/schemas/Information.res"
+            $ref: "#/components/schemas/Information@res"
           description: "内容 (OTM-JSON での `contents`)"
         phrases:
           type: array
           items:
-            $ref: "#/components/schemas/Phrase.res"
+            $ref: "#/components/schemas/Phrase@res"
           description: "成句"
         variations:
           type: array
           items:
-            $ref: "#/components/schemas/Variation.res"
+            $ref: "#/components/schemas/Variation@res"
           description: "変化形"
         relations:
           type: array
           items:
-            $ref: "#/components/schemas/Relation.res"
+            $ref: "#/components/schemas/Relation@res"
           description: "関連語"
 
-    WordWithExamples.res:
+    WordWithExamples@res:
       title: "WordWithExamples"
       allOf:
-        - $ref: "#/components/schemas/Word.res"
+        - $ref: "#/components/schemas/Word@res"
         - type: object
           properties:
             examples:
               type: array
               items:
-                $ref: "#/components/schemas/Example.res"
+                $ref: "#/components/schemas/Example@res"
               description: "例文"
 
-    EditableWord.req:
+    EditableWord@req:
       title: "EditableWord"
       type: object
       properties:
@@ -845,7 +845,7 @@ components:
         equivalents:
           type: array
           items:
-            $ref: "#/components/schemas/Equivalent.req"
+            $ref: "#/components/schemas/Equivalent@req"
           description: "訳語 (OTM-JSON での `translations`)"
           default: []
         tags:
@@ -858,31 +858,31 @@ components:
         informations:
           type: array
           items:
-            $ref: "#/components/schemas/Information.req"
+            $ref: "#/components/schemas/Information@req"
           description: "内容 (OTM-JSON での `contents`)"
           default: []
         phrases:
           type: array
           items:
-            $ref: "#/components/schemas/Phrase.req"
+            $ref: "#/components/schemas/Phrase@req"
           description: "成句"
           default: []
         variations:
           type: array
           items:
-            $ref: "#/components/schemas/Variation.req"
+            $ref: "#/components/schemas/Variation@req"
           description: "変化形"
           default: []
         relations:
           type: array
           items:
-            $ref: "#/components/schemas/Relation.req"
+            $ref: "#/components/schemas/Relation@req"
           description: "関連語"
           default: []
       required:
         - name
 
-    Equivalent.res:
+    Equivalent@res:
       title: "Equivalent"
       type: object
       properties:
@@ -923,7 +923,7 @@ components:
           description: "検索にのみ用いる (単語カードでは非表示にする) かどうか"
           example: false
 
-    Equivalent.req:
+    Equivalent@req:
       title: "Equivalent"
       type: object
       properties:
@@ -967,7 +967,7 @@ components:
           example: false
           default: false
 
-    Information.res:
+    Information@res:
       title: "Information"
       type: object
       properties:
@@ -984,7 +984,7 @@ components:
           description: "単語カードでは非表示にするかどうか"
           example: false
 
-    Information.req:
+    Information@req:
       title: "Information"
       type: object
       properties:
@@ -1004,7 +1004,7 @@ components:
           example: false
           default: false
 
-    Phrase.res:
+    Phrase@res:
       title: "Phrase"
       type: object
       properties:
@@ -1045,7 +1045,7 @@ components:
             > そのため、辞書の無視パターンを途中で変更した場合、それ以降に編集された単語でのみ新しい無視パターンが格納され、それ以前に編集された単語には以前の無視パターンが格納されたままになります。
           example: "[\\(（].*?[\\)）]"
 
-    Phrase.req:
+    Phrase@req:
       title: "Phrase"
       type: object
       properties:
@@ -1089,7 +1089,7 @@ components:
           example: "[\\(（].*?[\\)）]"
           default: ""
  
-    Variation.res:
+    Variation@res:
       title: "Variation"
       type: object
       properties:
@@ -1106,7 +1106,7 @@ components:
           description: "発音記号"
           example: "dɪk.ʃə.nə.ɹiz"
 
-    Variation.req:
+    Variation@req:
       title: "Variation"
       type: object
       properties:
@@ -1126,7 +1126,7 @@ components:
           example: "dɪk.ʃə.nə.ɹiz"
           default: ""
 
-    Relation.res:
+    Relation@res:
       title: "Relation"
       type: object
       properties:
@@ -1148,7 +1148,7 @@ components:
         - number
         - name
  
-    Relation.req:
+    Relation@req:
       title: "Relation"
       type: object
       properties:
@@ -1177,7 +1177,7 @@ components:
         - number
         - name
 
-    Example.res:
+    Example@res:
       title: "Example"
       type: object
       properties:
@@ -1211,12 +1211,12 @@ components:
         words:
           type: array
           items:
-            $ref: "#/components/schemas/LinkedWord.res"
+            $ref: "#/components/schemas/LinkedWord@res"
           description: "使用単語"
         offer:
-          $ref: "#/components/schemas/LinkedExampleOffer.res"
+          $ref: "#/components/schemas/LinkedExampleOffer@res"
   
-    EditableExample.req:
+    EditableExample@req:
       title: "EditableExample"
       type: object
       properties:
@@ -1245,13 +1245,13 @@ components:
         words:
           type: array
           items:
-            $ref: "#/components/schemas/LinkedWord.req"
+            $ref: "#/components/schemas/LinkedWord@req"
           description: "使用単語"
           default: []
         offer:
-          $ref: "#/components/schemas/LinkedExampleOffer.req"
+          $ref: "#/components/schemas/LinkedExampleOffer@req"
 
-    LinkedWord.res:
+    LinkedWord@res:
       title: "LinkedWord"
       type: object
       properties:
@@ -1260,7 +1260,7 @@ components:
           description: "番号"
           example: 1
 
-    LinkedWord.req:
+    LinkedWord@req:
       title: "LinkedWord"
       type: object
       properties:
@@ -1274,7 +1274,7 @@ components:
       required:
         - number
 
-    ExampleOffer.res:
+    ExampleOffer@res:
       title: "ExampleOffer"
       type: object
       properties:
@@ -1316,7 +1316,7 @@ components:
           description: "著者名"
           example: "ZpDIC Online"
 
-    LinkedExampleOffer.res:
+    LinkedExampleOffer@res:
       title: "LinkedExampleOffer"
       type: object
       properties:
@@ -1343,7 +1343,7 @@ components:
       nullable: true
       description: "結びつけられた例文集の例文情報 (存在しない場合は `null`)"
 
-    LinkedExampleOffer.req:
+    LinkedExampleOffer@req:
       title: "LinkedExampleOffer"
       type: object
       properties:

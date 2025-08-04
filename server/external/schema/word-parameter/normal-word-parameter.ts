@@ -1,14 +1,19 @@
 //
 
-import {boolean, object, string} from "yup";
-import {WORD_MODE, WORD_ORDER_DIRECTION, WORD_ORDER_MODE, WORD_TYPE} from "/server/external/schema/word-parameter/word-parameter";
+import {InferType, boolean, object, string} from "yup";
+import {WordMode$In, WordOrderMode$In, WordOrederDirection$In, WordType$In} from "/server/external/schema/word-parameter/word-parameter";
 
 
-export const NORMAL_WORD_PARAMETER = object({
+export const NormalWordParameter$In = object({
+
   text: string().defined(),
-  mode: WORD_MODE.default("both"),
-  type: WORD_TYPE.default("prefix"),
-  orderMode: WORD_ORDER_MODE.default("unicode"),
-  orderDirection: WORD_ORDER_DIRECTION.default("ascending"),
+  mode: WordMode$In.default("both"),
+  type: WordType$In.default("prefix"),
+  orderMode: WordOrderMode$In.default("unicode"),
+  orderDirection: WordOrederDirection$In.default("ascending"),
   ignoreCase: boolean().default(false)
+
 });
+
+
+export type NormalWordParameter$In = InferType<typeof NormalWordParameter$In>;

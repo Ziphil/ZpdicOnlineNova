@@ -7,9 +7,13 @@ import {PhraseCreator} from "/server/external/creator/word/phrase";
 import {RelationCreator} from "/server/external/creator/word/relation";
 import {VariationCreator} from "/server/external/creator/word/variation";
 import type {
-  Word as WordSkeleton,
-  WordWithExamples as WordSkeletonWithExamples
+  EditableWord$In,
+  Word$Out,
+  WordWithExamples$Out
 } from "/server/external/schema";
+import {
+  EditableWord
+} from "/server/internal/skeleton";
 import {
   ExampleModel,
   Word
@@ -18,7 +22,7 @@ import {
 
 export namespace WordCreator {
 
-  export function skeletonize(raw: Word): WordSkeleton {
+  export function skeletonize(raw: Word): Word$Out {
     const skeleton = {
       id: raw.id || raw["_id"],
       number: raw.number,
@@ -30,15 +34,29 @@ export namespace WordCreator {
       phrases: raw.sections[0]?.phrases?.map(PhraseCreator.skeletonize) ?? [],
       variations: raw.sections[0]?.variations.map(VariationCreator.skeletonize) ?? [],
       relations: raw.sections[0]?.relations.map(RelationCreator.skeletonize) ?? []
-    } satisfies WordSkeleton;
+    } satisfies Word$Out;
     return skeleton;
   }
 
-  export async function skeletonizeWithExamples(raw: Word): Promise<WordSkeletonWithExamples> {
+  export async function skeletonizeWithExamples(raw: Word): Promise<WordWithExamples$Out> {
     const base = skeletonize(raw);
     const examples = await ExampleModel.fetchByWord(raw).then((rawExamples) => rawExamples.map(ExampleCreator.skeletonize));
     const skeleton = {...base, examples};
     return skeleton;
+  }
+
+  export function enflesh(skeleton: EditableWord$In): Omit<EditableWord, "number"> {
+    const raw = {
+      ...skeleton,
+      sections: [{
+        equivalents: skeleton.equivalents,
+        informations: skeleton.informations,
+        phrases: skeleton.phrases,
+        variations: skeleton.variations,
+        relations: skeleton.relations
+      }]
+    };
+    return raw;
   }
 
 }

@@ -1,8 +1,7 @@
 //
 
-import {InferType} from "yup";
 import type {
-  NORMAL_EXAMPLE_PARAMETER
+  NormalExampleParameter$In
 } from "/server/external/schema";
 import {
   ExampleParameter,
@@ -12,7 +11,7 @@ import {
 
 export namespace ExampleParameterCreator {
 
-  export function enflesh(object: InferType<typeof NORMAL_EXAMPLE_PARAMETER>): ExampleParameter {
+  export function enflesh(object: NormalExampleParameter$In): ExampleParameter {
     const raw = new NormalExampleParameter(
       object.text,
       object.mode,

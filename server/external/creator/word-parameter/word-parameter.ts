@@ -1,8 +1,7 @@
 //
 
-import {InferType} from "yup";
 import type {
-  NORMAL_WORD_PARAMETER
+  NormalWordParameter$In
 } from "/server/external/schema";
 import {
   NormalWordParameter,
@@ -12,7 +11,7 @@ import {
 
 export namespace WordParameterCreator {
 
-  export function enflesh(object: InferType<typeof NORMAL_WORD_PARAMETER>): WordParameter {
+  export function enflesh(object: NormalWordParameter$In): WordParameter {
     const raw = new NormalWordParameter(
       object.text,
       object.mode,

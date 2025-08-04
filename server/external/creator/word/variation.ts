@@ -1,7 +1,7 @@
 //
 
 import type {
-  Variation as VariationSkeleton
+  Variation$Out
 } from "/server/external/schema";
 import {
   Variation
@@ -10,12 +10,12 @@ import {
 
 export namespace VariationCreator {
 
-  export function skeletonize(raw: Variation): VariationSkeleton {
+  export function skeletonize(raw: Variation): Variation$Out {
     const skeleton = {
       title: raw.title,
       name: raw.name,
       pronunciation: raw.pronunciation ?? ""
-    } satisfies VariationSkeleton;
+    } satisfies Variation$Out;
     return skeleton;
   }
 

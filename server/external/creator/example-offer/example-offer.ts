@@ -1,7 +1,7 @@
 //
 
 import type {
-  ExampleOffer as ExampleOfferSkeleton
+  ExampleOffer$Out
 } from "/server/external/schema";
 import {
   ExampleOffer
@@ -10,7 +10,7 @@ import {
 
 export namespace ExampleOfferCreator {
 
-  export function skeletonize(raw: ExampleOffer): ExampleOfferSkeleton {
+  export function skeletonize(raw: ExampleOffer): ExampleOffer$Out {
     const skeleton = {
       id: raw.id,
       catalog: raw.catalog,
@@ -18,7 +18,7 @@ export namespace ExampleOfferCreator {
       translation: raw.translation,
       supplement: raw.supplement ?? "",
       author: raw.author
-    } satisfies ExampleOfferSkeleton;
+    } satisfies ExampleOffer$Out;
     return skeleton;
   }
 

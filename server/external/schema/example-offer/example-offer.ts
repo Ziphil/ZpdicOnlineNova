@@ -1,7 +1,7 @@
 //
 
 
-export interface ExampleOffer {
+export interface ExampleOffer$Out {
 
   id: string;
   catalog: string;

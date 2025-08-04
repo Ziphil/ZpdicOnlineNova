@@ -1,8 +1,13 @@
 //
 
-import {object, string} from "yup";
+import {InferType, object, string} from "yup";
 
 
-export const NORMAL_EXAMPLE_OFFER_PARAMETER = object({
+export const NormalExampleOfferParameter$In = object({
+
   catalog: string().defined()
+
 });
+
+
+export type NormalExampleOfferParameter$In = InferType<typeof NormalExampleOfferParameter$In>;

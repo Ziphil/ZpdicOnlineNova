@@ -1,7 +1,7 @@
 //
 
 import type {
-  LinkedWord as LinkedWordSkeleton
+  LinkedWord$Out
 } from "/server/external/schema";
 import {
   LinkedWord
@@ -10,10 +10,10 @@ import {
 
 export namespace LinkedWordCreator {
 
-  export function skeletonize(raw: LinkedWord): LinkedWordSkeleton {
+  export function skeletonize(raw: LinkedWord): LinkedWord$Out {
     const skeleton = {
       number: raw.number
-    } satisfies LinkedWordSkeleton;
+    } satisfies LinkedWord$Out;
     return skeleton;
   }
 

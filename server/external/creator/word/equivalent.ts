@@ -1,7 +1,7 @@
 //
 
 import type {
-  Equivalent as EquivalentSkeleton
+  Equivalent$Out
 } from "/server/external/schema";
 import {
   Equivalent
@@ -10,14 +10,14 @@ import {
 
 export namespace EquivalentCreator {
 
-  export function skeletonize(raw: Equivalent): EquivalentSkeleton {
+  export function skeletonize(raw: Equivalent): Equivalent$Out {
     const skeleton = {
       titles: raw.titles,
       names: raw.names,
       nameString: raw.nameString ?? raw.names.join(", "),
       ignoredPattern: raw.ignoredPattern ?? "",
       hidden: raw.hidden ?? false
-    } satisfies EquivalentSkeleton;
+    } satisfies Equivalent$Out;
     return skeleton;
   }
 

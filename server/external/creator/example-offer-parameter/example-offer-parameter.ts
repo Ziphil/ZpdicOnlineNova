@@ -1,8 +1,7 @@
 //
 
-import {InferType} from "yup";
 import type {
-  NORMAL_EXAMPLE_OFFER_PARAMETER
+  NormalExampleOfferParameter$In
 } from "/server/external/schema";
 import {
   ExampleOfferParameter,
@@ -12,7 +11,7 @@ import {
 
 export namespace ExampleOfferParameterCreator {
 
-  export function enflesh(skeleton: InferType<typeof NORMAL_EXAMPLE_OFFER_PARAMETER>): ExampleOfferParameter {
+  export function enflesh(skeleton: NormalExampleOfferParameter$In): ExampleOfferParameter {
     const raw = new NormalExampleOfferParameter(skeleton.catalog);
     return raw;
   }

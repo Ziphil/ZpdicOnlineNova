@@ -1,7 +1,7 @@
 //
 
 import type {
-  Information as InformationSkeleton
+  Information$Out
 } from "/server/external/schema";
 import {
   Information
@@ -10,12 +10,12 @@ import {
 
 export namespace InformationCreator {
 
-  export function skeletonize(raw: Information): InformationSkeleton {
+  export function skeletonize(raw: Information): Information$Out {
     const skeleton = {
       title: raw.title,
       text: raw.text,
       hidden: raw.hidden ?? false
-    } satisfies InformationSkeleton;
+    } satisfies Information$Out;
     return skeleton;
   }
 
