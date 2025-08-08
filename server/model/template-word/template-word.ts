@@ -1,6 +1,7 @@
 //
 
 import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
+import {Jsonify} from "jsonify-type";
 import {TemplateSectionSchema} from "/server/model/template-word/template-section";
 
 
@@ -27,3 +28,5 @@ export class TemplateWordSchema {
 
 export type TemplateWord = TemplateWordSchema;
 export const TemplateWordModel = getModelForClass(TemplateWordSchema);
+
+export type EditableTemplateWord = Pick<Jsonify<TemplateWord>, "title" | "name" | "pronunciation" | "tags" | "sections"> & {id: string | null};

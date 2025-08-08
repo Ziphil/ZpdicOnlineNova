@@ -2,9 +2,11 @@
 
 import {LinkedWordCreator} from "/server/external/creator/word/linked-word";
 import type {
+  EditableExample$In,
   Example$Out
 } from "/server/external/schema";
 import {
+  EditableExample,
   Example
 } from "/server/model";
 
@@ -25,4 +27,11 @@ export namespace ExampleCreator {
     return skeleton;
   }
 
+  export function enflesh(skeleton: EditableExample$In): Omit<EditableExample, "number"> {
+    const raw = {
+      ...skeleton,
+      offer: (skeleton.offer !== null) ? skeleton.offer : undefined
+    } satisfies Omit<EditableExample, "number">;
+    return raw;
+  }
 }

@@ -10,19 +10,8 @@ import {
   prop
 } from "@typegoose/typegoose";
 import Fuse from "fuse.js";
-import type {
-  DictionaryStatistics,
-  EditableArticle,
-  EditableExample,
-  EditableTemplateWord,
-  EditableWord,
-  ObjectId,
-  StringLengths,
-  WholeAverage,
-  WordNameFrequencies,
-  WordNameFrequency
-} from "/server/internal/skeleton";
-import {Article, ArticleModel} from "/server/model/article";
+import type {DictionaryStatistics, StringLengths, WholeAverage, WordNameFrequencies, WordNameFrequency} from "/server/internal/skeleton";
+import {Article, ArticleModel, EditableArticle} from "/server/model/article";
 import {DiscardableSchema} from "/server/model/base";
 import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityQuery, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
@@ -30,13 +19,14 @@ import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} f
 import {Serializer} from "/server/model/dictionary/serializer";
 import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
 import {CustomError} from "/server/model/error";
-import {Example, ExampleModel} from "/server/model/example/example";
+import {EditableExample, Example, ExampleModel} from "/server/model/example/example";
 import {ExampleParameter} from "/server/model/example-parameter/example-parameter";
 import {InvitationModel} from "/server/model/invitation";
+import {EditableTemplateWord} from "/server/model/template-word/template-word";
 import {User, UserSchema} from "/server/model/user/user";
 import {Relation} from "/server/model/word/relation";
 import {Suggestion} from "/server/model/word/suggestion";
-import {Word, WordModel} from "/server/model/word/word";
+import {EditableWord, Word, WordModel} from "/server/model/word/word";
 import {NormalWordParameter} from "/server/model/word-parameter/normal-word-parameter";
 import {WordParameter} from "/server/model/word-parameter/word-parameter";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
@@ -324,7 +314,7 @@ export class DictionarySchema extends DiscardableSchema {
     return this;
   }
 
-  public async deleteTemplateWord(this: Dictionary, id: ObjectId): Promise<Dictionary> {
+  public async deleteTemplateWord(this: Dictionary, id: string): Promise<Dictionary> {
     const currentTemplateWords = this.settings.templateWords ?? [];
     const index = currentTemplateWords.findIndex((currentTemplateWord) => (currentTemplateWord as any)["_id"].toString() === id);
     if (index >= 0) {

@@ -3,10 +3,12 @@
 import {ExampleCreator} from "/server/internal/creator/example/example";
 import {SectionCreator} from "/server/internal/creator/word/section";
 import type {
+  EditableWord as EditableWordSkeleton,
   Word as WordSkeleton,
   WordWithExamples as WordSkeletonWithExamples
 } from "/server/internal/skeleton";
 import {
+  EditableWord,
   ExampleModel,
   Word
 } from "/server/model";
@@ -34,6 +36,13 @@ export namespace WordCreator {
     const examples = await ExampleModel.fetchByWord(raw).then((rawExamples) => rawExamples.map(ExampleCreator.skeletonize));
     const skeleton = {...base, examples};
     return skeleton;
+  }
+
+  export function enflesh(input: EditableWordSkeleton): EditableWord {
+    const raw = {
+      ...input
+    } satisfies EditableWord;
+    return raw;
   }
 
 }

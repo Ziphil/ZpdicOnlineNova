@@ -47,7 +47,7 @@ export class ExampleExternalRestController extends ExternalRestController {
   @before(checkMe(), limit(), validateBody("addExample"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"addExample", "me" | "dictionary">, response: Response<"addExample">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
-    const {example} = request.body;
+    const example = ExampleCreator.enflesh(request.body.example);
     try {
       const resultExample = await dictionary.editExample({number: null, ...example}, me);
       const body = {example: ExampleCreator.skeletonize(resultExample)};
@@ -66,7 +66,7 @@ export class ExampleExternalRestController extends ExternalRestController {
   public async [Symbol()](request: FilledRequest<"editExample", "me" | "dictionary">, response: Response<"editExample">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
     const exampleNumber = +request.params.exampleNumber;
-    const {example} = request.body;
+    const example = ExampleCreator.enflesh(request.body.example);
     try {
       const currentExample = await dictionary.fetchOneExampleByNumber(exampleNumber);
       if (currentExample) {

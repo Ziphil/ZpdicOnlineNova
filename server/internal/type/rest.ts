@@ -5,6 +5,8 @@ import type {
   Article,
   CustomError,
   Dictionary,
+  DictionaryAuthority,
+  DictionaryAuthorityQuery,
   DictionaryParameter,
   DictionarySettings,
   DictionaryStatistics,
@@ -36,7 +38,6 @@ import type {
   WordWithExamples
 } from "/server/internal/skeleton";
 import type {WithRecaptcha} from "/server/internal/type/common";
-import type {DictionaryAuthority, DictionaryAuthorityQuery} from "/server/model";
 import type {WithSize} from "/server/util/query";
 
 

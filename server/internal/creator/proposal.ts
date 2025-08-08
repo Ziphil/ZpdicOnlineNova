@@ -14,7 +14,7 @@ export namespace ProposalCreator {
     const skeleton = {
       id: raw.id,
       name: raw.name,
-      comment: raw.comment,
+      comment: raw.comment ?? "",
       createdDate: raw.createdDate.toISOString()
     } satisfies ProposalSkeleton;
     return skeleton;

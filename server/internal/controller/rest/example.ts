@@ -17,7 +17,7 @@ export class ExampleRestController extends InternalRestController {
   @before(checkMe(), checkDictionary("edit"))
   public async [Symbol()](request: Request<"editExample">, response: Response<"editExample">): Promise<void> {
     const {me, dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
-    const {example} = request.body;
+    const example = ExampleCreator.enflesh(request.body.example);
     try {
       const resultExample = await dictionary.editExample(example, me);
       const body = ExampleCreator.skeletonize(resultExample);

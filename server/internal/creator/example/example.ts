@@ -4,10 +4,12 @@ import {isDocument} from "@typegoose/typegoose";
 import {DictionaryCreator} from "/server/internal/creator/dictionary/dictionary";
 import {LinkedWordCreator} from "/server/internal/creator/word/linked-word";
 import type {
+  EditableExample as EditableExampleSkeleton,
   Example as ExampleSkeleton,
   ExampleWithDictionary as ExampleSkeletonWithDictionary
 } from "/server/internal/skeleton";
 import {
+  EditableExample,
   Example
 } from "/server/model";
 
@@ -22,7 +24,7 @@ export namespace ExampleCreator {
       words: raw.words.map(LinkedWordCreator.skeletonize),
       sentence: raw.sentence,
       translation: raw.translation,
-      supplement: raw.supplement,
+      supplement: raw.supplement ?? "",
       offer: raw.offer ?? null,
       updatedUser: (raw.updatedUser !== undefined) ? {id: raw.updatedUser} : undefined,
       createdDate: raw.createdDate?.toISOString() ?? undefined,
@@ -47,6 +49,14 @@ export namespace ExampleCreator {
     })()]);
     const skeleton = {...base, dictionary};
     return skeleton;
+  }
+
+  export function enflesh(input: EditableExampleSkeleton): EditableExample {
+    const raw = {
+      ...input,
+      offer: (input.offer !== null) ? input.offer : undefined
+    } satisfies EditableExample;
+    return raw;
   }
 
 }

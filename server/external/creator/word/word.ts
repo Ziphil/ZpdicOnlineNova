@@ -12,9 +12,7 @@ import type {
   WordWithExamples$Out
 } from "/server/external/schema";
 import {
-  EditableWord
-} from "/server/internal/skeleton";
-import {
+  EditableWord,
   ExampleModel,
   Word
 } from "/server/model";
@@ -55,7 +53,7 @@ export namespace WordCreator {
         variations: skeleton.variations,
         relations: skeleton.relations
       }]
-    };
+    } satisfies Omit<EditableWord, "number">;
     return raw;
   }
 

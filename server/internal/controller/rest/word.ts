@@ -16,7 +16,7 @@ export class WordRestController extends InternalRestController {
   @before(checkMe(), checkDictionary("edit"))
   public async [Symbol()](request: Request<"editWord">, response: Response<"editWord">): Promise<void> {
     const {me, dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
-    const {word} = request.body;
+    const word = WordCreator.enflesh(request.body.word);
     try {
       const resultWord = await dictionary.editWord(word, me);
       const body = WordCreator.skeletonize(resultWord);

@@ -7,7 +7,7 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import type {EditableWord} from "/server/internal/skeleton";
+import {Jsonify} from "jsonify-type";
 import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
@@ -52,7 +52,7 @@ export class WordSchema extends DiscardableSchema {
    * そうでない場合は、渡された単語データを新しいデータとして追加します。
    * 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。*/
   public static async edit(dictionary: Dictionary, word: EditableWord, user: User): Promise<Word> {
-    const currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", word.number);
+    const currentWord = (word.number !== null) ? await WordModel.findOneExist().where("dictionary", dictionary).where("number", word.number) : null;
     let resultWord;
     if (currentWord) {
       resultWord = new WordModel(word);
@@ -209,3 +209,5 @@ export class WordSchema extends DiscardableSchema {
 
 export type Word = DocumentType<WordSchema>;
 export const WordModel = getModelForClass(WordSchema);
+
+export type EditableWord = Pick<Jsonify<Word>, "name" | "pronunciation" | "tags" | "sections"> & {number: number | null};

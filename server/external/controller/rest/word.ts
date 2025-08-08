@@ -46,9 +46,9 @@ export class WordExternalRestController extends ExternalRestController {
   @before(checkMe(), limit(), validateBody("addWord"), checkDictionary("edit"))
   public async [Symbol()](request: FilledRequest<"addWord", "me" | "dictionary">, response: Response<"addWord">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
-    const {word} = request.body;
+    const word = WordCreator.enflesh(request.body.word);
     try {
-      const resultWord = await dictionary.editWord({number: null, ...WordCreator.enflesh(word)}, me);
+      const resultWord = await dictionary.editWord({number: null, ...word}, me);
       const body = {word: WordCreator.skeletonize(resultWord)};
       ExternalRestController.respond(response, 201, body);
     } catch (error) {
@@ -65,11 +65,11 @@ export class WordExternalRestController extends ExternalRestController {
   public async [Symbol()](request: FilledRequest<"editWord", "me" | "dictionary">, response: Response<"editWord">): Promise<void> {
     const {me, dictionary} = request.middlewareBody;
     const wordNumber = +request.params.wordNumber;
-    const {word} = request.body;
+    const word = WordCreator.enflesh(request.body.word);
     try {
       const currentWord = await dictionary.fetchOneWordByNumber(wordNumber);
       if (currentWord) {
-        const resultWord = await dictionary.editWord({number: currentWord.number, ...WordCreator.enflesh(word)}, me);
+        const resultWord = await dictionary.editWord({number: currentWord.number, ...word}, me);
         const body = {word: WordCreator.skeletonize(resultWord)};
         ExternalRestController.respond(response, 200, body);
       } else {
