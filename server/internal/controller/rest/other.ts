@@ -5,7 +5,7 @@ import {InternalRestController, Request, Response} from "/server/internal/contro
 import {checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {UserModel} from "/server/model";
-import {MailUtil} from "/server/util/mail";
+import {getMailSubject, getMailText, sendMail} from "/server/util/mail";
 
 
 @restController(SERVER_PATH_PREFIX)
@@ -32,9 +32,9 @@ export class OtherRestController extends InternalRestController {
     if (text !== "") {
       const administrator = await UserModel.fetchOneAdministrator();
       if (administrator !== null) {
-        const nextSubject = MailUtil.getSubject("contact", {subject});
-        const nextText = MailUtil.getText("contact", {userName, email, subject, text, signedIn, name});
-        MailUtil.send(administrator.email, nextSubject, nextText);
+        const nextSubject = getMailSubject("contact", {subject});
+        const nextText = getMailText("contact", {userName, email, subject, text, signedIn, name});
+        await sendMail(administrator.email, nextSubject, nextText);
         InternalRestController.respond(response, null);
       } else {
         InternalRestController.respondError(response, "administratorNotFound");

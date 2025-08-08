@@ -7,7 +7,7 @@ import {UserCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {UserModel} from "/server/model";
 import {AwsUtil} from "/server/util/aws";
-import {MailUtil} from "/server/util/mail";
+import {getMailSubject, getMailText, sendMail} from "/server/util/mail";
 
 
 @restController(SERVER_PATH_PREFIX)
@@ -36,9 +36,9 @@ export class UserRestController extends InternalRestController {
       const {user, key} = await UserModel.register(name, email, password);
       const url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
       const body = UserCreator.skeletonize(user);
-      const subject = MailUtil.getSubject("registerUser");
-      const text = MailUtil.getText("registerUser", {name, url});
-      MailUtil.send(user.email, subject, text);
+      const subject = getMailSubject("registerUser");
+      const text = getMailText("registerUser", {name, url});
+      await sendMail(user.email, subject, text);
       InternalRestController.respond(response, body);
     } catch (error) {
       if (error.name === "ValidationError") {
@@ -108,9 +108,9 @@ export class UserRestController extends InternalRestController {
     try {
       const key = await me.issueActivateToken();
       const url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
-      const subject = MailUtil.getSubject("issueMyActivateToken");
-      const text = MailUtil.getText("issueMyActivateToken", {url});
-      MailUtil.send(me.email, subject, text);
+      const subject = getMailSubject("issueMyActivateToken");
+      const text = getMailText("issueMyActivateToken", {url});
+      await sendMail(me.email, subject, text);
       InternalRestController.respond(response, null);
     } catch (error) {
       InternalRestController.respondByCustomError(response, ["noSuchUser", "userAlreadyActivated"], error);
@@ -124,9 +124,9 @@ export class UserRestController extends InternalRestController {
     try {
       const {user, key} = await UserModel.issueResetToken(email);
       const url = `${request.protocol}://${request.get("host")}/reset?key=${key}`;
-      const subject = MailUtil.getSubject("issueUserResetToken");
-      const text = MailUtil.getText("issueUserResetToken", {url});
-      MailUtil.send(user.email, subject, text);
+      const subject = getMailSubject("issueUserResetToken");
+      const text = getMailText("issueUserResetToken", {url});
+      await sendMail(user.email, subject, text);
       InternalRestController.respond(response, null);
     } catch (error) {
       InternalRestController.respondByCustomError(response, ["noSuchUser"], error);
