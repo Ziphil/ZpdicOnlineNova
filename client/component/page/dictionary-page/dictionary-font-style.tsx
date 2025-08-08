@@ -29,7 +29,7 @@ export const DictionaryFontStyle = create(
 
 function getFontCss(dictionary: Dictionary): string | undefined {
   const font = dictionary.settings.font;
-  if (font?.type === "custom") {
+  if (font.kind === "custom") {
     const url = getAwsFileUrl(`font/${dictionary.number}/font`);
     const css = `
       @font-face {

@@ -8,7 +8,7 @@ export interface DictionarySettings {
 
   akrantiainSource?: string;
   zatlinSource?: string;
-  font?: DictionaryFont;
+  font: DictionaryFont;
   templateWords: Array<TemplateWord>;
   punctuations: Array<string>;
   ignoredEquivalentPattern?: string;

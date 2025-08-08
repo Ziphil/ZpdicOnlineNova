@@ -839,7 +839,7 @@ changeDictionaryParamNameForm:
       The identifier must contain no more than 30 characters.
 changeDictionaryFontForm:
   label:
-    type:
+    kind:
       none: "Do not set"
       local: "Use local font"
       custom: "Upload custom font"
@@ -847,7 +847,7 @@ changeDictionaryFontForm:
       name: "Font family"
       file: "Font file"
   labelHelper:
-    type:
+    kind:
       none: |-
         The headwords will be displayed in the default font.
       local: |-

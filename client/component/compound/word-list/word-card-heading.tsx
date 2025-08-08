@@ -18,7 +18,7 @@ export const WordCardHeading = create(
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    const hasFont = dictionary.settings.font !== undefined && dictionary.settings.font.type !== "none";
+    const hasFont = dictionary.settings.font.kind !== "none";
     const pronunciation = useMemo(() => getPronunciation(dictionary, word), [dictionary, word]);
     const nameFontFamily = useMemo(() => getNameFontFamily(dictionary), [dictionary]);
 
@@ -79,9 +79,9 @@ function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | Word
 
 function getNameFontFamily(dictionary: DictionaryWithExecutors): string | undefined {
   const font = dictionary.settings.font;
-  if (font?.type === "custom") {
+  if (font.kind === "custom") {
     return `'zpdic-custom-${dictionary.number}'`;
-  } else if (font?.type === "local") {
+  } else if (font.kind === "local") {
     return `'${font.name}'`;
   } else {
     return undefined;

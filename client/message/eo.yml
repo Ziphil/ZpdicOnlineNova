@@ -839,7 +839,7 @@ changeDictionaryParamNameForm:
       La identigilo devas havi apenaŭ 30 signojn.
 changeDictionaryFontForm:
   label:
-    type:
+    kind:
       none: "Ne agordi"
       local: "Uzi lokan tiparon"
       custom: "Alŝuti propran tiparon"
@@ -847,7 +847,7 @@ changeDictionaryFontForm:
       name: "Tipara familio"
       file: "Tipara dosiero"
   labelHelper:
-    type:
+    kind:
       none: |-
         La kapvortoj estos montrataj en la defaŭlta tiparo.
       local: |-

@@ -835,7 +835,7 @@ changeDictionaryParamNameForm:
       識別子は 30 文字以下である必要があります。
 changeDictionaryFontForm:
   label:
-    type:
+    kind:
       none: "設定しない"
       local: "ローカルフォントを参照"
       custom: "フォントをアップロード"
@@ -843,7 +843,7 @@ changeDictionaryFontForm:
       name: "フォントファミリー名"
       file: "フォントファイル"
   labelHelper:
-    type:
+    kind:
       none: |-
         デフォルトフォントで表示します。
       local: |-

@@ -13,8 +13,8 @@ import {Dictionary, DictionaryFont} from "/server/internal/skeleton";
 
 
 const SCHEMA = object({
-  type: string().oneOf(["none", "local", "custom"]).required(),
-  name: string().when("type", {
+  kind: string().oneOf(["none", "local", "custom"]).required(),
+  name: string().when("kind", {
     is: "local",
     then: (schema) => schema.required("nameRequired")
   }),
@@ -51,7 +51,7 @@ export function useChangeDictionaryFont(dictionary: Dictionary): ChangeDictionar
     });
   }, [dictionary, request]);
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    if (value.type === "custom" && value.file !== undefined) {
+    if (value.kind === "custom" && value.file !== undefined) {
       const results = await Promise.all([changeSettings(value), uploadFont(value)]);
       if (results.every((result) => result)) {
         dispatchSuccessToast("changeDictionarySettings.font");
@@ -68,31 +68,31 @@ export function useChangeDictionaryFont(dictionary: Dictionary): ChangeDictionar
 
 function getFormValue(dictionary: Dictionary): FormValue {
   const value = {
-    type: dictionary.settings.font?.type ?? "none",
-    name: (dictionary.settings.font?.type === "local") ? dictionary.settings.font.name : undefined,
+    kind: dictionary.settings.font?.kind ?? "none",
+    name: (dictionary.settings.font?.kind === "local") ? dictionary.settings.font.name : undefined,
     file: undefined as any
   } satisfies FormValue;
   return value;
 }
 
 function getQueryFont(dictionary: Dictionary, formValue: FormValue): DictionaryFont {
-  if (formValue.type === "none") {
+  if (formValue.kind === "none") {
     const font = {
-      type: "none" as const
+      kind: "none" as const
     };
     return font;
-  } else if (formValue.type === "local") {
+  } else if (formValue.kind === "local") {
     const font = {
-      type: "local" as const,
+      kind: "local" as const,
       name: formValue.name ?? ""
     };
     return font;
-  } else if (formValue.type === "custom") {
+  } else if (formValue.kind === "custom") {
     const currentFont = dictionary.settings.font;
-    const currentName = (currentFont?.type === "custom") ? currentFont.name : undefined;
-    const currentFormat = (currentFont?.type === "custom") ? currentFont.format : "";
+    const currentName = (currentFont?.kind === "custom") ? currentFont.name : undefined;
+    const currentFormat = (currentFont?.kind === "custom") ? currentFont.format : "";
     const font = {
-      type: "custom" as const,
+      kind: "custom" as const,
       name: (formValue.file !== undefined) ? formValue.file.name : currentName,
       format: (formValue.file !== undefined) ? getFontFormat(formValue.file) : currentFormat
     };

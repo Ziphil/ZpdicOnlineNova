@@ -11,20 +11,20 @@ import {
 export namespace DictionaryFontCreator {
 
   export function skeletonize(raw: DictionaryFont): DictionaryFontSkeleton {
-    if (raw.type === "none") {
+    if (raw.kind === "none") {
       const skeleton = {
-        type: "none"
+        kind: "none"
       } satisfies DictionaryFontSkeleton;
       return skeleton;
-    } else if (raw.type === "local") {
+    } else if (raw.kind === "local") {
       const skeleton = {
-        type: "local",
+        kind: "local",
         name: raw.name ?? ""
       } satisfies DictionaryFontSkeleton;
       return skeleton;
-    } else if (raw.type === "custom") {
+    } else if (raw.kind === "custom") {
       const skeleton = {
-        type: "custom",
+        kind: "custom",
         name: raw.name ?? "",
         format: raw.format ?? ""
       } satisfies DictionaryFontSkeleton;

@@ -45,20 +45,20 @@ export const ChangeDictionaryFontForm = create(
         <ControlContainer>
           <div styleName="card-group" {...data({vertical: "wide"})}>
             <CheckableCard styleName="card">
-              <Radio value="none" {...register("type")}/>
+              <Radio value="none" {...register("kind")}/>
               <CheckableCardBody styleName="card-body">
                 <div styleName="label">
-                  <div styleName="label-main">{trans("label.type.none")}</div>
-                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.type.none")}</MultiLineText>
+                  <div styleName="label-main">{trans("label.kind.none")}</div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.kind.none")}</MultiLineText>
                 </div>
               </CheckableCardBody>
             </CheckableCard>
             <CheckableCard styleName="card">
-              <Radio value="local" {...register("type")}/>
+              <Radio value="local" {...register("kind")}/>
               <CheckableCardBody styleName="card-body">
                 <div styleName="label">
-                  <div styleName="label-main">{trans("label.type.local")}</div>
-                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.type.local")}</MultiLineText>
+                  <div styleName="label-main">{trans("label.kind.local")}</div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.kind.local")}</MultiLineText>
                 </div>
                 <ControlContainer>
                   <ControlLabel>
@@ -70,11 +70,11 @@ export const ChangeDictionaryFontForm = create(
               </CheckableCardBody>
             </CheckableCard>
             <CheckableCard styleName="card">
-              <Radio value="custom" {...register("type")}/>
+              <Radio value="custom" {...register("kind")}/>
               <CheckableCardBody styleName="card-body">
                 <div styleName="label">
-                  <div styleName="label-main">{trans("label.type.custom")}</div>
-                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.type.custom")}</MultiLineText>
+                  <div styleName="label-main">{trans("label.kind.custom")}</div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.kind.custom")}</MultiLineText>
                 </div>
                 <ControlContainer>
                   <ControlLabel>
@@ -83,7 +83,7 @@ export const ChangeDictionaryFontForm = create(
                   <Controller name="file" control={control} render={({field}) => (
                     <FileInput
                       value={field.value}
-                      defaultValue={(dictionary.settings.font?.type === "custom") ? dictionary.settings.font?.name : undefined}
+                      defaultValue={(dictionary.settings.font?.kind === "custom") ? dictionary.settings.font?.name : undefined}
                       onSet={field.onChange}
                       error={getFieldState("file").error !== undefined}
                       multiple={false}

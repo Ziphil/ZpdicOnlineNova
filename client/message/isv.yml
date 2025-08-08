@@ -769,7 +769,7 @@ changeDictionaryParamNameForm:
       The identifier must contain no more than 30 characters.
 changeDictionaryFontForm:
   label:
-    type:
+    kind:
       none: "Do not set"
       local: "Use local font"
       custom: "Upload custom font"

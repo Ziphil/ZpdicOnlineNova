@@ -7,7 +7,7 @@ import {modelOptions, prop} from "@typegoose/typegoose";
 export class DictionaryFontSchema {
 
   @prop({required: true})
-  public type!: string;
+  public kind!: string;
 
   @prop()
   public name?: string;

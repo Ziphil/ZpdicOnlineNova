@@ -16,7 +16,7 @@ export namespace DictionarySettingsCreator {
     const skeleton = {
       akrantiainSource: raw.akrantiainSource,
       zatlinSource: raw.zatlinSource,
-      font: (raw.font !== undefined) ? DictionaryFontCreator.skeletonize(raw.font) : undefined,
+      font: (raw.font !== undefined) ? DictionaryFontCreator.skeletonize(raw.font) : {kind: "none"},
       templateWords: (raw.templateWords !== undefined) ? raw.templateWords.map(TemplateWordCreator.skeletonize) : [],
       punctuations: raw.punctuations,
       ignoredEquivalentPattern: raw.ignoredEquivalentPattern,

@@ -132,4 +132,6 @@ db.dictionaries.updateMany({"settings.templateWords": {$exists: true}}, [{$set: 
     }
   }}
 }}])
+
+db.dictionaries.updateMany({}, {$rename: {"settings.font.type": "settings.font.kind"}});
 ```
