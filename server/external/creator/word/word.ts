@@ -27,11 +27,11 @@ export namespace WordCreator {
       name: raw.name,
       pronunciation: raw.pronunciation ?? "",
       tags: raw.tags,
-      equivalents: raw.sections[0]?.equivalents.map(EquivalentCreator.skeletonize) ?? [],
-      informations: raw.sections[0]?.informations.map(InformationCreator.skeletonize) ?? [],
-      phrases: raw.sections[0]?.phrases?.map(PhraseCreator.skeletonize) ?? [],
-      variations: raw.sections[0]?.variations.map(VariationCreator.skeletonize) ?? [],
-      relations: raw.sections[0]?.relations.map(RelationCreator.skeletonize) ?? []
+      equivalents: raw.sections.flatMap((section) => section.equivalents.map(EquivalentCreator.skeletonize)),
+      informations: raw.sections.flatMap((section) => section.informations.map(InformationCreator.skeletonize)),
+      phrases: raw.sections.flatMap((section) => section.phrases?.map(PhraseCreator.skeletonize) ?? []),
+      variations: raw.sections.flatMap((section) => section.variations.map(VariationCreator.skeletonize)),
+      relations: raw.sections.flatMap((section) => section.relations.map(RelationCreator.skeletonize))
     } satisfies Word$Out;
     return skeleton;
   }
