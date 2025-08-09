@@ -493,6 +493,7 @@ editWordForm:
       variation: "変化形を追加"
       relation: "関連語を追加"
     discard:
+      section: "セクションを削除"
       equivalent: "削除"
       information: "削除"
       phrase: "削除"

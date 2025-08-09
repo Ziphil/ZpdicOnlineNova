@@ -4,40 +4,26 @@
 
 
 .root {
-  border-block: solid 1zx var(--section-border-color);
-  interpolate-size: allow-keywords;
-  &:not(:last-of-type) {
-    border-block-end: none;
-  }
-  &::details-content {
-    transition: 0.2s height, 0.2s content-visibility allow-discrete;
-    overflow: clip;
-  }
-  &:not([open]) {
-    --when-open-display: none;
-    --when-closed-display: block;
-    &::details-content {
-      height: 2zu;
-    }
-  }
-  &[open] {
-    --when-open-display: block;
-    --when-closed-display: none;
-    &::details-content {
-      height: auto;
-    }
-  }
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
 }
 
 .heading {
   @include bold-font;
-  padding-block-start: 2zu;
+  padding-block-start: 0.5zu;
+  padding-inline-end: 2zu;
   font-size: 4zu;
-  color: var(--glob-secondary-heading-text-color);
-  list-style-type: none;
-  display: flex;
-  justify-content: space-between;
+  color: var(--glob-mute-text-color);
+  border-inline-end: double 3zx var(--glob-border-color);
   cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.heading-number {
+  top: 0zu;
+  position: sticky;
+  text-align: center;
 }
 
 .angle {
@@ -50,9 +36,9 @@
 }
 
 .main {
-  padding-block: 6zu;
-  padding-inline: 0zu;
+  padding-inline-start: 3zu;
   row-gap: 6zu;
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
 }

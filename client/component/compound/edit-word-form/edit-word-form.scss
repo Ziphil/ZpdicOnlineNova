@@ -6,8 +6,6 @@
 .root {
   @include theme("light") {
     --item-background-color: #{single-color("background-light")};
-    --section-border-color: #{leveled-color("secondary", 1)};
-    --section-heading-background-color: #{leveled-color("secondary", 0)};
   }
 }
 

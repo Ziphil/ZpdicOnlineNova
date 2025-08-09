@@ -495,6 +495,7 @@ editWordForm:
       variation: "Aldoni variaĵan formon"
       relation: "Aldoni rilatan vorton"
     discard:
+      section: "Forigi seksion"
       equivalent: "Forigi"
       information: "Forigi"
       phrase: "Forigi"

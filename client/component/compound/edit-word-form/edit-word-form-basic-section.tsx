@@ -117,7 +117,7 @@ export const EditWordFormBasicSection = create(
             <div styleName="row">
               <Input {...register("pronunciation")}/>
               {(dictionary.akrantiain !== null) && (
-                <Button scheme="gray" onClick={generatePronunciation}>
+                <Button scheme="primary" variant="light" onClick={generatePronunciation}>
                   <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
                   {trans("button.generate")}
                 </Button>

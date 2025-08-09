@@ -10,10 +10,11 @@
 }
 
 .section-list {
-  display: flex;
-  flex-direction: column;
+  row-gap: 8zu;
+  display: grid;
+  grid-template-columns: max-content 1fr;
 }
 
 .section-plus {
-  margin-block-start: 3zu;
+  grid-column: 1 / -1;
 }
