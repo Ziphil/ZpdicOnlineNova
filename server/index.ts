@@ -3,7 +3,6 @@
 import sendgrid from "@sendgrid/mail";
 import * as typegoose from "@typegoose/typegoose";
 import Agenda from "agenda";
-import aws from "aws-sdk";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dayjs from "dayjs";
@@ -46,9 +45,6 @@ import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
 import {jsonifyRequest} from "/server/util/request";
 import {
-  AWS_KEY,
-  AWS_REGION,
-  AWS_SECRET,
   COOKIE_SECRET,
   MONGO_URI,
   PORT,
@@ -83,7 +79,6 @@ export class Main {
     this.setupCors();
     this.setupMongo();
     this.setupSendgrid();
-    this.setupAws();
     this.setupDirectories();
     this.useRestControllers();
     this.useSocketControllers();
@@ -166,12 +161,6 @@ export class Main {
 
   private setupSendgrid(): void {
     sendgrid.setApiKey(SENDGRID_KEY);
-  }
-
-  private setupAws(): void {
-    const credentials = {accessKeyId: AWS_KEY, secretAccessKey: AWS_SECRET};
-    const region = AWS_REGION;
-    aws.config.update({credentials, region});
   }
 
   /** 内部処理で用いるディレクトリを用意します。*/

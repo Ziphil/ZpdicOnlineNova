@@ -6,7 +6,7 @@ import {checkMe, checkRecaptcha, login, logout} from "/server/internal/controlle
 import {UserCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {UserModel} from "/server/model";
-import {AwsUtil} from "/server/util/aws";
+import {getStorageUploadFilePost} from "/server/util/aws";
 import {getMailSubject, getMailText, sendMail} from "/server/util/mail";
 
 
@@ -196,7 +196,7 @@ export class UserRestController extends InternalRestController {
     try {
       const path = `avatar/${me.name}/avatar`;
       const configs = {contentType: "image/", sizeLimit: 1024 * 1024};
-      const post = await AwsUtil.getUploadFilePost(path, configs);
+      const post = await getStorageUploadFilePost(path, configs);
       const body = post;
       InternalRestController.respond(response, body);
     } catch (error) {

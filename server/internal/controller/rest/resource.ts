@@ -4,7 +4,7 @@ import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkDictionary, checkMe, checkRecaptcha} from "/server/internal/controller/rest/middleware";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
-import {AwsUtil} from "/server/util/aws";
+import {deleteStorageFile, getStorageFileNames, getStorageUploadFilePost} from "/server/util/aws";
 import {QueryRange} from "/server/util/query";
 
 
@@ -19,10 +19,10 @@ export class ResourceRestController extends InternalRestController {
     try {
       const directoryPath = `resource/${dictionary.number}`;
       const path = `resource/${dictionary.number}/${name}`;
-      const names = await AwsUtil.getFileNames(directoryPath);
+      const names = await getStorageFileNames(directoryPath);
       if (names.length < 25) {
         const configs = {contentType: "image/", sizeLimit: 1024 * 1024};
-        const post = await AwsUtil.getUploadFilePost(path, configs);
+        const post = await getStorageUploadFilePost(path, configs);
         const body = post;
         InternalRestController.respond(response, body);
       } else {
@@ -40,7 +40,7 @@ export class ResourceRestController extends InternalRestController {
     const {name} = request.body;
     try {
       const path = `resource/${dictionary.number}/${name}`;
-      await AwsUtil.deleteFile(path);
+      await deleteStorageFile(path);
       InternalRestController.respond(response, null);
     } catch (error) {
       InternalRestController.respondError(response, "awsError");
@@ -54,12 +54,13 @@ export class ResourceRestController extends InternalRestController {
     const {offset, size} = request.body;
     try {
       const path = `resource/${dictionary.number}`;
-      const names = await AwsUtil.getFileNames(path);
+      const names = await getStorageFileNames(path);
       const range = new QueryRange(offset, size);
       const result = QueryRange.restrictArrayWithSize(names, range);
       const body = result;
       InternalRestController.respond(response, body);
     } catch (error) {
+      console.error(error);
       InternalRestController.respondError(response, "awsError");
     }
   }
@@ -71,7 +72,7 @@ export class ResourceRestController extends InternalRestController {
     try {
       const path = `font/${dictionary.number}/font`;
       const configs = {contentType: "", sizeLimit: 1024 * 1024};
-      const post = await AwsUtil.getUploadFilePost(path, configs);
+      const post = await getStorageUploadFilePost(path, configs);
       const body = post;
       InternalRestController.respond(response, body);
     } catch (error) {

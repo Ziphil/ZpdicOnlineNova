@@ -12,13 +12,7 @@ export async function askClaude(userPrompt: string, systemPrompt?: string): Prom
     "max_tokens": 1000,
     "temperature": 1,
     "system": systemPrompt,
-    "messages": [{
-      role: "user",
-      content: [{
-        type: "text",
-        text: userPrompt
-      }]
-    }]
+    "messages": [{role: "user", content: [{type: "text", text: userPrompt}]}]
   });
   const text = message.content.find((block) => block.type === "text")?.text ?? "";
   return text;
