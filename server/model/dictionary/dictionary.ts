@@ -518,7 +518,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async calcStatistics(): Promise<DictionaryStatistics> {
-    const wordQuery = WordModel.findExist().where("dictionary", this).select(["name", "equivalents", "informations"]).lean().cursor();
+    const wordQuery = WordModel.findExist().where("dictionary", this).select(["name", "sections.equivalents", "sections.informations"]).lean().cursor();
     const exampleQuery = ExampleModel.findExist().where("dictionary", this).select(["sentence"]).lean().cursor();
     let rawWordCount = 0;
     const wholeWordNameLengths = {kept: 0, nfd: 0, nfc: 0};
