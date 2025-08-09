@@ -467,7 +467,7 @@ editWordForm:
       hidden: "Hide on word cards"
     phrase:
       titles: "Kinds"
-      spelling: "Expression"
+      expression: "Expression"
       terms: "Translations"
     variation:
       title: "Kind"

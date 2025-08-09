@@ -40,7 +40,7 @@ export const EditWordFormPhraseSection = create(
     const {fields: phrases, ...phraseOperations} = useFieldArray({control, name: `sections.${sectionIndex}.phrases`});
 
     const addPhrase = useCallback(function (): void {
-      phraseOperations.append({titles: [], spelling: "", termString: ""});
+      phraseOperations.append({titles: [], expression: "", termString: ""});
     }, [phraseOperations]);
 
     const setPhrases = useCallback(function (update: (phrases: Array<any>) => Array<any>): void {

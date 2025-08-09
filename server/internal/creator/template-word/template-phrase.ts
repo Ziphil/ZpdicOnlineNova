@@ -13,7 +13,7 @@ export namespace TemplatePhraseCreator {
   export function skeletonize(raw: TemplatePhrase): TemplatePhraseSkeleton {
     const skeleton = {
       titles: raw.titles,
-      spelling: raw.form,
+      expression: raw.form,
       termString: raw.termString
     } satisfies TemplatePhraseSkeleton;
     return skeleton;
@@ -22,7 +22,7 @@ export namespace TemplatePhraseCreator {
   export function enflesh(skeleton: TemplatePhraseSkeleton): TemplatePhrase {
     const raw = {
       titles: skeleton.titles,
-      form: skeleton.spelling,
+      form: skeleton.expression,
       termString: skeleton.termString
     } satisfies TemplatePhrase;
     return raw;

@@ -467,7 +467,7 @@ editWordForm:
       hidden: "Ne montri en vortokartoj"
     phrase:
       titles: "Specoj"
-      spelling: "Idiomaĵo"
+      expression: "Idiomaĵo"
       terms: "Tradukaĵoj"
     variation:
       title: "Speco"

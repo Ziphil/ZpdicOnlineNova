@@ -4,7 +4,7 @@
 export interface TemplatePhrase {
 
   titles: Array<string>;
-  spelling: string;
+  expression: string;
   termString: string;
 
 }
