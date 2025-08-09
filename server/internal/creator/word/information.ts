@@ -19,4 +19,13 @@ export namespace InformationCreator {
     return skeleton;
   }
 
+  export function enflesh(input: InformationSkeleton): Information {
+    const raw = {
+      title: input.title,
+      text: input.text,
+      hidden: input.hidden
+    } satisfies Information;
+    return raw;
+  }
+
 }

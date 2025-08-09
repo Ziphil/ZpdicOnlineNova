@@ -19,4 +19,13 @@ export namespace VariationCreator {
     return skeleton;
   }
 
+  export function enflesh(input: VariationSkeleton): Variation {
+    const raw = {
+      title: input.title,
+      name: input.name,
+      pronunciation: input.pronunciation
+    } satisfies Variation;
+    return raw;
+  }
+
 }

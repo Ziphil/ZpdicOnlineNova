@@ -21,4 +21,15 @@ export namespace PhraseCreator {
     return skeleton;
   }
 
+  export function enflesh(input: Phrase$Out): Phrase {
+    const raw = {
+      titles: input.titles,
+      form: input.form,
+      terms: input.terms,
+      termString: input.termString,
+      ignoredPattern: input.ignoredPattern
+    } satisfies Phrase;
+    return raw;
+  }
+
 }

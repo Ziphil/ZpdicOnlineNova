@@ -26,4 +26,15 @@ export namespace SectionCreator {
     return skeleton;
   }
 
+  export function enflesh(input: SectionSkeleton): Section {
+    const raw = {
+      equivalents: input.equivalents.map(EquivalentCreator.enflesh),
+      informations: input.informations.map(InformationCreator.enflesh),
+      phrases: input.phrases.map(PhraseCreator.enflesh),
+      variations: input.variations.map(VariationCreator.enflesh),
+      relations: input.relations.map(RelationCreator.enflesh)
+    } satisfies Section;
+    return raw;
+  }
+
 }

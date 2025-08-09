@@ -5,7 +5,6 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import {DiscardableSchema} from "/server/model/base";
 import {EquivalentSchema} from "/server/model/word/equivalent";
 import {InformationSchema} from "/server/model/word/information";
 import {PhraseSchema} from "/server/model/word/phrase";
@@ -14,7 +13,7 @@ import {VariationSchema} from "/server/model/word/variation";
 
 
 @modelOptions({schemaOptions: {autoCreate: false, collection: "sections"}})
-export class SectionSchema extends DiscardableSchema {
+export class SectionSchema {
 
   @prop({required: true, type: EquivalentSchema})
   public equivalents!: Array<EquivalentSchema>;

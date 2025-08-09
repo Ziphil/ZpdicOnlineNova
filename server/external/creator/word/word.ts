@@ -47,11 +47,11 @@ export namespace WordCreator {
     const raw = {
       ...skeleton,
       sections: [{
-        equivalents: skeleton.equivalents,
-        informations: skeleton.informations,
-        phrases: skeleton.phrases,
-        variations: skeleton.variations,
-        relations: skeleton.relations
+        equivalents: skeleton.equivalents.map(EquivalentCreator.enflesh),
+        informations: skeleton.informations.map(InformationCreator.enflesh),
+        phrases: skeleton.phrases.map(PhraseCreator.enflesh),
+        variations: skeleton.variations.map(VariationCreator.enflesh),
+        relations: skeleton.relations.map(RelationCreator.enflesh)
       }]
     } satisfies Omit<EditableWord, "number">;
     return raw;

@@ -21,4 +21,15 @@ export namespace EquivalentCreator {
     return skeleton;
   }
 
+  export function enflesh(input: Equivalent$Out): Equivalent {
+    const raw = {
+      titles: input.titles,
+      names: input.names,
+      nameString: input.nameString,
+      ignoredPattern: input.ignoredPattern,
+      hidden: input.hidden
+    } satisfies Equivalent;
+    return raw;
+  }
+
 }

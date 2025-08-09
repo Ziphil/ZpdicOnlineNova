@@ -40,7 +40,11 @@ export namespace WordCreator {
 
   export function enflesh(input: EditableWordSkeleton): EditableWord {
     const raw = {
-      ...input
+      number: input.number,
+      name: input.name,
+      pronunciation: input.pronunciation,
+      tags: input.tags,
+      sections: input.sections.map(SectionCreator.enflesh)
     } satisfies EditableWord;
     return raw;
   }
