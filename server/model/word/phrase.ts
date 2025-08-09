@@ -12,7 +12,7 @@ export class PhraseSchema {
   @prop({required: true})
   public form!: string;
 
-  @prop({required: true})
+  @prop({required: true, type: String})
   public terms!: Array<string>;
 
   @prop()
