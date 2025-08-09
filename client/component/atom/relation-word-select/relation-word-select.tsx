@@ -40,7 +40,7 @@ export const RelationWordSelect = create(
         value={word}
         onSet={onSet}
         loadOptions={loadOptions}
-        renderLabel={(word) => (word.name === undefined) ? <LoadingIcon/> : (word.name === null) ? <GeneralIcon icon={faTriangleExclamation}/> : word.name}
+        renderLabel={(word) => (word.spelling === undefined) ? <LoadingIcon/> : (word.spelling === null) ? <GeneralIcon icon={faTriangleExclamation}/> : word.spelling}
         {...rest}
       >
         {(word) => <RelationWordSelectOption key={word.number} dictionary={dictionary} word={word}/>}
@@ -53,5 +53,5 @@ export const RelationWordSelect = create(
 
 export type RelationWord = {
   number: number,
-  name?: string | null
+  spelling?: string | null
 };

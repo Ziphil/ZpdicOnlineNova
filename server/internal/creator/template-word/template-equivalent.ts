@@ -13,10 +13,19 @@ export namespace TemplateEquivalentCreator {
   export function skeletonize(raw: TemplateEquivalent): TemplateEquivalentSkeleton {
     const skeleton = {
       titles: raw.titles,
-      nameString: raw.nameString,
+      termString: raw.nameString,
       hidden: raw.hidden ?? false
     } satisfies TemplateEquivalentSkeleton;
     return skeleton;
+  }
+
+  export function enflesh(skeleton: TemplateEquivalentSkeleton): TemplateEquivalent {
+    const raw = {
+      titles: skeleton.titles,
+      nameString: skeleton.termString,
+      hidden: skeleton.hidden
+    } satisfies TemplateEquivalent;
+    return raw;
   }
 
 }

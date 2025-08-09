@@ -39,13 +39,13 @@ export const SuggestionCard = create(
                     title: suggestion.title,
                     mute: (parts) => <span styleName="mute">{parts}</span>,
                     nameNode: (
-                      <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?text=${encodeURIComponent(suggestion.word.name)}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
-                        {suggestion.word.name}
+                      <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?text=${encodeURIComponent(suggestion.word.spelling)}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
+                        {suggestion.word.spelling}
                       </Link>
                     )
                   }) : (
-                    <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?text=${encodeURIComponent(suggestion.word.name)}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
-                      {suggestion.word.name}
+                    <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?text=${encodeURIComponent(suggestion.word.spelling)}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
+                      {suggestion.word.spelling}
                     </Link>
                   )}
                 </MultiLineText>

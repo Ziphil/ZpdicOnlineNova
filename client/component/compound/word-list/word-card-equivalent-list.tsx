@@ -35,7 +35,7 @@ export const WordCardEquivalentList = create(
                 <Tag key={index} styleName="tag" variant="light">{title}</Tag>
               ))}
               <span>
-                {createTermNode(equivalent.nameString, equivalent.ignoredPattern)}
+                {createTermNode(equivalent.termString, equivalent.ignoredPattern)}
               </span>
             </MultiLineText>
           </li>

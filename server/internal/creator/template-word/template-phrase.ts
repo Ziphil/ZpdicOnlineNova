@@ -13,10 +13,19 @@ export namespace TemplatePhraseCreator {
   export function skeletonize(raw: TemplatePhrase): TemplatePhraseSkeleton {
     const skeleton = {
       titles: raw.titles,
-      form: raw.form,
+      spelling: raw.form,
       termString: raw.termString
     } satisfies TemplatePhraseSkeleton;
     return skeleton;
+  }
+
+  export function enflesh(skeleton: TemplatePhraseSkeleton): TemplatePhrase {
+    const raw = {
+      titles: skeleton.titles,
+      form: skeleton.spelling,
+      termString: skeleton.termString
+    } satisfies TemplatePhrase;
+    return raw;
   }
 
 }

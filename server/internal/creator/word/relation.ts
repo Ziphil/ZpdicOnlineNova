@@ -14,7 +14,7 @@ export namespace RelationCreator {
     const skeleton = {
       titles: raw.titles,
       number: raw.number,
-      name: raw.name
+      spelling: raw.name
     } satisfies RelationSkeleton;
     return skeleton;
   }
@@ -23,7 +23,7 @@ export namespace RelationCreator {
     const raw = {
       titles: input.titles,
       number: input.number,
-      name: input.name
+      name: input.spelling
     } satisfies Relation;
     return raw;
   }

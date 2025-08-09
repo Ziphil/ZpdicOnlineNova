@@ -20,7 +20,7 @@ export namespace WordCreator {
     const skeleton = {
       id: raw.id || raw["_id"],
       number: raw.number,
-      name: raw.name,
+      spelling: raw.name,
       pronunciation: raw.pronunciation ?? "",
       tags: raw.tags,
       sections: raw.sections.map(SectionCreator.skeletonize),
@@ -41,7 +41,7 @@ export namespace WordCreator {
   export function enflesh(input: EditableWordSkeleton): EditableWord {
     const raw = {
       number: input.number,
-      name: input.name,
+      name: input.spelling,
       pronunciation: input.pronunciation,
       tags: input.tags,
       sections: input.sections.map(SectionCreator.enflesh)

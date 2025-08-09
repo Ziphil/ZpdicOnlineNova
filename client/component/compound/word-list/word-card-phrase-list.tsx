@@ -38,7 +38,7 @@ export const WordCardPhraseList = create(
                     <Tag key={index} styleName="tag" variant="light">{title}</Tag>
                   ))}
                   <span>
-                    {phrase.form}
+                    {phrase.spelling}
                   </span>
                   <span styleName="separator" {...aria({hidden: true})}/>
                   <span>

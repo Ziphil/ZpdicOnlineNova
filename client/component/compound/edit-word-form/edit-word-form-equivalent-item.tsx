@@ -82,11 +82,11 @@ export const EditWordFormEquivalentItem = create(
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>
-              {transNode("label.equivalent.names", {
+              {transNode("label.equivalent.terms", {
                 note: (parts) => <span styleName="note">{parts}</span>
               })}
             </ControlLabel>
-            <Input {...register(`sections.${sectionIndex}.equivalents.${equivalentIndex}.nameString`)}/>
+            <Input {...register(`sections.${sectionIndex}.equivalents.${equivalentIndex}.termString`)}/>
           </ControlContainer>
           <ControlContainer>
             <CheckableContainer>

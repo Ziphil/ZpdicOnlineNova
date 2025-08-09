@@ -94,7 +94,7 @@ type ServerSpecs = {
     }
   },
   changeDictionarySettings: {
-    request: {number: number, settings: Partial<DictionarySettings>},
+    request: {number: number, settings: Partial<Omit<DictionarySettings, "templateWords">>},
     response: {
       success: Dictionary,
       error: CustomError<"noSuchDictionary">

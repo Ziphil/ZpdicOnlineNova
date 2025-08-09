@@ -33,7 +33,7 @@ export const EditWordFormEditPart = create(
 
     const addSection = useCallback(function (): void {
       sectionOperations.append({
-        equivalents: [{titles: [], nameString: "", hidden: false}],
+        equivalents: [{titles: [], termString: "", hidden: false}],
         informations: [],
         phrases: [],
         variations: [],

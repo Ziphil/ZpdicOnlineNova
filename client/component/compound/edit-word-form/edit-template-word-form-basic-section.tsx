@@ -64,8 +64,8 @@ export const EditTemplateWordFormBasicSection = create(
           <h3 styleName="heading">{trans("heading.basic")}</h3>
           <div styleName="control">
             <ControlContainer>
-              <ControlLabel>{trans("label.name")}</ControlLabel>
-              <Input {...register("name")}/>
+              <ControlLabel>{trans("label.spelling")}</ControlLabel>
+              <Input {...register("spelling")}/>
             </ControlContainer>
             <ControlContainer>
               <ControlLabel>{trans("label.pronunciation")}</ControlLabel>

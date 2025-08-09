@@ -5,7 +5,7 @@ export interface Relation {
 
   titles: Array<string>;
   number: number;
-  name: string;
+  spelling: string;
 
 }
 
@@ -15,7 +15,7 @@ export namespace Relation {
   export const EMPTY = {
     titles: [],
     number: -1,
-    name: ""
+    spelling: ""
   } as Relation;
 
 }

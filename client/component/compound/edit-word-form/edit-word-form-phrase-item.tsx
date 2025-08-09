@@ -77,8 +77,8 @@ export const EditWordFormPhraseItem = create(
             )}/>
           </ControlContainer>
           <ControlContainer>
-            <ControlLabel>{trans("label.phrase.form")}</ControlLabel>
-            <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.form`)}/>
+            <ControlLabel>{trans("label.phrase.spelling")}</ControlLabel>
+            <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.spelling`)}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{transNode("label.phrase.terms")}</ControlLabel>

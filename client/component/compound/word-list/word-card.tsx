@@ -62,7 +62,7 @@ export const WordCard = create(
 
     const device = useResponsiveDevice();
 
-    const shareText = `${word.name}\n#ZpDIC`;
+    const shareText = `${word.spelling}\n#ZpDIC`;
     const shareUrl = location.origin + useHref(getWordHref(dictionary, word.number));
 
     const discardWord = useDiscardWord(dictionary, word);

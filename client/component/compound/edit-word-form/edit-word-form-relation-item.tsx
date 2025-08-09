@@ -79,7 +79,7 @@ export const EditWordFormRelationItem = create(
             )}/>
           </ControlContainer>
           <ControlContainer>
-            <ControlLabel>{trans("label.relation.name")}</ControlLabel>
+            <ControlLabel>{trans("label.relation.spelling")}</ControlLabel>
             <Controller name={`sections.${sectionIndex}.relations.${relationIndex}.word`} control={form.control} render={({field}) => (
               <RelationWordSelect dictionary={dictionary} word={field.value} onSet={field.onChange}/>
             )}/>

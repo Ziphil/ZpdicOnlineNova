@@ -452,12 +452,12 @@ editWordForm:
     relations: "関連語"
     template: "テンプレート設定"
   label:
-    name: "綴り"
+    spelling: "綴り"
     pronunciation: "発音記号"
     tags: "タグ"
     equivalent:
       titles: "品詞"
-      names: "訳語"
+      terms: "訳語"
       hidden: "検索にのみ用いる (単語カードでは非表示にする)"
     information:
       title: "見出し"
@@ -465,15 +465,15 @@ editWordForm:
       hidden: "単語カードでは非表示にする"
     phrase:
       titles: "分類"
-      form: "成句表現"
+      spelling: "成句表現"
       terms: "訳語"
     variation:
       title: "種類"
-      name: "変化形"
+      spelling: "変化形"
       pronunciation: "発音記号"
     relation:
       titles: "分類"
-      name: "関連語"
+      spelling: "関連語"
       mutual: "この関連語を双方向にする"
     title: "テンプレート名"
   absent:
@@ -482,7 +482,7 @@ editWordForm:
     phrase: "成句が登録されていません"
     variation: "変化形が登録されていません"
     relation: "関連語が登録されていません"
-  duplicateName: >-
+  duplicateSpelling: >-
     同じ綴りの単語がすでに登録されています。
   button:
     add:

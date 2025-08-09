@@ -15,13 +15,13 @@ import type {RequestData} from "/server/internal/type/rest";
 
 const DEFAULT_VALUE = {
   number: null,
-  name: "",
+  spelling: "",
   pronunciation: "",
   tags: [],
   sections: [{
     equivalents: [{
       titles: [],
-      nameString: "",
+      termString: "",
       hidden: false
     }],
     informations: [],
@@ -32,13 +32,13 @@ const DEFAULT_VALUE = {
 } satisfies FormValue;
 type FormValue = {
   number: number | null,
-  name: string,
+  spelling: string,
   pronunciation: string,
   tags: Array<string>,
   sections: Array<{
     equivalents: Array<{
       titles: Array<string>,
-      nameString: string,
+      termString: string,
       hidden: boolean
     }>,
     informations: Array<{
@@ -48,17 +48,17 @@ type FormValue = {
     }>,
     phrases: Array<{
       titles: Array<string>,
-      form: string,
+      spelling: string,
       termString: string
     }>,
     variations: Array<{
       title: string,
-      name: string,
+      spelling: string,
       pronunciation: string
     }>,
     relations: Array<{
       titles: Array<string>,
-      word: (RelationWord & {name: string}) | null,
+      word: (RelationWord & {spelling: string}) | null,
       mutual: boolean
     }>
   }>
@@ -100,13 +100,13 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
       const word = initialData.word;
       const value = {
         number: (initialData.forceAdd) ? null : word.number ?? null,
-        name: word.name,
+        spelling: word.spelling,
         pronunciation: word.pronunciation,
         tags: word.tags,
         sections: word.sections.map((section) => ({
           equivalents: section.equivalents.map((equivalent) => ({
             titles: equivalent.titles,
-            nameString: equivalent.nameString,
+            termString: equivalent.termString,
             hidden: equivalent.hidden
           })),
           informations: section.informations.map((information) => ({
@@ -116,19 +116,19 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
           })),
           phrases: section.phrases.map((phrase) => ({
             titles: phrase.titles,
-            form: phrase.form,
+            spelling: phrase.spelling,
             termString: phrase.termString
           })),
           variations: section.variations.map((variation) => ({
             title: variation.title,
-            name: variation.name,
+            spelling: variation.spelling,
             pronunciation: variation.pronunciation
           })),
           relations: section.relations.map((relation) => ({
             titles: relation.titles,
             word: {
               number: relation.number,
-              name: relation.name
+              spelling: relation.spelling
             },
             mutual: false
           }))
@@ -139,13 +139,13 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
       const word = initialData.word;
       const value = {
         number: null,
-        name: word.name,
+        spelling: word.spelling,
         pronunciation: word.pronunciation,
         tags: word.tags,
         sections: word.sections.map((section) => ({
           equivalents: section.equivalents.map((equivalent) => ({
             titles: equivalent.titles,
-            nameString: equivalent.nameString,
+            termString: equivalent.termString,
             hidden: equivalent.hidden
           })),
           informations: section.informations.map((information) => ({
@@ -155,12 +155,12 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
           })),
           variations: section.variations.map((variation) => ({
             title: variation.title,
-            name: variation.name,
+            spelling: variation.spelling,
             pronunciation: variation.pronunciation
           })),
           phrases: section.phrases.map((phrase) => ({
             titles: phrase.titles,
-            form: phrase.form,
+            spelling: phrase.spelling,
             termString: phrase.termString
           })),
           relations: section.relations.map((relation) => ({
@@ -191,14 +191,14 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
     number: dictionary.number,
     word: {
       number: value.number ?? null,
-      name: value.name,
+      spelling: value.spelling,
       pronunciation: value.pronunciation,
       tags: value.tags,
       sections: value.sections.map((section) => ({
         equivalents: section.equivalents.map((rawEquivalent) => ({
           titles: rawEquivalent.titles,
-          names: createEquivalentNames(dictionary, rawEquivalent),
-          nameString: rawEquivalent.nameString,
+          terms: createEquivalentTerms(dictionary, rawEquivalent),
+          termString: rawEquivalent.termString,
           ignoredPattern: dictionary.settings.ignoredEquivalentPattern,
           hidden: rawEquivalent.hidden
         })),
@@ -209,20 +209,20 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
         })),
         phrases: section.phrases.map((phrase) => ({
           titles: phrase.titles,
-          form: phrase.form,
+          spelling: phrase.spelling,
           terms: createPhraseTerms(dictionary, phrase),
           termString: phrase.termString,
           ignoredPattern: dictionary.settings.ignoredEquivalentPattern
         })),
         variations: section.variations.map((variation) => ({
           title: variation.title,
-          name: variation.name,
+          spelling: variation.spelling,
           pronunciation: variation.pronunciation
         })),
         relations: section.relations.filter((rawRelation) => rawRelation.word !== null).map((rawRelation) => ({
           titles: rawRelation.titles,
           number: rawRelation.word!.number,
-          name: rawRelation.word!.name
+          spelling: rawRelation.word!.spelling
         }))
       }))
     }
@@ -236,7 +236,7 @@ function getQueryForRelations(dictionary: Dictionary, editedWord: Word, value: F
     const inverseRelation = {
       ...Relation.EMPTY,
       number: editedWord.number,
-      name: editedWord.name,
+      spelling: editedWord.spelling,
       titles: relation.titles
     };
     return {wordNumber: relation.word!.number, relation: inverseRelation};
@@ -245,12 +245,12 @@ function getQueryForRelations(dictionary: Dictionary, editedWord: Word, value: F
   return query;
 }
 
-function createEquivalentNames(dictionary: Dictionary, rawEquivalent: FormValue["sections"][0]["equivalents"][0]): Array<string> {
+function createEquivalentTerms(dictionary: Dictionary, rawEquivalent: FormValue["sections"][0]["equivalents"][0]): Array<string> {
   const punctuationRegexp = new RegExp(`[${escapeRegexp(dictionary.settings.punctuations.join(""))}]`);
   const ignoredRegexp = compileIgnoredPattern(dictionary.settings.ignoredEquivalentPattern);
-  const ignoredNameString = (ignoredRegexp) ? ignoredRegexp.matcher(rawEquivalent.nameString).replaceAll("") : rawEquivalent.nameString;
-  const names = ignoredNameString.split(punctuationRegexp).map((name) => name.trim()).filter((name) => name);
-  return names;
+  const ignoredTermString = (ignoredRegexp) ? ignoredRegexp.matcher(rawEquivalent.termString).replaceAll("") : rawEquivalent.termString;
+  const terms = ignoredTermString.split(punctuationRegexp).map((term) => term.trim()).filter((term) => term);
+  return terms;
 }
 
 function createPhraseTerms(dictionary: Dictionary, rawPhrase: FormValue["sections"][0]["phrases"][0]): Array<string> {

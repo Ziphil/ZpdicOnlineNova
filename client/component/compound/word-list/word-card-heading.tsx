@@ -22,7 +22,7 @@ export const WordCardHeading = create(
     const pronunciation = useMemo(() => getPronunciation(dictionary, word), [dictionary, word]);
     const nameFontFamily = useMemo(() => getNameFontFamily(dictionary), [dictionary]);
 
-    return (word.tags.length > 0 || !!word.name) ? (
+    return (word.tags.length > 0 || !!word.spelling) ? (
       <div styleName="root" {...rest}>
         {(word.tags.length > 0) && (
           <div styleName="tag">
@@ -31,14 +31,14 @@ export const WordCardHeading = create(
             ))}
           </div>
         )}
-        {(!!word.name) && (
-          <div styleName="name-container">
-            <MultiLineText styleName="name" is="h3" lineHeight="narrowFixed" {...{style: {fontFamily: nameFontFamily}}}>
-              {word.name}
+        {(!!word.spelling) && (
+          <div styleName="spelling-container">
+            <MultiLineText styleName="spelling" is="h3" lineHeight="narrowFixed" {...{style: {fontFamily: nameFontFamily}}}>
+              {word.spelling}
             </MultiLineText>
             {(hasFont) && (
-              <MultiLineText styleName="small-name" is="span" lineHeight="narrowFixed">
-                {word.name}
+              <MultiLineText styleName="small-spelling" is="span" lineHeight="narrowFixed">
+                {word.spelling}
               </MultiLineText>
             )}
             {(!!pronunciation) && (
@@ -65,7 +65,7 @@ function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | Word
   } else {
     if (dictionary.akrantiain !== null) {
       try {
-        const pronunciation = dictionary.akrantiain.convert(word.name);
+        const pronunciation = dictionary.akrantiain.convert(word.spelling);
         return "/" + pronunciation.trim() + "/";
       } catch (error) {
         console.error(error);

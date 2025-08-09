@@ -13,7 +13,7 @@ export namespace VariationCreator {
   export function skeletonize(raw: Variation): VariationSkeleton {
     const skeleton = {
       title: raw.title,
-      name: raw.name,
+      spelling: raw.name,
       pronunciation: raw.pronunciation ?? ""
     } satisfies VariationSkeleton;
     return skeleton;
@@ -22,7 +22,7 @@ export namespace VariationCreator {
   export function enflesh(input: VariationSkeleton): Variation {
     const raw = {
       title: input.title,
-      name: input.name,
+      name: input.spelling,
       pronunciation: input.pronunciation
     } satisfies Variation;
     return raw;

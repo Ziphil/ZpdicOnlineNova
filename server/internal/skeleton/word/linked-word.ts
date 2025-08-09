@@ -4,7 +4,7 @@
 export interface LinkedWord {
 
   number: number;
-  name?: string | null;
+  spelling?: string | null;
 
 }
 

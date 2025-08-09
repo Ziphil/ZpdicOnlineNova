@@ -26,7 +26,7 @@ export const WordCardVariationView = create(
       <Fragment>
         {(index > 0) && <span styleName="punctuation">, </span>}
         <span>
-          <span>{variation.name}</span>
+          <span>{variation.spelling}</span>
           {(!!pronunciation) && (
             <span styleName="pronunciation">{pronunciation}</span>
           )}
@@ -49,7 +49,7 @@ function getPronunciation(dictionary: DictionaryWithExecutors, variation: Variat
   } else {
     if (dictionary.akrantiain !== null) {
       try {
-        const pronunciation = dictionary.akrantiain.convert(variation.name);
+        const pronunciation = dictionary.akrantiain.convert(variation.spelling);
         return "/" + pronunciation.trim() + "/";
       } catch (error) {
         console.error(error);

@@ -4,7 +4,7 @@
 export interface TemplateEquivalent {
 
   titles: Array<string>;
-  nameString: string;
+  termString: string;
   hidden: boolean;
 
 }

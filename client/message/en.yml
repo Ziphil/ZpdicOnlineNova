@@ -454,12 +454,12 @@ editWordForm:
     relations: "Related words"
     template: "Template settings"
   label:
-    name: "Spelling"
+    spelling: "Spelling"
     pronunciation: "Pronunciation"
     tags: "Tags"
     equivalent:
       titles: "Parts of speech"
-      names: "Translations"
+      terms: "Translations"
       hidden: "Use only for search (hidden on word cards)"
     information:
       title: "Heading"
@@ -467,15 +467,15 @@ editWordForm:
       hidden: "Hide on word cards"
     phrase:
       titles: "Kinds"
-      form: "Expression"
+      spelling: "Expression"
       terms: "Translations"
     variation:
       title: "Kind"
-      name: "Form"
+      spelling: "Form"
       pronunciation: "Pronunciation"
     relation:
       titles: "Kinds"
-      name: "Word"
+      spelling: "Word"
       mutual: "Make this relation mutual"
     title: "Template name"
   absent:
@@ -484,7 +484,7 @@ editWordForm:
     phrase: "No idiomatic expressions"
     variation: "No variation forms"
     relation: "No related words"
-  duplicateName: >-
+  duplicateSpelling: >-
     A word with the same spelling has already been registered.
   button:
     add:

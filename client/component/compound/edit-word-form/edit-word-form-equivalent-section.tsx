@@ -40,7 +40,7 @@ export const EditWordFormEquivalentSection = create(
     const {fields: equivalents, ...equivalentOperations} = useFieldArray({control, name: `sections.${sectionIndex}.equivalents`});
 
     const addEquivalent = useCallback(function (): void {
-      equivalentOperations.append({titles: [], nameString: "", hidden: false});
+      equivalentOperations.append({titles: [], termString: "", hidden: false});
     }, [equivalentOperations]);
 
     const setEquivalents = useCallback(function (update: (equivalents: Array<any>) => Array<any>): void {

@@ -11,13 +11,13 @@ import {Dictionary, EditableTemplateWord, ObjectId, TemplateWord} from "/server/
 const DEFAULT_VALUE = {
   id: null,
   title: "",
-  name: "",
+  spelling: "",
   pronunciation: "",
   tags: [],
   sections: [{
     equivalents: [{
       titles: [],
-      nameString: "",
+      termString: "",
       hidden: false
     }],
     informations: [],
@@ -29,13 +29,13 @@ const DEFAULT_VALUE = {
 type FormValue = {
   id: ObjectId | null,
   title: string,
-  name: string,
+  spelling: string,
   pronunciation: string,
   tags: Array<string>,
   sections: Array<{
     equivalents: Array<{
       titles: Array<string>,
-      nameString: string,
+      termString: string,
       hidden: boolean
     }>,
     informations: Array<{
@@ -45,12 +45,12 @@ type FormValue = {
     }>,
     phrases: Array<{
       titles: Array<string>,
-      form: string,
+      spelling: string,
       termString: string
     }>,
     variations: Array<{
       title: string,
-      name: string,
+      spelling: string,
       pronunciation: string
     }>,
     relations: Array<{
@@ -92,13 +92,13 @@ function getFormValue<D extends EditTemplateWordInitialData | null>(initialData:
       const value = {
         id: (initialData.forceAdd) ? null : word.id ?? null,
         title: word.title,
-        name: word.name,
+        spelling: word.spelling,
         pronunciation: word.pronunciation,
         tags: word.tags,
         sections: word.sections.map((section) => ({
           equivalents: section.equivalents.map((equivalent) => ({
             titles: equivalent.titles,
-            nameString: equivalent.nameString,
+            termString: equivalent.termString,
             hidden: equivalent.hidden
           })),
           informations: section.informations.map((information) => ({
@@ -108,12 +108,12 @@ function getFormValue<D extends EditTemplateWordInitialData | null>(initialData:
           })),
           phrases: section.phrases.map((phrase) => ({
             titles: phrase.titles,
-            form: phrase.form,
+            spelling: phrase.spelling,
             termString: phrase.termString
           })),
           variations: section.variations.map((variation) => ({
             title: variation.title,
-            name: variation.name,
+            spelling: variation.spelling,
             pronunciation: variation.pronunciation
           })),
           relations: section.relations.map((relation) => ({

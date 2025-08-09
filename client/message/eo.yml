@@ -454,12 +454,12 @@ editWordForm:
     relations: "Rilataj vortoj"
     template: "Ŝablona agordoj"
   label:
-    name: "Literumo"
+    spelling: "Literumo"
     pronunciation: "Elparolo"
     tags: "Etikedoj"
     equivalent:
       titles: "Vortospecoj"
-      names: "Tradukaĵoj"
+      terms: "Tradukaĵoj"
       hidden: "Uzi nur por serĉo (ne montrata en vortokartoj)"
     information:
       title: "Titlo"
@@ -467,15 +467,15 @@ editWordForm:
       hidden: "Ne montri en vortokartoj"
     phrase:
       titles: "Specoj"
-      form: "Idiomaĵo"
+      spelling: "Idiomaĵo"
       terms: "Tradukaĵoj"
     variation:
       title: "Speco"
-      name: "Formo"
+      spelling: "Formo"
       pronunciation: "Elparolo"
     relation:
       titles: "Specoj"
-      name: "Vorto"
+      spelling: "Vorto"
       mutual: "Fari tiun rilaton reciproka"
     title: "Ŝablona titolo"
   absent:
@@ -484,7 +484,7 @@ editWordForm:
     phrase: "Neniuj idiomaĵoj"
     variation: "Neniuj variaĵaj formoj"
     relation: "Neniuj rilataj vortoj"
-  duplicateName: >-
+  duplicateSpelling: >-
     Vorto kun la sama literumo jam estas registrita.
   button:
     add:

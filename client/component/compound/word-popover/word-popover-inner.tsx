@@ -38,7 +38,7 @@ export const WordPopoverInner = create(
 
     return (actualWord !== undefined) ? (
       <div styleName="root" {...rest}>
-        <div styleName="name">{actualWord.name}</div>
+        <div styleName="spelling">{actualWord.spelling}</div>
         <div styleName="equivalent-list">
           {actualWord.sections.flatMap((section) => section.equivalents).map((equivalent, index) => (
             <MultiLineText styleName="equivalent-text" key={index} is="div">
@@ -46,7 +46,7 @@ export const WordPopoverInner = create(
                 <Tag key={index} styleName="tag" variant="light">{title}</Tag>
               ))}
               <span>
-                {createTermNode(equivalent.nameString, equivalent.ignoredPattern)}
+                {createTermNode(equivalent.termString, equivalent.ignoredPattern)}
               </span>
             </MultiLineText>
           ))}

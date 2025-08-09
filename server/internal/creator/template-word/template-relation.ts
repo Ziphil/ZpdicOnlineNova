@@ -17,4 +17,11 @@ export namespace TemplateRelationCreator {
     return skeleton;
   }
 
+  export function enflesh(skeleton: TemplateRelationSkeleton): TemplateRelation {
+    const raw = {
+      titles: skeleton.titles
+    } satisfies TemplateRelation;
+    return raw;
+  }
+
 }

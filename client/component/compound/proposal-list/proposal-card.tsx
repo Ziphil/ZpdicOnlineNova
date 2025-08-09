@@ -61,16 +61,16 @@ export const ProposalCard = create(
 function getWord(proposal: Proposal): EditableWord {
   const word = {
     number: null,
-    name: "",
+    spelling: "",
     pronunciation: "",
     tags: [],
     sections: [{
-      equivalents: [{titles: [], names: [proposal.name], nameString: proposal.name, hidden: false}],
+      equivalents: [{titles: [], terms: [proposal.name], termString: proposal.name, hidden: false}],
       informations: [],
       phrases: [],
       variations: [],
       relations: []
     }]
-  };
+  } satisfies EditableWord;
   return word;
 }

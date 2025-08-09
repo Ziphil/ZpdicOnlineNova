@@ -4,7 +4,7 @@
 export interface Variation {
 
   title: string;
-  name: string;
+  spelling: string;
   pronunciation: string;
 
 }
@@ -14,7 +14,7 @@ export namespace Variation {
 
   export const EMPTY = {
     title: "",
-    name: "",
+    spelling: "",
     pronunciation: ""
   } satisfies Variation;
 

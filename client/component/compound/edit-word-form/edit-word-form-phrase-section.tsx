@@ -34,13 +34,13 @@ export const EditWordFormPhraseSection = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNode} = useTrans("editWordForm");
+    const {trans} = useTrans("editWordForm");
 
     const {control, getValues} = form;
     const {fields: phrases, ...phraseOperations} = useFieldArray({control, name: `sections.${sectionIndex}.phrases`});
 
     const addPhrase = useCallback(function (): void {
-      phraseOperations.append({titles: [], form: "", termString: ""});
+      phraseOperations.append({titles: [], spelling: "", termString: ""});
     }, [phraseOperations]);
 
     const setPhrases = useCallback(function (update: (phrases: Array<any>) => Array<any>): void {

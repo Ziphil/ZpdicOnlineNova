@@ -23,8 +23,8 @@ export const RelationWordSelectOption = create(
 
     return (
       <AsyncSelectOption styleName="root" {...rest}>
-        <SingleLineText styleName="name">
-          {word.name}
+        <SingleLineText styleName="form">
+          {word.spelling}
         </SingleLineText>
         {(!!equivalentString) && (
           <MultiLineText styleName="equivalent">
@@ -40,7 +40,7 @@ export const RelationWordSelectOption = create(
 
 function getEquivalentString(word: RelationWord | Word): string | null {
   if ("sections" in word) {
-    return word.sections.flatMap((section) => section.equivalents.map((equivalent) => equivalent.names)).join(", ");
+    return word.sections.flatMap((section) => section.equivalents.map((equivalent) => equivalent.terms)).join(", ");
   } else {
     return null;
   }

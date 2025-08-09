@@ -38,13 +38,13 @@ export const EditWordFormBasicSection = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const [duplicateName, setDuplicateName] = useState(false);
+    const [duplicateSpelling, setDuplicateSpelling] = useState(false);
     const {register, control} = form;
 
-    const generateName = useCallback(function (): void {
+    const generateSpelling = useCallback(function (): void {
       if (dictionary.zatlin !== null) {
         try {
-          form.setValue("name", dictionary.zatlin.generate());
+          form.setValue("spelling", dictionary.zatlin.generate());
         } catch (error) {
           console.log(error);
         }
@@ -55,7 +55,7 @@ export const EditWordFormBasicSection = create(
       if (dictionary.akrantiain !== null) {
         try {
           const value = form.getValues();
-          form.setValue("pronunciation", dictionary.akrantiain.convert(value.name));
+          form.setValue("pronunciation", dictionary.akrantiain.convert(value.spelling));
         } catch (error) {
           console.log(error);
         }
@@ -77,15 +77,15 @@ export const EditWordFormBasicSection = create(
       }
     }, [dictionary.number]);
 
-    const handleNameChange = useDebouncedCallback(async function (event: ChangeEvent<HTMLInputElement>): Promise<void> {
+    const handleSpellingChange = useDebouncedCallback(async function (event: ChangeEvent<HTMLInputElement>): Promise<void> {
       if (dictionary.settings.enableDuplicateName) {
-        const name = event.target.value;
+        const spelling = event.target.value;
         const number = dictionary.number;
         const excludedWordNumber = form.getValues("number") ?? undefined;
-        if (name !== "") {
-          const response = await request("checkDuplicateWordName", {number, name, excludedWordNumber}, {ignoreError: true});
+        if (spelling !== "") {
+          const response = await request("checkDuplicateWordName", {number, name: spelling, excludedWordNumber}, {ignoreError: true});
           switchResponse(response, ({duplicate}) => {
-            setDuplicateName(duplicate);
+            setDuplicateSpelling(duplicate);
           });
         }
       }
@@ -96,19 +96,19 @@ export const EditWordFormBasicSection = create(
         <h3 styleName="heading">{trans("heading.basic")}</h3>
         <div styleName="control">
           <ControlContainer>
-            <ControlLabel>{trans("label.name")}</ControlLabel>
+            <ControlLabel>{trans("label.spelling")}</ControlLabel>
             <div styleName="row">
-              <Input {...register("name", {onChange: handleNameChange})}/>
+              <Input {...register("spelling", {onChange: handleSpellingChange})}/>
               {(dictionary.zatlin !== null) && (
-                <Button scheme="gray" onClick={generateName}>
+                <Button scheme="gray" onClick={generateSpelling}>
                   <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
                   {trans("button.generate")}
                 </Button>
               )}
             </div>
-            {(duplicateName) && (
+            {(duplicateSpelling) && (
               <ControlHelper>
-                {trans("duplicateName")}
+                {trans("duplicateSpelling")}
               </ControlHelper>
             )}
           </ControlContainer>

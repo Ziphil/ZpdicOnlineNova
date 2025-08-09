@@ -436,28 +436,28 @@ editWordForm:
     variations: "Вариације"
     relations: "Свезане слова"
   label:
-    name: "Правописанје"
+    spelling: "Правописанје"
     pronunciation: "Изговор"
     tags: "Значкы"
     equivalent:
       titles: "Чести молвы"
-      names: "Прєводы"
+      terms: "Прєводы"
     information:
       title: "Заглавје"
       text: "Содржанје"
     variation:
       title: "Род"
-      name: "Форма"
+      spelling: "Форма"
     relation:
       titles: "Роды"
-      name: "Слово"
+      spelling: "Слово"
       mutual: "Make this relation mutual"
   absent:
     equivalent: "Нема прєводов"
     information: "Нема содржаниј"
     variation: "Нема вариациј"
     relation: "Нема свезаных слов"
-  duplicateName: >-
+  duplicateSpelling: >-
     A word with the same spelling has already been registered.
   button:
     add:

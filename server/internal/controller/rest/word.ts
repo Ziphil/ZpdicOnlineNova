@@ -3,7 +3,7 @@
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkDictionary, checkMe, parseMe} from "/server/internal/controller/rest/middleware";
-import {WordCreator} from "/server/internal/creator";
+import {RelationCreator, WordCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {QueryRange} from "/server/util/query";
 import {mapWithSize} from "/server/util/with-size";
@@ -46,7 +46,9 @@ export class WordRestController extends InternalRestController {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {specs} = request.body;
     try {
-      const results = await Promise.allSettled(specs.map(async ({wordNumber, relation}) => {
+      const results = await Promise.allSettled(specs.map(async (spec) => {
+        const wordNumber = spec.wordNumber;
+        const relation = RelationCreator.enflesh(spec.relation);
         await dictionary.addRelation(wordNumber, relation);
       }));
       const rejectedResult = results.find((result) => result.status === "rejected") as any as PromiseRejectedResult | undefined;

@@ -54,7 +54,7 @@ export const EditWordFormVariationItem = create(
       if (dictionary.akrantiain !== null) {
         try {
           const value = form.getValues();
-          form.setValue(`sections.${sectionIndex}.variations.${variationIndex}.pronunciation`, dictionary.akrantiain.convert(value.sections[sectionIndex].variations[variationIndex].name));
+          form.setValue(`sections.${sectionIndex}.variations.${variationIndex}.pronunciation`, dictionary.akrantiain.convert(value.sections[sectionIndex].variations[variationIndex].spelling));
         } catch (error) {
           console.log(error);
         }
@@ -87,8 +87,8 @@ export const EditWordFormVariationItem = create(
             <Input suggest={suggestVariationTitle} {...register(`sections.${sectionIndex}.variations.${variationIndex}.title`)}/>
           </ControlContainer>
           <ControlContainer>
-            <ControlLabel>{trans("label.variation.name")}</ControlLabel>
-            <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.name`)}/>
+            <ControlLabel>{trans("label.variation.spelling")}</ControlLabel>
+            <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.spelling`)}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.variation.pronunciation")}</ControlLabel>

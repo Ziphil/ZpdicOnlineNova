@@ -42,7 +42,7 @@ export const WordCardRelationList = create(
                   <WordPopover dictionary={dictionary} word={relation} trigger={(
                     <span>
                       <Link href={getWordHref(dictionary, relation.number)} scheme="secondary" variant="underline">
-                        {relation.name}
+                        {relation.spelling}
                       </Link>
                     </span>
                   )}/>

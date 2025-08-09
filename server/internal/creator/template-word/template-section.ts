@@ -26,4 +26,15 @@ export namespace TemplateSectionCreator {
     return skeleton;
   }
 
+  export function enflesh(skeleton: TemplateSectionSkeleton): TemplateSection {
+    const raw = {
+      equivalents: skeleton.equivalents.map(TemplateEquivalentCreator.enflesh),
+      informations: skeleton.informations.map(InformationCreator.enflesh),
+      phrases: skeleton.phrases.map(TemplatePhraseCreator.enflesh),
+      variations: skeleton.variations.map(VariationCreator.enflesh),
+      relations: skeleton.relations.map(TemplateRelationCreator.enflesh)
+    } satisfies TemplateSection;
+    return raw;
+  }
+
 }

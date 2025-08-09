@@ -8,7 +8,7 @@ import {Section} from "/server/internal/skeleton/word/section";
 export interface EditableWord {
 
   number: number | null;
-  name: string;
+  spelling: string;
   pronunciation: string;
   tags: Array<string>;
   sections: Array<Section>;
@@ -20,7 +20,7 @@ export namespace EditableWord {
 
   export const EMPTY = {
     number: null,
-    name: "",
+    spelling: "",
     pronunciation: "",
     tags: [],
     sections: []
@@ -33,7 +33,7 @@ export interface Word {
 
   id: ObjectId;
   number: number;
-  name: string;
+  spelling: string;
   pronunciation: string;
   tags: Array<string>;
   sections: Array<Section>;

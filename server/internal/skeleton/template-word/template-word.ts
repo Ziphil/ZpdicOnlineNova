@@ -8,7 +8,7 @@ export interface EditableTemplateWord {
 
   id: ObjectId | null;
   title: string;
-  name: string;
+  spelling: string;
   pronunciation: string;
   tags: Array<string>;
   sections: Array<TemplateSection>;
@@ -21,7 +21,7 @@ export namespace EditableTemplateWord {
   export const EMPTY = {
     id: null,
     title: "",
-    name: "",
+    spelling: "",
     pronunciation: "",
     tags: [],
     sections: []
@@ -34,7 +34,7 @@ export interface TemplateWord {
 
   id: ObjectId;
   title: string;
-  name: string;
+  spelling: string;
   pronunciation: string;
   tags: Array<string>;
   sections: Array<TemplateSection>;

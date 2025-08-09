@@ -40,7 +40,7 @@ export const EditWordFormVariationSection = create(
     const {fields: variations, ...variationOperations} = useFieldArray({control, name: `sections.${sectionIndex}.variations`});
 
     const addVariation = useCallback(function (): void {
-      variationOperations.append({title: "", name: "", pronunciation: ""});
+      variationOperations.append({title: "", spelling: "", pronunciation: ""});
     }, [variationOperations]);
 
     const setVariations = useCallback(function (update: (variations: Array<any>) => Array<any>): void {
