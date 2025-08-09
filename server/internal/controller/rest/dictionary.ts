@@ -256,7 +256,7 @@ export class DictionaryRestController extends InternalRestController {
   @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchWordNameFrequencies", "dictionary">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const body = await dictionary.calcWordNameFrequencies();
+    const body = await dictionary.calcWordSpellingFrequencies();
     InternalRestController.respond(response, body);
   }
 

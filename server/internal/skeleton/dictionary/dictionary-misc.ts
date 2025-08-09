@@ -1,15 +1,15 @@
 //
 
 
-export interface WordNameFrequencies {
+export interface WordSpellingFrequencies {
 
-  whole: WordNameFrequency;
-  char: Array<[char: string, frequency: WordNameFrequency]>;
+  whole: WordSpellingFrequency;
+  char: Array<[char: string, frequency: WordSpellingFrequency]>;
 
 };
 
 
-export interface WordNameFrequency {
+export interface WordSpellingFrequency {
 
   all: number;
   word: number;

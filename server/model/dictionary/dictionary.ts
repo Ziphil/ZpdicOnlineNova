@@ -10,7 +10,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import Fuse from "fuse.js";
-import type {DictionaryStatistics, StringLengths, WholeAverage, WordNameFrequencies, WordNameFrequency} from "/server/internal/skeleton";
+import type {DictionaryStatistics, WordSpellingFrequencies} from "/server/internal/skeleton";
 import {Article, ArticleModel, EditableArticle} from "/server/model/article";
 import {DiscardableSchema} from "/server/model/base";
 import {Deserializer} from "/server/model/dictionary/deserializer";
@@ -29,6 +29,7 @@ import {Suggestion} from "/server/model/word/suggestion";
 import {EditableWord, Word, WordModel} from "/server/model/word/word";
 import {NormalWordParameter} from "/server/model/word-parameter/normal-word-parameter";
 import {WordParameter} from "/server/model/word-parameter/word-parameter";
+import {calcDictionaryStatistics, calcWordSpellingFrequencies} from "/server/util/dictionary";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 import {LogUtil} from "/server/util/log";
 import {QueryRange, WithSize} from "/server/util/query";
@@ -495,79 +496,17 @@ export class DictionarySchema extends DiscardableSchema {
     return count;
   }
 
-  public async calcWordNameFrequencies(): Promise<WordNameFrequencies> {
+  public async calcWordSpellingFrequencies(): Promise<WordSpellingFrequencies> {
     const query = WordModel.findExist().where("dictionary", this).select("name").lean().cursor();
-    const wholeFrequency = {all: 0, word: 0};
-    const charFrequencies = new Map<string, WordNameFrequency>();
-    for await (const word of query) {
-      const countedChars = new Set<string>();
-      for (const char of word.name) {
-        const frequency = charFrequencies.get(char) ?? {all: 0, word: 0};
-        if (!countedChars.has(char)) {
-          frequency.word ++;
-          countedChars.add(char);
-        }
-        frequency.all ++;
-        wholeFrequency.all ++;
-        charFrequencies.set(char, frequency);
-      }
-      wholeFrequency.word ++;
-    }
-    const frequencies = {whole: wholeFrequency, char: Array.from(charFrequencies.entries())};
+    const frequencies = await calcWordSpellingFrequencies(query);
     return frequencies;
   }
 
   public async calcStatistics(): Promise<DictionaryStatistics> {
-    const wordQuery = WordModel.findExist().where("dictionary", this).select(["name", "sections.equivalents", "sections.informations"]).lean().cursor();
-    const exampleQuery = ExampleModel.findExist().where("dictionary", this).select(["sentence"]).lean().cursor();
-    let rawWordCount = 0;
-    const wholeWordNameLengths = {kept: 0, nfd: 0, nfc: 0};
-    let wholeEquivalentNameCount = 0;
-    let wholeInformationCount = 0;
-    const wholeInformationTextLengths = {kept: 0, nfd: 0, nfc: 0};
-    let wholeExampleCount = 0;
-    for await (const word of wordQuery) {
-      rawWordCount ++;
-      wholeWordNameLengths.kept += [...word.name].length;
-      wholeWordNameLengths.nfd += [...word.name.normalize("NFD")].length;
-      wholeWordNameLengths.nfc += [...word.name.normalize("NFC")].length;
-      for (const section of word.sections) {
-        for (const equivalent of section.equivalents) {
-          wholeEquivalentNameCount += equivalent.names.length;
-        }
-        for (const information of section.informations) {
-          wholeInformationCount ++;
-          wholeInformationTextLengths.kept += [...information.text].length;
-          wholeInformationTextLengths.nfd += [...information.text.normalize("NFD")].length;
-          wholeInformationTextLengths.nfc += [...information.text.normalize("NFC")].length;
-        }
-      }
-    }
-    for await (const example of exampleQuery) {
-      wholeExampleCount ++;
-    }
-    const calcWithRatio = function <V extends number | StringLengths>(value: V): WholeAverage<V> {
-      if (typeof value === "number") {
-        return {whole: value, average: value / rawWordCount} as any;
-      } else {
-        return {whole: value, average: {kept: value.kept / rawWordCount, nfd: value.nfd / rawWordCount, nfc: value.nfc / rawWordCount}} as any;
-      }
-    };
-    const calcWordCount = function (rawWordCount: number): DictionaryStatistics["wordCount"] {
-      const raw = rawWordCount;
-      const tokipona = rawWordCount / 120;
-      const logTokipona = (rawWordCount <= 0) ? null : Math.log10(rawWordCount / 120);
-      const ctwi = (rawWordCount <= 0) ? null : (Math.log(rawWordCount) / Math.log(120)) * 120;
-      const coverage = Math.log10(rawWordCount) * 20 + 20;
-      return {raw, tokipona, logTokipona, ctwi, coverage};
-    };
-    const wordCount = calcWordCount(rawWordCount);
-    const wordNameLengths = calcWithRatio(wholeWordNameLengths);
-    const equivalentNameCount = calcWithRatio(wholeEquivalentNameCount);
-    const informationCount = calcWithRatio(wholeInformationCount);
-    const informationTextLengths = calcWithRatio(wholeInformationTextLengths);
-    const exampleCount = calcWithRatio(wholeExampleCount);
-    return {wordCount, wordNameLengths, equivalentNameCount, informationCount, informationTextLengths, exampleCount};
+    const wordCursor = WordModel.findExist().where("dictionary", this).select(["name", "sections.equivalents", "sections.informations"]).lean().cursor();
+    const exampleCursor = ExampleModel.findExist().where("dictionary", this).select(["sentence"]).lean().cursor();
+    const statistics = await calcDictionaryStatistics(wordCursor, exampleCursor);
+    return statistics;
   }
 
   /** 指定されたユーザーが指定された権限以上の権限をもっているか判定します。

@@ -33,7 +33,7 @@ import type {
   User,
   UserWithDetail,
   Word,
-  WordNameFrequencies,
+  WordSpellingFrequencies,
   WordParameter,
   WordWithExamples
 } from "/server/internal/skeleton";
@@ -278,7 +278,7 @@ type ServerSpecs = {
   fetchWordNameFrequencies: {
     request: {number: number},
     response: {
-      success: WordNameFrequencies,
+      success: WordSpellingFrequencies,
       error: CustomError<"noSuchDictionary">
     }
   },
