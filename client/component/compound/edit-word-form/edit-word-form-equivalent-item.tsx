@@ -74,13 +74,13 @@ export const EditWordFormEquivalentItem = create(
           <GeneralIcon icon={faGripVertical}/>
         </div>
         <fieldset styleName="field-list">
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.equivalent.titles")}</ControlLabel>
             <Controller name={`sections.${sectionIndex}.equivalents.${equivalentIndex}.titles`} control={form.control} render={({field}) => (
               <TagInput values={field.value} suggest={suggestEquivalentTitle} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>
               {transNode("label.equivalent.terms", {
                 note: (parts) => <span styleName="note">{parts}</span>
@@ -88,7 +88,7 @@ export const EditWordFormEquivalentItem = create(
             </ControlLabel>
             <Input {...register(`sections.${sectionIndex}.equivalents.${equivalentIndex}.termString`)}/>
           </ControlContainer>
-          <ControlContainer>
+          <ControlContainer styleName="field-item" {...data({checkable: true})}>
             <CheckableContainer>
               <Checkbox {...register(`sections.${sectionIndex}.equivalents.${equivalentIndex}.hidden`)}/>
               <CheckableLabel><MultiLineText>{trans("label.equivalent.hidden")}</MultiLineText></CheckableLabel>

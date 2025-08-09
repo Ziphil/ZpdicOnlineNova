@@ -72,19 +72,19 @@ export const EditWordFormRelationItem = create(
           <GeneralIcon icon={faGripVertical}/>
         </div>
         <fieldset styleName="field-list">
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
             <Controller name={`sections.${sectionIndex}.relations.${relationIndex}.titles`} control={form.control} render={({field}) => (
               <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.relation.spelling")}</ControlLabel>
             <Controller name={`sections.${sectionIndex}.relations.${relationIndex}.word`} control={form.control} render={({field}) => (
               <RelationWordSelect dictionary={dictionary} word={field.value} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
-          <ControlContainer>
+          <ControlContainer styleName="field-item" {...data({checkable: true})}>
             <CheckableContainer>
               <Checkbox {...register(`sections.${sectionIndex}.relations.${relationIndex}.mutual`)}/>
               <CheckableLabel>{trans("label.relation.mutual")}</CheckableLabel>

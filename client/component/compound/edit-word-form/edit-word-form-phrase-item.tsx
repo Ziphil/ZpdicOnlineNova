@@ -70,17 +70,17 @@ export const EditWordFormPhraseItem = create(
           <GeneralIcon icon={faGripVertical}/>
         </div>
         <fieldset styleName="field-list">
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.phrase.titles")}</ControlLabel>
             <Controller name={`sections.${sectionIndex}.phrases.${phraseIndex}.titles`} control={form.control} render={({field}) => (
               <TagInput values={field.value} suggest={suggestPhraseTitle} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.phrase.expression")}</ControlLabel>
             <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.expression`)}/>
           </ControlContainer>
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{transNode("label.phrase.terms")}</ControlLabel>
             <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.termString`)}/>
           </ControlContainer>

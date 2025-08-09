@@ -74,15 +74,15 @@ export const EditWordFormInformationItem = create(
           <GeneralIcon icon={faGripVertical}/>
         </div>
         <fieldset styleName="field-list">
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.information.title")}</ControlLabel>
             <Input suggest={suggestInformationTitle} {...register(`sections.${sectionIndex}.informations.${informationIndex}.title`)}/>
           </ControlContainer>
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.information.text")}</ControlLabel>
             <Textarea styleName="textarea" {...register(`sections.${sectionIndex}.informations.${informationIndex}.text`)}/>
           </ControlContainer>
-          <ControlContainer>
+          <ControlContainer styleName="field-item" {...data({checkable: true})}>
             <CheckableContainer>
               <Checkbox {...register(`sections.${sectionIndex}.informations.${informationIndex}.hidden`)}/>
               <CheckableLabel><MultiLineText>{trans("label.information.hidden")}</MultiLineText></CheckableLabel>

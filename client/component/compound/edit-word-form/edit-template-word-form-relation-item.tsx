@@ -68,7 +68,7 @@ export const EditTemplateWordFormRelationItem = create(
           <GeneralIcon icon={faGripVertical}/>
         </div>
         <fieldset styleName="field-list">
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
             <Controller name={`sections.${sectionIndex}.relations.${index}.titles`} control={form.control} render={({field}) => (
               <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>

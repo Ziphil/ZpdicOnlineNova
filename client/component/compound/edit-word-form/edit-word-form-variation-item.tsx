@@ -82,15 +82,15 @@ export const EditWordFormVariationItem = create(
           <GeneralIcon icon={faGripVertical}/>
         </div>
         <fieldset styleName="field-list">
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.variation.title")}</ControlLabel>
             <Input suggest={suggestVariationTitle} {...register(`sections.${sectionIndex}.variations.${variationIndex}.title`)}/>
           </ControlContainer>
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.variation.spelling")}</ControlLabel>
             <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.spelling`)}/>
           </ControlContainer>
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.variation.pronunciation")}</ControlLabel>
             <div styleName="row">
               <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.pronunciation`)}/>

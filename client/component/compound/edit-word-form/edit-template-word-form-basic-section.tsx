@@ -9,6 +9,7 @@ import {
   Input,
   SuggestionSpec,
   TagInput,
+  data,
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
@@ -53,8 +54,8 @@ export const EditTemplateWordFormBasicSection = create(
       <>
         <section styleName="root" {...rest}>
           <h3 styleName="heading">{trans("heading.template")}</h3>
-          <div styleName="control">
-            <ControlContainer>
+          <div styleName="field-list" {...data({vertical: true})}>
+            <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.title")}</ControlLabel>
               <Input {...register("title")}/>
             </ControlContainer>
@@ -62,16 +63,16 @@ export const EditTemplateWordFormBasicSection = create(
         </section>
         <section styleName="root" {...rest}>
           <h3 styleName="heading">{trans("heading.basic")}</h3>
-          <div styleName="control">
-            <ControlContainer>
+          <div styleName="field-list">
+            <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.spelling")}</ControlLabel>
               <Input {...register("spelling")}/>
             </ControlContainer>
-            <ControlContainer>
+            <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.pronunciation")}</ControlLabel>
               <Input {...register("pronunciation")}/>
             </ControlContainer>
-            <ControlContainer>
+            <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.tags")}</ControlLabel>
               <Controller name="tags" control={control} render={({field}) => (
                 <TagInput tagVariant="solid" values={field.value ?? []} suggest={suggestTag} onSet={field.onChange}/>

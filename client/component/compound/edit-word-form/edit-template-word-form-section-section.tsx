@@ -31,8 +31,10 @@ export const EditTemplateWordFormSectionSection = create(
     const {trans} = useTrans("editWordForm");
 
     return (
-      <section styleName="section">
-        <h3 styleName="heading">{trans("heading.section", {numberString: toLatinNumeral(sectionIndex + 1)})}</h3>
+      <section styleName="root">
+        <div styleName="heading">
+          <h3 styleName="heading-number">{toLatinNumeral(sectionIndex + 1)}</h3>
+        </div>
         <div styleName="main">
           <EditWordFormEquivalentSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
           <EditWordFormInformationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>

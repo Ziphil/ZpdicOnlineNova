@@ -94,8 +94,8 @@ export const EditWordFormBasicSection = create(
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.basic")}</h3>
-        <div styleName="control">
-          <ControlContainer>
+        <div styleName="field-list">
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.spelling")}</ControlLabel>
             <div styleName="row">
               <Input {...register("spelling", {onChange: handleSpellingChange})}/>
@@ -107,12 +107,12 @@ export const EditWordFormBasicSection = create(
               )}
             </div>
             {(duplicateSpelling) && (
-              <ControlHelper>
+              <ControlHelper styleName="helper">
                 {trans("duplicateSpelling")}
               </ControlHelper>
             )}
           </ControlContainer>
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.pronunciation")}</ControlLabel>
             <div styleName="row">
               <Input {...register("pronunciation")}/>
@@ -124,7 +124,7 @@ export const EditWordFormBasicSection = create(
               )}
             </div>
           </ControlContainer>
-          <ControlContainer>
+          <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.tags")}</ControlLabel>
             <Controller name="tags" control={control} render={({field}) => (
               <TagInput tagVariant="solid" values={field.value ?? []} suggest={suggestTag} onSet={field.onChange}/>

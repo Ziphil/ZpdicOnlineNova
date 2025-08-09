@@ -465,7 +465,7 @@ editWordForm:
       hidden: "単語カードでは非表示にする"
     phrase:
       titles: "分類"
-      expression: "成句表現"
+      expression: "表現"
       terms: "訳語"
     variation:
       title: "種類"
