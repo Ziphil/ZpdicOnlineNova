@@ -7,7 +7,7 @@ import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {AdditionalProps, data, useTrans} from "zographia";
 import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client/component/create";
-import {toRoman} from "/client/util/misc";
+import {toLatinNumeral} from "/client/util/misc";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditWordFormEquivalentSection} from "./edit-word-form-equivalent-section";
 import {EditWordFormValue} from "./edit-word-form-hook";
@@ -35,7 +35,7 @@ export const EditWordFormSectionSection = create(
     return (
       <details styleName="root" open={sectionIndex <= 0}>
         <summary styleName="heading">
-          <h3>{trans("heading.section", {numberString: toRoman(sectionIndex + 1)})}</h3>
+          <h3>{trans("heading.section", {numberString: toLatinNumeral(sectionIndex + 1)})}</h3>
           <FontAwesomeIcon styleName="angle" icon={faAngleDown} {...data({when: "closed"})}/>
           <FontAwesomeIcon styleName="angle" icon={faAngleUp} {...data({when: "open"})}/>
         </summary>

@@ -24,7 +24,7 @@ import {WordCardInfoPopover} from "/client/component/compound/word-list/word-car
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {getWordHref} from "/client/util/dictionary";
-import {toRoman} from "/client/util/misc";
+import {toLatinNumeral} from "/client/util/misc";
 import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/server/internal/skeleton";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardExampleList} from "./word-card-example-list";
@@ -83,7 +83,7 @@ export const WordCard = create(
               <div styleName="section-list">
                 {word.sections.map((section, index) => (
                   <div styleName="section-item" key={index}>
-                    <div styleName="section-number">{toRoman(index + 1)}</div>
+                    <div styleName="section-number">{toLatinNumeral(index + 1)}</div>
                     <div styleName="section-main">
                       <WordCardEquivalentList dictionary={dictionary} section={section}/>
                       <WordCardInformationList dictionary={dictionary} section={section}/>

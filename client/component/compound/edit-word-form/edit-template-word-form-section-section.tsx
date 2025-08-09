@@ -4,7 +4,7 @@ import {ReactElement} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {AdditionalProps, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {toRoman} from "/client/util/misc";
+import {toLatinNumeral} from "/client/util/misc";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditTemplateWordFormRelationSection} from "./edit-template-word-form-relation-section";
@@ -32,7 +32,7 @@ export const EditTemplateWordFormSectionSection = create(
 
     return (
       <section styleName="section">
-        <h3 styleName="heading">{trans("heading.section", {numberString: toRoman(sectionIndex + 1)})}</h3>
+        <h3 styleName="heading">{trans("heading.section", {numberString: toLatinNumeral(sectionIndex + 1)})}</h3>
         <div styleName="main">
           <EditWordFormEquivalentSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
           <EditWordFormInformationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
