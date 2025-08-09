@@ -16,40 +16,14 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import multer from "multer";
 import {Server} from "socket.io";
-import {
-  ExampleExternalRestController,
-  WordExternalRestController
-} from "/server/external/controller/rest";
-import {
-  DictionaryJobController,
-  RegularJobController
-} from "/server/internal/controller/job";
-import {
-  ArticleRestController,
-  DebugRestController,
-  DictionaryRestController,
-  ExampleRestController,
-  HistoryRestController,
-  InvitationRestController,
-  NotificationRestController,
-  OtherRestController,
-  ProposalRestController,
-  ResourceRestController,
-  UserRestController,
-  WordRestController
-} from "/server/internal/controller/rest";
-import {
-  DictionarySocketController
-} from "/server/internal/controller/socket";
+import * as externalRest from "/server/external/controller/rest";
+import * as internalJob from "/server/internal/controller/job";
+import * as internalRest from "/server/internal/controller/rest";
+import * as internalSocket from "/server/internal/controller/socket";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
 import {jsonifyRequest} from "/server/util/request";
-import {
-  COOKIE_SECRET,
-  MONGO_URI,
-  PORT,
-  SENDGRID_KEY
-} from "/server/variable";
+import {COOKIE_SECRET, MONGO_URI, PORT, SENDGRID_KEY} from "/server/variable";
 
 
 dayjs.extend(utc);
@@ -80,9 +54,7 @@ export class Main {
     this.setupMongo();
     this.setupSendgrid();
     this.setupDirectories();
-    this.useRestControllers();
-    this.useSocketControllers();
-    this.useJobControllers();
+    this.useControllers();
     this.setupAgenda();
     this.addStaticHandlers();
     this.addFallbackHandlers();
@@ -170,30 +142,11 @@ export class Main {
 
   /** ルーターの設定を行います。
    * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
-  private useRestControllers(): void {
-    ProposalRestController.use(this.application, this.server, this.agenda);
-    DictionaryRestController.use(this.application, this.server, this.agenda);
-    ExampleRestController.use(this.application, this.server, this.agenda);
-    ArticleRestController.use(this.application, this.server, this.agenda);
-    HistoryRestController.use(this.application, this.server, this.agenda);
-    InvitationRestController.use(this.application, this.server, this.agenda);
-    NotificationRestController.use(this.application, this.server, this.agenda);
-    OtherRestController.use(this.application, this.server, this.agenda);
-    ResourceRestController.use(this.application, this.server, this.agenda);
-    UserRestController.use(this.application, this.server, this.agenda);
-    WordRestController.use(this.application, this.server, this.agenda);
-    DebugRestController.use(this.application, this.server, this.agenda);
-    WordExternalRestController.use(this.application, this.server, this.agenda);
-    ExampleExternalRestController.use(this.application, this.server, this.agenda);
-  }
-
-  private useSocketControllers(): void {
-    DictionarySocketController.use(this.application, this.server, this.agenda);
-  }
-
-  private useJobControllers(): void {
-    DictionaryJobController.use(this.agenda);
-    RegularJobController.use(this.agenda);
+  private useControllers(): void {
+    internalRest.use(this.application, this.server, this.agenda);
+    externalRest.use(this.application, this.server, this.agenda);
+    internalSocket.use(this.application, this.server, this.agenda);
+    internalJob.use(this.agenda);
   }
 
   private setupAgenda(): void {
