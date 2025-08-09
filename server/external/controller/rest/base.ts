@@ -22,7 +22,7 @@ export interface MiddlewareBody {
   me?: User | null;
 
   /** リクエストに関連する辞書データです。
-     * このプロパティは、`parseDictionary` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
+   * このプロパティは、`parseDictionary` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
   dictionary?: Dictionary | null;
 
 }
