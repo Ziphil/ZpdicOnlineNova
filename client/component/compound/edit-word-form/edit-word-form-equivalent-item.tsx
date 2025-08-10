@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
@@ -11,6 +11,10 @@ import {
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  GrabbablePane,
+  GrabbablePaneBody,
+  GrabbablePaneGrip,
+  GrabbablePaneGripContainer,
   IconButton,
   Input,
   MultiLineText,
@@ -69,38 +73,40 @@ export const EditWordFormEquivalentItem = create(
     }, [dictionary.number]);
 
     return (
-      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
-        <div styleName="grip" {...gripProps}>
-          <GeneralIcon icon={faGripVertical}/>
-        </div>
-        <fieldset styleName="field-list">
-          <ControlContainer styleName="field-item">
-            <ControlLabel>{trans("label.equivalent.titles")}</ControlLabel>
-            <Controller name={`sections.${sectionIndex}.equivalents.${equivalentIndex}.titles`} control={form.control} render={({field}) => (
-              <TagInput values={field.value} suggest={suggestEquivalentTitle} onSet={field.onChange}/>
-            )}/>
-          </ControlContainer>
-          <ControlContainer styleName="field-item">
-            <ControlLabel>
-              {transNode("label.equivalent.terms", {
-                note: (parts) => <span styleName="note">{parts}</span>
-              })}
-            </ControlLabel>
-            <Input {...register(`sections.${sectionIndex}.equivalents.${equivalentIndex}.termString`)}/>
-          </ControlContainer>
-          <ControlContainer styleName="field-item" {...data({checkable: true})}>
-            <CheckableContainer>
-              <Checkbox {...register(`sections.${sectionIndex}.equivalents.${equivalentIndex}.hidden`)}/>
-              <CheckableLabel><MultiLineText>{trans("label.equivalent.hidden")}</MultiLineText></CheckableLabel>
-            </CheckableContainer>
-          </ControlContainer>
-        </fieldset>
-        <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.equivalent")} onClick={() => equivalentOperations.remove(equivalentIndex)}>
-            <GeneralIcon icon={faMinus}/>
-          </IconButton>
-        </div>
-      </div>
+      <GrabbablePane styleName="root" dragging={dragging} {...rest} {...paneProps}>
+        <GrabbablePaneGripContainer>
+          <GrabbablePaneGrip {...gripProps}/>
+        </GrabbablePaneGripContainer>
+        <GrabbablePaneBody styleName="body">
+          <fieldset styleName="field-list">
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.equivalent.titles")}</ControlLabel>
+              <Controller name={`sections.${sectionIndex}.equivalents.${equivalentIndex}.titles`} control={form.control} render={({field}) => (
+                <TagInput values={field.value} suggest={suggestEquivalentTitle} onSet={field.onChange}/>
+              )}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>
+                {transNode("label.equivalent.terms", {
+                  note: (parts) => <span styleName="note">{parts}</span>
+                })}
+              </ControlLabel>
+              <Input {...register(`sections.${sectionIndex}.equivalents.${equivalentIndex}.termString`)}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item" {...data({checkable: true})}>
+              <CheckableContainer>
+                <Checkbox {...register(`sections.${sectionIndex}.equivalents.${equivalentIndex}.hidden`)}/>
+                <CheckableLabel><MultiLineText>{trans("label.equivalent.hidden")}</MultiLineText></CheckableLabel>
+              </CheckableContainer>
+            </ControlContainer>
+          </fieldset>
+          <div styleName="minus">
+            <IconButton scheme="gray" variant="light" label={trans("discard.equivalent")} onClick={() => equivalentOperations.remove(equivalentIndex)}>
+              <GeneralIcon icon={faMinus}/>
+            </IconButton>
+          </div>
+        </GrabbablePaneBody>
+      </GrabbablePane>
     );
 
   }

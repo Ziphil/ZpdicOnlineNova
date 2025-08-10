@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
@@ -11,6 +11,10 @@ import {
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  GrabbablePane,
+  GrabbablePaneBody,
+  GrabbablePaneGrip,
+  GrabbablePaneGripContainer,
   IconButton,
   SuggestionSpec,
   TagInput,
@@ -67,36 +71,38 @@ export const EditWordFormRelationItem = create(
     }, [dictionary.number]);
 
     return (
-      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
-        <div styleName="grip" {...gripProps}>
-          <GeneralIcon icon={faGripVertical}/>
-        </div>
-        <fieldset styleName="field-list">
-          <ControlContainer styleName="field-item">
-            <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
-            <Controller name={`sections.${sectionIndex}.relations.${relationIndex}.titles`} control={form.control} render={({field}) => (
-              <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
-            )}/>
-          </ControlContainer>
-          <ControlContainer styleName="field-item">
-            <ControlLabel>{trans("label.relation.spelling")}</ControlLabel>
-            <Controller name={`sections.${sectionIndex}.relations.${relationIndex}.word`} control={form.control} render={({field}) => (
-              <RelationWordSelect dictionary={dictionary} word={field.value} onSet={field.onChange}/>
-            )}/>
-          </ControlContainer>
-          <ControlContainer styleName="field-item" {...data({checkable: true})}>
-            <CheckableContainer>
-              <Checkbox {...register(`sections.${sectionIndex}.relations.${relationIndex}.mutual`)}/>
-              <CheckableLabel>{trans("label.relation.mutual")}</CheckableLabel>
-            </CheckableContainer>
-          </ControlContainer>
-        </fieldset>
-        <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.relation")} onClick={() => relationOperations.remove(relationIndex)}>
-            <GeneralIcon icon={faMinus}/>
-          </IconButton>
-        </div>
-      </div>
+      <GrabbablePane styleName="root" {...rest} {...paneProps}>
+        <GrabbablePaneGripContainer>
+          <GrabbablePaneGrip {...gripProps}/>
+        </GrabbablePaneGripContainer>
+        <GrabbablePaneBody styleName="body">
+          <fieldset styleName="field-list">
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
+              <Controller name={`sections.${sectionIndex}.relations.${relationIndex}.titles`} control={form.control} render={({field}) => (
+                <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
+              )}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.relation.spelling")}</ControlLabel>
+              <Controller name={`sections.${sectionIndex}.relations.${relationIndex}.word`} control={form.control} render={({field}) => (
+                <RelationWordSelect dictionary={dictionary} word={field.value} onSet={field.onChange}/>
+              )}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item" {...data({checkable: true})}>
+              <CheckableContainer>
+                <Checkbox {...register(`sections.${sectionIndex}.relations.${relationIndex}.mutual`)}/>
+                <CheckableLabel>{trans("label.relation.mutual")}</CheckableLabel>
+              </CheckableContainer>
+            </ControlContainer>
+          </fieldset>
+          <div styleName="minus">
+            <IconButton scheme="gray" variant="light" label={trans("discard.relation")} onClick={() => relationOperations.remove(relationIndex)}>
+              <GeneralIcon icon={faMinus}/>
+            </IconButton>
+          </div>
+        </GrabbablePaneBody>
+      </GrabbablePane>
     );
 
   }

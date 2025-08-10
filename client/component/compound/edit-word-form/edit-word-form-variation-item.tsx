@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faGripVertical, faMinus, faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
+import {faMinus, faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
@@ -10,10 +10,13 @@ import {
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  GrabbablePane,
+  GrabbablePaneBody,
+  GrabbablePaneGrip,
+  GrabbablePaneGripContainer,
   IconButton,
   Input,
   SuggestionSpec,
-  data,
   useTrans
 } from "zographia";
 import {useEditWordFormDndItem} from "/client/component/compound/edit-word-form/edit-word-form-dnd";
@@ -77,38 +80,40 @@ export const EditWordFormVariationItem = create(
     }, [dictionary.number]);
 
     return (
-      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
-        <div styleName="grip" {...gripProps}>
-          <GeneralIcon icon={faGripVertical}/>
-        </div>
-        <fieldset styleName="field-list">
-          <ControlContainer styleName="field-item">
-            <ControlLabel>{trans("label.variation.title")}</ControlLabel>
-            <Input suggest={suggestVariationTitle} {...register(`sections.${sectionIndex}.variations.${variationIndex}.title`)}/>
-          </ControlContainer>
-          <ControlContainer styleName="field-item">
-            <ControlLabel>{trans("label.variation.spelling")}</ControlLabel>
-            <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.spelling`)}/>
-          </ControlContainer>
-          <ControlContainer styleName="field-item">
-            <ControlLabel>{trans("label.variation.pronunciation")}</ControlLabel>
-            <div styleName="row">
-              <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.pronunciation`)}/>
-              {(dictionary.akrantiain !== null) && (
-                <Button scheme="primary" variant="light" onClick={generatePronunciation}>
-                  <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
-                  {trans("button.generate")}
-                </Button>
-              )}
-            </div>
-          </ControlContainer>
-        </fieldset>
-        <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.variation")} onClick={() => variationOperations.remove(variationIndex)}>
-            <GeneralIcon icon={faMinus}/>
-          </IconButton>
-        </div>
-      </div>
+      <GrabbablePane styleName="root" {...rest} {...paneProps}>
+        <GrabbablePaneGripContainer>
+          <GrabbablePaneGrip {...gripProps}/>
+        </GrabbablePaneGripContainer>
+        <GrabbablePaneBody styleName="body">
+          <fieldset styleName="field-list">
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.variation.title")}</ControlLabel>
+              <Input suggest={suggestVariationTitle} {...register(`sections.${sectionIndex}.variations.${variationIndex}.title`)}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.variation.spelling")}</ControlLabel>
+              <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.spelling`)}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.variation.pronunciation")}</ControlLabel>
+              <div styleName="row">
+                <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.pronunciation`)}/>
+                {(dictionary.akrantiain !== null) && (
+                  <Button scheme="primary" variant="light" onClick={generatePronunciation}>
+                    <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
+                    {trans("button.generate")}
+                  </Button>
+                )}
+              </div>
+            </ControlContainer>
+          </fieldset>
+          <div styleName="minus">
+            <IconButton scheme="gray" variant="light" label={trans("discard.variation")} onClick={() => variationOperations.remove(variationIndex)}>
+              <GeneralIcon icon={faMinus}/>
+            </IconButton>
+          </div>
+        </GrabbablePaneBody>
+      </GrabbablePane>
     );
 
   }

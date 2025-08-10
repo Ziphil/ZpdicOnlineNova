@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
@@ -11,6 +11,10 @@ import {
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  GrabbablePane,
+  GrabbablePaneBody,
+  GrabbablePaneGrip,
+  GrabbablePaneGripContainer,
   IconButton,
   Input,
   MultiLineText,
@@ -69,32 +73,34 @@ export const EditWordFormInformationItem = create(
     }, [dictionary.number]);
 
     return (
-      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
-        <div styleName="grip" {...gripProps}>
-          <GeneralIcon icon={faGripVertical}/>
-        </div>
-        <fieldset styleName="field-list">
-          <ControlContainer styleName="field-item">
-            <ControlLabel>{trans("label.information.title")}</ControlLabel>
-            <Input suggest={suggestInformationTitle} {...register(`sections.${sectionIndex}.informations.${informationIndex}.title`)}/>
-          </ControlContainer>
-          <ControlContainer styleName="field-item">
-            <ControlLabel>{trans("label.information.text")}</ControlLabel>
-            <Textarea styleName="textarea" {...register(`sections.${sectionIndex}.informations.${informationIndex}.text`)}/>
-          </ControlContainer>
-          <ControlContainer styleName="field-item" {...data({checkable: true})}>
-            <CheckableContainer>
-              <Checkbox {...register(`sections.${sectionIndex}.informations.${informationIndex}.hidden`)}/>
-              <CheckableLabel><MultiLineText>{trans("label.information.hidden")}</MultiLineText></CheckableLabel>
-            </CheckableContainer>
-          </ControlContainer>
-        </fieldset>
-        <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.information")} onClick={() => informationOperations.remove(informationIndex)}>
-            <GeneralIcon icon={faMinus}/>
-          </IconButton>
-        </div>
-      </div>
+      <GrabbablePane styleName="root" {...rest} {...paneProps}>
+        <GrabbablePaneGripContainer>
+          <GrabbablePaneGrip {...gripProps}/>
+        </GrabbablePaneGripContainer>
+        <GrabbablePaneBody styleName="body">
+          <fieldset styleName="field-list">
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.information.title")}</ControlLabel>
+              <Input suggest={suggestInformationTitle} {...register(`sections.${sectionIndex}.informations.${informationIndex}.title`)}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.information.text")}</ControlLabel>
+              <Textarea styleName="textarea" {...register(`sections.${sectionIndex}.informations.${informationIndex}.text`)}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item" {...data({checkable: true})}>
+              <CheckableContainer>
+                <Checkbox {...register(`sections.${sectionIndex}.informations.${informationIndex}.hidden`)}/>
+                <CheckableLabel><MultiLineText>{trans("label.information.hidden")}</MultiLineText></CheckableLabel>
+              </CheckableContainer>
+            </ControlContainer>
+          </fieldset>
+          <div styleName="minus">
+            <IconButton scheme="gray" variant="light" label={trans("discard.information")} onClick={() => informationOperations.remove(informationIndex)}>
+              <GeneralIcon icon={faMinus}/>
+            </IconButton>
+          </div>
+        </GrabbablePaneBody>
+      </GrabbablePane>
     );
 
   }

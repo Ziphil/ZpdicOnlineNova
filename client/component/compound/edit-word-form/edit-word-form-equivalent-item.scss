@@ -3,37 +3,8 @@
 @use "zographia/source/component/function.scss" as *;
 
 
-.root {
-  padding-block: 3zu;
-  padding-inline-end: 3zu;
-  border-radius: var(--glob-border-radius);
-  background-color: var(--item-background-color);
-  border: solid 1zx var(--glob-border-color);
+.body {
   display: flex;
-  &[data-dragging] {
-    z-index: 1;
-  }
-}
-
-.grip {
-  margin-block: -3zu;
-  margin-inline-end: 3zu;
-  padding-inline: 1zu;
-  background-color: var(--glob-border-color);
-  color: var(--glob-mute-text-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: move;
-  flex: 0 0 auto;
-}
-
-.minus {
-  margin-inline-start: 3zu;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  flex: 0 0 auto;
 }
 
 .field-list {
@@ -85,4 +56,12 @@
   @supports not (field-sizing: content) {
     height: 40zu;
   }
+}
+
+.minus {
+  margin-inline-start: 3zu;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex: 0 0 auto;
 }

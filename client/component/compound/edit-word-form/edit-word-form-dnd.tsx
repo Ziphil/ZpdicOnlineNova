@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {DndContext, DragEndEvent, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors} from "@dnd-kit/core";
+import {restrictToVerticalAxis} from "@dnd-kit/modifiers";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import {ReactElement, ReactNode, useCallback, useMemo} from "react";
 import {create} from "/client/component/create";
@@ -33,7 +34,7 @@ export const EditWordFormDndContext = create(
     }, [values, setValues]);
 
     return (
-      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <DndContext sensors={sensors} collisionDetection={closestCenter} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>
         <SortableContext items={dndIds} strategy={verticalListSortingStrategy}>
           {children}
         </SortableContext>

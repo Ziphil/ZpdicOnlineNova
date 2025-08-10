@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
@@ -8,11 +8,14 @@ import {
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  GrabbablePane,
+  GrabbablePaneBody,
+  GrabbablePaneGrip,
+  GrabbablePaneGripContainer,
   IconButton,
   Input,
   SuggestionSpec,
   TagInput,
-  data,
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
@@ -65,32 +68,34 @@ export const EditWordFormPhraseItem = create(
     }, [dictionary.number]);
 
     return (
-      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
-        <div styleName="grip" {...gripProps}>
-          <GeneralIcon icon={faGripVertical}/>
-        </div>
-        <fieldset styleName="field-list">
-          <ControlContainer styleName="field-item">
-            <ControlLabel>{trans("label.phrase.titles")}</ControlLabel>
-            <Controller name={`sections.${sectionIndex}.phrases.${phraseIndex}.titles`} control={form.control} render={({field}) => (
-              <TagInput values={field.value} suggest={suggestPhraseTitle} onSet={field.onChange}/>
-            )}/>
-          </ControlContainer>
-          <ControlContainer styleName="field-item">
-            <ControlLabel>{trans("label.phrase.expression")}</ControlLabel>
-            <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.expression`)}/>
-          </ControlContainer>
-          <ControlContainer styleName="field-item">
-            <ControlLabel>{transNode("label.phrase.terms")}</ControlLabel>
-            <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.termString`)}/>
-          </ControlContainer>
-        </fieldset>
-        <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.phrase")} onClick={() => phraseOperations.remove(phraseIndex)}>
-            <GeneralIcon icon={faMinus}/>
-          </IconButton>
-        </div>
-      </div>
+      <GrabbablePane styleName="root" {...rest} {...paneProps}>
+        <GrabbablePaneGripContainer>
+          <GrabbablePaneGrip {...gripProps}/>
+        </GrabbablePaneGripContainer>
+        <GrabbablePaneBody styleName="body">
+          <fieldset styleName="field-list">
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.phrase.titles")}</ControlLabel>
+              <Controller name={`sections.${sectionIndex}.phrases.${phraseIndex}.titles`} control={form.control} render={({field}) => (
+                <TagInput values={field.value} suggest={suggestPhraseTitle} onSet={field.onChange}/>
+              )}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.phrase.expression")}</ControlLabel>
+              <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.expression`)}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{transNode("label.phrase.terms")}</ControlLabel>
+              <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.termString`)}/>
+            </ControlContainer>
+          </fieldset>
+          <div styleName="minus">
+            <IconButton scheme="gray" variant="light" label={trans("discard.phrase")} onClick={() => phraseOperations.remove(phraseIndex)}>
+              <GeneralIcon icon={faMinus}/>
+            </IconButton>
+          </div>
+        </GrabbablePaneBody>
+      </GrabbablePane>
     );
 
   }

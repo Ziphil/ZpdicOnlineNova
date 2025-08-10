@@ -44,7 +44,7 @@ export const EditWordFormEquivalentSection = create(
     }, [equivalentOperations]);
 
     const setEquivalents = useCallback(function (update: (equivalents: Array<any>) => Array<any>): void {
-      sectionOperations.update(sectionIndex, update(getValues(`sections.${sectionIndex}.equivalents`)));
+      sectionOperations.update(sectionIndex, {...getValues(`sections.${sectionIndex}`), equivalents: update(getValues(`sections.${sectionIndex}.equivalents`))});
     }, [sectionIndex, getValues, sectionOperations]);
 
     return (
