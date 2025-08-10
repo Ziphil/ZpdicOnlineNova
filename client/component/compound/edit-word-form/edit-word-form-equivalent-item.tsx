@@ -13,6 +13,7 @@ import {
   GeneralIcon,
   GrabbablePane,
   GrabbablePaneBody,
+  GrabbablePaneButton,
   GrabbablePaneGrip,
   GrabbablePaneGripContainer,
   IconButton,
@@ -24,6 +25,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
+import {moveArrayItem} from "/client/util/misc";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
@@ -38,17 +40,21 @@ export const EditWordFormEquivalentItem = create(
     dictionary,
     form,
     equivalentOperations,
+    setEquivalents,
     dndId,
     sectionIndex,
     equivalentIndex,
+    equivalentPosition,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
     equivalentOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.equivalents`>, "fields">,
+    setEquivalents: (update: (equivalents: Array<any>) => Array<any>) => void,
     dndId: string,
     sectionIndex: number,
     equivalentIndex: number,
+    equivalentPosition: "first" | "middle" | "last",
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -72,10 +78,20 @@ export const EditWordFormEquivalentItem = create(
       }
     }, [dictionary.number]);
 
+    const moveUp = useCallback(function (): void {
+      setEquivalents((equivalents) => moveArrayItem(equivalents, equivalentIndex, equivalentIndex - 1));
+    }, [setEquivalents, equivalentIndex]);
+
+    const moveDown = useCallback(function (): void {
+      setEquivalents((equivalents) => moveArrayItem(equivalents, equivalentIndex, equivalentIndex + 1));
+    }, [setEquivalents, equivalentIndex]);
+
     return (
       <GrabbablePane styleName="root" dragging={dragging} {...rest} {...paneProps}>
         <GrabbablePaneGripContainer>
+          <GrabbablePaneButton position="top" disabled={equivalentPosition === "first"} onClick={moveUp}/>
           <GrabbablePaneGrip {...gripProps}/>
+          <GrabbablePaneButton position="bottom" disabled={equivalentPosition === "last"} onClick={moveDown}/>
         </GrabbablePaneGripContainer>
         <GrabbablePaneBody styleName="body">
           <fieldset styleName="field-list">

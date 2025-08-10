@@ -60,9 +60,11 @@ export const EditWordFormEquivalentSection = create(
                   dictionary={dictionary}
                   form={form}
                   equivalentOperations={equivalentOperations as any}
+                  setEquivalents={setEquivalents}
                   dndId={equivalent.id}
                   sectionIndex={sectionIndex}
                   equivalentIndex={equivalentIndex}
+                  equivalentPosition={(equivalentIndex === 0) ? "first" : (equivalentIndex === equivalents.length - 1) ? "last" : "middle"}
                 />
               ))}
             </EditWordFormDndContext>
