@@ -239,7 +239,7 @@ export class DictionarySchema extends DiscardableSchema {
     return word;
   }
 
-  public async fetchWordNames<N extends number>(this: Dictionary, numbers: Array<N>): Promise<Record<N, string | null>> {
+  public async fetchWordSpellings<N extends number>(this: Dictionary, numbers: Array<N>): Promise<Record<N, string | null>> {
     const promises = numbers.map((number) => {
       const query = WordModel.findOneExist().where("dictionary", this).where("number", number);
       const promise = query.exec().then((word) => [number, word?.name ?? null] as const);
@@ -250,7 +250,7 @@ export class DictionarySchema extends DiscardableSchema {
     return names;
   }
 
-  public async checkDuplicateWordName(this: Dictionary, name: string, excludedWordNumber?: number): Promise<boolean> {
+  public async checkDuplicateWordSpelling(this: Dictionary, name: string, excludedWordNumber?: number): Promise<boolean> {
     let query = WordModel.findOneExist().where("dictionary", this).where("name", name);
     if (excludedWordNumber !== undefined) {
       query = query.ne("number", excludedWordNumber);

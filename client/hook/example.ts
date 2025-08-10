@@ -13,7 +13,7 @@ export function useFilledExample(dictionary: Dictionary, example: Example): Exam
   const filledExample = useMemo(() => {
     const words = example.words.map((word) => ({
       ...word,
-      name: (wordNameSpec === undefined) ? undefined : wordNameSpec.names[word.number] ?? null
+      spelling: (wordNameSpec === undefined) ? undefined : wordNameSpec.spellings[word.number] ?? null
     }));
     return {...example, words};
   }, [example, wordNameSpec]);

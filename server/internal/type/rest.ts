@@ -33,8 +33,8 @@ import type {
   User,
   UserWithDetail,
   Word,
-  WordSpellingFrequencies,
   WordParameter,
+  WordSpellingFrequencies,
   WordWithExamples
 } from "/server/internal/skeleton";
 import type {WithRecaptcha} from "/server/internal/type/common";
@@ -313,7 +313,7 @@ type ServerSpecs = {
   fetchWordNames: {
     request: {number: number, wordNumbers: Array<number>},
     response: {
-      success: {names: Record<number, string | null>},
+      success: {spellings: Record<number, string | null>},
       error: CustomError<"noSuchDictionary">
     }
   },

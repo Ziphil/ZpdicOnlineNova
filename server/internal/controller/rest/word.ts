@@ -81,8 +81,8 @@ export class WordRestController extends InternalRestController {
   public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {wordNumbers} = request.body;
-    const names = await dictionary.fetchWordNames(wordNumbers);
-    const body = {names};
+    const spellings = await dictionary.fetchWordSpellings(wordNumbers);
+    const body = {spellings};
     InternalRestController.respond(response, body);
   }
 
@@ -102,7 +102,7 @@ export class WordRestController extends InternalRestController {
   public async [Symbol()](request: Request<"checkDuplicateWordName">, response: Response<"checkDuplicateWordName">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {name, excludedWordNumber} = request.body;
-    const duplicate = await dictionary.checkDuplicateWordName(name, excludedWordNumber);
+    const duplicate = await dictionary.checkDuplicateWordSpelling(name, excludedWordNumber);
     const body = {duplicate};
     InternalRestController.respond(response, body);
   }
