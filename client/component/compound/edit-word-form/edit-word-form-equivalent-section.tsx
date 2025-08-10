@@ -3,13 +3,7 @@
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback, useMemo} from "react";
 import {UseFieldArrayReturn, UseFormReturn, useFieldArray} from "react-hook-form";
-import {
-  AdditionalProps,
-  Button,
-  ButtonIconbag,
-  GeneralIcon,
-  useTrans
-} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";

@@ -3,7 +3,7 @@
 import {DndContext, DragEndEvent, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors} from "@dnd-kit/core";
 import {restrictToVerticalAxis} from "@dnd-kit/modifiers";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
-import {ReactElement, ReactNode, useCallback, useMemo} from "react";
+import {ReactElement, ReactNode, Ref, useCallback, useMemo} from "react";
 import {create} from "/client/component/create";
 import {moveArrayItem} from "/client/util/misc";
 
@@ -45,13 +45,14 @@ export const EditWordFormDndContext = create(
 );
 
 
-export function useEditWordFormDndItem(id: string): {paneProps: any, gripProps: any, dragging: boolean} {
+export function useEditWordFormDndItem(id: string): {paneProps: any, paneRef: Ref<HTMLElement>, gripProps: any, dragging: boolean} {
   const {attributes, listeners, isDragging, setNodeRef, transform, transition} = useSortable({id});
   const style = {
     transform: (transform !== null) ? `translate(${transform.x}px, ${transform.y}px) scaleX(${transform.scaleX}) scaleY(${transform.scaleY})` : undefined,
     transition
   };
-  const paneProps = {ref: setNodeRef, style};
+  const paneRef = setNodeRef;
+  const paneProps = {style};
   const gripProps = {...attributes, ...listeners};
-  return {paneProps, gripProps, dragging: isDragging};
+  return {paneProps, paneRef, gripProps, dragging: isDragging};
 }

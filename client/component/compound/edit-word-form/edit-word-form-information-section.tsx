@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faImage, faPlus} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback} from "react";
+import {ReactElement, useCallback, useMemo} from "react";
 import {UseFieldArrayReturn, UseFormReturn, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
@@ -12,6 +12,7 @@ import {
 } from "zographia";
 import {ResourceListDialog} from "/client/component/compound/resource-list-dialog";
 import {create} from "/client/component/create";
+import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
@@ -38,7 +39,14 @@ export const EditWordFormInformationSection = create(
     const {trans} = useTrans("editWordForm");
 
     const {control, getValues} = form;
-    const {fields: informations, ...informationOperations} = useFieldArray({control, name: `sections.${sectionIndex}.informations`});
+    const informationFieldArraySpec = useFieldArray({control, name: `sections.${sectionIndex}.informations`});
+    const informationOperations = useMemo(() => ({
+      append: informationFieldArraySpec.append,
+      update: informationFieldArraySpec.update,
+      remove: informationFieldArraySpec.remove
+    }), [informationFieldArraySpec]);
+
+    const informations = informationFieldArraySpec.fields;
 
     const addInformation = useCallback(function (): void {
       informationOperations.append({title: "", text: "", hidden: false});
@@ -53,20 +61,22 @@ export const EditWordFormInformationSection = create(
         <h4 styleName="heading">{trans("heading.informations")}</h4>
         <div styleName="list">
           {(informations.length > 0) ? (
-            <EditWordFormDndContext values={informations} setValues={setInformations}>
-              {informations.map((information, index) => (
-                <EditWordFormInformationItem
-                  styleName="item"
-                  key={information.id}
-                  dictionary={dictionary}
-                  form={form}
-                  informationOperations={informationOperations as any}
-                  dndId={information.id}
-                  sectionIndex={sectionIndex}
-                  informationIndex={index}
-                />
-              ))}
-            </EditWordFormDndContext>
+            <SwapAnimationContext values={informations} setValues={setInformations}>
+              <EditWordFormDndContext values={informations} setValues={setInformations}>
+                {informations.map((information, index) => (
+                  <EditWordFormInformationItem
+                    styleName="item"
+                    key={information.id}
+                    dictionary={dictionary}
+                    form={form}
+                    informationOperations={informationOperations as any}
+                    dndId={information.id}
+                    sectionIndex={sectionIndex}
+                    informationIndex={index}
+                  />
+                ))}
+              </EditWordFormDndContext>
+            </SwapAnimationContext>
           ) : (
             <p styleName="absent">
               {trans("absent.information")}

@@ -58,7 +58,7 @@ export const EditWordFormEquivalentItem = create(
     const {trans, transNode} = useTrans("editWordForm");
 
     const {register} = form;
-    const {paneProps: {ref: paneRef, ...paneProps}, gripProps, dragging} = useEditWordFormDndItem(dndId);
+    const {paneProps, paneRef, gripProps, dragging} = useEditWordFormDndItem(dndId);
 
     const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
 

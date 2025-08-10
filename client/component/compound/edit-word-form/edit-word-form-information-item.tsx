@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
+import {useMergeRefs} from "@floating-ui/react";
 import {faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
@@ -13,6 +14,7 @@ import {
   GeneralIcon,
   GrabbablePane,
   GrabbablePaneBody,
+  GrabbablePaneButton,
   GrabbablePaneGrip,
   GrabbablePaneGripContainer,
   IconButton,
@@ -26,6 +28,7 @@ import {
 import {create} from "/client/component/create";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {useSwapAnimationItem} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
@@ -55,7 +58,11 @@ export const EditWordFormInformationItem = create(
     const {trans} = useTrans("editWordForm");
 
     const {register} = form;
-    const {paneProps, gripProps, dragging} = useEditWordFormDndItem(dndId);
+    const {paneProps, paneRef, gripProps, dragging} = useEditWordFormDndItem(dndId);
+
+    const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
+
+    const mergedRef = useMergeRefs([paneRef, swapRef]);
 
     const suggestInformationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
@@ -73,9 +80,11 @@ export const EditWordFormInformationItem = create(
     }, [dictionary.number]);
 
     return (
-      <GrabbablePane styleName="root" {...rest} {...paneProps}>
+      <GrabbablePane styleName="root" dragging={dragging} ref={mergedRef} {...rest} {...paneProps} {...swapProps}>
         <GrabbablePaneGripContainer>
+          <GrabbablePaneButton position="top" disabled={!canMoveUp} onClick={moveUp}/>
           <GrabbablePaneGrip {...gripProps}/>
+          <GrabbablePaneButton position="bottom" disabled={!canMoveDown} onClick={moveDown}/>
         </GrabbablePaneGripContainer>
         <GrabbablePaneBody styleName="body">
           <fieldset styleName="field-list">

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback} from "react";
+import {ReactElement, useCallback, useMemo} from "react";
 import {UseFieldArrayReturn, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
@@ -11,6 +11,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
+import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordSpec} from "./edit-word-form-hook";
@@ -36,7 +37,14 @@ export const EditWordFormRelationSection = create(
     const {trans} = useTrans("editWordForm");
 
     const {control, getValues} = form;
-    const {fields: relations, ...relationOperations} = useFieldArray({control, name: `sections.${sectionIndex}.relations`});
+    const relationFieldArraySpec = useFieldArray({control, name: `sections.${sectionIndex}.relations`});
+    const relationOperations = useMemo(() => ({
+      append: relationFieldArraySpec.append,
+      update: relationFieldArraySpec.update,
+      remove: relationFieldArraySpec.remove
+    }), [relationFieldArraySpec]);
+
+    const relations = relationFieldArraySpec.fields;
 
     const addRelation = useCallback(function (): void {
       relationOperations.append({titles: [], word: null, mutual: false});
@@ -51,20 +59,22 @@ export const EditWordFormRelationSection = create(
         <h4 styleName="heading">{trans("heading.relations")}</h4>
         <div styleName="list">
           {(relations.length > 0) ? (
-            <EditWordFormDndContext values={relations} setValues={setRelations}>
-              {relations.map((relation, index) => (
-                <EditWordFormRelationItem
-                  styleName="item"
-                  key={relation.id}
-                  dictionary={dictionary}
-                  form={form}
-                  relationOperations={relationOperations as any}
-                  dndId={relation.id}
-                  sectionIndex={sectionIndex}
-                  relationIndex={index}
-                />
-              ))}
-            </EditWordFormDndContext>
+            <SwapAnimationContext values={relations} setValues={setRelations}>
+              <EditWordFormDndContext values={relations} setValues={setRelations}>
+                {relations.map((relation, index) => (
+                  <EditWordFormRelationItem
+                    styleName="item"
+                    key={relation.id}
+                    dictionary={dictionary}
+                    form={form}
+                    relationOperations={relationOperations as any}
+                    dndId={relation.id}
+                    sectionIndex={sectionIndex}
+                    relationIndex={index}
+                  />
+                ))}
+              </EditWordFormDndContext>
+            </SwapAnimationContext>
           ) : (
             <p styleName="absent">
               {trans("absent.relation")}
