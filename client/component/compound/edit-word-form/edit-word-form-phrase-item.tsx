@@ -40,7 +40,7 @@ export const EditWordFormPhraseItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    phraseOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.phrases`>, "fields">,
+    phraseOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.phrases`>, "append" | "update" | "remove">,
     dndId: string,
     sectionIndex: number,
     phraseIndex: number,

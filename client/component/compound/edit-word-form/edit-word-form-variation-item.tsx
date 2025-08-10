@@ -41,7 +41,7 @@ export const EditWordFormVariationItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    variationOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.variations`>, "fields">,
+    variationOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.variations`>, "append" | "update" | "remove">,
     dndId: string,
     sectionIndex: number,
     variationIndex: number,

@@ -1,7 +1,7 @@
 //
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback} from "react";
+import {ReactElement, useCallback, useMemo} from "react";
 import {useFieldArray} from "react-hook-form";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
@@ -29,7 +29,12 @@ export const EditWordFormEditPart = create(
     const {form} = formSpec;
 
     const {control} = form;
-    const {fields: sections, ...sectionOperations} = useFieldArray({control, name: "sections"});
+    const sectionFieldArraySpec = useFieldArray({control, name: "sections"});
+    const sectionOperations = useMemo(() => ({
+      append: sectionFieldArraySpec.append,
+      update: sectionFieldArraySpec.update,
+      remove: sectionFieldArraySpec.remove
+    }), [sectionFieldArraySpec]);
 
     const addSection = useCallback(function (): void {
       sectionOperations.append({
@@ -46,7 +51,7 @@ export const EditWordFormEditPart = create(
         <div styleName="main">
           <EditWordFormBasicSection dictionary={dictionary} form={form}/>
           <div styleName="section-list">
-            {sections.map((section, sectionIndex) => (
+            {sectionFieldArraySpec.fields.map((section, sectionIndex) => (
               <EditWordFormSectionSection
                 key={section.id}
                 dictionary={dictionary}

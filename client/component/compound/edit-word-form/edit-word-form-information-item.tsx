@@ -45,7 +45,7 @@ export const EditWordFormInformationItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    informationOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.informations`>, "fields">,
+    informationOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.informations`>, "append" | "update" | "remove">,
     dndId: string,
     sectionIndex: number,
     informationIndex: number,

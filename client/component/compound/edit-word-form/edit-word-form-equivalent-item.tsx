@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
+import {useMergeRefs} from "@floating-ui/react";
 import {faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
@@ -25,9 +26,9 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {moveArrayItem} from "/client/util/misc";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {useSwapAnimationItem} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
@@ -40,28 +41,28 @@ export const EditWordFormEquivalentItem = create(
     dictionary,
     form,
     equivalentOperations,
-    setEquivalents,
     dndId,
     sectionIndex,
     equivalentIndex,
-    equivalentPosition,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    equivalentOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.equivalents`>, "fields">,
-    setEquivalents: (update: (equivalents: Array<any>) => Array<any>) => void,
+    equivalentOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.equivalents`>, "append" | "update" | "remove">,
     dndId: string,
     sectionIndex: number,
     equivalentIndex: number,
-    equivalentPosition: "first" | "middle" | "last",
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans, transNode} = useTrans("editWordForm");
 
     const {register} = form;
-    const {paneProps, gripProps, dragging} = useEditWordFormDndItem(dndId);
+    const {paneProps: {ref: paneRef, ...paneProps}, gripProps, dragging} = useEditWordFormDndItem(dndId);
+
+    const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
+
+    const mergedRef = useMergeRefs([paneRef, swapRef]);
 
     const suggestEquivalentTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
@@ -78,20 +79,12 @@ export const EditWordFormEquivalentItem = create(
       }
     }, [dictionary.number]);
 
-    const moveUp = useCallback(function (): void {
-      setEquivalents((equivalents) => moveArrayItem(equivalents, equivalentIndex, equivalentIndex - 1));
-    }, [setEquivalents, equivalentIndex]);
-
-    const moveDown = useCallback(function (): void {
-      setEquivalents((equivalents) => moveArrayItem(equivalents, equivalentIndex, equivalentIndex + 1));
-    }, [setEquivalents, equivalentIndex]);
-
     return (
-      <GrabbablePane styleName="root" dragging={dragging} {...rest} {...paneProps}>
+      <GrabbablePane styleName="root" dragging={dragging} ref={mergedRef} {...rest} {...paneProps} {...swapProps}>
         <GrabbablePaneGripContainer>
-          <GrabbablePaneButton position="top" disabled={equivalentPosition === "first"} onClick={moveUp}/>
+          <GrabbablePaneButton position="top" disabled={!canMoveUp} onClick={moveUp}/>
           <GrabbablePaneGrip {...gripProps}/>
-          <GrabbablePaneButton position="bottom" disabled={equivalentPosition === "last"} onClick={moveDown}/>
+          <GrabbablePaneButton position="bottom" disabled={!canMoveDown} onClick={moveDown}/>
         </GrabbablePaneGripContainer>
         <GrabbablePaneBody styleName="body">
           <fieldset styleName="field-list">

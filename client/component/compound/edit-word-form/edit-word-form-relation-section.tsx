@@ -28,7 +28,7 @@ export const EditWordFormRelationSection = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: EditWordSpec["form"],
-    sectionOperations: Omit<UseFieldArrayReturn<any, "sections">, "fields">,
+    sectionOperations: Pick<UseFieldArrayReturn<any, "sections">, "append" | "update" | "remove">,
     sectionIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {

@@ -43,7 +43,7 @@ export const EditWordFormRelationItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: EditWordSpec["form"],
-    relationOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.relations`>, "fields">,
+    relationOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.relations`>, "append" | "update" | "remove">,
     dndId: string,
     sectionIndex: number,
     relationIndex: number,

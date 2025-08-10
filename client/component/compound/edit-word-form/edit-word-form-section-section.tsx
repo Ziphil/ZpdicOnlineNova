@@ -25,7 +25,7 @@ export const EditWordFormSectionSection = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue>,
-    sectionOperations: Omit<UseFieldArrayReturn<any, "sections">, "fields">,
+    sectionOperations: Pick<UseFieldArrayReturn<any, "sections">, "append" | "update" | "remove">,
     sectionIndex: number
   } & AdditionalProps): ReactElement {
 
