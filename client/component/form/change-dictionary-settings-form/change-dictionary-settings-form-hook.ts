@@ -42,7 +42,7 @@ function getSchema<N extends keyof DictionarySettings>(propertyName: N): StringS
 }
 
 function getDefaultFormValue<N extends keyof DictionarySettings>(dictionary: Dictionary, propertyName: N): FormValue {
-  if (propertyName === "enableMarkdown" || propertyName === "enableDuplicateName" || propertyName === "showEquivalentNumber") {
+  if (propertyName === "enableAdvancedWord" || propertyName === "enableMarkdown" || propertyName === "enableDuplicateName" || propertyName === "showEquivalentNumber") {
     return {value: dictionary.settings[propertyName]!.toString()};
   } else if (propertyName === "punctuations") {
     return {value: dictionary.settings.punctuations.join("")};
@@ -53,7 +53,7 @@ function getDefaultFormValue<N extends keyof DictionarySettings>(dictionary: Dic
 
 function getQuery<N extends keyof DictionarySettings>(dictionary: Dictionary, propertyName: N, value: FormValue): RequestData<"changeDictionarySettings"> {
   const number = dictionary.number;
-  if (propertyName === "enableMarkdown" || propertyName === "enableDuplicateName" || propertyName === "showEquivalentNumber") {
+  if (propertyName === "enableAdvancedWord" || propertyName === "enableMarkdown" || propertyName === "enableDuplicateName" || propertyName === "showEquivalentNumber") {
     return {number, settings: {[propertyName]: value.value === "true"}};
   } else if (propertyName === "punctuations") {
     return {number, settings: {punctuations: (value.value || "").split("")}};

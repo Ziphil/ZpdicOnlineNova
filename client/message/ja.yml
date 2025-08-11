@@ -30,6 +30,8 @@ toast:
         設定を変更しました。
       pronunciationTitle: |-
         設定を変更しました。
+      enableAdvancedWord: |-
+        設定を変更しました。
       enableMarkdown: |-
         設定を変更しました。
       enableDuplicateName: |-
@@ -861,6 +863,9 @@ changeDictionaryFontForm:
       1 MB より大きなファイルはアップロードすることができません。
 changeDictionarySettingsForm:
   label:
+    enableAdvancedWord:
+      true: "有効"
+      false: "無効"
     enableMarkdown:
       true: "有効"
       false: "無効"
@@ -1043,6 +1048,7 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Akrantiain ソースコード"
     zatlinSource: "Zatlin ソースコード"
+    enableAdvancedWord: "高度な単語編集"
     enableMarkdown: "Markdown"
     enableDuplicateName: "重複綴りチェック"
     punctuations: "区切り文字"
@@ -1059,6 +1065,8 @@ dictionarySettingEditingPart:
       Zatlin とは、単語の綴りをランダムに生成するためのシステムです。 
       Zatlin 用のソースコードを設定しておくと、単語編集画面で単語欄の横に「生成」ボタンが表示され、Zatlin を用いて綴りを生成できるようになります。
       Zatlin の構文については<link>ドキュメント</link>をご覧ください。
+    enableAdvancedWord: >-
+      これを有効にしておくと、訳語から関連語までを 1 つのセクションとして、単語データに複数のセクションを登録できるようになります。 
     enableMarkdown: >-
       これを有効にしておくと、単語データの内容欄を Markdown 形式で書くことができるようになります。
     enableDuplicateName: >-

@@ -32,6 +32,8 @@ toast:
         The setting has been changed.
       pronunciationTitle: |-
         The setting has been changed.
+      enableAdvancedWord: |-
+        The setting has been changed.
       enableMarkdown: |-
         The setting has been changed.
       enableDuplicateName: |-
@@ -865,6 +867,9 @@ changeDictionaryFontForm:
       You cannot upload files larger than 1 MB.
 changeDictionarySettingsForm:
   label:
+    enableAdvancedWord:
+      true: "Enabled"
+      false: "Disabled"
     enableMarkdown:
       true: "Enabled"
       false: "Disabled"
@@ -1045,6 +1050,7 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Source code for Akrantiain"
     zatlinSource: "Source code for Zatlin"
+    enableAdvancedWord: "Advanced word editing"
     enableMarkdown: "Markdown"
     enableDuplicateName: "Duplicate spelling check"
     punctuations: "Delimiters"
@@ -1061,6 +1067,8 @@ dictionarySettingEditingPart:
       Zatlin is a system that generates random spellings of words.
       If you set the source code here, a ‘Generate’ button will appear in the word editor, allowing you to generate a spelling by Zatlin.
       For more information on Zatlin’s syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
+    enableAdvancedWord: >- 
+      If you enable this feature, you can register multiple sections in a word, with each section containing a range of information from translations to related words.
     enableMarkdown: >-
       Enabling this feature will allow you to write the contents of words in Markdown format.
     enableDuplicateName: >-

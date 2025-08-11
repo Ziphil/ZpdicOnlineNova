@@ -32,6 +32,8 @@ toast:
         La agordo ŝanĝitas.
       pronunciationTitle: |-
         La agordo ŝanĝitas.
+      enableAdvancedWord: |-
+        La agordo ŝanĝitas.
       enableMarkdown: |-
         La agordo ŝanĝitas.
       enableDuplicateName: |-
@@ -865,6 +867,9 @@ changeDictionaryFontForm:
       Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
 changeDictionarySettingsForm:
   label:
+    enableAdvancedWord:
+      true: "Ebligita"
+      false: "Malebligita"
     enableMarkdown:
       true: "Ebligita"
       false: "Malebligita"
@@ -1045,8 +1050,9 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Fontkodo por Akrantiain"
     zatlinSource: "Fontkodo por Zatlin"
+    enableAdvancedWord: "Altnivela redaktado de vortoj"
     enableMarkdown: "Markdown"
-    enableDuplicateName: "Kontrolon de duoblan literumon"
+    enableDuplicateName: "Kontrolon de duobla literumo"
     punctuations: "Disigiloj"
     ignoredEquivalentPattern: "Regulesprimo ignorota en tradukaĵoj"
     wordCardTitles: "Titoloj en vortokartoj"
@@ -1061,6 +1067,8 @@ dictionarySettingEditingPart:
       Zatlin estas aparato kiu generas aleatorajn literumojn de vortoj.
       Se vi agordos la fontkodon, butono “Generi” aperos en la redaktilo de vorto, permesante al vi generi literumon pere de Zatlin.
       Por pliaj informoj pri la sintakso de Zatlin, bonvolu rilati al la <link>dokumentaro</link> (nuntempe disponebla nur en la japana).
+    enableAdvancedWord: >- 
+      Se vi ebligos tiun funkcion, vi povos registri plurajn sekciojn en vorto, ĉiu el kiu enhavas informojn de tradukaĵoj ĝis rilataj vortoj.
     enableMarkdown: >-
       Ebligi tiun funkcion permesos al vi skribi la enhavojn de vortoj en Markdown.
     enableDuplicateName: >-
