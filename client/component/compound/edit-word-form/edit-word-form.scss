@@ -5,7 +5,9 @@
 
 .root {
   @include theme("light") {
-    --item-background-color: #{single-color("background-light")};
+    --button-text-color: #{leveled-color("gray", 5)};
+    --hover-button-text-color: #{leveled-color("gray", 6)};
+    --focus-color: #{leveled-color("gray", 5, var(--glob-focus-alpha))};
   }
 }
 

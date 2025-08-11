@@ -59,7 +59,7 @@ export const SwapAnimationContext = function <T extends {id: string}>({
 };
 
 export function useSwapAnimationItem(id: string): {
-  ref: Ref<HTMLElement>,
+  ref: Ref<any>,
   props: Record<string, any>,
   animating: boolean,
   canMoveUp: boolean,

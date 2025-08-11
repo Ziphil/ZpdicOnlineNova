@@ -11,18 +11,50 @@
 
 .heading {
   @include bold-font;
-  padding-block-start: 0.5zu;
+  padding-block-start: 1zu;
   padding-inline-end: 2zu;
-  font-size: 4zu;
   color: var(--glob-mute-text-color);
   border-inline-end: double 3zx var(--glob-border-color);
   flex: 0 0 auto;
 }
 
-.heading-number {
-  top: 0zu;
+.number-container {
+  row-gap: 1.5zu;
+  inset-block-start: 0zu;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: sticky;
+}
+
+.button-container {
+  row-gap: 0.5zu;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.button {
+  font-size: 3.5zu;
+  color: var(--button-text-color);
+  border-radius: var(--glob-border-radius);
+  transition: 0.1s color;
+  &:hover {
+    color: var(--hover-button-text-color);
+  }
+  &:focus-visible {
+    outline: solid 2zx var(--focus-color);
+  }
+  &:disabled {
+    display: none;
+  }
+}
+
+.number {
+  font-size: 4zu;
   text-align: center;
+  flex: 0 0 auto;
 }
 
 .angle {
