@@ -16,7 +16,8 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import multer from "multer";
 import {Server} from "socket.io";
-import * as externalRest from "/server/external-preview/controller/rest";
+import * as externalAlphaRest from "/server/external-alpha/controller/rest";
+import * as externalPreviewRest from "/server/external-preview/controller/rest";
 import * as internalJob from "/server/internal/controller/job";
 import * as internalRest from "/server/internal/controller/rest";
 import * as internalSocket from "/server/internal/controller/socket";
@@ -144,7 +145,8 @@ export class Main {
    * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
   private useControllers(): void {
     internalRest.use(this.application, this.server, this.agenda);
-    externalRest.use(this.application, this.server, this.agenda);
+    externalPreviewRest.use(this.application, this.server, this.agenda);
+    externalAlphaRest.use(this.application, this.server, this.agenda);
     internalSocket.use(this.application, this.server, this.agenda);
     internalJob.use(this.agenda);
   }

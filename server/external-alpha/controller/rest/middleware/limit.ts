@@ -2,7 +2,7 @@
 
 import {NextFunction, Request, RequestHandler, Response} from "express";
 import {limiter} from "/server/controller/rest/limiter";
-import {MiddlewareBody} from "/server/external-preview/controller/rest/base";
+import {MiddlewareBody} from "/server/external-alpha/controller/rest/base";
 
 
 /** リクエストに呼び出し制限をかけます。
