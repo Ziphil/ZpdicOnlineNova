@@ -17,9 +17,9 @@ export abstract class WordParameter {
   public abstract createSuggestionQuery(dictionary: Dictionary): Aggregate<Array<RawSuggestion>> | null;
 
   protected static createKeys(mode: WordMode): Array<string> {
-    if (mode === "name") {
+    if (mode === "spelling") {
       return ["name"];
-    } else if (mode === "equivalent") {
+    } else if (mode === "term") {
       return ["sections.equivalents.names", "sections.phrases.terms"];
     } else if (mode === "both") {
       return ["name", "sections.equivalents.names", "sections.phrases.terms"];
@@ -89,7 +89,7 @@ export abstract class WordParameter {
 }
 
 
-export const WORD_MODES = ["name", "equivalent", "both", "tag", "information", "variation", "relation", "content"] as const;
+export const WORD_MODES = ["spelling", "term", "both", "tag", "information", "variation", "relation", "content"] as const;
 export type WordMode = LiteralType<typeof WORD_MODES>;
 export const WordModeUtil = LiteralUtilType.create(WORD_MODES);
 

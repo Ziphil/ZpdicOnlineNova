@@ -3,7 +3,7 @@
 import {string} from "yup";
 
 
-export const WordMode$In = string().oneOf(["name", "equivalent", "both", "tag", "information", "variation", "relation", "content"]);
+export const WordMode$In = string().oneOf(["spelling", "term", "both", "tag", "information", "variation", "relation", "content"]);
 
 export const WordType$In = string().oneOf(["exact", "prefix", "suffix", "part", "regular"]);
 

@@ -46,7 +46,7 @@ export class NormalWordParameter extends WordParameter {
     if (this.options.enableSuggestions) {
       const mode = this.mode;
       const type = this.type;
-      if ((mode === "name" || mode === "both") && (type === "exact" || type === "prefix")) {
+      if ((mode === "spelling" || mode === "both") && (type === "exact" || type === "prefix")) {
         const needle = WordParameter.createNeedle(this.text, "exact", {case: false});
         let aggregate = WordModel.aggregate();
         aggregate = aggregate.match(WordModel.findExist().where("dictionary", dictionary["_id"]).where("sections.variations.name", needle).getFilter());

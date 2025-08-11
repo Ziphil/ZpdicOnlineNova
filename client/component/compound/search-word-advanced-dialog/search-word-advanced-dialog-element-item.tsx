@@ -38,7 +38,7 @@ export const SearchWordAdvancedDialogElementItem = create(
     const {register, control, watch} = form;
 
     const mode = watch(`elements.${index}.mode`);
-    const showTitle = mode === "equivalent" || mode === "information" || mode === "variation" || mode === "relation";
+    const showTitle = mode === "term" || mode === "information" || mode === "variation" || mode === "relation";
 
     return (
       <div styleName="root" {...rest}>
@@ -80,4 +80,4 @@ export const SearchWordAdvancedDialogElementItem = create(
 );
 
 
-const FORM_WORD_MODES = ["name", "equivalent", "tag", "information", "variation", "relation", "content"] as const;
+const FORM_WORD_MODES = ["spelling", "term", "tag", "information", "variation", "relation", "content"] as const;

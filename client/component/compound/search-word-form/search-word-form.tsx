@@ -141,6 +141,6 @@ export const SearchWordForm = create(
 );
 
 
-const FORM_WORD_MODES = ["both", "name", "equivalent", "tag", "content"] as const;
+const FORM_WORD_MODES = ["both", "spelling", "term", "tag", "content"] as const;
 const FORM_WORD_TYPES = ["prefix", "part", "exact", "regular"] as const;
 const FORM_WORD_ORDER_MODES = ["unicode", "updatedDate", "createdDate"] as const;

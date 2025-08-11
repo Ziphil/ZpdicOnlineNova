@@ -43,7 +43,7 @@ export namespace NormalWordParameter {
 
   export function deserialize(search: Search): NormalWordParameter {
     const text = (search.has("text")) ? search.get("text") : undefined;
-    const mode = (search.has("mode")) ? WordModeUtil.cast(search.get("mode")) : undefined;
+    const mode = (search.has("mode")) ? WordModeUtil.cast((search.get("mode") === "name") ? "spelling" : (search.get("mode") === "equivalent") ? "term" : search.get("mode")) : undefined;
     const type = (search.has("type")) ? WordTypeUtil.cast(search.get("type")) : undefined;
     const orderMode = (search.has("orderMode")) ? WordOrderModeUtil.cast(search.get("orderMode")) : undefined;
     const orderDirection = (search.has("orderDirection")) ? WordOrderDirectionUtil.cast(search.get("orderDirection")) : undefined;

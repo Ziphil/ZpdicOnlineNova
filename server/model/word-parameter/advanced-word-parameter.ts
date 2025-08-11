@@ -51,7 +51,7 @@ export class AdvancedWordParameterElement extends WordParameter {
     const eachFilters = keys.map((key) => {
       let eachQuery = WordModel.find().where(key, needle);
       if (this.title) {
-        if (this.mode === "equivalent") {
+        if (this.mode === "term") {
           eachQuery = eachQuery.where("sections.equivalents.titles", this.title);
         } else if (this.mode === "information") {
           eachQuery = eachQuery.where("sections.informations.title", this.title);

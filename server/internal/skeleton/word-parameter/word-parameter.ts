@@ -9,7 +9,7 @@ import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 export type WordParameter = NormalWordParameter | AdvancedWordParameter | ExactWordParameter;
 
-export const WORD_MODES = ["name", "equivalent", "both", "tag", "information", "variation", "relation", "content"] as const;
+export const WORD_MODES = ["spelling", "term", "both", "tag", "information", "variation", "relation", "content"] as const;
 export type WordMode = LiteralType<typeof WORD_MODES>;
 export const WordModeUtil = LiteralUtilType.create(WORD_MODES);
 

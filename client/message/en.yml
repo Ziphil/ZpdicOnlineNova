@@ -262,8 +262,8 @@ exampleTypeSelect:
     regular: "Regex"
 wordModeSelect:
   label:
-    name: "Headword"
-    equivalent: "Translation"
+    spelling: "Headword"
+    term: "Translation"
     both: "Both"
     tag: "Tag"
     information: "Contents"

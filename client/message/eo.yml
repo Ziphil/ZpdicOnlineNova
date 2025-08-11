@@ -262,8 +262,8 @@ exampleTypeSelect:
     regular: "Regesp"
 wordModeSelect:
   label:
-    name: "Kapvorto"
-    equivalent: "Tradukaĵo"
+    spelling: "Kapvorto"
+    term: "Tradukaĵo"
     both: "Ambaŭ"
     tag: "Etikedo"
     information: "Enhavo"
