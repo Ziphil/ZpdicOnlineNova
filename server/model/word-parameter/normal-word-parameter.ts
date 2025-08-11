@@ -1,4 +1,4 @@
-//
+/* eslint-disable @typescript-eslint/naming-convention */
 
 import {Aggregate} from "mongoose";
 import {Dictionary} from "/server/model/dictionary/dictionary";
@@ -33,9 +33,9 @@ export class NormalWordParameter extends WordParameter {
     const disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
     const query = WordModel.findExist().where("dictionary", dictionary["_id"]).or(disjunctFilters).sort(sortKey);
     if (this.options.shuffleSeed !== null) {
-      let aggregate = WordModel.aggregate();
-      aggregate = aggregate.match(query.getFilter());
-      aggregate = aggregate.sample(50);
+      const aggregate = WordModel.aggregate()
+        .match(query.getFilter())
+        .sample(50);
       return aggregate;
     } else {
       return query;
@@ -48,12 +48,12 @@ export class NormalWordParameter extends WordParameter {
       const type = this.type;
       if ((mode === "spelling" || mode === "both") && (type === "exact" || type === "prefix")) {
         const needle = WordParameter.createNeedle(this.text, "exact", {case: false});
-        let aggregate = WordModel.aggregate();
-        aggregate = aggregate.match(WordModel.findExist().where("dictionary", dictionary["_id"]).where("sections.variations.name", needle).getFilter());
-        aggregate = aggregate.addFields({"oldVariations": "$sections.variations"});
-        aggregate = aggregate.unwind("$oldVariations");
-        aggregate = aggregate.match(WordModel.where("oldVariations.name", needle).getFilter());
-        aggregate = aggregate.project({"title": "$oldVariations.title", "word": "$$CURRENT"});
+        const aggregate = WordModel.aggregate()
+          .match(WordModel.findExist().where("dictionary", dictionary["_id"]).where("sections.variations.name", needle).getFilter())
+          .addFields({"oldVariations": "$sections.variations"})
+          .unwind("$oldVariations")
+          .match({"oldVariations.name": needle})
+          .project({"title": "$oldVariations.title", "word": "$$CURRENT"});
         return aggregate;
       } else {
         return null;
