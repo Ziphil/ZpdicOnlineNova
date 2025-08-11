@@ -39,8 +39,8 @@ export const SwapAnimationContext = function <T extends {id: string}>({
     if (fromElement && toElement) {
       const fromRect = fromElement.getBoundingClientRect();
       const toRect = toElement.getBoundingClientRect();
-      const fromTranslate = toRect.top - fromRect.top;
-      const toTranslate = fromRect.top - toRect.top;
+      const fromTranslate = (fromRect.top < toRect.top) ? toRect.bottom - fromRect.bottom : toRect.top - fromRect.top;
+      const toTranslate = (fromRect.top < toRect.top) ? fromRect.top - toRect.top : fromRect.bottom - toRect.bottom;
       setStyles({
         [fromId]: {transform: `translateY(${fromTranslate}px)`, transition: "0.2s transform"},
         [toId]: {transform: `translateY(${toTranslate}px)`, transition: "0.2s transform"}
