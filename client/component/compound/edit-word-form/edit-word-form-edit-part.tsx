@@ -50,23 +50,36 @@ export const EditWordFormEditPart = create(
       <form styleName="root" onSubmit={preventDefault} {...rest}>
         <div styleName="main">
           <EditWordFormBasicSection dictionary={dictionary} form={form}/>
-          <div styleName="section-list">
-            {sectionFieldArraySpec.fields.map((section, sectionIndex) => (
+          {(dictionary.settings.enableAdvancedWord) ? (
+            <div styleName="section-list">
+              {sectionFieldArraySpec.fields.map((section, sectionIndex) => (
+                <EditWordFormSectionSection
+                  key={section.id}
+                  dictionary={dictionary}
+                  form={form}
+                  sectionOperations={sectionOperations}
+                  sectionIndex={sectionIndex}
+                  multiple={true}
+                />
+              ))}
+              <div styleName="section-plus">
+                <Button scheme="gray" variant="solid" onClick={addSection}>
+                  <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+                  {trans("button.add.section")}
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div styleName="section-list">
               <EditWordFormSectionSection
-                key={section.id}
                 dictionary={dictionary}
                 form={form}
                 sectionOperations={sectionOperations}
-                sectionIndex={sectionIndex}
+                sectionIndex={0}
+                multiple={false}
               />
-            ))}
-            <div styleName="section-plus">
-              <Button scheme="gray" variant="solid" onClick={addSection}>
-                <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-                {trans("button.add.section")}
-              </Button>
             </div>
-          </div>
+          )}
         </div>
       </form>
     );

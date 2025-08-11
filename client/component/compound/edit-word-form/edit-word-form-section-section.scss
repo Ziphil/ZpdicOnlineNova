@@ -35,9 +35,16 @@
 }
 
 .main {
-  padding-inline-start: 3zu;
-  row-gap: 6zu;
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
+  &[data-multiple] {
+    padding-inline-start: 3zu;
+    row-gap: 6zu;
+  }
+  &:not([data-multiple]) {
+    padding-inline-start: 0zu;
+    row-gap: 8zu;
+    grid-column: 1 / -1;
+  }
 }

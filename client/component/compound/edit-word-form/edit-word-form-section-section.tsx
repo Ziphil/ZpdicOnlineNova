@@ -3,7 +3,7 @@
 import {faTimes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, data, useTrans} from "zographia";
 import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client/component/create";
 import {toLatinNumeral} from "/client/util/misc";
@@ -21,33 +21,39 @@ export const EditWordFormSectionSection = create(
     dictionary,
     form,
     sectionOperations,
-    sectionIndex
+    sectionIndex,
+    multiple
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue>,
     sectionOperations: Pick<UseFieldArrayReturn<any, "sections">, "append" | "update" | "remove">,
-    sectionIndex: number
+    sectionIndex: number,
+    multiple: boolean
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
     return (
       <div styleName="root">
-        <div styleName="heading">
-          <h3 styleName="heading-number">{toLatinNumeral(sectionIndex + 1)}</h3>
-        </div>
-        <div styleName="main">
+        {(multiple) && (
+          <div styleName="heading">
+            <h3 styleName="heading-number">{toLatinNumeral(sectionIndex + 1)}</h3>
+          </div>
+        )}
+        <div styleName="main" {...data({multiple})}>
           <EditWordFormEquivalentSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
           <EditWordFormInformationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
           <EditWordFormPhraseSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
           <EditWordFormVariationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
           <EditWordFormRelationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
-          <div styleName="minus">
-            <Button scheme="gray" variant="solid" onClick={() => sectionOperations.remove(sectionIndex)}>
-              <ButtonIconbag><GeneralIcon icon={faTimes}/></ButtonIconbag>
-              {trans("button.discard.section")}
-            </Button>
-          </div>
+          {(multiple) && (
+            <div styleName="minus">
+              <Button scheme="gray" variant="solid" onClick={() => sectionOperations.remove(sectionIndex)}>
+                <ButtonIconbag><GeneralIcon icon={faTimes}/></ButtonIconbag>
+                {trans("button.discard.section")}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     );

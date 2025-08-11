@@ -43,7 +43,6 @@
   font-size: 3.5zu;
   color: var(--glob-mute-text-color);
   text-align: center;
-  flex: 0 0 auto;
 }
 
 .section-main {
@@ -52,7 +51,9 @@
   border-inline-start: double 3zx var(--glob-border-color);
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  &:not([data-has-number]) {
+    grid-column: 1 / -1;
+  }
 }
 
 .group {

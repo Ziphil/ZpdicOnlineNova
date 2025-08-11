@@ -14,6 +14,7 @@ import {
   CollapsibleBody,
   CollapsibleButton,
   GeneralIcon,
+  data,
   useResponsiveDevice,
   useTrans
 } from "zographia";
@@ -83,8 +84,10 @@ export const WordCard = create(
               <div styleName="section-list">
                 {word.sections.map((section, index) => (
                   <div styleName="section-item" key={index}>
-                    <div styleName="section-number">{toLatinNumeral(index + 1)}</div>
-                    <div styleName="section-main">
+                    {(dictionary.settings.enableAdvancedWord && dictionary.settings.showEquivalentNumber) && (
+                      <div styleName="section-number">{toLatinNumeral(index + 1)}</div>
+                    )}
+                    <div styleName="section-main" {...data({hasNumber: dictionary.settings.enableAdvancedWord && dictionary.settings.showEquivalentNumber})}>
                       <WordCardEquivalentList dictionary={dictionary} section={section}/>
                       <WordCardInformationList dictionary={dictionary} section={section}/>
                       <WordCardPhraseList dictionary={dictionary} section={section}/>
