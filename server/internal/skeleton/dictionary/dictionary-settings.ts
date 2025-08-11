@@ -11,10 +11,11 @@ export interface DictionarySettings {
   font: DictionaryFont;
   templateWords: Array<TemplateWord>;
   punctuations: Array<string>;
-  ignoredEquivalentPattern?: string;
+  ignoredEquivalentPattern: string;
   pronunciationTitle: string;
   phraseTitle: string;
   exampleTitle: string;
+  enableAdvancedWord: boolean;
   enableMarkdown: boolean;
   enableDuplicateName: boolean;
   showEquivalentNumber: boolean;
