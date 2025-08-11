@@ -33,9 +33,7 @@ export class NormalWordParameter extends WordParameter {
     const disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
     const query = WordModel.findExist().where("dictionary", dictionary["_id"]).or(disjunctFilters).sort(sortKey);
     if (this.options.shuffleSeed !== null) {
-      const aggregate = WordModel.aggregate()
-        .match(query.getFilter())
-        .sample(50);
+      const aggregate = WordModel.aggregate().match(query.getFilter()).sample(50);
       return aggregate;
     } else {
       return query;
