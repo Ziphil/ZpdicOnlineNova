@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {useMergeRefs} from "@floating-ui/react";
-import {faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {faTimes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
@@ -100,7 +100,7 @@ export const EditWordFormPhraseItem = create(
           </fieldset>
           <div styleName="minus">
             <IconButton scheme="gray" variant="light" label={trans("discard.phrase")} onClick={() => phraseOperations.remove(phraseIndex)}>
-              <GeneralIcon icon={faMinus}/>
+              <GeneralIcon icon={faTimes}/>
             </IconButton>
           </div>
         </GrabbablePaneBody>

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {faGripVertical, faTimes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
@@ -77,7 +77,7 @@ export const EditTemplateWordFormRelationItem = create(
         </fieldset>
         <div styleName="minus">
           <IconButton scheme="gray" variant="light" label={trans("discard.relation")} onClick={() => relationOperations.remove(index)}>
-            <GeneralIcon icon={faMinus}/>
+            <GeneralIcon icon={faTimes}/>
           </IconButton>
         </div>
       </div>

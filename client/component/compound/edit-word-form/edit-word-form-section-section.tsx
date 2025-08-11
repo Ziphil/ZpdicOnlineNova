@@ -1,6 +1,6 @@
 //
 
-import {faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {faTimes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
@@ -44,7 +44,7 @@ export const EditWordFormSectionSection = create(
           <EditWordFormRelationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
           <div styleName="minus">
             <Button scheme="gray" variant="solid" onClick={() => sectionOperations.remove(sectionIndex)}>
-              <ButtonIconbag><GeneralIcon icon={faMinus}/></ButtonIconbag>
+              <ButtonIconbag><GeneralIcon icon={faTimes}/></ButtonIconbag>
               {trans("button.discard.section")}
             </Button>
           </div>

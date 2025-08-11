@@ -45,7 +45,7 @@ export const EditExampleFormDndContext = create(
 
 
 export function useEditExampleFormDndItem(id: string): {paneProps: any, paneRef: Ref<HTMLElement>, gripProps: any, dragging: boolean} {
-  const {attributes, listeners, isDragging, setNodeRef, transform, transition} = useSortable({id});
+  const {attributes, listeners, isDragging, setNodeRef, transform, transition} = useSortable({id, transition: {duration: 200, easing: "ease"}});
   const style = {
     transform: (transform !== null) ? `translate(${transform.x}px, ${transform.y}px) scaleX(${transform.scaleX}) scaleY(${transform.scaleY})` : undefined,
     transition

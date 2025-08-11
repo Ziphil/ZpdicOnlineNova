@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {useMergeRefs} from "@floating-ui/react";
-import {faMinus, faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
+import {faTimes, faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
@@ -118,7 +118,7 @@ export const EditWordFormVariationItem = create(
           </fieldset>
           <div styleName="minus">
             <IconButton scheme="gray" variant="light" label={trans("discard.variation")} onClick={() => variationOperations.remove(variationIndex)}>
-              <GeneralIcon icon={faMinus}/>
+              <GeneralIcon icon={faTimes}/>
             </IconButton>
           </div>
         </GrabbablePaneBody>
