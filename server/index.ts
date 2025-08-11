@@ -16,7 +16,7 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import multer from "multer";
 import {Server} from "socket.io";
-import * as externalRest from "/server/external/controller/rest";
+import * as externalRest from "/server/external-preview/controller/rest";
 import * as internalJob from "/server/internal/controller/job";
 import * as internalRest from "/server/internal/controller/rest";
 import * as internalSocket from "/server/internal/controller/socket";

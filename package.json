@@ -13,7 +13,7 @@
     "build": "run-s build:client build:server build:openapi",
     "build:client": "webpack --mode production --config webpack-client.ts",
     "build:server": "webpack --mode production --config webpack-server.ts",
-    "build:openapi": "redocly build-docs server/external/type/rest.yml -o dist/openapi.html",
+    "build:openapi": "redocly build-docs server/external-preview/type/rest.yml -o dist/openapi.html",
     "start": "node dist/index.js",
     "start:worker": "node dist/worker.js",
     "lint": "eslint client/**/*.ts client/**/*.tsx server/**/*.ts",
