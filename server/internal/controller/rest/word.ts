@@ -76,9 +76,9 @@ export class WordRestController extends InternalRestController {
     }
   }
 
-  @post("/fetchWordNames")
+  @post("/fetchWordSpellings")
   @before(parseMe(), checkDictionary("view"))
-  public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {
+  public async [Symbol()](request: Request<"fetchWordSpellings">, response: Response<"fetchWordSpellings">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {wordNumbers} = request.body;
     const spellings = await dictionary.fetchWordSpellings(wordNumbers);
@@ -97,9 +97,9 @@ export class WordRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
-  @post("/checkDuplicateWordName")
+  @post("/checkDuplicateWordSpelling")
   @before(checkMe(), checkDictionary("edit"))
-  public async [Symbol()](request: Request<"checkDuplicateWordName">, response: Response<"checkDuplicateWordName">): Promise<void> {
+  public async [Symbol()](request: Request<"checkDuplicateWordSpelling">, response: Response<"checkDuplicateWordSpelling">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {name, excludedWordNumber} = request.body;
     const duplicate = await dictionary.checkDuplicateWordSpelling(name, excludedWordNumber);

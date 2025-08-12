@@ -83,7 +83,7 @@ export const EditWordFormBasicSection = create(
         const number = dictionary.number;
         const excludedWordNumber = form.getValues("number") ?? undefined;
         if (spelling !== "") {
-          const response = await request("checkDuplicateWordName", {number, name: spelling, excludedWordNumber}, {ignoreError: true});
+          const response = await request("checkDuplicateWordSpelling", {number, name: spelling, excludedWordNumber}, {ignoreError: true});
           switchResponse(response, ({duplicate}) => {
             setDuplicateSpelling(duplicate);
           });

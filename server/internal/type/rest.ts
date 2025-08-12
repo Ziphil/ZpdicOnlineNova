@@ -310,7 +310,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "noSuchWord">
     }
   },
-  fetchWordNames: {
+  fetchWordSpellings: {
     request: {number: number, wordNumbers: Array<number>},
     response: {
       success: {spellings: Record<number, string | null>},
@@ -324,7 +324,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "noSuchWord">
     }
   },
-  checkDuplicateWordName: {
+  checkDuplicateWordSpelling: {
     request: {number: number, name: string, excludedWordNumber?: number},
     response: {
       success: {duplicate: boolean},
