@@ -1,10 +1,12 @@
 //
 
 import {ReactElement} from "react";
+import {GoogleAnalytics} from "zographia";
 import {AppearanceRoot} from "/client/component/core/appearance-root";
 import {ProviderRoot} from "/client/component/core/provider-root";
 import {Routing} from "/client/component/core/routing";
 import {create} from "/client/component/create";
+import {ANALYTICS_ID} from "/client/variable";
 
 
 require("./root.scss");
@@ -17,11 +19,14 @@ export const Root = create(
   }): ReactElement {
 
     return (
-      <ProviderRoot>
-        <AppearanceRoot>
-          <Routing/>
-        </AppearanceRoot>
-      </ProviderRoot>
+      <>
+        {(!!ANALYTICS_ID) && <GoogleAnalytics measurementId={ANALYTICS_ID}/>}
+        <ProviderRoot>
+          <AppearanceRoot>
+            <Routing/>
+          </AppearanceRoot>
+        </ProviderRoot>
+      </>
     );
 
   }
