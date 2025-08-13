@@ -9,7 +9,8 @@ import {Dictionary, Example} from "/server/internal/skeleton";
 export function useFilledExample(dictionary: Dictionary, example: Example): Example {
   const number = dictionary.number;
   const wordNumbers = example.words.map((word) => word.number);
-  const [{spellings} = {}] = useResponse("fetchWordSpellings", {number, wordNumbers}, {ignoreError: true});
+  const [spellingSpec] = useResponse("fetchWordSpellings", {number, wordNumbers}, {ignoreError: true});
+  const spellings = spellingSpec?.spellings;
   const filledExample = useMemo(() => {
     const words = example.words.map((word) => ({
       ...word,
