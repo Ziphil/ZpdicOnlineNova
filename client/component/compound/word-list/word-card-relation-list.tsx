@@ -36,7 +36,7 @@ export const WordCardRelationList = create(
               {titles.map((title, index) => (!!title) && (
                 <Tag key={index} styleName="tag" variant="light">{title}</Tag>
               ))}
-              {relations.map((relation, index) => ("name" in relation) && (
+              {relations.map((relation, index) => ("spelling" in relation) && (
                 <Fragment key={index}>
                   {(index > 0) && <span styleName="punctuation">, </span>}
                   <WordPopover dictionary={dictionary} word={relation} trigger={(
