@@ -1030,7 +1030,7 @@ dictionaryMainPart:
   button:
     addWord: "Krei vorton"
     addWordFromTemplate: "Krei vorton de ŝablono"
-    addCommission: "Peti"
+    addProposal: "Peti"
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"
