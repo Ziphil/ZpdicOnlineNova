@@ -30,7 +30,10 @@ export namespace DictionaryFontCreator {
       } satisfies DictionaryFontSkeleton;
       return skeleton;
     } else {
-      throw new Error("cannot happen");
+      const skeleton = {
+        kind: "none"
+      } satisfies DictionaryFontSkeleton;
+      return skeleton;
     }
   }
 
