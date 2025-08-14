@@ -24,7 +24,8 @@ export const EditWordFormSectionSection = create(
     sectionOperations,
     dndId,
     sectionIndex,
-    multiple
+    multiple,
+    ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue>,
@@ -39,7 +40,7 @@ export const EditWordFormSectionSection = create(
     const {ref, props, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
 
     return (
-      <div styleName="root" ref={ref} {...props}>
+      <div styleName="root" ref={ref} {...props} {...rest}>
         {(multiple) && (
           <div styleName="heading">
             <div styleName="number-container">

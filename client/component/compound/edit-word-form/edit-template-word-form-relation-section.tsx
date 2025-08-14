@@ -28,7 +28,7 @@ export const EditTemplateWordFormRelationSection = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: EditTemplateWordSpec["form"],
-    sectionOperations: Omit<UseFieldArrayReturn<any, "sections">, "fields">,
+    sectionOperations: Pick<UseFieldArrayReturn<any, "sections">, "append" | "update" | "remove">,
     sectionIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {

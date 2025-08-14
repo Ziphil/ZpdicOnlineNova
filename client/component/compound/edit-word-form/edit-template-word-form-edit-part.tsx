@@ -1,11 +1,12 @@
 //
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback} from "react";
+import {ReactElement, useCallback, useMemo} from "react";
 import {useFieldArray} from "react-hook-form";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {preventDefault} from "/client/util/form";
+import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormBasicSection} from "./edit-template-word-form-basic-section";
 import {EditTemplateWordSpec} from "./edit-template-word-form-hook";
@@ -28,8 +29,19 @@ export const EditTemplateWordFormEditPart = create(
 
     const {form} = formSpec;
 
-    const {control} = form;
-    const {fields: sections, ...sectionOperations} = useFieldArray({control, name: "sections"});
+    const {control, setValue} = form;
+    const sectionFieldArraySpec = useFieldArray({control, name: "sections"});
+    const sectionOperations = useMemo(() => ({
+      append: sectionFieldArraySpec.append,
+      update: sectionFieldArraySpec.update,
+      remove: sectionFieldArraySpec.remove
+    }), [sectionFieldArraySpec]);
+
+    const sections = sectionFieldArraySpec.fields;
+
+    const setSections = useCallback(function (update: (sections: Array<any>) => Array<any>): void {
+      setValue("sections", update(sections));
+    }, [sections, setValue]);
 
     const addSection = useCallback(function (): void {
       sectionOperations.append({
@@ -45,23 +57,42 @@ export const EditTemplateWordFormEditPart = create(
       <form styleName="root" onSubmit={preventDefault} {...rest}>
         <div styleName="main">
           <EditTemplateWordFormBasicSection dictionary={dictionary} form={form}/>
-          <div styleName="section-list">
-            {sections.map((section, sectionIndex) => (
-              <EditTemplateWordFormSectionSection
-                key={section.id}
-                dictionary={dictionary}
-                form={form}
-                sectionOperations={sectionOperations}
-                sectionIndex={sectionIndex}
-              />
-            ))}
-            <div styleName="section-plus">
-              <Button scheme="secondary" variant="light" onClick={addSection}>
-                <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-                {trans("button.add.section")}
-              </Button>
+          {(dictionary.settings.enableAdvancedWord) ? (
+            <div styleName="section-list">
+              <SwapAnimationContext values={sections} setValues={setSections}>
+                {sections.map((section, sectionIndex) => (
+                  <EditTemplateWordFormSectionSection
+                    key={section.id}
+                    dictionary={dictionary}
+                    form={form}
+                    sectionOperations={sectionOperations}
+                    dndId={section.id}
+                    sectionIndex={sectionIndex}
+                    multiple={true}
+                  />
+                ))}
+              </SwapAnimationContext>
+              <div styleName="section-plus">
+                <Button scheme="gray" variant="solid" onClick={addSection}>
+                  <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+                  {trans("button.add.section")}
+                </Button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div styleName="section-list">
+              <SwapAnimationContext values={sections} setValues={setSections}>
+                <EditTemplateWordFormSectionSection
+                  dictionary={dictionary}
+                  form={form}
+                  sectionOperations={sectionOperations}
+                  dndId="section"
+                  sectionIndex={0}
+                  multiple={false}
+                />
+              </SwapAnimationContext>
+            </div>
+          )}
         </div>
       </form>
     );
