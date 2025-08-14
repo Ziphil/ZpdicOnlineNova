@@ -1,7 +1,7 @@
 //
 
 import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
-import {DictionaryFontSchema} from "/server/model/dictionary/dictionary-font";
+import {DictionaryFontModel, DictionaryFontSchema} from "/server/model/dictionary/dictionary-font";
 import {TemplateWordSchema} from "/server/model/template-word/template-word";
 
 
@@ -48,7 +48,7 @@ export class DictionarySettingsSchema {
   public showEquivalentNumber!: boolean;
 
   public static createDefault(): DictionarySettings {
-    const font = {type: "none"};
+    const font = new DictionaryFontModel({kind: "none"});
     const punctuations = [",", "、", "。"];
     const ignoredEquivalentPattern = "[\\(（].*?[\\)）]";
     const pronunciationTitle = "発音";
