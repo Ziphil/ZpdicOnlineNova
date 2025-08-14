@@ -34,7 +34,7 @@ export const SearchWordAdvancedDialogElementSection = create(
       elementOperations.append({
         text: "",
         title: "",
-        mode: "name",
+        mode: "spelling",
         type: "exact"
       });
     }, [elementOperations]);

@@ -9,13 +9,14 @@ import {Dictionary, Example} from "/server/internal/skeleton";
 export function useFilledExample(dictionary: Dictionary, example: Example): Example {
   const number = dictionary.number;
   const wordNumbers = example.words.map((word) => word.number);
-  const [wordNameSpec] = useResponse("fetchWordNames", {number, wordNumbers}, {ignoreError: true});
+  const [spellingSpec] = useResponse("fetchWordSpellings", {number, wordNumbers}, {ignoreError: true});
+  const spellings = spellingSpec?.spellings;
   const filledExample = useMemo(() => {
     const words = example.words.map((word) => ({
       ...word,
-      name: (wordNameSpec === undefined) ? undefined : wordNameSpec.names[word.number] ?? null
+      spelling: (spellings === undefined) ? undefined : spellings[word.number] ?? null
     }));
     return {...example, words};
-  }, [example, wordNameSpec]);
+  }, [example, spellings]);
   return filledExample;
 }

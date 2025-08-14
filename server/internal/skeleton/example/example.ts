@@ -11,7 +11,7 @@ export interface EditableExample {
   number: number | null;
   sentence: string;
   translation: string;
-  supplement?: string;
+  supplement: string;
   tags: Array<string>;
   words: Array<LinkedWord>;
   offer: LinkedExampleOffer | null;

@@ -1,17 +1,16 @@
 //
 
-import {ReactElement} from "react";
-import {AdditionalProps} from "zographia";
-import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
+import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {ReactElement, useCallback, useMemo} from "react";
+import {useFieldArray} from "react-hook-form";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {preventDefault} from "/client/util/form";
+import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
-import {EditWordFormEquivalentSection} from "./edit-word-form-equivalent-section";
 import {EditWordSpec} from "./edit-word-form-hook";
-import {EditWordFormInformationSection} from "./edit-word-form-information-section";
-import {EditWordFormPhraseSection} from "./edit-word-form-phrase-section";
-import {EditWordFormVariationSection} from "./edit-word-form-variation-section";
+import {EditWordFormSectionSection} from "./edit-word-form-section-section";
 
 
 export const EditWordFormEditPart = create(
@@ -26,17 +25,74 @@ export const EditWordFormEditPart = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const {trans} = useTrans("editWordForm");
+
     const {form} = formSpec;
+
+    const {control, setValue} = form;
+    const sectionFieldArraySpec = useFieldArray({control, name: "sections"});
+    const sectionOperations = useMemo(() => ({
+      append: sectionFieldArraySpec.append,
+      update: sectionFieldArraySpec.update,
+      remove: sectionFieldArraySpec.remove
+    }), [sectionFieldArraySpec]);
+
+    const sections = sectionFieldArraySpec.fields;
+
+    const setSections = useCallback(function (update: (sections: Array<any>) => Array<any>): void {
+      setValue("sections", update(sections));
+    }, [sections, setValue]);
+
+    const addSection = useCallback(function (): void {
+      sectionOperations.append({
+        equivalents: [{titles: [], termString: "", hidden: false}],
+        informations: [],
+        phrases: [],
+        variations: [],
+        relations: []
+      });
+    }, [sectionOperations]);
 
     return (
       <form styleName="root" onSubmit={preventDefault} {...rest}>
         <div styleName="main">
           <EditWordFormBasicSection dictionary={dictionary} form={form}/>
-          <EditWordFormEquivalentSection dictionary={dictionary} form={form as any}/>
-          <EditWordFormInformationSection dictionary={dictionary} form={form as any}/>
-          <EditWordFormPhraseSection dictionary={dictionary} form={form as any}/>
-          <EditWordFormVariationSection dictionary={dictionary} form={form as any}/>
-          <EditWordFormRelationSection dictionary={dictionary} form={form}/>
+          {(dictionary.settings.enableAdvancedWord) ? (
+            <div styleName="section-list">
+              <SwapAnimationContext values={sections} setValues={setSections}>
+                {sections.map((section, sectionIndex) => (
+                  <EditWordFormSectionSection
+                    key={section.id}
+                    dictionary={dictionary}
+                    form={form}
+                    sectionOperations={sectionOperations}
+                    dndId={section.id}
+                    sectionIndex={sectionIndex}
+                    multiple={true}
+                  />
+                ))}
+              </SwapAnimationContext>
+              <div styleName="section-plus">
+                <Button scheme="gray" variant="solid" onClick={addSection}>
+                  <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+                  {trans("button.add.section")}
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div styleName="section-list">
+              <SwapAnimationContext values={sections} setValues={setSections}>
+                <EditWordFormSectionSection
+                  dictionary={dictionary}
+                  form={form}
+                  sectionOperations={sectionOperations}
+                  dndId="section"
+                  sectionIndex={0}
+                  multiple={false}
+                />
+              </SwapAnimationContext>
+            </div>
+          )}
         </div>
       </form>
     );

@@ -3,6 +3,40 @@
 import {SetStateAction} from "react";
 
 
+export function toLatinNumeral(number: number): string {
+  if (number > 0) {
+    let result = "";
+    let current = number - 1;
+    while (true) {
+      const remainder = current % 26;
+      result = String.fromCharCode(65 + remainder) + result;
+      current = Math.floor(current / 26) - 1;
+      if (current < 0) {
+        break;
+      }
+    }
+    return result;
+  } else {
+    return "";
+  }
+}
+
+export function toRomanNumeral(number: number): string {
+  if (number > 0 && number < 4000) {
+    const data = [[1000, "M"], [900, "CM"], [500, "D"], [400, "CD"], [100, "C"], [90, "XC"], [50, "L"], [40, "XL"], [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]] as const;
+    let result = "";
+    for (const [value, roman] of data) {
+      while (number >= value) {
+        result += roman;
+        number -= value;
+      }
+    }
+    return result;
+  } else {
+    return "";
+  }
+}
+
 export function escapeRegexp(string: string): string {
   const escapedString = string.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
   return escapedString;

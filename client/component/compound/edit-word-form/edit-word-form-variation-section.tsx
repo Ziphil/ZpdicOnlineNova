@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback} from "react";
-import {UseFormReturn, useFieldArray} from "react-hook-form";
+import {ReactElement, useCallback, useMemo} from "react";
+import {UseFieldArrayReturn, UseFormReturn, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -11,6 +11,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
+import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
@@ -23,48 +24,58 @@ export const EditWordFormVariationSection = create(
   function ({
     dictionary,
     form,
+    sectionOperations,
+    sectionIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
+    sectionOperations: Pick<UseFieldArrayReturn<any, "sections">, "append" | "update" | "remove">,
+    sectionIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
-    const {control, getValues, setValue} = form;
-    const {fields: variations, ...variationOperations} = useFieldArray({control, name: "variations"});
+    const {control, getValues} = form;
+    const variationFieldArraySpec = useFieldArray({control, name: `sections.${sectionIndex}.variations`});
+    const variationOperations = useMemo(() => ({
+      append: variationFieldArraySpec.append,
+      update: variationFieldArraySpec.update,
+      remove: variationFieldArraySpec.remove
+    }), [variationFieldArraySpec]);
+
+    const variations = variationFieldArraySpec.fields;
 
     const addVariation = useCallback(function (): void {
-      variationOperations.append({
-        title: "",
-        name: "",
-        pronunciation: ""
-      });
+      variationOperations.append({title: "", spelling: "", pronunciation: ""});
     }, [variationOperations]);
 
     const setVariations = useCallback(function (update: (variations: Array<any>) => Array<any>): void {
-      setValue("variations", update(getValues("variations")));
-    }, [getValues, setValue]);
+      sectionOperations.update(sectionIndex, {...getValues(`sections.${sectionIndex}`), variations: update(getValues(`sections.${sectionIndex}.variations`))});
+    }, [sectionIndex, getValues, sectionOperations]);
 
     return (
       <section styleName="root" {...rest}>
-        <h3 styleName="heading">{trans("heading.variations")}</h3>
+        <h4 styleName="heading">{trans("heading.variations")}</h4>
         <div styleName="list">
           {(variations.length > 0) ? (
-            <EditWordFormDndContext values={variations} setValues={setVariations}>
-              {variations.map((variation, index) => (
-                <EditWordFormVariationItem
-                  className="item"
-                  key={variation.id}
-                  dictionary={dictionary}
-                  form={form}
-                  variationOperations={variationOperations}
-                  dndId={variation.id}
-                  index={index}
-                />
-              ))}
-            </EditWordFormDndContext>
+            <SwapAnimationContext values={variations} setValues={setVariations}>
+              <EditWordFormDndContext values={variations} setValues={setVariations}>
+                {variations.map((variation, index) => (
+                  <EditWordFormVariationItem
+                    styleName="item"
+                    key={variation.id}
+                    dictionary={dictionary}
+                    form={form}
+                    variationOperations={variationOperations as any}
+                    dndId={variation.id}
+                    sectionIndex={sectionIndex}
+                    variationIndex={index}
+                  />
+                ))}
+              </EditWordFormDndContext>
+            </SwapAnimationContext>
           ) : (
             <p styleName="absent">
               {trans("absent.variation")}

@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback} from "react";
-import {UseFormReturn, useFieldArray} from "react-hook-form";
+import {ReactElement, useCallback, useMemo} from "react";
+import {UseFieldArrayReturn, UseFormReturn, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -11,6 +11,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
+import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
@@ -23,48 +24,58 @@ export const EditWordFormPhraseSection = create(
   function ({
     dictionary,
     form,
+    sectionOperations,
+    sectionIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
+    sectionOperations: Pick<UseFieldArrayReturn<any, "sections">, "append" | "update" | "remove">,
+    sectionIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNode} = useTrans("editWordForm");
+    const {trans} = useTrans("editWordForm");
 
-    const {control, getValues, setValue} = form;
-    const {fields: phrases, ...phraseOperations} = useFieldArray({control, name: "phrases"});
+    const {control, getValues} = form;
+    const phraseFieldArraySpec = useFieldArray({control, name: `sections.${sectionIndex}.phrases`});
+    const phraseOperations = useMemo(() => ({
+      append: phraseFieldArraySpec.append,
+      update: phraseFieldArraySpec.update,
+      remove: phraseFieldArraySpec.remove
+    }), [phraseFieldArraySpec]);
+
+    const phrases = phraseFieldArraySpec.fields;
 
     const addPhrase = useCallback(function (): void {
-      phraseOperations.append({
-        titles: [],
-        form: "",
-        termString: ""
-      });
+      phraseOperations.append({titles: [], expression: "", termString: ""});
     }, [phraseOperations]);
 
     const setPhrases = useCallback(function (update: (phrases: Array<any>) => Array<any>): void {
-      setValue("phrases", update(getValues("phrases")));
-    }, [getValues, setValue]);
+      sectionOperations.update(sectionIndex, {...getValues(`sections.${sectionIndex}`), phrases: update(getValues(`sections.${sectionIndex}.phrases`))});
+    }, [sectionIndex, getValues, sectionOperations]);
 
     return (
       <section styleName="root" {...rest}>
-        <h3 styleName="heading">{trans("heading.phrases")}</h3>
+        <h4 styleName="heading">{trans("heading.phrases")}</h4>
         <div styleName="list">
           {(phrases.length > 0) ? (
-            <EditWordFormDndContext values={phrases} setValues={setPhrases}>
-              {phrases.map((phrase, index) => (
-                <EditWordFormPhraseItem
-                  styleName="item"
-                  key={phrase.id}
-                  dictionary={dictionary}
-                  form={form}
-                  phraseOperations={phraseOperations}
-                  dndId={phrase.id}
-                  index={index}
-                />
-              ))}
-            </EditWordFormDndContext>
+            <SwapAnimationContext values={phrases} setValues={setPhrases}>
+              <EditWordFormDndContext values={phrases} setValues={setPhrases}>
+                {phrases.map((phrase, index) => (
+                  <EditWordFormPhraseItem
+                    styleName="item"
+                    key={phrase.id}
+                    dictionary={dictionary}
+                    form={form}
+                    phraseOperations={phraseOperations as any}
+                    dndId={phrase.id}
+                    sectionIndex={sectionIndex}
+                    phraseIndex={index}
+                  />
+                ))}
+              </EditWordFormDndContext>
+            </SwapAnimationContext>
           ) : (
             <p styleName="absent">
               {trans("absent.phrase")}

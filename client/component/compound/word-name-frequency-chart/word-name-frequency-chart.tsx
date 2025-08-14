@@ -6,7 +6,7 @@ import {Cell, Pie, PieChart, ResponsiveContainer} from "recharts";
 import {AdditionalProps, useLeveledColor} from "zographia";
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
-import {Dictionary, WordNameFrequencies} from "/server/internal/skeleton";
+import {Dictionary, WordSpellingFrequencies} from "/server/internal/skeleton";
 import {WordNameFrequencyChartLabel} from "./word-name-frequency-chart-label";
 
 
@@ -64,7 +64,7 @@ function toColorString(color: Color): string {
   return color.to("srgb").toString({format: "hex"});
 }
 
-function calcChartDataSpec(frequencies: WordNameFrequencies): {data: Array<{char: string, count: number}>} {
+function calcChartDataSpec(frequencies: WordSpellingFrequencies): {data: Array<{char: string, count: number}>} {
   const rawData = frequencies.char.map(([char, frequency]) => ({char, count: frequency.all}));
   rawData.sort((firstItem, secondItem) => secondItem.count - firstItem.count);
   const topData = rawData.slice(0, 20);

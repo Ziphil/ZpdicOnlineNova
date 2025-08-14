@@ -45,6 +45,13 @@ export const DictionarySettingEditingPart = create(
           <ChangeDictionarySourceForm dictionary={dictionary} language="zatlin"/>
         </section>
         <section styleName="section">
+          <h3 styleName="heading">{trans("heading.enableAdvancedWord")}</h3>
+          <MultiLineText styleName="description">
+            {trans("description.enableAdvancedWord")}
+          </MultiLineText>
+          <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="enableAdvancedWord"/>
+        </section>
+        <section styleName="section">
           <h3 styleName="heading">{trans("heading.enableMarkdown")}</h3>
           <MultiLineText styleName="description">
             {trans("description.enableMarkdown")}

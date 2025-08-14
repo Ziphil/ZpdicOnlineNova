@@ -21,7 +21,7 @@ export namespace AdvancedWordParameterElement {
   export const EMPTY = {
     text: "",
     title: "",
-    mode: "name",
+    mode: "spelling",
     type: "exact"
   } satisfies AdvancedWordParameterElement;
 
@@ -59,5 +59,5 @@ export namespace AdvancedWordParameter {
 }
 
 
-export const ADVANCED_WORD_MODES = ["name", "equivalent", "tag", "information", "variation", "relation", "content"] as const;
+export const ADVANCED_WORD_MODES = ["spelling", "term", "tag", "information", "variation", "relation", "content"] as const;
 export type AdvancedWordMode = LiteralType<typeof ADVANCED_WORD_MODES>;

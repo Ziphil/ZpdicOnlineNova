@@ -1,20 +1,21 @@
 //
 
 import {DictionaryFont} from "/server/internal/skeleton/dictionary/dictionary-font";
-import {TemplateWord} from "/server/internal/skeleton/word/template-word";
+import {TemplateWord} from "../template-word/template-word";
 
 
 export interface DictionarySettings {
 
   akrantiainSource?: string;
   zatlinSource?: string;
-  font?: DictionaryFont;
+  font: DictionaryFont;
   templateWords: Array<TemplateWord>;
   punctuations: Array<string>;
-  ignoredEquivalentPattern?: string;
+  ignoredEquivalentPattern: string;
   pronunciationTitle: string;
   phraseTitle: string;
   exampleTitle: string;
+  enableAdvancedWord: boolean;
   enableMarkdown: boolean;
   enableDuplicateName: boolean;
   showEquivalentNumber: boolean;

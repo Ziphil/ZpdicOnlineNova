@@ -24,6 +24,38 @@
   margin-block-start: 3zu;
 }
 
+.section-list {
+  row-gap: 3zu;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  flex: 0 0 auto;
+}
+
+.section-item {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+}
+
+.section-number {
+  margin-inline-end: 2zu;
+  padding-block-start: 0.25zu;
+  font-size: 3.5zu;
+  color: var(--glob-mute-text-color);
+  text-align: center;
+}
+
+.section-main {
+  row-gap: 3zu;
+  padding-inline-start: 2zu;
+  border-inline-start: double 3zx var(--glob-border-color);
+  display: flex;
+  flex-direction: column;
+  &:not([data-has-number]) {
+    grid-column: 1 / -1;
+  }
+}
+
 .group {
   row-gap: 2zu;
   display: flex;

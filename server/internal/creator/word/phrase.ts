@@ -13,12 +13,23 @@ export namespace PhraseCreator {
   export function skeletonize(raw: Phrase): PhraseSkeleton {
     const skeleton = {
       titles: raw.titles,
-      form: raw.form,
+      expression: raw.form,
       terms: raw.terms,
       termString: raw.termString ?? raw.terms.join(", "),
       ignoredPattern: raw.ignoredPattern
     } satisfies PhraseSkeleton;
     return skeleton;
+  }
+
+  export function enflesh(input: PhraseSkeleton): Phrase {
+    const raw = {
+      titles: input.titles,
+      form: input.expression,
+      terms: input.terms,
+      termString: input.termString,
+      ignoredPattern: input.ignoredPattern
+    } satisfies Phrase;
+    return raw;
   }
 
 }

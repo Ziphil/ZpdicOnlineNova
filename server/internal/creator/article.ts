@@ -1,10 +1,12 @@
 //
 
 import type {
-  Article as ArticleSkeleton
+  Article as ArticleSkeleton,
+  EditableArticle as EditableArticleSkeleton
 } from "/server/internal/skeleton";
 import {
-  Article
+  Article,
+  EditableArticle
 } from "/server/model";
 
 
@@ -21,6 +23,13 @@ export namespace ArticleCreator {
       updatedDate: raw.updatedDate.toISOString()
     } satisfies ArticleSkeleton;
     return skeleton;
+  }
+
+  export function enflesh(input: EditableArticleSkeleton): EditableArticle {
+    const raw = {
+      ...input
+    } satisfies EditableArticle;
+    return raw;
   }
 
 }

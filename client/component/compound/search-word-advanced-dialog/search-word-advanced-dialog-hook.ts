@@ -10,7 +10,7 @@ const DEFAULT_VALUE = {
   elements: [{
     text: "",
     title: "",
-    mode: "name",
+    mode: "spelling",
     type: "exact"
   }]
 } satisfies FormValue;

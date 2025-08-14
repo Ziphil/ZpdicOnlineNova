@@ -14,9 +14,18 @@ export namespace RelationCreator {
     const skeleton = {
       titles: raw.titles,
       number: raw.number,
-      name: raw.name
+      spelling: raw.name
     } satisfies RelationSkeleton;
     return skeleton;
+  }
+
+  export function enflesh(input: RelationSkeleton): Relation {
+    const raw = {
+      titles: input.titles,
+      number: input.number,
+      name: input.spelling
+    } satisfies Relation;
+    return raw;
   }
 
 }

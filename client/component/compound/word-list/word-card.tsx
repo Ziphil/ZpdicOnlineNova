@@ -14,6 +14,7 @@ import {
   CollapsibleBody,
   CollapsibleButton,
   GeneralIcon,
+  data,
   useResponsiveDevice,
   useTrans
 } from "zographia";
@@ -24,6 +25,7 @@ import {WordCardInfoPopover} from "/client/component/compound/word-list/word-car
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {getWordHref} from "/client/util/dictionary";
+import {toLatinNumeral} from "/client/util/misc";
 import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/server/internal/skeleton";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardExampleList} from "./word-card-example-list";
@@ -61,7 +63,7 @@ export const WordCard = create(
 
     const device = useResponsiveDevice();
 
-    const shareText = `${word.name}\n#ZpDIC`;
+    const shareText = `${word.spelling}\n#ZpDIC`;
     const shareUrl = location.origin + useHref(getWordHref(dictionary, word.number));
 
     const discardWord = useDiscardWord(dictionary, word);
@@ -79,12 +81,23 @@ export const WordCard = create(
           <WordCardHeading dictionary={dictionary} word={word}/>
           <Collapsible styleName="collapsible">
             <CollapsibleBody styleName="collapsible-body" height="20rem">
-              <WordCardEquivalentList dictionary={dictionary} word={word}/>
-              <WordCardInformationList dictionary={dictionary} word={word}/>
-              <WordCardPhraseList dictionary={dictionary} word={word}/>
+              <div styleName="section-list">
+                {word.sections.map((section, index) => (
+                  <div styleName="section-item" key={index}>
+                    {(dictionary.settings.enableAdvancedWord && dictionary.settings.showEquivalentNumber) && (
+                      <div styleName="section-number">{toLatinNumeral(index + 1)}</div>
+                    )}
+                    <div styleName="section-main" {...data({hasNumber: dictionary.settings.enableAdvancedWord && dictionary.settings.showEquivalentNumber})}>
+                      <WordCardEquivalentList dictionary={dictionary} section={section}/>
+                      <WordCardInformationList dictionary={dictionary} section={section}/>
+                      <WordCardPhraseList dictionary={dictionary} section={section}/>
+                      <WordCardVariationList dictionary={dictionary} section={section}/>
+                      <WordCardRelationList dictionary={dictionary} section={section}/>
+                    </div>
+                  </div>
+                ))}
+              </div>
               <WordCardExampleList dictionary={dictionary} word={word}/>
-              <WordCardVariationList dictionary={dictionary} word={word}/>
-              <WordCardRelationList dictionary={dictionary} word={word}/>
             </CollapsibleBody>
             <CollapsibleButton styleName="collapsible-button"/>
           </Collapsible>

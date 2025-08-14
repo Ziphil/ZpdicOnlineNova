@@ -1,7 +1,7 @@
 //
 
 import {DictionaryFontCreator} from "/server/internal/creator/dictionary/dictionary-font";
-import {TemplateWordCreator} from "/server/internal/creator/word/template-word";
+import {TemplateWordCreator} from "/server/internal/creator/template-word/template-word";
 import type {
   DictionarySettings as DictionarySettingsSkeleton
 } from "/server/internal/skeleton";
@@ -16,13 +16,14 @@ export namespace DictionarySettingsCreator {
     const skeleton = {
       akrantiainSource: raw.akrantiainSource,
       zatlinSource: raw.zatlinSource,
-      font: (raw.font !== undefined) ? DictionaryFontCreator.skeletonize(raw.font) : undefined,
+      font: (raw.font !== undefined) ? DictionaryFontCreator.skeletonize(raw.font) : {kind: "none"},
       templateWords: (raw.templateWords !== undefined) ? raw.templateWords.map(TemplateWordCreator.skeletonize) : [],
       punctuations: raw.punctuations,
-      ignoredEquivalentPattern: raw.ignoredEquivalentPattern,
+      ignoredEquivalentPattern: raw.ignoredEquivalentPattern ?? "",
       pronunciationTitle: raw.pronunciationTitle,
       phraseTitle: raw.phraseTitle ?? "成句",
       exampleTitle: raw.exampleTitle ?? "例文",
+      enableAdvancedWord: raw.enableAdvancedWord ?? false,
       enableMarkdown: raw.enableMarkdown,
       enableDuplicateName: raw.enableDuplicateName,
       showEquivalentNumber: raw.showEquivalentNumber

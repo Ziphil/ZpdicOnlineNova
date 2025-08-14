@@ -7,7 +7,7 @@ export interface Proposal {
 
   id: ObjectId;
   name: string;
-  comment?: string;
+  comment: string;
   createdDate: DateString;
 
 }

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {faTimes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
@@ -38,7 +38,7 @@ export const SearchWordAdvancedDialogElementItem = create(
     const {register, control, watch} = form;
 
     const mode = watch(`elements.${index}.mode`);
-    const showTitle = mode === "equivalent" || mode === "information" || mode === "variation" || mode === "relation";
+    const showTitle = mode === "term" || mode === "information" || mode === "variation" || mode === "relation";
 
     return (
       <div styleName="root" {...rest}>
@@ -70,7 +70,7 @@ export const SearchWordAdvancedDialogElementItem = create(
         </fieldset>
         <div styleName="minus">
           <IconButton scheme="gray" variant="light" label={trans("discard.equivalent")} onClick={() => elementOperations.remove(index)}>
-            <GeneralIcon icon={faMinus}/>
+            <GeneralIcon icon={faTimes}/>
           </IconButton>
         </div>
       </div>
@@ -80,4 +80,4 @@ export const SearchWordAdvancedDialogElementItem = create(
 );
 
 
-const FORM_WORD_MODES = ["name", "equivalent", "tag", "information", "variation", "relation", "content"] as const;
+const FORM_WORD_MODES = ["spelling", "term", "tag", "information", "variation", "relation", "content"] as const;

@@ -1,16 +1,14 @@
 //
 
 import {ExampleCreator} from "/server/internal/creator/example/example";
-import {EquivalentCreator} from "/server/internal/creator/word/equivalent";
-import {InformationCreator} from "/server/internal/creator/word/information";
-import {PhraseCreator} from "/server/internal/creator/word/phrase";
-import {RelationCreator} from "/server/internal/creator/word/relation";
-import {VariationCreator} from "/server/internal/creator/word/variation";
+import {SectionCreator} from "/server/internal/creator/word/section";
 import type {
+  EditableWord as EditableWordSkeleton,
   Word as WordSkeleton,
   WordWithExamples as WordSkeletonWithExamples
 } from "/server/internal/skeleton";
 import {
+  EditableWord,
   ExampleModel,
   Word
 } from "/server/model";
@@ -22,14 +20,10 @@ export namespace WordCreator {
     const skeleton = {
       id: raw.id || raw["_id"],
       number: raw.number,
-      name: raw.name,
+      spelling: raw.name,
       pronunciation: raw.pronunciation ?? "",
-      equivalents: raw.equivalents.map(EquivalentCreator.skeletonize),
       tags: raw.tags,
-      informations: raw.informations.map(InformationCreator.skeletonize),
-      phrases: raw.phrases?.map(PhraseCreator.skeletonize) ?? [],
-      variations: raw.variations.map(VariationCreator.skeletonize),
-      relations: raw.relations.map(RelationCreator.skeletonize),
+      sections: raw.sections.map(SectionCreator.skeletonize),
       updatedUser: (raw.updatedUser !== undefined) ? {id: raw.updatedUser} : undefined,
       createdDate: raw.createdDate?.toISOString() ?? undefined,
       updatedDate: raw.updatedDate?.toISOString() ?? undefined
@@ -42,6 +36,17 @@ export namespace WordCreator {
     const examples = await ExampleModel.fetchByWord(raw).then((rawExamples) => rawExamples.map(ExampleCreator.skeletonize));
     const skeleton = {...base, examples};
     return skeleton;
+  }
+
+  export function enflesh(input: EditableWordSkeleton): EditableWord {
+    const raw = {
+      number: input.number,
+      name: input.spelling,
+      pronunciation: input.pronunciation,
+      tags: input.tags,
+      sections: input.sections.map(SectionCreator.enflesh)
+    } satisfies EditableWord;
+    return raw;
   }
 
 }

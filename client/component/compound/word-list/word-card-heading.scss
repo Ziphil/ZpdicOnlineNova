@@ -18,7 +18,7 @@
   flex-wrap: wrap;
 }
 
-.name-container {
+.spelling-container {
   column-gap: 2zu;
   row-gap: calc(4zu * (var(--glob-line-height-narrow) - 1)); 
   display: flex;
@@ -27,14 +27,14 @@
   flex-wrap: wrap;
 }
 
-.name {
+.spelling {
   @include bold-font;
   font-size: 6zu;
   color: var(--glob-primary-heading-text-color);
   overflow-wrap: break-word;
 }
 
-.small-name {
+.small-spelling {
   @include bold-font;
   font-size: 4zu;
   color: var(--glob-primary-heading-text-color);

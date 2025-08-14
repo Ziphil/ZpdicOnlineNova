@@ -11,47 +11,51 @@ import {Dictionary, EditableTemplateWord, ObjectId, TemplateWord} from "/server/
 const DEFAULT_VALUE = {
   id: null,
   title: "",
-  name: "",
+  spelling: "",
   pronunciation: "",
   tags: [],
-  equivalents: [{
-    titles: [],
-    nameString: "",
-    hidden: false
-  }],
-  informations: [],
-  phrases: [],
-  variations: [],
-  relations: []
+  sections: [{
+    equivalents: [{
+      titles: [],
+      termString: "",
+      hidden: false
+    }],
+    informations: [],
+    phrases: [],
+    variations: [],
+    relations: []
+  }]
 } satisfies FormValue;
 type FormValue = {
   id: ObjectId | null,
   title: string,
-  name: string,
+  spelling: string,
   pronunciation: string,
   tags: Array<string>,
-  equivalents: Array<{
-    titles: Array<string>,
-    nameString: string,
-    hidden: boolean
-  }>,
-  informations: Array<{
-    title: string,
-    text: string,
-    hidden: boolean
-  }>,
-  phrases: Array<{
-    titles: Array<string>,
-    form: string,
-    termString: string
-  }>,
-  variations: Array<{
-    title: string,
-    name: string,
-    pronunciation: string
-  }>,
-  relations: Array<{
-    titles: Array<string>
+  sections: Array<{
+    equivalents: Array<{
+      titles: Array<string>,
+      termString: string,
+      hidden: boolean
+    }>,
+    informations: Array<{
+      title: string,
+      text: string,
+      hidden: boolean
+    }>,
+    phrases: Array<{
+      titles: Array<string>,
+      expression: string,
+      termString: string
+    }>,
+    variations: Array<{
+      title: string,
+      spelling: string,
+      pronunciation: string
+    }>,
+    relations: Array<{
+      titles: Array<string>
+    }>
   }>
 };
 
@@ -88,31 +92,33 @@ function getFormValue<D extends EditTemplateWordInitialData | null>(initialData:
       const value = {
         id: (initialData.forceAdd) ? null : word.id ?? null,
         title: word.title,
-        name: word.name,
+        spelling: word.spelling,
         pronunciation: word.pronunciation,
         tags: word.tags,
-        equivalents: word.equivalents.map((equivalent) => ({
-          titles: equivalent.titles,
-          nameString: equivalent.nameString,
-          hidden: equivalent.hidden
-        })),
-        informations: word.informations.map((information) => ({
-          title: information.title,
-          text: information.text,
-          hidden: information.hidden
-        })),
-        phrases: word.phrases.map((phrase) => ({
-          titles: phrase.titles,
-          form: phrase.form,
-          termString: phrase.termString
-        })),
-        variations: word.variations.map((variation) => ({
-          title: variation.title,
-          name: variation.name,
-          pronunciation: variation.pronunciation
-        })),
-        relations: word.relations.map((relation) => ({
-          titles: relation.titles
+        sections: word.sections.map((section) => ({
+          equivalents: section.equivalents.map((equivalent) => ({
+            titles: equivalent.titles,
+            termString: equivalent.termString,
+            hidden: equivalent.hidden
+          })),
+          informations: section.informations.map((information) => ({
+            title: information.title,
+            text: information.text,
+            hidden: information.hidden
+          })),
+          phrases: section.phrases.map((phrase) => ({
+            titles: phrase.titles,
+            expression: phrase.expression,
+            termString: phrase.termString
+          })),
+          variations: section.variations.map((variation) => ({
+            title: variation.title,
+            spelling: variation.spelling,
+            pronunciation: variation.pronunciation
+          })),
+          relations: section.relations.map((relation) => ({
+            titles: relation.titles
+          }))
         }))
       } satisfies FormValue;
       return value;

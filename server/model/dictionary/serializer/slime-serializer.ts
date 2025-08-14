@@ -95,44 +95,51 @@ export class SlimeSerializer extends Serializer {
     raw["entry"] = {};
     raw["entry"]["id"] = word.number;
     raw["entry"]["form"] = word.name;
-    raw["translations"] = [];
-    for (const equivalent of word.equivalents ?? []) {
-      const rawEquivalent = {} as any;
-      rawEquivalent["title"] = equivalent.titles[0] ?? "";
-      rawEquivalent["forms"] = equivalent.names;
-      rawEquivalent["rawForms"] = equivalent.nameString;
-      raw["translations"].push(rawEquivalent);
-    }
     raw["tags"] = word.tags;
+    raw["translations"] = [];
     raw["contents"] = [];
-    for (const information of word.informations ?? []) {
-      const rawInformation = {} as any;
-      rawInformation["title"] = information.title;
-      rawInformation["text"] = information.text;
-      raw["contents"].push(rawInformation);
-    }
+    raw["variations"] = [];
+    raw["relations"] = [];
     if (word.pronunciation !== undefined) {
-      const title = this.dictionary.settings.pronunciationTitle;
       const rawInformation = {} as any;
-      rawInformation["title"] = title;
+      rawInformation["title"] = this.dictionary.settings.pronunciationTitle;
       rawInformation["text"] = word.pronunciation;
       raw["contents"].push(rawInformation);
     }
-    raw["variations"] = [];
-    for (const variation of word.variations ?? []) {
-      const rawVariation = {} as any;
-      rawVariation["title"] = variation.title;
-      rawVariation["form"] = variation.name;
-      raw["variations"].push(rawVariation);
-    }
-    raw["relations"] = [];
-    for (const relation of word.relations ?? []) {
-      const rawRelation = {} as any;
-      rawRelation["title"] = relation.titles[0] ?? "";
-      rawRelation["entry"] = {};
-      rawRelation["entry"]["id"] = relation.number;
-      rawRelation["entry"]["form"] = relation.name;
-      raw["relations"].push(rawRelation);
+    for (const section of word.sections ?? []) {
+      for (const equivalent of section.equivalents ?? []) {
+        const rawEquivalent = {} as any;
+        rawEquivalent["title"] = equivalent.titles[0] ?? "";
+        rawEquivalent["forms"] = equivalent.names;
+        rawEquivalent["rawForms"] = equivalent.nameString;
+        raw["translations"].push(rawEquivalent);
+      }
+      for (const information of section.informations ?? []) {
+        const rawInformation = {} as any;
+        rawInformation["title"] = information.title;
+        rawInformation["text"] = information.text;
+        raw["contents"].push(rawInformation);
+      }
+      for (const phrase of section.phrases ?? []) {
+        const rawInformation = {} as any;
+        rawInformation["title"] = this.dictionary.settings.phraseTitle;
+        rawInformation["text"] = `${phrase.form} — ${phrase.termString}`;
+        raw["contents"].push(rawInformation);
+      }
+      for (const variation of section.variations ?? []) {
+        const rawVariation = {} as any;
+        rawVariation["title"] = variation.title;
+        rawVariation["form"] = variation.name;
+        raw["variations"].push(rawVariation);
+      }
+      for (const relation of section.relations ?? []) {
+        const rawRelation = {} as any;
+        rawRelation["title"] = relation.titles[0] ?? "";
+        rawRelation["entry"] = {};
+        rawRelation["entry"]["id"] = relation.number;
+        rawRelation["entry"]["form"] = relation.name;
+        raw["relations"].push(rawRelation);
+      }
     }
     const string = JSON.stringify(raw);
     return string;

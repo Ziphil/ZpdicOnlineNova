@@ -40,7 +40,20 @@ export const ChangeDictionarySettingsForm = create(
 
     return (
       <form styleName="root" {...rest}>
-        {(propertyName === "enableMarkdown") ? (
+        {(propertyName === "enableAdvancedWord") ? (
+          <ControlContainer>
+            <div styleName="radio-group">
+              <CheckableContainer>
+                <Radio value="true" {...register("value")}/>
+                <CheckableLabel>{trans("label.enableAdvancedWord.true")}</CheckableLabel>
+              </CheckableContainer>
+              <CheckableContainer>
+                <Radio value="false" {...register("value")}/>
+                <CheckableLabel>{trans("label.enableAdvancedWord.false")}</CheckableLabel>
+              </CheckableContainer>
+            </div>
+          </ControlContainer>
+        ) : (propertyName === "enableMarkdown") ? (
           <ControlContainer>
             <div styleName="radio-group">
               <CheckableContainer>

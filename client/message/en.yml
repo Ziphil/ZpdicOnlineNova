@@ -32,6 +32,8 @@ toast:
         The setting has been changed.
       pronunciationTitle: |-
         The setting has been changed.
+      enableAdvancedWord: |-
+        The setting has been changed.
       enableMarkdown: |-
         The setting has been changed.
       enableDuplicateName: |-
@@ -260,8 +262,8 @@ exampleTypeSelect:
     regular: "Regex"
 wordModeSelect:
   label:
-    name: "Headword"
-    equivalent: "Translation"
+    spelling: "Headword"
+    term: "Translation"
     both: "Both"
     tag: "Tag"
     information: "Contents"
@@ -446,6 +448,7 @@ editWordForm:
     old: "History"
   heading:
     basic: "Basic information"
+    section: "Section {numberString}"
     equivalents: "Translations"
     informations: "Contents"
     phrases: "Idiomatic expressions"
@@ -453,12 +456,12 @@ editWordForm:
     relations: "Related words"
     template: "Template settings"
   label:
-    name: "Spelling"
+    spelling: "Spelling"
     pronunciation: "Pronunciation"
     tags: "Tags"
     equivalent:
       titles: "Parts of speech"
-      names: "Translations"
+      terms: "Translations"
       hidden: "Use only for search (hidden on word cards)"
     information:
       title: "Heading"
@@ -466,15 +469,15 @@ editWordForm:
       hidden: "Hide on word cards"
     phrase:
       titles: "Kinds"
-      form: "Expression"
+      expression: "Expression"
       terms: "Translations"
     variation:
       title: "Kind"
-      name: "Form"
+      spelling: "Form"
       pronunciation: "Pronunciation"
     relation:
       titles: "Kinds"
-      name: "Word"
+      spelling: "Word"
       mutual: "Make this relation mutual"
     title: "Template name"
   absent:
@@ -483,16 +486,18 @@ editWordForm:
     phrase: "No idiomatic expressions"
     variation: "No variation forms"
     relation: "No related words"
-  duplicateName: >-
+  duplicateSpelling: >-
     A word with the same spelling has already been registered.
   button:
     add:
+      section: "Add section"
       equivalent: "Add translation"
       information: "Add content"
       phrase: "Add idiomatic expression"
       variation: "Add variation form"
       relation: "Add related word"
     discard:
+      section: "Remove section"
       equivalent: "Remove"
       information: "Remove"
       phrase: "Remove"
@@ -837,7 +842,7 @@ changeDictionaryParamNameForm:
       The identifier must contain no more than 30 characters.
 changeDictionaryFontForm:
   label:
-    type:
+    kind:
       none: "Do not set"
       local: "Use local font"
       custom: "Upload custom font"
@@ -845,7 +850,7 @@ changeDictionaryFontForm:
       name: "Font family"
       file: "Font file"
   labelHelper:
-    type:
+    kind:
       none: |-
         The headwords will be displayed in the default font.
       local: |-
@@ -862,6 +867,9 @@ changeDictionaryFontForm:
       You cannot upload files larger than 1 MB.
 changeDictionarySettingsForm:
   label:
+    enableAdvancedWord:
+      true: "Enabled"
+      false: "Disabled"
     enableMarkdown:
       true: "Enabled"
       false: "Disabled"
@@ -1042,6 +1050,7 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Source code for Akrantiain"
     zatlinSource: "Source code for Zatlin"
+    enableAdvancedWord: "Advanced word editing"
     enableMarkdown: "Markdown"
     enableDuplicateName: "Duplicate spelling check"
     punctuations: "Delimiters"
@@ -1058,6 +1067,8 @@ dictionarySettingEditingPart:
       Zatlin is a system that generates random spellings of words.
       If you set the source code here, a ‘Generate’ button will appear in the word editor, allowing you to generate a spelling by Zatlin.
       For more information on Zatlin’s syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
+    enableAdvancedWord: >- 
+      If you enable this feature, you can register multiple sections in a word, with each section containing a range of information from translations to related words.
     enableMarkdown: >-
       Enabling this feature will allow you to write the contents of words in Markdown format.
     enableDuplicateName: >-

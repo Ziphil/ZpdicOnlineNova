@@ -8,6 +8,7 @@ import {EquivalentModel} from "/server/model/word/equivalent";
 import {InformationModel} from "/server/model/word/information";
 import {LinkedWordModel} from "/server/model/word/linked-word";
 import {RelationModel} from "/server/model/word/relation";
+import {SectionModel} from "/server/model/word/section";
 import {VariationModel} from "/server/model/word/variation";
 import {Word, WordModel} from "/server/model/word/word";
 
@@ -160,7 +161,8 @@ export class SlimeDeserializer extends Deserializer {
       relations.push(relation);
     }
     const updatedDate = new Date();
-    const word = new WordModel({dictionary, number, name, pronunciation, equivalents, tags, informations, variations, relations, updatedDate});
+    const section = new SectionModel({equivalents, informations, variations, relations});
+    const word = new WordModel({dictionary, number, name, pronunciation, tags, sections: [section], updatedDate});
     return word;
   }
 

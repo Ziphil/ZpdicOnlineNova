@@ -44,11 +44,17 @@ export const TemplateWordCard = create(
             {word.title}
           </SingleLineText>
           <ul styleName="count-list">
-            {(word.equivalents.length > 0) && <li>{trans("label.equivalent", {count: word.equivalents.length})}</li>}
-            {(word.informations.length > 0) && <li>{trans("label.information", {count: word.informations.length})}</li>}
-            {(word.phrases.length > 0) && <li>{trans("label.phrase", {count: word.phrases.length})}</li>}
-            {(word.variations.length > 0) && <li>{trans("label.variation", {count: word.variations.length})}</li>}
-            {(word.relations.length > 0) && <li>{trans("label.relation", {count: word.relations.length})}</li>}
+            {word.sections.map((section, index) => (
+              <li styleName="count-item" key={index}>
+                {"["}
+                {(section.equivalents.length > 0) && <span styleName="count-section-item">{trans("label.equivalent", {count: section.equivalents.length})}</span>}
+                {(section.informations.length > 0) && <span styleName="count-section-item">{trans("label.information", {count: section.informations.length})}</span>}
+                {(section.phrases.length > 0) && <span styleName="count-section-item">{trans("label.phrase", {count: section.phrases.length})}</span>}
+                {(section.variations.length > 0) && <span styleName="count-section-item">{trans("label.variation", {count: section.variations.length})}</span>}
+                {(section.relations.length > 0) && <span styleName="count-section-item">{trans("label.relation", {count: section.relations.length})}</span>}
+                {"]"}
+              </li>
+            ))}
           </ul>
         </CardBody>
         {(authorities?.includes("own")) && (

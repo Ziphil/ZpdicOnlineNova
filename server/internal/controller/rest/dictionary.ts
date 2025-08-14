@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledRequest, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
-import {DictionaryCreator, DictionaryParameterCreator, SuggestionCreator, UserCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
+import {DictionaryCreator, DictionaryParameterCreator, SuggestionCreator, TemplateWordCreator, UserCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {SOCKET_PATH_PREFIX} from "/server/internal/type/socket";
 import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
@@ -147,7 +147,7 @@ export class DictionaryRestController extends InternalRestController {
   @before(checkMe(), checkDictionary("own"))
   public async [Symbol()](request: FilledRequest<"editDictionaryTemplateWord", "me" | "dictionary">, response: Response<"editDictionaryTemplateWord">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const {word} = request.body;
+    const word = TemplateWordCreator.enflesh(request.body.word);
     await dictionary.editTemplateWord(word);
     const body = DictionaryCreator.skeletonize(dictionary);
     InternalRestController.respond(response, body);
@@ -256,7 +256,7 @@ export class DictionaryRestController extends InternalRestController {
   @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchWordNameFrequencies", "dictionary">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const body = await dictionary.calcWordNameFrequencies();
+    const body = await dictionary.calcWordSpellingFrequencies();
     InternalRestController.respond(response, body);
   }
 

@@ -7,7 +7,7 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import type {EditableExample} from "/server/internal/skeleton";
+import {Jsonify} from "jsonify-type";
 import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
@@ -153,3 +153,5 @@ export class ExampleSchema extends DiscardableSchema {
 
 export type Example = DocumentType<ExampleSchema>;
 export const ExampleModel = getModelForClass(ExampleSchema);
+
+export type EditableExample = Pick<Jsonify<Example>, "tags" | "words" | "sentence" | "translation" | "supplement" | "offer"> & {number: number | null};

@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {useMergeRefs} from "@floating-ui/react";
+import {faTimes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
@@ -8,15 +9,20 @@ import {
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  GrabbablePane,
+  GrabbablePaneBody,
+  GrabbablePaneButton,
+  GrabbablePaneGrip,
+  GrabbablePaneGripContainer,
   IconButton,
   SuggestionSpec,
   TagInput,
-  data,
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {useSwapAnimationItem} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordSpec} from "./edit-template-word-form-hook";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
@@ -29,13 +35,15 @@ export const EditTemplateWordFormRelationItem = create(
     form,
     relationOperations,
     dndId,
+    sectionIndex,
     index,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: EditTemplateWordSpec["form"],
-    relationOperations: Omit<UseFieldArrayReturn<any, "relations">, "fields">,
+    relationOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.relations`>, "fields">,
     dndId: string,
+    sectionIndex: number,
     index: number,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -43,7 +51,11 @@ export const EditTemplateWordFormRelationItem = create(
     const {trans} = useTrans("editWordForm");
 
     const {register} = form;
-    const {paneProps, gripProps, dragging} = useEditWordFormDndItem(dndId);
+    const {paneProps, paneRef, gripProps, dragging} = useEditWordFormDndItem(dndId);
+
+    const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
+
+    const mergedRef = useMergeRefs([paneRef, swapRef]);
 
     const suggestRelationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
@@ -61,24 +73,28 @@ export const EditTemplateWordFormRelationItem = create(
     }, [dictionary.number]);
 
     return (
-      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
-        <div styleName="grip" {...gripProps}>
-          <GeneralIcon icon={faGripVertical}/>
-        </div>
-        <fieldset styleName="field-list">
-          <ControlContainer>
-            <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
-            <Controller name={`relations.${index}.titles`} control={form.control} render={({field}) => (
-              <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
-            )}/>
-          </ControlContainer>
-        </fieldset>
-        <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.relation")} onClick={() => relationOperations.remove(index)}>
-            <GeneralIcon icon={faMinus}/>
-          </IconButton>
-        </div>
-      </div>
+      <GrabbablePane styleName="root" dragging={dragging} ref={mergedRef} {...rest} {...paneProps} {...swapProps}>
+        <GrabbablePaneGripContainer>
+          <GrabbablePaneButton position="top" disabled={!canMoveUp} onClick={moveUp}/>
+          <GrabbablePaneGrip {...gripProps}/>
+          <GrabbablePaneButton position="bottom" disabled={!canMoveDown} onClick={moveDown}/>
+        </GrabbablePaneGripContainer>
+        <GrabbablePaneBody styleName="body">
+          <fieldset styleName="field-list">
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
+              <Controller name={`sections.${sectionIndex}.relations.${index}.titles`} control={form.control} render={({field}) => (
+                <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
+              )}/>
+            </ControlContainer>
+          </fieldset>
+          <div styleName="minus">
+            <IconButton scheme="gray" variant="light" label={trans("discard.relation")} onClick={() => relationOperations.remove(index)}>
+              <GeneralIcon icon={faTimes}/>
+            </IconButton>
+          </div>
+        </GrabbablePaneBody>
+      </GrabbablePane>
     );
 
   }

@@ -3,14 +3,14 @@
 
 export interface DictionaryFontNone {
 
-  type: "none";
+  kind: "none";
 
 }
 
 
 export interface DictionaryFontLocal {
 
-  type: "local";
+  kind: "local";
   name: string;
 
 }
@@ -18,7 +18,7 @@ export interface DictionaryFontLocal {
 
 export interface DictionaryFontCustom {
 
-  type: "custom";
+  kind: "custom";
   name?: string;
   format: string;
 

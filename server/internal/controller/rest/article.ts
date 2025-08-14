@@ -16,7 +16,7 @@ export class ArticleRestController extends InternalRestController {
   @before(checkMe(), checkDictionary("edit"))
   public async [Symbol()](request: Request<"editArticle">, response: Response<"editArticle">): Promise<void> {
     const {me, dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
-    const {article} = request.body;
+    const article = ArticleCreator.enflesh(request.body.article);
     try {
       const resultArticle = await dictionary.editArticle(article, me);
       const body = ArticleCreator.skeletonize(resultArticle);

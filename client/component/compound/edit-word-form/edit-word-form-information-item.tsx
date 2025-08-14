@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {useMergeRefs} from "@floating-ui/react";
+import {faTimes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
@@ -11,6 +12,11 @@ import {
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  GrabbablePane,
+  GrabbablePaneBody,
+  GrabbablePaneButton,
+  GrabbablePaneGrip,
+  GrabbablePaneGripContainer,
   IconButton,
   Input,
   MultiLineText,
@@ -22,6 +28,7 @@ import {
 import {create} from "/client/component/create";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {useSwapAnimationItem} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
@@ -35,21 +42,27 @@ export const EditWordFormInformationItem = create(
     form,
     informationOperations,
     dndId,
-    index,
+    sectionIndex,
+    informationIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    informationOperations: Omit<UseFieldArrayReturn<any, "informations">, "fields">,
+    informationOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.informations`>, "append" | "update" | "remove">,
     dndId: string,
-    index: number,
+    sectionIndex: number,
+    informationIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
     const {register} = form;
-    const {paneProps, gripProps, dragging} = useEditWordFormDndItem(dndId);
+    const {paneProps, paneRef, gripProps, dragging} = useEditWordFormDndItem(dndId);
+
+    const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
+
+    const mergedRef = useMergeRefs([paneRef, swapRef]);
 
     const suggestInformationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
@@ -67,32 +80,36 @@ export const EditWordFormInformationItem = create(
     }, [dictionary.number]);
 
     return (
-      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
-        <div styleName="grip" {...gripProps}>
-          <GeneralIcon icon={faGripVertical}/>
-        </div>
-        <fieldset styleName="field-list">
-          <ControlContainer>
-            <ControlLabel>{trans("label.information.title")}</ControlLabel>
-            <Input suggest={suggestInformationTitle} {...register(`informations.${index}.title`)}/>
-          </ControlContainer>
-          <ControlContainer>
-            <ControlLabel>{trans("label.information.text")}</ControlLabel>
-            <Textarea styleName="textarea" {...register(`informations.${index}.text`)}/>
-          </ControlContainer>
-          <ControlContainer>
-            <CheckableContainer>
-              <Checkbox {...register(`informations.${index}.hidden`)}/>
-              <CheckableLabel><MultiLineText>{trans("label.information.hidden")}</MultiLineText></CheckableLabel>
-            </CheckableContainer>
-          </ControlContainer>
-        </fieldset>
-        <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.information")} onClick={() => informationOperations.remove(index)}>
-            <GeneralIcon icon={faMinus}/>
-          </IconButton>
-        </div>
-      </div>
+      <GrabbablePane styleName="root" dragging={dragging} ref={mergedRef} {...rest} {...paneProps} {...swapProps}>
+        <GrabbablePaneGripContainer>
+          <GrabbablePaneButton position="top" disabled={!canMoveUp} onClick={moveUp}/>
+          <GrabbablePaneGrip {...gripProps}/>
+          <GrabbablePaneButton position="bottom" disabled={!canMoveDown} onClick={moveDown}/>
+        </GrabbablePaneGripContainer>
+        <GrabbablePaneBody styleName="body">
+          <fieldset styleName="field-list">
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.information.title")}</ControlLabel>
+              <Input suggest={suggestInformationTitle} {...register(`sections.${sectionIndex}.informations.${informationIndex}.title`)}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.information.text")}</ControlLabel>
+              <Textarea styleName="textarea" {...register(`sections.${sectionIndex}.informations.${informationIndex}.text`)}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item" {...data({checkable: true})}>
+              <CheckableContainer>
+                <Checkbox {...register(`sections.${sectionIndex}.informations.${informationIndex}.hidden`)}/>
+                <CheckableLabel><MultiLineText>{trans("label.information.hidden")}</MultiLineText></CheckableLabel>
+              </CheckableContainer>
+            </ControlContainer>
+          </fieldset>
+          <div styleName="minus">
+            <IconButton scheme="gray" variant="light" label={trans("discard.information")} onClick={() => informationOperations.remove(informationIndex)}>
+              <GeneralIcon icon={faTimes}/>
+            </IconButton>
+          </div>
+        </GrabbablePaneBody>
+      </GrabbablePane>
     );
 
   }

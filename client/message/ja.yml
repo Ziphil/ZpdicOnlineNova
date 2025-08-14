@@ -30,6 +30,8 @@ toast:
         設定を変更しました。
       pronunciationTitle: |-
         設定を変更しました。
+      enableAdvancedWord: |-
+        設定を変更しました。
       enableMarkdown: |-
         設定を変更しました。
       enableDuplicateName: |-
@@ -258,8 +260,8 @@ exampleTypeSelect:
     regular: "正規"
 wordModeSelect:
   label:
-    name: "単語"
-    equivalent: "訳語"
+    spelling: "単語"
+    term: "訳語"
     both: "単語＋訳語"
     tag: "タグ"
     information: "内容"
@@ -444,6 +446,7 @@ editWordForm:
     old: "履歴"
   heading:
     basic: "基本情報"
+    section: "セクション {numberString}"
     equivalents: "訳語"
     informations: "内容"
     phrases: "成句"
@@ -451,12 +454,12 @@ editWordForm:
     relations: "関連語"
     template: "テンプレート設定"
   label:
-    name: "綴り"
+    spelling: "綴り"
     pronunciation: "発音記号"
     tags: "タグ"
     equivalent:
       titles: "品詞"
-      names: "訳語"
+      terms: "訳語"
       hidden: "検索にのみ用いる (単語カードでは非表示にする)"
     information:
       title: "見出し"
@@ -464,15 +467,15 @@ editWordForm:
       hidden: "単語カードでは非表示にする"
     phrase:
       titles: "分類"
-      form: "成句表現"
+      expression: "表現"
       terms: "訳語"
     variation:
       title: "種類"
-      name: "変化形"
+      spelling: "変化形"
       pronunciation: "発音記号"
     relation:
       titles: "分類"
-      name: "関連語"
+      spelling: "関連語"
       mutual: "この関連語を双方向にする"
     title: "テンプレート名"
   absent:
@@ -481,16 +484,18 @@ editWordForm:
     phrase: "成句が登録されていません"
     variation: "変化形が登録されていません"
     relation: "関連語が登録されていません"
-  duplicateName: >-
+  duplicateSpelling: >-
     同じ綴りの単語がすでに登録されています。
   button:
     add:
+      section: "セクションを追加"
       equivalent: "訳語を追加"
       information: "内容を追加"
       phrase: "成句を追加"
       variation: "変化形を追加"
       relation: "関連語を追加"
     discard:
+      section: "セクションを削除"
       equivalent: "削除"
       information: "削除"
       phrase: "削除"
@@ -833,7 +838,7 @@ changeDictionaryParamNameForm:
       識別子は 30 文字以下である必要があります。
 changeDictionaryFontForm:
   label:
-    type:
+    kind:
       none: "設定しない"
       local: "ローカルフォントを参照"
       custom: "フォントをアップロード"
@@ -841,7 +846,7 @@ changeDictionaryFontForm:
       name: "フォントファミリー名"
       file: "フォントファイル"
   labelHelper:
-    type:
+    kind:
       none: |-
         デフォルトフォントで表示します。
       local: |-
@@ -858,6 +863,9 @@ changeDictionaryFontForm:
       1 MB より大きなファイルはアップロードすることができません。
 changeDictionarySettingsForm:
   label:
+    enableAdvancedWord:
+      true: "有効"
+      false: "無効"
     enableMarkdown:
       true: "有効"
       false: "無効"
@@ -1040,6 +1048,7 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Akrantiain ソースコード"
     zatlinSource: "Zatlin ソースコード"
+    enableAdvancedWord: "高度な単語編集"
     enableMarkdown: "Markdown"
     enableDuplicateName: "重複綴りチェック"
     punctuations: "区切り文字"
@@ -1056,6 +1065,8 @@ dictionarySettingEditingPart:
       Zatlin とは、単語の綴りをランダムに生成するためのシステムです。 
       Zatlin 用のソースコードを設定しておくと、単語編集画面で単語欄の横に「生成」ボタンが表示され、Zatlin を用いて綴りを生成できるようになります。
       Zatlin の構文については<link>ドキュメント</link>をご覧ください。
+    enableAdvancedWord: >-
+      これを有効にしておくと、訳語から関連語までを 1 つのセクションとして、単語データに複数のセクションを登録できるようになります。 
     enableMarkdown: >-
       これを有効にしておくと、単語データの内容欄を Markdown 形式で書くことができるようになります。
     enableDuplicateName: >-

@@ -3,13 +3,6 @@
 @use "zographia/source/component/function.scss" as *;
 
 
-.root {
-  @include theme("light") {
-    --border-color: #{leveled-color("gray", 1)};
-    --background-color: #{single-color("background-light")};
-  }
-}
-
 .heading {
   @include bold-font;
   margin-block-end: 3zu;
@@ -31,7 +24,7 @@
   padding-inline: 3zu;
   color: var(--glob-mute-text-color);
   border-radius: var(--glob-border-radius);
-  border: solid 1zx var(--border-color);
+  border: solid 1zx var(--glob-border-color);
   display: flex;
   flex-direction: column;
   align-items: center;

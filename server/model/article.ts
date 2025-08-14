@@ -7,7 +7,7 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import {EditableArticle} from "/server/internal/skeleton";
+import {Jsonify} from "jsonify-type";
 import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
@@ -101,3 +101,5 @@ export class ArticleSchema extends DiscardableSchema {
 
 export type Article = DocumentType<ArticleSchema>;
 export const ArticleModel = getModelForClass(ArticleSchema);
+
+export type EditableArticle = Pick<Jsonify<Article>, "tags" | "title" | "content"> & {number: number | null};

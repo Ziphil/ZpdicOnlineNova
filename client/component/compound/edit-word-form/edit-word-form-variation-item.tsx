@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faGripVertical, faMinus, faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
+import {useMergeRefs} from "@floating-ui/react";
+import {faTimes, faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
@@ -10,16 +11,21 @@ import {
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  GrabbablePane,
+  GrabbablePaneBody,
+  GrabbablePaneButton,
+  GrabbablePaneGrip,
+  GrabbablePaneGripContainer,
   IconButton,
   Input,
   SuggestionSpec,
-  data,
   useTrans
 } from "zographia";
 import {useEditWordFormDndItem} from "/client/component/compound/edit-word-form/edit-word-form-dnd";
 import {create} from "/client/component/create";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {useSwapAnimationItem} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormValue} from "./edit-word-form-hook";
@@ -32,32 +38,38 @@ export const EditWordFormVariationItem = create(
     form,
     variationOperations,
     dndId,
-    index,
+    sectionIndex,
+    variationIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    variationOperations: Omit<UseFieldArrayReturn<any, "variations">, "fields">,
+    variationOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.variations`>, "append" | "update" | "remove">,
     dndId: string,
-    index: number,
+    sectionIndex: number,
+    variationIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
     const {register} = form;
-    const {paneProps, gripProps, dragging} = useEditWordFormDndItem(dndId);
+    const {paneProps, paneRef, gripProps, dragging} = useEditWordFormDndItem(dndId);
+
+    const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
+
+    const mergedRef = useMergeRefs([paneRef, swapRef]);
 
     const generatePronunciation = useCallback(function (): void {
       if (dictionary.akrantiain !== null) {
         try {
           const value = form.getValues();
-          form.setValue(`variations.${index}.pronunciation`, dictionary.akrantiain.convert(value.variations[index].name));
+          form.setValue(`sections.${sectionIndex}.variations.${variationIndex}.pronunciation`, dictionary.akrantiain.convert(value.sections[sectionIndex].variations[variationIndex].spelling));
         } catch (error) {
           console.log(error);
         }
       };
-    }, [dictionary, form, index]);
+    }, [dictionary, form, sectionIndex, variationIndex]);
 
     const suggestVariationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
@@ -75,38 +87,42 @@ export const EditWordFormVariationItem = create(
     }, [dictionary.number]);
 
     return (
-      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
-        <div styleName="grip" {...gripProps}>
-          <GeneralIcon icon={faGripVertical}/>
-        </div>
-        <fieldset styleName="field-list">
-          <ControlContainer>
-            <ControlLabel>{trans("label.variation.title")}</ControlLabel>
-            <Input suggest={suggestVariationTitle} {...register(`variations.${index}.title`)}/>
-          </ControlContainer>
-          <ControlContainer>
-            <ControlLabel>{trans("label.variation.name")}</ControlLabel>
-            <Input {...register(`variations.${index}.name`)}/>
-          </ControlContainer>
-          <ControlContainer>
-            <ControlLabel>{trans("label.variation.pronunciation")}</ControlLabel>
-            <div styleName="row">
-              <Input {...register(`variations.${index}.pronunciation`)}/>
-              {(dictionary.akrantiain !== null) && (
-                <Button variant="light" onClick={generatePronunciation}>
-                  <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
-                  {trans("button.generate")}
-                </Button>
-              )}
-            </div>
-          </ControlContainer>
-        </fieldset>
-        <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.variation")} onClick={() => variationOperations.remove(index)}>
-            <GeneralIcon icon={faMinus}/>
-          </IconButton>
-        </div>
-      </div>
+      <GrabbablePane styleName="root" dragging={dragging} ref={mergedRef} {...rest} {...paneProps} {...swapProps}>
+        <GrabbablePaneGripContainer>
+          <GrabbablePaneButton position="top" disabled={!canMoveUp} onClick={moveUp}/>
+          <GrabbablePaneGrip {...gripProps}/>
+          <GrabbablePaneButton position="bottom" disabled={!canMoveDown} onClick={moveDown}/>
+        </GrabbablePaneGripContainer>
+        <GrabbablePaneBody styleName="body">
+          <fieldset styleName="field-list">
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.variation.title")}</ControlLabel>
+              <Input suggest={suggestVariationTitle} {...register(`sections.${sectionIndex}.variations.${variationIndex}.title`)}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.variation.spelling")}</ControlLabel>
+              <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.spelling`)}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.variation.pronunciation")}</ControlLabel>
+              <div styleName="row">
+                <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.pronunciation`)}/>
+                {(dictionary.akrantiain !== null) && (
+                  <Button scheme="primary" variant="light" onClick={generatePronunciation}>
+                    <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
+                    {trans("button.generate")}
+                  </Button>
+                )}
+              </div>
+            </ControlContainer>
+          </fieldset>
+          <div styleName="minus">
+            <IconButton scheme="gray" variant="light" label={trans("discard.variation")} onClick={() => variationOperations.remove(variationIndex)}>
+              <GeneralIcon icon={faTimes}/>
+            </IconButton>
+          </div>
+        </GrabbablePaneBody>
+      </GrabbablePane>
     );
 
   }

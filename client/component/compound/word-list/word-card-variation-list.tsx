@@ -5,7 +5,7 @@ import {faAngleRight} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Variation, Word, WordWithExamples} from "/server/internal/skeleton";
+import {DictionaryWithExecutors, Section, Variation} from "/server/internal/skeleton";
 import {WordCardVariationView} from "./word-card-variation-view";
 
 
@@ -13,15 +13,15 @@ export const WordCardVariationList = create(
   require("./word-card-variation-list.scss"), "WordCardVariationList",
   function ({
     dictionary,
-    word,
+    section,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | WordWithExamples,
+    section: Section,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    const groupedVariations = useMemo(() => getGroupedVariations(word), [word]);
+    const groupedVariations = useMemo(() => getGroupedVariations(section), [section]);
 
     return (groupedVariations.length > 0) ? (
       <div styleName="root" {...rest}>
@@ -48,9 +48,9 @@ export const WordCardVariationList = create(
 );
 
 
-function getGroupedVariations(word: Word | WordWithExamples): Array<[string, [string, Array<Variation>]]> {
+function getGroupedVariations(section: Section): Array<[string, [string, Array<Variation>]]> {
   const groupedVariations = new Map<string, [string, Array<Variation>]>();
-  for (const variation of word.variations) {
+  for (const variation of section.variations) {
     const title = variation.title;
     if (groupedVariations.get(title) === undefined) {
       groupedVariations.set(title, [title, []]);

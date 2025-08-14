@@ -3,7 +3,6 @@
 import sendgrid from "@sendgrid/mail";
 import * as typegoose from "@typegoose/typegoose";
 import Agenda from "agenda";
-import aws from "aws-sdk";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dayjs from "dayjs";
@@ -17,43 +16,15 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import multer from "multer";
 import {Server} from "socket.io";
-import {
-  ExampleExternalRestController,
-  WordExternalRestController
-} from "/server/external/controller/rest";
-import {
-  DictionaryJobController,
-  RegularJobController
-} from "/server/internal/controller/job";
-import {
-  ArticleRestController,
-  DebugRestController,
-  DictionaryRestController,
-  ExampleRestController,
-  HistoryRestController,
-  InvitationRestController,
-  NotificationRestController,
-  OtherRestController,
-  ProposalRestController,
-  ResourceRestController,
-  UserRestController,
-  WordRestController
-} from "/server/internal/controller/rest";
-import {
-  DictionarySocketController
-} from "/server/internal/controller/socket";
+import * as externalAlphaRest from "/server/external-alpha/controller/rest";
+import * as externalPreviewRest from "/server/external-preview/controller/rest";
+import * as internalJob from "/server/internal/controller/job";
+import * as internalRest from "/server/internal/controller/rest";
+import * as internalSocket from "/server/internal/controller/socket";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
 import {jsonifyRequest} from "/server/util/request";
-import {
-  AWS_KEY,
-  AWS_REGION,
-  AWS_SECRET,
-  COOKIE_SECRET,
-  MONGO_URI,
-  PORT,
-  SENDGRID_KEY
-} from "/server/variable";
+import {COOKIE_SECRET, MONGO_URI, PORT, SENDGRID_KEY} from "/server/variable";
 
 
 dayjs.extend(utc);
@@ -83,11 +54,8 @@ export class Main {
     this.setupCors();
     this.setupMongo();
     this.setupSendgrid();
-    this.setupAws();
     this.setupDirectories();
-    this.useRestControllers();
-    this.useSocketControllers();
-    this.useJobControllers();
+    this.useControllers();
     this.setupAgenda();
     this.addStaticHandlers();
     this.addFallbackHandlers();
@@ -168,12 +136,6 @@ export class Main {
     sendgrid.setApiKey(SENDGRID_KEY);
   }
 
-  private setupAws(): void {
-    const credentials = {accessKeyId: AWS_KEY, secretAccessKey: AWS_SECRET};
-    const region = AWS_REGION;
-    aws.config.update({credentials, region});
-  }
-
   /** 内部処理で用いるディレクトリを用意します。*/
   private setupDirectories(): void {
     fs.mkdirSync("./dist/download", {recursive: true});
@@ -181,30 +143,12 @@ export class Main {
 
   /** ルーターの設定を行います。
    * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
-  private useRestControllers(): void {
-    ProposalRestController.use(this.application, this.server, this.agenda);
-    DictionaryRestController.use(this.application, this.server, this.agenda);
-    ExampleRestController.use(this.application, this.server, this.agenda);
-    ArticleRestController.use(this.application, this.server, this.agenda);
-    HistoryRestController.use(this.application, this.server, this.agenda);
-    InvitationRestController.use(this.application, this.server, this.agenda);
-    NotificationRestController.use(this.application, this.server, this.agenda);
-    OtherRestController.use(this.application, this.server, this.agenda);
-    ResourceRestController.use(this.application, this.server, this.agenda);
-    UserRestController.use(this.application, this.server, this.agenda);
-    WordRestController.use(this.application, this.server, this.agenda);
-    DebugRestController.use(this.application, this.server, this.agenda);
-    WordExternalRestController.use(this.application, this.server, this.agenda);
-    ExampleExternalRestController.use(this.application, this.server, this.agenda);
-  }
-
-  private useSocketControllers(): void {
-    DictionarySocketController.use(this.application, this.server, this.agenda);
-  }
-
-  private useJobControllers(): void {
-    DictionaryJobController.use(this.agenda);
-    RegularJobController.use(this.agenda);
+  private useControllers(): void {
+    internalRest.use(this.application, this.server, this.agenda);
+    externalPreviewRest.use(this.application, this.server, this.agenda);
+    externalAlphaRest.use(this.application, this.server, this.agenda);
+    internalSocket.use(this.application, this.server, this.agenda);
+    internalJob.use(this.agenda);
   }
 
   private setupAgenda(): void {

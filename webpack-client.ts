@@ -114,7 +114,9 @@ const config = {
       "recoil": path.resolve(__dirname, "node_modules/recoil"),
     },
     fallback: {
-      stream: require.resolve("stream-browserify")
+      "stream": require.resolve("stream-browserify"),
+      "buffer": require.resolve("buffer"),
+      "events": require.resolve("events")
     }
   },
   devServer: {

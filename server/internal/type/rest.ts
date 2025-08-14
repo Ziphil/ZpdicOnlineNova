@@ -5,6 +5,8 @@ import type {
   Article,
   CustomError,
   Dictionary,
+  DictionaryAuthority,
+  DictionaryAuthorityQuery,
   DictionaryParameter,
   DictionarySettings,
   DictionaryStatistics,
@@ -31,12 +33,11 @@ import type {
   User,
   UserWithDetail,
   Word,
-  WordNameFrequencies,
   WordParameter,
+  WordSpellingFrequencies,
   WordWithExamples
 } from "/server/internal/skeleton";
 import type {WithRecaptcha} from "/server/internal/type/common";
-import type {DictionaryAuthority, DictionaryAuthorityQuery} from "/server/model";
 import type {WithSize} from "/server/util/query";
 
 
@@ -93,7 +94,7 @@ type ServerSpecs = {
     }
   },
   changeDictionarySettings: {
-    request: {number: number, settings: Partial<DictionarySettings>},
+    request: {number: number, settings: Partial<Omit<DictionarySettings, "templateWords">>},
     response: {
       success: Dictionary,
       error: CustomError<"noSuchDictionary">
@@ -277,7 +278,7 @@ type ServerSpecs = {
   fetchWordNameFrequencies: {
     request: {number: number},
     response: {
-      success: WordNameFrequencies,
+      success: WordSpellingFrequencies,
       error: CustomError<"noSuchDictionary">
     }
   },
@@ -309,10 +310,10 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "noSuchWord">
     }
   },
-  fetchWordNames: {
+  fetchWordSpellings: {
     request: {number: number, wordNumbers: Array<number>},
     response: {
-      success: {names: Record<number, string | null>},
+      success: {spellings: Record<number, string | null>},
       error: CustomError<"noSuchDictionary">
     }
   },
@@ -323,7 +324,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "noSuchWord">
     }
   },
-  checkDuplicateWordName: {
+  checkDuplicateWordSpelling: {
     request: {number: number, name: string, excludedWordNumber?: number},
     response: {
       success: {duplicate: boolean},

@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
+import {useMergeRefs} from "@floating-ui/react";
+import {faTimes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
@@ -8,16 +9,21 @@ import {
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  GrabbablePane,
+  GrabbablePaneBody,
+  GrabbablePaneButton,
+  GrabbablePaneGrip,
+  GrabbablePaneGripContainer,
   IconButton,
   Input,
   SuggestionSpec,
   TagInput,
-  data,
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {useSwapAnimationItem} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
@@ -31,21 +37,27 @@ export const EditWordFormPhraseItem = create(
     form,
     phraseOperations,
     dndId,
-    index,
+    sectionIndex,
+    phraseIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    phraseOperations: Omit<UseFieldArrayReturn<any, "phrases">, "fields">,
+    phraseOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.phrases`>, "append" | "update" | "remove">,
     dndId: string,
-    index: number,
+    sectionIndex: number,
+    phraseIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans, transNode} = useTrans("editWordForm");
 
     const {register} = form;
-    const {paneProps, gripProps, dragging} = useEditWordFormDndItem(dndId);
+    const {paneProps, paneRef, gripProps, dragging} = useEditWordFormDndItem(dndId);
+
+    const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
+
+    const mergedRef = useMergeRefs([paneRef, swapRef]);
 
     const suggestPhraseTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
@@ -63,32 +75,36 @@ export const EditWordFormPhraseItem = create(
     }, [dictionary.number]);
 
     return (
-      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
-        <div styleName="grip" {...gripProps}>
-          <GeneralIcon icon={faGripVertical}/>
-        </div>
-        <fieldset styleName="field-list">
-          <ControlContainer>
-            <ControlLabel>{trans("label.phrase.titles")}</ControlLabel>
-            <Controller name={`phrases.${index}.titles`} control={form.control} render={({field}) => (
-              <TagInput values={field.value} suggest={suggestPhraseTitle} onSet={field.onChange}/>
-            )}/>
-          </ControlContainer>
-          <ControlContainer>
-            <ControlLabel>{trans("label.phrase.form")}</ControlLabel>
-            <Input {...register(`phrases.${index}.form`)}/>
-          </ControlContainer>
-          <ControlContainer>
-            <ControlLabel>{transNode("label.phrase.terms")}</ControlLabel>
-            <Input {...register(`phrases.${index}.termString`)}/>
-          </ControlContainer>
-        </fieldset>
-        <div styleName="minus">
-          <IconButton scheme="gray" variant="light" label={trans("discard.phrase")} onClick={() => phraseOperations.remove(index)}>
-            <GeneralIcon icon={faMinus}/>
-          </IconButton>
-        </div>
-      </div>
+      <GrabbablePane styleName="root" dragging={dragging} ref={mergedRef} {...rest} {...paneProps} {...swapProps}>
+        <GrabbablePaneGripContainer>
+          <GrabbablePaneButton position="top" disabled={!canMoveUp} onClick={moveUp}/>
+          <GrabbablePaneGrip {...gripProps}/>
+          <GrabbablePaneButton position="bottom" disabled={!canMoveDown} onClick={moveDown}/>
+        </GrabbablePaneGripContainer>
+        <GrabbablePaneBody styleName="body">
+          <fieldset styleName="field-list">
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.phrase.titles")}</ControlLabel>
+              <Controller name={`sections.${sectionIndex}.phrases.${phraseIndex}.titles`} control={form.control} render={({field}) => (
+                <TagInput values={field.value} suggest={suggestPhraseTitle} onSet={field.onChange}/>
+              )}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.phrase.expression")}</ControlLabel>
+              <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.expression`)}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{transNode("label.phrase.terms")}</ControlLabel>
+              <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.termString`)}/>
+            </ControlContainer>
+          </fieldset>
+          <div styleName="minus">
+            <IconButton scheme="gray" variant="light" label={trans("discard.phrase")} onClick={() => phraseOperations.remove(phraseIndex)}>
+              <GeneralIcon icon={faTimes}/>
+            </IconButton>
+          </div>
+        </GrabbablePaneBody>
+      </GrabbablePane>
     );
 
   }

@@ -85,7 +85,7 @@ export const ExampleCard = create(
                     <WordPopover dictionary={dictionary} word={word} trigger={(
                       <span>
                         <Link href={getWordHref(dictionary, word.number)} scheme="secondary" variant="underline">
-                          {(word.name === undefined) ? <LoadingIcon/> : (word.name === null) ? <GeneralIcon icon={faTriangleExclamation}/> : word.name}
+                          {(word.spelling === undefined) ? <LoadingIcon/> : (word.spelling === null) ? <GeneralIcon icon={faTriangleExclamation}/> : word.spelling}
                         </Link>
                       </span>
                     )}/>

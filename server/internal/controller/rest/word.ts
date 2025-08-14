@@ -3,7 +3,7 @@
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkDictionary, checkMe, parseMe} from "/server/internal/controller/rest/middleware";
-import {WordCreator} from "/server/internal/creator";
+import {RelationCreator, WordCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {QueryRange} from "/server/util/query";
 import {mapWithSize} from "/server/util/with-size";
@@ -16,7 +16,7 @@ export class WordRestController extends InternalRestController {
   @before(checkMe(), checkDictionary("edit"))
   public async [Symbol()](request: Request<"editWord">, response: Response<"editWord">): Promise<void> {
     const {me, dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
-    const {word} = request.body;
+    const word = WordCreator.enflesh(request.body.word);
     try {
       const resultWord = await dictionary.editWord(word, me);
       const body = WordCreator.skeletonize(resultWord);
@@ -46,7 +46,9 @@ export class WordRestController extends InternalRestController {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {specs} = request.body;
     try {
-      const results = await Promise.allSettled(specs.map(async ({wordNumber, relation}) => {
+      const results = await Promise.allSettled(specs.map(async (spec) => {
+        const wordNumber = spec.wordNumber;
+        const relation = RelationCreator.enflesh(spec.relation);
         await dictionary.addRelation(wordNumber, relation);
       }));
       const rejectedResult = results.find((result) => result.status === "rejected") as any as PromiseRejectedResult | undefined;
@@ -74,13 +76,13 @@ export class WordRestController extends InternalRestController {
     }
   }
 
-  @post("/fetchWordNames")
+  @post("/fetchWordSpellings")
   @before(parseMe(), checkDictionary("view"))
-  public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {
+  public async [Symbol()](request: Request<"fetchWordSpellings">, response: Response<"fetchWordSpellings">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {wordNumbers} = request.body;
-    const names = await dictionary.fetchWordNames(wordNumbers);
-    const body = {names};
+    const spellings = await dictionary.fetchWordSpellings(wordNumbers);
+    const body = {spellings};
     InternalRestController.respond(response, body);
   }
 
@@ -95,12 +97,12 @@ export class WordRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
-  @post("/checkDuplicateWordName")
+  @post("/checkDuplicateWordSpelling")
   @before(checkMe(), checkDictionary("edit"))
-  public async [Symbol()](request: Request<"checkDuplicateWordName">, response: Response<"checkDuplicateWordName">): Promise<void> {
+  public async [Symbol()](request: Request<"checkDuplicateWordSpelling">, response: Response<"checkDuplicateWordSpelling">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {name, excludedWordNumber} = request.body;
-    const duplicate = await dictionary.checkDuplicateWordName(name, excludedWordNumber);
+    const duplicate = await dictionary.checkDuplicateWordSpelling(name, excludedWordNumber);
     const body = {duplicate};
     InternalRestController.respond(response, body);
   }

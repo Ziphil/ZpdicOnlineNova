@@ -19,7 +19,7 @@
   flex: 0 0 auto;
 }
 
-.name {
+.spelling {
   @include bold-font;
   font-size: 5zu;
   color: var(--glob-primary-heading-text-color);

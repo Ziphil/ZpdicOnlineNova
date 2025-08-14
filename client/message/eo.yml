@@ -32,6 +32,8 @@ toast:
         La agordo ŝanĝitas.
       pronunciationTitle: |-
         La agordo ŝanĝitas.
+      enableAdvancedWord: |-
+        La agordo ŝanĝitas.
       enableMarkdown: |-
         La agordo ŝanĝitas.
       enableDuplicateName: |-
@@ -260,8 +262,8 @@ exampleTypeSelect:
     regular: "Regesp"
 wordModeSelect:
   label:
-    name: "Kapvorto"
-    equivalent: "Tradukaĵo"
+    spelling: "Kapvorto"
+    term: "Tradukaĵo"
     both: "Ambaŭ"
     tag: "Etikedo"
     information: "Enhavo"
@@ -446,6 +448,7 @@ editWordForm:
     old: "Historio"
   heading:
     basic: "Bazaj informoj"
+    section: "Seksio {numberString}"
     equivalents: "Tradukaĵoj"
     informations: "Enhavoj"
     phrases: "Idiomaĵoj"
@@ -453,12 +456,12 @@ editWordForm:
     relations: "Rilataj vortoj"
     template: "Ŝablona agordoj"
   label:
-    name: "Literumo"
+    spelling: "Literumo"
     pronunciation: "Elparolo"
     tags: "Etikedoj"
     equivalent:
       titles: "Vortospecoj"
-      names: "Tradukaĵoj"
+      terms: "Tradukaĵoj"
       hidden: "Uzi nur por serĉo (ne montrata en vortokartoj)"
     information:
       title: "Titlo"
@@ -466,15 +469,15 @@ editWordForm:
       hidden: "Ne montri en vortokartoj"
     phrase:
       titles: "Specoj"
-      form: "Idiomaĵo"
+      expression: "Idiomaĵo"
       terms: "Tradukaĵoj"
     variation:
       title: "Speco"
-      name: "Formo"
+      spelling: "Formo"
       pronunciation: "Elparolo"
     relation:
       titles: "Specoj"
-      name: "Vorto"
+      spelling: "Vorto"
       mutual: "Fari tiun rilaton reciproka"
     title: "Ŝablona titolo"
   absent:
@@ -483,16 +486,18 @@ editWordForm:
     phrase: "Neniuj idiomaĵoj"
     variation: "Neniuj variaĵaj formoj"
     relation: "Neniuj rilataj vortoj"
-  duplicateName: >-
+  duplicateSpelling: >-
     Vorto kun la sama literumo jam estas registrita.
   button:
     add:
+      section: "Aldoni seksion"
       equivalent: "Aldoni tradukaĵon"
       information: "Aldoni enhavon"
       phrase: "Aldoni idiomaĵon"
       variation: "Aldoni variaĵan formon"
       relation: "Aldoni rilatan vorton"
     discard:
+      section: "Forigi seksion"
       equivalent: "Forigi"
       information: "Forigi"
       phrase: "Forigi"
@@ -837,7 +842,7 @@ changeDictionaryParamNameForm:
       La identigilo devas havi apenaŭ 30 signojn.
 changeDictionaryFontForm:
   label:
-    type:
+    kind:
       none: "Ne agordi"
       local: "Uzi lokan tiparon"
       custom: "Alŝuti propran tiparon"
@@ -845,7 +850,7 @@ changeDictionaryFontForm:
       name: "Tipara familio"
       file: "Tipara dosiero"
   labelHelper:
-    type:
+    kind:
       none: |-
         La kapvortoj estos montrataj en la defaŭlta tiparo.
       local: |-
@@ -862,6 +867,9 @@ changeDictionaryFontForm:
       Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
 changeDictionarySettingsForm:
   label:
+    enableAdvancedWord:
+      true: "Ebligita"
+      false: "Malebligita"
     enableMarkdown:
       true: "Ebligita"
       false: "Malebligita"
@@ -1022,7 +1030,7 @@ dictionaryMainPart:
   button:
     addWord: "Krei vorton"
     addWordFromTemplate: "Krei vorton de ŝablono"
-    addCommission: "Peti"
+    addProposal: "Peti"
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"
@@ -1042,8 +1050,9 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Fontkodo por Akrantiain"
     zatlinSource: "Fontkodo por Zatlin"
+    enableAdvancedWord: "Altnivela redaktado de vortoj"
     enableMarkdown: "Markdown"
-    enableDuplicateName: "Kontrolon de duoblan literumon"
+    enableDuplicateName: "Kontrolon de duobla literumo"
     punctuations: "Disigiloj"
     ignoredEquivalentPattern: "Regulesprimo ignorota en tradukaĵoj"
     wordCardTitles: "Titoloj en vortokartoj"
@@ -1058,6 +1067,8 @@ dictionarySettingEditingPart:
       Zatlin estas aparato kiu generas aleatorajn literumojn de vortoj.
       Se vi agordos la fontkodon, butono “Generi” aperos en la redaktilo de vorto, permesante al vi generi literumon pere de Zatlin.
       Por pliaj informoj pri la sintakso de Zatlin, bonvolu rilati al la <link>dokumentaro</link> (nuntempe disponebla nur en la japana).
+    enableAdvancedWord: >- 
+      Se vi ebligos tiun funkcion, vi povos registri plurajn sekciojn en vorto, ĉiu el kiu enhavas informojn de tradukaĵoj ĝis rilataj vortoj.
     enableMarkdown: >-
       Ebligi tiun funkcion permesos al vi skribi la enhavojn de vortoj en Markdown.
     enableDuplicateName: >-

@@ -1,16 +1,11 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback} from "react";
-import {UseFormReturn, useFieldArray} from "react-hook-form";
-import {
-  AdditionalProps,
-  Button,
-  ButtonIconbag,
-  GeneralIcon,
-  useTrans
-} from "zographia";
+import {ReactElement, useCallback, useMemo} from "react";
+import {UseFieldArrayReturn, UseFormReturn, useFieldArray} from "react-hook-form";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
+import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
@@ -23,48 +18,58 @@ export const EditWordFormEquivalentSection = create(
   function ({
     dictionary,
     form,
+    sectionOperations,
+    sectionIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
+    sectionOperations: Pick<UseFieldArrayReturn<any, "sections">, "append" | "update" | "remove">,
+    sectionIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNode} = useTrans("editWordForm");
+    const {trans} = useTrans("editWordForm");
 
-    const {control, getValues, setValue} = form;
-    const {fields: equivalents, ...equivalentOperations} = useFieldArray({control, name: "equivalents"});
+    const {control, getValues} = form;
+    const equivalentFieldArraySpec = useFieldArray({control, name: `sections.${sectionIndex}.equivalents`});
+    const equivalentOperations = useMemo(() => ({
+      append: equivalentFieldArraySpec.append,
+      update: equivalentFieldArraySpec.update,
+      remove: equivalentFieldArraySpec.remove
+    }), [equivalentFieldArraySpec]);
 
-    const addEquivalent = useCallback(function (): void {
-      equivalentOperations.append({
-        titles: [],
-        nameString: "",
-        hidden: false
-      });
-    }, [equivalentOperations]);
+    const equivalents = equivalentFieldArraySpec.fields;
 
     const setEquivalents = useCallback(function (update: (equivalents: Array<any>) => Array<any>): void {
-      setValue("equivalents", update(getValues("equivalents")));
-    }, [getValues, setValue]);
+      sectionOperations.update(sectionIndex, {...getValues(`sections.${sectionIndex}`), equivalents: update(getValues(`sections.${sectionIndex}.equivalents`))});
+    }, [sectionIndex, getValues, sectionOperations]);
+
+    const addEquivalent = useCallback(function (): void {
+      equivalentOperations.append({titles: [], termString: "", hidden: false});
+    }, [equivalentOperations]);
 
     return (
       <section styleName="root" {...rest}>
-        <h3 styleName="heading">{trans("heading.equivalents")}</h3>
+        <h4 styleName="heading">{trans("heading.equivalents")}</h4>
         <div styleName="list">
           {(equivalents.length > 0) ? (
-            <EditWordFormDndContext values={equivalents} setValues={setEquivalents}>
-              {equivalents.map((equivalent, index) => (
-                <EditWordFormEquivalentItem
-                  styleName="item"
-                  key={equivalent.id}
-                  dictionary={dictionary}
-                  form={form}
-                  equivalentOperations={equivalentOperations}
-                  dndId={equivalent.id}
-                  index={index}
-                />
-              ))}
-            </EditWordFormDndContext>
+            <SwapAnimationContext values={equivalents} setValues={setEquivalents}>
+              <EditWordFormDndContext values={equivalents} setValues={setEquivalents}>
+                {equivalents.map((equivalent, equivalentIndex) => (
+                  <EditWordFormEquivalentItem
+                    styleName="item"
+                    key={equivalent.id}
+                    dictionary={dictionary}
+                    form={form}
+                    equivalentOperations={equivalentOperations as any}
+                    dndId={equivalent.id}
+                    sectionIndex={sectionIndex}
+                    equivalentIndex={equivalentIndex}
+                  />
+                ))}
+              </EditWordFormDndContext>
+            </SwapAnimationContext>
           ) : (
             <p styleName="absent">
               {trans("absent.equivalent")}
