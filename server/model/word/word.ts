@@ -155,9 +155,8 @@ export class WordSchema extends DiscardableSchema {
         }
       }
     }
-    const promises = affectedWords.map((affectedWord) => affectedWord.save());
     LogUtil.log("model/word/correctRelationsByEdit", {number: dictionary.number, affectedIds: affectedWords.map((word) => word.id)});
-    await Promise.all(promises);
+    await Promise.all(affectedWords.map((affectedWord) => affectedWord.save()));
   }
 
   /** 単語データを削除した場合に、それによって起こり得る関連語データの不整合を修正します。
@@ -175,10 +174,11 @@ export class WordSchema extends DiscardableSchema {
       changedWord.updatedDate = new Date();
       changedWords.push(changedWord);
     }
-    const affectedPromises = affectedWords.map((affectedWord) => affectedWord.flagDiscarded());
-    const changedPromises = changedWords.map((changedWord) => changedWord.save());
     LogUtil.log("model/word/correctRelationsByDiscard", {number: dictionary.number, affectedIds: affectedWords.map((word) => word.id)});
-    await Promise.all([...affectedPromises, ...changedPromises]);
+    await Promise.all([
+      ...affectedWords.map((affectedWord) => affectedWord.flagDiscarded()),
+      ...changedWords.map((changedWord) => changedWord.save())
+    ]);
   }
 
   /** この単語データをコピーした新しい単語データを返します。*/
