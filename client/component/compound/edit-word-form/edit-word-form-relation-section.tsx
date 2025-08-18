@@ -59,8 +59,8 @@ export const EditWordFormRelationSection = create(
         <h4 styleName="heading">{trans("heading.relations")}</h4>
         <div styleName="list">
           {(relations.length > 0) ? (
-            <SwapAnimationContext values={relations} setValues={setRelations}>
-              <EditWordFormDndContext values={relations} setValues={setRelations}>
+            <SwapAnimationContext values={relations} setValues={setRelations} move={relationFieldArraySpec.move}>
+              <EditWordFormDndContext values={relations} setValues={setRelations} move={relationFieldArraySpec.move}>
                 {relations.map((relation, index) => (
                   <EditWordFormRelationItem
                     styleName="item"
