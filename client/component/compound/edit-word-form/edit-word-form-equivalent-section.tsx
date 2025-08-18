@@ -54,8 +54,8 @@ export const EditWordFormEquivalentSection = create(
         <h4 styleName="heading">{trans("heading.equivalents")}</h4>
         <div styleName="list">
           {(equivalents.length > 0) ? (
-            <SwapAnimationContext values={equivalents} setValues={setEquivalents}>
-              <EditWordFormDndContext values={equivalents} setValues={setEquivalents}>
+            <SwapAnimationContext values={equivalents} setValues={setEquivalents} move={equivalentFieldArraySpec.move}>
+              <EditWordFormDndContext values={equivalents} setValues={setEquivalents} move={equivalentFieldArraySpec.move}>
                 {equivalents.map((equivalent, equivalentIndex) => (
                   <EditWordFormEquivalentItem
                     styleName="item"

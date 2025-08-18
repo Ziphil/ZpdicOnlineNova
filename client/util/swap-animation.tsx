@@ -23,10 +23,12 @@ const SwapAnimationContextProvider = swapAnimationContext["Provider"];
 export const SwapAnimationContext = function <T extends {id: string}>({
   values,
   setValues,
+  move,
   children
 }: {
   values: Array<T>,
   setValues: (update: (values: Array<T>) => Array<T>) => void,
+  move?: (fromIndex: number, toIndex: number) => void,
   children: ReactNode
 }): ReactElement {
   const refs = useRef<Map<string, HTMLElement>>(new Map());
@@ -47,10 +49,14 @@ export const SwapAnimationContext = function <T extends {id: string}>({
       });
       setTimeout(() => {
         setStyles({});
-        setValues((values) => moveArrayItem(values, fromIndex, toIndex));
+        if (move) {
+          move(fromIndex, toIndex);
+        } else {
+          setValues((values) => moveArrayItem(values, fromIndex, toIndex));
+        }
       }, 200);
     }
-  }, [values, setValues]);
+  }, [values, setValues, move]);
   return (
     <SwapAnimationContextProvider value={{values, refs, styles, moveValue}}>
       {children}

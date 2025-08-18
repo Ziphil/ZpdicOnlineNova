@@ -60,8 +60,8 @@ export const EditWordFormVariationSection = create(
         <h4 styleName="heading">{trans("heading.variations")}</h4>
         <div styleName="list">
           {(variations.length > 0) ? (
-            <SwapAnimationContext values={variations} setValues={setVariations}>
-              <EditWordFormDndContext values={variations} setValues={setVariations}>
+            <SwapAnimationContext values={variations} setValues={setVariations} move={variationFieldArraySpec.move}>
+              <EditWordFormDndContext values={variations} setValues={setVariations} move={variationFieldArraySpec.move}>
                 {variations.map((variation, index) => (
                   <EditWordFormVariationItem
                     styleName="item"
