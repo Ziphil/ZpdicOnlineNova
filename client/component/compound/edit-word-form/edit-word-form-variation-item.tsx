@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {useMergeRefs} from "@floating-ui/react";
-import {faTimes, faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
+import {faArrowDown, faArrowUp, faCircleEllipsisVertical, faClone, faTimes, faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
@@ -16,8 +16,11 @@ import {
   GrabbablePaneButton,
   GrabbablePaneGrip,
   GrabbablePaneGripContainer,
-  IconButton,
   Input,
+  Menu,
+  MenuItem,
+  MenuItemIconbag,
+  MenuSeparator,
   SuggestionSpec,
   useTrans
 } from "zographia";
@@ -53,7 +56,7 @@ export const EditWordFormVariationItem = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {register} = form;
+    const {register, getValues} = form;
     const {paneProps, paneRef, gripProps, dragging} = useEditWordFormDndItem(dndId);
 
     const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
@@ -86,6 +89,14 @@ export const EditWordFormVariationItem = create(
       }
     }, [dictionary.number]);
 
+    const duplicate = useCallback(function (): void {
+      variationOperations.append(getValues(`sections.${sectionIndex}.variations.${variationIndex}`));
+    }, [variationOperations, getValues, sectionIndex, variationIndex]);
+
+    const remove = useCallback(function (): void {
+      variationOperations.remove(variationIndex);
+    }, [variationOperations, variationIndex]);
+
     return (
       <GrabbablePane styleName="root" dragging={dragging} ref={mergedRef} {...rest} {...paneProps} {...swapProps}>
         <GrabbablePaneGripContainer>
@@ -117,9 +128,32 @@ export const EditWordFormVariationItem = create(
             </ControlContainer>
           </fieldset>
           <div styleName="minus">
-            <IconButton scheme="gray" variant="light" label={trans("discard.variation")} onClick={() => variationOperations.remove(variationIndex)}>
-              <GeneralIcon icon={faTimes}/>
-            </IconButton>
+            <Menu
+              placement="bottom-end"
+              trigger={(
+                <Button scheme="gray" variant="simple">
+                  <GeneralIcon icon={faCircleEllipsisVertical}/>
+                </Button>
+              )}
+            >
+              <MenuItem disabled={!canMoveUp} onClick={moveUp}>
+                <MenuItemIconbag><GeneralIcon icon={faArrowUp}/></MenuItemIconbag>
+                {trans("menu.moveUp")}
+              </MenuItem>
+              <MenuItem disabled={!canMoveDown} onClick={moveDown}>
+                <MenuItemIconbag><GeneralIcon icon={faArrowDown}/></MenuItemIconbag>
+                {trans("menu.moveDown")}
+              </MenuItem>
+              <MenuSeparator/>
+              <MenuItem onClick={duplicate}>
+                <MenuItemIconbag><GeneralIcon icon={faClone}/></MenuItemIconbag>
+                {trans("menu.duplicate")}
+              </MenuItem>
+              <MenuItem onClick={remove}>
+                <MenuItemIconbag><GeneralIcon icon={faTimes}/></MenuItemIconbag>
+                {trans("menu.discard")}
+              </MenuItem>
+            </Menu>
           </div>
         </GrabbablePaneBody>
       </GrabbablePane>
