@@ -114,18 +114,20 @@ export const EditWordFormVariationItem = create(
               <ControlLabel>{trans("label.variation.spelling")}</ControlLabel>
               <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.spelling`)}/>
             </ControlContainer>
-            <ControlContainer styleName="field-item">
-              <ControlLabel>{trans("label.variation.pronunciation")}</ControlLabel>
-              <div styleName="row">
-                <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.pronunciation`)}/>
-                {(dictionary.akrantiain !== null) && (
-                  <Button scheme="primary" variant="light" onClick={generatePronunciation}>
-                    <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
-                    {trans("button.generate")}
-                  </Button>
-                )}
-              </div>
-            </ControlContainer>
+            {(dictionary.settings.showVariationPronunciation) && (
+              <ControlContainer styleName="field-item">
+                <ControlLabel>{trans("label.variation.pronunciation")}</ControlLabel>
+                <div styleName="row">
+                  <Input {...register(`sections.${sectionIndex}.variations.${variationIndex}.pronunciation`)}/>
+                  {(dictionary.akrantiain !== null) && (
+                    <Button scheme="primary" variant="light" onClick={generatePronunciation}>
+                      <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
+                      {trans("button.generate")}
+                    </Button>
+                  )}
+                </div>
+              </ControlContainer>
+            )}
           </fieldset>
           <div styleName="minus">
             <Menu
