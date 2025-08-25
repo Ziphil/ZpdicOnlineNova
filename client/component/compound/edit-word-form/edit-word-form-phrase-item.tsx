@@ -98,7 +98,7 @@ export const EditWordFormPhraseItem = create(
             <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.phrase.titles")}</ControlLabel>
               <Controller name={`sections.${sectionIndex}.phrases.${phraseIndex}.titles`} control={form.control} render={({field}) => (
-                <TagInput values={field.value} suggest={suggestPhraseTitle} onSet={field.onChange}/>
+                <TagInput tagScheme="gray" values={field.value} suggest={suggestPhraseTitle} onSet={field.onChange}/>
               )}/>
             </ControlContainer>
             <ControlContainer styleName="field-item">

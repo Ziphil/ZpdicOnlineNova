@@ -99,7 +99,7 @@ export const EditWordFormRelationItem = create(
             <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
               <Controller name={`sections.${sectionIndex}.relations.${relationIndex}.titles`} control={form.control} render={({field}) => (
-                <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
+                <TagInput tagScheme="gray" values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
               )}/>
             </ControlContainer>
             <ControlContainer styleName="field-item">

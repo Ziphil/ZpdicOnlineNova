@@ -34,7 +34,7 @@ export const WordCardRelationList = create(
             </span>
             <MultiLineText styleName="text" is="span">
               {titles.map((title, index) => (!!title) && (
-                <Tag key={index} styleName="tag" variant="light">{title}</Tag>
+                <Tag key={index} styleName="tag" variant="light" scheme="gray">{title}</Tag>
               ))}
               {relations.map((relation, index) => ("spelling" in relation) && (
                 <Fragment key={index}>
