@@ -432,11 +432,13 @@ editExampleForm:
     supplement: "Aldona klarigo"
   absent:
     word: "Neniuj enhavitaj vortoj specifitaj"
+  menu:
+    moveUp: "Movi supren"
+    moveDown: "Movi malsupren"
+    discard: "Forigi"
   button:
     add:
       word: "Aldoni enhavitan vorton"
-    discard:
-      word: "Remove"
     confirm: "Konfirmi"
 editWordDialog:
   button:

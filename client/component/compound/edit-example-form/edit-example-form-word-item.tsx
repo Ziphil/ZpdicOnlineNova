@@ -1,22 +1,28 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faTimes} from "@fortawesome/sharp-regular-svg-icons";
+import {useMergeRefs} from "@floating-ui/react";
+import {faArrowDown, faArrowUp, faCircleEllipsisVertical, faTimes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
+  Button,
   ControlContainer,
   GeneralIcon,
   GrabbablePane,
   GrabbablePaneBody,
   GrabbablePaneGrip,
   GrabbablePaneGripContainer,
-  IconButton,
+  Menu,
+  MenuItem,
+  MenuItemIconbag,
+  MenuSeparator,
   data,
   useTrans
 } from "zographia";
 import {RelationWordSelect} from "/client/component/atom/relation-word-select";
 import {create} from "/client/component/create";
+import {useSwapAnimationItem} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {useEditExampleFormDndItem} from "./edit-example-form-dnd";
 import {EditExampleSpec} from "./edit-example-form-hook";
@@ -43,9 +49,11 @@ export const EditExampleFormWordItem = create(
     const {trans} = useTrans("editExampleForm");
 
     const {paneProps, paneRef, gripProps, dragging} = useEditExampleFormDndItem(dndId);
+    const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
+    const mergedRef = useMergeRefs([paneRef, swapRef]);
 
     return (
-      <GrabbablePane styleName="root" dragging={dragging} ref={paneRef} {...rest} {...paneProps}>
+      <GrabbablePane styleName="root" dragging={dragging} ref={mergedRef} {...rest} {...paneProps} {...swapProps}>
         <GrabbablePaneGripContainer>
           <GrabbablePaneGrip {...gripProps}/>
         </GrabbablePaneGripContainer>
@@ -58,9 +66,28 @@ export const EditExampleFormWordItem = create(
             </ControlContainer>
           </fieldset>
           <div styleName="minus">
-            <IconButton scheme="gray" variant="light" label={trans("discard.word")} onClick={() => wordOperations.remove(index)}>
-              <GeneralIcon icon={faTimes}/>
-            </IconButton>
+            <Menu
+              placement="bottom-end"
+              trigger={(
+                <Button scheme="gray" variant="simple">
+                  <GeneralIcon icon={faCircleEllipsisVertical}/>
+                </Button>
+              )}
+            >
+              <MenuItem disabled={!canMoveUp} onClick={moveUp}>
+                <MenuItemIconbag><GeneralIcon icon={faArrowUp}/></MenuItemIconbag>
+                {trans("menu.moveUp")}
+              </MenuItem>
+              <MenuItem disabled={!canMoveDown} onClick={moveDown}>
+                <MenuItemIconbag><GeneralIcon icon={faArrowDown}/></MenuItemIconbag>
+                {trans("menu.moveDown")}
+              </MenuItem>
+              <MenuSeparator/>
+              <MenuItem onClick={() => wordOperations.remove(index)}>
+                <MenuItemIconbag><GeneralIcon icon={faTimes}/></MenuItemIconbag>
+                {trans("menu.discard")}
+              </MenuItem>
+            </Menu>
           </div>
         </GrabbablePaneBody>
       </GrabbablePane>

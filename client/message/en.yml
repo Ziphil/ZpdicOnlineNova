@@ -432,11 +432,13 @@ editExampleForm:
     supplement: "Supplementary explanation"
   absent:
     word: "No included words specified"
+  menu:
+    moveUp: "Move up"
+    moveDown: "Move down"
+    discard: "Remove"
   button:
     add:
       word: "Add included words"
-    discard:
-      word: "Remove"
     confirm: "Confirm"
 editWordDialog:
   button:

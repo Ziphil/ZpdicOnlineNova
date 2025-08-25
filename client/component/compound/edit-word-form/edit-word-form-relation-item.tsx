@@ -61,9 +61,7 @@ export const EditWordFormRelationItem = create(
 
     const {register, getValues} = form;
     const {paneProps, paneRef, gripProps, dragging} = useEditWordFormDndItem(dndId);
-
     const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
-
     const mergedRef = useMergeRefs([paneRef, swapRef]);
 
     const suggestRelationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {

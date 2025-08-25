@@ -11,6 +11,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
+import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 import {EditExampleFormDndContext} from "./edit-example-form-dnd";
 import {EditExampleSpec} from "./edit-example-form-hook";
@@ -47,19 +48,21 @@ export const EditExampleFormWordSection = create(
         <h3 styleName="heading">{trans("heading.words")}</h3>
         <div styleName="list">
           {(words.length > 0) ? (
-            <EditExampleFormDndContext values={words} setValues={setWords}>
-              {words.map((word, index) => (
-                <EditExampleFormWordItem
-                  styleName="item"
-                  key={word.id}
-                  dictionary={dictionary}
-                  form={form}
-                  wordOperations={wordOperations}
-                  dndId={word.id}
-                  index={index}
-                />
-              ))}
-            </EditExampleFormDndContext>
+            <SwapAnimationContext values={words} setValues={setWords}>
+              <EditExampleFormDndContext values={words} setValues={setWords}>
+                {words.map((word, index) => (
+                  <EditExampleFormWordItem
+                    styleName="item"
+                    key={word.id}
+                    dictionary={dictionary}
+                    form={form}
+                    wordOperations={wordOperations}
+                    dndId={word.id}
+                    index={index}
+                  />
+                ))}
+              </EditExampleFormDndContext>
+            </SwapAnimationContext>
           ) : (
             <p styleName="absent">
               {trans("absent.word")}
