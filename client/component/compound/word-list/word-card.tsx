@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faCheck, faCircleEllipsis, faClone, faEdit, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {faCheck, faCircleInfo, faClone, faEdit, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {useHref} from "react-router";
 import {
@@ -145,12 +145,12 @@ export const WordCard = create(
               {(showInfo) && (
                 <WordCardInfoPopover word={word} trigger={(device === "desktop") ? (
                   <Button scheme="secondary" variant="underline">
-                    <ButtonIconbag><GeneralIcon icon={faCircleEllipsis}/></ButtonIconbag>
+                    <ButtonIconbag><GeneralIcon icon={faCircleInfo}/></ButtonIconbag>
                     {trans("button.info")}
                   </Button>
                 ) : (
                   <Button scheme="secondary" variant="underline">
-                    <GeneralIcon icon={faCircleEllipsis}/>
+                    <GeneralIcon icon={faCircleInfo}/>
                   </Button>
                 )}/>
               )}
