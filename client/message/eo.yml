@@ -488,6 +488,11 @@ editWordForm:
     relation: "Neniuj rilataj vortoj"
   duplicateSpelling: >-
     Vorto kun la sama literumo jam estas registrita.
+  menu:
+    moveUp: "Movi supren"
+    moveDown: "Movi malsupren"
+    duplicate: "Duobligi"
+    discard: "Forigi"
   button:
     add:
       section: "Aldoni seksion"
@@ -496,13 +501,6 @@ editWordForm:
       phrase: "Aldoni idiomaĵon"
       variation: "Aldoni variaĵan formon"
       relation: "Aldoni rilatan vorton"
-    discard:
-      section: "Forigi seksion"
-      equivalent: "Forigi"
-      information: "Forigi"
-      phrase: "Forigi"
-      variation: "Forigi"
-      relation: "Forigi"
     resource: "Bildoj"
     generate: "Generi"
     confirm: "Konfirmi"

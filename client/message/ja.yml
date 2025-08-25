@@ -499,13 +499,6 @@ editWordForm:
       phrase: "成句を追加"
       variation: "変化形を追加"
       relation: "関連語を追加"
-    discard:
-      section: "セクションを削除"
-      equivalent: "削除"
-      information: "削除"
-      phrase: "削除"
-      variation: "削除"
-      relation: "削除"
     resource: "画像"
     generate: "生成"
     confirm: "決定"

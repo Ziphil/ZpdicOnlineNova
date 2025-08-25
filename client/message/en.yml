@@ -488,6 +488,11 @@ editWordForm:
     relation: "No related words"
   duplicateSpelling: >-
     A word with the same spelling has already been registered.
+  menu:
+    moveUp: "Move up"
+    moveDown: "Move down"
+    duplicate: "Duplicate"
+    discard: "Remove"
   button:
     add:
       section: "Add section"
@@ -496,13 +501,6 @@ editWordForm:
       phrase: "Add idiomatic expression"
       variation: "Add variation form"
       relation: "Add related word"
-    discard:
-      section: "Remove section"
-      equivalent: "Remove"
-      information: "Remove"
-      phrase: "Remove"
-      variation: "Remove"
-      relation: "Remove"
     resource: "Images"
     generate: "Generate"
     confirm: "Confirm"
