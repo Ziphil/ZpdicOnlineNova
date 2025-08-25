@@ -66,7 +66,7 @@ export class DictionarySettingsSchema {
       enableDuplicateName: true,
       showVariationPronunciation: true,
       showEquivalentNumber: false,
-      showSectionNumber: false
+      showSectionNumber: true
     });
     return settings;
   }

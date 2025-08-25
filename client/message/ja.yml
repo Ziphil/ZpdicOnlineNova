@@ -28,13 +28,13 @@ toast:
         設定を変更しました。
       font: |-
         設定を変更しました。
-      pronunciationTitle: |-
-        設定を変更しました。
       enableAdvancedWord: |-
         設定を変更しました。
       enableMarkdown: |-
         設定を変更しました。
       enableDuplicateName: |-
+        設定を変更しました。
+      showVariationPronunciation: |-
         設定を変更しました。
       punctuations: |-
         設定を変更しました。
@@ -872,6 +872,9 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "有効"
       false: "無効"
+    showVariationPronunciation:
+      true: "表示する"
+      false: "表示しない"
   pattern:
     none: "設定なし"
     paren: "丸カッコ内を無視"
@@ -1052,6 +1055,7 @@ dictionarySettingDisplayPart:
   heading:
     font: "見出し語のフォント"
     showNumbers: "通し番号"
+    showVariationPronunciation: "変化形の発音記号"
     wordCardTitles: "単語カードでの見出し"
     slimeTitles: "OTM-JSON 形式での見出し"
   description:

@@ -28,15 +28,13 @@ toast:
         The setting has been changed.
       font: |-
         The setting has been changed.
-      exampleTitle: |-
-        The setting has been changed.
-      pronunciationTitle: |-
-        The setting has been changed.
       enableAdvancedWord: |-
         The setting has been changed.
       enableMarkdown: |-
         The setting has been changed.
       enableDuplicateName: |-
+        The setting has been changed.
+      showVariationPronunciation: |-
         The setting has been changed.
       punctuations: |-
         The setting has been changed.
@@ -876,6 +874,9 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Enabled"
       false: "Disabled"
+    showVariationPronunciation:
+      true: "Show"
+      false: "Don’t show"
   pattern:
     none: "No setting"
     paren: "Ignore inside round brackets (parens)"
@@ -1054,6 +1055,7 @@ dictionarySettingDisplayPart:
   heading:
     font: "Font for headwords"
     showNumbers: "Numberings"
+    showVariationPronunciation: "Variation pronunciations"
     wordCardTitles: "Headings in word cards"
     slimeTitles: "Headings in OTM-JSON format"
   description:

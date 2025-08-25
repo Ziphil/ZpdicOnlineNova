@@ -28,7 +28,7 @@ export namespace DictionarySettingsCreator {
       enableDuplicateName: raw.enableDuplicateName,
       showVariationPronunciation: raw.showVariationPronunciation ?? true,
       showEquivalentNumber: raw.showEquivalentNumber,
-      showSectionNumber: raw.showSectionNumber ?? false
+      showSectionNumber: raw.showSectionNumber ?? true
     } satisfies DictionarySettingsSkeleton;
     return skeleton;
   }

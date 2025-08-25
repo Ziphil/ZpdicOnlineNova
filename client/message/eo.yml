@@ -28,15 +28,13 @@ toast:
         La agordo ŝanĝitas.
       font: |-
         La agordo ŝanĝitas.
-      exampleTitle: |-
-        La agordo ŝanĝitas.
-      pronunciationTitle: |-
-        La agordo ŝanĝitas.
       enableAdvancedWord: |-
         La agordo ŝanĝitas.
       enableMarkdown: |-
         La agordo ŝanĝitas.
       enableDuplicateName: |-
+        La agordo ŝanĝitas.
+      showVariationPronunciation: |-
         La agordo ŝanĝitas.
       punctuations: |-
         La agordo ŝanĝitas.
@@ -876,7 +874,7 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Ebligita"
       false: "Malebligita"
-    showNumbers:
+    showVariationPronunciation:
       true: "Montri"
       false: "Ne montri"
   pattern:
@@ -1057,6 +1055,7 @@ dictionarySettingDisplayPart:
   heading:
     font: "Tiparo por kapvortoj"
     showNumbers: "Numeroj"
+    showVariationPronunciation: "Elparoloj de variaĵaj formoj"
     wordCardTitles: "Titoloj en vortokartoj"
     slimeTitles: "Titoloj en formato OTM-JSON"
   description:
