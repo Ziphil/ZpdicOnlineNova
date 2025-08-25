@@ -9,7 +9,7 @@ import {ChangeDictionaryExplanationForm} from "/client/component/form/change-dic
 import {ChangeDictionaryFontForm} from "/client/component/form/change-dictionary-font-form";
 import {ChangeDictionaryNameForm} from "/client/component/form/change-dictionary-name-form";
 import {ChangeDictionaryParamNameForm} from "/client/component/form/change-dictionary-param-name-form";
-import {ChangeDictionarySettingsForm} from "/client/component/form/change-dictionary-settings-form";
+import {ChangeDictionaryShowNumbersForm} from "/client/component/form/change-dictionary-show-numbers-form";
 import {ChangeDictionaryVisibilityForm} from "/client/component/form/change-dictionary-visibility-form";
 import {DiscardDictionaryButton} from "/client/component/form/discard-dictionary-button";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
@@ -52,11 +52,11 @@ export const DictionarySettingGeneralPart = create(
           <ChangeDictionaryFontForm dictionary={dictionary}/>
         </section>
         <section styleName="section">
-          <h3 styleName="heading">{trans("heading.showEquivalentNumber")}</h3>
+          <h3 styleName="heading">{trans("heading.showNumbers")}</h3>
           <MultiLineText styleName="description">
-            {trans("description.showEquivalentNumber")}
+            {trans("description.showNumbers")}
           </MultiLineText>
-          <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="showEquivalentNumber"/>
+          <ChangeDictionaryShowNumbersForm dictionary={dictionary}/>
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.visibility")}</h3>

@@ -13,6 +13,8 @@ toast:
       La identigilo ŝanĝitas.
     changeDictionaryExplanation: |-
       La priskribo ŝanĝitas.
+    changeDictionaryShowNumbers: |-
+      La agordo ŝanĝitas.
     changeDictionaryWordCardTitles: |-
       La agordo ŝanĝitas.
     changeDictionarySlimeTitles: |-
@@ -25,8 +27,6 @@ toast:
       zatlinSource: |-
         La agordo ŝanĝitas.
       font: |-
-        La agordo ŝanĝitas.
-      showEquivalentNumber: |-
         La agordo ŝanĝitas.
       exampleTitle: |-
         La agordo ŝanĝitas.
@@ -876,7 +876,7 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Ebligita"
       false: "Malebligita"
-    showEquivalentNumber:
+    showNumbers:
       true: "Montri"
       false: "Ne montri"
   pattern:
@@ -886,6 +886,12 @@ changeDictionarySettingsForm:
   error:
     invalidPattern: >-
       Enigu validan regulan esprimon.
+changeDictionaryShowNumbersForm:
+  label:
+    section: "Por sekcioj"
+    equivalent: "Por tradukaĵoj"
+    true: "Montri"
+    false: "Ne montri"
 changeDictionarySlimeTitlesForm:
   label:
     pronunciationTitle: "Por elparoloj"
@@ -1106,7 +1112,7 @@ dictionarySettingGeneralPart:
     paramName: "Identigilo por retadreso"
     explanation: "Priskribo"
     font: "Tiparo por kapvortoj"
-    showEquivalentNumber: "Numero de tradukaĵoj"
+    showNumbers: "Numeroj"
     visibility: "Videbleco"
     discard: "Forigi"
   description:
@@ -1118,8 +1124,8 @@ dictionarySettingGeneralPart:
     font: >-
       Vi povas ŝanĝi la tiparon por kapvortoj.
       Elektu “Uzi lokan tiparon” por uzi tiparon instalitan en la medio de la vizitanto, aŭ “Alŝuti propran tiparon” por uzi vian propran alŝutitan tiparon.
-    showEquivalentNumber: >-
-      Se vi ebligos tiun funkcion, la numero de tradukaĵoj estos montrata.
+    showNumbers: >-
+      Se vi ebligos tiun funkcion, la numeroj de tradukaĵoj kaj/aŭ sekcioj estos montrataj.
     visibility: >-
       Se vi agordos tiun al “Nelistigita”, la vortaro ne aperos en listoj de vortaroj.
       Tamen ĉiu kiu scias la retadreson de la paĝo de la vortaro povas ankoraŭ rekte aliri ĝin.

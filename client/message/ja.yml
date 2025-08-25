@@ -13,6 +13,8 @@ toast:
       識別子を変更しました。
     changeDictionaryExplanation: |-
       説明を変更しました。
+    changeDictionaryShowNumbers: |-
+      設定を変更しました。
     changeDictionaryWordCardTitles: |-
       設定を変更しました。
     changeDictionarySlimeTitles: |-
@@ -25,8 +27,6 @@ toast:
       zatlinSource: |-
         設定を変更しました。
       font: |-
-        設定を変更しました。
-      showEquivalentNumber: |-
         設定を変更しました。
       pronunciationTitle: |-
         設定を変更しました。
@@ -872,9 +872,6 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "有効"
       false: "無効"
-    showEquivalentNumber:
-      true: "表示する"
-      false: "表示しない"
   pattern:
     none: "設定なし"
     paren: "丸カッコ内を無視"
@@ -882,6 +879,12 @@ changeDictionarySettingsForm:
   error:
     invalidPattern: >-
       正規表現として有効なパターンを入力してください。
+changeDictionaryShowNumbersForm:
+  label:
+    section: "セクション"
+    equivalent: "訳語"
+    true: "表示する"
+    false: "表示しない"
 changeDictionarySlimeTitlesForm:
   label:
     pronunciationTitle: "発音"
@@ -1104,7 +1107,7 @@ dictionarySettingGeneralPart:
     paramName: "URL 用識別子"
     explanation: "説明"
     font: "見出し語のフォント"
-    showEquivalentNumber: "訳語の番号"
+    showNumbers: "通し番号"
     visibility: "公開範囲"
     discard: "削除"
   description:
@@ -1117,8 +1120,8 @@ dictionarySettingGeneralPart:
       見出し語のフォントを変更することができます。
       「ローカルフォントを参照」を選択すると、閲覧者各自の環境にインストールされているフォントを参照して使用します。
       「フォントをアップロード」を選択すると、アップロードされた独自のフォントを使用します。
-    showEquivalentNumber: >-
-      これを有効にすると、訳語欄の横に通し番号が表示されるようになります。
+    showNumbers: >-
+      これを有効にすると、セクションや訳語の横に通し番号が表示されるようになります。
     visibility: >-
       これを「限定公開」に設定すると、この辞書が辞書一覧に表示されなくなります。
       ただし、辞書ページの URL を知っている人は直接アクセスすることができます。

@@ -13,6 +13,8 @@ toast:
       The identifier has been changed.
     changeDictionaryExplanation: |-
       The description has been changed.
+    changeDictionaryShowNumbers: |-
+      The setting has been changed.
     changeDictionaryWordCardTitles: |-
       The setting has been changed.
     changeDictionarySlimeTitles: |-
@@ -25,8 +27,6 @@ toast:
       zatlinSource: |-
         The setting has been changed.
       font: |-
-        The setting has been changed.
-      showEquivalentNumber: |-
         The setting has been changed.
       exampleTitle: |-
         The setting has been changed.
@@ -876,9 +876,6 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Enabled"
       false: "Disabled"
-    showEquivalentNumber:
-      true: "Show"
-      false: "Don’t show"
   pattern:
     none: "No setting"
     paren: "Ignore inside round brackets (parens)"
@@ -886,6 +883,12 @@ changeDictionarySettingsForm:
   error:
     invalidPattern: >-
       Enter a valid regular expression.
+changeDictionaryShowNumbersForm:
+  label:
+    section: "For sections"
+    equivalent: "For translations"
+    true: "Show"
+    false: "Don’t show"
 changeDictionarySlimeTitlesForm:
   label:
     pronunciationTitle: "For pronunciations"
@@ -1106,7 +1109,7 @@ dictionarySettingGeneralPart:
     paramName: "Identifier for URL"
     explanation: "Description"
     font: "Font for headwords"
-    showEquivalentNumber: "Translation numbering"
+    showNumbers: "Numberings"
     visibility: "Visibility"
     discard: "Delete"
   description:
@@ -1118,8 +1121,8 @@ dictionarySettingGeneralPart:
     font: >-
       You can change the font for headwords.
       Select ‘Use local font’ to use a font installed in the visiter’s environment, or ‘Upload custom font’ to use your own uploaded font.
-    showEquivalentNumber: >-
-      Enabling this feature will display the index number of each translation.
+    showNumbers: >-
+      Enabling this feature will display the index number of each translation and/or section.
     visibility: >-
       If you set this to ‘Unlisted’, this dictionary will not appear in dictionary lists.
       However, anyone who knows the URL of the dictionary page can still access it directly.
