@@ -10,7 +10,7 @@ import {Dictionary} from "/server/internal/skeleton";
 
 
 const SCHEMA = object({
-  pronunciationTitle: string()
+  pronunciation: string()
 });
 type FormValue = Asserts<typeof SCHEMA>;
 
@@ -20,11 +20,11 @@ export type ChangeDictionarySlimeTitlesSpec = {
 };
 
 export function useChangeDictionarySlimeTitles(dictionary: Dictionary): ChangeDictionarySlimeTitlesSpec {
-  const form = useForm<FormValue>(SCHEMA, {pronunciationTitle: dictionary.settings.pronunciationTitle}, {});
+  const form = useForm<FormValue>(SCHEMA, {pronunciation: dictionary.settings.pronunciationTitle}, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {pronunciationTitle: value.pronunciationTitle ?? ""}});
+    const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {pronunciationTitle: value.pronunciation ?? ""}});
     await switchResponse(response, async () => {
       await invalidateResponses("fetchDictionary", (query) => +query.identifier === dictionary.number || query.identifier === dictionary.paramName);
       dispatchSuccessToast("changeDictionarySlimeTitles");

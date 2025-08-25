@@ -29,11 +29,11 @@ export const ChangeDictionaryShowNumbersForm = create(
           <ControlLabel>{trans("label.section")}</ControlLabel>
           <div styleName="radio-group">
             <CheckableContainer>
-              <Radio value="true" {...register("showSectionNumber")}/>
+              <Radio value="true" {...register("section")}/>
               <CheckableLabel>{trans("label.true")}</CheckableLabel>
             </CheckableContainer>
             <CheckableContainer>
-              <Radio value="false" {...register("showSectionNumber")}/>
+              <Radio value="false" {...register("section")}/>
               <CheckableLabel>{trans("label.false")}</CheckableLabel>
             </CheckableContainer>
           </div>
@@ -42,11 +42,11 @@ export const ChangeDictionaryShowNumbersForm = create(
           <ControlLabel>{trans("label.equivalent")}</ControlLabel>
           <div styleName="radio-group">
             <CheckableContainer>
-              <Radio value="true" {...register("showEquivalentNumber")}/>
+              <Radio value="true" {...register("equivalent")}/>
               <CheckableLabel>{trans("label.true")}</CheckableLabel>
             </CheckableContainer>
             <CheckableContainer>
-              <Radio value="false" {...register("showEquivalentNumber")}/>
+              <Radio value="false" {...register("equivalent")}/>
               <CheckableLabel>{trans("label.false")}</CheckableLabel>
             </CheckableContainer>
           </div>

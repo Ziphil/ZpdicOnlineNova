@@ -27,14 +27,14 @@ export const ChangeDictionaryWordCardTitlesForm = create(
     return (
       <form styleName="root" {...rest}>
         <ControlContainer>
-          <ControlLabel>{trans("label.phraseTitle")}</ControlLabel>
-          <Input error={!!getFieldState("phraseTitle").error} {...register("phraseTitle")}/>
-          <ControlErrorMessage name="phraseTitle" form={form} trans={trans}/>
+          <ControlLabel>{trans("label.phrase")}</ControlLabel>
+          <Input error={!!getFieldState("phrase").error} {...register("phrase")}/>
+          <ControlErrorMessage name="phrase" form={form} trans={trans}/>
         </ControlContainer>
         <ControlContainer>
-          <ControlLabel>{trans("label.exampleTitle")}</ControlLabel>
-          <Input error={!!getFieldState("exampleTitle").error} {...register("exampleTitle")}/>
-          <ControlErrorMessage name="exampleTitle" form={form} trans={trans}/>
+          <ControlLabel>{trans("label.example")}</ControlLabel>
+          <Input error={!!getFieldState("example").error} {...register("example")}/>
+          <ControlErrorMessage name="example" form={form} trans={trans}/>
         </ControlContainer>
         <div>
           <Button variant="light" type="submit" onClick={handleSubmit}>

@@ -887,11 +887,11 @@ changeDictionaryShowNumbersForm:
     false: "表示しない"
 changeDictionarySlimeTitlesForm:
   label:
-    pronunciationTitle: "発音"
+    pronunciation: "発音"
 changeDictionaryWordCardTitlesForm:
   label:
-    phraseTitle: "成句"
-    exampleTitle: "例文"
+    phrase: "成句"
+    example: "例文"
 changeDictionaryVisibilityForm:
   label:
     public: "全体公開"

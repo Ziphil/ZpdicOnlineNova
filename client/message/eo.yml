@@ -894,11 +894,11 @@ changeDictionaryShowNumbersForm:
     false: "Ne montri"
 changeDictionarySlimeTitlesForm:
   label:
-    pronunciationTitle: "Por elparoloj"
+    pronunciation: "Por elparoloj"
 changeDictionaryWordCardTitlesForm:
   label:
-    phraseTitle: "Por idiomaĵoj"
-    exampleTitle: "Por ekzemplaj frazoj"
+    phrase: "Por idiomaĵoj"
+    example: "Por ekzemplaj frazoj"
 changeDictionaryVisibilityForm:
   label:
     public: "Publika"

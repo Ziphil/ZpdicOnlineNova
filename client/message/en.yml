@@ -891,11 +891,11 @@ changeDictionaryShowNumbersForm:
     false: "Don’t show"
 changeDictionarySlimeTitlesForm:
   label:
-    pronunciationTitle: "For pronunciations"
+    pronunciation: "For pronunciations"
 changeDictionaryWordCardTitlesForm:
   label:
-    phraseTitle: "For idiomatic expressions"
-    exampleTitle: "For example sentences"
+    phrase: "For idiomatic expressions"
+    example: "For example sentences"
 changeDictionaryVisibilityForm:
   label:
     public: "Public"

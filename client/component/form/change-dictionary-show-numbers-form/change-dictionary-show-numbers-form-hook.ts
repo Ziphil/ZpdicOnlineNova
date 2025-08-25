@@ -10,8 +10,8 @@ import {Dictionary} from "/server/internal/skeleton";
 
 
 const SCHEMA = object({
-  showSectionNumber: string().oneOf(["true", "false"]).required(),
-  showEquivalentNumber: string().oneOf(["true", "false"]).required()
+  section: string().oneOf(["true", "false"]).required(),
+  equivalent: string().oneOf(["true", "false"]).required()
 });
 type FormValue = Asserts<typeof SCHEMA>;
 
@@ -21,11 +21,11 @@ export type ChangeDictionaryShowNumbersSpec = {
 };
 
 export function useChangeDictionaryShowNumbers(dictionary: Dictionary): ChangeDictionaryShowNumbersSpec {
-  const form = useForm<FormValue>(SCHEMA, {showSectionNumber: (dictionary.settings.showSectionNumber) ? "true" : "false", showEquivalentNumber: (dictionary.settings.showEquivalentNumber) ? "true" : "false"}, {});
+  const form = useForm<FormValue>(SCHEMA, {section: (dictionary.settings.showSectionNumber) ? "true" : "false", equivalent: (dictionary.settings.showEquivalentNumber) ? "true" : "false"}, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {showSectionNumber: value.showSectionNumber === "true", showEquivalentNumber: value.showEquivalentNumber === "true"}});
+    const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {showSectionNumber: value.section === "true", showEquivalentNumber: value.equivalent === "true"}});
     await switchResponse(response, async () => {
       await invalidateResponses("fetchDictionary", (query) => +query.identifier === dictionary.number || query.identifier === dictionary.paramName);
       dispatchSuccessToast("changeDictionaryShowNumbers");
