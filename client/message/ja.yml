@@ -1035,6 +1035,7 @@ dictionaryResourcePart:
 dictionarySettingPart:
   tab:
     general: "一般"
+    display: "表示"
     editing: "編集"
     template: "テンプレート"
     authority: "権限"
@@ -1047,6 +1048,27 @@ dictionarySettingAuthorityPart:
     editInvitation: >-
       この辞書の編集権限を保有しているユーザーです。
       これらのユーザーは、単語の編集や削除はできますが、辞書の設定変更や削除はできません。
+dictionarySettingDisplayPart:
+  heading:
+    font: "見出し語のフォント"
+    showNumbers: "通し番号"
+    wordCardTitles: "単語カードでの見出し"
+    slimeTitles: "OTM-JSON 形式での見出し"
+  description:
+    font: >-
+      見出し語のフォントを変更することができます。
+      「ローカルフォントを参照」を選択すると、閲覧者各自の環境にインストールされているフォントを参照して使用します。
+      「フォントをアップロード」を選択すると、アップロードされた独自のフォントを使用します。
+    showNumbers: >-
+      これを有効にすると、セクションや訳語の横に通し番号が表示されるようになります。
+    wordCardTitles: >-
+      単語カードに各種項目を表示する際の見出しです。
+    slimeTitles: >-
+      辞書を OTM-JSON 形式で出力したときに各種項目が格納される内容欄の見出しです。
+  callout:
+    font: >-
+      アップロードしたフォントが反映されるまで時間がかかることがあります。
+      しばらくしても反映されない場合は、ブラウザのキャッシュを消去してみてください。
 dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Akrantiain ソースコード"
@@ -1056,8 +1078,6 @@ dictionarySettingEditingPart:
     enableDuplicateName: "重複綴りチェック"
     punctuations: "区切り文字"
     ignoredEquivalentPattern: "訳語で無視するパターン"
-    wordCardTitles: "単語カードでの見出し"
-    slimeTitles: "OTM-JSON 形式での見出し"
   description:
     akrantiainSource: >-
       Akrantiain とは、単語の綴りから発音記号を自動生成するためのシステムです。 
@@ -1082,10 +1102,6 @@ dictionarySettingEditingPart:
       訳語欄に入力されたテキストから訳語を抽出する際に、ここで設定された正規表現パターンにマッチした部分は無視されます。
       そのため、マッチした部分は訳語検索の対象外となります。
       例えば、訳語欄に動詞の格の取り方を明示したいが訳語検索の対象にはしたくない場合などに利用できます。
-    wordCardTitles: >-
-      単語カードに各種項目を表示する際の見出しです。
-    slimeTitles: >-
-      辞書を OTM-JSON 形式で出力したときに各種項目が格納される内容欄の見出しです。
 dictionarySettingFilePart:
   heading:
     upload: "インポート"
@@ -1106,8 +1122,6 @@ dictionarySettingGeneralPart:
     name: "名前"
     paramName: "URL 用識別子"
     explanation: "説明"
-    font: "見出し語のフォント"
-    showNumbers: "通し番号"
     visibility: "公開範囲"
     discard: "削除"
   description:
@@ -1116,19 +1130,10 @@ dictionarySettingGeneralPart:
     explanation: >-
       この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
       一部の Markdown 形式に対応しています。
-    font: >-
-      見出し語のフォントを変更することができます。
-      「ローカルフォントを参照」を選択すると、閲覧者各自の環境にインストールされているフォントを参照して使用します。
-      「フォントをアップロード」を選択すると、アップロードされた独自のフォントを使用します。
-    showNumbers: >-
-      これを有効にすると、セクションや訳語の横に通し番号が表示されるようになります。
     visibility: >-
       これを「限定公開」に設定すると、この辞書が辞書一覧に表示されなくなります。
       ただし、辞書ページの URL を知っている人は直接アクセスすることができます。
   callout:
-    font: >-
-      アップロードしたフォントが反映されるまで時間がかかることがあります。
-      しばらくしても反映されない場合は、ブラウザのキャッシュを消去してみてください。
     discard: >-
       この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。
       後からデータを復元することはできないので、慎重に行ってください。

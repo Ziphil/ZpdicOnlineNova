@@ -22,6 +22,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="settings" lazy={() => import("/client/component/page/dictionary-setting-part")}>
         <Route index={true} lazy={() => import("/client/component/page/dictionary-setting-general-part")}/>
         <Route path="general" lazy={() => import("/client/component/page/dictionary-setting-general-part")}/>
+        <Route path="display" lazy={() => import("/client/component/page/dictionary-setting-display-part")}/>
         <Route path="editing" lazy={() => import("/client/component/page/dictionary-setting-editing-part")}/>
         <Route path="template" lazy={() => import("/client/component/page/dictionary-setting-template-part")}/>
         <Route path="file" lazy={() => import("/client/component/page/dictionary-setting-file-part")}/>

@@ -1040,6 +1040,7 @@ dictionaryMainPart:
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"
+    display: "Vidigo"
     editing: "Redaktado"
     template: "Ŝablonoj"
     authority: "Permesoj"
@@ -1052,6 +1053,26 @@ dictionarySettingAuthorityPart:
     editInvitation: >-
       La jenaj uzantoj havas permeson redakti tiun vortaron.
       Ili povas redakti kaj forigi vortojn, sed ili ne povas ŝanĝi la agordojn de la vortaro aŭ forigi la vortaron mem.
+dictionarySettingDisplayPart:
+  heading:
+    font: "Tiparo por kapvortoj"
+    showNumbers: "Numeroj"
+    wordCardTitles: "Titoloj en vortokartoj"
+    slimeTitles: "Titoloj en formato OTM-JSON"
+  description:
+    font: >-
+      Vi povas ŝanĝi la tiparon por kapvortoj.
+      Elektu “Uzi lokan tiparon” por uzi tiparon instalitan en la medio de la vizitanto, aŭ “Alŝuti propran tiparon” por uzi vian propran alŝutitan tiparon.
+    showNumbers: >-
+      Se vi ebligos tiun funkcion, la numeroj de tradukaĵoj kaj/aŭ sekcioj estos montrataj.
+    wordCardTitles: >-
+      Jen la titoloj de sekcioj, kiuj estas montrataj en kartoj de vorto.
+    slimeTitles: >-
+      Jen la titoloj de sekcioj, kiuj estos uzataj kiam la vortaro estos eligita en formato OTM-JSON.
+  callout:
+    font: >-
+      Eble necesas tempo por ke la alŝutita tiparo estus reflektita.
+      Se ĝi ne reflektas eĉ post iom da tempo, provu forigi la kaŝmemoron de via retumilo.
 dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Fontkodo por Akrantiain"
@@ -1061,8 +1082,6 @@ dictionarySettingEditingPart:
     enableDuplicateName: "Kontrolon de duobla literumo"
     punctuations: "Disigiloj"
     ignoredEquivalentPattern: "Regulesprimo ignorota en tradukaĵoj"
-    wordCardTitles: "Titoloj en vortokartoj"
-    slimeTitles: "Titoloj en formato OTM-JSON"
   description:
     akrantiainSource: >-
       Akrantiain estas aparato kiu aŭtomate generas fonetikajn simbolojn surbaze de la literumo de vortoj.
@@ -1087,10 +1106,6 @@ dictionarySettingEditingPart:
       Kiam oni ĉerpas tradukaĵojn el la teksto enigita en la tradukaĵa kampo, la partoj kongruaj kun tiu regulesprimo estas ignorataj.
       La kongruoj do ne estos inkluzivitaj en la tradukaĵa serĉo.
       Tio ekzemple povas esti uzata, se oni volas montri la kazan strukturon de verbo en la tradukaĵa kampo, sed ne volas ke ĝi estus inkluzivita en la tradukaĵa serĉo.
-    wordCardTitles: >-
-      Jen la titoloj de sekcioj, kiuj estas montrataj en kartoj de vorto.
-    slimeTitles: >-
-      Jen la titoloj de sekcioj, kiuj estos uzataj kiam la vortaro estos eligita en formato OTM-JSON.
 dictionarySettingFilePart:
   heading:
     upload: "Importi"
@@ -1111,8 +1126,6 @@ dictionarySettingGeneralPart:
     name: "Nomo"
     paramName: "Identigilo por retadreso"
     explanation: "Priskribo"
-    font: "Tiparo por kapvortoj"
-    showNumbers: "Numeroj"
     visibility: "Videbleco"
     discard: "Forigi"
   description:
@@ -1121,18 +1134,10 @@ dictionarySettingGeneralPart:
     explanation: >-
       Tio estas montrata sur la paĝo de la vortaro antaŭ serĉado.
       Vi povas uzi iun sintakson de Markdown.
-    font: >-
-      Vi povas ŝanĝi la tiparon por kapvortoj.
-      Elektu “Uzi lokan tiparon” por uzi tiparon instalitan en la medio de la vizitanto, aŭ “Alŝuti propran tiparon” por uzi vian propran alŝutitan tiparon.
-    showNumbers: >-
-      Se vi ebligos tiun funkcion, la numeroj de tradukaĵoj kaj/aŭ sekcioj estos montrataj.
     visibility: >-
       Se vi agordos tiun al “Nelistigita”, la vortaro ne aperos en listoj de vortaroj.
       Tamen ĉiu kiu scias la retadreson de la paĝo de la vortaro povas ankoraŭ rekte aliri ĝin.
   callout:
-    font: >-
-      Eble necesas tempo por ke la alŝutita tiparo estus reflektita.
-      Se ĝi ne reflektas eĉ post iom da tempo, provu forigi la kaŝmemoron de via retumilo.
     discard: >-
       Forigi tiun vortaron ankaŭ forigos ĉiujn rilatajn datumojn, inkluzive de vortoj kaj ekzemplaj frazoj.
       Bonvolu esti certa, ĉar ne estas reiro.
