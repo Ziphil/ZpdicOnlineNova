@@ -15,7 +15,6 @@ import {
   GeneralIcon,
   GrabbablePane,
   GrabbablePaneBody,
-  GrabbablePaneButton,
   GrabbablePaneGrip,
   GrabbablePaneGripContainer,
   Input,
@@ -94,9 +93,7 @@ export const EditWordFormEquivalentItem = create(
     return (
       <GrabbablePane styleName="root" dragging={dragging} ref={mergedRef} {...rest} {...paneProps} {...swapProps}>
         <GrabbablePaneGripContainer>
-          <GrabbablePaneButton position="top" disabled={!canMoveUp} onClick={moveUp}/>
           <GrabbablePaneGrip {...gripProps}/>
-          <GrabbablePaneButton position="bottom" disabled={!canMoveDown} onClick={moveDown}/>
         </GrabbablePaneGripContainer>
         <GrabbablePaneBody styleName="body">
           <fieldset styleName="field-list">
