@@ -13,6 +13,8 @@ toast:
       The identifier has been changed.
     changeDictionaryExplanation: |-
       The description has been changed.
+    changeDictionaryShowNumbers: |-
+      The setting has been changed.
     changeDictionaryWordCardTitles: |-
       The setting has been changed.
     changeDictionarySlimeTitles: |-
@@ -26,17 +28,13 @@ toast:
         The setting has been changed.
       font: |-
         The setting has been changed.
-      showEquivalentNumber: |-
-        The setting has been changed.
-      exampleTitle: |-
-        The setting has been changed.
-      pronunciationTitle: |-
-        The setting has been changed.
       enableAdvancedWord: |-
         The setting has been changed.
       enableMarkdown: |-
         The setting has been changed.
       enableDuplicateName: |-
+        The setting has been changed.
+      showVariationPronunciation: |-
         The setting has been changed.
       punctuations: |-
         The setting has been changed.
@@ -432,11 +430,13 @@ editExampleForm:
     supplement: "Supplementary explanation"
   absent:
     word: "No included words specified"
+  menu:
+    moveUp: "Move up"
+    moveDown: "Move down"
+    discard: "Remove"
   button:
     add:
       word: "Add included words"
-    discard:
-      word: "Remove"
     confirm: "Confirm"
 editWordDialog:
   button:
@@ -488,6 +488,11 @@ editWordForm:
     relation: "No related words"
   duplicateSpelling: >-
     A word with the same spelling has already been registered.
+  menu:
+    moveUp: "Move up"
+    moveDown: "Move down"
+    duplicate: "Duplicate"
+    discard: "Remove"
   button:
     add:
       section: "Add section"
@@ -496,13 +501,6 @@ editWordForm:
       phrase: "Add idiomatic expression"
       variation: "Add variation form"
       relation: "Add related word"
-    discard:
-      section: "Remove section"
-      equivalent: "Remove"
-      information: "Remove"
-      phrase: "Remove"
-      variation: "Remove"
-      relation: "Remove"
     resource: "Images"
     generate: "Generate"
     confirm: "Confirm"
@@ -876,7 +874,7 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Enabled"
       false: "Disabled"
-    showEquivalentNumber:
+    showVariationPronunciation:
       true: "Show"
       false: "Don’t show"
   pattern:
@@ -886,13 +884,19 @@ changeDictionarySettingsForm:
   error:
     invalidPattern: >-
       Enter a valid regular expression.
+changeDictionaryShowNumbersForm:
+  label:
+    section: "For sections"
+    equivalent: "For translations"
+    true: "Show"
+    false: "Don’t show"
 changeDictionarySlimeTitlesForm:
   label:
-    pronunciationTitle: "For pronunciations"
+    pronunciation: "For pronunciations"
 changeDictionaryWordCardTitlesForm:
   label:
-    phraseTitle: "For idiomatic expressions"
-    exampleTitle: "For example sentences"
+    phrase: "For idiomatic expressions"
+    example: "For example sentences"
 changeDictionaryVisibilityForm:
   label:
     public: "Public"
@@ -1034,6 +1038,7 @@ dictionaryResourcePart:
 dictionarySettingPart:
   tab:
     general: "General"
+    display: "Display"
     editing: "Editing"
     template: "Templates"
     authority: "Permissions"
@@ -1046,6 +1051,27 @@ dictionarySettingAuthorityPart:
     editInvitation: >-
       The following users have permission to edit this dictionary.
       They can edit and delete words, but they cannot change the dictionary settings or delete the dictionary itself.
+dictionarySettingDisplayPart:
+  heading:
+    font: "Font for headwords"
+    showNumbers: "Numberings"
+    showVariationPronunciation: "Variation pronunciations"
+    wordCardTitles: "Headings in word cards"
+    slimeTitles: "Headings in OTM-JSON format"
+  description:
+    font: >-
+      You can change the font for headwords.
+      Select ‘Use local font’ to use a font installed in the visiter’s environment, or ‘Upload custom font’ to use your own uploaded font.
+    showNumbers: >-
+      Enabling this feature will display the index number of each translation and/or section.
+    wordCardTitles: >-
+      The headings of some sections, which are displayed in word cards.
+    slimeTitles: >-
+      The headings of some sections, which will be used when the dictionary is output in OTM-JSON format.
+  callout:
+    font: >-
+      It may take some time for the uploaded font to be reflected.
+      If it is not reflected even after a while, try clearing your browser cache.
 dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Source code for Akrantiain"
@@ -1055,8 +1081,6 @@ dictionarySettingEditingPart:
     enableDuplicateName: "Duplicate spelling check"
     punctuations: "Delimiters"
     ignoredEquivalentPattern: "Pattern to be ignored in translations"
-    wordCardTitles: "Headings in word cards"
-    slimeTitles: "Headings in OTM-JSON format"
   description:
     akrantiainSource: >-
       Akrantiain is a system that automatically generates phonetic symbols based on the spelling of words.
@@ -1081,10 +1105,6 @@ dictionarySettingEditingPart:
       When extracting translation terms from the text entered in the translation field, the parts matching this regexp pattern are ignored.
       The matches therefore will not be included in the translation search.
       This can be used, for example, if you want to show the case structure of a verb in the translation field, but do not want it to be included in the translation search.
-    wordCardTitles: >-
-      The headings of some sections, which are displayed in word cards.
-    slimeTitles: >-
-      The headings of some sections, which will be used when the dictionary is output in OTM-JSON format.
 dictionarySettingFilePart:
   heading:
     upload: "Import"
@@ -1105,8 +1125,6 @@ dictionarySettingGeneralPart:
     name: "Name"
     paramName: "Identifier for URL"
     explanation: "Description"
-    font: "Font for headwords"
-    showEquivalentNumber: "Translation numbering"
     visibility: "Visibility"
     discard: "Delete"
   description:
@@ -1115,18 +1133,10 @@ dictionarySettingGeneralPart:
     explanation: >-
       This is displayed on the dictionary page before searching.
       You can use some Markdown syntax here.
-    font: >-
-      You can change the font for headwords.
-      Select ‘Use local font’ to use a font installed in the visiter’s environment, or ‘Upload custom font’ to use your own uploaded font.
-    showEquivalentNumber: >-
-      Enabling this feature will display the index number of each translation.
     visibility: >-
       If you set this to ‘Unlisted’, this dictionary will not appear in dictionary lists.
       However, anyone who knows the URL of the dictionary page can still access it directly.
   callout:
-    font: >-
-      It may take some time for the uploaded font to be reflected.
-      If it is not reflected even after a while, try clearing your browser cache.
     discard: >-
       Deleting this dictionary will also delete all the relevant data, including words and example sentences.
       Please be certain, as there is no going back.

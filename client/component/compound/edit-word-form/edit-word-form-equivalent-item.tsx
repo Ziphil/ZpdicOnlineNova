@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {useMergeRefs} from "@floating-ui/react";
-import {faTimes} from "@fortawesome/sharp-regular-svg-icons";
+import {faArrowDown, faArrowUp, faCircleEllipsisVertical, faClone, faTimes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
 import {
   AdditionalProps,
+  Button,
   CheckableContainer,
   CheckableLabel,
   Checkbox,
@@ -14,11 +15,13 @@ import {
   GeneralIcon,
   GrabbablePane,
   GrabbablePaneBody,
-  GrabbablePaneButton,
   GrabbablePaneGrip,
   GrabbablePaneGripContainer,
-  IconButton,
   Input,
+  Menu,
+  MenuItem,
+  MenuItemIconbag,
+  MenuSeparator,
   MultiLineText,
   SuggestionSpec,
   TagInput,
@@ -57,7 +60,7 @@ export const EditWordFormEquivalentItem = create(
 
     const {trans, transNode} = useTrans("editWordForm");
 
-    const {register} = form;
+    const {register, getValues} = form;
     const {paneProps, paneRef, gripProps, dragging} = useEditWordFormDndItem(dndId);
 
     const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
@@ -79,12 +82,18 @@ export const EditWordFormEquivalentItem = create(
       }
     }, [dictionary.number]);
 
+    const duplicate = useCallback(function (): void {
+      equivalentOperations.append(getValues(`sections.${sectionIndex}.equivalents.${equivalentIndex}`));
+    }, [equivalentOperations, getValues, sectionIndex, equivalentIndex]);
+
+    const remove = useCallback(function (): void {
+      equivalentOperations.remove(equivalentIndex);
+    }, [equivalentOperations, equivalentIndex]);
+
     return (
       <GrabbablePane styleName="root" dragging={dragging} ref={mergedRef} {...rest} {...paneProps} {...swapProps}>
         <GrabbablePaneGripContainer>
-          <GrabbablePaneButton position="top" disabled={!canMoveUp} onClick={moveUp}/>
           <GrabbablePaneGrip {...gripProps}/>
-          <GrabbablePaneButton position="bottom" disabled={!canMoveDown} onClick={moveDown}/>
         </GrabbablePaneGripContainer>
         <GrabbablePaneBody styleName="body">
           <fieldset styleName="field-list">
@@ -110,9 +119,32 @@ export const EditWordFormEquivalentItem = create(
             </ControlContainer>
           </fieldset>
           <div styleName="minus">
-            <IconButton scheme="gray" variant="light" label={trans("discard.equivalent")} onClick={() => equivalentOperations.remove(equivalentIndex)}>
-              <GeneralIcon icon={faTimes}/>
-            </IconButton>
+            <Menu
+              placement="bottom-end"
+              trigger={(
+                <Button scheme="gray" variant="simple">
+                  <GeneralIcon icon={faCircleEllipsisVertical}/>
+                </Button>
+              )}
+            >
+              <MenuItem disabled={!canMoveUp} onClick={moveUp}>
+                <MenuItemIconbag><GeneralIcon icon={faArrowUp}/></MenuItemIconbag>
+                {trans("menu.moveUp")}
+              </MenuItem>
+              <MenuItem disabled={!canMoveDown} onClick={moveDown}>
+                <MenuItemIconbag><GeneralIcon icon={faArrowDown}/></MenuItemIconbag>
+                {trans("menu.moveDown")}
+              </MenuItem>
+              <MenuSeparator/>
+              <MenuItem onClick={duplicate}>
+                <MenuItemIconbag><GeneralIcon icon={faClone}/></MenuItemIconbag>
+                {trans("menu.duplicate")}
+              </MenuItem>
+              <MenuItem onClick={remove}>
+                <MenuItemIconbag><GeneralIcon icon={faTimes}/></MenuItemIconbag>
+                {trans("menu.discard")}
+              </MenuItem>
+            </Menu>
           </div>
         </GrabbablePaneBody>
       </GrabbablePane>

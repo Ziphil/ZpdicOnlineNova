@@ -18,6 +18,8 @@ export interface DictionarySettings {
   enableAdvancedWord: boolean;
   enableMarkdown: boolean;
   enableDuplicateName: boolean;
+  showVariationPronunciation: boolean;
   showEquivalentNumber: boolean;
+  showSectionNumber: boolean;
 
 }

@@ -10,8 +10,8 @@ import {Dictionary} from "/server/internal/skeleton";
 
 
 const SCHEMA = object({
-  phraseTitle: string(),
-  exampleTitle: string()
+  phrase: string(),
+  example: string()
 });
 type FormValue = Asserts<typeof SCHEMA>;
 
@@ -21,11 +21,11 @@ export type ChangeDictionaryWordCardTitlesSpec = {
 };
 
 export function useChangeDictionaryWordCardTitles(dictionary: Dictionary): ChangeDictionaryWordCardTitlesSpec {
-  const form = useForm<FormValue>(SCHEMA, {phraseTitle: dictionary.settings.phraseTitle, exampleTitle: dictionary.settings.exampleTitle}, {});
+  const form = useForm<FormValue>(SCHEMA, {phrase: dictionary.settings.phraseTitle, example: dictionary.settings.exampleTitle}, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {phraseTitle: value.phraseTitle ?? "", exampleTitle: value.exampleTitle ?? ""}});
+    const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {phraseTitle: value.phrase ?? "", exampleTitle: value.example ?? ""}});
     await switchResponse(response, async () => {
       await invalidateResponses("fetchDictionary", (query) => +query.identifier === dictionary.number || query.identifier === dictionary.paramName);
       dispatchSuccessToast("changeDictionaryWordCardTitles");

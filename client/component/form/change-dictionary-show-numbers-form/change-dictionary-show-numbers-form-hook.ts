@@ -10,24 +10,25 @@ import {Dictionary} from "/server/internal/skeleton";
 
 
 const SCHEMA = object({
-  pronunciation: string()
+  section: string().oneOf(["true", "false"]).required(),
+  equivalent: string().oneOf(["true", "false"]).required()
 });
 type FormValue = Asserts<typeof SCHEMA>;
 
-export type ChangeDictionarySlimeTitlesSpec = {
+export type ChangeDictionaryShowNumbersSpec = {
   form: UseFormReturn<FormValue>,
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useChangeDictionarySlimeTitles(dictionary: Dictionary): ChangeDictionarySlimeTitlesSpec {
-  const form = useForm<FormValue>(SCHEMA, {pronunciation: dictionary.settings.pronunciationTitle}, {});
+export function useChangeDictionaryShowNumbers(dictionary: Dictionary): ChangeDictionaryShowNumbersSpec {
+  const form = useForm<FormValue>(SCHEMA, {section: (dictionary.settings.showSectionNumber) ? "true" : "false", equivalent: (dictionary.settings.showEquivalentNumber) ? "true" : "false"}, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {pronunciationTitle: value.pronunciation ?? ""}});
+    const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {showSectionNumber: value.section === "true", showEquivalentNumber: value.equivalent === "true"}});
     await switchResponse(response, async () => {
       await invalidateResponses("fetchDictionary", (query) => +query.identifier === dictionary.number || query.identifier === dictionary.paramName);
-      dispatchSuccessToast("changeDictionarySlimeTitles");
+      dispatchSuccessToast("changeDictionaryShowNumbers");
     });
   }), [dictionary.number, dictionary.paramName, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};

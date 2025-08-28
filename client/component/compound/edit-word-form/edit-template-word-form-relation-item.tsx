@@ -1,20 +1,23 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {useMergeRefs} from "@floating-ui/react";
-import {faTimes} from "@fortawesome/sharp-regular-svg-icons";
+import {faArrowDown, faArrowUp, faCircleEllipsisVertical, faClone, faTimes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
+  Button,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
   GrabbablePane,
   GrabbablePaneBody,
-  GrabbablePaneButton,
   GrabbablePaneGrip,
   GrabbablePaneGripContainer,
-  IconButton,
+  Menu,
+  MenuItem,
+  MenuItemIconbag,
+  MenuSeparator,
   SuggestionSpec,
   TagInput,
   useTrans
@@ -50,7 +53,7 @@ export const EditTemplateWordFormRelationItem = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {register} = form;
+    const {register, getValues} = form;
     const {paneProps, paneRef, gripProps, dragging} = useEditWordFormDndItem(dndId);
 
     const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
@@ -72,12 +75,18 @@ export const EditTemplateWordFormRelationItem = create(
       }
     }, [dictionary.number]);
 
+    const duplicate = useCallback(function (): void {
+      relationOperations.append(getValues(`sections.${sectionIndex}.relations.${index}`));
+    }, [relationOperations, getValues, sectionIndex, index]);
+
+    const remove = useCallback(function (): void {
+      relationOperations.remove(index);
+    }, [relationOperations, index]);
+
     return (
       <GrabbablePane styleName="root" dragging={dragging} ref={mergedRef} {...rest} {...paneProps} {...swapProps}>
         <GrabbablePaneGripContainer>
-          <GrabbablePaneButton position="top" disabled={!canMoveUp} onClick={moveUp}/>
           <GrabbablePaneGrip {...gripProps}/>
-          <GrabbablePaneButton position="bottom" disabled={!canMoveDown} onClick={moveDown}/>
         </GrabbablePaneGripContainer>
         <GrabbablePaneBody styleName="body">
           <fieldset styleName="field-list">
@@ -89,9 +98,32 @@ export const EditTemplateWordFormRelationItem = create(
             </ControlContainer>
           </fieldset>
           <div styleName="minus">
-            <IconButton scheme="gray" variant="light" label={trans("discard.relation")} onClick={() => relationOperations.remove(index)}>
-              <GeneralIcon icon={faTimes}/>
-            </IconButton>
+            <Menu
+              placement="bottom-end"
+              trigger={(
+                <Button scheme="gray" variant="simple">
+                  <GeneralIcon icon={faCircleEllipsisVertical}/>
+                </Button>
+              )}
+            >
+              <MenuItem disabled={!canMoveUp} onClick={moveUp}>
+                <MenuItemIconbag><GeneralIcon icon={faArrowUp}/></MenuItemIconbag>
+                {trans("menu.moveUp")}
+              </MenuItem>
+              <MenuItem disabled={!canMoveDown} onClick={moveDown}>
+                <MenuItemIconbag><GeneralIcon icon={faArrowDown}/></MenuItemIconbag>
+                {trans("menu.moveDown")}
+              </MenuItem>
+              <MenuSeparator/>
+              <MenuItem onClick={duplicate}>
+                <MenuItemIconbag><GeneralIcon icon={faClone}/></MenuItemIconbag>
+                {trans("menu.duplicate")}
+              </MenuItem>
+              <MenuItem onClick={remove}>
+                <MenuItemIconbag><GeneralIcon icon={faTimes}/></MenuItemIconbag>
+                {trans("menu.discard")}
+              </MenuItem>
+            </Menu>
           </div>
         </GrabbablePaneBody>
       </GrabbablePane>

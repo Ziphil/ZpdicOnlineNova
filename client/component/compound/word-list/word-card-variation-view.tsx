@@ -20,14 +20,14 @@ export const WordCardVariationView = create(
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    const pronunciation = useMemo(() => getPronunciation(dictionary, variation), [dictionary, variation]);
+    const pronunciation = useMemo(() => (dictionary.settings.showVariationPronunciation) ? getPronunciation(dictionary, variation) : undefined, [dictionary, variation]);
 
     return (
       <Fragment>
         {(index > 0) && <span styleName="punctuation">, </span>}
         <span>
           <span>{variation.spelling}</span>
-          {(!!pronunciation) && (
+          {(dictionary.settings.showVariationPronunciation && !!pronunciation) && (
             <span styleName="pronunciation">{pronunciation}</span>
           )}
         </span>

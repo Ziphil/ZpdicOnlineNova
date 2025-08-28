@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircleEllipsis, faEdit, faHandPointRight, faShare, faTrashAlt, faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
+import {faCircleInfo, faEdit, faHandPointRight, faShare, faTrashAlt, faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {useHref} from "react-router-dom";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, Tag, aria, useResponsiveDevice, useTrans} from "zographia";
@@ -123,12 +123,12 @@ export const ExampleCard = create(
               {(showInfo) && (
                 <ExampleCardInfoPopover example={example} trigger={(device === "desktop") ? (
                   <Button scheme="secondary" variant="underline">
-                    <ButtonIconbag><GeneralIcon icon={faCircleEllipsis}/></ButtonIconbag>
+                    <ButtonIconbag><GeneralIcon icon={faCircleInfo}/></ButtonIconbag>
                     {trans("button.info")}
                   </Button>
                 ) : (
                   <Button scheme="secondary" variant="underline">
-                    <GeneralIcon icon={faCircleEllipsis}/>
+                    <GeneralIcon icon={faCircleInfo}/>
                   </Button>
                 )}/>
               )}

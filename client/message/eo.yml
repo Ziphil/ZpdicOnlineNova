@@ -13,6 +13,8 @@ toast:
       La identigilo ŝanĝitas.
     changeDictionaryExplanation: |-
       La priskribo ŝanĝitas.
+    changeDictionaryShowNumbers: |-
+      La agordo ŝanĝitas.
     changeDictionaryWordCardTitles: |-
       La agordo ŝanĝitas.
     changeDictionarySlimeTitles: |-
@@ -26,17 +28,13 @@ toast:
         La agordo ŝanĝitas.
       font: |-
         La agordo ŝanĝitas.
-      showEquivalentNumber: |-
-        La agordo ŝanĝitas.
-      exampleTitle: |-
-        La agordo ŝanĝitas.
-      pronunciationTitle: |-
-        La agordo ŝanĝitas.
       enableAdvancedWord: |-
         La agordo ŝanĝitas.
       enableMarkdown: |-
         La agordo ŝanĝitas.
       enableDuplicateName: |-
+        La agordo ŝanĝitas.
+      showVariationPronunciation: |-
         La agordo ŝanĝitas.
       punctuations: |-
         La agordo ŝanĝitas.
@@ -432,11 +430,13 @@ editExampleForm:
     supplement: "Aldona klarigo"
   absent:
     word: "Neniuj enhavitaj vortoj specifitaj"
+  menu:
+    moveUp: "Movi supren"
+    moveDown: "Movi malsupren"
+    discard: "Forigi"
   button:
     add:
       word: "Aldoni enhavitan vorton"
-    discard:
-      word: "Remove"
     confirm: "Konfirmi"
 editWordDialog:
   button:
@@ -488,6 +488,11 @@ editWordForm:
     relation: "Neniuj rilataj vortoj"
   duplicateSpelling: >-
     Vorto kun la sama literumo jam estas registrita.
+  menu:
+    moveUp: "Movi supren"
+    moveDown: "Movi malsupren"
+    duplicate: "Duobligi"
+    discard: "Forigi"
   button:
     add:
       section: "Aldoni seksion"
@@ -496,13 +501,6 @@ editWordForm:
       phrase: "Aldoni idiomaĵon"
       variation: "Aldoni variaĵan formon"
       relation: "Aldoni rilatan vorton"
-    discard:
-      section: "Forigi seksion"
-      equivalent: "Forigi"
-      information: "Forigi"
-      phrase: "Forigi"
-      variation: "Forigi"
-      relation: "Forigi"
     resource: "Bildoj"
     generate: "Generi"
     confirm: "Konfirmi"
@@ -876,7 +874,7 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Ebligita"
       false: "Malebligita"
-    showEquivalentNumber:
+    showVariationPronunciation:
       true: "Montri"
       false: "Ne montri"
   pattern:
@@ -886,13 +884,19 @@ changeDictionarySettingsForm:
   error:
     invalidPattern: >-
       Enigu validan regulan esprimon.
+changeDictionaryShowNumbersForm:
+  label:
+    section: "Por sekcioj"
+    equivalent: "Por tradukaĵoj"
+    true: "Montri"
+    false: "Ne montri"
 changeDictionarySlimeTitlesForm:
   label:
-    pronunciationTitle: "Por elparoloj"
+    pronunciation: "Por elparoloj"
 changeDictionaryWordCardTitlesForm:
   label:
-    phraseTitle: "Por idiomaĵoj"
-    exampleTitle: "Por ekzemplaj frazoj"
+    phrase: "Por idiomaĵoj"
+    example: "Por ekzemplaj frazoj"
 changeDictionaryVisibilityForm:
   label:
     public: "Publika"
@@ -1034,6 +1038,7 @@ dictionaryMainPart:
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"
+    display: "Vidigo"
     editing: "Redaktado"
     template: "Ŝablonoj"
     authority: "Permesoj"
@@ -1046,6 +1051,27 @@ dictionarySettingAuthorityPart:
     editInvitation: >-
       La jenaj uzantoj havas permeson redakti tiun vortaron.
       Ili povas redakti kaj forigi vortojn, sed ili ne povas ŝanĝi la agordojn de la vortaro aŭ forigi la vortaron mem.
+dictionarySettingDisplayPart:
+  heading:
+    font: "Tiparo por kapvortoj"
+    showNumbers: "Numeroj"
+    showVariationPronunciation: "Elparoloj de variaĵaj formoj"
+    wordCardTitles: "Titoloj en vortokartoj"
+    slimeTitles: "Titoloj en formato OTM-JSON"
+  description:
+    font: >-
+      Vi povas ŝanĝi la tiparon por kapvortoj.
+      Elektu “Uzi lokan tiparon” por uzi tiparon instalitan en la medio de la vizitanto, aŭ “Alŝuti propran tiparon” por uzi vian propran alŝutitan tiparon.
+    showNumbers: >-
+      Se vi ebligos tiun funkcion, la numeroj de tradukaĵoj kaj/aŭ sekcioj estos montrataj.
+    wordCardTitles: >-
+      Jen la titoloj de sekcioj, kiuj estas montrataj en kartoj de vorto.
+    slimeTitles: >-
+      Jen la titoloj de sekcioj, kiuj estos uzataj kiam la vortaro estos eligita en formato OTM-JSON.
+  callout:
+    font: >-
+      Eble necesas tempo por ke la alŝutita tiparo estus reflektita.
+      Se ĝi ne reflektas eĉ post iom da tempo, provu forigi la kaŝmemoron de via retumilo.
 dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Fontkodo por Akrantiain"
@@ -1055,8 +1081,6 @@ dictionarySettingEditingPart:
     enableDuplicateName: "Kontrolon de duobla literumo"
     punctuations: "Disigiloj"
     ignoredEquivalentPattern: "Regulesprimo ignorota en tradukaĵoj"
-    wordCardTitles: "Titoloj en vortokartoj"
-    slimeTitles: "Titoloj en formato OTM-JSON"
   description:
     akrantiainSource: >-
       Akrantiain estas aparato kiu aŭtomate generas fonetikajn simbolojn surbaze de la literumo de vortoj.
@@ -1081,10 +1105,6 @@ dictionarySettingEditingPart:
       Kiam oni ĉerpas tradukaĵojn el la teksto enigita en la tradukaĵa kampo, la partoj kongruaj kun tiu regulesprimo estas ignorataj.
       La kongruoj do ne estos inkluzivitaj en la tradukaĵa serĉo.
       Tio ekzemple povas esti uzata, se oni volas montri la kazan strukturon de verbo en la tradukaĵa kampo, sed ne volas ke ĝi estus inkluzivita en la tradukaĵa serĉo.
-    wordCardTitles: >-
-      Jen la titoloj de sekcioj, kiuj estas montrataj en kartoj de vorto.
-    slimeTitles: >-
-      Jen la titoloj de sekcioj, kiuj estos uzataj kiam la vortaro estos eligita en formato OTM-JSON.
 dictionarySettingFilePart:
   heading:
     upload: "Importi"
@@ -1105,8 +1125,6 @@ dictionarySettingGeneralPart:
     name: "Nomo"
     paramName: "Identigilo por retadreso"
     explanation: "Priskribo"
-    font: "Tiparo por kapvortoj"
-    showEquivalentNumber: "Numero de tradukaĵoj"
     visibility: "Videbleco"
     discard: "Forigi"
   description:
@@ -1115,18 +1133,10 @@ dictionarySettingGeneralPart:
     explanation: >-
       Tio estas montrata sur la paĝo de la vortaro antaŭ serĉado.
       Vi povas uzi iun sintakson de Markdown.
-    font: >-
-      Vi povas ŝanĝi la tiparon por kapvortoj.
-      Elektu “Uzi lokan tiparon” por uzi tiparon instalitan en la medio de la vizitanto, aŭ “Alŝuti propran tiparon” por uzi vian propran alŝutitan tiparon.
-    showEquivalentNumber: >-
-      Se vi ebligos tiun funkcion, la numero de tradukaĵoj estos montrata.
     visibility: >-
       Se vi agordos tiun al “Nelistigita”, la vortaro ne aperos en listoj de vortaroj.
       Tamen ĉiu kiu scias la retadreson de la paĝo de la vortaro povas ankoraŭ rekte aliri ĝin.
   callout:
-    font: >-
-      Eble necesas tempo por ke la alŝutita tiparo estus reflektita.
-      Se ĝi ne reflektas eĉ post iom da tempo, provu forigi la kaŝmemoron de via retumilo.
     discard: >-
       Forigi tiun vortaron ankaŭ forigos ĉiujn rilatajn datumojn, inkluzive de vortoj kaj ekzemplaj frazoj.
       Bonvolu esti certa, ĉar ne estas reiro.

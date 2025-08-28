@@ -13,6 +13,8 @@ toast:
       識別子を変更しました。
     changeDictionaryExplanation: |-
       説明を変更しました。
+    changeDictionaryShowNumbers: |-
+      設定を変更しました。
     changeDictionaryWordCardTitles: |-
       設定を変更しました。
     changeDictionarySlimeTitles: |-
@@ -26,15 +28,13 @@ toast:
         設定を変更しました。
       font: |-
         設定を変更しました。
-      showEquivalentNumber: |-
-        設定を変更しました。
-      pronunciationTitle: |-
-        設定を変更しました。
       enableAdvancedWord: |-
         設定を変更しました。
       enableMarkdown: |-
         設定を変更しました。
       enableDuplicateName: |-
+        設定を変更しました。
+      showVariationPronunciation: |-
         設定を変更しました。
       punctuations: |-
         設定を変更しました。
@@ -430,11 +430,13 @@ editExampleForm:
     supplement: "補足説明"
   absent:
     word: "使用単語が登録されていません"
+  menu:
+    moveUp: "上に移動"
+    moveDown: "下に移動"
+    discard: "削除"
   button:
     add:
       word: "使用単語を追加"
-    discard:
-      word: "削除"
     confirm: "決定"
 editWordDialog:
   button:
@@ -486,6 +488,11 @@ editWordForm:
     relation: "関連語が登録されていません"
   duplicateSpelling: >-
     同じ綴りの単語がすでに登録されています。
+  menu:
+    moveUp: "上に移動"
+    moveDown: "下に移動"
+    duplicate: "複製"
+    discard: "削除"
   button:
     add:
       section: "セクションを追加"
@@ -494,13 +501,6 @@ editWordForm:
       phrase: "成句を追加"
       variation: "変化形を追加"
       relation: "関連語を追加"
-    discard:
-      section: "セクションを削除"
-      equivalent: "削除"
-      information: "削除"
-      phrase: "削除"
-      variation: "削除"
-      relation: "削除"
     resource: "画像"
     generate: "生成"
     confirm: "決定"
@@ -872,7 +872,7 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "有効"
       false: "無効"
-    showEquivalentNumber:
+    showVariationPronunciation:
       true: "表示する"
       false: "表示しない"
   pattern:
@@ -882,13 +882,19 @@ changeDictionarySettingsForm:
   error:
     invalidPattern: >-
       正規表現として有効なパターンを入力してください。
+changeDictionaryShowNumbersForm:
+  label:
+    section: "セクション"
+    equivalent: "訳語"
+    true: "表示する"
+    false: "表示しない"
 changeDictionarySlimeTitlesForm:
   label:
-    pronunciationTitle: "発音"
+    pronunciation: "発音"
 changeDictionaryWordCardTitlesForm:
   label:
-    phraseTitle: "成句"
-    exampleTitle: "例文"
+    phrase: "成句"
+    example: "例文"
 changeDictionaryVisibilityForm:
   label:
     public: "全体公開"
@@ -1032,6 +1038,7 @@ dictionaryResourcePart:
 dictionarySettingPart:
   tab:
     general: "一般"
+    display: "表示"
     editing: "編集"
     template: "テンプレート"
     authority: "権限"
@@ -1044,6 +1051,28 @@ dictionarySettingAuthorityPart:
     editInvitation: >-
       この辞書の編集権限を保有しているユーザーです。
       これらのユーザーは、単語の編集や削除はできますが、辞書の設定変更や削除はできません。
+dictionarySettingDisplayPart:
+  heading:
+    font: "見出し語のフォント"
+    showNumbers: "通し番号"
+    showVariationPronunciation: "変化形の発音記号"
+    wordCardTitles: "単語カードでの見出し"
+    slimeTitles: "OTM-JSON 形式での見出し"
+  description:
+    font: >-
+      見出し語のフォントを変更することができます。
+      「ローカルフォントを参照」を選択すると、閲覧者各自の環境にインストールされているフォントを参照して使用します。
+      「フォントをアップロード」を選択すると、アップロードされた独自のフォントを使用します。
+    showNumbers: >-
+      これを有効にすると、セクションや訳語の横に通し番号が表示されるようになります。
+    wordCardTitles: >-
+      単語カードに各種項目を表示する際の見出しです。
+    slimeTitles: >-
+      辞書を OTM-JSON 形式で出力したときに各種項目が格納される内容欄の見出しです。
+  callout:
+    font: >-
+      アップロードしたフォントが反映されるまで時間がかかることがあります。
+      しばらくしても反映されない場合は、ブラウザのキャッシュを消去してみてください。
 dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Akrantiain ソースコード"
@@ -1053,8 +1082,6 @@ dictionarySettingEditingPart:
     enableDuplicateName: "重複綴りチェック"
     punctuations: "区切り文字"
     ignoredEquivalentPattern: "訳語で無視するパターン"
-    wordCardTitles: "単語カードでの見出し"
-    slimeTitles: "OTM-JSON 形式での見出し"
   description:
     akrantiainSource: >-
       Akrantiain とは、単語の綴りから発音記号を自動生成するためのシステムです。 
@@ -1079,10 +1106,6 @@ dictionarySettingEditingPart:
       訳語欄に入力されたテキストから訳語を抽出する際に、ここで設定された正規表現パターンにマッチした部分は無視されます。
       そのため、マッチした部分は訳語検索の対象外となります。
       例えば、訳語欄に動詞の格の取り方を明示したいが訳語検索の対象にはしたくない場合などに利用できます。
-    wordCardTitles: >-
-      単語カードに各種項目を表示する際の見出しです。
-    slimeTitles: >-
-      辞書を OTM-JSON 形式で出力したときに各種項目が格納される内容欄の見出しです。
 dictionarySettingFilePart:
   heading:
     upload: "インポート"
@@ -1103,8 +1126,6 @@ dictionarySettingGeneralPart:
     name: "名前"
     paramName: "URL 用識別子"
     explanation: "説明"
-    font: "見出し語のフォント"
-    showEquivalentNumber: "訳語の番号"
     visibility: "公開範囲"
     discard: "削除"
   description:
@@ -1113,19 +1134,10 @@ dictionarySettingGeneralPart:
     explanation: >-
       この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
       一部の Markdown 形式に対応しています。
-    font: >-
-      見出し語のフォントを変更することができます。
-      「ローカルフォントを参照」を選択すると、閲覧者各自の環境にインストールされているフォントを参照して使用します。
-      「フォントをアップロード」を選択すると、アップロードされた独自のフォントを使用します。
-    showEquivalentNumber: >-
-      これを有効にすると、訳語欄の横に通し番号が表示されるようになります。
     visibility: >-
       これを「限定公開」に設定すると、この辞書が辞書一覧に表示されなくなります。
       ただし、辞書ページの URL を知っている人は直接アクセスすることができます。
   callout:
-    font: >-
-      アップロードしたフォントが反映されるまで時間がかかることがあります。
-      しばらくしても反映されない場合は、ブラウザのキャッシュを消去してみてください。
     discard: >-
       この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。
       後からデータを復元することはできないので、慎重に行ってください。

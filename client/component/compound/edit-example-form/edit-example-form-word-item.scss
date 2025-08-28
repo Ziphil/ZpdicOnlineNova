@@ -1,4 +1,38 @@
 @charset "utf-8";
 
 @use "zographia/source/component/function.scss" as *;
-@forward "/client/component/compound/edit-word-form/edit-word-form-equivalent-item.scss";
+
+
+.body {
+  display: flex;
+}
+
+.field-list {
+  row-gap: 3zu;
+  column-gap: 2zu;
+  display: grid;
+  flex: 1 1 auto;
+  @include device("desktop") {
+    grid-template-columns: max-content 1fr;
+  }
+  @include device("mobile") {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field-item {
+  grid-column: 1 / -1;
+  &:not([data-checkable]) {
+    display: grid;
+    grid-template-columns: subgrid;
+    align-items: baseline;
+  }
+}
+
+.minus {
+  margin-inline-start: 3zu;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}

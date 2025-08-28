@@ -27,9 +27,9 @@ export const ChangeDictionarySlimeTitlesForm = create(
     return (
       <form styleName="root" {...rest}>
         <ControlContainer>
-          <ControlLabel>{trans("label.pronunciationTitle")}</ControlLabel>
-          <Input error={!!getFieldState("pronunciationTitle").error} {...register("pronunciationTitle")}/>
-          <ControlErrorMessage name="pronunciationTitle" form={form} trans={trans}/>
+          <ControlLabel>{trans("label.pronunciation")}</ControlLabel>
+          <Input error={!!getFieldState("pronunciation").error} {...register("pronunciation")}/>
+          <ControlErrorMessage name="pronunciation" form={form} trans={trans}/>
         </ControlContainer>
         <div>
           <Button variant="light" type="submit" onClick={handleSubmit}>

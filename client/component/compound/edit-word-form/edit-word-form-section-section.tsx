@@ -1,9 +1,9 @@
 //
 
-import {faArrowDown, faArrowUp, faTimes} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement} from "react";
+import {faArrowDown, faArrowUp, faCircleEllipsisVertical, faClone, faTimes} from "@fortawesome/sharp-regular-svg-icons";
+import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, data, useTrans} from "zographia";
+import {AdditionalProps, Button, GeneralIcon, Menu, MenuItem, MenuItemIconbag, MenuSeparator, data, useTrans} from "zographia";
 import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client/component/create";
 import {toLatinNumeral} from "/client/util/misc";
@@ -37,7 +37,17 @@ export const EditWordFormSectionSection = create(
 
     const {trans} = useTrans("editWordForm");
 
+    const {getValues} = form;
+
     const {ref, props, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
+
+    const duplicate = useCallback(function (): void {
+      sectionOperations.append(getValues(`sections.${sectionIndex}`));
+    }, [sectionOperations, getValues, sectionIndex]);
+
+    const remove = useCallback(function (): void {
+      sectionOperations.remove(sectionIndex);
+    }, [sectionOperations, sectionIndex]);
 
     return (
       <div styleName="root" ref={ref} {...props} {...rest}>
@@ -46,12 +56,32 @@ export const EditWordFormSectionSection = create(
             <div styleName="number-container">
               <h3 styleName="number">{toLatinNumeral(sectionIndex + 1)}</h3>
               <div styleName="button-container">
-                <button styleName="button" type="button" disabled={!canMoveUp} onClick={moveUp}>
-                  <GeneralIcon icon={faArrowUp}/>
-                </button>
-                <button styleName="button" type="button" disabled={!canMoveDown} onClick={moveDown}>
-                  <GeneralIcon icon={faArrowDown}/>
-                </button>
+                <Menu
+                  placement="bottom-start"
+                  trigger={(
+                    <Button scheme="gray" variant="simple">
+                      <GeneralIcon icon={faCircleEllipsisVertical}/>
+                    </Button>
+                  )}
+                >
+                  <MenuItem disabled={!canMoveUp} onClick={moveUp}>
+                    <MenuItemIconbag><GeneralIcon icon={faArrowUp}/></MenuItemIconbag>
+                    {trans("menu.moveUp")}
+                  </MenuItem>
+                  <MenuItem disabled={!canMoveDown} onClick={moveDown}>
+                    <MenuItemIconbag><GeneralIcon icon={faArrowDown}/></MenuItemIconbag>
+                    {trans("menu.moveDown")}
+                  </MenuItem>
+                  <MenuSeparator/>
+                  <MenuItem onClick={duplicate}>
+                    <MenuItemIconbag><GeneralIcon icon={faClone}/></MenuItemIconbag>
+                    {trans("menu.duplicate")}
+                  </MenuItem>
+                  <MenuItem onClick={remove}>
+                    <MenuItemIconbag><GeneralIcon icon={faTimes}/></MenuItemIconbag>
+                    {trans("menu.discard")}
+                  </MenuItem>
+                </Menu>
               </div>
             </div>
           </div>
@@ -62,14 +92,6 @@ export const EditWordFormSectionSection = create(
           <EditWordFormPhraseSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
           <EditWordFormVariationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
           <EditWordFormRelationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
-          {(multiple) && (
-            <div styleName="minus">
-              <Button scheme="gray" variant="solid" onClick={() => sectionOperations.remove(sectionIndex)}>
-                <ButtonIconbag><GeneralIcon icon={faTimes}/></ButtonIconbag>
-                {trans("button.discard.section")}
-              </Button>
-            </div>
-          )}
         </div>
       </div>
     );

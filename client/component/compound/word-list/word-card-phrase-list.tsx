@@ -35,7 +35,7 @@ export const WordCardPhraseList = create(
                 </span>
                 <MultiLineText styleName="text" is="span">
                   {phrase.titles.map((title, index) => (!!title) && (
-                    <Tag key={index} styleName="tag" variant="light">{title}</Tag>
+                    <Tag key={index} styleName="tag" variant="light" scheme="gray">{title}</Tag>
                   ))}
                   <span>
                     {phrase.expression}

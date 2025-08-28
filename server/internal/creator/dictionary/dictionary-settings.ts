@@ -26,7 +26,9 @@ export namespace DictionarySettingsCreator {
       enableAdvancedWord: raw.enableAdvancedWord ?? false,
       enableMarkdown: raw.enableMarkdown,
       enableDuplicateName: raw.enableDuplicateName,
-      showEquivalentNumber: raw.showEquivalentNumber
+      showVariationPronunciation: raw.showVariationPronunciation ?? true,
+      showEquivalentNumber: raw.showEquivalentNumber,
+      showSectionNumber: raw.showSectionNumber ?? true
     } satisfies DictionarySettingsSkeleton;
     return skeleton;
   }

@@ -32,7 +32,7 @@ export const WordCardVariationList = create(
             </span>
             <MultiLineText styleName="text" is="span">
               {(!!title) && (
-                <Tag styleName="tag" variant="light">{title}</Tag>
+                <Tag styleName="tag" variant="light" scheme="gray">{title}</Tag>
               )}
               {variations.map((variation, index) => (
                 <WordCardVariationView key={index} dictionary={dictionary} variation={variation} index={index}/>

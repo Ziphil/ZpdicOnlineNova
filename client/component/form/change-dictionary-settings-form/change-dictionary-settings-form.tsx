@@ -99,16 +99,16 @@ export const ChangeDictionarySettingsForm = create(
           <ControlContainer>
             <Input {...register("value")}/>
           </ControlContainer>
-        ) : (propertyName === "showEquivalentNumber") ? (
+        ) : (propertyName === "showVariationPronunciation") ? (
           <ControlContainer>
             <div styleName="radio-group">
               <CheckableContainer>
                 <Radio value="true" {...register("value")}/>
-                <CheckableLabel>{trans("label.showEquivalentNumber.true")}</CheckableLabel>
+                <CheckableLabel>{trans("label.showVariationPronunciation.true")}</CheckableLabel>
               </CheckableContainer>
               <CheckableContainer>
                 <Radio value="false" {...register("value")}/>
-                <CheckableLabel>{trans("label.showEquivalentNumber.false")}</CheckableLabel>
+                <CheckableLabel>{trans("label.showVariationPronunciation.false")}</CheckableLabel>
               </CheckableContainer>
             </div>
           </ControlContainer>

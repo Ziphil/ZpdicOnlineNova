@@ -4,6 +4,7 @@
 
 
 .root {
+  background-color: var(--background-color);
   display: grid;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
@@ -19,7 +20,7 @@
 }
 
 .number-container {
-  row-gap: 1.5zu;
+  row-gap: 2zu;
   inset-block-start: 0zu;
   display: flex;
   flex-direction: column;
