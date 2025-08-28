@@ -3,7 +3,7 @@
 import {faArrowDown, faArrowUp, faCircleEllipsisVertical, faClone, faTimes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn, UseFormReturn} from "react-hook-form";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, Menu, MenuItem, MenuItemIconbag, MenuSeparator, data, useTrans} from "zographia";
+import {AdditionalProps, Button, GeneralIcon, Menu, MenuItem, MenuItemIconbag, MenuSeparator, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {toLatinNumeral} from "/client/util/misc";
 import {useSwapAnimationItem} from "/client/util/swap-animation";
@@ -92,14 +92,6 @@ export const EditTemplateWordFormSectionSection = create(
           <EditWordFormPhraseSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
           <EditWordFormVariationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
           <EditTemplateWordFormRelationSection dictionary={dictionary} sectionOperations={sectionOperations} sectionIndex={sectionIndex} form={form as any}/>
-          {(multiple) && (
-            <div styleName="minus">
-              <Button scheme="gray" variant="solid" onClick={() => sectionOperations.remove(sectionIndex)}>
-                <ButtonIconbag><GeneralIcon icon={faTimes}/></ButtonIconbag>
-                {trans("button.discard.section")}
-              </Button>
-            </div>
-          )}
         </div>
       </div>
     );
