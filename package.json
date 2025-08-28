@@ -124,7 +124,7 @@
     "xml-js": "^1.6.11",
     "yup": "^1.3.3",
     "zatlin": "^1.2.2",
-    "zographia": "^0.17.0"
+    "zographia": "^0.18.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
