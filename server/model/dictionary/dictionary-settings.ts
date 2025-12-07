@@ -38,6 +38,9 @@ export class DictionarySettingsSchema {
   @prop()
   public enableAdvancedWord?: boolean;
 
+  @prop()
+  public enableProposal?: boolean;
+
   @prop({required: true})
   public enableMarkdown!: boolean;
 
@@ -63,6 +66,7 @@ export class DictionarySettingsSchema {
       exampleTitle: "例文",
       enableAdvancedWord: false,
       enableMarkdown: false,
+      enableProposal: true,
       enableDuplicateName: true,
       showVariationPronunciation: true,
       showEquivalentNumber: false,

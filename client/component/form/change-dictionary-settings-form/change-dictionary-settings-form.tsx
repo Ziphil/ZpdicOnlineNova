@@ -53,6 +53,19 @@ export const ChangeDictionarySettingsForm = create(
               </CheckableContainer>
             </div>
           </ControlContainer>
+        ) : (propertyName === "enableProposal") ? (
+          <ControlContainer>
+            <div styleName="radio-group">
+              <CheckableContainer>
+                <Radio value="true" {...register("value")}/>
+                <CheckableLabel>{trans("label.enableProposal.true")}</CheckableLabel>
+              </CheckableContainer>
+              <CheckableContainer>
+                <Radio value="false" {...register("value")}/>
+                <CheckableLabel>{trans("label.enableProposal.false")}</CheckableLabel>
+              </CheckableContainer>
+            </div>
+          </ControlContainer>
         ) : (propertyName === "enableMarkdown") ? (
           <ControlContainer>
             <div styleName="radio-group">

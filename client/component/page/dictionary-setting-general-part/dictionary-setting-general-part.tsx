@@ -8,6 +8,7 @@ import {create} from "/client/component/create";
 import {ChangeDictionaryExplanationForm} from "/client/component/form/change-dictionary-explanation-form";
 import {ChangeDictionaryNameForm} from "/client/component/form/change-dictionary-name-form";
 import {ChangeDictionaryParamNameForm} from "/client/component/form/change-dictionary-param-name-form";
+import {ChangeDictionarySettingsForm} from "/client/component/form/change-dictionary-settings-form";
 import {ChangeDictionaryVisibilityForm} from "/client/component/form/change-dictionary-visibility-form";
 import {DiscardDictionaryButton} from "/client/component/form/discard-dictionary-button";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
@@ -48,6 +49,13 @@ export const DictionarySettingGeneralPart = create(
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.visibility")}</h3>
           <ChangeDictionaryVisibilityForm dictionary={dictionary}/>
+        </section>
+        <section styleName="section">
+          <h3 styleName="heading">{trans("heading.enableProposal")}</h3>
+          <MultiLineText styleName="description">
+            {trans("description.enableProposal")}
+          </MultiLineText>
+          <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="enableProposal"/>
         </section>
         <section styleName="section">
           <h3 styleName="heading" {...data({danger: true})}>{trans("heading.discard")}</h3>

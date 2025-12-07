@@ -869,6 +869,9 @@ changeDictionarySettingsForm:
     enableAdvancedWord:
       true: "有効"
       false: "無効"
+    enableProposal:
+      true: "受け付ける"
+      false: "受け付けない"
     enableMarkdown:
       true: "有効"
       false: "無効"
@@ -1130,6 +1133,7 @@ dictionarySettingGeneralPart:
     paramName: "URL 用識別子"
     explanation: "説明"
     visibility: "公開範囲"
+    enableProposal: "造語依頼"
     discard: "削除"
   description:
     paramName: >-
@@ -1140,6 +1144,8 @@ dictionarySettingGeneralPart:
     visibility: >-
       これを「限定公開」に設定すると、この辞書が辞書一覧に表示されなくなります。
       ただし、辞書ページの URL を知っている人は直接アクセスすることができます。
+    enableProposal: >-
+      他のユーザーからの造語依頼を受け付けるかどうかを設定できます。
   callout:
     discard: >-
       この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。
