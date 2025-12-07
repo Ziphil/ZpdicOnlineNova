@@ -46,7 +46,9 @@ type FormValue = {
     phrases: Array<{
       titles: Array<string>,
       expression: string,
-      termString: string
+      termString: string,
+      text: string,
+      hidden: boolean
     }>,
     variations: Array<{
       title: string,
@@ -109,7 +111,9 @@ function getFormValue<D extends EditTemplateWordInitialData | null>(initialData:
           phrases: section.phrases.map((phrase) => ({
             titles: phrase.titles,
             expression: phrase.expression,
-            termString: phrase.termString
+            termString: phrase.termString,
+            text: phrase.text,
+            hidden: phrase.hidden
           })),
           variations: section.variations.map((variation) => ({
             title: variation.title,

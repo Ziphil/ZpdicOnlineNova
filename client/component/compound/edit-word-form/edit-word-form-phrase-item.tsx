@@ -21,6 +21,7 @@ import {
   MenuSeparator,
   SuggestionSpec,
   TagInput,
+  Textarea,
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
@@ -105,6 +106,10 @@ export const EditWordFormPhraseItem = create(
             <ControlContainer styleName="field-item">
               <ControlLabel>{transNode("label.phrase.terms")}</ControlLabel>
               <Input {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.termString`)}/>
+            </ControlContainer>
+            <ControlContainer styleName="field-item">
+              <ControlLabel>{trans("label.phrase.text")}</ControlLabel>
+              <Textarea styleName="small-textarea" {...register(`sections.${sectionIndex}.phrases.${phraseIndex}.text`)}/>
             </ControlContainer>
           </fieldset>
           <div styleName="minus">

@@ -58,6 +58,19 @@
   }
 }
 
+.small-textarea {
+  @supports (field-sizing: content) {
+    min-height: 16zu;
+    max-height: 100zu;
+    >textarea {
+      field-sizing: content;
+    }
+  }
+  @supports not (field-sizing: content) {
+    height: 16zu;
+  }
+}
+
 .minus {
   margin-inline-start: 3zu;
   display: flex;

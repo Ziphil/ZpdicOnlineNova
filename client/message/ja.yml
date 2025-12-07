@@ -471,6 +471,8 @@ editWordForm:
       titles: "分類"
       expression: "表現"
       terms: "訳語"
+      text: "説明"
+      hidden: "検索にのみ用いる (単語カードでは非表示にする)"
     variation:
       title: "種類"
       spelling: "変化形"

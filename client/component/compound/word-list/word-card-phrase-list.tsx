@@ -33,18 +33,25 @@ export const WordCardPhraseList = create(
                 <span styleName="icon" {...aria({hidden: true})}>
                   <FontAwesomeIcon icon={faCaretRight}/>
                 </span>
-                <MultiLineText styleName="text" is="span">
-                  {phrase.titles.map((title, index) => (!!title) && (
-                    <Tag key={index} styleName="tag" variant="light" scheme="gray">{title}</Tag>
-                  ))}
-                  <span>
-                    {phrase.expression}
-                  </span>
-                  <span styleName="separator" {...aria({hidden: true})}/>
-                  <span>
-                    {createTermNode(phrase.termString, phrase.ignoredPattern)}
-                  </span>
-                </MultiLineText>
+                <div styleName="text-container">
+                  <MultiLineText styleName="expression" is="span">
+                    {phrase.titles.map((title, index) => (!!title) && (
+                      <Tag key={index} styleName="tag" variant="light" scheme="gray">{title}</Tag>
+                    ))}
+                    <span>
+                      {phrase.expression}
+                    </span>
+                    <span styleName="separator" {...aria({hidden: true})}/>
+                    <span>
+                      {createTermNode(phrase.termString, phrase.ignoredPattern)}
+                    </span>
+                  </MultiLineText>
+                  {(!!phrase.text) && (
+                    <MultiLineText styleName="text" is="p">
+                      {phrase.text}
+                    </MultiLineText>
+                  )}
+                </div>
               </li>
             ))}
           </ul>

@@ -471,6 +471,8 @@ editWordForm:
       titles: "Specoj"
       expression: "Idiomaĵo"
       terms: "Tradukaĵoj"
+      text: "Klarigo"
+      hidden: "Uzi nur por serĉo (ne montri en vortokartoj)"
     variation:
       title: "Speco"
       spelling: "Formo"

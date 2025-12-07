@@ -21,6 +21,12 @@ export class PhraseSchema {
   @prop()
   public ignoredPattern?: string;
 
+  @prop()
+  public text?: string;
+
+  @prop()
+  public hidden?: boolean;
+
 }
 
 

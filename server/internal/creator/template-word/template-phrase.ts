@@ -14,7 +14,9 @@ export namespace TemplatePhraseCreator {
     const skeleton = {
       titles: raw.titles,
       expression: raw.form,
-      termString: raw.termString
+      termString: raw.termString,
+      text: raw.text ?? "",
+      hidden: raw.hidden ?? false
     } satisfies TemplatePhraseSkeleton;
     return skeleton;
   }
@@ -23,7 +25,9 @@ export namespace TemplatePhraseCreator {
     const raw = {
       titles: skeleton.titles,
       form: skeleton.expression,
-      termString: skeleton.termString
+      termString: skeleton.termString,
+      text: skeleton.text,
+      hidden: skeleton.hidden
     } satisfies TemplatePhrase;
     return raw;
   }
