@@ -30,6 +30,8 @@ toast:
         La agordo ŝanĝitas.
       enableAdvancedWord: |-
         La agordo ŝanĝitas.
+      enableProposal: |-
+        La agordo ŝanĝitas.
       enableMarkdown: |-
         La agordo ŝanĝitas.
       enableDuplicateName: |-
@@ -626,6 +628,8 @@ searchWordAdvancedDialog:
     type: "Metodo"
     title: "Speco"
     text: "Ŝlosilvorto"
+  absent:
+    element: "Neniuj kondiĉoj"
   button:
     add:
       element: "Aldoni kondiĉon"

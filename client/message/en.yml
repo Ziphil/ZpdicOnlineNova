@@ -30,6 +30,8 @@ toast:
         The setting has been changed.
       enableAdvancedWord: |-
         The setting has been changed.
+      enableProposal: |-
+        The setting has been changed.
       enableMarkdown: |-
         The setting has been changed.
       enableDuplicateName: |-
@@ -626,6 +628,8 @@ searchWordAdvancedDialog:
     type: "Method"
     title: "Kind"
     text: "Keyword"
+  absent:
+    element: "No conditions"
   button:
     add:
       element: "Add condition"

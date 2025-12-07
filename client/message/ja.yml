@@ -30,6 +30,8 @@ toast:
         設定を変更しました。
       enableAdvancedWord: |-
         設定を変更しました。
+      enableProposal: |-
+        設定を変更しました。
       enableMarkdown: |-
         設定を変更しました。
       enableDuplicateName: |-
@@ -626,6 +628,8 @@ searchWordAdvancedDialog:
     type: "検索方式"
     title: "分類"
     text: "検索内容"
+  absent:
+    element: "条件が設定されていません"
   button:
     add:
       element: "条件を追加"
