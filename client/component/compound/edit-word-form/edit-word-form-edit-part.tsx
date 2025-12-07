@@ -83,10 +83,11 @@ export const EditWordFormEditPart = create(
             <div styleName="section-list">
               <SwapAnimationContext values={sections} setValues={setSections}>
                 <EditWordFormSectionSection
+                  key={sections[0].id}
                   dictionary={dictionary}
                   form={form}
                   sectionOperations={sectionOperations}
-                  dndId="section"
+                  dndId={sections[0].id}
                   sectionIndex={0}
                   multiple={false}
                 />
