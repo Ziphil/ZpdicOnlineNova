@@ -4,8 +4,10 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretRight} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
+import {Markdown} from "/client/component/atom/markdown";
+import {WordCardAnchor} from "/client/component/compound/word-list/word-card-anchor";
 import {create} from "/client/component/create";
-import {createTermNode} from "/client/util/dictionary";
+import {createTermNode, getDictionarySpecialPaths} from "/client/util/dictionary";
 import {DictionaryWithExecutors, Section} from "/server/internal/skeleton";
 
 
@@ -47,9 +49,23 @@ export const WordCardPhraseList = create(
                     </span>
                   </MultiLineText>
                   {(!!phrase.text) && (
-                    <MultiLineText styleName="text" is="p">
-                      {phrase.text}
-                    </MultiLineText>
+                    (dictionary.settings.enableMarkdown) ? (
+                      <Markdown
+                        styleName="markdown"
+                        mode="normal"
+                        compact={true}
+                        specialPaths={getDictionarySpecialPaths(dictionary)}
+                        components={{
+                          a: (props) => <WordCardAnchor dictionary={dictionary} {...props}/>
+                        }}
+                      >
+                        {phrase.text}
+                      </Markdown>
+                    ) : (
+                      <MultiLineText styleName="text">
+                        {phrase.text}
+                      </MultiLineText>
+                    )
                   )}
                 </div>
               </li>
