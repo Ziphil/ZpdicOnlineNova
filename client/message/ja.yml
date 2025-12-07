@@ -30,6 +30,8 @@ toast:
         設定を変更しました。
       enableAdvancedWord: |-
         設定を変更しました。
+      enableProposal: |-
+        設定を変更しました。
       enableMarkdown: |-
         設定を変更しました。
       enableDuplicateName: |-
@@ -471,6 +473,8 @@ editWordForm:
       titles: "分類"
       expression: "表現"
       terms: "訳語"
+      text: "説明"
+      hidden: "検索にのみ用いる (単語カードでは非表示にする)"
     variation:
       title: "種類"
       spelling: "変化形"
@@ -554,6 +558,7 @@ header:
   link:
     dictionary: "辞書一覧"
     exampleOffer: "例文集"
+    login: "ログイン"
   userPage: "ユーザーページ"
 invitationList:
   empty: "通知はありません"
@@ -623,6 +628,8 @@ searchWordAdvancedDialog:
     type: "検索方式"
     title: "分類"
     text: "検索内容"
+  absent:
+    element: "条件が設定されていません"
   button:
     add:
       element: "条件を追加"
@@ -866,6 +873,9 @@ changeDictionarySettingsForm:
     enableAdvancedWord:
       true: "有効"
       false: "無効"
+    enableProposal:
+      true: "受け付ける"
+      false: "受け付けない"
     enableMarkdown:
       true: "有効"
       false: "無効"
@@ -1127,6 +1137,7 @@ dictionarySettingGeneralPart:
     paramName: "URL 用識別子"
     explanation: "説明"
     visibility: "公開範囲"
+    enableProposal: "造語依頼"
     discard: "削除"
   description:
     paramName: >-
@@ -1137,6 +1148,8 @@ dictionarySettingGeneralPart:
     visibility: >-
       これを「限定公開」に設定すると、この辞書が辞書一覧に表示されなくなります。
       ただし、辞書ページの URL を知っている人は直接アクセスすることができます。
+    enableProposal: >-
+      他のユーザーからの造語依頼を受け付けるかどうかを設定できます。
   callout:
     discard: >-
       この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。

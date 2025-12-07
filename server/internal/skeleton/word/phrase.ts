@@ -8,6 +8,8 @@ export interface Phrase {
   terms: Array<string>;
   termString: string;
   ignoredPattern?: string;
+  text: string;
+  hidden: boolean;
 
 }
 
@@ -18,7 +20,9 @@ export namespace Phrase {
     titles: [],
     expression: "",
     terms: [],
-    termString: ""
+    termString: "",
+    text: "",
+    hidden: false
   } as Phrase;
 
 }

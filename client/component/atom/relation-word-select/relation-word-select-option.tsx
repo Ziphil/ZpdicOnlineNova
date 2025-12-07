@@ -40,7 +40,7 @@ export const RelationWordSelectOption = create(
 
 function getEquivalentString(word: RelationWord | Word): string | null {
   if ("sections" in word) {
-    return word.sections.flatMap((section) => section.equivalents.map((equivalent) => equivalent.terms)).join(", ");
+    return word.sections.flatMap((section) => section.equivalents.flatMap((equivalent) => (!equivalent.hidden) ? equivalent.terms : [])).join(", ");
   } else {
     return null;
   }

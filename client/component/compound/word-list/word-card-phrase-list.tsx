@@ -4,8 +4,10 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretRight} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
+import {Markdown} from "/client/component/atom/markdown";
+import {WordCardAnchor} from "/client/component/compound/word-list/word-card-anchor";
 import {create} from "/client/component/create";
-import {createTermNode} from "/client/util/dictionary";
+import {createTermNode, getDictionarySpecialPaths} from "/client/util/dictionary";
 import {DictionaryWithExecutors, Section} from "/server/internal/skeleton";
 
 
@@ -33,18 +35,39 @@ export const WordCardPhraseList = create(
                 <span styleName="icon" {...aria({hidden: true})}>
                   <FontAwesomeIcon icon={faCaretRight}/>
                 </span>
-                <MultiLineText styleName="text" is="span">
-                  {phrase.titles.map((title, index) => (!!title) && (
-                    <Tag key={index} styleName="tag" variant="light" scheme="gray">{title}</Tag>
-                  ))}
-                  <span>
-                    {phrase.expression}
-                  </span>
-                  <span styleName="separator" {...aria({hidden: true})}/>
-                  <span>
-                    {createTermNode(phrase.termString, phrase.ignoredPattern)}
-                  </span>
-                </MultiLineText>
+                <div styleName="text-container">
+                  <MultiLineText styleName="expression" is="span">
+                    {phrase.titles.map((title, index) => (!!title) && (
+                      <Tag key={index} styleName="tag" variant="light" scheme="gray">{title}</Tag>
+                    ))}
+                    <span>
+                      {phrase.expression}
+                    </span>
+                    <span styleName="separator" {...aria({hidden: true})}/>
+                    <span>
+                      {createTermNode(phrase.termString, phrase.ignoredPattern)}
+                    </span>
+                  </MultiLineText>
+                  {(!!phrase.text) && (
+                    (dictionary.settings.enableMarkdown) ? (
+                      <Markdown
+                        styleName="markdown"
+                        mode="normal"
+                        compact={true}
+                        specialPaths={getDictionarySpecialPaths(dictionary)}
+                        components={{
+                          a: (props) => <WordCardAnchor dictionary={dictionary} {...props}/>
+                        }}
+                      >
+                        {phrase.text}
+                      </Markdown>
+                    ) : (
+                      <MultiLineText styleName="text">
+                        {phrase.text}
+                      </MultiLineText>
+                    )
+                  )}
+                </div>
               </li>
             ))}
           </ul>

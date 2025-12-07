@@ -24,6 +24,7 @@ export namespace DictionarySettingsCreator {
       phraseTitle: raw.phraseTitle ?? "成句",
       exampleTitle: raw.exampleTitle ?? "例文",
       enableAdvancedWord: raw.enableAdvancedWord ?? false,
+      enableProposal: raw.enableProposal ?? true,
       enableMarkdown: raw.enableMarkdown,
       enableDuplicateName: raw.enableDuplicateName,
       showVariationPronunciation: raw.showVariationPronunciation ?? true,

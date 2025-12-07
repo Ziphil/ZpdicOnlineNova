@@ -135,3 +135,9 @@ db.dictionaries.updateMany({"settings.templateWords": {$exists: true}}, [{$set: 
 
 db.dictionaries.updateMany({}, {$rename: {"settings.font.type": "settings.font.kind"}});
 ```
+
+### → ver 3.20.0
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+db.dictionaries.updateMany({}, {$set: {"settings.enableProposal": true}});
+```

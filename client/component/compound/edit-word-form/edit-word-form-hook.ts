@@ -49,7 +49,9 @@ type FormValue = {
     phrases: Array<{
       titles: Array<string>,
       expression: string,
-      termString: string
+      termString: string,
+      text: string,
+      hidden: boolean
     }>,
     variations: Array<{
       title: string,
@@ -117,7 +119,9 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
           phrases: section.phrases.map((phrase) => ({
             titles: phrase.titles,
             expression: phrase.expression,
-            termString: phrase.termString
+            termString: phrase.termString,
+            text: phrase.text,
+            hidden: phrase.hidden
           })),
           variations: section.variations.map((variation) => ({
             title: variation.title,
@@ -161,7 +165,9 @@ function getFormValue<D extends EditWordInitialData | null>(initialData: D): For
           phrases: section.phrases.map((phrase) => ({
             titles: phrase.titles,
             expression: phrase.expression,
-            termString: phrase.termString
+            termString: phrase.termString,
+            text: phrase.text,
+            hidden: phrase.hidden
           })),
           relations: section.relations.map((relation) => ({
             titles: relation.titles,
@@ -212,7 +218,9 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
           expression: phrase.expression,
           terms: createPhraseTerms(dictionary, phrase),
           termString: phrase.termString,
-          ignoredPattern: dictionary.settings.ignoredEquivalentPattern
+          ignoredPattern: dictionary.settings.ignoredEquivalentPattern,
+          text: phrase.text,
+          hidden: phrase.hidden
         })),
         variations: section.variations.map((variation) => ({
           title: variation.title,

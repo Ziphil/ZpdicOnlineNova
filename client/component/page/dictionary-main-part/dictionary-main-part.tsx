@@ -68,13 +68,15 @@ export const DictionaryMainPart = create(
             <div styleName="header">
               {(authorities?.includes("edit")) ? (
                 <AddWordButton dictionary={dictionary}/>
-              ) : (
+              ) : (dictionary.settings.enableProposal) ? (
                 <AddProposalDialog dictionary={dictionary} trigger={(
                   <Button scheme="gray" variant="light">
                     <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
                     {trans("button.addProposal")}
                   </Button>
                 )}/>
+              ) : (
+                <div/>
               )}
               <div styleName="size">
                 {(isFetching) ? <LoadingIcon/> : transNumber(hitSize)}

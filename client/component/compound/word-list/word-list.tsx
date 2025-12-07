@@ -63,7 +63,7 @@ export const WordList = create(
                     {trans("button.create")}
                   </Button>
                 )}/>
-              ) : (emptyType === "proposal") ? (
+              ) : (emptyType === "proposal" && dictionary.settings.enableProposal) ? (
                 <AddProposalDialog dictionary={dictionary} trigger={(
                   <Button scheme="gray" variant="light">
                     <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>

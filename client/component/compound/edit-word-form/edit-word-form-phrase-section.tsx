@@ -48,7 +48,7 @@ export const EditWordFormPhraseSection = create(
     const phrases = phraseFieldArraySpec.fields;
 
     const addPhrase = useCallback(function (): void {
-      phraseOperations.append({titles: [], expression: "", termString: ""});
+      phraseOperations.append({titles: [], expression: "", termString: "", text: "", hidden: false});
     }, [phraseOperations]);
 
     const setPhrases = useCallback(function (update: (phrases: Array<any>) => Array<any>): void {

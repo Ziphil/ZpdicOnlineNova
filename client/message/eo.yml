@@ -30,6 +30,8 @@ toast:
         La agordo ŝanĝitas.
       enableAdvancedWord: |-
         La agordo ŝanĝitas.
+      enableProposal: |-
+        La agordo ŝanĝitas.
       enableMarkdown: |-
         La agordo ŝanĝitas.
       enableDuplicateName: |-
@@ -471,6 +473,8 @@ editWordForm:
       titles: "Specoj"
       expression: "Idiomaĵo"
       terms: "Tradukaĵoj"
+      text: "Klarigo"
+      hidden: "Uzi nur por serĉo (ne montri en vortokartoj)"
     variation:
       title: "Speco"
       spelling: "Formo"
@@ -554,6 +558,7 @@ header:
   link:
     dictionary: "Vortaroj"
     exampleOffer: "Frazoj"
+    login: "Ensaluti"
   userPage: "Uzanta paĝo"
 invitationList:
   empty: "Neniuj sciigoj"
@@ -623,6 +628,8 @@ searchWordAdvancedDialog:
     type: "Metodo"
     title: "Speco"
     text: "Ŝlosilvorto"
+  absent:
+    element: "Neniuj kondiĉoj"
   button:
     add:
       element: "Aldoni kondiĉon"
@@ -868,6 +875,9 @@ changeDictionarySettingsForm:
     enableAdvancedWord:
       true: "Ebligita"
       false: "Malebligita"
+    enableProposal:
+      true: "Akcepti"
+      false: "Ne akcepti"
     enableMarkdown:
       true: "Ebligita"
       false: "Malebligita"
@@ -1126,6 +1136,7 @@ dictionarySettingGeneralPart:
     paramName: "Identigilo por retadreso"
     explanation: "Priskribo"
     visibility: "Videbleco"
+    enableProposal: "Petoj"
     discard: "Forigi"
   description:
     paramName: >-
@@ -1136,6 +1147,8 @@ dictionarySettingGeneralPart:
     visibility: >-
       Se vi agordos tiun al “Nelistigita”, la vortaro ne aperos en listoj de vortaroj.
       Tamen ĉiu kiu scias la retadreson de la paĝo de la vortaro povas ankoraŭ rekte aliri ĝin.
+    enableProposal: >-
+      Vi povas agordi ĉu akcepti petojn de aliaj uzantoj por krei novajn vortojn.
   callout:
     discard: >-
       Forigi tiun vortaron ankaŭ forigos ĉiujn rilatajn datumojn, inkluzive de vortoj kaj ekzemplaj frazoj.

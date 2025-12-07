@@ -16,6 +16,7 @@ export interface DictionarySettings {
   phraseTitle: string;
   exampleTitle: string;
   enableAdvancedWord: boolean;
+  enableProposal: boolean;
   enableMarkdown: boolean;
   enableDuplicateName: boolean;
   showVariationPronunciation: boolean;

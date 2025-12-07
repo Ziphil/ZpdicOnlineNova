@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faPlus, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, useTrans} from "zographia";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
@@ -21,7 +22,7 @@ export const ProposalCard = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("proposalList");
+    const {trans, transDate} = useTrans("proposalList");
 
     const word = useMemo(() => getWord(proposal), [proposal]);
 
@@ -30,6 +31,9 @@ export const ProposalCard = create(
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
+          <div styleName="date">
+            <time dateTime={dayjs(proposal.createdDate).toISOString()}>{transDate(proposal.createdDate)}</time>
+          </div>
           <MultiLineText styleName="name">
             {proposal.name}
           </MultiLineText>

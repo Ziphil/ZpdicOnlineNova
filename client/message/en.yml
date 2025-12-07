@@ -30,6 +30,8 @@ toast:
         The setting has been changed.
       enableAdvancedWord: |-
         The setting has been changed.
+      enableProposal: |-
+        The setting has been changed.
       enableMarkdown: |-
         The setting has been changed.
       enableDuplicateName: |-
@@ -471,6 +473,8 @@ editWordForm:
       titles: "Kinds"
       expression: "Expression"
       terms: "Translations"
+      text: "Explanation"
+      hidden: "Use only for search (hidden on word cards)"
     variation:
       title: "Kind"
       spelling: "Form"
@@ -554,6 +558,7 @@ header:
   link:
     dictionary: "Dictionaries"
     exampleOffer: "Sentences"
+    login: "Sign in"
   userPage: "User page"
 invitationList:
   empty: "No notifications"
@@ -623,6 +628,8 @@ searchWordAdvancedDialog:
     type: "Method"
     title: "Kind"
     text: "Keyword"
+  absent:
+    element: "No conditions"
   button:
     add:
       element: "Add condition"
@@ -868,6 +875,9 @@ changeDictionarySettingsForm:
     enableAdvancedWord:
       true: "Enabled"
       false: "Disabled"
+    enableProposal:
+      true: "Accept"
+      false: "Don’t accept"
     enableMarkdown:
       true: "Enabled"
       false: "Disabled"
@@ -1126,6 +1136,7 @@ dictionarySettingGeneralPart:
     paramName: "Identifier for URL"
     explanation: "Description"
     visibility: "Visibility"
+    enableProposal: "Requests"
     discard: "Delete"
   description:
     paramName: >-
@@ -1136,6 +1147,8 @@ dictionarySettingGeneralPart:
     visibility: >-
       If you set this to ‘Unlisted’, this dictionary will not appear in dictionary lists.
       However, anyone who knows the URL of the dictionary page can still access it directly.
+    enableProposal: >-
+      You can set whether to accept requests for new words from other users.
   callout:
     discard: >-
       Deleting this dictionary will also delete all the relevant data, including words and example sentences.

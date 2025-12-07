@@ -27,7 +27,14 @@
 
 .row {
   column-gap: 3zu;
+  row-gap: 3zu;
   display: flex;
+  @include device("desktop") {
+    flex-direction: row;
+  }
+  @include device("mobile") {
+    flex-direction: column;
+  }
   >:nth-child(-n+3) {
     flex: 0 0 auto;
   }
