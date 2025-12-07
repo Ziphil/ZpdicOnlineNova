@@ -1,6 +1,6 @@
 //
 
-import {faBook, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
+import {faBook, faQuotes, faSignInAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, LinkIconbag, useResponsiveDevice, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
@@ -46,13 +46,18 @@ export const Header = create(
           <div styleName="menu">
             <ChangeLocaleForm/>
           </div>
-          {(me !== null) && (
-            <div styleName="rightmost">
+          <div styleName="rightmost">
+            {(me !== null) ? (
               <SimpleLink href={`/user/${me.name}`}>
                 <UserAvatar styleName="avatar" user={me} insertAlt={true}/>
               </SimpleLink>
-            </div>
-          )}
+            ) : (
+              <Link styleName="link" href="/login" variant="unstyledUnderline">
+                <LinkIconbag><GeneralIcon icon={faSignInAlt}/></LinkIconbag>
+                {trans("link.login")}
+              </Link>
+            )}
+          </div>
         </div>
       </header>
     );

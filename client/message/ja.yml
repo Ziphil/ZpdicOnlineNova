@@ -554,6 +554,7 @@ header:
   link:
     dictionary: "辞書一覧"
     exampleOffer: "例文集"
+    login: "ログイン"
   userPage: "ユーザーページ"
 invitationList:
   empty: "通知はありません"
