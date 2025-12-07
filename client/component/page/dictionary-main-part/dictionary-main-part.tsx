@@ -75,7 +75,9 @@ export const DictionaryMainPart = create(
                     {trans("button.addProposal")}
                   </Button>
                 )}/>
-              ) : null}
+              ) : (
+                <div/>
+              )}
               <div styleName="size">
                 {(isFetching) ? <LoadingIcon/> : transNumber(hitSize)}
               </div>
