@@ -174,7 +174,7 @@ export class SlimeSerializer extends Serializer {
     raw["zpdicOnline"]["punctuations"] = this.dictionary.settings.punctuations;
     raw["zpdicOnline"]["ignoredPattern"] = this.dictionary.settings.ignoredEquivalentPattern;
     raw["zpdicOnline"]["pronunciationTitle"] = this.dictionary.settings.pronunciationTitle;
-    raw["zpdicOnline"]["enableMarkdown"] = this.dictionary.settings.enableMarkdown;
+    raw["zpdicOnline"]["enableMarkdown"] = (this.dictionary.settings.markdownFeatures ?? []).length > 0;
     raw["snoj"] = this.dictionary.settings.akrantiainSource;
     raw["zatlin"] = this.dictionary.settings.zatlinSource;
     const string = JSON.stringify(raw).slice(1, -1);

@@ -35,14 +35,14 @@ export class DictionarySettingsSchema {
   @prop({required: true})
   public exampleTitle!: string;
 
+  @prop({type: String})
+  public markdownFeatures?: Array<string>;
+
   @prop()
   public enableAdvancedWord?: boolean;
 
   @prop()
   public enableProposal?: boolean;
-
-  @prop({required: true})
-  public enableMarkdown!: boolean;
 
   @prop({required: true})
   public enableDuplicateName!: boolean;
@@ -64,8 +64,8 @@ export class DictionarySettingsSchema {
       pronunciationTitle: "発音",
       phraseTitle: "成句",
       exampleTitle: "例文",
+      markdownFeatures: [],
       enableAdvancedWord: false,
-      enableMarkdown: false,
       enableProposal: true,
       enableDuplicateName: true,
       showVariationPronunciation: true,

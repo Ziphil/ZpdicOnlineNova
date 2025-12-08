@@ -5,6 +5,7 @@ import {uriTransformer as defaultTransformUri} from "react-markdown";
 import {AdditionalProps, Markdown as ZographiaMarkdown} from "zographia";
 import {MarkdownHeading} from "/client/component/atom/markdown/markdown-heading";
 import {create} from "/client/component/create";
+import {MarkdownFeature} from "/server/internal/skeleton";
 import {MarkdownAnchor} from "./markdown-anchor";
 
 
@@ -15,6 +16,7 @@ export const Markdown = create(
     compact = false,
     specialPaths,
     components,
+    features,
     children,
     ...rest
   }: {
@@ -22,6 +24,7 @@ export const Markdown = create(
     compact?: boolean,
     specialPaths?: MarkdownSpecialPaths,
     components?: ComponentProps<typeof ZographiaMarkdown>["components"],
+    features: Array<Omit<MarkdownFeature, "basic">>,
     children: string,
     className?: string
   } & AdditionalProps): ReactElement {

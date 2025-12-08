@@ -66,7 +66,7 @@ export const ChangeDictionarySettingsForm = create(
               </CheckableContainer>
             </div>
           </ControlContainer>
-        ) : (propertyName === "enableMarkdown") ? (
+        ) : (propertyName === "markdownFeatures") ? (
           <ControlContainer>
             <div styleName="radio-group">
               <CheckableContainer>

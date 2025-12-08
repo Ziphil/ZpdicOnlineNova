@@ -141,3 +141,10 @@ Mongo Shell で該当のデータベースを選択した後、以下を実行�
 ```js
 db.dictionaries.updateMany({}, {$set: {"settings.enableProposal": true}});
 ```
+
+### → ver 3.21.0
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+db.dictionaries.updateMany({"settings.enableMarkdown": true}, {$set: {"settings.markdownFeatures": ["basic"]}});
+db.dictionaries.updateMany({"settings.enableMarkdown": false}, {$set: {"settings.markdownFeatures": []}});
+```

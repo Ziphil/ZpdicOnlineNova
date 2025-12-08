@@ -15,12 +15,15 @@ export interface DictionarySettings {
   pronunciationTitle: string;
   phraseTitle: string;
   exampleTitle: string;
+  markdownFeatures: Array<MarkdownFeature>;
   enableAdvancedWord: boolean;
   enableProposal: boolean;
-  enableMarkdown: boolean;
   enableDuplicateName: boolean;
   showVariationPronunciation: boolean;
   showEquivalentNumber: boolean;
   showSectionNumber: boolean;
 
 }
+
+
+export type MarkdownFeature = "basic" | "font";

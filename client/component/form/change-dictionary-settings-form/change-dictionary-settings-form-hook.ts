@@ -42,7 +42,7 @@ function getSchema<N extends keyof DictionarySettings>(propertyName: N): StringS
 }
 
 function getDefaultFormValue<N extends keyof DictionarySettings>(dictionary: Dictionary, propertyName: N): FormValue {
-  if (propertyName === "enableAdvancedWord" || propertyName === "enableProposal" || propertyName === "enableMarkdown" || propertyName === "enableDuplicateName" || propertyName === "showVariationPronunciation") {
+  if (propertyName === "enableAdvancedWord" || propertyName === "enableProposal" || propertyName === "enableDuplicateName" || propertyName === "showVariationPronunciation") {
     return {value: dictionary.settings[propertyName]!.toString()};
   } else if (propertyName === "punctuations") {
     return {value: dictionary.settings.punctuations.join("")};
@@ -53,7 +53,7 @@ function getDefaultFormValue<N extends keyof DictionarySettings>(dictionary: Dic
 
 function getQuery<N extends keyof DictionarySettings>(dictionary: Dictionary, propertyName: N, value: FormValue): RequestData<"changeDictionarySettings"> {
   const number = dictionary.number;
-  if (propertyName === "enableAdvancedWord" || propertyName === "enableProposal" || propertyName === "enableMarkdown" || propertyName === "enableDuplicateName" || propertyName === "showVariationPronunciation") {
+  if (propertyName === "enableAdvancedWord" || propertyName === "enableProposal" || propertyName === "enableDuplicateName" || propertyName === "showVariationPronunciation") {
     return {number, settings: {[propertyName]: value.value === "true"}};
   } else if (propertyName === "punctuations") {
     return {number, settings: {punctuations: (value.value || "").split("")}};

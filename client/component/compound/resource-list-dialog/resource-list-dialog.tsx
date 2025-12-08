@@ -50,7 +50,7 @@ export const ResourceListDialog = create(
 
     const enableMarkdown = useCallback(async function (): Promise<void> {
       const number = dictionary.number;
-      const response = await request("changeDictionarySettings", {number, settings: {enableMarkdown: true}});
+      const response = await request("changeDictionarySettings", {number, settings: {markdownFeatures: ["basic"]}});
       await switchResponse(response, async () => {
         await invalidateResponses("fetchDictionary", (query) => +query.identifier === dictionary.number || query.identifier === dictionary.paramName);
       });
@@ -63,7 +63,7 @@ export const ResourceListDialog = create(
           <DialogPane styleName="pane">
             <DialogCloseButton/>
             <DialogBody>
-              {(dictionary.settings.enableMarkdown) ? (
+              {(dictionary.settings.markdownFeatures.length > 0) ? (
                 <MultiLineText styleName="explanation" is="p">
                   {trans("explanation")}
                 </MultiLineText>

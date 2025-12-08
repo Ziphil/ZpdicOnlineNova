@@ -49,12 +49,13 @@ export const WordCardPhraseList = create(
                     </span>
                   </MultiLineText>
                   {(!!phrase.text) && (
-                    (dictionary.settings.enableMarkdown) ? (
+                    (dictionary.settings.markdownFeatures.length > 0) ? (
                       <Markdown
                         styleName="markdown"
                         mode="normal"
                         compact={true}
                         specialPaths={getDictionarySpecialPaths(dictionary)}
+                        features={dictionary.settings.markdownFeatures}
                         components={{
                           a: (props) => <WordCardAnchor dictionary={dictionary} {...props}/>
                         }}

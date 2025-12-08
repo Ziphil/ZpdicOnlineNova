@@ -50,11 +50,11 @@ export const DictionarySettingEditingPart = create(
           <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="enableAdvancedWord"/>
         </section>
         <section styleName="section">
-          <h3 styleName="heading">{trans("heading.enableMarkdown")}</h3>
+          <h3 styleName="heading">{trans("heading.markdownFeatures")}</h3>
           <MultiLineText styleName="description">
-            {trans("description.enableMarkdown")}
+            {trans("description.markdownFeatures")}
           </MultiLineText>
-          <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="enableMarkdown"/>
+          <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="markdownFeatures"/>
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.enableDuplicateName")}</h3>
