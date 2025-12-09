@@ -856,12 +856,12 @@ changeDictionaryFontForm:
       file: "Tipara dosiero"
   labelHelper:
     kind:
-      none: |-
+      none: >-
         La kapvortoj estos montrataj en la defaŭlta tiparo.
-      local: |-
+      local: >-
         La kapvortoj estos montrataj en la loka tiparo instalita en la vizitanta medio.
         Se la specifita tiparo ne estas instalita en la vizitanta medio, la kapvortoj estos montrataj en la defaŭlta tiparo anstataŭe.
-      custom: |-
+      custom: >-
         Alŝutu vian propran tiparan dosieron por uzi ĝin por la kapvortoj.
         Tiu tiparo estas uzata sendepende de la vizitanta medio.
   error:
@@ -870,6 +870,27 @@ changeDictionaryFontForm:
     filetooLarge: >-
       La dosiero estas tro granda.
       Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
+changeDictionaryMarkdownFeaturesForm:
+  label:
+    enable:
+      label: "Ebligi/Malebligi"
+      true: "Ebligi"
+      false: "Malebligi"
+    features:
+      label: "Uzataj funkcioj"
+      basic: "Bazaj"
+      font: "Propran tiparon"
+  labelHelper:
+    enable:
+      true: >-
+        Vi povas uzi Markdown-sintakson por dekori la tekston.
+      false: >-
+        La teksto estos montrata kiel estas.
+    features:
+      basic: >-
+        Ebligas la bazajn funkciojn kiel ligilojn kaj bildojn.
+      font: >-
+        La teksto enkludita en <pre>{…}</pre> estos montrata en la propran tiparon registrita en tiu vortaro.
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:
@@ -913,11 +934,11 @@ changeDictionaryVisibilityForm:
     unlisted: "Nelistigita"
     private: "Nepublika"
   labelHelper:
-    public: |-
+    public: >-
       Ĉiuj povos vidi tiun vortaron.
-    unlisted: |-
+    unlisted: >-
       Tiu vortaro ne aperos en listoj de vortaroj, sed ĉiu kiu scias la retadreson de la vortaro povos ankoraŭ rekte aliri ĝin.
-    private: |-
+    private: >-
       Nur uzantoj kun redakta permeso povos vidi tiun vortaron.
       Uzantoj sen permeso ne povos aliri ĝin eĉ se ili scias la retadreson.
 changeDictionarySourceForm:

@@ -5,6 +5,7 @@ import {uriTransformer as defaultTransformUri} from "react-markdown";
 import {AdditionalProps, Markdown as ZographiaMarkdown} from "zographia";
 import {MarkdownHeading} from "/client/component/atom/markdown/markdown-heading";
 import {create} from "/client/component/create";
+import {remarkCustomSpan} from "/client/util/markdown";
 import {MarkdownFeature} from "/server/internal/skeleton";
 import {MarkdownAnchor} from "./markdown-anchor";
 
@@ -72,6 +73,9 @@ export const Markdown = create(
           h6: (mode === "article") ? (props) => <MarkdownHeading level={6} {...props}/> : (props) => <h6 {...props}/>,
           ...components
         }}
+        remarkPlugins={[
+          ...(features.includes("font") ? [remarkCustomSpan()] : [])
+        ]}
         transformUrl={transformUrl}
         {...rest}
       >

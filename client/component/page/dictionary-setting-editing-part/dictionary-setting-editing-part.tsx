@@ -5,6 +5,7 @@ import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
+import {ChangeDictionaryMarkdownFeaturesForm} from "/client/component/form/change-dictionary-markdown-features-form";
 import {ChangeDictionarySettingsForm} from "/client/component/form/change-dictionary-settings-form";
 import {ChangeDictionarySourceForm} from "/client/component/form/change-dictionary-source-form";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
@@ -54,7 +55,7 @@ export const DictionarySettingEditingPart = create(
           <MultiLineText styleName="description">
             {trans("description.markdownFeatures")}
           </MultiLineText>
-          <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="markdownFeatures"/>
+          <ChangeDictionaryMarkdownFeaturesForm dictionary={dictionary}/>
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.enableDuplicateName")}</h3>

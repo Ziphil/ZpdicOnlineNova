@@ -854,12 +854,12 @@ changeDictionaryFontForm:
       file: "フォントファイル"
   labelHelper:
     kind:
-      none: |-
+      none: >-
         デフォルトフォントで表示します。
-      local: |-
+      local: >-
         閲覧者の環境に保存されているローカルフォントで表示します。
         指定されたフォントが閲覧者の環境にインストールされていない場合は、デフォルトフォントが使われます。
-      custom: |-
+      custom: >-
         フォントファイルをアップロードすることで、そのフォントで表示します。
         閲覧者の環境によらず、指定されたフォントで表示することができます。
   error:
@@ -868,6 +868,27 @@ changeDictionaryFontForm:
     filetooLarge: >-
       ファイルのサイズが大きすぎます。
       1 MB より大きなファイルはアップロードすることができません。
+changeDictionaryMarkdownFeaturesForm:
+  label:
+    enable:
+      label: "有効/無効"
+      true: "有効"
+      false: "無効"
+    features:
+      label: "使用する機能"
+      basic: "基本"
+      font: "専用フォント"
+  labelHelper:
+    enable:
+      true: >-
+        Markdown 記法を用いることでテキストを装飾できるようにします。
+      false: >-
+        入力されたテキストをそのまま表示します。
+    features:
+      basic: >-
+        リンクや画像などの基本的を機能を有効にします。
+      font: >-
+        <pre>{…}</pre> で囲まれた箇所が、この辞書に登録された専用フォントで表示されるようになります。
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:
@@ -911,11 +932,11 @@ changeDictionaryVisibilityForm:
     unlisted: "限定公開"
     private: "非公開"
   labelHelper:
-    public: |-
+    public: >-
       誰でも自由に閲覧できます。
-    unlisted: |-
+    unlisted: >-
       辞書一覧などには表示されませんが、辞書ページの URL を知っている人は直接アクセスできます。
-    private: |-
+    private: >-
       編集権限がある人のみ閲覧できます。
       権限がない人は URL から直接アクセスしても閲覧できません。
 changeDictionarySourceForm:

@@ -1,6 +1,7 @@
 //
 
 import {DictionaryFont} from "/server/internal/skeleton/dictionary/dictionary-font";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 import {TemplateWord} from "../template-word/template-word";
 
 
@@ -26,4 +27,6 @@ export interface DictionarySettings {
 }
 
 
-export type MarkdownFeature = "basic" | "font";
+export const MARKDOWN_FEATURES = ["basic", "font"] as const;
+export type MarkdownFeature = LiteralType<typeof MARKDOWN_FEATURES>;
+export const MarkdownFeatureUtil = LiteralUtilType.create(MARKDOWN_FEATURES);
