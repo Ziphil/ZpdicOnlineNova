@@ -29,7 +29,7 @@ function wrapCustomSpan(children: Array<Content>): Array<Content> {
     if (child.type === "text") {
       const value = child.value ?? "";
       let start = 0;
-      for (let pos = 0; pos < value.length; pos += 1) {
+      for (let pos = 0 ; pos < value.length ; pos += 1) {
         const char = value.charAt(pos);
         if (!inside) {
           if (char === "{") {
