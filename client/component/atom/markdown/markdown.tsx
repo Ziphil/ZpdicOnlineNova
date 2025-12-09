@@ -74,7 +74,7 @@ export const Markdown = create(
           ...components
         }}
         remarkPlugins={[
-          ...(features.includes("font") ? [remarkCustomSpan()] : [])
+          ...(features.includes("font") ? [remarkCustomSpan] : [])
         ]}
         transformUrl={transformUrl}
         {...rest}
