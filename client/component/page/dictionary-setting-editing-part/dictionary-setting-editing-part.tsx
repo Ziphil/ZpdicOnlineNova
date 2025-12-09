@@ -52,9 +52,6 @@ export const DictionarySettingEditingPart = create(
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.markdownFeatures")}</h3>
-          <MultiLineText styleName="description">
-            {trans("description.markdownFeatures")}
-          </MultiLineText>
           <ChangeDictionaryMarkdownFeaturesForm dictionary={dictionary}/>
         </section>
         <section styleName="section">

@@ -28,11 +28,11 @@ toast:
         The setting has been changed.
       font: |-
         The setting has been changed.
+      markdownFeatures: |-
+        The setting has been changed.
       enableAdvancedWord: |-
         The setting has been changed.
       enableProposal: |-
-        The setting has been changed.
-      enableMarkdown: |-
         The setting has been changed.
       enableDuplicateName: |-
         The setting has been changed.
@@ -1107,8 +1107,8 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Source code for Akrantiain"
     zatlinSource: "Source code for Zatlin"
+    markdownFeatures: "Markdown"
     enableAdvancedWord: "Advanced word editing"
-    enableMarkdown: "Markdown"
     enableDuplicateName: "Duplicate spelling check"
     punctuations: "Delimiters"
     ignoredEquivalentPattern: "Pattern to be ignored in translations"
@@ -1124,8 +1124,6 @@ dictionarySettingEditingPart:
       For more information on Zatlin’s syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
     enableAdvancedWord: >- 
       If you enable this feature, you can register multiple sections in a word, with each section containing a range of information from translations to related words.
-    enableMarkdown: >-
-      Enabling this feature will allow you to write the contents of words in Markdown format.
     enableDuplicateName: >-
       If you enable this feature, when you enter a spelling in the word editor, it will tell you whether the dictionary already has a word with the same spelling.
       Note that it only checks for spelling duplication and does not prevent you from registering a word with the same spelling.

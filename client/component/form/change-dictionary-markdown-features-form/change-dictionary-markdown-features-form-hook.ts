@@ -5,6 +5,7 @@ import {Asserts, array, object, string} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
+import {forceArray} from "/client/util/misc";
 import {switchResponse} from "/client/util/response";
 import {Dictionary, MARKDOWN_FEATURES} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
@@ -47,7 +48,7 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"change
   return {
     number,
     settings: {
-      markdownFeatures: (value.enable === "true") ? ["basic", ...value.features] : []
+      markdownFeatures: (value.enable === "true") ? ["basic", ...forceArray(value.features)] : []
     }
   };
 }

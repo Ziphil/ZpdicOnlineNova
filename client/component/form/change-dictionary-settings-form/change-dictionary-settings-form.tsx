@@ -66,19 +66,6 @@ export const ChangeDictionarySettingsForm = create(
               </CheckableContainer>
             </div>
           </ControlContainer>
-        ) : (propertyName === "markdownFeatures") ? (
-          <ControlContainer>
-            <div styleName="radio-group">
-              <CheckableContainer>
-                <Radio value="true" {...register("value")}/>
-                <CheckableLabel>{trans("label.enableMarkdown.true")}</CheckableLabel>
-              </CheckableContainer>
-              <CheckableContainer>
-                <Radio value="false" {...register("value")}/>
-                <CheckableLabel>{trans("label.enableMarkdown.false")}</CheckableLabel>
-              </CheckableContainer>
-            </div>
-          </ControlContainer>
         ) : (propertyName === "enableDuplicateName") ? (
           <ControlContainer>
             <div styleName="radio-group">

@@ -28,11 +28,11 @@ toast:
         La agordo ŝanĝitas.
       font: |-
         La agordo ŝanĝitas.
+      markdownFeatures: |-
+        La agordo ŝanĝitas.
       enableAdvancedWord: |-
         La agordo ŝanĝitas.
       enableProposal: |-
-        La agordo ŝanĝitas.
-      enableMarkdown: |-
         La agordo ŝanĝitas.
       enableDuplicateName: |-
         La agordo ŝanĝitas.
@@ -1107,8 +1107,8 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Fontkodo por Akrantiain"
     zatlinSource: "Fontkodo por Zatlin"
+    markdownFeatures: "Markdown"
     enableAdvancedWord: "Altnivela redaktado de vortoj"
-    enableMarkdown: "Markdown"
     enableDuplicateName: "Kontrolon de duobla literumo"
     punctuations: "Disigiloj"
     ignoredEquivalentPattern: "Regulesprimo ignorota en tradukaĵoj"
@@ -1124,8 +1124,6 @@ dictionarySettingEditingPart:
       Por pliaj informoj pri la sintakso de Zatlin, bonvolu rilati al la <link>dokumentaro</link> (nuntempe disponebla nur en la japana).
     enableAdvancedWord: >- 
       Se vi ebligos tiun funkcion, vi povos registri plurajn sekciojn en vorto, ĉiu el kiu enhavas informojn de tradukaĵoj ĝis rilataj vortoj.
-    enableMarkdown: >-
-      Ebligi tiun funkcion permesos al vi skribi la enhavojn de vortoj en Markdown.
     enableDuplicateName: >-
       Se vi ebligos tiun funkcion, kiam vi tajpos literumon en la redaktilo de vorto, ĝi diros al vi ĉu la vortaro jam havas vorto kun la sama literumo.
       Notu, ke ĝi nur kontrolas duobligon de literumoj kaj ne malhelpas vin registri vorton kun la sama literumo.

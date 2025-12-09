@@ -1,5 +1,6 @@
 //
 
+import type {Falsey} from "lodash";
 import {SetStateAction} from "react";
 
 
@@ -40,6 +41,16 @@ export function toRomanNumeral(number: number): string {
 export function escapeRegexp(string: string): string {
   const escapedString = string.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
   return escapedString;
+}
+
+export function forceArray<T>(value: Falsey | T | Array<T>): Array<T> {
+  if (Array.isArray(value)) {
+    return value;
+  } else if (value) {
+    return [value];
+  } else {
+    return [];
+  }
 }
 
 export function calcOffsetSpec(page: number, size: number): {offset: number, size: number} {

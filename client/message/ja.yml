@@ -28,11 +28,11 @@ toast:
         設定を変更しました。
       font: |-
         設定を変更しました。
+      markdownFeatures: |-
+        設定を変更しました。
       enableAdvancedWord: |-
         設定を変更しました。
       enableProposal: |-
-        設定を変更しました。
-      enableMarkdown: |-
         設定を変更しました。
       enableDuplicateName: |-
         設定を変更しました。
@@ -1108,8 +1108,8 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Akrantiain ソースコード"
     zatlinSource: "Zatlin ソースコード"
+    markdownFeatures: "Markdown"
     enableAdvancedWord: "高度な単語編集"
-    enableMarkdown: "Markdown"
     enableDuplicateName: "重複綴りチェック"
     punctuations: "区切り文字"
     ignoredEquivalentPattern: "訳語で無視するパターン"
@@ -1125,8 +1125,6 @@ dictionarySettingEditingPart:
       Zatlin の構文については<link>ドキュメント</link>をご覧ください。
     enableAdvancedWord: >-
       これを有効にしておくと、訳語から関連語までを 1 つのセクションとして、単語データに複数のセクションを登録できるようになります。 
-    enableMarkdown: >-
-      これを有効にしておくと、単語データの内容欄を Markdown 形式で書くことができるようになります。
     enableDuplicateName: >-
       これを有効にしておくと、単語編集画面で綴りを入力した際に、同じ綴りの単語がすでに存在しているかが表示されるようになります。
       なお、あくまでこの機能は綴りの重複をチェックするのみで、同じ綴りの単語を登録できるなくなるわけではありません。
