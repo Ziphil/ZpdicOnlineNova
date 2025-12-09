@@ -38,14 +38,14 @@ function getFontCss(dictionary: Dictionary): string | undefined {
         src: url("${url}") format("${font.format}");
       }
       .custom-font {
-        font-family: "zpdic-custom-${dictionary.number}";
+        font-family: "zpdic-custom-${dictionary.number}" !important;
       }
     `;
     return css;
   } else if (font.kind === "local") {
     const css = `
       .custom-font {
-        font-family: "${font.name}";
+        font-family: "${font.name}" !important;
       }
     `;
     return css;
