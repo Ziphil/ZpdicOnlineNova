@@ -37,6 +37,16 @@ function getFontCss(dictionary: Dictionary): string | undefined {
         font-weight: bold;
         src: url("${url}") format("${font.format}");
       }
+      .custom-font {
+        font-family: "zpdic-custom-${dictionary.number}";
+      }
+    `;
+    return css;
+  } else if (font.kind === "local") {
+    const css = `
+      .custom-font {
+        font-family: "${font.name}";
+      }
     `;
     return css;
   } else {

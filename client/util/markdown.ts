@@ -5,7 +5,7 @@ import type {Data, Node} from "unist";
 import {CONTINUE, SKIP, visit} from "unist-util-visit";
 
 
-export function remarkCustomSpan(): (tree: Root) => void {
+export function remarkCustomFont(): (tree: Root) => void {
   const plugin = function (tree: Root): void {
     visit(tree, (node) => {
       if ("type" in node && node.type as string === "customSpan") {
@@ -49,7 +49,7 @@ function wrapCustomSpan(children: Array<Content>): Array<Content> {
             }
             const customSpan = {
               type: "customSpan",
-              data: {hName: "span", hProperties: {className: ["custom"]}} as Data,
+              data: {hName: "span", hProperties: {className: ["custom-font"]}} as Data,
               children: capturedContents
             } as unknown as Content;
             headChildren.push(customSpan);
