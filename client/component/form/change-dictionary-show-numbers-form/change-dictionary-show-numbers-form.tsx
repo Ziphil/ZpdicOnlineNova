@@ -25,7 +25,7 @@ export const ChangeDictionaryShowNumbersForm = create(
 
     return (
       <form styleName="root" {...rest}>
-        <ControlContainer>
+        <ControlContainer label={false}>
           <ControlLabel>{trans("label.section")}</ControlLabel>
           <div styleName="radio-group">
             <CheckableContainer>
@@ -38,7 +38,7 @@ export const ChangeDictionaryShowNumbersForm = create(
             </CheckableContainer>
           </div>
         </ControlContainer>
-        <ControlContainer>
+        <ControlContainer label={false}>
           <ControlLabel>{trans("label.equivalent")}</ControlLabel>
           <div styleName="radio-group">
             <CheckableContainer>
