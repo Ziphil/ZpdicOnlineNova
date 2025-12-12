@@ -877,6 +877,7 @@ changeDictionaryMarkdownFeaturesForm:
     features:
       label: "使用する機能"
       basic: "基本"
+      supsub: "上付き/下付き"
       font: "専用フォント"
   labelHelper:
     enable:
@@ -887,8 +888,10 @@ changeDictionaryMarkdownFeaturesForm:
     features:
       basic: >-
         リンクや画像などの基本的を機能を有効にします。
+      supsub: >-
+        <pre>^…^</pre> で囲まれた箇所が上付き文字で表示され、<pre>~…~</pre> で囲まれた箇所が下付き文字で表示されるようになります。
       font: >-
-        <pre>{…}</pre> で囲まれた箇所が、この辞書に登録された専用フォントで表示されるようになります。
+        <pre>{…}</pre> で囲まれた箇所が専用フォントで表示されるようになります。
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:

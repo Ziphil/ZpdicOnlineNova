@@ -18,7 +18,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {Dictionary} from "/server/internal/skeleton";
+import {Dictionary, MARKDOWN_FEATURES} from "/server/internal/skeleton";
 import {useChangeDictionaryMarkdownFeatures} from "./change-dictionary-markdown-features-form-hook";
 
 
@@ -83,15 +83,17 @@ export const ChangeDictionaryMarkdownFeaturesForm = create(
                   <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.features.basic")}</MultiLineText>
                 </div>
               </CheckableCard>
-              <CheckableCard styleName="card">
-                <Checkbox value="font" {...register("features")}/>
-                <div styleName="label">
-                  <div styleName="label-main">
-                    {trans("label.features.font")}
+              {MARKDOWN_FEATURES.filter((feature) => feature !== "basic").map((feature) => (
+                <CheckableCard styleName="card" key={feature}>
+                  <Checkbox value={feature} {...register("features")}/>
+                  <div styleName="label">
+                    <div styleName="label-main">
+                      {trans(`label.features.${feature}`)}
+                    </div>
+                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans(`labelHelper.features.${feature}`)}</MultiLineText>
                   </div>
-                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.features.font")}</MultiLineText>
-                </div>
-              </CheckableCard>
+                </CheckableCard>
+              ))}
             </div>
           </ControlContainer>
         )}

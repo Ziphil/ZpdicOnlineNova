@@ -27,6 +27,6 @@ export interface DictionarySettings {
 }
 
 
-export const MARKDOWN_FEATURES = ["basic", "font"] as const;
+export const MARKDOWN_FEATURES = ["basic", "supsub", "font"] as const;
 export type MarkdownFeature = LiteralType<typeof MARKDOWN_FEATURES>;
 export const MarkdownFeatureUtil = LiteralUtilType.create(MARKDOWN_FEATURES);

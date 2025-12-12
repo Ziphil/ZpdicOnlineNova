@@ -1,7 +1,9 @@
 //
 
-import {ComponentProps, ReactElement, useCallback} from "react";
+import {ComponentProps, ReactElement, useCallback, useMemo} from "react";
 import {uriTransformer as defaultTransformUri} from "react-markdown";
+import remarkSupsub from "remark-supersub";
+import type {Pluggable} from "unified";
 import {AdditionalProps, Markdown as ZographiaMarkdown} from "zographia";
 import {MarkdownHeading} from "/client/component/atom/markdown/markdown-heading";
 import {create} from "/client/component/create";
@@ -58,6 +60,13 @@ export const Markdown = create(
       return nextUri;
     }, [specialPaths?.home, specialPaths?.at]);
 
+    const [rehypePlugins, remarkPlugins] = useMemo(() => {
+      return features.reduce<[Array<Pluggable>, Array<Pluggable>]>(([accumRehypePlugins, accumRemarkPlugins], feature) => {
+        const [rehypePlugins, remarkPlugins] = getFeaturePlugins(feature);
+        return [[...accumRehypePlugins, ...rehypePlugins], [...accumRemarkPlugins, ...remarkPlugins]];
+      }, [[], []]);
+    }, [features]);
+
     return (
       <ZographiaMarkdown
         compact={compact}
@@ -73,9 +82,8 @@ export const Markdown = create(
           h6: (mode === "article") ? (props) => <MarkdownHeading level={6} {...props}/> : (props) => <h6 {...props}/>,
           ...components
         }}
-        remarkPlugins={[
-          ...(features.includes("font") ? [remarkCustomFont] : [])
-        ]}
+        remarkPlugins={remarkPlugins}
+        rehypePlugins={rehypePlugins}
         transformUrl={transformUrl}
         {...rest}
       >
@@ -87,6 +95,16 @@ export const Markdown = create(
   {memo: true}
 );
 
+
+function getFeaturePlugins(feature: Omit<MarkdownFeature, "basic">): [rehypePlugins: Array<Pluggable>, remarkPlugins: Array<Pluggable>] {
+  if (feature === "supsub") {
+    return [[], [remarkSupsub]];
+  } else if (feature === "font") {
+    return [[], [remarkCustomFont]];
+  } else {
+    return [[], []];
+  }
+}
 
 export type MarkdownSpecialPaths = {
   home?: string | ((uri: string) => string),

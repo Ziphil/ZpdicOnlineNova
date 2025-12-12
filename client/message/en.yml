@@ -873,12 +873,13 @@ changeDictionaryFontForm:
 changeDictionaryMarkdownFeaturesForm:
   label:
     enable:
-      label: "Enable/Disable"
+      label: "Enable/disable"
       true: "Enable"
       false: "Disable"
     features:
       label: "Features to use"
       basic: "Basic"
+      supsub: "Superscript/subscript"
       font: "Custom font"
   labelHelper:
     enable:
@@ -889,8 +890,10 @@ changeDictionaryMarkdownFeaturesForm:
     features:
       basic: >-
         Enables the basic features such as links and images.
+      supsub: >-
+        The text enclosed in <pre>^…^</pre> will be displayed in superscript, and the text enclosed in <pre>~…~</pre> will be displayed in subscript.
       font: >-
-        The text enclosed in <pre>{…}</pre> will be displayed in the custom font registered in this dictionary.
+        The text enclosed in <pre>{…}</pre> will be displayed in the custom font.
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:

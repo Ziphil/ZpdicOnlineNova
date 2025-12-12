@@ -873,12 +873,13 @@ changeDictionaryFontForm:
 changeDictionaryMarkdownFeaturesForm:
   label:
     enable:
-      label: "Ebligi/Malebligi"
+      label: "Ebligi/malebligi"
       true: "Ebligi"
       false: "Malebligi"
     features:
       label: "Uzataj funkcioj"
       basic: "Bazaj"
+      supsub: "Superskribita/subskribita"
       font: "Propran tiparon"
   labelHelper:
     enable:
@@ -889,8 +890,10 @@ changeDictionaryMarkdownFeaturesForm:
     features:
       basic: >-
         Ebligas la bazajn funkciojn kiel ligilojn kaj bildojn.
+      supsub: >-
+        La teksto enkludita en <pre>^…^</pre> estos montrata en superskribita, kaj la teksto enkludita en <pre>~…~</pre> estos montrata en subskribita.
       font: >-
-        La teksto enkludita en <pre>{…}</pre> estos montrata en la propran tiparon registrita en tiu vortaro.
+        La teksto enkludita en <pre>{…}</pre> estos montrata en la propran tiparon.
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:

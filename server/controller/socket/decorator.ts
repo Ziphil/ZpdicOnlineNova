@@ -1,7 +1,7 @@
 //
 
 import "reflect-metadata";
-import {SocketReservedEventsMap} from "socket.io/dist/socket";
+import {SocketReservedEventsMap} from "socket.io/dist/socket-types";
 import {ReservedOrUserEventNames, ReservedOrUserListener} from "socket.io/dist/typed-events";
 import {SocketController} from "/server/controller/socket/controller";
 import {SocketEventsFromClient} from "/server/internal/type/socket";
