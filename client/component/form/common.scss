@@ -4,6 +4,12 @@
 
 
 .root {
+  @include theme("light") {
+    --block-background-color: #{leveled-color("gray", 0)};
+  }
+}
+
+.root {
   row-gap: 3zu;
   display: flex;
   flex-direction: column;
@@ -124,4 +130,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.code {
+  padding-inline: 0.5zu;
+  font-size: 3zu;
+  font-family: var(--glob-font-family-monospace);
+  font-feature-settings: "palt" 0, "pkna" 0, "lnum" 0, "kern" 0 !important;
+  white-space: pre;
+  text-autospace: no-autospace;
+  background-color: var(--block-background-color);
+  border-radius: var(--glob-border-radius);
+  display: inline;
 }

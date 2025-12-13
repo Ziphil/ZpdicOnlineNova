@@ -32,7 +32,7 @@ export const ChangeDictionaryMarkdownFeaturesForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("changeDictionaryMarkdownFeaturesForm");
+    const {trans, transNode} = useTrans("changeDictionaryMarkdownFeaturesForm");
 
     const {form, handleSubmit} = useChangeDictionaryMarkdownFeatures(dictionary);
     const {register, watch} = form;
@@ -80,7 +80,9 @@ export const ChangeDictionaryMarkdownFeaturesForm = create(
                   <div styleName="label-main">
                     {trans("label.features.basic")}
                   </div>
-                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.features.basic")}</MultiLineText>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">
+                    {trans("labelHelper.features.basic")}
+                  </MultiLineText>
                 </div>
               </CheckableCard>
               {MARKDOWN_FEATURES.filter((feature) => feature !== "basic").map((feature) => (
@@ -90,7 +92,11 @@ export const ChangeDictionaryMarkdownFeaturesForm = create(
                     <div styleName="label-main">
                       {trans(`label.features.${feature}`)}
                     </div>
-                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans(`labelHelper.features.${feature}`)}</MultiLineText>
+                    <MultiLineText styleName="label-helper" lineHeight="narrow">
+                      {transNode(`labelHelper.features.${feature}`, {
+                        pre: (parts) => <pre styleName="code">{parts}</pre>
+                      })}
+                    </MultiLineText>
                   </div>
                 </CheckableCard>
               ))}

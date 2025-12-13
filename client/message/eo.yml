@@ -891,9 +891,9 @@ changeDictionaryMarkdownFeaturesForm:
       basic: >-
         Ebligas la bazajn funkciojn kiel ligilojn kaj bildojn.
       supsub: >-
-        La teksto enkludita en <pre>^…^</pre> estos montrata en superskribita, kaj la teksto enkludita en <pre>~…~</pre> estos montrata en subskribita.
+        La teksto enkludita en <pre>^</pre> estos montrata en superskribita, kaj la teksto enkludita en <pre>~</pre> estos montrata en subskribita.
       font: >-
-        La teksto enkludita en <pre>{…}</pre> estos montrata en la propran tiparon.
+        La teksto enkludita en <pre>'{'</pre> kaj <pre>'}'</pre> estos montrata en la propran tiparon.
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:

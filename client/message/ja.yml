@@ -889,9 +889,9 @@ changeDictionaryMarkdownFeaturesForm:
       basic: >-
         リンクや画像などの基本的を機能を有効にします。
       supsub: >-
-        <pre>^…^</pre> で囲まれた箇所が上付き文字で表示され、<pre>~…~</pre> で囲まれた箇所が下付き文字で表示されるようになります。
+        <pre>^</pre> で囲まれた箇所が上付き文字で表示され、<pre>~</pre> で囲まれた箇所が下付き文字で表示されるようになります。
       font: >-
-        <pre>{…}</pre> で囲まれた箇所が専用フォントで表示されるようになります。
+        <pre>'{'</pre> と <pre>'}'</pre> で囲まれた箇所が専用フォントで表示されるようになります。
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:

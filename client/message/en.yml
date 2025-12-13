@@ -891,9 +891,9 @@ changeDictionaryMarkdownFeaturesForm:
       basic: >-
         Enables the basic features such as links and images.
       supsub: >-
-        The text enclosed in <pre>^…^</pre> will be displayed in superscript, and the text enclosed in <pre>~…~</pre> will be displayed in subscript.
+        The text enclosed in <pre>^</pre> will be displayed in superscript, and the text enclosed in <pre>~</pre> will be displayed in subscript.
       font: >-
-        The text enclosed in <pre>{…}</pre> will be displayed in the custom font.
+        The text enclosed in <pre>'{'</pre> and <pre>'}'</pre> will be displayed in the custom font.
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:
