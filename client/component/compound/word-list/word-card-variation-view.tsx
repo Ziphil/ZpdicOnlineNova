@@ -1,7 +1,7 @@
 //
 
 import {Fragment, ReactElement, useMemo} from "react";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, data} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Variation} from "/server/internal/skeleton";
 
@@ -26,7 +26,9 @@ export const WordCardVariationView = create(
       <Fragment>
         {(index > 0) && <span styleName="punctuation">, </span>}
         <span>
-          <span>{variation.spelling}</span>
+          <span>
+            <span className="dictionary-custom-font" {...data({target: "variation"})}>{variation.spelling}</span>
+          </span>
           {(dictionary.settings.showVariationPronunciation && !!pronunciation) && (
             <span styleName="pronunciation">{pronunciation}</span>
           )}

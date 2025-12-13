@@ -52,9 +52,6 @@ export const DictionarySettingGeneralPart = create(
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.enableProposal")}</h3>
-          <MultiLineText styleName="description">
-            {trans("description.enableProposal")}
-          </MultiLineText>
           <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="enableProposal"/>
         </section>
         <section styleName="section">

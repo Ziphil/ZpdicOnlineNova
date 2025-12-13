@@ -107,7 +107,7 @@ export class SlimeDeserializer extends Deserializer {
         this.emit("settings", "pronunciationTitle", data["pronunciationTitle"]);
       }
       if (typeof data["enableMarkdown"] === "boolean") {
-        this.emit("settings", "enableMarkdown", data["enableMarkdown"]);
+        this.emit("settings", "markdownFeatures", (data["enableMarkdown"]) ? ["basic"] : []);
       }
     } else if (path === "snoj") {
       if (typeof data === "string") {

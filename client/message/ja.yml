@@ -28,11 +28,11 @@ toast:
         設定を変更しました。
       font: |-
         設定を変更しました。
+      markdownFeatures: |-
+        設定を変更しました。
       enableAdvancedWord: |-
         設定を変更しました。
       enableProposal: |-
-        設定を変更しました。
-      enableMarkdown: |-
         設定を変更しました。
       enableDuplicateName: |-
         設定を変更しました。
@@ -846,28 +846,78 @@ changeDictionaryParamNameForm:
 changeDictionaryFontForm:
   label:
     kind:
+      label: "参照先"
       none: "設定しない"
       local: "ローカルフォントを参照"
       custom: "フォントをアップロード"
     input:
       name: "フォントファミリー名"
       file: "フォントファイル"
+    targets:
+      label: "適用範囲"
+      heading: "見出し語"
+      variation: "変化形"
+      relation: "関連語"
+      phrase: "成句"
+      example: "例文"
+      text: "内容"
   labelHelper:
     kind:
-      none: |-
+      none: >-
         デフォルトフォントで表示します。
-      local: |-
+      local: >-
         閲覧者の環境に保存されているローカルフォントで表示します。
         指定されたフォントが閲覧者の環境にインストールされていない場合は、デフォルトフォントが使われます。
-      custom: |-
+      custom: >-
         フォントファイルをアップロードすることで、そのフォントで表示します。
         閲覧者の環境によらず、指定されたフォントで表示することができます。
+    targets:
+      heading: >-
+        見出し語を専用フォントで表示します。
+        このとき、その隣に合わせて通常のフォントでの表示も行います。
+      variation: >-
+        変化形を専用フォントで表示します。
+      relation: >-
+        関連語のリンクを専用フォントで表示します。
+      phrase: >-
+        成句を専用フォントで表示します。
+      example: >-
+        例文を専用フォントで表示します。
+      text: >-
+        内容において専用のマークアップがなされている箇所を専用フォントで表示します。
+        下の「Markdown」項目で「専用フォント」を有効にしてください。
   error:
     nameRequired: >-
       フォントファミリー名を入力してください。
     filetooLarge: >-
       ファイルのサイズが大きすぎます。
       1 MB より大きなファイルはアップロードすることができません。
+changeDictionaryMarkdownFeaturesForm:
+  label:
+    enable:
+      label: "有効/無効"
+      true: "有効"
+      false: "無効"
+    features:
+      label: "使用する機能"
+      basic: "基本"
+      supsub: "上付き · 下付き"
+      font: "専用フォント"
+  labelHelper:
+    enable:
+      true: >-
+        Markdown 記法を用いることでテキストを装飾できるようにします。
+      false: >-
+        入力されたテキストをそのまま表示します。
+    features:
+      basic: >-
+        リンクや画像などの基本的を機能です。
+        これは常に有効です。
+      supsub: >-
+        <pre>^</pre> で囲まれた箇所が上付き文字で表示され、<pre>~</pre> で囲まれた箇所が下付き文字で表示されるようになります。
+      font: >-
+        <pre>'{'</pre> と <pre>'}'</pre> で囲まれた箇所が専用フォントで表示されるようになります。
+        上の「専用フォント」項目で「本文」にチェックを入れてください。
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:
@@ -885,6 +935,27 @@ changeDictionarySettingsForm:
     showVariationPronunciation:
       true: "表示する"
       false: "表示しない"
+  labelHelper:
+    enableAdvancedWord:
+      true: >-
+        訳語から関連語までを 1 つのセクションとして、単語データに複数のセクションを登録できるようになります。
+      false: >-
+        単語データには 1 つのセクションのみを登録できます。
+    enableProposal:
+      true: >-
+        他のユーザーからの造語依頼を受け付けます。
+      false: >-
+        造語依頼ボタンを非表示にして、他のユーザーが造語依頼できないようにします。
+    enableDuplicateName:
+      true: >-
+        単語編集画面で綴りを入力した際に、同じ綴りの単語がすでに存在しているかが表示されるようになります。
+      false: >-
+        同じ綴りの単語が存在するかのチェックを行いません。
+    showVariationPronunciation:
+      true: >-
+        変化形の横に発音記号を表示します。
+      false: >-
+        変化形には発音記号を表示しません。
   pattern:
     none: "設定なし"
     paren: "丸カッコ内を無視"
@@ -911,11 +982,11 @@ changeDictionaryVisibilityForm:
     unlisted: "限定公開"
     private: "非公開"
   labelHelper:
-    public: |-
+    public: >-
       誰でも自由に閲覧できます。
-    unlisted: |-
+    unlisted: >-
       辞書一覧などには表示されませんが、辞書ページの URL を知っている人は直接アクセスできます。
-    private: |-
+    private: >-
       編集権限がある人のみ閲覧できます。
       権限がない人は URL から直接アクセスしても閲覧できません。
 changeDictionarySourceForm:
@@ -1063,7 +1134,8 @@ dictionarySettingAuthorityPart:
       これらのユーザーは、単語の編集や削除はできますが、辞書の設定変更や削除はできません。
 dictionarySettingDisplayPart:
   heading:
-    font: "見出し語のフォント"
+    font: "専用フォント"
+    markdownFeatures: "Markdown"
     showNumbers: "通し番号"
     showVariationPronunciation: "変化形の発音記号"
     wordCardTitles: "単語カードでの見出し"
@@ -1088,7 +1160,6 @@ dictionarySettingEditingPart:
     akrantiainSource: "Akrantiain ソースコード"
     zatlinSource: "Zatlin ソースコード"
     enableAdvancedWord: "高度な単語編集"
-    enableMarkdown: "Markdown"
     enableDuplicateName: "重複綴りチェック"
     punctuations: "区切り文字"
     ignoredEquivalentPattern: "訳語で無視するパターン"
@@ -1104,8 +1175,6 @@ dictionarySettingEditingPart:
       Zatlin の構文については<link>ドキュメント</link>をご覧ください。
     enableAdvancedWord: >-
       これを有効にしておくと、訳語から関連語までを 1 つのセクションとして、単語データに複数のセクションを登録できるようになります。 
-    enableMarkdown: >-
-      これを有効にしておくと、単語データの内容欄を Markdown 形式で書くことができるようになります。
     enableDuplicateName: >-
       これを有効にしておくと、単語編集画面で綴りを入力した際に、同じ綴りの単語がすでに存在しているかが表示されるようになります。
       なお、あくまでこの機能は綴りの重複をチェックするのみで、同じ綴りの単語を登録できるなくなるわけではありません。

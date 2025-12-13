@@ -1,7 +1,7 @@
 //
 
 import {ReactElement, useMemo} from "react";
-import {AdditionalProps, MultiLineText, Tag} from "zographia";
+import {AdditionalProps, MultiLineText, Tag, data} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
 
@@ -18,9 +18,8 @@ export const WordCardHeading = create(
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    const hasFont = dictionary.settings.font.kind !== "none";
+    const hasFont = dictionary.settings.font.kind === "custom";
     const pronunciation = useMemo(() => getPronunciation(dictionary, word), [dictionary, word]);
-    const nameFontFamily = useMemo(() => getNameFontFamily(dictionary), [dictionary]);
 
     return (word.tags.length > 0 || !!word.spelling) ? (
       <div styleName="root" {...rest}>
@@ -33,8 +32,8 @@ export const WordCardHeading = create(
         )}
         {(!!word.spelling) && (
           <div styleName="spelling-container">
-            <MultiLineText styleName="spelling" is="h3" lineHeight="narrowFixed" {...{style: {fontFamily: nameFontFamily}}}>
-              {word.spelling}
+            <MultiLineText styleName="spelling" is="h3" lineHeight="narrowFixed">
+              <span className="dictionary-custom-font" {...data({target: "heading"})}>{word.spelling}</span>
             </MultiLineText>
             {(hasFont) && (
               <MultiLineText styleName="small-spelling" is="span" lineHeight="narrowFixed">
@@ -74,16 +73,5 @@ function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | Word
     } else {
       return undefined;
     }
-  }
-}
-
-function getNameFontFamily(dictionary: DictionaryWithExecutors): string | undefined {
-  const font = dictionary.settings.font;
-  if (font.kind === "custom") {
-    return `'zpdic-custom-${dictionary.number}'`;
-  } else if (font.kind === "local") {
-    return `'${font.name}'`;
-  } else {
-    return undefined;
   }
 }

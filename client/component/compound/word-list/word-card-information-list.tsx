@@ -32,12 +32,13 @@ export const WordCardInformationList = create(
                 {information.title}
               </h4>
             )}
-            {(dictionary.settings.enableMarkdown) ? (
+            {(dictionary.settings.markdownFeatures.length > 0) ? (
               <Markdown
                 styleName="markdown"
                 mode="normal"
                 compact={true}
                 specialPaths={getDictionarySpecialPaths(dictionary)}
+                features={dictionary.settings.markdownFeatures}
                 components={{
                   a: (props) => <WordCardAnchor dictionary={dictionary} {...props}/>
                 }}

@@ -28,11 +28,11 @@ toast:
         La agordo ŝanĝitas.
       font: |-
         La agordo ŝanĝitas.
+      markdownFeatures: |-
+        La agordo ŝanĝitas.
       enableAdvancedWord: |-
         La agordo ŝanĝitas.
       enableProposal: |-
-        La agordo ŝanĝitas.
-      enableMarkdown: |-
         La agordo ŝanĝitas.
       enableDuplicateName: |-
         La agordo ŝanĝitas.
@@ -848,28 +848,78 @@ changeDictionaryParamNameForm:
 changeDictionaryFontForm:
   label:
     kind:
+      label: "Refero"
       none: "Ne agordi"
       local: "Uzi lokan tiparon"
       custom: "Alŝuti propran tiparon"
     input:
       name: "Tipara familio"
       file: "Tipara dosiero"
+    targets:
+      label: "Kie apliki"
+      heading: "Kapvortoj"
+      variation: "Variaĵaj formoj"
+      relation: "Rilataj vortoj"
+      phrase: "Idiomaĵoj"
+      example: "Frazoj"
+      text: "Enhavoj"
   labelHelper:
     kind:
-      none: |-
+      none: >-
         La kapvortoj estos montrataj en la defaŭlta tiparo.
-      local: |-
+      local: >-
         La kapvortoj estos montrataj en la loka tiparo instalita en la vizitanta medio.
         Se la specifita tiparo ne estas instalita en la vizitanta medio, la kapvortoj estos montrataj en la defaŭlta tiparo anstataŭe.
-      custom: |-
+      custom: >-
         Alŝutu vian propran tiparan dosieron por uzi ĝin por la kapvortoj.
         Tiu tiparo estas uzata sendepende de la vizitanta medio.
+    targets:
+      heading: >-
+        Montri la kapvortojn per la propran tiparon.
+        Tio ankaŭ montros la normalan tiparon apud ĝi.
+      variation: >-
+        Montri la variaĵajn formojn per la propran tiparon.
+      relation: >-
+        Montri la rilatajn vortojn per la propran tiparon.
+      phrase: >-
+        Montri la idiomaĵojn per la propran tiparon.
+      example: >-
+        Montri la ekzemplajn frazojn per la propran tiparon.
+      text: >-
+        Montri la partojn de la enhavoj markitajn kun propran sintakson per la propran tiparon.
+        Bonvolu ebligi “Propran tiparon” en la sekcio “Markdown” malsupre.
   error:
     nameRequired: >-
       Enigu tipara familio.
     filetooLarge: >-
       La dosiero estas tro granda.
       Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
+changeDictionaryMarkdownFeaturesForm:
+  label:
+    enable:
+      label: "Ebligi/malebligi"
+      true: "Ebligi"
+      false: "Malebligi"
+    features:
+      label: "Uzataj funkcioj"
+      basic: "Bazaj"
+      supsub: "Superskribita · Subskribita"
+      font: "Propran tiparon"
+  labelHelper:
+    enable:
+      true: >-
+        Vi povas uzi Markdown-sintakson por dekori la tekston.
+      false: >-
+        La teksto estos montrata kiel estas.
+    features:
+      basic: >-
+        La bazaj funkcioj kiel ligilojn kaj bildojn.
+        Tio estas ĉiam ebligita.
+      supsub: >-
+        La teksto enkludita en <pre>^</pre> estos montrata en superskribita, kaj la teksto enkludita en <pre>~</pre> estos montrata en subskribita.
+      font: >-
+        La teksto enkludita en <pre>'{'</pre> kaj <pre>'}'</pre> estos montrata en la propran tiparon.
+        Bonvolu ankaŭ ebligi “Enhavoj” en la sekcio “Propran tiparon” supre.
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:
@@ -887,6 +937,27 @@ changeDictionarySettingsForm:
     showVariationPronunciation:
       true: "Montri"
       false: "Ne montri"
+  labelHelper:
+    enableAdvancedWord:
+      true: >-
+        Vi povos registri plurajn sekciojn en vorto, ĉiu el kiu enhavas informojn de tradukaĵoj ĝis rilataj vortoj.
+      false: >-
+        Ĉiu vorto povos nur havi unu sekcion.
+    enableProposal:
+      true: >-
+        Akcepti petojn pri novaj vortoj de aliaj uzantoj.
+      false: >-
+        Kaŝi la butonon kaj malhelpi aliajn uzantojn peti novajn vortojn.
+    enableDuplicateName:
+      true: >-
+        Kiam vi enigas literumon en la redaktilo de vorto, ĝi diros al vi ĉu la vortaro jam havas vorto kun la sama literumo.
+      false: >-
+        Ne kontroli por duoblaj literumoj.
+    showVariationPronunciation:
+      true: >-
+        Montri la elparolojn de variaĵaj formoj apud ili.
+      false: >-
+        Ne montri la elparolojn de variaĵaj formoj.
   pattern:
     none: "Ne agordi"
     paren: "Ignori internoj de rondaj krampoj"
@@ -913,11 +984,11 @@ changeDictionaryVisibilityForm:
     unlisted: "Nelistigita"
     private: "Nepublika"
   labelHelper:
-    public: |-
+    public: >-
       Ĉiuj povos vidi tiun vortaron.
-    unlisted: |-
+    unlisted: >-
       Tiu vortaro ne aperos en listoj de vortaroj, sed ĉiu kiu scias la retadreson de la vortaro povos ankoraŭ rekte aliri ĝin.
-    private: |-
+    private: >-
       Nur uzantoj kun redakta permeso povos vidi tiun vortaron.
       Uzantoj sen permeso ne povos aliri ĝin eĉ se ili scias la retadreson.
 changeDictionarySourceForm:
@@ -1063,7 +1134,8 @@ dictionarySettingAuthorityPart:
       Ili povas redakti kaj forigi vortojn, sed ili ne povas ŝanĝi la agordojn de la vortaro aŭ forigi la vortaron mem.
 dictionarySettingDisplayPart:
   heading:
-    font: "Tiparo por kapvortoj"
+    font: "Propra tiparo"
+    markdownFeatures: "Markdown"
     showNumbers: "Numeroj"
     showVariationPronunciation: "Elparoloj de variaĵaj formoj"
     wordCardTitles: "Titoloj en vortokartoj"
@@ -1087,7 +1159,6 @@ dictionarySettingEditingPart:
     akrantiainSource: "Fontkodo por Akrantiain"
     zatlinSource: "Fontkodo por Zatlin"
     enableAdvancedWord: "Altnivela redaktado de vortoj"
-    enableMarkdown: "Markdown"
     enableDuplicateName: "Kontrolon de duobla literumo"
     punctuations: "Disigiloj"
     ignoredEquivalentPattern: "Regulesprimo ignorota en tradukaĵoj"
@@ -1103,8 +1174,6 @@ dictionarySettingEditingPart:
       Por pliaj informoj pri la sintakso de Zatlin, bonvolu rilati al la <link>dokumentaro</link> (nuntempe disponebla nur en la japana).
     enableAdvancedWord: >- 
       Se vi ebligos tiun funkcion, vi povos registri plurajn sekciojn en vorto, ĉiu el kiu enhavas informojn de tradukaĵoj ĝis rilataj vortoj.
-    enableMarkdown: >-
-      Ebligi tiun funkcion permesos al vi skribi la enhavojn de vortoj en Markdown.
     enableDuplicateName: >-
       Se vi ebligos tiun funkcion, kiam vi tajpos literumon en la redaktilo de vorto, ĝi diros al vi ĉu la vortaro jam havas vorto kun la sama literumo.
       Notu, ke ĝi nur kontrolas duobligon de literumoj kaj ne malhelpas vin registri vorton kun la sama literumo.

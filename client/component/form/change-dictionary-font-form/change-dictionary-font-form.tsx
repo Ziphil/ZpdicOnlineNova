@@ -9,6 +9,7 @@ import {
   ButtonIconbag,
   CheckableCard,
   CheckableCardBody,
+  Checkbox,
   ControlContainer,
   ControlLabel,
   FileInput,
@@ -16,12 +17,11 @@ import {
   Input,
   MultiLineText,
   Radio,
-  data,
   useTrans
 } from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
-import {Dictionary} from "/server/internal/skeleton";
+import {DICTIONARY_FONT_TARGET, Dictionary} from "/server/internal/skeleton";
 import {useChangeDictionaryFont} from "./change-dictionary-font-form-hook";
 
 
@@ -38,37 +38,15 @@ export const ChangeDictionaryFontForm = create(
     const {trans} = useTrans("changeDictionaryFontForm");
 
     const {form, handleSubmit} = useChangeDictionaryFont(dictionary);
-    const {control, register, getFieldState, formState: {errors}} = form;
+    const {control, register, watch, getFieldState, formState: {errors}} = form;
 
     return (
       <form styleName="root" {...rest}>
-        <ControlContainer>
-          <div styleName="card-group" {...data({vertical: "wide"})}>
-            <CheckableCard styleName="card">
-              <Radio value="none" {...register("kind")}/>
-              <CheckableCardBody styleName="card-body">
-                <div styleName="label">
-                  <div styleName="label-main">{trans("label.kind.none")}</div>
-                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.kind.none")}</MultiLineText>
-                </div>
-              </CheckableCardBody>
-            </CheckableCard>
-            <CheckableCard styleName="card">
-              <Radio value="local" {...register("kind")}/>
-              <CheckableCardBody styleName="card-body">
-                <div styleName="label">
-                  <div styleName="label-main">{trans("label.kind.local")}</div>
-                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.kind.local")}</MultiLineText>
-                </div>
-                <ControlContainer>
-                  <ControlLabel>
-                    {trans("label.input.name")}
-                  </ControlLabel>
-                  <Input error={!!getFieldState("name").error} {...register("name")}/>
-                  <ControlErrorMessage name="name" form={form} trans={trans}/>
-                </ControlContainer>
-              </CheckableCardBody>
-            </CheckableCard>
+        <ControlContainer label={false}>
+          <ControlLabel>
+            {trans("label.kind.label")}
+          </ControlLabel>
+          <div styleName="card-group">
             <CheckableCard styleName="card">
               <Radio value="custom" {...register("kind")}/>
               <CheckableCardBody styleName="card-body">
@@ -93,8 +71,53 @@ export const ChangeDictionaryFontForm = create(
                 </ControlContainer>
               </CheckableCardBody>
             </CheckableCard>
+            <CheckableCard styleName="card">
+              <Radio value="local" {...register("kind")}/>
+              <CheckableCardBody styleName="card-body">
+                <div styleName="label">
+                  <div styleName="label-main">{trans("label.kind.local")}</div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.kind.local")}</MultiLineText>
+                </div>
+                <ControlContainer>
+                  <ControlLabel>
+                    {trans("label.input.name")}
+                  </ControlLabel>
+                  <Input error={!!getFieldState("name").error} {...register("name")}/>
+                  <ControlErrorMessage name="name" form={form} trans={trans}/>
+                </ControlContainer>
+              </CheckableCardBody>
+            </CheckableCard>
+            <CheckableCard styleName="card">
+              <Radio value="none" {...register("kind")}/>
+              <CheckableCardBody styleName="card-body">
+                <div styleName="label">
+                  <div styleName="label-main">{trans("label.kind.none")}</div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.kind.none")}</MultiLineText>
+                </div>
+              </CheckableCardBody>
+            </CheckableCard>
           </div>
         </ControlContainer>
+        {(watch("kind") !== "none") && (
+          <ControlContainer label={false}>
+            <ControlLabel>
+              {trans("label.targets.label")}
+            </ControlLabel>
+            <div styleName="card-group">
+              {DICTIONARY_FONT_TARGET.map((fontTarget) => (
+                <CheckableCard styleName="card" key={fontTarget}>
+                  <Checkbox value={fontTarget} {...register("targets")}/>
+                  <div styleName="label">
+                    <div styleName="label-main">
+                      {trans(`label.targets.${fontTarget}`)}
+                    </div>
+                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans(`labelHelper.targets.${fontTarget}`)}</MultiLineText>
+                  </div>
+                </CheckableCard>
+              ))}
+            </div>
+          </ControlContainer>
+        )}
         <div>
           <Button variant="light" type="submit" onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>

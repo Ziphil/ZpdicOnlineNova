@@ -3,7 +3,7 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHandPointRight} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, useMemo} from "react";
-import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
+import {AdditionalProps, MultiLineText, Tag, aria, data} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
@@ -42,7 +42,7 @@ export const WordCardRelationList = create(
                   <WordPopover dictionary={dictionary} word={relation} trigger={(
                     <span>
                       <Link href={getWordHref(dictionary, relation.number)} scheme="secondary" variant="underline">
-                        {relation.spelling}
+                        <span className="dictionary-custom-font" {...data({target: "relation"})}>{relation.spelling}</span>
                       </Link>
                     </span>
                   )}/>

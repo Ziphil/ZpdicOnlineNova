@@ -29,6 +29,7 @@ export const DictionaryFontStyle = create(
 
 function getFontCss(dictionary: Dictionary): string | undefined {
   const font = dictionary.settings.font;
+  const fontTargets = dictionary.settings.fontTargets;
   if (font.kind === "custom") {
     const url = getAwsFileUrl(`font/${dictionary.number}/font`);
     const css = `
@@ -36,6 +37,26 @@ function getFontCss(dictionary: Dictionary): string | undefined {
         font-family: "zpdic-custom-${dictionary.number}";
         font-weight: bold;
         src: url("${url}") format("${font.format}");
+      }
+      .dictionary-custom-font {
+        ${fontTargets.map((fontTarget) => `
+          &[data-target="${fontTarget}"] {
+            font-family: "zpdic-custom-${dictionary.number}" !important;
+            font-feature-settings: initial !important;
+          }
+        `).join("\n\n")}
+      }
+    `;
+    return css;
+  } else if (font.kind === "local") {
+    const css = `
+      .dictionary-custom-font {
+        ${fontTargets.map((fontTarget) => `
+          &[data-target="${fontTarget}"] {
+            font-family: "${font.name}" !important;
+            font-feature-settings: initial !important;
+          }
+        `).join("\n\n")}
       }
     `;
     return css;

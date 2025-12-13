@@ -43,7 +43,7 @@ export const NotificationCard = create(
               </div>
             </div>
           </div>
-          <Markdown styleName="text" mode="normal">
+          <Markdown styleName="text" mode="normal" features={[]}>
             {notification.text}
           </Markdown>
         </CardBody>

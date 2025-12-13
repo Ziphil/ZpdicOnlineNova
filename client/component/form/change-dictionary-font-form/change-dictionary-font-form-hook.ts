@@ -1,15 +1,17 @@
 //
 
 import {BaseSyntheticEvent, useCallback, useMemo} from "react";
-import {Asserts, mixed, object, string} from "yup";
+import {Asserts, array, mixed, object, string} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {uploadFileToAws} from "/client/util/aws";
+import {forceArray} from "/client/util/misc";
 import {determineAwsErrorToastType} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {testFileSize} from "/client/util/validation";
-import {Dictionary, DictionaryFont} from "/server/internal/skeleton";
+import {DICTIONARY_FONT_TARGET, Dictionary, DictionaryFont} from "/server/internal/skeleton";
+import {RequestData} from "/server/internal/type/rest";
 
 
 const SCHEMA = object({
@@ -18,7 +20,8 @@ const SCHEMA = object({
     is: "local",
     then: (schema) => schema.required("nameRequired")
   }),
-  file: mixed<File>().test(testFileSize(1, "fileTooLarge"))
+  file: mixed<File>().test(testFileSize(1, "fileTooLarge")),
+  targets: array(string().oneOf(DICTIONARY_FONT_TARGET).required()).required()
 });
 type FormValue = Asserts<typeof SCHEMA>;
 
@@ -44,7 +47,7 @@ export function useChangeDictionaryFont(dictionary: Dictionary): ChangeDictionar
     });
   }, [dictionary.number, request, dispatchErrorToast]);
   const changeSettings = useCallback(async function (value: FormValue): Promise<boolean | void> {
-    const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {font: getQueryFont(dictionary, value)}});
+    const response = await request("changeDictionarySettings", getQuery(dictionary, value));
     return await switchResponse(response, async () => {
       await invalidateResponses("fetchDictionary", (query) => +query.identifier === dictionary.number || query.identifier === dictionary.paramName);
       return true;
@@ -70,31 +73,39 @@ function getFormValue(dictionary: Dictionary): FormValue {
   const value = {
     kind: dictionary.settings.font?.kind ?? "none",
     name: (dictionary.settings.font?.kind === "local") ? dictionary.settings.font.name : undefined,
-    file: undefined as any
+    file: undefined as any,
+    targets: dictionary.settings.fontTargets
   } satisfies FormValue;
   return value;
 }
 
-function getQueryFont(dictionary: Dictionary, formValue: FormValue): DictionaryFont {
-  if (formValue.kind === "none") {
+function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"changeDictionarySettings"> {
+  const number = dictionary.number;
+  const font = getQueryFont(dictionary, value);
+  const fontTargets = forceArray(value.targets);
+  return {number, settings: {font, fontTargets}};
+}
+
+function getQueryFont(dictionary: Dictionary, value: FormValue): DictionaryFont {
+  if (value.kind === "none") {
     const font = {
       kind: "none" as const
     };
     return font;
-  } else if (formValue.kind === "local") {
+  } else if (value.kind === "local") {
     const font = {
       kind: "local" as const,
-      name: formValue.name ?? ""
+      name: value.name ?? ""
     };
     return font;
-  } else if (formValue.kind === "custom") {
+  } else if (value.kind === "custom") {
     const currentFont = dictionary.settings.font;
     const currentName = (currentFont?.kind === "custom") ? currentFont.name : undefined;
     const currentFormat = (currentFont?.kind === "custom") ? currentFont.format : "";
     const font = {
       kind: "custom" as const,
-      name: (formValue.file !== undefined) ? formValue.file.name : currentName,
-      format: (formValue.file !== undefined) ? getFontFormat(formValue.file) : currentFormat
+      name: (value.file !== undefined) ? value.file.name : currentName,
+      format: (value.file !== undefined) ? getFontFormat(value.file) : currentFormat
     };
     return font;
   } else {

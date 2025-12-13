@@ -30,7 +30,7 @@ export const DocumentPage = create(
     return (
       <Page styleName="root" title={title} headerNode={<Header/>} {...rest}>
         <MainContainer>
-          <Markdown mode="document">
+          <Markdown mode="document" features={[]}>
             {decommentedSource}
           </Markdown>
         </MainContainer>

@@ -28,11 +28,11 @@ toast:
         The setting has been changed.
       font: |-
         The setting has been changed.
+      markdownFeatures: |-
+        The setting has been changed.
       enableAdvancedWord: |-
         The setting has been changed.
       enableProposal: |-
-        The setting has been changed.
-      enableMarkdown: |-
         The setting has been changed.
       enableDuplicateName: |-
         The setting has been changed.
@@ -848,28 +848,78 @@ changeDictionaryParamNameForm:
 changeDictionaryFontForm:
   label:
     kind:
+      label: "Reference"
       none: "Do not set"
       local: "Use local font"
       custom: "Upload custom font"
     input:
       name: "Font family"
       file: "Font file"
+    targets:
+      label: "Where to apply"
+      heading: "Headwords"
+      variation: "Variation forms"
+      relation: "Related words"
+      phrase: "Idiomatic expressions"
+      example: "Sentences"
+      text: "Contents"
   labelHelper:
     kind:
-      none: |-
+      none: >-
         The headwords will be displayed in the default font.
-      local: |-
+      local: >-
         The headwords will be displayed in the local font installed in the visitor’s environment.
         If the specified font is not installed in the visitor’s environment, the headwords will be displayed in the default font instead.
-      custom: |-
+      custom: >-
         Upload your own font file to use it for the headwords.
         This font is used regardless of the visitor’s environment.
+    targets:
+      heading: >-
+        Display the headwords in the custom font.
+        This will also display the normal font next to it.
+      variation: >-
+        Display the variation forms in the custom font.
+      relation: >-
+        Display the related words in the custom font.
+      phrase: >-
+        Display the idiomatic expressions in the custom font.
+      example: >-
+        Display the example sentences in the custom font.
+      text: >-
+        Display the parts of the contents marked with custom syntax in the custom font.
+        Please enable ‘Custom font’ in the ‘Markdown’ section below.
   error:
     nameRequired: >-
       Enter a font family.
     filetooLarge: >-
       The file is too large.
       You cannot upload files larger than 1 MB.
+changeDictionaryMarkdownFeaturesForm:
+  label:
+    enable:
+      label: "Enable/disable"
+      true: "Enable"
+      false: "Disable"
+    features:
+      label: "Features to use"
+      basic: "Basic"
+      supsub: "Superscript · Subscript"
+      font: "Custom font"
+  labelHelper:
+    enable:
+      true: >-
+        You can use Markdown syntax to decorate the text.
+      false: >-
+        The text will be displayed as is.
+    features:
+      basic: >-
+        The basic features such as links and images.
+        This is always enabled.
+      supsub: >-
+        The text enclosed in <pre>^</pre> will be displayed in superscript, and the text enclosed in <pre>~</pre> will be displayed in subscript.
+      font: >-
+        The text enclosed in <pre>'{'</pre> and <pre>'}'</pre> will be displayed in the custom font.
+        Please also enable ‘Contents’ in the ‘Custom font’ section above.
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:
@@ -887,6 +937,27 @@ changeDictionarySettingsForm:
     showVariationPronunciation:
       true: "Show"
       false: "Don’t show"
+  labelHelper:
+    enableAdvancedWord:
+      true: >-
+        You can register multiple sections in a word, with each section containing a range of information from translations to related words.
+      false: >-
+        Each word can only have one section.
+    enableProposal:
+      true: >-
+        Accept requests for new words from other users.
+      false: >-
+        Hide the request button and prevent other users from requesting new words.
+    enableDuplicateName:
+      true: >-
+        When you enter a spelling in the word editor, it will tell you whether the dictionary already has a word with the same spelling.
+      false: >-
+        Do not check for duplicate spellings.
+    showVariationPronunciation:
+      true: >-
+        Display the pronunciations of variation forms next to them.
+      false: >-
+        Do not display the pronunciations of variation forms.
   pattern:
     none: "No setting"
     paren: "Ignore inside round brackets (parens)"
@@ -913,11 +984,11 @@ changeDictionaryVisibilityForm:
     unlisted: "Unlisted"
     private: "Private"
   labelHelper:
-    public: |-
+    public: >-
       Anyone can freely view this dictionary.
-    unlisted: |-
+    unlisted: >-
       This dictionary will not be displayed in dictionary lists, but anyone who knows the URL of the dictionary page can still access it directly.
-    private: |-
+    private: >-
       Only users with editing permission can view this dictionary.
       Users without permission cannot access it even if they know the URL.
 changeDictionarySourceForm:
@@ -1063,7 +1134,8 @@ dictionarySettingAuthorityPart:
       They can edit and delete words, but they cannot change the dictionary settings or delete the dictionary itself.
 dictionarySettingDisplayPart:
   heading:
-    font: "Font for headwords"
+    font: "Custom font"
+    markdownFeatures: "Markdown"
     showNumbers: "Numberings"
     showVariationPronunciation: "Variation pronunciations"
     wordCardTitles: "Headings in word cards"
@@ -1087,7 +1159,6 @@ dictionarySettingEditingPart:
     akrantiainSource: "Source code for Akrantiain"
     zatlinSource: "Source code for Zatlin"
     enableAdvancedWord: "Advanced word editing"
-    enableMarkdown: "Markdown"
     enableDuplicateName: "Duplicate spelling check"
     punctuations: "Delimiters"
     ignoredEquivalentPattern: "Pattern to be ignored in translations"
@@ -1103,8 +1174,6 @@ dictionarySettingEditingPart:
       For more information on Zatlin’s syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
     enableAdvancedWord: >- 
       If you enable this feature, you can register multiple sections in a word, with each section containing a range of information from translations to related words.
-    enableMarkdown: >-
-      Enabling this feature will allow you to write the contents of words in Markdown format.
     enableDuplicateName: >-
       If you enable this feature, when you enter a spelling in the word editor, it will tell you whether the dictionary already has a word with the same spelling.
       Note that it only checks for spelling duplication and does not prevent you from registering a word with the same spelling.

@@ -61,13 +61,13 @@ export const ArticleCard = create(
           {(listed) ? (
             <Collapsible styleName="collapsible">
               <CollapsibleBody styleName="collapsible-body" height="5rem">
-                <Markdown styleName="markdown" mode="article" compact={true} specialPaths={getDictionarySpecialPaths(dictionary)}>
+                <Markdown styleName="markdown" mode="article" compact={true} specialPaths={getDictionarySpecialPaths(dictionary)} features={dictionary.settings.markdownFeatures}>
                   {truncateMarkdown(article.content, {limit: 200})}
                 </Markdown>
               </CollapsibleBody>
             </Collapsible>
           ) : (
-            <Markdown styleName="markdown" mode="article" compact={true} specialPaths={getDictionarySpecialPaths(dictionary)}>
+            <Markdown styleName="markdown" mode="article" compact={true} specialPaths={getDictionarySpecialPaths(dictionary)} features={dictionary.settings.markdownFeatures}>
               {article.content}
             </Markdown>
           )}

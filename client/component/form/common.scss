@@ -4,6 +4,12 @@
 
 
 .root {
+  @include theme("light") {
+    --block-background-color: #{leveled-color("gray", 0)};
+  }
+}
+
+.root {
   row-gap: 3zu;
   display: flex;
   flex-direction: column;
@@ -25,50 +31,25 @@
   column-gap: 4zu;
   display: flex;
   align-items: center;
-  &[data-vertical] {
-    flex-direction: column;
-    align-items: flex-start;
-    &:not([data-vertical="wide"]) {
-      row-gap: 2zu;
-    }
-    &[data-vertical="wide"] {
-      row-gap: 2.5zu;
-    }
-  }
-  &[data-mobile-vertical] {
-    &:not([data-vertical="wide"]) {
-      row-gap: 2zu;
-    }
-    &[data-vertical="wide"] {
-      row-gap: 2.5zu;
-    }
-    @include device("mobile") {
-      flex-direction: column;
-      align-items: flex-start;    
-    }
-  }
 }
 
 .card-group {
-  column-gap: 3zu;
-  row-gap: 3zu;
-  display: flex;
+  column-gap: 2.5zu;
+  row-gap: 2.5zu;
+  display: grid;
   @include device("desktop") {
-    flex-direction: row;
+    grid-template-columns: repeat(auto-fit, minmax(64zu, 1fr));
   }
   @include device("mobile") {
-    flex-direction: column;
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
 .card {
-  @include device("desktop") {
-    flex: 1 1 0zu;
-  }
 }
 
 .card-body {
-  row-gap: 3zu;
+  row-gap: 2.5zu;
   display: flex;
   flex-direction: column;
 }
@@ -124,4 +105,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.code {
+  padding-inline: 0.5zu;
+  font-size: 3zu;
+  font-family: var(--glob-font-family-monospace);
+  font-feature-settings: "palt" 0, "pkna" 0, "lnum" 0, "kern" 0 !important;
+  white-space: pre;
+  text-autospace: no-autospace;
+  background-color: var(--block-background-color);
+  border-radius: var(--glob-border-radius);
+  display: inline;
 }

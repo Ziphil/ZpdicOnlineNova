@@ -60,7 +60,7 @@ export const DictionaryMainPart = create(
         <div styleName="right">
           <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
           {(debouncedQuery.showExplanation && !!dictionary.explanation) && (
-            <Markdown styleName="explanation" mode="article" specialPaths={getDictionarySpecialPaths(dictionary)}>
+            <Markdown styleName="explanation" mode="article" specialPaths={getDictionarySpecialPaths(dictionary)} features={dictionary.settings.markdownFeatures}>
               {dictionary.explanation}
             </Markdown>
           )}
