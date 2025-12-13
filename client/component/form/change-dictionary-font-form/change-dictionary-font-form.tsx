@@ -16,7 +16,6 @@ import {
   Input,
   MultiLineText,
   Radio,
-  data,
   useTrans
 } from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
@@ -42,33 +41,8 @@ export const ChangeDictionaryFontForm = create(
 
     return (
       <form styleName="root" {...rest}>
-        <ControlContainer>
-          <div styleName="card-group" {...data({vertical: "wide"})}>
-            <CheckableCard styleName="card">
-              <Radio value="none" {...register("kind")}/>
-              <CheckableCardBody styleName="card-body">
-                <div styleName="label">
-                  <div styleName="label-main">{trans("label.kind.none")}</div>
-                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.kind.none")}</MultiLineText>
-                </div>
-              </CheckableCardBody>
-            </CheckableCard>
-            <CheckableCard styleName="card">
-              <Radio value="local" {...register("kind")}/>
-              <CheckableCardBody styleName="card-body">
-                <div styleName="label">
-                  <div styleName="label-main">{trans("label.kind.local")}</div>
-                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.kind.local")}</MultiLineText>
-                </div>
-                <ControlContainer>
-                  <ControlLabel>
-                    {trans("label.input.name")}
-                  </ControlLabel>
-                  <Input error={!!getFieldState("name").error} {...register("name")}/>
-                  <ControlErrorMessage name="name" form={form} trans={trans}/>
-                </ControlContainer>
-              </CheckableCardBody>
-            </CheckableCard>
+        <ControlContainer label={false}>
+          <div styleName="card-group">
             <CheckableCard styleName="card">
               <Radio value="custom" {...register("kind")}/>
               <CheckableCardBody styleName="card-body">
@@ -91,6 +65,31 @@ export const ChangeDictionaryFontForm = create(
                   )}/>
                   <ControlErrorMessage name="file" form={form} trans={trans}/>
                 </ControlContainer>
+              </CheckableCardBody>
+            </CheckableCard>
+            <CheckableCard styleName="card">
+              <Radio value="local" {...register("kind")}/>
+              <CheckableCardBody styleName="card-body">
+                <div styleName="label">
+                  <div styleName="label-main">{trans("label.kind.local")}</div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.kind.local")}</MultiLineText>
+                </div>
+                <ControlContainer>
+                  <ControlLabel>
+                    {trans("label.input.name")}
+                  </ControlLabel>
+                  <Input error={!!getFieldState("name").error} {...register("name")}/>
+                  <ControlErrorMessage name="name" form={form} trans={trans}/>
+                </ControlContainer>
+              </CheckableCardBody>
+            </CheckableCard>
+            <CheckableCard styleName="card">
+              <Radio value="none" {...register("kind")}/>
+              <CheckableCardBody styleName="card-body">
+                <div styleName="label">
+                  <div styleName="label-main">{trans("label.kind.none")}</div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.kind.none")}</MultiLineText>
+                </div>
               </CheckableCardBody>
             </CheckableCard>
           </div>

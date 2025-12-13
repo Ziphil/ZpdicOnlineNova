@@ -912,6 +912,27 @@ changeDictionarySettingsForm:
     showVariationPronunciation:
       true: "Montri"
       false: "Ne montri"
+  labelHelper:
+    enableAdvancedWord:
+      true: >-
+        Vi povos registri plurajn sekciojn en vorto, ĉiu el kiu enhavas informojn de tradukaĵoj ĝis rilataj vortoj.
+      false: >-
+        Ĉiu vorto povos nur havi unu sekcion.
+    enableProposal:
+      true: >-
+        Akcepti petojn pri novaj vortoj de aliaj uzantoj.
+      false: >-
+        Kaŝi la butonon kaj malhelpi aliajn uzantojn peti novajn vortojn.
+    enableDuplicateName:
+      true: >-
+        Kiam vi enigas literumon en la redaktilo de vorto, ĝi diros al vi ĉu la vortaro jam havas vorto kun la sama literumo.
+      false: >-
+        Ne kontroli por duoblaj literumoj.
+    showVariationPronunciation:
+      true: >-
+        Montri la elparolojn de variaĵaj formoj apud ili.
+      false: >-
+        Ne montri la elparolojn de variaĵaj formoj.
   pattern:
     none: "Ne agordi"
     paren: "Ignori internoj de rondaj krampoj"

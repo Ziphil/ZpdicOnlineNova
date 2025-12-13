@@ -910,6 +910,27 @@ changeDictionarySettingsForm:
     showVariationPronunciation:
       true: "表示する"
       false: "表示しない"
+  labelHelper:
+    enableAdvancedWord:
+      true: >-
+        訳語から関連語までを 1 つのセクションとして、単語データに複数のセクションを登録できるようになります。
+      false: >-
+        単語データには 1 つのセクションのみを登録できます。
+    enableProposal:
+      true: >-
+        他のユーザーからの造語依頼を受け付けます。
+      false: >-
+        造語依頼ボタンを非表示にして、他のユーザーが造語依頼できないようにします。
+    enableDuplicateName:
+      true: >-
+        単語編集画面で綴りを入力した際に、同じ綴りの単語がすでに存在しているかが表示されるようになります。
+      false: >-
+        同じ綴りの単語が存在するかのチェックを行いません。
+    showVariationPronunciation:
+      true: >-
+        変化形の横に発音記号を表示します。
+      false: >-
+        変化形には発音記号を表示しません。
   pattern:
     none: "設定なし"
     paren: "丸カッコ内を無視"

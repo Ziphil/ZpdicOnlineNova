@@ -14,7 +14,6 @@ import {
   GeneralIcon,
   MultiLineText,
   Radio,
-  data,
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
@@ -43,7 +42,7 @@ export const ChangeDictionaryMarkdownFeaturesForm = create(
           <ControlLabel>
             {trans("label.enable.label")}
           </ControlLabel>
-          <div styleName="card-group" {...data({vertical: "wide"})}>
+          <div styleName="card-group">
             <CheckableCard styleName="card">
               <Radio value="true" {...register("enable")}/>
               <CheckableCardBody styleName="card-body">
@@ -73,7 +72,7 @@ export const ChangeDictionaryMarkdownFeaturesForm = create(
             <ControlLabel>
               {trans("label.features.label")}
             </ControlLabel>
-            <div styleName="card-group" {...data({vertical: "wide"})}>
+            <div styleName="card-group">
               <CheckableCard styleName="card">
                 <Checkbox checked={watch("enable") === "true"} disabled={true}/>
                 <div styleName="label">

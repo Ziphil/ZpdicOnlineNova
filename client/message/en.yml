@@ -912,6 +912,27 @@ changeDictionarySettingsForm:
     showVariationPronunciation:
       true: "Show"
       false: "Don’t show"
+  labelHelper:
+    enableAdvancedWord:
+      true: >-
+        You can register multiple sections in a word, with each section containing a range of information from translations to related words.
+      false: >-
+        Each word can only have one section.
+    enableProposal:
+      true: >-
+        Accept requests for new words from other users.
+      false: >-
+        Hide the request button and prevent other users from requesting new words.
+    enableDuplicateName:
+      true: >-
+        When you enter a spelling in the word editor, it will tell you whether the dictionary already has a word with the same spelling.
+      false: >-
+        Do not check for duplicate spellings.
+    showVariationPronunciation:
+      true: >-
+        Display the pronunciations of variation forms next to them.
+      false: >-
+        Do not display the pronunciations of variation forms.
   pattern:
     none: "No setting"
     paren: "Ignore inside round brackets (parens)"

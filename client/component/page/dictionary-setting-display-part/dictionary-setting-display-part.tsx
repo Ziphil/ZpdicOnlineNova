@@ -37,9 +37,6 @@ export const DictionarySettingDisplayPart = create(
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.showNumbers")}</h3>
-          <MultiLineText styleName="description">
-            {trans("description.showNumbers")}
-          </MultiLineText>
           <ChangeDictionaryShowNumbersForm dictionary={dictionary}/>
         </section>
         <section styleName="section">

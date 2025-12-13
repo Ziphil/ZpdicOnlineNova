@@ -6,11 +6,12 @@ import {
   AdditionalProps,
   Button,
   ButtonIconbag,
-  CheckableContainer,
-  CheckableLabel,
+  CheckableCard,
+  CheckableCardBody,
   ControlContainer,
   GeneralIcon,
   Input,
+  MultiLineText,
   Radio,
   useTrans
 } from "zographia";
@@ -41,42 +42,72 @@ export const ChangeDictionarySettingsForm = create(
     return (
       <form styleName="root" {...rest}>
         {(propertyName === "enableAdvancedWord") ? (
-          <ControlContainer>
-            <div styleName="radio-group">
-              <CheckableContainer>
+          <ControlContainer label={false}>
+            <div styleName="card-group">
+              <CheckableCard styleName="card">
                 <Radio value="true" {...register("value")}/>
-                <CheckableLabel>{trans("label.enableAdvancedWord.true")}</CheckableLabel>
-              </CheckableContainer>
-              <CheckableContainer>
+                <CheckableCardBody styleName="card-body">
+                  <div styleName="label">
+                    <div styleName="label-main">{trans("label.enableAdvancedWord.true")}</div>
+                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.enableAdvancedWord.true")}</MultiLineText>
+                  </div>
+                </CheckableCardBody>
+              </CheckableCard>
+              <CheckableCard styleName="card">
                 <Radio value="false" {...register("value")}/>
-                <CheckableLabel>{trans("label.enableAdvancedWord.false")}</CheckableLabel>
-              </CheckableContainer>
+                <CheckableCardBody styleName="card-body">
+                  <div styleName="label">
+                    <div styleName="label-main">{trans("label.enableAdvancedWord.false")}</div>
+                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.enableAdvancedWord.false")}</MultiLineText>
+                  </div>
+                </CheckableCardBody>
+              </CheckableCard>
             </div>
           </ControlContainer>
         ) : (propertyName === "enableProposal") ? (
-          <ControlContainer>
-            <div styleName="radio-group">
-              <CheckableContainer>
+          <ControlContainer label={false}>
+            <div styleName="card-group">
+              <CheckableCard styleName="card">
                 <Radio value="true" {...register("value")}/>
-                <CheckableLabel>{trans("label.enableProposal.true")}</CheckableLabel>
-              </CheckableContainer>
-              <CheckableContainer>
+                <CheckableCardBody styleName="card-body">
+                  <div styleName="label">
+                    <div styleName="label-main">{trans("label.enableProposal.true")}</div>
+                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.enableProposal.true")}</MultiLineText>
+                  </div>
+                </CheckableCardBody>
+              </CheckableCard>
+              <CheckableCard styleName="card">
                 <Radio value="false" {...register("value")}/>
-                <CheckableLabel>{trans("label.enableProposal.false")}</CheckableLabel>
-              </CheckableContainer>
+                <CheckableCardBody styleName="card-body">
+                  <div styleName="label">
+                    <div styleName="label-main">{trans("label.enableProposal.false")}</div>
+                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.enableProposal.false")}</MultiLineText>
+                  </div>
+                </CheckableCardBody>
+              </CheckableCard>
             </div>
           </ControlContainer>
         ) : (propertyName === "enableDuplicateName") ? (
-          <ControlContainer>
-            <div styleName="radio-group">
-              <CheckableContainer>
+          <ControlContainer label={false}>
+            <div styleName="card-group">
+              <CheckableCard styleName="card">
                 <Radio value="true" {...register("value")}/>
-                <CheckableLabel>{trans("label.enableDuplicateName.true")}</CheckableLabel>
-              </CheckableContainer>
-              <CheckableContainer>
+                <CheckableCardBody styleName="card-body">
+                  <div styleName="label">
+                    <div styleName="label-main">{trans("label.enableDuplicateName.true")}</div>
+                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.enableDuplicateName.true")}</MultiLineText>
+                  </div>
+                </CheckableCardBody>
+              </CheckableCard>
+              <CheckableCard styleName="card">
                 <Radio value="false" {...register("value")}/>
-                <CheckableLabel>{trans("label.enableDuplicateName.false")}</CheckableLabel>
-              </CheckableContainer>
+                <CheckableCardBody styleName="card-body">
+                  <div styleName="label">
+                    <div styleName="label-main">{trans("label.enableDuplicateName.false")}</div>
+                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.enableDuplicateName.false")}</MultiLineText>
+                  </div>
+                </CheckableCardBody>
+              </CheckableCard>
             </div>
           </ControlContainer>
         ) : (propertyName === "punctuations") ? (
@@ -100,16 +131,26 @@ export const ChangeDictionarySettingsForm = create(
             <Input {...register("value")}/>
           </ControlContainer>
         ) : (propertyName === "showVariationPronunciation") ? (
-          <ControlContainer>
-            <div styleName="radio-group">
-              <CheckableContainer>
+          <ControlContainer label={false}>
+            <div styleName="card-group">
+              <CheckableCard styleName="card">
                 <Radio value="true" {...register("value")}/>
-                <CheckableLabel>{trans("label.showVariationPronunciation.true")}</CheckableLabel>
-              </CheckableContainer>
-              <CheckableContainer>
+                <CheckableCardBody styleName="card-body">
+                  <div styleName="label">
+                    <div styleName="label-main">{trans("label.showVariationPronunciation.true")}</div>
+                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.showVariationPronunciation.true")}</MultiLineText>
+                  </div>
+                </CheckableCardBody>
+              </CheckableCard>
+              <CheckableCard styleName="card">
                 <Radio value="false" {...register("value")}/>
-                <CheckableLabel>{trans("label.showVariationPronunciation.false")}</CheckableLabel>
-              </CheckableContainer>
+                <CheckableCardBody styleName="card-body">
+                  <div styleName="label">
+                    <div styleName="label-main">{trans("label.showVariationPronunciation.false")}</div>
+                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.showVariationPronunciation.false")}</MultiLineText>
+                  </div>
+                </CheckableCardBody>
+              </CheckableCard>
             </div>
           </ControlContainer>
         ) : null}
