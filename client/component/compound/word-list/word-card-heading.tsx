@@ -1,7 +1,7 @@
 //
 
 import {ReactElement, useMemo} from "react";
-import {AdditionalProps, MultiLineText, Tag} from "zographia";
+import {AdditionalProps, MultiLineText, Tag, data} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
 
@@ -32,8 +32,8 @@ export const WordCardHeading = create(
         )}
         {(!!word.spelling) && (
           <div styleName="spelling-container">
-            <MultiLineText styleName="spelling" className="custom-font" is="h3" lineHeight="narrowFixed">
-              {word.spelling}
+            <MultiLineText styleName="spelling" is="h3" lineHeight="narrowFixed">
+              <span className="dictionary-custom-font" {...data({target: "heading"})}>{word.spelling}</span>
             </MultiLineText>
             {(hasFont) && (
               <MultiLineText styleName="small-spelling" is="span" lineHeight="narrowFixed">

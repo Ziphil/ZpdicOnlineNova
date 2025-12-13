@@ -3,12 +3,13 @@
 import type {Content, Parent, Root} from "mdast";
 import type {Data, Node} from "unist";
 import {CONTINUE, SKIP, visit} from "unist-util-visit";
+import {data} from "zographia";
 
 
 export function remarkCustomFont(): (tree: Root) => void {
   const plugin = function (tree: Root): void {
     visit(tree, (node) => {
-      if ("type" in node && node.type as string === "customSpan") {
+      if ("type" in node && node.type as string === "dictionaryCustomFont") {
         return SKIP;
       } else {
         if (isParent(node)) {
@@ -47,12 +48,18 @@ function wrapCustomSpan(children: Array<Content>): Array<Content> {
             if (part.length > 0) {
               capturedContents.push({type: "text", value: part});
             }
-            const customSpan = {
-              type: "customSpan",
-              data: {hName: "span", hProperties: {className: ["custom-font"]}} as Data,
+            const child = {
+              type: "dictionaryCustomFont",
+              data: {
+                hName: "span",
+                hProperties: {
+                  className: ["dictionary-custom-font"],
+                  ...data({target: "text"})
+                }
+              } as Data,
               children: capturedContents
             } as unknown as Content;
-            headChildren.push(customSpan);
+            headChildren.push(child);
             capturedContents = [];
             inside = false;
             start = pos + 1;

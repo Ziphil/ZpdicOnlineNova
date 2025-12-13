@@ -3,7 +3,7 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretRight} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
+import {AdditionalProps, MultiLineText, Tag, aria, data} from "zographia";
 import {Markdown} from "/client/component/atom/markdown";
 import {WordCardAnchor} from "/client/component/compound/word-list/word-card-anchor";
 import {create} from "/client/component/create";
@@ -41,7 +41,7 @@ export const WordCardPhraseList = create(
                       <Tag key={index} styleName="tag" variant="light" scheme="gray">{title}</Tag>
                     ))}
                     <span>
-                      {phrase.expression}
+                      <span className="dictionary-custom-font" {...data({target: "phrase"})}>{phrase.expression}</span>
                     </span>
                     <span styleName="separator" {...aria({hidden: true})}/>
                     <span>

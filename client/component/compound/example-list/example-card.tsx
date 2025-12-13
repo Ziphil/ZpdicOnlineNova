@@ -4,7 +4,22 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleInfo, faEdit, faHandPointRight, faShare, faTrashAlt, faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {useHref} from "react-router-dom";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, Tag, aria, useResponsiveDevice, useTrans} from "zographia";
+import {
+  AdditionalProps,
+  Button,
+  ButtonIconbag,
+  Card,
+  CardBody,
+  CardFooter,
+  GeneralIcon,
+  LoadingIcon,
+  MultiLineText,
+  Tag,
+  aria,
+  data,
+  useResponsiveDevice,
+  useTrans
+} from "zographia";
 import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {Link} from "/client/component/atom/link";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
@@ -62,7 +77,7 @@ export const ExampleCard = create(
           )}
           <div styleName="parallel">
             <MultiLineText is="p">
-              {filledExample.sentence}
+              <span className="dictionary-custom-font" {...data({target: "example"})}>{filledExample.sentence}</span>
             </MultiLineText>
             <MultiLineText is="p">
               {(example.offer !== null) ? offer?.translation : filledExample.translation}
@@ -85,7 +100,13 @@ export const ExampleCard = create(
                     <WordPopover dictionary={dictionary} word={word} trigger={(
                       <span>
                         <Link href={getWordHref(dictionary, word.number)} scheme="secondary" variant="underline">
-                          {(word.spelling === undefined) ? <LoadingIcon/> : (word.spelling === null) ? <GeneralIcon icon={faTriangleExclamation}/> : word.spelling}
+                          {(word.spelling === undefined) ? (
+                            <LoadingIcon/>
+                          ) : (word.spelling === null) ? (
+                            <GeneralIcon icon={faTriangleExclamation}/>
+                          ) : (
+                            <span className="dictionary-custom-font" {...data({target: "relation"})}>{word.spelling}</span>
+                          )}
                         </Link>
                       </span>
                     )}/>
