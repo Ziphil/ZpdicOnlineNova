@@ -848,12 +848,18 @@ changeDictionaryParamNameForm:
 changeDictionaryFontForm:
   label:
     kind:
+      label: "Refero"
       none: "Ne agordi"
       local: "Uzi lokan tiparon"
       custom: "Alŝuti propran tiparon"
     input:
       name: "Tipara familio"
       file: "Tipara dosiero"
+    targets:
+      label: "Kie apliki"
+      heading: "Titoloj"
+      phrase: "Idiomaĵoj · Frazoj"
+      text: "Enhavoj"
   labelHelper:
     kind:
       none: >-
@@ -864,6 +870,14 @@ changeDictionaryFontForm:
       custom: >-
         Alŝutu vian propran tiparan dosieron por uzi ĝin por la kapvortoj.
         Tiu tiparo estas uzata sendepende de la vizitanta medio.
+    targets:
+      heading: >-
+        Montri la titolojn per la propran tiparon.
+      phrase: >-
+        Montri la esprimojn en la idiomaĵoj kaj ekzemplajn frazojn per la propran tiparon.
+      text: >-
+        Montri la partojn de la enhavoj markitajn kun propran sintakson per la propran tiparon.
+        Bonvolu ebligi “Propran tiparon” en la sekcio “Markdown” malsupre.
   error:
     nameRequired: >-
       Enigu tipara familio.
@@ -879,7 +893,7 @@ changeDictionaryMarkdownFeaturesForm:
     features:
       label: "Uzataj funkcioj"
       basic: "Bazaj"
-      supsub: "Superskribita/subskribita"
+      supsub: "Superskribita · Subskribita"
       font: "Propran tiparon"
   labelHelper:
     enable:

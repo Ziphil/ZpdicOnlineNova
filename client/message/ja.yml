@@ -846,12 +846,18 @@ changeDictionaryParamNameForm:
 changeDictionaryFontForm:
   label:
     kind:
+      label: "参照先"
       none: "設定しない"
       local: "ローカルフォントを参照"
       custom: "フォントをアップロード"
     input:
       name: "フォントファミリー名"
       file: "フォントファイル"
+    targets:
+      label: "適用範囲"
+      heading: "見出し"
+      phrase: "成句 · 例文"
+      text: "本文"
   labelHelper:
     kind:
       none: >-
@@ -862,6 +868,14 @@ changeDictionaryFontForm:
       custom: >-
         フォントファイルをアップロードすることで、そのフォントで表示します。
         閲覧者の環境によらず、指定されたフォントで表示することができます。
+    targets:
+      heading: >-
+        見出しを専用フォントで表示します。
+      phrase: >-
+        成句や例文を専用フォントで表示します。
+      text: >-
+        内容において専用のマークアップがなされている箇所を専用フォントで表示します。
+        下の「Markdown」項目で「専用フォント」を有効にしてください。
   error:
     nameRequired: >-
       フォントファミリー名を入力してください。
@@ -877,7 +891,7 @@ changeDictionaryMarkdownFeaturesForm:
     features:
       label: "使用する機能"
       basic: "基本"
-      supsub: "上付き/下付き"
+      supsub: "上付き · 下付き"
       font: "専用フォント"
   labelHelper:
     enable:

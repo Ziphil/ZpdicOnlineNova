@@ -848,12 +848,18 @@ changeDictionaryParamNameForm:
 changeDictionaryFontForm:
   label:
     kind:
+      label: "Reference"
       none: "Do not set"
       local: "Use local font"
       custom: "Upload custom font"
     input:
       name: "Font family"
       file: "Font file"
+    targets:
+      label: "Where to apply"
+      heading: "Headings"
+      phrase: "Phrases · Sentences"
+      text: "Contents"
   labelHelper:
     kind:
       none: >-
@@ -864,6 +870,14 @@ changeDictionaryFontForm:
       custom: >-
         Upload your own font file to use it for the headwords.
         This font is used regardless of the visitor’s environment.
+    targets:
+      heading: >-
+        Display the headings in the custom font.
+      phrase: >-
+        Display the expressions in the phrases and example sentences in the custom font.
+      text: >-
+        Display the parts of the contents marked with custom syntax in the custom font.
+        Please enable ‘Custom font’ in the ‘Markdown’ section below.
   error:
     nameRequired: >-
       Enter a font family.
@@ -879,7 +893,7 @@ changeDictionaryMarkdownFeaturesForm:
     features:
       label: "Features to use"
       basic: "Basic"
-      supsub: "Superscript/subscript"
+      supsub: "Superscript · Subscript"
       font: "Custom font"
   labelHelper:
     enable:

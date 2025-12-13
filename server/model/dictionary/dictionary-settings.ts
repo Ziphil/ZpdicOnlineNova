@@ -17,6 +17,9 @@ export class DictionarySettingsSchema {
   @prop()
   public font?: DictionaryFontSchema;
 
+  @prop({type: String})
+  public fontTargets?: Array<string>;
+
   @prop({type: TemplateWordSchema})
   public templateWords?: Array<TemplateWordSchema>;
 
@@ -59,6 +62,7 @@ export class DictionarySettingsSchema {
   public static createDefault(): DictionarySettings {
     const settings = new DictionarySettingsModel({
       font: new DictionaryFontModel({kind: "none"}),
+      fontTargets: ["heading", "text"],
       punctuations: [",", "、", "。"],
       ignoredEquivalentPattern: "[\\(（].*?[\\)）]",
       pronunciationTitle: "発音",

@@ -10,6 +10,7 @@ export interface DictionarySettings {
   akrantiainSource?: string;
   zatlinSource?: string;
   font: DictionaryFont;
+  fontTargets: Array<DictionaryFontTarget>;
   templateWords: Array<TemplateWord>;
   punctuations: Array<string>;
   ignoredEquivalentPattern: string;
@@ -26,6 +27,10 @@ export interface DictionarySettings {
 
 }
 
+
+export const DICTIONARY_FONT_TARGET = ["heading", "phrase", "example", "text"] as const;
+export type DictionaryFontTarget = LiteralType<typeof DICTIONARY_FONT_TARGET>;
+export const DictionaryFontTargetUtil = LiteralUtilType.create(DICTIONARY_FONT_TARGET);
 
 export const MARKDOWN_FEATURES = ["basic", "supsub", "font"] as const;
 export type MarkdownFeature = LiteralType<typeof MARKDOWN_FEATURES>;

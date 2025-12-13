@@ -67,7 +67,7 @@ export const ChangeDictionaryMarkdownFeaturesForm = create(
             </CheckableCard>
           </div>
         </ControlContainer>
-        {watch("enable") === "true" && (
+        {(watch("enable") === "true") && (
           <ControlContainer label={false}>
             <ControlLabel>
               {trans("label.features.label")}

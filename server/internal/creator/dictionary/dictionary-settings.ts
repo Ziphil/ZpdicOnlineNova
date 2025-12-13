@@ -17,6 +17,7 @@ export namespace DictionarySettingsCreator {
       akrantiainSource: raw.akrantiainSource,
       zatlinSource: raw.zatlinSource,
       font: (raw.font !== undefined) ? DictionaryFontCreator.skeletonize(raw.font) : {kind: "none"},
+      fontTargets: raw.fontTargets as any ?? ["heading", "text"],
       templateWords: (raw.templateWords !== undefined) ? raw.templateWords.map(TemplateWordCreator.skeletonize) : [],
       punctuations: raw.punctuations,
       ignoredEquivalentPattern: raw.ignoredEquivalentPattern ?? "",

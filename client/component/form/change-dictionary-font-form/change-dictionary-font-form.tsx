@@ -9,6 +9,7 @@ import {
   ButtonIconbag,
   CheckableCard,
   CheckableCardBody,
+  Checkbox,
   ControlContainer,
   ControlLabel,
   FileInput,
@@ -37,11 +38,14 @@ export const ChangeDictionaryFontForm = create(
     const {trans} = useTrans("changeDictionaryFontForm");
 
     const {form, handleSubmit} = useChangeDictionaryFont(dictionary);
-    const {control, register, getFieldState, formState: {errors}} = form;
+    const {control, register, watch, getFieldState, formState: {errors}} = form;
 
     return (
       <form styleName="root" {...rest}>
         <ControlContainer label={false}>
+          <ControlLabel>
+            {trans("label.kind.label")}
+          </ControlLabel>
           <div styleName="card-group">
             <CheckableCard styleName="card">
               <Radio value="custom" {...register("kind")}/>
@@ -94,6 +98,42 @@ export const ChangeDictionaryFontForm = create(
             </CheckableCard>
           </div>
         </ControlContainer>
+        {(watch("kind") !== "none") && (
+          <ControlContainer label={false}>
+            <ControlLabel>
+              {trans("label.targets.label")}
+            </ControlLabel>
+            <div styleName="card-group">
+              <CheckableCard styleName="card">
+                <Checkbox value="heading" {...register("targets")}/>
+                <div styleName="label">
+                  <div styleName="label-main">
+                    {trans("label.targets.heading")}
+                  </div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.targets.heading")}</MultiLineText>
+                </div>
+              </CheckableCard>
+              <CheckableCard styleName="card">
+                <Checkbox value="phrase" {...register("targets")}/>
+                <div styleName="label">
+                  <div styleName="label-main">
+                    {trans("label.targets.phrase")}
+                  </div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.targets.phrase")}</MultiLineText>
+                </div>
+              </CheckableCard>
+              <CheckableCard styleName="card">
+                <Checkbox value="text" {...register("targets")}/>
+                <div styleName="label">
+                  <div styleName="label-main">
+                    {trans("label.targets.text")}
+                  </div>
+                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.targets.text")}</MultiLineText>
+                </div>
+              </CheckableCard>
+            </div>
+          </ControlContainer>
+        )}
         <div>
           <Button variant="light" type="submit" onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
