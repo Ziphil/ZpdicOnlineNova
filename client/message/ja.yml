@@ -856,10 +856,11 @@ changeDictionaryFontForm:
     targets:
       label: "適用範囲"
       heading: "見出し語"
+      variation: "変化形"
       relation: "関連語"
       phrase: "成句"
       example: "例文"
-      text: "本文"
+      text: "内容"
   labelHelper:
     kind:
       none: >-
@@ -874,6 +875,8 @@ changeDictionaryFontForm:
       heading: >-
         見出し語を専用フォントで表示します。
         このとき、その隣に合わせて通常のフォントでの表示も行います。
+      variation: >-
+        変化形を専用フォントで表示します。
       relation: >-
         関連語のリンクを専用フォントで表示します。
       phrase: >-
@@ -914,6 +917,7 @@ changeDictionaryMarkdownFeaturesForm:
         <pre>^</pre> で囲まれた箇所が上付き文字で表示され、<pre>~</pre> で囲まれた箇所が下付き文字で表示されるようになります。
       font: >-
         <pre>'{'</pre> と <pre>'}'</pre> で囲まれた箇所が専用フォントで表示されるようになります。
+        上の「専用フォント」項目で「本文」にチェックを入れてください。
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:

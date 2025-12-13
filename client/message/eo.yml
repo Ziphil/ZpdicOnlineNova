@@ -858,6 +858,7 @@ changeDictionaryFontForm:
     targets:
       label: "Kie apliki"
       heading: "Kapvortoj"
+      variation: "Variaĵaj formoj"
       relation: "Rilataj vortoj"
       phrase: "Idiomaĵoj"
       example: "Frazoj"
@@ -876,6 +877,8 @@ changeDictionaryFontForm:
       heading: >-
         Montri la kapvortojn per la propran tiparon.
         Tio ankaŭ montros la normalan tiparon apud ĝi.
+      variation: >-
+        Montri la variaĵajn formojn per la propran tiparon.
       relation: >-
         Montri la rilatajn vortojn per la propran tiparon.
       phrase: >-
@@ -916,6 +919,7 @@ changeDictionaryMarkdownFeaturesForm:
         La teksto enkludita en <pre>^</pre> estos montrata en superskribita, kaj la teksto enkludita en <pre>~</pre> estos montrata en subskribita.
       font: >-
         La teksto enkludita en <pre>'{'</pre> kaj <pre>'}'</pre> estos montrata en la propran tiparon.
+        Bonvolu ankaŭ ebligi “Enhavoj” en la sekcio “Propran tiparon” supre.
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:

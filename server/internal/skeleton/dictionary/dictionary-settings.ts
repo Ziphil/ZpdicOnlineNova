@@ -28,7 +28,7 @@ export interface DictionarySettings {
 }
 
 
-export const DICTIONARY_FONT_TARGET = ["heading", "relation", "phrase", "example", "text"] as const;
+export const DICTIONARY_FONT_TARGET = ["heading", "phrase", "variation", "relation", "example", "text"] as const;
 export type DictionaryFontTarget = LiteralType<typeof DICTIONARY_FONT_TARGET>;
 export const DictionaryFontTargetUtil = LiteralUtilType.create(DICTIONARY_FONT_TARGET);
 

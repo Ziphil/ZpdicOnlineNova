@@ -858,8 +858,9 @@ changeDictionaryFontForm:
     targets:
       label: "Where to apply"
       heading: "Headwords"
+      variation: "Variation forms"
       relation: "Related words"
-      phrase: "Phrases"
+      phrase: "Idiomatic expressions"
       example: "Sentences"
       text: "Contents"
   labelHelper:
@@ -876,10 +877,12 @@ changeDictionaryFontForm:
       heading: >-
         Display the headwords in the custom font.
         This will also display the normal font next to it.
+      variation: >-
+        Display the variation forms in the custom font.
       relation: >-
         Display the related words in the custom font.
       phrase: >-
-        Display the phrases in the custom font.
+        Display the idiomatic expressions in the custom font.
       example: >-
         Display the example sentences in the custom font.
       text: >-
@@ -916,6 +919,7 @@ changeDictionaryMarkdownFeaturesForm:
         The text enclosed in <pre>^</pre> will be displayed in superscript, and the text enclosed in <pre>~</pre> will be displayed in subscript.
       font: >-
         The text enclosed in <pre>'{'</pre> and <pre>'}'</pre> will be displayed in the custom font.
+        Please also enable ‘Contents’ in the ‘Custom font’ section above.
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:
