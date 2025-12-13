@@ -58,12 +58,12 @@
 .card-group {
   column-gap: 3zu;
   row-gap: 3zu;
-  display: flex;
+  display: grid;
   @include device("desktop") {
-    flex-direction: row;
+    grid-template-columns: repeat(auto-fit, minmax(64zu, 1fr));
   }
   @include device("mobile") {
-    flex-direction: column;
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 

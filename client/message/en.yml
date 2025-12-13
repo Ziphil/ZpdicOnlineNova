@@ -857,8 +857,10 @@ changeDictionaryFontForm:
       file: "Font file"
     targets:
       label: "Where to apply"
-      heading: "Headings"
-      phrase: "Phrases · Sentences"
+      heading: "Headwords"
+      relation: "Related words"
+      phrase: "Phrases"
+      example: "Sentences"
       text: "Contents"
   labelHelper:
     kind:
@@ -872,9 +874,14 @@ changeDictionaryFontForm:
         This font is used regardless of the visitor’s environment.
     targets:
       heading: >-
-        Display the headings in the custom font.
+        Display the headwords in the custom font.
+        This will also display the normal font next to it.
+      relation: >-
+        Display the related words in the custom font.
       phrase: >-
-        Display the expressions in the phrases and example sentences in the custom font.
+        Display the phrases in the custom font.
+      example: >-
+        Display the example sentences in the custom font.
       text: >-
         Display the parts of the contents marked with custom syntax in the custom font.
         Please enable ‘Custom font’ in the ‘Markdown’ section below.

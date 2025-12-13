@@ -82,7 +82,7 @@ function getFormValue(dictionary: Dictionary): FormValue {
 function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"changeDictionarySettings"> {
   const number = dictionary.number;
   const font = getQueryFont(dictionary, value);
-  const fontTargets = (forceArray(value.targets).includes("phrase")) ? [...forceArray(value.targets), "example" as const] : forceArray(value.targets);
+  const fontTargets = forceArray(value.targets);
   return {number, settings: {font, fontTargets}};
 }
 

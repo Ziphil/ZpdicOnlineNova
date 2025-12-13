@@ -855,8 +855,10 @@ changeDictionaryFontForm:
       file: "フォントファイル"
     targets:
       label: "適用範囲"
-      heading: "見出し"
-      phrase: "成句 · 例文"
+      heading: "見出し語"
+      relation: "関連語"
+      phrase: "成句"
+      example: "例文"
       text: "本文"
   labelHelper:
     kind:
@@ -870,9 +872,14 @@ changeDictionaryFontForm:
         閲覧者の環境によらず、指定されたフォントで表示することができます。
     targets:
       heading: >-
-        見出しを専用フォントで表示します。
+        見出し語を専用フォントで表示します。
+        このとき、その隣に合わせて通常のフォントでの表示も行います。
+      relation: >-
+        関連語のリンクを専用フォントで表示します。
       phrase: >-
-        成句や例文を専用フォントで表示します。
+        成句を専用フォントで表示します。
+      example: >-
+        例文を専用フォントで表示します。
       text: >-
         内容において専用のマークアップがなされている箇所を専用フォントで表示します。
         下の「Markdown」項目で「専用フォント」を有効にしてください。

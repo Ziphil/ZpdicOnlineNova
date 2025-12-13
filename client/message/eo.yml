@@ -857,8 +857,10 @@ changeDictionaryFontForm:
       file: "Tipara dosiero"
     targets:
       label: "Kie apliki"
-      heading: "Titoloj"
-      phrase: "Idiomaĵoj · Frazoj"
+      heading: "Kapvortoj"
+      relation: "Rilataj vortoj"
+      phrase: "Idiomaĵoj"
+      example: "Frazoj"
       text: "Enhavoj"
   labelHelper:
     kind:
@@ -872,9 +874,14 @@ changeDictionaryFontForm:
         Tiu tiparo estas uzata sendepende de la vizitanta medio.
     targets:
       heading: >-
-        Montri la titolojn per la propran tiparon.
+        Montri la kapvortojn per la propran tiparon.
+        Tio ankaŭ montros la normalan tiparon apud ĝi.
+      relation: >-
+        Montri la rilatajn vortojn per la propran tiparon.
       phrase: >-
-        Montri la esprimojn en la idiomaĵoj kaj ekzemplajn frazojn per la propran tiparon.
+        Montri la idiomaĵojn per la propran tiparon.
+      example: >-
+        Montri la ekzemplajn frazojn per la propran tiparon.
       text: >-
         Montri la partojn de la enhavoj markitajn kun propran sintakson per la propran tiparon.
         Bonvolu ebligi “Propran tiparon” en la sekcio “Markdown” malsupre.

@@ -21,7 +21,7 @@ import {
 } from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
-import {Dictionary} from "/server/internal/skeleton";
+import {DICTIONARY_FONT_TARGET, Dictionary} from "/server/internal/skeleton";
 import {useChangeDictionaryFont} from "./change-dictionary-font-form-hook";
 
 
@@ -104,33 +104,17 @@ export const ChangeDictionaryFontForm = create(
               {trans("label.targets.label")}
             </ControlLabel>
             <div styleName="card-group">
-              <CheckableCard styleName="card">
-                <Checkbox value="heading" {...register("targets")}/>
-                <div styleName="label">
-                  <div styleName="label-main">
-                    {trans("label.targets.heading")}
+              {DICTIONARY_FONT_TARGET.map((fontTarget) => (
+                <CheckableCard styleName="card" key={fontTarget}>
+                  <Checkbox value={fontTarget} {...register("targets")}/>
+                  <div styleName="label">
+                    <div styleName="label-main">
+                      {trans(`label.targets.${fontTarget}`)}
+                    </div>
+                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans(`labelHelper.targets.${fontTarget}`)}</MultiLineText>
                   </div>
-                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.targets.heading")}</MultiLineText>
-                </div>
-              </CheckableCard>
-              <CheckableCard styleName="card">
-                <Checkbox value="phrase" {...register("targets")}/>
-                <div styleName="label">
-                  <div styleName="label-main">
-                    {trans("label.targets.phrase")}
-                  </div>
-                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.targets.phrase")}</MultiLineText>
-                </div>
-              </CheckableCard>
-              <CheckableCard styleName="card">
-                <Checkbox value="text" {...register("targets")}/>
-                <div styleName="label">
-                  <div styleName="label-main">
-                    {trans("label.targets.text")}
-                  </div>
-                  <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.targets.text")}</MultiLineText>
-                </div>
-              </CheckableCard>
+                </CheckableCard>
+              ))}
             </div>
           </ControlContainer>
         )}
