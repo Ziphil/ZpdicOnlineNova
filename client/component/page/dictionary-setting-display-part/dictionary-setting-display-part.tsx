@@ -5,6 +5,7 @@ import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {ChangeDictionaryFontForm} from "/client/component/form/change-dictionary-font-form";
+import {ChangeDictionaryMarkdownFeaturesForm} from "/client/component/form/change-dictionary-markdown-features-form";
 import {ChangeDictionarySettingsForm} from "/client/component/form/change-dictionary-settings-form";
 import {ChangeDictionaryShowNumbersForm} from "/client/component/form/change-dictionary-show-numbers-form";
 import {ChangeDictionarySlimeTitlesForm} from "/client/component/form/change-dictionary-slime-titles-form";
@@ -29,6 +30,10 @@ export const DictionarySettingDisplayPart = create(
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.font")}</h3>
           <ChangeDictionaryFontForm dictionary={dictionary}/>
+        </section>
+        <section styleName="section">
+          <h3 styleName="heading">{trans("heading.markdownFeatures")}</h3>
+          <ChangeDictionaryMarkdownFeaturesForm dictionary={dictionary}/>
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.showNumbers")}</h3>

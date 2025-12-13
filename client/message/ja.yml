@@ -887,7 +887,8 @@ changeDictionaryMarkdownFeaturesForm:
         入力されたテキストをそのまま表示します。
     features:
       basic: >-
-        リンクや画像などの基本的を機能を有効にします。
+        リンクや画像などの基本的を機能です。
+        これは常に有効です。
       supsub: >-
         <pre>^</pre> で囲まれた箇所が上付き文字で表示され、<pre>~</pre> で囲まれた箇所が下付き文字で表示されるようになります。
       font: >-
@@ -1087,7 +1088,8 @@ dictionarySettingAuthorityPart:
       これらのユーザーは、単語の編集や削除はできますが、辞書の設定変更や削除はできません。
 dictionarySettingDisplayPart:
   heading:
-    font: "見出し語のフォント"
+    font: "専用フォント"
+    markdownFeatures: "Markdown"
     showNumbers: "通し番号"
     showVariationPronunciation: "変化形の発音記号"
     wordCardTitles: "単語カードでの見出し"
@@ -1111,7 +1113,6 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Akrantiain ソースコード"
     zatlinSource: "Zatlin ソースコード"
-    markdownFeatures: "Markdown"
     enableAdvancedWord: "高度な単語編集"
     enableDuplicateName: "重複綴りチェック"
     punctuations: "区切り文字"

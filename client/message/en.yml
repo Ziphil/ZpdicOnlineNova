@@ -889,7 +889,8 @@ changeDictionaryMarkdownFeaturesForm:
         The text will be displayed as is.
     features:
       basic: >-
-        Enables the basic features such as links and images.
+        The basic features such as links and images.
+        This is always enabled.
       supsub: >-
         The text enclosed in <pre>^</pre> will be displayed in superscript, and the text enclosed in <pre>~</pre> will be displayed in subscript.
       font: >-
@@ -1087,7 +1088,8 @@ dictionarySettingAuthorityPart:
       They can edit and delete words, but they cannot change the dictionary settings or delete the dictionary itself.
 dictionarySettingDisplayPart:
   heading:
-    font: "Font for headwords"
+    font: "Custom font"
+    markdownFeatures: "Markdown"
     showNumbers: "Numberings"
     showVariationPronunciation: "Variation pronunciations"
     wordCardTitles: "Headings in word cards"
@@ -1110,7 +1112,6 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Source code for Akrantiain"
     zatlinSource: "Source code for Zatlin"
-    markdownFeatures: "Markdown"
     enableAdvancedWord: "Advanced word editing"
     enableDuplicateName: "Duplicate spelling check"
     punctuations: "Delimiters"

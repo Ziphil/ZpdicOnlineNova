@@ -889,7 +889,8 @@ changeDictionaryMarkdownFeaturesForm:
         La teksto estos montrata kiel estas.
     features:
       basic: >-
-        Ebligas la bazajn funkciojn kiel ligilojn kaj bildojn.
+        La bazaj funkcioj kiel ligilojn kaj bildojn.
+        Tio estas ĉiam ebligita.
       supsub: >-
         La teksto enkludita en <pre>^</pre> estos montrata en superskribita, kaj la teksto enkludita en <pre>~</pre> estos montrata en subskribita.
       font: >-
@@ -1087,7 +1088,8 @@ dictionarySettingAuthorityPart:
       Ili povas redakti kaj forigi vortojn, sed ili ne povas ŝanĝi la agordojn de la vortaro aŭ forigi la vortaron mem.
 dictionarySettingDisplayPart:
   heading:
-    font: "Tiparo por kapvortoj"
+    font: "Propra tiparo"
+    markdownFeatures: "Markdown"
     showNumbers: "Numeroj"
     showVariationPronunciation: "Elparoloj de variaĵaj formoj"
     wordCardTitles: "Titoloj en vortokartoj"
@@ -1110,7 +1112,6 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Fontkodo por Akrantiain"
     zatlinSource: "Fontkodo por Zatlin"
-    markdownFeatures: "Markdown"
     enableAdvancedWord: "Altnivela redaktado de vortoj"
     enableDuplicateName: "Kontrolon de duobla literumo"
     punctuations: "Disigiloj"
