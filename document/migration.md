@@ -147,4 +147,6 @@ Mongo Shell で該当のデータベースを選択した後、以下を実行�
 ```js
 db.dictionaries.updateMany({"settings.enableMarkdown": true}, {$set: {"settings.markdownFeatures": ["basic"]}});
 db.dictionaries.updateMany({"settings.enableMarkdown": false}, {$set: {"settings.markdownFeatures": []}});
+
+db.dictionaries.updateMany({}, {$set: {"settings.markdownFeatures": ["heading", "phrase", "example", "text"]}});
 ```
