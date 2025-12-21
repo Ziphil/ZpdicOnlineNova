@@ -1,6 +1,6 @@
 //
 
-import {IconDefinition} from "@fortawesome/fontawesome-common-types";
+import type {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 
 
 export const fakBookCirclePlus = {

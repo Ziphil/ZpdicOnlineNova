@@ -20,8 +20,8 @@
     "lint:fix": "eslint --fix client/**/*.ts client/**/*.tsx server/**/*.ts"
   },
   "engines": {
-    "node": "16.13.2",
-    "npm": "8.1.2"
+    "node": "20.18.0",
+    "npm": "10.8.2"
   },
   "eslintConfig": {
     "extends": [
@@ -57,10 +57,10 @@
     "@floating-ui/react": "^0.27.15",
     "@formatjs/intl": "^2.9.9",
     "@formatjs/intl-numberformat": "^8.9.0",
-    "@fortawesome/fontawesome-svg-core": "^6.1.1",
-    "@fortawesome/free-brands-svg-icons": "^6.1.1",
-    "@fortawesome/react-fontawesome": "^0.1.18",
-    "@fortawesome/sharp-regular-svg-icons": "^6.5.1",
+    "@fortawesome/fontawesome-svg-core": "^7.1.0",
+    "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.1",
+    "@fortawesome/sharp-regular-svg-icons": "^7.1.0",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.4",
     "@sendgrid/mail": "^8.1.0",
