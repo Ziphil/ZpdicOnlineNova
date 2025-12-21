@@ -33,6 +33,7 @@ export const EditWordFormEditPart = create(
     const sectionFieldArraySpec = useFieldArray({control, name: "sections"});
     const sectionOperations = useMemo(() => ({
       append: sectionFieldArraySpec.append,
+      insert: sectionFieldArraySpec.insert,
       update: sectionFieldArraySpec.update,
       remove: sectionFieldArraySpec.remove
     }), [sectionFieldArraySpec]);
