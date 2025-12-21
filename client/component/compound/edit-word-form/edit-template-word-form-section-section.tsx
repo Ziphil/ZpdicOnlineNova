@@ -29,7 +29,7 @@ export const EditTemplateWordFormSectionSection = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditTemplateWordFormValue>,
-    sectionOperations: Pick<UseFieldArrayReturn<any, "sections">, "append" | "update" | "remove">,
+    sectionOperations: Pick<UseFieldArrayReturn<any, "sections">, "append" | "insert" | "update" | "remove">,
     dndId: string,
     sectionIndex: number,
     multiple: boolean
@@ -42,7 +42,7 @@ export const EditTemplateWordFormSectionSection = create(
     const {ref, props, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
 
     const duplicate = useCallback(function (): void {
-      sectionOperations.append(getValues(`sections.${sectionIndex}`));
+      sectionOperations.insert(sectionIndex, getValues(`sections.${sectionIndex}`), {focusName: "section-menu"});
     }, [sectionOperations, getValues, sectionIndex]);
 
     const remove = useCallback(function (): void {
@@ -59,7 +59,7 @@ export const EditTemplateWordFormSectionSection = create(
                 <Menu
                   placement="bottom-start"
                   trigger={(
-                    <Button scheme="gray" variant="simple">
+                    <Button scheme="gray" variant="simple" name="section-menu">
                       <GeneralIcon icon={faCircleEllipsisVertical}/>
                     </Button>
                   )}

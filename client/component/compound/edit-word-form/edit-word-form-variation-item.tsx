@@ -46,7 +46,7 @@ export const EditWordFormVariationItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    variationOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.variations`>, "append" | "update" | "remove">,
+    variationOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.variations`>, "append" | "insert" | "update" | "remove">,
     dndId: string,
     sectionIndex: number,
     variationIndex: number,
@@ -89,7 +89,7 @@ export const EditWordFormVariationItem = create(
     }, [dictionary.number]);
 
     const duplicate = useCallback(function (): void {
-      variationOperations.append(getValues(`sections.${sectionIndex}.variations.${variationIndex}`));
+      variationOperations.insert(variationIndex, getValues(`sections.${sectionIndex}.variations.${variationIndex}`), {focusIndex: variationIndex + 1});
     }, [variationOperations, getValues, sectionIndex, variationIndex]);
 
     const remove = useCallback(function (): void {

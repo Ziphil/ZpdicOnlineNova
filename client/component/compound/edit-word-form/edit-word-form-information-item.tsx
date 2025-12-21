@@ -51,7 +51,7 @@ export const EditWordFormInformationItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    informationOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.informations`>, "append" | "update" | "remove">,
+    informationOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.informations`>, "append" | "insert" | "update" | "remove">,
     dndId: string,
     sectionIndex: number,
     informationIndex: number,
@@ -83,7 +83,7 @@ export const EditWordFormInformationItem = create(
     }, [dictionary.number]);
 
     const duplicate = useCallback(function (): void {
-      informationOperations.append(getValues(`sections.${sectionIndex}.informations.${informationIndex}`));
+      informationOperations.insert(informationIndex, getValues(`sections.${sectionIndex}.informations.${informationIndex}`), {focusIndex: informationIndex + 1});
     }, [informationOperations, getValues, sectionIndex, informationIndex]);
 
     const remove = useCallback(function (): void {

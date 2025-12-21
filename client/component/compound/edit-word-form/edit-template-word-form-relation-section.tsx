@@ -28,7 +28,7 @@ export const EditTemplateWordFormRelationSection = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: EditTemplateWordSpec["form"],
-    sectionOperations: Pick<UseFieldArrayReturn<any, "sections">, "append" | "update" | "remove">,
+    sectionOperations: Pick<UseFieldArrayReturn<any, "sections">, "append" | "insert" | "update" | "remove">,
     sectionIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -63,7 +63,7 @@ export const EditTemplateWordFormRelationSection = create(
                   relationOperations={relationOperations as any}
                   dndId={relation.id}
                   sectionIndex={sectionIndex}
-                  index={index}
+                  relationIndex={index}
                 />
               ))}
             </EditWordFormDndContext>

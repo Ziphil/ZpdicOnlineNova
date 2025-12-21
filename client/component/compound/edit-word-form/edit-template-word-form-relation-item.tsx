@@ -39,7 +39,7 @@ export const EditTemplateWordFormRelationItem = create(
     relationOperations,
     dndId,
     sectionIndex,
-    index,
+    relationIndex,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
@@ -47,7 +47,7 @@ export const EditTemplateWordFormRelationItem = create(
     relationOperations: Omit<UseFieldArrayReturn<any, `sections.${number}.relations`>, "fields">,
     dndId: string,
     sectionIndex: number,
-    index: number,
+    relationIndex: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -76,12 +76,12 @@ export const EditTemplateWordFormRelationItem = create(
     }, [dictionary.number]);
 
     const duplicate = useCallback(function (): void {
-      relationOperations.append(getValues(`sections.${sectionIndex}.relations.${index}`));
-    }, [relationOperations, getValues, sectionIndex, index]);
+      relationOperations.insert(relationIndex, getValues(`sections.${sectionIndex}.relations.${relationIndex}`), {focusIndex: relationIndex + 1});
+    }, [relationOperations, getValues, sectionIndex, relationIndex]);
 
     const remove = useCallback(function (): void {
-      relationOperations.remove(index);
-    }, [relationOperations, index]);
+      relationOperations.remove(relationIndex);
+    }, [relationOperations, relationIndex]);
 
     return (
       <GrabbablePane styleName="root" dragging={dragging} ref={mergedRef} {...rest} {...paneProps} {...swapProps}>
@@ -92,7 +92,7 @@ export const EditTemplateWordFormRelationItem = create(
           <fieldset styleName="field-list">
             <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
-              <Controller name={`sections.${sectionIndex}.relations.${index}.titles`} control={form.control} render={({field}) => (
+              <Controller name={`sections.${sectionIndex}.relations.${relationIndex}.titles`} control={form.control} render={({field}) => (
                 <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
               )}/>
             </ControlContainer>

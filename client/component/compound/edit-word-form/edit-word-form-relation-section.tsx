@@ -40,6 +40,7 @@ export const EditWordFormRelationSection = create(
     const relationFieldArraySpec = useFieldArray({control, name: `sections.${sectionIndex}.relations`});
     const relationOperations = useMemo(() => ({
       append: relationFieldArraySpec.append,
+      insert: relationFieldArraySpec.insert,
       update: relationFieldArraySpec.update,
       remove: relationFieldArraySpec.remove
     }), [relationFieldArraySpec]);

@@ -41,6 +41,7 @@ export const EditWordFormVariationSection = create(
     const variationFieldArraySpec = useFieldArray({control, name: `sections.${sectionIndex}.variations`});
     const variationOperations = useMemo(() => ({
       append: variationFieldArraySpec.append,
+      insert: variationFieldArraySpec.insert,
       update: variationFieldArraySpec.update,
       remove: variationFieldArraySpec.remove
     }), [variationFieldArraySpec]);
