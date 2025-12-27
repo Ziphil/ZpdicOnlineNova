@@ -49,7 +49,7 @@ export const EditWordFormRelationItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: EditWordSpec["form"],
-    relationOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.relations`>, "append" | "update" | "remove">,
+    relationOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.relations`>, "append" | "insert" | "update" | "remove">,
     dndId: string,
     sectionIndex: number,
     relationIndex: number,
@@ -79,7 +79,7 @@ export const EditWordFormRelationItem = create(
     }, [dictionary.number]);
 
     const duplicate = useCallback(function (): void {
-      relationOperations.append(getValues(`sections.${sectionIndex}.relations.${relationIndex}`));
+      relationOperations.insert(relationIndex, getValues(`sections.${sectionIndex}.relations.${relationIndex}`), {focusIndex: relationIndex + 1});
     }, [relationOperations, getValues, sectionIndex, relationIndex]);
 
     const remove = useCallback(function (): void {

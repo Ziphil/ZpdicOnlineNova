@@ -35,6 +35,7 @@ export const EditWordFormEquivalentSection = create(
     const equivalentFieldArraySpec = useFieldArray({control, name: `sections.${sectionIndex}.equivalents`});
     const equivalentOperations = useMemo(() => ({
       append: equivalentFieldArraySpec.append,
+      insert: equivalentFieldArraySpec.insert,
       update: equivalentFieldArraySpec.update,
       remove: equivalentFieldArraySpec.remove
     }), [equivalentFieldArraySpec]);

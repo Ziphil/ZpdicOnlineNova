@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {ReactElement} from "react";
-import {Helmet} from "react-helmet";
+import {ReactNode, useEffect} from "react";
 import {create} from "/client/component/create";
 import {getAwsFileUrl} from "/client/util/aws";
 import {Dictionary} from "/server/internal/skeleton";
@@ -13,15 +12,36 @@ export const DictionaryFontStyle = create(
     dictionary
   }: {
     dictionary: Dictionary
-  }): ReactElement {
+  }): ReactNode {
 
     const css = getFontCss(dictionary);
 
-    return (
-      <Helmet>
-        {(!!css) && <style>{css}</style>}
-      </Helmet>
-    );
+    useEffect(() => {
+      const id = "dictionary-font-style";
+      const existingStyleElement = document.getElementById(id);
+      if (css) {
+        if (existingStyleElement) {
+          existingStyleElement.textContent = css;
+        } else {
+          const style = document.createElement("style");
+          style.id = id;
+          style.textContent = css;
+          document.head.appendChild(style);
+        }
+      } else {
+        if (existingStyleElement) {
+          existingStyleElement.remove();
+        }
+      }
+      return () => {
+        const existingStyleElement = document.getElementById(id);
+        if (existingStyleElement) {
+          existingStyleElement.remove();
+        }
+      };
+    }, [css]);
+
+    return null;
 
   }
 );

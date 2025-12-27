@@ -66,7 +66,7 @@ export const EditExampleDialog = create(
         const addExamplePageUrl = addExamplePageUrlBase + `/${(value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
         window.open(addExamplePageUrl);
       } else {
-        formSpec.form.reset();
+        formSpec.form.reset(getEditExampleFormValue(initialData));
         setOpen(true);
       }
     }, [addExamplePageUrlBase, initialData, formSpec.form]);

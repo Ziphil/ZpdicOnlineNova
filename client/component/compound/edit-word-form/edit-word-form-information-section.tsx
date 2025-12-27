@@ -42,6 +42,7 @@ export const EditWordFormInformationSection = create(
     const informationFieldArraySpec = useFieldArray({control, name: `sections.${sectionIndex}.informations`});
     const informationOperations = useMemo(() => ({
       append: informationFieldArraySpec.append,
+      insert: informationFieldArraySpec.insert,
       update: informationFieldArraySpec.update,
       remove: informationFieldArraySpec.remove
     }), [informationFieldArraySpec]);

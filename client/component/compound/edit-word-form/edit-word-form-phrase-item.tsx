@@ -47,7 +47,7 @@ export const EditWordFormPhraseItem = create(
   }: {
     dictionary: DictionaryWithExecutors,
     form: UseFormReturn<EditWordFormValue | EditTemplateWordFormValue>,
-    phraseOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.phrases`>, "append" | "update" | "remove">,
+    phraseOperations: Pick<UseFieldArrayReturn<any, `sections.${number}.phrases`>, "append" | "insert" | "update" | "remove">,
     dndId: string,
     sectionIndex: number,
     phraseIndex: number,
@@ -79,7 +79,7 @@ export const EditWordFormPhraseItem = create(
     }, [dictionary.number]);
 
     const duplicate = useCallback(function (): void {
-      phraseOperations.append(getValues(`sections.${sectionIndex}.phrases.${phraseIndex}`));
+      phraseOperations.insert(phraseIndex, getValues(`sections.${sectionIndex}.phrases.${phraseIndex}`), {focusIndex: phraseIndex + 1});
     }, [phraseOperations, getValues, sectionIndex, phraseIndex]);
 
     const remove = useCallback(function (): void {

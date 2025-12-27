@@ -2,7 +2,7 @@
 
 import {faEdit} from "@fortawesome/sharp-regular-svg-icons";
 import {MouseEvent, ReactElement, useCallback} from "react";
-import {Button, ButtonIconbag, GeneralIcon, LoadingIcon, MultiLineText, Tag, useTrans} from "zographia";
+import {Button, ButtonIconbag, GeneralIcon, LoadingIcon, MultiLineText, Tag, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {createTermNode} from "/client/util/dictionary";
@@ -38,7 +38,9 @@ export const WordPopoverInner = create(
 
     return (actualWord !== undefined) ? (
       <div styleName="root" {...rest}>
-        <div styleName="spelling">{actualWord.spelling}</div>
+        <div styleName="spelling">
+          <span className="dictionary-custom-font" {...data({target: "heading"})}>{actualWord.spelling}</span>
+        </div>
         <div styleName="equivalent-list">
           {actualWord.sections.flatMap((section) => section.equivalents).map((equivalent, index) => (!equivalent.hidden) && (
             <MultiLineText styleName="equivalent-text" key={index} is="div">
