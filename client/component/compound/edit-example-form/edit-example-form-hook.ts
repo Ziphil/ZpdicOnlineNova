@@ -72,7 +72,7 @@ function getFormValue(initialData: EditExampleInitialData | null): FormValue {
         tags: example.tags ?? [],
         words: example.words.map((word) => ({
           number: word.number,
-          name: word.spelling
+          spelling: word.spelling
         })),
         offer: example.offer
       } satisfies FormValue;
