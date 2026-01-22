@@ -62,8 +62,8 @@ export const EditWordFormInformationSection = create(
         <h4 styleName="heading">{trans("heading.informations")}</h4>
         <div styleName="list">
           {(informations.length > 0) ? (
-            <SwapAnimationContext values={informations} setValues={setInformations}>
-              <EditWordFormDndContext values={informations} setValues={setInformations}>
+            <SwapAnimationContext values={informations} setValues={setInformations} move={informationFieldArraySpec.move}>
+              <EditWordFormDndContext values={informations} setValues={setInformations} move={informationFieldArraySpec.move}>
                 {informations.map((information, index) => (
                   <EditWordFormInformationItem
                     styleName="item"

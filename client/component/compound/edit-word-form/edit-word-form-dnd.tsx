@@ -13,10 +13,12 @@ export const EditWordFormDndContext = create(
   function <T extends {id: string}>({
     values,
     setValues,
+    move,
     children
   }: {
     values: Array<T>,
     setValues: (update: (values: Array<T>) => Array<T>) => void,
+    move?: (fromIndex: number, toIndex: number) => void,
     children: ReactNode
   }): ReactElement {
 
@@ -29,9 +31,13 @@ export const EditWordFormDndContext = create(
       if (over && active.id !== over.id) {
         const activeIndex = values.findIndex((value) => value.id === active.id);
         const overIndex = values.findIndex((value) => value.id === over.id);
-        setValues((values) => moveArrayItem(values, activeIndex, overIndex));
+        if (move) {
+          move(activeIndex, overIndex);
+        } else {
+          setValues((values) => moveArrayItem(values, activeIndex, overIndex));
+        }
       }
-    }, [values, setValues]);
+    }, [values, setValues, move]);
 
     return (
       <DndContext sensors={sensors} collisionDetection={closestCenter} modifiers={[restrictToVerticalAxis]} onDragEnd={handleDragEnd}>

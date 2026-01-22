@@ -61,8 +61,8 @@ export const EditWordFormPhraseSection = create(
         <h4 styleName="heading">{trans("heading.phrases")}</h4>
         <div styleName="list">
           {(phrases.length > 0) ? (
-            <SwapAnimationContext values={phrases} setValues={setPhrases}>
-              <EditWordFormDndContext values={phrases} setValues={setPhrases}>
+            <SwapAnimationContext values={phrases} setValues={setPhrases} move={phraseFieldArraySpec.move}>
+              <EditWordFormDndContext values={phrases} setValues={setPhrases} move={phraseFieldArraySpec.move}>
                 {phrases.map((phrase, index) => (
                   <EditWordFormPhraseItem
                     styleName="item"
