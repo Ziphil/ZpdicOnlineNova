@@ -2,7 +2,7 @@ openapi: "3.0.3"
 
 info:
   title: "ZpDIC Online API"
-  version: "0.2.0"
+  version: "1.0.0"
   description: |-
     ### ベース URL
     全ての API のベース URL は `https://zpdic.ziphil.com/api` です。
@@ -36,13 +36,11 @@ servers:
 
 tags:
   - name: "単語"
-  - name: "例文"
-  - name: "例文集"
 
 
 paths:
 
-  "/v0/dictionary/{identifier}/words":
+  "/v1/dictionary/{identifier}/words":
     get:
       summary: "辞書の単語を検索する"
       tags: ["単語"]
@@ -86,7 +84,7 @@ paths:
         429:
           $ref: "#/components/responses/generalTooManyRequests"
 
-  "/v0/dictionary/{identifier}/word":
+  "/v1/dictionary/{identifier}/word":
     post:
       summary: "辞書に単語を新しく作成する"
       tags: ["単語"]
@@ -137,7 +135,7 @@ paths:
         429:
           $ref: "#/components/responses/generalTooManyRequests"
 
-  "/v0/dictionary/{identifier}/word/{wordNumber}":
+  "/v1/dictionary/{identifier}/word/{wordNumber}":
     get:
       summary: "辞書の単語を取得する (1 件)"
       tags: ["単語"]
@@ -153,7 +151,7 @@ paths:
                 type: object
                 properties:
                   word:
-                    $ref: "#/components/schemas/WordWithExamples@out"
+                    $ref: "#/components/schemas/Word@out"
         404:
           description: "辞書もしくは単語が存在しない場合"
           content:
@@ -263,287 +261,6 @@ paths:
         429:
           $ref: "#/components/responses/generalTooManyRequests"
 
-  "/v0/dictionary/{identifier}/examples":
-    get:
-      summary: "辞書の例文を検索する"
-      tags: ["例文"]
-      parameters:
-        - $ref: "#/components/parameters/identifier"
-        - $ref: "#/components/parameters/text"
-        - $ref: "#/components/parameters/exampleMode"
-        - $ref: "#/components/parameters/exampleType"
-        - $ref: "#/components/parameters/exampleIgnoreCase"
-        - $ref: "#/components/parameters/skip"
-        - $ref: "#/components/parameters/limit"
-      responses:
-        200:
-          description: "成功"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  examples:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Example@out"
-                    description: "検索結果"
-                  total:
-                    type: integer
-                    description: "検索結果の総数"
-                    example: 250
-        404:
-          description: "辞書が存在しない場合"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error#noSuchDictionary"
-        401:
-          $ref: "#/components/responses/generalUnauthorized"
-        400:
-          $ref: "#/components/responses/generalBadRequest"
-        429:
-          $ref: "#/components/responses/generalTooManyRequests"
-
-  "/v0/dictionary/{identifier}/example":
-    post:
-      summary: "辞書に例文を新しく作成する"
-      tags: ["例文"]
-      parameters:
-        - $ref: "#/components/parameters/identifier"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                example:
-                  $ref: "#/components/schemas/EditableExample@in"
-              required:
-                - example
-      responses:
-        201:
-          description: "成功"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  example:
-                    $ref: "#/components/schemas/Example@out"
-        403:
-          description: "辞書の編集権限がない場合"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error#notEnoughDictionaryAuthority"
-        404:
-          description: "辞書が存在しない場合"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error#noSuchDictionary"
-        409:
-          description: "辞書のインポート処理が実行中の場合"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error#dictionarySaving"
-        401:
-          $ref: "#/components/responses/generalUnauthorized"
-        400:
-          $ref: "#/components/responses/generalBadRequest"
-        429:
-          $ref: "#/components/responses/generalTooManyRequests"
-
-  "/v0/dictionary/{identifier}/example/{exampleNumber}":
-    get:
-      summary: "辞書の例文を取得する (1 件)"
-      tags: ["例文"]
-      parameters:
-        - $ref: "#/components/parameters/identifier"
-        - $ref: "#/components/parameters/exampleNumber"
-      responses:
-        200:
-          description: "成功"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  example:
-                    $ref: "#/components/schemas/Example@out"
-        404:
-          description: "辞書もしくは例文が存在しない場合"
-          content:
-            application/json:
-              schema:
-                oneOf:
-                  - $ref: "#/components/schemas/Error#noSuchDictionary"
-                  - $ref: "#/components/schemas/Error#noSuchExample"
-        401:
-          $ref: "#/components/responses/generalUnauthorized"
-        400:
-          $ref: "#/components/responses/generalBadRequest"
-        429:
-          $ref: "#/components/responses/generalTooManyRequests"
-    put:
-      summary: "辞書の例文を編集する"
-      tags: ["例文"]
-      parameters:
-        - $ref: "#/components/parameters/identifier"
-        - $ref: "#/components/parameters/exampleNumber"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                example:
-                  $ref: "#/components/schemas/EditableExample@in"
-              required:
-                - example
-      responses:
-        200:
-          description: "成功"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  example:
-                    $ref: "#/components/schemas/Example@out"
-        403:
-          description: "辞書の編集権限がない場合"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error#notEnoughDictionaryAuthority"
-        404:
-          description: "辞書もしくは例文が存在しない場合"
-          content:
-            application/json:
-              schema:
-                oneOf:
-                  - $ref: "#/components/schemas/Error#noSuchDictionary"
-                  - $ref: "#/components/schemas/Error#noSuchExample"
-        409:
-          description: "辞書のインポート処理が実行中の場合"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error#dictionarySaving"
-        401:
-          $ref: "#/components/responses/generalUnauthorized"
-        400:
-          $ref: "#/components/responses/generalBadRequest"
-        429:
-          $ref: "#/components/responses/generalTooManyRequests"
-    delete:
-      summary: "辞書の例文を削除する"
-      tags: ["例文"]
-      parameters:
-        - $ref: "#/components/parameters/identifier"
-        - $ref: "#/components/parameters/exampleNumber"
-      responses:
-        200:
-          description: "成功"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  example:
-                    $ref: "#/components/schemas/Example@out"
-        403:
-          description: "辞書の編集権限がない場合"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error#notEnoughDictionaryAuthority"
-        404:
-          description: "辞書もしくは例文が存在しない場合"
-          content:
-            application/json:
-              schema:
-                oneOf:
-                  - $ref: "#/components/schemas/Error#noSuchDictionary"
-                  - $ref: "#/components/schemas/Error#noSuchExample"
-        409:
-          description: "辞書のインポート処理が実行中の場合"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error#dictionarySaving"
-        401:
-          $ref: "#/components/responses/generalUnauthorized"
-        400:
-          $ref: "#/components/responses/generalBadRequest"
-        429:
-          $ref: "#/components/responses/generalTooManyRequests"
-
-  "/v0/exampleOffers":
-    get:
-      summary: "例文集の例文を検索する"
-      tags: ["例文集"]
-      parameters:
-        - $ref: "#/components/parameters/catalog@query"
-        - $ref: "#/components/parameters/skip"
-        - $ref: "#/components/parameters/limit"
-      responses:
-        200:
-          description: "成功"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  exampleOffers:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/ExampleOffer@out"
-                    description: "検索結果"
-                  total:
-                    type: integer
-                    description: "検索結果の総数"
-                    example: 250
-        401:
-          $ref: "#/components/responses/generalUnauthorized"
-        400:
-          $ref: "#/components/responses/generalBadRequest"
-        429:
-          $ref: "#/components/responses/generalTooManyRequests"
-  
-  "/v0/exampleOffer/{catalog}/{exampleOfferNumber}":
-    get:
-      summary: "例文集の例文を取得する (1 件)"
-      tags: ["例文集"]
-      parameters:
-        - $ref: "#/components/parameters/catalog@path"
-        - $ref: "#/components/parameters/exampleOfferNumber"
-      responses:
-        200:
-          description: "成功"
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  exampleOffer:
-                    $ref: "#/components/schemas/ExampleOffer@out"
-        404:
-          description: "例文集もしくは例文が存在しない場合"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error#noSuchExampleOffer"
-        401:
-          $ref: "#/components/responses/generalUnauthorized"
-        400:
-          $ref: "#/components/responses/generalBadRequest"
-        429:
-          $ref: "#/components/responses/generalTooManyRequests"
-
 
 components:
   parameters:
@@ -560,22 +277,6 @@ components:
       name: "wordNumber"
       in: path
       description: "単語の番号"
-      required: true
-      schema:
-        type: integer
-
-    exampleNumber:
-      name: "exampleNumber"
-      in: path
-      description: "例文の番号"
-      required: true
-      schema:
-        type: integer
-
-    exampleOfferNumber:
-      name: "exampleOfferNumber"
-      in: path
-      description: "例文集の例文の番号"
       required: true
       schema:
         type: integer
@@ -614,9 +315,9 @@ components:
       in: query
       description: |-
         検索範囲
-        - `"name"` — 単語
-        - `"equivalent"` — 訳語
-        - `"both"` — 単語＋訳語
+        - `"spelling"` — 綴り
+        - `"term"` — 訳語
+        - `"both"` — 綴り＋訳語
         - `"tag"` — タグ
         - `"information"` — 内容
         - `"variation"` — 変化形
@@ -625,7 +326,7 @@ components:
       required: false
       schema:
         type: string
-        enum: ["name", "equivalent", "both", "tag", "information", "variation", "relation", "content"] 
+        enum: ["spelling", "term", "both", "tag", "information", "variation", "relation", "content"]
         default: "both"
  
     wordType:
@@ -680,87 +381,6 @@ components:
         type: boolean
         default: false
 
-    exampleMode:
-      name: "mode"
-      in: query
-      description: |-
-        検索範囲
-        - `"sentence"` — 例文
-        - `"translation"` — 訳文
-        - `"both"` — 例文＋訳文
-        - `"tag"` — タグ
-        - `"content"` — 全文
-      required: false
-      schema:
-        type: string
-        enum: ["sentence", "translation", "both", "tag", "content"] 
-        default: "both"
- 
-    exampleType:
-      name: "type"
-      in: query
-      description: |-
-        検索方法
-        - `"exact"` — 完全一致
-        - `"prefix"` — 前方一致
-        - `"suffix"` — 後方一致
-        - `"part"` — 部分一致
-        - `"regular"` — 正規表現
-      required: false
-      schema:
-        type: string
-        enum: ["exact", "prefix", "suffix", "part", "regular"]
-        default: "prefix"
-
-    exampleIgnoreCase:
-      name: "ignoreCase"
-      in: query
-      description: "大小文字の違いを無視するかどうか"
-      required: false
-      schema:
-        type: boolean
-        default: false
-
-    catalog@path:
-      name: "catalog"
-      in: path
-      description: |-
-        例文集名
-        - `"zpdicDaily"` — 今日の例文
-        - `"appleAlpha"` — リンゴを食べたい 58 文
-        - `"appleBeta"` — リンゴを食べ足りない 57 文
-        - `"appleGamma"` — リンゴをもっと食べたい 55 文
-        - `"survival"` — 今日を生き抜く実用例文
-        - `"weaving"` — 手袋と辞書を編む 50 文
-        - `"shaleianAlpha"` — 今日のシャレイア語 I
-        - `"shaleianBeta"` — 今日のシャレイア語 II
-        - `"meat"` — 古代の民族のためのお肉例文
-        - `"arithmetic"` — 算数例文
-        - `"adposition"` — 格や接置詞のための例文集
-      required: true
-      schema:
-        type: string
-
-    catalog@query:
-      name: "catalog"
-      in: query
-      description: |-
-        例文集名
-        - `"zpdicDaily"` — 今日の例文
-        - `"appleAlpha"` — リンゴを食べたい 58 文
-        - `"appleBeta"` — リンゴを食べ足りない 57 文
-        - `"appleGamma"` — リンゴをもっと食べたい 55 文
-        - `"survival"` — 今日を生き抜く実用例文
-        - `"weaving"` — 手袋と辞書を編む 50 文
-        - `"shaleianAlpha"` — 今日のシャレイア語 I
-        - `"shaleianBeta"` — 今日のシャレイア語 II
-        - `"meat"` — 古代の民族のためのお肉例文
-        - `"arithmetic"` — 算数例文
-        - `"adposition"` — 格や接置詞のための例文集
-      required: true
-      schema:
-        type: string
-  
 
   schemas:
 
@@ -777,7 +397,7 @@ components:
           type: integer
           description: "番号 (OTM-JSON での `entry.id`)"
           example: 1
-        name:
+        spelling:
           type: string
           description: "綴り (OTM-JSON での `entry.form`)"
           example: "dictionary"
@@ -785,17 +405,68 @@ components:
           type: string
           description: "発音記号"
           example: "dɪk.ʃə.nə.ɹi"
-        equivalents:
-          type: array
-          items:
-            $ref: "#/components/schemas/Equivalent@out"
-          description: "訳語 (OTM-JSON での `translations`)"
         tags:
           type: array
           items:
             type: string
           description: "タグ"
           example: ["基本", "レベル 1"]
+        sections:
+          type: array
+          items:
+            $ref: "#/components/schemas/Section@out"
+          description: "セクション"
+
+    WordWithExamples@out:
+      title: "WordWithExamples"
+      allOf:
+        - $ref: "#/components/schemas/Word@out"
+        - type: object
+          properties:
+            examples:
+              type: array
+              items:
+                $ref: "#/components/schemas/Example@out"
+              description: "例文"
+
+    EditableWord@in:
+      title: "EditableWord"
+      type: object
+      properties:
+        spelling:
+          type: string
+          description: "綴り (OTM-JSON での `entry.form`)"
+          example: "dictionary"
+        pronunciation:
+          type: string
+          description: "発音記号"
+          example: "dɪk.ʃə.nə.ɹi"
+          default: ""
+        tags:
+          type: array
+          items:
+            type: string
+          description: "タグ"
+          example: ["基本", "レベル 1"]
+          default: []
+        sections:
+          type: array
+          items:
+            $ref: "#/components/schemas/Section@in"
+          description: "セクション"
+          default: []
+      required:
+        - spelling
+
+    Section@out:
+      title: "Section"
+      type: object
+      properties:
+        equivalents:
+          type: array
+          items:
+            $ref: "#/components/schemas/Equivalent@out"
+          description: "訳語 (OTM-JSON での `translations`)"
         informations:
           type: array
           items:
@@ -817,43 +488,15 @@ components:
             $ref: "#/components/schemas/Relation@out"
           description: "関連語"
 
-    WordWithExamples@out:
-      title: "WordWithExamples"
-      allOf:
-        - $ref: "#/components/schemas/Word@out"
-        - type: object
-          properties:
-            examples:
-              type: array
-              items:
-                $ref: "#/components/schemas/Example@out"
-              description: "例文"
-
-    EditableWord@in:
-      title: "EditableWord"
+    Section@in:
+      title: "Section"
       type: object
       properties:
-        name:
-          type: string
-          description: "綴り (OTM-JSON での `entry.form`)"
-          example: "dictionary"
-        pronunciation:
-          type: string
-          description: "発音記号"
-          example: "dɪk.ʃə.nə.ɹi"
-          default: ""
         equivalents:
           type: array
           items:
             $ref: "#/components/schemas/Equivalent@in"
           description: "訳語 (OTM-JSON での `translations`)"
-          default: []
-        tags:
-          type: array
-          items:
-            type: string
-          description: "タグ"
-          example: ["基本", "レベル 1"]
           default: []
         informations:
           type: array
@@ -879,8 +522,6 @@ components:
             $ref: "#/components/schemas/Relation@in"
           description: "関連語"
           default: []
-      required:
-        - name
 
     Equivalent@out:
       title: "Equivalent"
@@ -892,7 +533,7 @@ components:
             type: string
           description: "品詞"
           example: ["名詞", "一般"]
-        names:
+        terms:
           type: array
           items:
             type: string
@@ -900,20 +541,20 @@ components:
             訳語
             > 訳語検索の際に参照されます。
           example: ["辞書", "辞典"]
-        nameString:
+        termString:
           type: string
           description: |-
             訳語の生文字列
             > ZpDIC 上で単語カードの訳語欄にそのまま表示されます。
             > その際、`ignoredPattern` にマッチする部分は薄く表示されます。
             >
-            > ここから `ignoredPattern` にマッチする部分を削除して適切に区切ったものが `names` です。
+            > ここから `ignoredPattern` にマッチする部分を削除して適切に区切ったものが `terms` です。
           example: "(言語の) 辞書, 辞典"
         ignoredPattern:
           type: string
           description: |-
             訳語の生文字列から訳語リストを取得する際に無視するパターン (正規表現)
-            > `nameString` から `names` を取得する際に利用されます。
+            > `termString` から `terms` を取得する際に利用されます。
             >
             > 単語の編集時に、辞書全体に設定された無視パターンがそのまま格納されます。
             > そのため、辞書の無視パターンを途中で変更した場合、それ以降に編集された単語でのみ新しい無視パターンが格納され、それ以前に編集された単語には以前の無視パターンが格納されたままになります。
@@ -934,7 +575,7 @@ components:
           description: "品詞"
           example: ["名詞", "一般"]
           default: []
-        names:
+        terms:
           type: array
           items:
             type: string
@@ -942,11 +583,11 @@ components:
             訳語
             > 訳語検索の際に参照されます。
             >
-            > `nameString` から `ignoredPattern` にマッチする部分を削除して句読点で区切ったものを指定してください。
+            > `termString` から `ignoredPattern` にマッチする部分を削除して句読点で区切ったものを指定してください。
             > それ以外の文字列リストを指定すると、ZpDIC 上で単語カードに表示される訳語と検索で使われる訳語が一致せず、混乱を招く可能性があります。
           example: ["辞書", "辞典"]
           default: []
-        nameString:
+        termString:
           type: string
           description: |-
             訳語の生文字列
@@ -958,7 +599,7 @@ components:
           type: string
           description: |-
             訳語の生文字列から訳語リストを取得する際に無視するパターン (正規表現)
-            > `nameString` から `names` を取得する際に利用されます。
+            > `termString` から `terms` を取得する際に利用されます。
           example: "[\\(（].*?[\\)）]"
           default: ""
         hidden:
@@ -1014,7 +655,7 @@ components:
             type: string
           description: "分類"
           example: ["慣用句", "格言"]
-        form:
+        expression:
           type: string
           description: "成句表現"
           example: "go on"
@@ -1044,6 +685,14 @@ components:
             > 単語の編集時に、辞書全体に設定された無視パターンがそのまま格納されます。
             > そのため、辞書の無視パターンを途中で変更した場合、それ以降に編集された単語でのみ新しい無視パターンが格納され、それ以前に編集された単語には以前の無視パターンが格納されたままになります。
           example: "[\\(（].*?[\\)）]"
+        text:
+          type: string
+          description: "説明"
+          example: "前に進む、続けるという意味の句動詞です。"
+        hidden:
+          type: boolean
+          description: "単語カードでは非表示にするかどうか"
+          example: false
 
     Phrase@in:
       title: "Phrase"
@@ -1056,7 +705,7 @@ components:
           description: "分類"
           example: ["慣用句", "格言"]
           default: []
-        form:
+        expression:
           type: string
           description: "成句表現"
           example: "go on"
@@ -1088,6 +737,16 @@ components:
             > `termString` から `terms` を取得する際に利用されます。
           example: "[\\(（].*?[\\)）]"
           default: ""
+        text:
+          type: string
+          description: "説明"
+          example: "前に進む、続けるという意味の句動詞です。"
+          default: ""
+        hidden:
+          type: boolean
+          description: "単語カードでは非表示にするかどうか"
+          example: false
+          default: false
  
     Variation@out:
       title: "Variation"
@@ -1097,9 +756,9 @@ components:
           type: string
           description: "種類"
           example: "複数形"
-        name:
+        spelling:
           type: string
-          description: "変化形 (OTM-JSON での `form`)"
+          description: "変化形の綴り"
           example: "dictionaries"
         pronunciation:
           type: string
@@ -1115,9 +774,9 @@ components:
           description: "種類"
           example: "複数形"
           default: ""
-        name:
+        spelling:
           type: string
-          description: "変化形 (OTM-JSON での `form`)"
+          description: "変化形の綴り"
           example: "dictionaries"
           default: ""
         pronunciation:
@@ -1140,7 +799,7 @@ components:
           type: integer
           description: "関連語の番号 (OTM-JSON での `entry.id`)"
           example: 2
-        name:
+        spelling:
           type: string
           description: "関連語の綴り (OTM-JSON での `entry.form`)"
           example: "wordbook"
@@ -1163,7 +822,7 @@ components:
             > 存在する単語の番号を指定してください。
             > 存在しない番号が指定されている場合、ZpDIC 上での表示がおかしくなる可能性があります。
           example: 2
-        name:
+        spelling:
           type: string
           description: |-
             関連語の綴り (OTM-JSON での `entry.form`)
@@ -1172,7 +831,7 @@ components:
           example: "wordbook"
       required:
         - number
-        - name
+        - spelling
 
     Example@out:
       title: "Example"
@@ -1213,41 +872,6 @@ components:
         offer:
           $ref: "#/components/schemas/LinkedExampleOffer@out"
   
-    EditableExample@in:
-      title: "EditableExample"
-      type: object
-      properties:
-        sentence:
-          type: string
-          description: "該当言語での例文"
-          example: "This is a dictionary."
-          default: ""
-        translation:
-          type: string
-          description: "自然言語訳"
-          example: "これは辞書です。"
-          default: ""
-        supplement:
-          type: string
-          description: "補足説明"
-          example: "簡単な繋辞文です。「This is ～」で「これは～です」という意味になります。"
-          default: ""
-        tags:
-          type: array
-          items:
-            type: string
-          description: "タグ"
-          example: ["基本", "レベル 1"]
-          default: []
-        words:
-          type: array
-          items:
-            $ref: "#/components/schemas/LinkedWord@in"
-          description: "使用単語"
-          default: []
-        offer:
-          $ref: "#/components/schemas/LinkedExampleOffer@in"
-
     LinkedWord@out:
       title: "LinkedWord"
       type: object
@@ -1257,81 +881,13 @@ components:
           description: "番号"
           example: 1
 
-    LinkedWord@in:
-      title: "LinkedWord"
-      type: object
-      properties:
-        number:
-          type: integer
-          description: |-
-            番号
-            > 存在する単語の番号を指定してください。
-            > 存在しない番号が指定されている場合、ZpDIC 上での表示がおかしくなる可能性があります。
-          example: 1
-      required:
-        - number
-
-    ExampleOffer@out:
-      title: "ExampleOffer"
-      type: object
-      properties:
-        id:
-          type: string
-          format: objectid
-          description: "データベース上のオブジェクト ID"
-          example: "507f1f77bcf86cd799439011"
-        catalog:
-          type: string
-          description: |-
-            例文集名
-            - `"zpdicDaily"` — 今日の例文
-            - `"appleAlpha"` — リンゴを食べたい 58 文
-            - `"appleBeta"` — リンゴを食べ足りない 57 文
-            - `"appleGamma"` — リンゴをもっと食べたい 55 文
-            - `"survival"` — 今日を生き抜く実用例文
-            - `"weaving"` — 手袋と辞書を編む 50 文
-            - `"shaleianAlpha"` — 今日のシャレイア語 I
-            - `"shaleianBeta"` — 今日のシャレイア語 II
-            - `"meat"` — 古代の民族のためのお肉例文
-            - `"arithmetic"` — 算数例文
-            - `"adposition"` — 格や接置詞のための例文集
-          example: "zpdicDaily"
-        number:
-          type: integer
-          description: "番号"
-          example: 1
-        translation:
-          type: string
-          description: "自然言語訳"
-          example: "母は朝食に卵を使ったおいしい料理を作ってくれます。"
-        supplement:
-          type: string
-          description: "補足説明"
-          example: "最初の例文です。"
-        author:
-          type: string
-          description: "著者名"
-          example: "ZpDIC Online"
-
     LinkedExampleOffer@out:
       title: "LinkedExampleOffer"
       type: object
       properties:
         catalog:
           type: string
-          description: |-
-            例文集名
-            - `"zpdicDaily"` — 今日の例文
-            - `"appleAlpha"` — リンゴを食べたい 58 文
-            - `"appleBeta"` — リンゴを食べ足りない 57 文
-            - `"appleGamma"` — リンゴをもっと食べたい 55 文
-            - `"survival"` — 今日を生き抜く実用例文
-            - `"weaving"` — 手袋と辞書を編む 50 文
-            - `"shaleianAlpha"` — 今日のシャレイア語 I
-            - `"shaleianBeta"` — 今日のシャレイア語 II
-            - `"meat"` — 古代の民族のためのお肉例文
-            - `"arithmetic"` — 算数例文
-            - `"adposition"` — 格や接置詞のための例文集
+          description: "例文集名"
           example: "zpdicDaily"
         number:
           type: integer
@@ -1340,43 +896,6 @@ components:
       nullable: true
       description: "結びつけられた例文集の例文情報 (存在しない場合は `null`)"
 
-    LinkedExampleOffer@in:
-      title: "LinkedExampleOffer"
-      type: object
-      properties:
-        catalog:
-          type: string
-          description: |-
-            例文集名
-            - `"zpdicDaily"` — 今日の例文
-            - `"appleAlpha"` — リンゴを食べたい 58 文
-            - `"appleBeta"` — リンゴを食べ足りない 57 文
-            - `"appleGamma"` — リンゴをもっと食べたい 55 文
-            - `"survival"` — 今日を生き抜く実用例文
-            - `"weaving"` — 手袋と辞書を編む 50 文
-            - `"shaleianAlpha"` — 今日のシャレイア語 I
-            - `"shaleianBeta"` — 今日のシャレイア語 II
-            - `"meat"` — 古代の民族のためのお肉例文
-            - `"arithmetic"` — 算数例文
-            - `"adposition"` — 格や接置詞のための例文集
-
-            > 上記のいずれかを指定してください。
-            > これ以外の例文集名が指定されている場合、ZpDIC 上での表示がおかしくなる可能性があります。
-          example: "zpdicDaily"
-        number:
-          type: integer
-          description: |-
-            番号
-            > `catalog` で指定した例文集に存在する番号を指定してください。
-            > 存在しない番号が指定されている場合、ZpDIC 上での表示がおかしくなる可能性があります。
-          example: 3
-      nullable: true
-      description: "結びつけられた例文集の例文情報 (存在しない場合は `null`)"
-      default: null
-      required:
-        - catalog
-        - number
- 
     Error#noSuchDictionary:
       type: object
       properties:
@@ -1392,22 +911,6 @@ components:
           type: string
           enum: ["noSuchWord"]
           example: "noSuchWord"
-
-    Error#noSuchExample:
-      type: object
-      properties:
-        error:
-          type: string
-          enum: ["noSuchExample"]
-          example: "noSuchExample"
-
-    Error#noSuchExampleOffer:
-      type: object
-      properties:
-        error:
-          type: string
-          enum: ["noSuchExampleOffer"]
-          example: "noSuchExampleOffer"
   
     Error#notEnoughDictionaryAuthority:
       type: object
@@ -1464,10 +967,13 @@ components:
                 type: string
                 enum: ["rateLimitExceeded"]
                 example: "rateLimitExceeded"
+
   securitySchemes:
     apiKeyAuth:
       type: apiKey
       in: header
       name: "X-Api-Key"
+
 security:
   - apiKeyAuth: []
+
