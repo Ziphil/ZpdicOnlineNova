@@ -65,6 +65,7 @@ export const WordCard = create(
 
     const shareText = `${word.spelling}\n#ZpDIC`;
     const shareUrl = location.origin + useHref(getWordHref(dictionary, word.number));
+    const shareMarkdownText = getShareMarkdownText(word, dictionary);
 
     const discardWord = useDiscardWord(dictionary, word);
 
@@ -132,7 +133,7 @@ export const WordCard = create(
               </Button>
             </div>
             <div styleName="footer-right">
-              <ShareMenu text={shareText} url={shareUrl} trigger={(device === "desktop") ? (
+              <ShareMenu text={shareText} url={shareUrl} markdownText={shareMarkdownText} trigger={(device === "desktop") ? (
                 <Button scheme="secondary" variant="underline">
                   <ButtonIconbag><GeneralIcon icon={faShare}/></ButtonIconbag>
                   {trans("button.share")}
@@ -162,3 +163,17 @@ export const WordCard = create(
 
   }
 );
+
+
+function getShareMarkdownText(word: Word | OldWord | WordWithExamples, dictionary: DictionaryWithExecutors): string | undefined {
+  const markdownFeatures = dictionary.settings.markdownFeatures;
+  if (markdownFeatures.length > 0) {
+    if (markdownFeatures.includes("font")) {
+      return `[{${word.spelling}}](@#${word.number})`;
+    } else {
+      return `[${word.spelling}](@#${word.number})`;
+    }
+  } else {
+    return undefined;
+  }
+}

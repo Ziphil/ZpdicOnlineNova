@@ -1,6 +1,6 @@
 //
 
-import {faCopy, faEllipsis} from "@fortawesome/sharp-regular-svg-icons";
+import {faBracketsSquare, faEllipsis, faLink} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {GeneralIcon, Menu, MenuItem, MenuItemIconbag, MenuSeparator, useTrans} from "zographia";
 import {create} from "/client/component/create";
@@ -13,11 +13,13 @@ export const ShareMenu = create(
   function ({
     text,
     url,
+    markdownText,
     trigger,
     ...rest
   }: {
     text: string,
     url?: string,
+    markdownText?: string,
     trigger: ReactElement,
     className?: string
   }): ReactElement {
@@ -41,6 +43,15 @@ export const ShareMenu = create(
       }
     }, [url, trans, dispatchInfoToast]);
 
+    const copyMarkdownText = useCallback(async function (): Promise<void> {
+      try {
+        await copyToClipboard(markdownText ?? "");
+        dispatchInfoToast(trans("toast.copy"));
+      } catch (error) {
+        console.error(error);
+      }
+    }, [markdownText, trans, dispatchInfoToast]);
+
     const shareText = useCallback(async function (): Promise<void> {
       try {
         await navigator.share({text, url});
@@ -57,10 +68,18 @@ export const ShareMenu = create(
           </MenuItem>
         ))}
         <MenuSeparator/>
-        <MenuItem onClick={copyUrl}>
-          <MenuItemIconbag><GeneralIcon icon={faCopy}/></MenuItemIconbag>
-          {trans("label.copy")}
-        </MenuItem>
+        {(!!url) && (
+          <MenuItem onClick={copyUrl}>
+            <MenuItemIconbag><GeneralIcon icon={faLink}/></MenuItemIconbag>
+            {trans("label.copyUrl")}
+          </MenuItem>
+        )}
+        {(!!markdownText) && (
+          <MenuItem onClick={copyMarkdownText}>
+            <MenuItemIconbag><GeneralIcon icon={faBracketsSquare}/></MenuItemIconbag>
+            {trans("label.copyMarkdownText")}
+          </MenuItem>
+        )}
         {(canShare) && (
           <MenuItem onClick={shareText}>
             <MenuItemIconbag><GeneralIcon icon={faEllipsis}/></MenuItemIconbag>

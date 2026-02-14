@@ -646,7 +646,8 @@ shareMenu:
     twitter: "X (Twitter)"
     bluesky: "Bluesky"
     misskey: "Misskey.io"
-    copy: "Copy link"
+    copyUrl: "Copy URL"
+    copyMarkdownText: "Copy Markdown"
     other: "Others"
   toast:
     copy: |-
