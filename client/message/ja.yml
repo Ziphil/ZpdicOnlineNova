@@ -912,7 +912,7 @@ changeDictionaryMarkdownFeaturesForm:
         入力されたテキストをそのまま表示します。
     features:
       basic: >-
-        リンクや画像などの基本的を機能です。
+        リンクや画像などの基本的な機能です。
         これは常に有効です。
       supsub: >-
         <pre>^</pre> で囲まれた箇所が上付き文字で表示され、<pre>~</pre> で囲まれた箇所が下付き文字で表示されるようになります。
