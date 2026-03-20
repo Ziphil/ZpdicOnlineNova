@@ -82,15 +82,17 @@ export class DictionarySchema extends DiscardableSchema {
   public updatedDate?: Date;
 
   public static async addEmpty(name: string, user: User): Promise<Dictionary> {
-    const editUsers = new Array<User>();
-    const number = await DictionaryModel.fetchNextNumber();
-    const status = "ready";
-    const visibility = "public";
-    const settings = DictionarySettingsModel.createDefault();
-    const externalData = {};
-    const createdDate = new Date();
-    const updatedDate = new Date();
-    const dictionary = new DictionaryModel({user, editUsers, number, name, status, visibility, settings, externalData, createdDate, updatedDate});
+    const dictionary = new DictionaryModel({
+      user,
+      editUsers: new Array<User>(),
+      number: await DictionaryModel.fetchNextNumber(),
+      name,
+      status: "ready",
+      visibility: "public",
+      settings: DictionarySettingsModel.createDefault(),
+      createdDate: new Date(),
+      updatedDate: new Date()
+    });
     await dictionary.save();
     return dictionary;
   }
