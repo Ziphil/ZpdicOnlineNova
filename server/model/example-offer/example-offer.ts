@@ -34,20 +34,18 @@ export class ExampleOfferSchema {
   public createdDate!: Date;
 
   public static async addDaily(): Promise<[string, ExampleOffer]> {
-    const catalog = "zpdicDaily";
     const number = await this.fetchDailyNextNumber();
-    const author = "ZpDIC Online";
-    const createdDate = new Date();
     const keywords = await fs.readFile("./dist/static/keyword.txt", "utf-8").then((content) => content.split(/\s*\n\s*/));
     const keyword = keywords[Math.floor(Math.random() * keywords.length)];
+    const [wordCount, cefrLevel] = [[10, "A2"], [15, "B1"], [20, "B2"]][number % 3];
     const answer = await askClaude(`
       「${keyword}」という単語をテーマにして、例文を日本語で1つ生成してください。
       このとき、以下の条件を満たすようにしてください。
       <conditions>
-      - 1つの文である
-      - 文に含まれる単語数は${(number % 2 === 0) ? "5以上10以下" : "10以上15以下"}である
-      - 文に「${keyword}」という単語が含まれる (変化形も可)
-      - 文に含まれる単語は${(number % 2 === 0) ? "誰でも知っている非常に簡単なものだけにする" : "できるだけ日常生活で使われる頻度が高いものにする"}
+        - 1つの文である
+        - 文の含まれる単語数は${wordCount}個程度である
+        - 文に「${keyword}」という単語が含まれる (変化形も可)
+        - CEFR ${cefrLevel} レベルの内容である
       </conditions>
       回答では、最後に生成した文を<sentence></sentence>タグに入れてください。
     `, `
@@ -55,7 +53,13 @@ export class ExampleOfferSchema {
       利用者はあなたが生成した例文を外国語に翻訳することで外国語の勉強をするので、外国語への翻訳がしやすい文を生成してください。
     `);
     const translation = answer.match(/<sentence>(.*?)<\/sentence>/)?.[1] ?? "";
-    const offer = new ExampleOfferModel({catalog, number, translation, author, createdDate});
+    const offer = new ExampleOfferModel({
+      catalog: "zpdicDaily",
+      number,
+      translation,
+      author: "ZpDIC Online",
+      createdDate: new Date()
+    });
     await offer.save();
     return [keyword, offer];
   }
