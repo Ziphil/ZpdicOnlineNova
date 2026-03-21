@@ -22,6 +22,7 @@ export interface DictionarySettings {
   enableProposal: boolean;
   enableDuplicateName: boolean;
   showVariationPronunciation: boolean;
+  showOrdinarySpelling: boolean;
   showEquivalentNumber: boolean;
   showSectionNumber: boolean;
 

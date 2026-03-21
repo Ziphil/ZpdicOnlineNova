@@ -11,6 +11,15 @@ export function getDictionaryIdentifier(dictionary: Dictionary): string | number
   return dictionary.paramName || dictionary.number;
 }
 
+/** 見出し語に辞書フォントが当たっており、設定で通常字体の併記が有効なとき真。 */
+export function shouldShowOrdinaryHeadwordSpelling(settings: Dictionary["settings"]): boolean {
+  return (
+    settings.showOrdinarySpelling &&
+    settings.font.kind !== "none" &&
+    settings.fontTargets.includes("heading")
+  );
+}
+
 export function getDictionarySpecialPaths(dictionary: Dictionary): MarkdownSpecialPaths {
   const specialPaths = {
     home: getAwsFileUrl(`resource/${dictionary.number}/`),

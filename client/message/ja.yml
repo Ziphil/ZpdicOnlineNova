@@ -854,6 +854,10 @@ changeDictionaryFontForm:
     input:
       name: "フォントファミリー名"
       file: "フォントファイル"
+    showOrdinarySpelling:
+      label: "通常フォントでの見出し語"
+      true: "併記する"
+      false: "併記しない"
     targets:
       label: "適用範囲"
       heading: "見出し語"
@@ -863,6 +867,11 @@ changeDictionaryFontForm:
       example: "例文"
       text: "内容"
   labelHelper:
+    showOrdinarySpelling:
+      true: >-
+        専用フォントで表示された見出し語の横に、通常フォントでの表記も表示します。
+      false: >-
+        見出し語は専用フォントのみで表示します。
     kind:
       none: >-
         デフォルトフォントで表示します。

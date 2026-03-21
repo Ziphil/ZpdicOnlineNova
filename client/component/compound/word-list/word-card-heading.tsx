@@ -3,6 +3,7 @@
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, data} from "zographia";
 import {create} from "/client/component/create";
+import {shouldShowOrdinaryHeadwordSpelling} from "/client/util/dictionary";
 import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
 
 
@@ -18,7 +19,10 @@ export const WordCardHeading = create(
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    const hasFont = dictionary.settings.font.kind === "custom";
+    const showOrdinarySpelling = useMemo(
+      () => shouldShowOrdinaryHeadwordSpelling(dictionary.settings),
+      [dictionary.settings]
+    );
     const pronunciation = useMemo(() => getPronunciation(dictionary, word), [dictionary, word]);
 
     return (word.tags.length > 0 || !!word.spelling) ? (
@@ -35,7 +39,7 @@ export const WordCardHeading = create(
             <MultiLineText styleName="spelling" is="h3" lineHeight="narrowFixed">
               <span className="dictionary-custom-font" {...data({target: "heading"})}>{word.spelling}</span>
             </MultiLineText>
-            {(hasFont) && (
+            {(showOrdinarySpelling) && (
               <MultiLineText styleName="small-spelling" is="span" lineHeight="narrowFixed">
                 {word.spelling}
               </MultiLineText>

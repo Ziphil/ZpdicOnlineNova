@@ -21,7 +21,8 @@ const SCHEMA = object({
     then: (schema) => schema.required("nameRequired")
   }),
   file: mixed<File>().test(testFileSize(1, "fileTooLarge")),
-  targets: array(string().oneOf(DICTIONARY_FONT_TARGET).required()).required()
+  targets: array(string().oneOf(DICTIONARY_FONT_TARGET).required()).required(),
+  showOrdinarySpelling: string().oneOf(["true", "false"]).required()
 });
 type FormValue = Asserts<typeof SCHEMA>;
 
@@ -74,40 +75,42 @@ function getFormValue(dictionary: Dictionary): FormValue {
     kind: dictionary.settings.font?.kind ?? "none",
     name: (dictionary.settings.font?.kind === "local") ? dictionary.settings.font.name : undefined,
     file: undefined as any,
-    targets: dictionary.settings.fontTargets
+    targets: dictionary.settings.fontTargets,
+    showOrdinarySpelling: (dictionary.settings.showOrdinarySpelling) ? "true" : "false"
   } satisfies FormValue;
   return value;
 }
 
 function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"changeDictionarySettings"> {
-  const number = dictionary.number;
-  const font = getQueryFont(dictionary, value);
-  const fontTargets = forceArray(value.targets);
-  return {number, settings: {font, fontTargets}};
+  return {
+    number: dictionary.number,
+    settings: {
+      font: getQueryFont(dictionary, value),
+      fontTargets: forceArray(value.targets),
+      showOrdinarySpelling: value.showOrdinarySpelling === "true"
+    }
+  };
 }
 
 function getQueryFont(dictionary: Dictionary, value: FormValue): DictionaryFont {
   if (value.kind === "none") {
-    const font = {
-      kind: "none" as const
+    return {
+      kind: "none"
     };
-    return font;
   } else if (value.kind === "local") {
-    const font = {
-      kind: "local" as const,
+    return {
+      kind: "local",
       name: value.name ?? ""
     };
-    return font;
   } else if (value.kind === "custom") {
     const currentFont = dictionary.settings.font;
     const currentName = (currentFont?.kind === "custom") ? currentFont.name : undefined;
     const currentFormat = (currentFont?.kind === "custom") ? currentFont.format : "";
-    const font = {
-      kind: "custom" as const,
+    return {
+      kind: "custom",
       name: (value.file !== undefined) ? value.file.name : currentName,
       format: (value.file !== undefined) ? getFontFormat(value.file) : currentFormat
     };
-    return font;
   } else {
     throw new Error("cannot happen");
   }

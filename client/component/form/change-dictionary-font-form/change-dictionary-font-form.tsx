@@ -99,24 +99,51 @@ export const ChangeDictionaryFontForm = create(
           </div>
         </ControlContainer>
         {(watch("kind") !== "none") && (
-          <ControlContainer label={false}>
-            <ControlLabel>
-              {trans("label.targets.label")}
-            </ControlLabel>
-            <div styleName="card-group">
-              {DICTIONARY_FONT_TARGET.map((fontTarget) => (
-                <CheckableCard styleName="card" key={fontTarget}>
-                  <Checkbox value={fontTarget} {...register("targets")}/>
-                  <div styleName="label">
-                    <div styleName="label-main">
-                      {trans(`label.targets.${fontTarget}`)}
+          <>
+            <ControlContainer label={false}>
+              <ControlLabel>
+                {trans("label.targets.label")}
+              </ControlLabel>
+              <div styleName="card-group">
+                {DICTIONARY_FONT_TARGET.map((fontTarget) => (
+                  <CheckableCard styleName="card" key={fontTarget}>
+                    <Checkbox value={fontTarget} {...register("targets")}/>
+                    <div styleName="label">
+                      <div styleName="label-main">
+                        {trans(`label.targets.${fontTarget}`)}
+                      </div>
+                      <MultiLineText styleName="label-helper" lineHeight="narrow">{trans(`labelHelper.targets.${fontTarget}`)}</MultiLineText>
                     </div>
-                    <MultiLineText styleName="label-helper" lineHeight="narrow">{trans(`labelHelper.targets.${fontTarget}`)}</MultiLineText>
-                  </div>
+                  </CheckableCard>
+                ))}
+              </div>
+            </ControlContainer>
+            <ControlContainer label={false}>
+              <ControlLabel>
+                {trans("label.showOrdinarySpelling.label")}
+              </ControlLabel>
+              <div styleName="card-group">
+                <CheckableCard styleName="card">
+                  <Radio value="true" {...register("showOrdinarySpelling")}/>
+                  <CheckableCardBody styleName="card-body">
+                    <div styleName="label">
+                      <div styleName="label-main">{trans("label.showOrdinarySpelling.true")}</div>
+                      <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.showOrdinarySpelling.true")}</MultiLineText>
+                    </div>
+                  </CheckableCardBody>
                 </CheckableCard>
-              ))}
-            </div>
-          </ControlContainer>
+                <CheckableCard styleName="card">
+                  <Radio value="false" {...register("showOrdinarySpelling")}/>
+                  <CheckableCardBody styleName="card-body">
+                    <div styleName="label">
+                      <div styleName="label-main">{trans("label.showOrdinarySpelling.false")}</div>
+                      <MultiLineText styleName="label-helper" lineHeight="narrow">{trans("labelHelper.showOrdinarySpelling.false")}</MultiLineText>
+                    </div>
+                  </CheckableCardBody>
+                </CheckableCard>
+              </div>
+            </ControlContainer>
+          </>
         )}
         <div>
           <Button variant="light" type="submit" onClick={handleSubmit}>

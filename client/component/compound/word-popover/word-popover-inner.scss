@@ -19,10 +19,27 @@
   flex: 0 0 auto;
 }
 
+.spelling-container {
+  column-gap: 2zu;
+  row-gap: calc(4zu * (var(--glob-line-height-narrow) - 1));
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
 .spelling {
   @include bold-font;
   font-size: 5zu;
   color: var(--glob-primary-heading-text-color);
+  overflow-wrap: break-word;
+}
+
+.small-spelling {
+  @include bold-font;
+  font-size: 4zu;
+  color: var(--glob-primary-heading-text-color);
+  overflow-wrap: break-word;
 }
 
 .equivalent-list {

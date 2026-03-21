@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faEdit} from "@fortawesome/sharp-regular-svg-icons";
-import {MouseEvent, ReactElement, useCallback} from "react";
+import {MouseEvent, ReactElement, useCallback, useMemo} from "react";
 import {Button, ButtonIconbag, GeneralIcon, LoadingIcon, MultiLineText, Tag, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {createTermNode} from "/client/util/dictionary";
+import {createTermNode, shouldShowOrdinaryHeadwordSpelling} from "/client/util/dictionary";
 import {DictionaryWithExecutors, Word} from "/server/internal/skeleton";
 
 
@@ -30,6 +30,11 @@ export const WordPopoverInner = create(
     const [innerWord] = useResponse("fetchWord", (!isFull(word)) && {number: dictionary.number, wordNumber: word.number});
     const actualWord = (!isFull(word)) ? innerWord : word;
 
+    const showOrdinarySpelling = useMemo(
+      () => shouldShowOrdinaryHeadwordSpelling(dictionary.settings),
+      [dictionary.settings]
+    );
+
     const handleEdit = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       if (actualWord !== undefined) {
         onEdit?.(actualWord, event);
@@ -38,8 +43,15 @@ export const WordPopoverInner = create(
 
     return (actualWord !== undefined) ? (
       <div styleName="root" {...rest}>
-        <div styleName="spelling">
-          <span className="dictionary-custom-font" {...data({target: "heading"})}>{actualWord.spelling}</span>
+        <div styleName="spelling-container">
+          <MultiLineText styleName="spelling" is="span" lineHeight="narrowFixed">
+            <span className="dictionary-custom-font" {...data({target: "heading"})}>{actualWord.spelling}</span>
+          </MultiLineText>
+          {(showOrdinarySpelling) && (
+            <MultiLineText styleName="small-spelling" is="span" lineHeight="narrowFixed">
+              {actualWord.spelling}
+            </MultiLineText>
+          )}
         </div>
         <div styleName="equivalent-list">
           {actualWord.sections.flatMap((section) => section.equivalents).map((equivalent, index) => (!equivalent.hidden) && (
