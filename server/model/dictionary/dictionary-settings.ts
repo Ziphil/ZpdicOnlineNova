@@ -53,6 +53,9 @@ export class DictionarySettingsSchema {
   @prop()
   public showVariationPronunciation?: boolean;
 
+  @prop()
+  public showOrdinarySpelling?: boolean;
+
   @prop({required: true})
   public showEquivalentNumber!: boolean;
 
@@ -73,6 +76,7 @@ export class DictionarySettingsSchema {
       enableProposal: true,
       enableDuplicateName: true,
       showVariationPronunciation: true,
+      showOrdinarySpelling: false,
       showEquivalentNumber: false,
       showSectionNumber: true
     });

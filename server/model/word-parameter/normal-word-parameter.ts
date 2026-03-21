@@ -50,6 +50,7 @@ export class NormalWordParameter extends WordParameter {
           .match(WordModel.findExist().where("dictionary", dictionary["_id"]).where("sections.variations.name", needle).getFilter())
           .addFields({"oldVariations": "$sections.variations"})
           .unwind("$oldVariations")
+          .unwind("$oldVariations")
           .match({"oldVariations.name": needle})
           .project({"title": "$oldVariations.title", "word": "$$CURRENT"});
         return aggregate;

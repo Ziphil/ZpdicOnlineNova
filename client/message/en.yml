@@ -646,7 +646,8 @@ shareMenu:
     twitter: "X (Twitter)"
     bluesky: "Bluesky"
     misskey: "Misskey.io"
-    copy: "Copy link"
+    copyUrl: "Copy URL"
+    copyMarkdownText: "Copy Markdown"
     other: "Others"
   toast:
     copy: |-
@@ -855,6 +856,10 @@ changeDictionaryFontForm:
     input:
       name: "Font family"
       file: "Font file"
+    showOrdinarySpelling:
+      label: "Headword in default font"
+      true: "Show alongside"
+      false: "Custom font only"
     targets:
       label: "Where to apply"
       heading: "Headwords"
@@ -864,6 +869,11 @@ changeDictionaryFontForm:
       example: "Sentences"
       text: "Contents"
   labelHelper:
+    showOrdinarySpelling:
+      true: >-
+        Beside the headwords displayed in the custom font, also show the same text in the default font.
+      false: >-
+        Show headwords only in the custom font.
     kind:
       none: >-
         The headwords will be displayed in the default font.

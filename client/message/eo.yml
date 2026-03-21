@@ -646,7 +646,8 @@ shareMenu:
     twitter: "X (Twitter)"
     bluesky: "Bluesky"
     misskey: "Misskey.io"
-    copy: "Kopii ligilon"
+    copyUrl: "Kopii retadreson"
+    copyMarkdownText: "Kopii Markdown"
     other: "Aliaj"
   toast:
     copy: |-
@@ -855,6 +856,10 @@ changeDictionaryFontForm:
     input:
       name: "Tipara familio"
       file: "Tipara dosiero"
+    showOrdinarySpelling:
+      label: "Kapvorto en defaŭlta tiparo"
+      true: "Montri ambaŭ"
+      false: "Nur la propra tiparo"
     targets:
       label: "Kie apliki"
       heading: "Kapvortoj"
@@ -864,6 +869,11 @@ changeDictionaryFontForm:
       example: "Frazoj"
       text: "Enhavoj"
   labelHelper:
+    showOrdinarySpelling:
+      true: >-
+        Apud la kapvortojn montritaj en la propran tiparon, ankaŭ montri la saman tekston en la defaŭlta tiparo.
+      false: >-
+        Montri la kapvortojn nur en la propra tiparo.
     kind:
       none: >-
         La kapvortoj estos montrataj en la defaŭlta tiparo.

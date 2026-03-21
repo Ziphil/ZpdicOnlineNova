@@ -776,6 +776,16 @@ changeDictionaryFontForm:
     input:
       name: "Font family"
       file: "Font file"
+    showOrdinarySpelling:
+      label: "Default-font headword next to custom font"
+      true: "Show alongside"
+      false: "Custom font only"
+  labelHelper:
+    showOrdinarySpelling:
+      true: >-
+        When headwords use the custom font, also show the same text in the default font beside it.
+      false: >-
+        Show headwords only in the custom font.
   error:
     nameRequired: >-
       Enter a font family.

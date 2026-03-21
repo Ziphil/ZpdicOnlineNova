@@ -38,6 +38,8 @@ export const DictionaryMainPart = create(
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
 
+    const showHitSizeCap = debouncedQuery.parameter.kind === "normal" && debouncedQuery.parameter.options.shuffleSeed !== null && hitSize >= 50;
+
     const handleParameterSet = useCallback(function (parameter: SetStateAction<WordParameter>): void {
       setQuery((prevQuery) => {
         const nextParameter = resolveStateAction(parameter, prevQuery.parameter);
@@ -79,7 +81,7 @@ export const DictionaryMainPart = create(
                 <div/>
               )}
               <div styleName="size">
-                {(isFetching) ? <LoadingIcon/> : transNumber(hitSize)}
+                {(isFetching) ? <LoadingIcon/> : (showHitSizeCap) ? <>{transNumber(50)}+</> : transNumber(hitSize)}
               </div>
             </div>
             <SuggestionCard dictionary={dictionary} suggestions={hitSuggestions}/>

@@ -50,8 +50,8 @@ export const COLOR_DEFINITIONS = {
 export const STYLE_DEFINITIONS = {
   sans: {
     fontFamily: {
-      main: "'Noto Sans Display', 'Noto Sans JP', sans-serif",
-      bold: "'Noto Sans Display', 'Noto Sans JP', sans-serif",
+      main: "'Noto Sans', 'Noto Sans JP', sans-serif",
+      bold: "'Noto Sans', 'Noto Sans JP', sans-serif",
       monospace: "'Noto Sans Mono', 'Noto Sans JP', monospace"
     }
   },

@@ -109,12 +109,7 @@ export class BinaryDeserializer extends Deserializer {
       informations.push(...informations);
     }
     const updatedDate = new Date();
-    const section = new SectionModel({
-      equivalents,
-      informations,
-      variations,
-      relations
-    });
+    const section = new SectionModel({equivalents, informations, variations, relations});
     const word = new WordModel({dictionary, number, name, tags, sections: [section], updatedDate});
     return [word, nameBytes];
   }

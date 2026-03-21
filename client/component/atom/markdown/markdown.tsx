@@ -33,39 +33,10 @@ export const Markdown = create(
   } & AdditionalProps): ReactElement {
 
     const transformUrl = useCallback(function (uri: string): string {
-      const homePath = specialPaths?.home;
-      const atPath = specialPaths?.at;
-      let nextUri = defaultTransformUri(uri);
-      if (homePath !== undefined) {
-        if (typeof homePath === "string") {
-          nextUri = nextUri.replace(/^~/, homePath);
-        } else {
-          if (nextUri.startsWith("~")) {
-            nextUri = homePath(nextUri);
-          }
-        }
-      }
-      if (atPath !== undefined) {
-        if (typeof atPath === "string") {
-          nextUri = nextUri.replace(/^@/, atPath);
-        } else {
-          if (nextUri.startsWith("@")) {
-            nextUri = atPath(nextUri);
-          }
-        }
-      }
-      if (nextUri === "javascript:void(0)") {
-        nextUri = "";
-      }
-      return nextUri;
-    }, [specialPaths?.home, specialPaths?.at]);
+      return getModifiedUri(uri, specialPaths);
+    }, [specialPaths]);
 
-    const [rehypePlugins, remarkPlugins] = useMemo(() => {
-      return features.reduce<[Array<Pluggable>, Array<Pluggable>]>(([accumRehypePlugins, accumRemarkPlugins], feature) => {
-        const [rehypePlugins, remarkPlugins] = getFeaturePlugins(feature);
-        return [[...accumRehypePlugins, ...rehypePlugins], [...accumRemarkPlugins, ...remarkPlugins]];
-      }, [[], []]);
-    }, [features]);
+    const [rehypePlugins, remarkPlugins] = useMemo(() => getAllFeaturePlugins(features), [features]);
 
     return (
       <ZographiaMarkdown
@@ -96,6 +67,57 @@ export const Markdown = create(
 );
 
 
+function getModifiedUri(uri: string, specialPaths?: MarkdownSpecialPaths): string {
+  const homePath = specialPaths?.home;
+  const atPath = specialPaths?.at;
+  let nextUri = decodeUri(defaultTransformUri(uri));
+  if (homePath !== undefined) {
+    if (typeof homePath === "string") {
+      nextUri = nextUri.replace(/^~/, homePath);
+    } else {
+      if (nextUri.startsWith("~")) {
+        nextUri = homePath(nextUri);
+      }
+    }
+  }
+  if (atPath !== undefined) {
+    if (typeof atPath === "string") {
+      nextUri = nextUri.replace(/^@/, atPath);
+    } else {
+      if (nextUri.startsWith("@")) {
+        nextUri = atPath(nextUri);
+      }
+    }
+  }
+  if (nextUri === "javascript:void(0)") {
+    nextUri = "";
+  }
+  return nextUri;
+}
+
+export function decodeUri(uri: string): string {
+  if (uri.startsWith("@")) {
+    if (!uri.includes("%")) {
+      return uri;
+    } else {
+      try {
+        return decodeURIComponent(uri);
+      } catch {
+        return uri;
+      }
+    }
+  } else if (uri.startsWith("%40")) {
+    try {
+      const decodedUri = decodeURIComponent(uri);
+      return (decodedUri.startsWith("@")) ? decodedUri : uri;
+    } catch {
+      return uri;
+    }
+  } else {
+    return uri;
+  }
+}
+
 function getFeaturePlugins(feature: Omit<MarkdownFeature, "basic">): [rehypePlugins: Array<Pluggable>, remarkPlugins: Array<Pluggable>] {
   if (feature === "supsub") {
     return [[], [remarkSupsub]];
@@ -104,6 +126,13 @@ function getFeaturePlugins(feature: Omit<MarkdownFeature, "basic">): [rehypePlug
   } else {
     return [[], []];
   }
+}
+
+function getAllFeaturePlugins(features: Array<Omit<MarkdownFeature, "basic">>): [rehypePlugins: Array<Pluggable>, remarkPlugins: Array<Pluggable>] {
+  return features.reduce<[Array<Pluggable>, Array<Pluggable>]>(([accumRehypePlugins, accumRemarkPlugins], feature) => {
+    const [rehypePlugins, remarkPlugins] = getFeaturePlugins(feature);
+    return [[...accumRehypePlugins, ...rehypePlugins], [...accumRemarkPlugins, ...remarkPlugins]];
+  }, [[], []]);
 }
 
 export type MarkdownSpecialPaths = {
