@@ -7,6 +7,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import fs from "fs/promises";
+import {CustomError} from "/server/model/error";
 import {ExampleOfferParameter} from "/server/model/example-offer-parameter/example-offer-parameter";
 import {askClaude} from "/server/util/claude";
 import {QueryRange, WithSize} from "/server/util/query";
@@ -48,20 +49,25 @@ export class ExampleOfferSchema {
         - CEFR ${cefrLevel} レベルの内容である
       </conditions>
       回答では、最後に生成した文を<sentence></sentence>タグに入れてください。
+      それ以外の回答は不要です。
     `, `
       あなたは、外国語の学習者のために例文を生成するAIです。
       利用者はあなたが生成した例文を外国語に翻訳することで外国語の勉強をするので、外国語への翻訳がしやすい文を生成してください。
     `);
-    const translation = answer.match(/<sentence>(.*?)<\/sentence>/)?.[1] ?? "";
-    const offer = new ExampleOfferModel({
-      catalog: "zpdicDaily",
-      number,
-      translation,
-      author: "ZpDIC Online",
-      createdDate: new Date()
-    });
-    await offer.save();
-    return [keyword, offer];
+    const translation = answer.match(/<sentence>(.*?)<\/sentence>/)?.[1];
+    if (translation) {
+      const offer = new ExampleOfferModel({
+        catalog: "zpdicDaily",
+        number,
+        translation,
+        author: "ZpDIC Online",
+        createdDate: new Date()
+      });
+      await offer.save();
+      return [keyword, offer];
+    } else {
+      throw new CustomError("invalidClaudeResponse");
+    }
   }
 
   public static async fetchOneByNumber(catalog: string, number: number): Promise<ExampleOffer | null> {
