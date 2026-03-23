@@ -103,7 +103,7 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editEx
     example: {
       number: value.number ?? null,
       sentence: value.sentence,
-      translation: (value.offer !== null) ? "" : value.translation,
+      translation: value.translation,
       supplement: value.supplement,
       tags: value.tags,
       words: value.words.filter((rawWord) => rawWord !== null).map((rawWord) => ({

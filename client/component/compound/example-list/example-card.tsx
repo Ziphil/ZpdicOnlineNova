@@ -51,7 +51,7 @@ export const ExampleCard = create(
     const {trans} = useTrans("exampleList");
 
     const [authorities] = useResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
-    const [offer] = useResponse("fetchExampleOfferOrNull", (example.offer) && example.offer);
+    const [offer] = useResponse("fetchExampleOfferOrNull", (example.offer !== null) && example.offer);
 
     const device = useResponsiveDevice();
 
@@ -80,7 +80,7 @@ export const ExampleCard = create(
               <span className="dictionary-custom-font" {...data({target: "example"})}>{filledExample.sentence}</span>
             </MultiLineText>
             <MultiLineText is="p">
-              {(example.offer !== null) ? offer?.translation : filledExample.translation}
+              {(example.offer !== null) ? ((offer !== undefined) ? offer?.translation : <LoadingIcon/>) : filledExample.translation}
             </MultiLineText>
           </div>
           {(!!filledExample.supplement) && (
