@@ -27,7 +27,7 @@ export const Link = createWithRef(
       );
     }, [href, useTransition]);
 
-    return (href === "/api") ? (
+    return (typeof href === "string" && href.startsWith("/api")) ? (
       <ZographiaLink styleName="root" href={href} {...rest}>
         {children}
       </ZographiaLink>
