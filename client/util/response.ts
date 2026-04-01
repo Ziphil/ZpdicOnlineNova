@@ -1,12 +1,12 @@
 //
 
-import {AxiosResponseSpec} from "/client/util/request";
+import {CommonResponse} from "/client/util/request";
 import type {ErrorResponseData, ProcessName, SuccessResponseData} from "/server/internal/type/rest";
 
 
-export function switchResponse<N extends ProcessName, R>(response: AxiosResponseSpec<N>, whenSuccess: (body: SuccessResponseData<N>) => R): R | void;
-export function switchResponse<N extends ProcessName, R>(response: AxiosResponseSpec<N>, whenSuccess: (body: SuccessResponseData<N>) => R, whenError: (body: ErrorResponseData<N>) => R): R;
-export function switchResponse<N extends ProcessName, R>(response: AxiosResponseSpec<N>, whenSuccess: (body: SuccessResponseData<N>) => R, whenError?: (body: ErrorResponseData<N>) => R): R | undefined {
+export function switchResponse<N extends ProcessName, R>(response: CommonResponse<N>, whenSuccess: (body: SuccessResponseData<N>) => R): R | void;
+export function switchResponse<N extends ProcessName, R>(response: CommonResponse<N>, whenSuccess: (body: SuccessResponseData<N>) => R, whenError: (body: ErrorResponseData<N>) => R): R;
+export function switchResponse<N extends ProcessName, R>(response: CommonResponse<N>, whenSuccess: (body: SuccessResponseData<N>) => R, whenError?: (body: ErrorResponseData<N>) => R): R | undefined {
   if (response.status === 200 && !(response.data !== null && typeof response.data === "object" && "error" in response.data)) {
     const body = response.data;
     return whenSuccess(body);

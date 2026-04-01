@@ -1,6 +1,5 @@
 //
 
-import axios from "axios";
 import {xml2js as parseXml} from "xml-js";
 import {AWS_STORAGE_BUCKET} from "/client/variable";
 
@@ -12,9 +11,10 @@ export async function uploadFileToAws(post: PresignedPost, file: Blob): Promise<
   }
   formData.append("Content-Type", file.type);
   formData.append("file", file);
-  const response = await axios.post(post.url, formData, {validateStatus: () => true});
+  const response = await fetch(post.url, {method: "post", body: formData});
   if (response.status === 400 || response.status === 403) {
-    const result = parseXml(response.data, {compact: true}) as any;
+    const text = await response.text();
+    const result = parseXml(text, {compact: true}) as any;
     const errorData = result["Error"];
     if (typeof errorData === "object") {
       throw new AwsError(errorData);

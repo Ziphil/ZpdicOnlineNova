@@ -1,7 +1,6 @@
 //
 
 import {faUser} from "@fortawesome/sharp-regular-svg-icons";
-import axios from "axios";
 import {ReactElement} from "react";
 import {useQuery} from "react-query";
 import {AdditionalProps, Avatar, AvatarFallbackIconContainer, GeneralIcon} from "zographia";
@@ -55,9 +54,10 @@ async function resolveAvatarUrl(rawAvatarUrl?: SupporterAvatarUrl): Promise<stri
     if (typeof rawAvatarUrl === "string") {
       return rawAvatarUrl;
     } else if (rawAvatarUrl.type === "github") {
-      const response = await axios.get(`https://api.github.com/users/${rawAvatarUrl.name}`, {validateStatus: () => true});
+      const response = await fetch(`https://api.github.com/users/${rawAvatarUrl.name}`);
       if (response.status === 200) {
-        const avatarUrl = response.data["avatar_url"];
+        const data = await response.json() as Record<string, unknown>;
+        const avatarUrl = data["avatar_url"] as string | undefined;
         return avatarUrl;
       } else {
         return undefined;

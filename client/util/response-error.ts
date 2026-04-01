@@ -1,6 +1,6 @@
 //
 
-import {AxiosResponseSpec} from "/client/util/request";
+import {CommonResponse} from "/client/util/request";
 import type {ProcessName, RequestData, ResponseData} from "/server/internal/type/rest";
 
 
@@ -12,13 +12,13 @@ export class ResponseError<N extends ProcessName> extends Error {
   public requestData: RequestData<N>;
   public responseData: ResponseData<N>;
 
-  public constructor(name: N, data: RequestData<N>, response: AxiosResponseSpec<N>) {
-    super(`${response.status} ${response.data?.type} <- ${name} ${JSON.stringify(data)}`);
+  public constructor(name: N, requestData: RequestData<N>, response: CommonResponse<N>) {
+    super(`${response.status} ${response.data?.type} <- ${name} ${JSON.stringify(requestData)}`);
     this.name = "ResponseError";
     this.queryName = name;
     this.status = response.status;
     this.type = response.data?.type ?? "unexpected";
-    this.requestData = data;
+    this.requestData = requestData;
     this.responseData = response.data;
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, ResponseError);

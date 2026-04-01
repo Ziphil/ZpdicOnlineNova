@@ -2,7 +2,6 @@
 
 import {faGithub} from "@fortawesome/free-brands-svg-icons";
 import {faStar} from "@fortawesome/sharp-regular-svg-icons";
-import axios from "axios";
 import {ReactElement} from "react";
 import {useQuery} from "react-query";
 import {AdditionalProps, GeneralIcon, aria, useTrans} from "zographia";
@@ -20,9 +19,10 @@ export const GithubStarButton = create(
     const {trans, transNumber} = useTrans("topPage");
 
     const {data: starCount} = useQuery("github", async () => {
-      const response = await axios.get("https://api.github.com/repos/Ziphil/ZpdicOnlineNova", {validateStatus: () => true});
-      if (response.status === 200 && "stargazers_count" in response.data) {
-        const starCount = +response.data["stargazers_count"];
+      const response = await fetch("https://api.github.com/repos/Ziphil/ZpdicOnlineNova");
+      const data = await response.json() as Record<string, unknown>;
+      if (response.status === 200 && "stargazers_count" in data) {
+        const starCount = +(data["stargazers_count"] as number);
         return starCount;
       } else {
         throw new Error("cannot fetch");
