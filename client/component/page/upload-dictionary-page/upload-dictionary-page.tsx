@@ -6,11 +6,11 @@ import {AdditionalProps} from "zographia";
 import {Header} from "/client/component/compound/header";
 import {MainContainer, Page} from "/client/component/compound/page";
 import {create} from "/client/component/create";
-import {DownloadDictionaryForm} from "/client/component/form/download-dictionary-form";
+import {UploadDictionaryForm} from "/client/component/form/upload-dictionary-form";
 
 
-export const DownloadDictionaryPage = create(
-  require("./download-dictionary-page.scss"), "DownloadDictionaryPage",
+export const UploadDictionaryPage = create(
+  require("./upload-dictionary-page.scss"), "UploadDictionaryPage",
   function ({
     ...rest
   }: {
@@ -22,7 +22,7 @@ export const DownloadDictionaryPage = create(
     return (
       <Page styleName="root" headerNode={<Header/>} {...rest}>
         <MainContainer styleName="main">
-          <DownloadDictionaryForm id={id ?? ""}/>
+          <UploadDictionaryForm id={id ?? ""}/>
         </MainContainer>
       </Page>
     );

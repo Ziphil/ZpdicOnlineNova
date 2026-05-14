@@ -1059,6 +1059,30 @@ downloadDictionaryForm:
       以下のボタンからダウンロードできます。
     error: >-
       ファイルの作成に失敗しました。
+queueUploadDictionaryButton:
+  heading: "インポート"
+  label:
+    file: "ファイル"
+  button:
+    open: "インポート"
+    confirm: "決定"
+  error:
+    required: >-
+      ファイルを選択してください。
+    tooLarge: >-
+      ファイルのサイズが大きすぎます。
+      5 MB より大きなファイルはアップロードすることができません。
+uploadDictionaryForm:
+  button:
+    back: "辞書ページに戻る"
+  message:
+    processing: >-
+      インポート処理中です。
+      このページを開いたまましばらくお待ちください。
+    success: >-
+      インポートが完了しました。
+    error: >-
+      インポートに失敗しました。
 generateMyApiKeyForm:
   button:
     generate: "新規生成"
@@ -1069,23 +1093,6 @@ generateMyApiKeyForm:
   caution: >-
     API キーを後から確認することはできません。
     今の段階でコピーして保存しておいてください。
-uploadDictionaryButton:
-  heading: "インポート"
-  label:
-    file: "ファイル"
-  status:
-    loading: "処理中"
-    success: "完了"
-    error: "失敗"
-  button:
-    open: "インポート"
-    confirm: "決定"
-  error:
-    required: >-
-      ファイルを選択してください。
-    tooLarge: >-
-      ファイルのサイズが大きすぎます。
-      5 MB より大きなファイルはアップロードすることができません。
 
 contactPage:
   title: "お問い合わせ"

@@ -51,13 +51,6 @@ type ServerSpecs = {
       error: never
     }
   },
-  uploadDictionary: {
-    request: WithRecaptcha<{number: string}>,
-    response: {
-      success: Dictionary,
-      error: CustomError<"noSuchDictionary" | "dictionarySizeTooLarge" | "invalidArgument">
-    }
-  },
   discardDictionary: {
     request: {number: number},
     response: {
@@ -234,6 +227,20 @@ type ServerSpecs = {
     }
   },
   fetchDownloadDictionaryProgress: {
+    request: {id: string},
+    response: {
+      success: {status: "processing" | "success" | "error", errorCode: string | null},
+      error: CustomError<"noSuchJob">
+    }
+  },
+  queueUploadDictionary: {
+    request: WithRecaptcha<{number: string}>,
+    response: {
+      success: {id: string},
+      error: CustomError<"dictionarySizeTooLarge" | "invalidArgument">
+    }
+  },
+  fetchUploadDictionaryProgress: {
     request: {id: string},
     response: {
       success: {status: "processing" | "success" | "error", errorCode: string | null},

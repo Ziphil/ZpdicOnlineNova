@@ -1,12 +1,10 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faCheck, faExclamation, faFileImport} from "@fortawesome/sharp-regular-svg-icons";
+import {faCheck, faFileImport} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {Controller} from "react-hook-form";
 import {
   AdditionalProps,
-  Badge,
-  BadgeIconbag,
   Button,
   ButtonIconbag,
   ControlContainer,
@@ -17,18 +15,17 @@ import {
   DialogPane,
   FileInput,
   GeneralIcon,
-  LoadingIcon,
   useTrans
 } from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {useDialogOpen} from "/client/hook/dialog";
 import {DictionaryWithUser} from "/server/internal/skeleton";
-import {useUploadDictionary} from "./upload-dictionary-button-hook";
+import {useQueueUploadDictionary} from "./queue-upload-dictionary-button-hook";
 
 
-export const UploadDictionaryButton = create(
-  require("../common.scss"), "UploadDictionaryButton",
+export const QueueUploadDictionaryButton = create(
+  require("../common.scss"), "QueueUploadDictionaryButton",
   function ({
     dictionary,
     ...rest
@@ -37,11 +34,11 @@ export const UploadDictionaryButton = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("uploadDictionaryButton");
+    const {trans} = useTrans("queueUploadDictionaryButton");
 
-    const {form, status, handleSubmit} = useUploadDictionary(dictionary);
+    const {form, handleSubmit} = useQueueUploadDictionary(dictionary);
     const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen({handleSubmit, onOpen: form.resetAll});
-    const {control, getFieldState, formState: {errors}} = form;
+    const {control, getFieldState} = form;
 
     return (
       <Fragment>
@@ -50,22 +47,6 @@ export const UploadDictionaryButton = create(
             <ButtonIconbag><GeneralIcon icon={faFileImport}/></ButtonIconbag>
             {trans("button.open")}
           </Button>
-          {(status === "loading") ? (
-            <Badge scheme="gray">
-              <BadgeIconbag><LoadingIcon/></BadgeIconbag>
-              {trans("status.loading")}
-            </Badge>
-          ) : (status === "success") ? (
-            <Badge scheme="blue">
-              <BadgeIconbag><GeneralIcon icon={faCheck}/></BadgeIconbag>
-              {trans("status.success")}
-            </Badge>
-          ) : (status === "error") ? (
-            <Badge scheme="red">
-              <BadgeIconbag><GeneralIcon icon={faExclamation}/></BadgeIconbag>
-              {trans("status.error")}
-            </Badge>
-          ) : null}
         </div>
         <Dialog open={open} onOpenSet={setOpen}>
           <DialogPane>
@@ -103,16 +84,3 @@ export const UploadDictionaryButton = create(
 
   }
 );
-
-
-function getFileName(disposition: string): string {
-  const match = disposition.match(/filename="(.+)"/);
-  const encodedMatch = disposition.match(/filename\*=UTF-8''(.+)$/);
-  if (encodedMatch !== null) {
-    return decodeURIComponent(encodedMatch[1]).replace(/\+/g, " ");
-  } else if (match !== null) {
-    return match[1];
-  } else {
-    return "dictionary.json";
-  }
-}

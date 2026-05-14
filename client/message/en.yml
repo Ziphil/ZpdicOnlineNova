@@ -1060,23 +1060,10 @@ downloadDictionaryForm:
       You can download it from the button below.
     error: >-
       Failed to create the file.
-generateMyApiKeyForm:
-  button:
-    generate: "Generate"
-    copy: "Copy"
-  toast: 
-    copy: >-
-      Copied your API key.
-  caution: >-
-    Please copy this key now and save it in a safe place, as you will not be able to see it later.
-uploadDictionaryButton:
+queueUploadDictionaryButton:
   heading: "Import"
   label:
     file: "File"
-  status:
-    loading: "Processing"
-    success: "Done"
-    error: "Failed"
   button:
     open: "Import"
     confirm: "Confirm"
@@ -1086,6 +1073,26 @@ uploadDictionaryButton:
     tooLarge: >-
       The file is too large.
       You cannot upload files larger than 5 MB.
+uploadDictionaryForm:
+  button:
+    back: "Back to dictionary page"
+  message:
+    processing: >-
+      Importing your file.
+      Please keep this page open.
+    success: >-
+      Your file has been imported.
+    error: >-
+      Failed to import your file.
+generateMyApiKeyForm:
+  button:
+    generate: "Generate"
+    copy: "Copy"
+  toast: 
+    copy: >-
+      Copied your API key.
+  caution: >-
+    Please copy this key now and save it in a safe place, as you will not be able to see it later.
 
 contactPage:
   title: "Contact"

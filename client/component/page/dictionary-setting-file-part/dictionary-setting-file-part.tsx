@@ -7,7 +7,7 @@ import {AdditionalProps, Callout, CalloutBody, CalloutIconContainer, GeneralIcon
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
 import {QueueDownloadDictionaryButton} from "/client/component/form/queue-download-dictionary-button";
-import {UploadDictionaryButton} from "/client/component/form/upload-dictionary-button";
+import {QueueUploadDictionaryButton} from "/client/component/form/queue-upload-dictionary-button";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
@@ -38,7 +38,7 @@ export const DictionarySettingFilePart = create(
               </MultiLineText>
             </CalloutBody>
           </Callout>
-          <UploadDictionaryButton dictionary={dictionary}/>
+          <QueueUploadDictionaryButton dictionary={dictionary}/>
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.download")}</h3>

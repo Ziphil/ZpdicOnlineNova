@@ -1060,23 +1060,10 @@ downloadDictionaryForm:
       Vi povas elŝuti ĝin per la butono sube.
     error: >-
       Malsukcesis krei la dosieron.
-generateMyApiKeyForm:
-  button:
-    generate: "Generi"
-    copy: "Kopii"
-  toast: 
-    copy: >-
-      Via API-ŝlosilo estas kopiita.
-  caution: >-
-    Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
-uploadDictionaryButton:
+queueUploadDictionaryButton:
   heading: "Importi"
   label:
     file: "Dosiero"
-  status:
-    loading: "Traktanta"
-    success: "Finita"
-    error: "Malsukcesinta"
   button:
     open: "Importi"
     confirm: "Konfirmi"
@@ -1086,6 +1073,26 @@ uploadDictionaryButton:
     tooLarge: >-
       La dosiero estas tro granda.
       Vi ne povas alŝuti dosierojn pli grandajn ol 5 MB.
+uploadDictionaryForm:
+  button:
+    back: "Reiri al paĝo de vortaro"
+  message:
+    processing: >-
+      Importante vian dosieron.
+      Bonvolu teni tiun paĝon malfermita dum tempo.
+    success: >-
+      Via dosiero estas importita.
+    error: >-
+      Malsukcesis importi vian dosieron.
+generateMyApiKeyForm:
+  button:
+    generate: "Generi"
+    copy: "Kopii"
+  toast: 
+    copy: >-
+      Via API-ŝlosilo estas kopiita.
+  caution: >-
+    Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
 
 contactPage:
   title: "Kontakti"
