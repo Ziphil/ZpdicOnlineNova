@@ -1043,13 +1043,22 @@ discardMeButton:
       削除した後にデータを戻すことはできません。
       本当によろしいですか?
     confirm: "削除"
-downloadDictionaryButton:
+queueDownloadDictionaryButton:
   button:
     start: "エクスポート"
+downloadDictionaryForm:
+  button:
     download: "ダウンロード"
-  status:
-    loading: "処理中"
-    error: "失敗"
+    back: "辞書ページに戻る"
+  message:
+    processing: >-
+      ファイルを作成中です。
+      このページを開いたまましばらくお待ちください。
+    success: >-
+      ファイルの作成が完了しました。
+      以下のボタンからダウンロードできます。
+    error: >-
+      ファイルの作成に失敗しました。
 generateMyApiKeyForm:
   button:
     generate: "新規生成"

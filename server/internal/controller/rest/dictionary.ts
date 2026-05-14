@@ -9,6 +9,7 @@ import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {SOCKET_PATH_PREFIX} from "/server/internal/type/socket";
 import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
 import {sanitizeFileName} from "/server/util/misc";
+import {toObjectId} from "/server/util/mongo";
 import {QueryRange} from "/server/util/query";
 import {mapWithSizeAsync} from "/server/util/with-size";
 
@@ -24,35 +25,6 @@ export class DictionaryRestController extends InternalRestController {
     const dictionary = await DictionaryModel.addEmpty(name, me);
     const body = DictionaryCreator.skeletonize(dictionary);
     InternalRestController.respond(response, body);
-  }
-
-  @post("/uploadDictionary")
-  @before(checkRecaptcha(), checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: FilledRequest<"uploadDictionary", "me" | "dictionary">, response: Response<"uploadDictionary">): Promise<void> {
-    const {dictionary} = request.middlewareBody;
-    const file = request.file;
-    if (file !== undefined) {
-      const path = file.path;
-      const originalPath = file.originalname;
-      if (file.size <= 5 * 1024 * 1024) {
-        const number = dictionary.number;
-        await this.agenda.now("uploadDictionary", {number, path, originalPath});
-        this.agenda.on("success:uploadDictionary", (job) => {
-          this.namespace?.to(`uploadDictionary.${number}`).emit("succeedUploadDictionary", {number});
-          this.namespace?.socketsLeave(`uploadDictionary.${number}`);
-        });
-        this.agenda.on("fail:uploadDictionary", (job) => {
-          this.namespace?.to(`uploadDictionary.${number}`).emit("failUploadDictionary", {number});
-          this.namespace?.socketsLeave(`uploadDictionary.${number}`);
-        });
-        const body = DictionaryCreator.skeletonize(dictionary);
-        InternalRestController.respond(response, body);
-      } else {
-        InternalRestController.respondError(response, "dictionarySizeTooLarge");
-      }
-    } else {
-      InternalRestController.respondError(response, "invalidArgument");
-    }
   }
 
   @post("/discardDictionary")
@@ -202,32 +174,76 @@ export class DictionaryRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
-  @post("/downloadDictionary")
+  @post("/uploadDictionary")
+  @before(checkRecaptcha(), checkMe(), checkDictionary("own"))
+  public async [Symbol()](request: FilledRequest<"uploadDictionary", "me" | "dictionary">, response: Response<"uploadDictionary">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
+    const file = request.file;
+    if (file !== undefined) {
+      const path = file.path;
+      const originalPath = file.originalname;
+      if (file.size <= 5 * 1024 * 1024) {
+        const number = dictionary.number;
+        await this.agenda.now("uploadDictionary", {number, path, originalPath});
+        this.agenda.on("success:uploadDictionary", (job) => {
+          this.namespace?.to(`uploadDictionary.${number}`).emit("succeedUploadDictionary", {number});
+          this.namespace?.socketsLeave(`uploadDictionary.${number}`);
+        });
+        this.agenda.on("fail:uploadDictionary", (job) => {
+          this.namespace?.to(`uploadDictionary.${number}`).emit("failUploadDictionary", {number});
+          this.namespace?.socketsLeave(`uploadDictionary.${number}`);
+        });
+        const body = DictionaryCreator.skeletonize(dictionary);
+        InternalRestController.respond(response, body);
+      } else {
+        InternalRestController.respondError(response, "dictionarySizeTooLarge");
+      }
+    } else {
+      InternalRestController.respondError(response, "invalidArgument");
+    }
+  }
+
+  @post("/queueDownloadDictionary")
   @before(parseMe(), checkDictionary("view"))
-  public async [Symbol()](request: FilledRequest<"downloadDictionary", "dictionary">, response: Response<"downloadDictionary">): Promise<void> {
+  public async [Symbol()](request: FilledRequest<"queueDownloadDictionary", "dictionary">, response: Response<"queueDownloadDictionary">): Promise<void> {
     const {dictionary} = request.middlewareBody ;
+    const {format} = request.body;
     const number = dictionary.number;
+    const name = dictionary.name;
     const key = dayjs().valueOf().toString();
     const path = `./dist/download/${key}.json`;
-    await this.agenda.now("downloadDictionary", {number, key, path});
-    this.agenda.on("success:downloadDictionary", (job) => {
-      this.namespace?.to(`downloadDictionary.${number}`).emit("succeedDownloadDictionary", {number, key});
-      this.namespace?.socketsLeave(`downloadDictionary.${number}`);
-    });
-    this.agenda.on("fail:downloadDictionary", (job) => {
-      this.namespace?.to(`downloadDictionary.${number}`).emit("failDownloadDictionary", {number});
-      this.namespace?.socketsLeave(`downloadDictionary.${number}`);
-    });
-    const body = {key};
+    const job = await this.agenda.now("downloadDictionary", {number, name, format, key, path});
+    const body = {id: job.attrs["_id"].toString()};
     InternalRestController.respond(response, body);
+  }
+
+  @post("/fetchDownloadDictionaryProgress")
+  public async [Symbol()](request: Request<"fetchDownloadDictionaryProgress">, response: Response<"fetchDownloadDictionaryProgress">): Promise<void> {
+    const {id} = request.body;
+    const jobs = await this.agenda.jobs({"_id": toObjectId(id)});
+    if (jobs.length > 0) {
+      const job = jobs[0];
+      const body = {status: job.attrs.data.status || "processing", errorCode: job.attrs.data.errorCode};
+      InternalRestController.respond(response, body);
+    } else {
+      InternalRestController.respondError(response, "noSuchJob");
+    }
   }
 
   @post("/downloadDictionaryFile")
   public async [Symbol()](request: Request<"downloadDictionaryFile">, response: Response<"downloadDictionaryFile">): Promise<void> {
-    const {key, fileName} = request.body;
-    const path = `./dist/download/${key}.json`;
-    const fullFileName = sanitizeFileName(fileName || key) + ".json";
-    response.download(path, fullFileName);
+    const {id} = request.body;
+    const jobs = await this.agenda.jobs({"_id": toObjectId(id)});
+    if (jobs.length > 0) {
+      const job = jobs[0];
+      const key = job.attrs.data.key;
+      const name = job.attrs.data.name;
+      const path = `./dist/download/${key}.json`;
+      const fullFileName = sanitizeFileName(name) + ".json";
+      response.download(path, fullFileName);
+    } else {
+      InternalRestController.respondError(response, "noSuchJob");
+    }
   }
 
   @post("/fetchDictionary")

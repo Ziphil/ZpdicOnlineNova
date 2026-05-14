@@ -1045,13 +1045,21 @@ discardMeButton:
       You cannot restore it afterwards.
       Are you really sure?
     confirm: "Delete"
-downloadDictionaryButton:
+queueDownloadDictionaryButton:
   button:
     start: "Export"
+downloadDictionaryForm:
+  button:
     download: "Download"
-  status:
-    loading: "Processing"
-    error: "Failed"
+    back: "Back to dictionary page"
+  message:
+    processing: >-
+      Creating a file.
+    success: >-
+      The file has been created.
+      You can download it from the button below.
+    error: >-
+      Failed to create the file.
 generateMyApiKeyForm:
   button:
     generate: "Generate"

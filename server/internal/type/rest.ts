@@ -226,18 +226,25 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
-  downloadDictionary: {
-    request: {number: number},
+  queueDownloadDictionary: {
+    request: {number: number, format: "slime" | "zpdic"},
     response: {
-      success: {key: string},
+      success: {id: string},
       error: CustomError<"noSuchDictionary">
     }
   },
+  fetchDownloadDictionaryProgress: {
+    request: {id: string},
+    response: {
+      success: {status: "processing" | "success" | "error", errorCode: string | null},
+      error: CustomError<"noSuchJob">
+    }
+  },
   downloadDictionaryFile: {
-    request: {key: string, fileName?: string},
+    request: {id: string},
     response: {
       success: any,
-      error: never
+      error: CustomError<"noSuchJob">
     }
   },
   suggestDictionaryTitles: {

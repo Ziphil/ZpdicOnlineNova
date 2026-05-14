@@ -1045,13 +1045,21 @@ discardMeButton:
       Vi ne povas restaŭri ĝin poste.
       Ĉu vi vere certas?
     confirm: "Forigi"
-downloadDictionaryButton:
+queueDownloadDictionaryButton:
   button:
     start: "Eksporti"
+downloadDictionaryForm:
+  button:
     download: "Elŝuti"
-  status:
-    loading: "Traktanta"
-    error: "Malsukcesinta"
+    back: "Reiri al paĝo de vortaro"
+  message:
+    processing: >-
+      Kreadas dosiero.
+    success: >-
+      La dosiero estas kreita.
+      Vi povas elŝuti ĝin per la butono sube.
+    error: >-
+      Malsukcesis krei la dosieron.
 generateMyApiKeyForm:
   button:
     generate: "Generi"

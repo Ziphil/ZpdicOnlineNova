@@ -6,7 +6,7 @@ import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, Callout, CalloutBody, CalloutIconContainer, GeneralIcon, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
-import {DownloadDictionaryButton} from "/client/component/form/download-dictionary-button";
+import {QueueDownloadDictionaryButton} from "/client/component/form/queue-download-dictionary-button";
 import {UploadDictionaryButton} from "/client/component/form/upload-dictionary-button";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
@@ -47,7 +47,7 @@ export const DictionarySettingFilePart = create(
               link: (parts) => <Link href="/document/other/json-spec" variant="unstyledUnderline">{parts}</Link>
             })}
           </MultiLineText>
-          <DownloadDictionaryButton dictionary={dictionary}/>
+          <QueueDownloadDictionaryButton dictionary={dictionary}/>
         </section>
       </div>
     );
