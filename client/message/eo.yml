@@ -1048,6 +1048,10 @@ discardMeButton:
 queueDownloadDictionaryButton:
   button:
     start: "Eksporti"
+  label:
+    format:
+      slime: "OneToMany-JSON"
+      zpdic: "ZpDIC API"
 downloadDictionaryForm:
   button:
     download: "Elŝuti"

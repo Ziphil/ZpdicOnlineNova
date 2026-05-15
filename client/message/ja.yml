@@ -1044,6 +1044,10 @@ discardMeButton:
       本当によろしいですか?
     confirm: "削除"
 queueDownloadDictionaryButton:
+  label:
+    format:
+      slime: "OneToMany-JSON 形式"
+      zpdic: "ZpDIC API 形式"
   button:
     start: "エクスポート"
 downloadDictionaryForm:

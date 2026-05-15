@@ -62,6 +62,10 @@
   height: 64zu;
 }
 
+.select {
+  width: 60zu;
+}
+
 .label {
   row-gap: 2zu;
   display: flex;
@@ -80,7 +84,6 @@
 .button {
   column-gap: 4zu;
   display: flex;
-  align-items: center;
 }
 
 .dialog-heading {

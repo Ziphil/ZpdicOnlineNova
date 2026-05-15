@@ -203,7 +203,7 @@ export class DictionaryRestController extends InternalRestController {
     const number = dictionary.number;
     const name = dictionary.name;
     const key = dayjs().valueOf().toString();
-    const path = `./dist/download/${key}.json`;
+    const path = (format === "slime") ? `./dist/download/${key}.json` : `./dist/download/${key}.zpdc`;
     const job = await this.agenda.now("downloadDictionary", {number, name, format, key, path});
     const body = {id: job.attrs["_id"].toString()};
     InternalRestController.respond(response, body);
@@ -243,8 +243,9 @@ export class DictionaryRestController extends InternalRestController {
       const job = jobs[0];
       const key = job.attrs.data.key;
       const name = job.attrs.data.name;
-      const path = `./dist/download/${key}.json`;
-      const fullFileName = sanitizeFileName(name) + ".json";
+      const format = job.attrs.data.format;
+      const path = (format === "slime") ? `./dist/download/${key}.json` : `./dist/download/${key}.zpdc`;
+      const fullFileName = sanitizeFileName(name) + ((format === "slime") ? ".json" : ".zpdc");
       response.download(path, fullFileName);
     } else {
       InternalRestController.respondError(response, "noSuchJob");

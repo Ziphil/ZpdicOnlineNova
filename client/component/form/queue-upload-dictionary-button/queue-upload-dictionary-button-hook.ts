@@ -1,6 +1,6 @@
 //
 
-import {BaseSyntheticEvent, useCallback} from "react";
+import {BaseSyntheticEvent, useMemo} from "react";
 import {useNavigate} from "react-router-dom";
 import {Asserts, mixed, object} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
@@ -28,14 +28,11 @@ export function useQueueUploadDictionary(dictionary: Dictionary): QueueUploadDic
   const form = useForm<FormValue>(SCHEMA, DEFAULT_VALUE, {});
   const requestFile = useRequestFile();
   const navigate = useNavigate();
-  const handleSubmit = useCallback(async function (event: BaseSyntheticEvent, onSubmit?: () => unknown): Promise<void> {
-    await form.handleSubmit(async (value) => {
-      const response = await requestFile("queueUploadDictionary", {number: dictionary.number.toString(), file: value.file}, {useRecaptcha: true});
-      await switchResponse(response, async ({id}) => {
-        await onSubmit?.();
-        navigate(`/dictionary/${getDictionaryIdentifier(dictionary)}/upload/${id}`);
-      });
-    })(event);
-  }, [dictionary, requestFile, form, navigate]);
+  const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
+    const response = await requestFile("queueUploadDictionary", {number: dictionary.number.toString(), file: value.file}, {useRecaptcha: true});
+    await switchResponse(response, async ({id}) => {
+      navigate(`/dictionary/${getDictionaryIdentifier(dictionary)}/upload/${id}`);
+    });
+  }), [dictionary, requestFile, form, navigate]);
   return {form, handleSubmit};
 }

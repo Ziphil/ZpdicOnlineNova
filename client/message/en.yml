@@ -1046,6 +1046,10 @@ discardMeButton:
       Are you really sure?
     confirm: "Delete"
 queueDownloadDictionaryButton:
+  label:
+    format:
+      slime: "OneToMany-JSON format"
+      zpdic: "ZpDIC API format"
   button:
     start: "Export"
 downloadDictionaryForm:
