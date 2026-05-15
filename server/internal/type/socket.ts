@@ -4,29 +4,9 @@
 export const SOCKET_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
 
 type SocketSpecsFromServer = {
-  succeedUploadDictionary: {
-    message: {number: number}
-  },
-  failUploadDictionary: {
-    message: {number: number}
-  },
-  succeedDownloadDictionary: {
-    message: {number: number, key: string}
-  },
-  failDownloadDictionary: {
-    message: {number: number}
-  }
 };
 
 type SocketSpecsFromClient = {
-  listenUploadDictionary: {
-    request: {number: number},
-    response: {}
-  },
-  listenDownloadDictionary: {
-    request: {number: number},
-    response: {}
-  }
 };
 
 export type SocketProcessName = keyof SocketSpecsFromClient;

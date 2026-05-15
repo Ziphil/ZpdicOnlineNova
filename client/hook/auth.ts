@@ -1,11 +1,10 @@
 //
 
-import axios from "axios";
 import {useCallback} from "react";
 import {atom, useRecoilValue, useSetRecoilState} from "recoil";
 import {invalidateAllResponses, useRequest} from "/client/hook/request";
 import {setAnalyticsProperties} from "/client/util/gtag";
-import {AxiosResponseSpec, RequestConfig, SERVER_PATH_PREFIX} from "/client/util/request";
+import {CommonResponse, RequestConfig, SERVER_PATH_PREFIX} from "/client/util/request";
 import {UserWithDetail} from "/server/internal/skeleton";
 import type {RequestData, ResponseData} from "/server/internal/type/rest";
 
@@ -26,10 +25,10 @@ export function useRefetchMe(): () => Promise<void> {
   return refetchMe;
 }
 
-export function useLoginRequest(): (data: RequestData<"login">, config?: RequestConfig) => Promise<AxiosResponseSpec<"login">> {
+export function useLoginRequest(): (data: RequestData<"login">, config?: RequestConfig) => Promise<CommonResponse<"login">> {
   const request = useRequest();
   const setMe = useSetRecoilState(meAtom);
-  const login = useCallback(async function (data: RequestData<"login">, config?: RequestConfig): Promise<AxiosResponseSpec<"login">> {
+  const login = useCallback(async function (data: RequestData<"login">, config?: RequestConfig): Promise<CommonResponse<"login">> {
     const response = await request("login", data, config);
     if (response.status === 200) {
       const body = response.data;
@@ -40,10 +39,10 @@ export function useLoginRequest(): (data: RequestData<"login">, config?: Request
   return login;
 }
 
-export function useLogoutRequest(): (config?: RequestConfig) => Promise<AxiosResponseSpec<"logout">> {
+export function useLogoutRequest(): (config?: RequestConfig) => Promise<CommonResponse<"logout">> {
   const request = useRequest();
   const setMe = useSetRecoilState(meAtom);
-  const logout = useCallback(async function (config?: RequestConfig): Promise<AxiosResponseSpec<"logout">> {
+  const logout = useCallback(async function (config?: RequestConfig): Promise<CommonResponse<"logout">> {
     const response = await request("logout", {}, config);
     if (response.status === 200) {
       setMe(null);
@@ -56,11 +55,14 @@ export function useLogoutRequest(): (config?: RequestConfig) => Promise<AxiosRes
 
 async function fetchMe(): Promise<UserWithDetail | null> {
   const url = SERVER_PATH_PREFIX + "/fetchMe";
-  const response = await axios.post<ResponseData<"fetchMe">>(url, {}, {validateStatus: () => true});
-  if (response.status === 200 && !("error" in response.data)) {
-    const me = response.data;
+  const headers = new Headers();
+  headers.set("Content-Type", "application/json");
+  const response = await fetch(url, {method: "post", headers, body: "{}"});
+  if (response.status === 200) {
+    const data = await response.json() as ResponseData<"fetchMe">;
+    const me = data;
     setAnalyticsProperties("user_properties", [["id", me.id], ["name", me.name], ["screen_name", me.screenName]]);
-    return me;
+    return data;
   } else {
     return null;
   }

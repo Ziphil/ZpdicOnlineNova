@@ -51,13 +51,6 @@ type ServerSpecs = {
       error: never
     }
   },
-  uploadDictionary: {
-    request: WithRecaptcha<{number: string}>,
-    response: {
-      success: Dictionary,
-      error: CustomError<"noSuchDictionary" | "dictionarySizeTooLarge" | "invalidArgument">
-    }
-  },
   discardDictionary: {
     request: {number: number},
     response: {
@@ -226,18 +219,39 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
-  downloadDictionary: {
-    request: {number: number},
+  queueDownloadDictionary: {
+    request: {number: number, format: "slime" | "zpdic"},
     response: {
-      success: {key: string},
+      success: {id: string},
       error: CustomError<"noSuchDictionary">
     }
   },
+  fetchDownloadDictionaryProgress: {
+    request: {id: string},
+    response: {
+      success: {status: "processing" | "success" | "error", errorCode: string | null},
+      error: CustomError<"noSuchJob">
+    }
+  },
+  queueUploadDictionary: {
+    request: WithRecaptcha<{number: string}>,
+    response: {
+      success: {id: string},
+      error: CustomError<"dictionarySizeTooLarge" | "invalidArgument">
+    }
+  },
+  fetchUploadDictionaryProgress: {
+    request: {id: string},
+    response: {
+      success: {status: "processing" | "success" | "error", errorCode: string | null},
+      error: CustomError<"noSuchJob">
+    }
+  },
   downloadDictionaryFile: {
-    request: {key: string, fileName?: string},
+    request: {id: string},
     response: {
       success: any,
-      error: never
+      error: CustomError<"noSuchJob">
     }
   },
   suggestDictionaryTitles: {

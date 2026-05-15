@@ -4,12 +4,12 @@ import {useCallback} from "react";
 import {QueryClient, UseQueryOptions, UseQueryResult, useQuery as useRawQuery} from "react-query";
 import {useToast} from "/client/hook/toast";
 import {
-  AxiosResponseSpec,
+  CommonResponse,
   RequestConfig,
   WithFile,
   determineErrorToastType,
-  request as rawRequest,
-  requestFile as rawRequestFile
+  request as doRequest,
+  requestFile as doRequestFile
 } from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {ResponseError} from "/client/util/response-error";
@@ -28,10 +28,10 @@ export const queryClient = new QueryClient({
   }
 });
 
-export function useRequest(): typeof rawRequest {
+export function useRequest(): typeof doRequest {
   const {dispatchErrorToast} = useToast();
-  const request = useCallback(async function <N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
-    const response = await rawRequest(name, data, config);
+  const request = useCallback(async function <N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<CommonResponse<N>> {
+    const response = await doRequest(name, data, config);
     if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
       const type = determineErrorToastType(response);
       dispatchErrorToast(type);
@@ -41,10 +41,10 @@ export function useRequest(): typeof rawRequest {
   return request;
 }
 
-export function useRequestFile(): typeof rawRequestFile {
+export function useRequestFile(): typeof doRequestFile {
   const {dispatchErrorToast} = useToast();
-  const requestFile = useCallback(async function <N extends ProcessName>(name: N, data: WithFile<RequestData<N>>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
-    const response = await rawRequestFile(name, data, config);
+  const requestFile = useCallback(async function <N extends ProcessName>(name: N, data: WithFile<RequestData<N>>, config: RequestConfig = {}): Promise<CommonResponse<N>> {
+    const response = await doRequestFile(name, data, config);
     if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
       const type = determineErrorToastType(response);
       dispatchErrorToast(type);
@@ -57,7 +57,7 @@ export function useRequestFile(): typeof rawRequestFile {
 export function useResponse<N extends ProcessName>(name: N, data: RequestData<N> | FalsyData, config: ResponseConfig<N> = {}): [SuccessResponseData<N> | undefined, unknown, ResponseRest<N>] {
   const responseResult = useRawQuery<ResponseData<N>>([name, data], async () => {
     if (data) {
-      const response = await rawRequest(name, data, config);
+      const response = await doRequest(name, data, config);
       return switchResponse(response, (data) => {
         return data;
       }, () => {
@@ -74,7 +74,7 @@ export function useResponse<N extends ProcessName>(name: N, data: RequestData<N>
 
 export function useSuspenseResponse<N extends ProcessName>(name: N, data: RequestData<N>, config: ResponseConfig<N> = {}): [SuccessResponseData<N>, ResponseRest<N>] {
   const responseResult = useRawQuery<SuccessResponseData<N>>([name, data], async () => {
-    const response = await rawRequest(name, data, config);
+    const response = await doRequest(name, data, config);
     return switchResponse(response, (data) => {
       return data;
     }, () => {
@@ -91,7 +91,7 @@ export function useSuspenseResponse<N extends ProcessName>(name: N, data: Reques
 
 export async function fetchResponse<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<SuccessResponseData<N>> {
   const responseResult = await queryClient.fetchQuery([name, data], async () => {
-    const response = await rawRequest(name, data, config);
+    const response = await doRequest(name, data, config);
     return switchResponse(response, (data) => {
       return data;
     }, () => {
@@ -103,7 +103,7 @@ export async function fetchResponse<N extends ProcessName>(name: N, data: Reques
 
 export async function prefetchResponse<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<void> {
   await queryClient.prefetchQuery([name, data], async () => {
-    const response = await rawRequest(name, data, config);
+    const response = await doRequest(name, data, config);
     return switchResponse(response, (data) => {
       return data;
     }, () => {

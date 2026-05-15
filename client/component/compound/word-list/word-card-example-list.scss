@@ -22,3 +22,13 @@
   display: flex;
   flex-direction: column;
 }
+
+.button {
+  margin-block-start: 2zu;
+  font-size: 3.5zu;
+  display: flex;
+}
+
+.icon {
+  margin-inline-end: var(--glob-blank-gap);
+}

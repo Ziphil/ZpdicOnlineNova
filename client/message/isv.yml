@@ -875,14 +875,10 @@ generateMyApiKeyForm:
       Copied your API key.
   caution: >-
     Please copy this key now and save it in a safe place, as you will not be able to see it later.
-uploadDictionaryButton:
+queueUploadDictionaryButton:
   heading: "Import"
   label:
     file: "File"
-  status:
-    loading: "Processing"
-    success: "Done"
-    error: "Failed"
   button:
     open: "Import"
     confirm: "Confirm"

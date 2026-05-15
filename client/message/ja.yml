@@ -681,6 +681,9 @@ wordList:
     create: "作成"
     proposal: "造語依頼"
     info: "詳細"
+  exampleListButton:
+    hide: "例文を隠す"
+    show: "例文を全て表示"
   table:
     updatedDate: "更新日時"
     createdDate: "作成日時"
@@ -1043,13 +1046,50 @@ discardMeButton:
       削除した後にデータを戻すことはできません。
       本当によろしいですか?
     confirm: "削除"
-downloadDictionaryButton:
+queueDownloadDictionaryButton:
+  label:
+    format:
+      slime: "OneToMany-JSON 形式"
+      zpdic: "ZpDIC API 形式"
   button:
     start: "エクスポート"
+downloadDictionaryForm:
+  button:
     download: "ダウンロード"
-  status:
-    loading: "処理中"
-    error: "失敗"
+    back: "辞書ページに戻る"
+  message:
+    processing: >-
+      ファイルを作成中です。
+      このページを開いたまましばらくお待ちください。
+    success: >-
+      ファイルの作成が完了しました。
+      以下のボタンからダウンロードできます。
+    error: >-
+      ファイルの作成に失敗しました。
+queueUploadDictionaryButton:
+  heading: "インポート"
+  label:
+    file: "ファイル"
+  button:
+    open: "インポート"
+    confirm: "決定"
+  error:
+    required: >-
+      ファイルを選択してください。
+    tooLarge: >-
+      ファイルのサイズが大きすぎます。
+      5 MB より大きなファイルはアップロードすることができません。
+uploadDictionaryForm:
+  button:
+    back: "辞書ページに戻る"
+  message:
+    processing: >-
+      インポート処理中です。
+      このページを開いたまましばらくお待ちください。
+    success: >-
+      インポートが完了しました。
+    error: >-
+      インポートに失敗しました。
 generateMyApiKeyForm:
   button:
     generate: "新規生成"
@@ -1060,23 +1100,6 @@ generateMyApiKeyForm:
   caution: >-
     API キーを後から確認することはできません。
     今の段階でコピーして保存しておいてください。
-uploadDictionaryButton:
-  heading: "インポート"
-  label:
-    file: "ファイル"
-  status:
-    loading: "処理中"
-    success: "完了"
-    error: "失敗"
-  button:
-    open: "インポート"
-    confirm: "決定"
-  error:
-    required: >-
-      ファイルを選択してください。
-    tooLarge: >-
-      ファイルのサイズが大きすぎます。
-      5 MB より大きなファイルはアップロードすることができません。
 
 contactPage:
   title: "お問い合わせ"
@@ -1204,7 +1227,7 @@ dictionarySettingFilePart:
       ファイルの内容をインポートして、現在のデータを上書きします。
       OneToMany-JSON 形式 (拡張子 .json) と PDIC 形式 (拡張子 .dic) に対応しています。
     download: >-
-      この辞書のデータを拡張 OneToMany-JSON 形式でエクスポートします。
+      この辞書のデータを指定された形式でエクスポートします。
       詳細な仕様については<link>ドキュメント</link>をご覧ください。
   callout:
     upload: >-

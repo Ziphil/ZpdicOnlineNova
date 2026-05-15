@@ -681,6 +681,9 @@ wordList:
     create: "Create"
     proposal: "Request creation"
     info: "Details"
+  exampleListButton:
+    hide: "Hide examples"
+    show: "Show all examples"
   table:
     updatedDate: "Updated at"
     createdDate: "Created at"
@@ -1045,30 +1048,29 @@ discardMeButton:
       You cannot restore it afterwards.
       Are you really sure?
     confirm: "Delete"
-downloadDictionaryButton:
+queueDownloadDictionaryButton:
+  label:
+    format:
+      slime: "OneToMany-JSON format"
+      zpdic: "ZpDIC API format"
   button:
     start: "Export"
-    download: "Download"
-  status:
-    loading: "Processing"
-    error: "Failed"
-generateMyApiKeyForm:
+downloadDictionaryForm:
   button:
-    generate: "Generate"
-    copy: "Copy"
-  toast: 
-    copy: >-
-      Copied your API key.
-  caution: >-
-    Please copy this key now and save it in a safe place, as you will not be able to see it later.
-uploadDictionaryButton:
+    download: "Download"
+    back: "Back to dictionary page"
+  message:
+    processing: >-
+      Creating a file.
+    success: >-
+      The file has been created.
+      You can download it from the button below.
+    error: >-
+      Failed to create the file.
+queueUploadDictionaryButton:
   heading: "Import"
   label:
     file: "File"
-  status:
-    loading: "Processing"
-    success: "Done"
-    error: "Failed"
   button:
     open: "Import"
     confirm: "Confirm"
@@ -1078,6 +1080,26 @@ uploadDictionaryButton:
     tooLarge: >-
       The file is too large.
       You cannot upload files larger than 5 MB.
+uploadDictionaryForm:
+  button:
+    back: "Back to dictionary page"
+  message:
+    processing: >-
+      Importing your file.
+      Please keep this page open.
+    success: >-
+      Your file has been imported.
+    error: >-
+      Failed to import your file.
+generateMyApiKeyForm:
+  button:
+    generate: "Generate"
+    copy: "Copy"
+  toast: 
+    copy: >-
+      Copied your API key.
+  caution: >-
+    Please copy this key now and save it in a safe place, as you will not be able to see it later.
 
 contactPage:
   title: "Contact"
@@ -1203,7 +1225,7 @@ dictionarySettingFilePart:
       Import the contents of a file and overwrite the current data.
       The supported formats are: OneToMany-JSON format (with extension .json) and PDIC format (with extension .dic).
     download: >-
-      Export the dictionary data in the extended OneToMany-JSON format.
+      Export the dictionary data in the specified format.
       See also the <link>documentation</link> for detailed specification.
   callout:
     upload: >-
