@@ -10,6 +10,7 @@ import {CustomError} from "/server/model/error";
 import {ExampleOfferParameter} from "/server/model/example-offer-parameter/example-offer-parameter";
 import {SystemModel} from "/server/model/system";
 import {askClaude} from "/server/util/claude";
+import {LogUtil} from "/server/util/log";
 import {QueryRange, WithSize} from "/server/util/query";
 
 
@@ -38,11 +39,13 @@ export class ExampleOfferSchema {
     const number = await this.fetchDailyNextNumber();
     const system = await SystemModel.findOne();
     if (system !== null) {
-      const [wordCount, cefrLevel] = [[10, "A1"], [13, "A2"], [15, "B1"]][number % 3] as [number, string];
+      const specs = system.dailyExampleOfferSpecs as Array<[number, string]>;
+      const [wordCount, cefrLevel] = specs[number % specs.length];
       const userPrompt = system.dailyExampleOfferUserPrompt.replace("{{wordCount}}", wordCount.toString()).replace("{{cefrLevel}}", cefrLevel);
       const systemPrompt = system.dailyExampleOfferSystemPrompt;
       const answer = await askClaude(userPrompt, systemPrompt);
       const translation = answer.match(/<sentence>(.*?)<\/sentence>/s)?.[1]?.trim();
+      LogUtil.log("model/example-offer/addDaily", {number, wordCount, cefrLevel});
       if (translation) {
         const offer = new ExampleOfferModel({
           catalog: "zpdicDaily",

@@ -17,6 +17,9 @@ export class SystemSchema {
   @prop({required: true})
   public dailyExampleOfferSystemPrompt!: string;
 
+  @prop({required: true})
+  public dailyExampleOfferSpecs!: any;
+
 }
 
 
