@@ -8,8 +8,8 @@ const anthropic = new Anthropic({apiKey: ANTHROPIC_KEY});
 
 export async function askClaude(userPrompt: string, systemPrompt?: string): Promise<string> {
   const message = await anthropic.messages.create({
-    "model": "claude-sonnet-4-20250514",
-    "max_tokens": 1000,
+    "model": "claude-sonnet-4-6",
+    "max_tokens": 10000,
     "temperature": 1,
     "system": systemPrompt,
     "messages": [{role: "user", content: [{type: "text", text: userPrompt}]}]
