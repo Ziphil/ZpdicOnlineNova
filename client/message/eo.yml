@@ -681,6 +681,9 @@ wordList:
     create: "Krei"
     proposal: "Peti kreadon"
     info: "Detaloj"
+  exampleListButton:
+    hide: "Kaŝi frazojn"
+    show: "Montri ĉiujn frazojn"
   table:
     updatedDate: "Ĝisdatigita je"
     createdDate: "Kreita je"

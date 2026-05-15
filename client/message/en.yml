@@ -681,6 +681,9 @@ wordList:
     create: "Create"
     proposal: "Request creation"
     info: "Details"
+  exampleListButton:
+    hide: "Hide examples"
+    show: "Show all examples"
   table:
     updatedDate: "Updated at"
     createdDate: "Created at"

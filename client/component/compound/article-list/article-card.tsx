@@ -60,9 +60,9 @@ export const ArticleCard = create(
           </div>
           {(listed) ? (
             <Collapsible styleName="collapsible">
-              <CollapsibleBody styleName="collapsible-body" height="5rem">
+              <CollapsibleBody styleName="collapsible-body" height="10rem">
                 <Markdown styleName="markdown" mode="article" compact={true} specialPaths={getDictionarySpecialPaths(dictionary)} features={dictionary.settings.markdownFeatures}>
-                  {truncateMarkdown(article.content, {limit: 200})}
+                  {truncateMarkdown(article.content, {limit: 500})}
                 </Markdown>
               </CollapsibleBody>
             </Collapsible>
