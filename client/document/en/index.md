@@ -16,8 +16,10 @@ title: Documents
 - [Complete specification](/document/zatlin/syntax)
 - ~~Errors~~
 
+## Terms
+- [Privacy policy](/document/legal/privacy)
+
 ## Other documentations
 
 - ~~Available Markdown syntaxes~~
 - ~~Introduction to regular expressions~~
-- [Privacy policy](/document/other/privacy)

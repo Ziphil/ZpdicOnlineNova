@@ -23,12 +23,12 @@ title: ドキュメント
 - [API v1 仕様書](/api/v1)
 
 ## 規約
-- [利用規約](/document/other/terms)
-- [プライバシーポリシー](/document/other/privacy)
+- [利用規約](/document/legal/terms)
+- [プライバシーポリシー](/document/legal/privacy)
+- [例文集のライセンス](/document/legal/exmaple-offer-licence)
 
 ## その他のドキュメント
 
 - [ダウンロード JSON ファイルの仕様](/document/other/json-spec)
 - [利用可能な Markdown 構文](/document/other/markdown)
 - [正規表現入門](/document/other/regexp)
-- [例文集のライセンス](/document/other/exmaple-offer-licence)
