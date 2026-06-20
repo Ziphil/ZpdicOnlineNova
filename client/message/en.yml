@@ -736,7 +736,7 @@ registerForm:
     name: &label.name "Username"
     email: &label.email "Email address"
     password: "Password"
-    agree: "Agree to the <link>privacy policy</link>"
+    agree: "Agree to the <termsLink>terms of service</termsLink> and <privacyLink>privacy policy</privacyLink>"
   button:
     confirm: "Create account"
   error:

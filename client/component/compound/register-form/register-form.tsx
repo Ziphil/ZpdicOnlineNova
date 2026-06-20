@@ -79,7 +79,8 @@ export const RegisterForm = create(
               />
               <CheckableLabel>
                 {transNode("label.agree", {
-                  link: (parts) => <Link href="/document/legal/privacy" scheme="secondary" variant="underline" target="_blank">{parts}</Link>
+                  termsLink: (parts) => <Link href="/document/legal/terms" scheme="secondary" variant="underline" target="_blank">{parts}</Link>,
+                  privacyLink: (parts) => <Link href="/document/legal/privacy" scheme="secondary" variant="underline" target="_blank">{parts}</Link>
                 })}
               </CheckableLabel>
             </CheckableContainer>

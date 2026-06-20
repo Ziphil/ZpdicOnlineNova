@@ -25,7 +25,8 @@ export namespace UserCreator {
     const skeleton = {
       ...base,
       email: raw.email,
-      activated: raw.activated
+      activated: raw.activated,
+      termsVersion: raw.termsVersion ?? 0
     } satisfies UserSkeletonWithDetail;
     return skeleton;
   }

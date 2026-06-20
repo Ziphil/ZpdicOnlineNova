@@ -736,7 +736,7 @@ registerForm:
     name: &label.name "ユーザー ID"
     email: &label.email "メールアドレス"
     password: "パスワード"
-    agree: "<link>プライバシーポリシー</link>に同意する"
+    agree: "<termsLink>利用規約</termsLink>と<privacyLink>プライバシーポリシー</privacyLink>に同意する"
   button:
     confirm: "新規登録"
   error:

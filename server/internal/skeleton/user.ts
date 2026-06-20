@@ -16,5 +16,6 @@ export interface UserWithDetail extends User {
 
   email: string;
   activated: boolean;
+  termsVersion: number;
 
 }

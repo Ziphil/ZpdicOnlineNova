@@ -492,6 +492,13 @@ type ServerSpecs = {
       error: CustomError<"invalidUserPassword">
     }
   },
+  changeMyTermsVersion: {
+    request: {termsVersion: number},
+    response: {
+      success: User,
+      error: never
+    }
+  },
   issueMyActivateToken: {
     request: WithRecaptcha<{}>,
     response: {

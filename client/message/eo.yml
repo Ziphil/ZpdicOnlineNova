@@ -736,7 +736,7 @@ registerForm:
     name: &label.name "Salutnomo"
     email: &label.email "Retpoŝta adreso"
     password: "Pasvorto"
-    agree: "Konsenti pri la <link>privateca politiko</link>"
+    agree: "Konsenti pri la <termsLink>uzkondiĉoj</termsLink> kaj <privacyLink>privateca politiko</privacyLink>"
   button:
     confirm: "Krei konton"
   error:

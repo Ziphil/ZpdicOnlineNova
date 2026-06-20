@@ -45,6 +45,9 @@ export class UserSchema {
   @prop()
   public authority?: string;
 
+  @prop()
+  public termsVersion?: number;
+
   /** 渡された情報からユーザーを作成し、データベースに保存します。
    * このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
    * 渡されたパスワードは自動的にハッシュ化されます。*/
@@ -58,7 +61,7 @@ export class UserSchema {
     } else {
       const screenName = "@" + name;
       const activated = false;
-      const user = new UserModel({name, screenName, email, activated});
+      const user = new UserModel({name, screenName, email, activated, termsVersion: 1});
       const key = await user.issueActivateToken();
       await user.encryptPassword(password);
       await user.validate();
@@ -198,6 +201,12 @@ export class UserSchema {
 
   public async changePassword(this: User, password: string): Promise<User> {
     this.encryptPassword(password);
+    await this.save();
+    return this;
+  }
+
+  public async changeTermsVersion(this: User, termsVersion: number): Promise<User> {
+    this.termsVersion = termsVersion;
     await this.save();
     return this;
   }
