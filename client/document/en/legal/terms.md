@@ -3,6 +3,8 @@ title: Terms of service
 ---
 
 
+These terms of service take effect on 1 July 2026.
+
 ## Article 1 — Overview
 These terms of service (hereinafter referred to as ‘these terms’) set out the conditions for using the various services of ZpDIC Online (hereinafter referred to as ‘this application’).
 All those who use this application (hereinafter referred to as ‘the user’) shall use this application only after agreeing to these terms.
@@ -154,4 +156,4 @@ This document is an English translation of the Japanese version, provided for re
 In the event of any discrepancy between this document and the Japanese version, the Japanese version shall prevail.
 
 ## Enactment date
-- Enacted on 20 June 2026
+- Formulated on 20 June 2026, takes effect on 1 July 2026

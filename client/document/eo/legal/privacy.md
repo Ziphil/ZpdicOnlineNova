@@ -3,6 +3,9 @@ title: Privateca politiko
 ---
 
 
+Tiu ĉi privateca politiko ekvalidos la 1an de julio 2026.
+Ĝis tiam validas la antaŭa privateca politiko.
+
 ## Superrigardo 
 Tiu privateca politiko klarigas la politikojn al kiuj ZpDIC Online (ĉi-poste nomata “tiu aplikaĵo”) aliĝas dum traktado de personaj informoj de la uzantoj de tiu aplikaĵo (ĉi-poste nomataj “la uzantoj”) en ĝiaj diversaj servoj.
 
@@ -105,4 +108,4 @@ En la okazo de iu ajn malkongruo inter tiu ĉi dokumento kaj la japana versio, l
 - Leĝigita la 30an de januaro 2021
 - Parte reviziita la 28an de januaro 2022
 - Parte reviziita la 15an de junio 2022
-- Parte reviziita la 20an de junio 2026 (aldono de priskriboj pri Amazon S3 kaj SendGrid, kaj transmeto de la malgarantio al la uzkondiĉoj)
+- Parte reviziita la 1an de julio 2026 (aldono de priskriboj pri Amazon S3 kaj SendGrid, kaj transmeto de la malgarantio al la uzkondiĉoj)

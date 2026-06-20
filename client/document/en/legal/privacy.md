@@ -3,6 +3,9 @@ title: Privacy policy
 ---
 
 
+This privacy policy takes effect on 1 July 2026.
+Until then, the previous privacy policy applies.
+
 ## Overview
 This privacy policy explains the policies to which ZpDIC Online (hereinafter referred to as ‘this application’) adheres when handling personal information of the users of this application (hereinafter referred to as ‘the users’) in its various services.
 
@@ -105,4 +108,4 @@ In the event of any discrepancy between this document and the Japanese version, 
 - Enacted on 30 January 2021
 - Partially revised on 28 January 2022
 - Partially revised on 15 June 2022
-- Partially revised on 20 June 2026 (added descriptions about Amazon S3 and SendGrid, and moved the disclaimer to the terms of service)
+- Partially revised on 1 July 2026 (added descriptions about Amazon S3 and SendGrid, and moved the disclaimer to the terms of service)
