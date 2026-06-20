@@ -3,7 +3,7 @@ title: Privateca politiko
 ---
 
 
-Tiu ĉi privateca politiko ekvalidos la 1an de julio 2026.
+Tiu ĉi privateca politiko ekvalidos la 13an de julio 2026.
 Ĝis tiam validas la antaŭa privateca politiko.
 
 ## Superrigardo 
@@ -108,4 +108,4 @@ En la okazo de iu ajn malkongruo inter tiu ĉi dokumento kaj la japana versio, l
 - Leĝigita la 30an de januaro 2021
 - Parte reviziita la 28an de januaro 2022
 - Parte reviziita la 15an de junio 2022
-- Parte reviziita la 1an de julio 2026 (aldono de priskriboj pri Amazon S3 kaj SendGrid, kaj transmeto de la malgarantio al la uzkondiĉoj)
+- Parte reviziita la 13an de julio 2026 (aldono de priskriboj pri Amazon S3 kaj SendGrid, kaj transmeto de la malgarantio al la uzkondiĉoj)

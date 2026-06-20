@@ -3,7 +3,7 @@ title: Privacy policy
 ---
 
 
-This privacy policy takes effect on 1 July 2026.
+This privacy policy takes effect on 13 July 2026.
 Until then, the previous privacy policy applies.
 
 ## Overview
@@ -108,4 +108,4 @@ In the event of any discrepancy between this document and the Japanese version, 
 - Enacted on 30 January 2021
 - Partially revised on 28 January 2022
 - Partially revised on 15 June 2022
-- Partially revised on 1 July 2026 (added descriptions about Amazon S3 and SendGrid, and moved the disclaimer to the terms of service)
+- Partially revised on 13 July 2026 (added descriptions about Amazon S3 and SendGrid, and moved the disclaimer to the terms of service)
