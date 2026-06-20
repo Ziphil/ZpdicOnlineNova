@@ -68,6 +68,18 @@
 .right {
   display: flex;
   @include device("desktop") {
+    column-gap: 6zu;
+    flex-direction: row-reverse;
+  }
+  @include device("mobile") {
+    row-gap: 2zu;
+    flex-direction: column;
+  }
+}
+
+.right-row {
+  display: flex;
+  @include device("desktop") {
     row-gap: 2zu;
     flex-direction: column;
     align-items: flex-end;

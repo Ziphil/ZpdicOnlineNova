@@ -556,6 +556,8 @@ footer:
     notification: "お知らせ"
     contact: "お問い合わせ"
     document: "ドキュメント"
+    terms: "利用規約"
+    privacy: "プライバシーポリシー"
 header:
   link:
     dictionary: "辞書一覧"

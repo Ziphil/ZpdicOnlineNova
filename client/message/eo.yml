@@ -556,6 +556,8 @@ footer:
     notification: "Novaĵoj"
     contact: "Kontakti"
     document: "Dokumentaro"
+    terms: "Uzkondiĉoj"
+    privacy: "Privateca politiko"
 header:
   link:
     dictionary: "Vortaroj"

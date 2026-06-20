@@ -556,6 +556,8 @@ footer:
     notification: "News"
     contact: "Contact"
     document: "Documentation"
+    terms: "Terms of service"
+    privacy: "Privacy policy"
 header:
   link:
     dictionary: "Dictionaries"
