@@ -1,4 +1,6 @@
-<!-- title: Zatlin 入門 -->
+---
+title: Zatlin 入門
+---
 
 
 ## 概要

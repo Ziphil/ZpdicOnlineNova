@@ -54,12 +54,12 @@ export const ExampleOfferCard = create(
               <div styleName="header">
                 <ExampleOfferTag offer={offer} scheme="primary" variant="solid"/>
                 {offer.catalog === "zpdicDaily" ? (
-                  <Link styleName="author" href={"/document/other/exmaple-offer-licence"} scheme="gray" variant="simple">
+                  <Link styleName="author" href={"/document/legal/exmaple-offer-licence"} scheme="gray" variant="simple">
                     <LinkIconbag><GeneralIcon styleName="author-icon" icon={faCreativeCommonsZero}/></LinkIconbag>
                     CC0 ({offer.author})
                   </Link>
                 ) : (
-                  <Link styleName="author" href={"/document/other/exmaple-offer-licence"} scheme="gray" variant="simple">
+                  <Link styleName="author" href={"/document/legal/exmaple-offer-licence"} scheme="gray" variant="simple">
                     <LinkIconbag><GeneralIcon styleName="author-icon" icon={faCopyright}/></LinkIconbag>
                     {offer.author}
                   </Link>

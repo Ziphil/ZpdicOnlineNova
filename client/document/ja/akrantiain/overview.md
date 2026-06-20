@@ -1,4 +1,6 @@
-<!-- title: Akrantiain とは -->
+---
+title: Akrantiain とは
+---
 
 
 ## Akrantiain とは

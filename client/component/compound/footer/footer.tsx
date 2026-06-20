@@ -37,15 +37,25 @@ export const Footer = create(
           </MultiLineText>
         </div>
         <div styleName="right">
-          <Link scheme="gray" variant="unstyledUnderline" href="/notification">
-            {trans("link.notification")}
-          </Link>
-          <Link scheme="gray" variant="unstyledUnderline" href="/contact">
-            {trans("link.contact")}
-          </Link>
-          <Link scheme="gray" variant="unstyledUnderline" href="/document">
-            {trans("link.document")}
-          </Link>
+          <div styleName="right-row">
+            <Link scheme="gray" variant="unstyledUnderline" href="/notification">
+              {trans("link.notification")}
+            </Link>
+            <Link scheme="gray" variant="unstyledUnderline" href="/contact">
+              {trans("link.contact")}
+            </Link>
+            <Link scheme="gray" variant="unstyledUnderline" href="/document">
+              {trans("link.document")}
+            </Link>
+          </div>
+          <div styleName="right-row">
+            <Link scheme="gray" variant="unstyledUnderline" href="/document/legal/terms">
+              {trans("link.terms")}
+            </Link>
+            <Link scheme="gray" variant="unstyledUnderline" href="/document/legal/privacy">
+              {trans("link.privacy")}
+            </Link>
+          </div>
         </div>
       </footer>
     );

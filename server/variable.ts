@@ -1,9 +1,9 @@
 //
 
-import dotenv from "dotenv";
+import {loadVault} from "../secret";
 
 
-dotenv.config({path: "./variable.env"});
+loadVault();
 
 export const VERSION = process.env["npm_package_version"] || "?";
 export const PORT = process.env["PORT"] || 8050;

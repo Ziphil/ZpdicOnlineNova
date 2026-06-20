@@ -1,5 +1,7 @@
 //
 
+import fs from "fs/promises";
+import nodePath from "path";
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
@@ -13,13 +15,19 @@ export class OtherRestController extends InternalRestController {
 
   @post("/fetchDocument")
   public async [Symbol()](request: Request<"fetchDocument">, response: Response<"fetchDocument">): Promise<void> {
-    const {locale, path} = request.body;
-    const localPath = `/dist/document/${locale}/${path || "index"}.md`;
-    response.sendFile(process.cwd() + localPath, (error) => {
-      if (error) {
+    const {locale, path: documentPath} = request.body;
+    const baseDirectory = nodePath.join(process.cwd(), "dist", "document");
+    const localPath = nodePath.join(baseDirectory, locale, `${documentPath || "index"}.md`);
+    if (nodePath.normalize(localPath).startsWith(nodePath.normalize(baseDirectory))) {
+      try {
+        const source = await fs.readFile(localPath, "utf-8");
+        InternalRestController.respond(response, source);
+      } catch (error) {
         InternalRestController.respondError(response, "noSuchDocument");
       }
-    });
+    } else {
+      InternalRestController.respondError(response, "noSuchDocument");
+    }
   }
 
   @post("/contact")

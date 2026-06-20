@@ -1,4 +1,6 @@
-<!-- title: Documents -->
+---
+title: Documents
+---
 
 
 ## Embedded applications
@@ -14,8 +16,12 @@
 - [Complete specification](/document/zatlin/syntax)
 - ~~Errors~~
 
+## Terms
+- [Terms of service](/document/legal/terms)
+- [Privacy policy](/document/legal/privacy)
+- [Licence of the example sentences](/document/legal/exmaple-offer-licence)
+
 ## Other documentations
 
 - ~~Available Markdown syntaxes~~
 - ~~Introduction to regular expressions~~
-- [Privacy policy](/document/other/privacy)

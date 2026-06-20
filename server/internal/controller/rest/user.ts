@@ -101,6 +101,16 @@ export class UserRestController extends InternalRestController {
     }
   }
 
+  @post("/changeMyTermsAgreement")
+  @before(checkMe())
+  public async [Symbol()](request: Request<"changeMyTermsAgreement">, response: Response<"changeMyTermsAgreement">): Promise<void> {
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
+    const {termsVersion} = request.body;
+    await me.changeTermsAgreement(termsVersion);
+    const body = UserCreator.skeletonize(me);
+    InternalRestController.respond(response, body);
+  }
+
   @post("/issueMyActivateToken")
   @before(checkRecaptcha(), checkMe())
   public async [Symbol()](request: Request<"issueMyActivateToken">, response: Response<"issueMyActivateToken">): Promise<void> {

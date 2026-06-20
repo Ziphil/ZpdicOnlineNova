@@ -106,6 +106,8 @@ toast:
       メールアドレスを変更しました。
     changeMyPassword: |-
       パスワードを変更しました。
+    changeMyTermsAgreement: |-
+      利用規約とプライバシーポリシーに同意しました。
     changeAppearance: |-
       外観を変更しました。
     generateMyApiKey: |-
@@ -554,6 +556,8 @@ footer:
     notification: "お知らせ"
     contact: "お問い合わせ"
     document: "ドキュメント"
+    terms: "利用規約"
+    privacy: "プライバシーポリシー"
 header:
   link:
     dictionary: "辞書一覧"
@@ -736,7 +740,7 @@ registerForm:
     name: &label.name "ユーザー ID"
     email: &label.email "メールアドレス"
     password: "パスワード"
-    agree: "<link>プライバシーポリシー</link>に同意する"
+    agree: "<termsLink>利用規約</termsLink>と<privacyLink>プライバシーポリシー</privacyLink>に同意する"
   button:
     confirm: "新規登録"
   error:
@@ -758,6 +762,17 @@ registerForm:
       パスワードを入力してください。
     agreeRequired: >-
       このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
+termsAgreementBanner:
+  message:
+    before: >-
+      新しい<termsLink>利用規約</termsLink>と<privacyLink>プライバシーポリシー</privacyLink>が {dateString} から適用される予定です。
+      内容をご確認の上、同意いただける場合は「同意する」ボタンを押してください。
+      なお、{dateString} 以降も利用を続けられた場合は、これらに同意したものと見なします。
+      同意いただけない場合は、それまでに退会およびデータのエクスポートをお願いします。
+    after: >-
+      新しい<termsLink>利用規約</termsLink>と<privacyLink>プライバシーポリシー</privacyLink>が {dateString} から適用されています。
+  button:
+    agree: "同意する"
 issueUserResetTokenForm:
   label:
     name: *label.name

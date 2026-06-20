@@ -106,6 +106,8 @@ toast:
       Your email address has been changed.
     changeMyPassword:
       Your password has been changed.
+    changeMyTermsAgreement:
+      You have agreed to the terms of service and privacy policy.
     changeAppearance: |-
       The appearance has been changed.
     generateMyApiKey: |-
@@ -554,6 +556,8 @@ footer:
     notification: "News"
     contact: "Contact"
     document: "Documentation"
+    terms: "Terms of service"
+    privacy: "Privacy policy"
 header:
   link:
     dictionary: "Dictionaries"
@@ -736,7 +740,7 @@ registerForm:
     name: &label.name "Username"
     email: &label.email "Email address"
     password: "Password"
-    agree: "Agree to the <link>privacy policy</link>"
+    agree: "Agree to the <termsLink>terms of service</termsLink> and <privacyLink>privacy policy</privacyLink>"
   button:
     confirm: "Create account"
   error:
@@ -759,6 +763,17 @@ registerForm:
       Enter a password.
     agreeRequired: >-
       In order to use this application, you must read and agree to the privacy policy.
+termsAgreementBanner:
+  message:
+    before: >-
+      The new <termsLink>terms of service</termsLink> and <privacyLink>privacy policy</privacyLink> are scheduled to take effect on {dateString}.
+      Please review them, and if you agree, press the ‘Agree’ button.
+      Note that if you continue to use this application on or after {dateString}, you will be deemed to have agreed to them.
+      If you do not agree, please delete your account and export your data before then.
+    after: >-
+      The new <termsLink>terms of service</termsLink> and <privacyLink>privacy policy</privacyLink> have been in effect since {dateString}.
+  button:
+    agree: "Agree"
 issueUserResetTokenForm:
   label:
     name: *label.name

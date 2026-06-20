@@ -1,4 +1,6 @@
-<!-- title: Zatlin とは -->
+---
+title: Zatlin とは
+---
 
 
 ## Zatlin とは

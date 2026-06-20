@@ -1,5 +1,10 @@
-<!-- title: Privacy policy -->
+---
+title: Privacy policy
+---
 
+
+This privacy policy takes effect on 13 July 2026.
+Until then, the previous privacy policy applies.
 
 ## Overview
 This privacy policy explains the policies to which ZpDIC Online (hereinafter referred to as ‘this application’) adheres when handling personal information of the users of this application (hereinafter referred to as ‘the users’) in its various services.
@@ -12,8 +17,9 @@ This privacy policy applies only to this application.
 
 ## Purpose of acquisition and use of personal information
 ### User management
-In order to use this application, the user must sign up and then sign in.
-When registering with and/or using this application, the user will need to send the following information.
+Some features of this application, such as browsing dictionaries, can be used without signing up.
+However, in order to use certain features such as creating or editing dictionaries, the user must sign up and then sign in.
+When registering, the user will need to send the following information.
 
 - Name (or handle name)
 - Email address
@@ -22,6 +28,7 @@ When registering with and/or using this application, the user will need to send 
 This information will be stored in a database managed by this application, and will be used to verify user information.
 The password will be stored in a hashed format by which the original string cannot be recovered.
 The email address will be used to reset the password in case the user forgets it, and to send emails to notify the user of information in this application.
+Note that this application uses [SendGrid](https://sendgrid.com/), an external service, to send emails, and the email address is sent to SendGrid when an email is sent.
 
 ### Contact
 In this application, the user may be asked to send the following information when they contact us via the contact form.
@@ -50,8 +57,8 @@ The information stored is as follows:
 
 The abovementioned ‘request body’ does not include the unhashed password which is sent to sign in, and thus passwords will not be stored unencrypted.
 
-This log information will be used to analyze access trends to improve the services and to determine the cause of errors when they occur.
-Log information will be stored on Papertrail for up to 7 days, and thery will be deleted after 7 days.
+This log information will be used to analyse access trends to improve the services and to determine the cause of errors when they occur.
+Log information will be stored on Papertrail for up to 7 days, and they will be deleted after 7 days.
 
 ### Cookies
 This application uses cookies.
@@ -75,6 +82,11 @@ This data collection is subject to the Google’s [Privacy Policy](https://polic
 The collected data will be used to understand how this application is used and to improve the services.
 This data is collected anonymously and does not identify the user.
 
+### File upload
+This application provides a feature to upload files such as images related to dictionaries.
+It uses [Amazon S3](https://aws.amazon.com/s3/) provided by Amazon to store the uploaded files.
+These files are stored on servers managed by Amazon and are used to provide the features of this application.
+
 ## Management of personal information
 This application manages personal information appropriately, and will not disclose or delete it except in the following cases:
 
@@ -82,22 +94,18 @@ This application manages personal information appropriately, and will not disclo
 - When there is a risk of infringing on the rights or interests of a user or a third party
 - When it is necessary to disclose or delete the information in accordance with laws and regulations
 
-## Disclaimer
-The copyrights and portrait rights of the dictionary data and/or image data published by the user in this application belong to the user concerned.
-The copyrights to the documentations and other materials which are not published by the users belong to the developer of this application.
-The developer of this application is not responsible for any damages caused to the users by these contents.
-
-While we strive to ensure that the information on this application is as accurate as possible, it may contain errors or be out of date.
-
-If the user are transferred from this application to another website via a link or banner, the developer of this application assumes no responsibility for the information or services provided at the linked website.
-
 ## Contact
 If you have any questions regarding the privacy policy of this application, please use the [contact form](/contact) or contact us directly at the following address:
 
 - Administrator — Ziphil Aleshlas
 - Email address — ziphil.shaleiras❖gmail.com (❖ → @)
 
+## Governing language
+This document is an English translation of the Japanese version, provided for reference.
+In the event of any discrepancy between this document and the Japanese version, the Japanese version shall prevail.
+
 ## Enactment date
 - Enacted on 30 January 2021
 - Partially revised on 28 January 2022
 - Partially revised on 15 June 2022
+- Partially revised on 13 July 2026 (added descriptions about Amazon S3 and SendGrid, and moved the disclaimer to the terms of service)

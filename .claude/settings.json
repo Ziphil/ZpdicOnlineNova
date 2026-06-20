@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint)",
+      "Bash(npm run lint:fix)",
+      "Bash(npm run build:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git show:*)"
+    ],
+    "deny": [
+      "Read(./variable.env)",
+      "Read(./secret.ts)",
+      "Read(**/variable.env)",
+      "Read(**/secret.ts)"
+    ]
+  }
+}
