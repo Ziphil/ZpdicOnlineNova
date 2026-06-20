@@ -12,12 +12,12 @@
 以下の順序で GitHub 連携を行います。
 これを行っておくと、GitHub の特定のブランチにプッシュするだけで自動的にデプロイされます。
 
-- 「Deploy」タブの「Deployment method」欄から「GitHub」を選択
-- 下に追加される「Connect to GitHub」欄の「Connect to GitHub」ボタンをクリック
-- 新しく表示されるウィンドウで GitHub アカウントを認証
-- リポジトリを検索するダイアログに「ZpdicOnlineNova」(このリポジトリ) と入力して検索
-- 見つかったリポジトリの横にある「Connect」ボタンをクリック
-- 「Automatic deploys」欄の「Enable Automatic Deploys」ボタンをクリック
+1. 「Deploy」タブの「Deployment method」欄から「GitHub」を選択する。
+1. 下に追加される「Connect to GitHub」欄の「Connect to GitHub」ボタンをクリックする。
+1. 新しく表示されるウィンドウで GitHub アカウントを認証する。
+1. リポジトリを検索するダイアログに「ZpdicOnlineNova」(このリポジトリ) と入力して検索する。
+1. 見つかったリポジトリの横にある「Connect」ボタンをクリックする。
+1. 「Automatic deploys」欄の「Enable Automatic Deploys」ボタンをクリックする。
 
 ### 環境変数の設定
 「Setting」タブの「Config Vars」欄で環境変数の設定を行います。
