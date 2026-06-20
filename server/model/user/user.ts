@@ -11,6 +11,7 @@ import Fuse from "fuse.js";
 import {DictionaryModel} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {ResetTokenModel, ResetTokenSchema} from "/server/model/user/reset-token";
+import {TermsAgreementSchema} from "/server/model/user/terms-agreement";
 import {createRandomString} from "/server/util/misc";
 import {EMAIL_REGEXP, IDENTIFIER_REGEXP, validatePassword} from "/server/util/validation";
 
@@ -46,7 +47,7 @@ export class UserSchema {
   public authority?: string;
 
   @prop()
-  public termsVersion?: number;
+  public termsAgreement?: TermsAgreementSchema;
 
   /** 渡された情報からユーザーを作成し、データベースに保存します。
    * このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
@@ -61,7 +62,8 @@ export class UserSchema {
     } else {
       const screenName = "@" + name;
       const activated = false;
-      const user = new UserModel({name, screenName, email, activated, termsVersion: 1});
+      const termsAgreement = {version: 1, date: new Date()};
+      const user = new UserModel({name, screenName, email, activated, termsAgreement});
       const key = await user.issueActivateToken();
       await user.encryptPassword(password);
       await user.validate();
@@ -205,8 +207,8 @@ export class UserSchema {
     return this;
   }
 
-  public async changeTermsVersion(this: User, termsVersion: number): Promise<User> {
-    this.termsVersion = termsVersion;
+  public async changeTermsAgreement(this: User, version: number): Promise<User> {
+    this.termsAgreement = {version, date: new Date()};
     await this.save();
     return this;
   }

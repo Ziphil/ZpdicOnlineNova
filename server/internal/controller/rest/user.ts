@@ -101,12 +101,12 @@ export class UserRestController extends InternalRestController {
     }
   }
 
-  @post("/changeMyTermsVersion")
+  @post("/changeMyTermsAgreement")
   @before(checkMe())
-  public async [Symbol()](request: Request<"changeMyTermsVersion">, response: Response<"changeMyTermsVersion">): Promise<void> {
+  public async [Symbol()](request: Request<"changeMyTermsAgreement">, response: Response<"changeMyTermsAgreement">): Promise<void> {
     const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     const {termsVersion} = request.body;
-    await me.changeTermsVersion(termsVersion);
+    await me.changeTermsAgreement(termsVersion);
     const body = UserCreator.skeletonize(me);
     InternalRestController.respond(response, body);
   }

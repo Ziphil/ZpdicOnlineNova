@@ -22,6 +22,7 @@ export * from "./template-word/template-relation";
 export * from "./template-word/template-section";
 export * from "./template-word/template-word";
 export * from "./user/reset-token";
+export * from "./user/terms-agreement";
 export * from "./user/user";
 export * from "./word/equivalent";
 export * from "./word/information";

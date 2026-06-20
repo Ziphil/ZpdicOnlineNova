@@ -1,6 +1,6 @@
 //
 
-import {ObjectId} from "/server/internal/skeleton/common";
+import {DateString, ObjectId} from "/server/internal/skeleton/common";
 
 
 export interface User {
@@ -16,6 +16,14 @@ export interface UserWithDetail extends User {
 
   email: string;
   activated: boolean;
-  termsVersion: number;
+  termsAgreement: TermsAgreement;
+
+}
+
+
+export interface TermsAgreement {
+
+  version: number;
+  date: DateString;
 
 }

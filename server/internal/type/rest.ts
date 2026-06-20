@@ -492,7 +492,7 @@ type ServerSpecs = {
       error: CustomError<"invalidUserPassword">
     }
   },
-  changeMyTermsVersion: {
+  changeMyTermsAgreement: {
     request: {termsVersion: number},
     response: {
       success: User,
