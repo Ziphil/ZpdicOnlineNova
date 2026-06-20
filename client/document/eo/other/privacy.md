@@ -1,4 +1,6 @@
-<!-- title: Privateca politiko -->
+---
+title: Privateca politiko
+---
 
 
 ## Superrigardo 

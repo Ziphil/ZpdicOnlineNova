@@ -1,4 +1,6 @@
-<!-- title: About Zatlin -->
+---
+title: About Zatlin
+---
 
 
 ## About Zatlin

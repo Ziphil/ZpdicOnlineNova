@@ -1,4 +1,6 @@
-<!-- title: Akrantiain 入門 -->
+---
+title: Akrantiain 入門
+---
 
 
 ## 概要

@@ -1,4 +1,6 @@
-<!-- title: Complete specification -->
+---
+title: Complete specification
+---
 
 
 ## Basic syntax

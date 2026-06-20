@@ -1,4 +1,6 @@
-<!-- title: Documents -->
+---
+title: Documents
+---
 
 
 ## Embedded applications

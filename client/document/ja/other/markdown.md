@@ -1,4 +1,6 @@
-<!-- title: 利用可能な Markdown 構文 -->
+---
+title: 利用可能な Markdown 構文
+---
 
 
 ## 概要

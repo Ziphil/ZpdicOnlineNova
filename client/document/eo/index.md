@@ -1,4 +1,6 @@
-<!-- title: Documentoj -->
+---
+title: Documentoj
+---
 
 
 ## Anonco

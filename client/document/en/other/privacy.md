@@ -1,4 +1,6 @@
-<!-- title: Privacy policy -->
+---
+title: Privacy policy
+---
 
 
 ## Overview

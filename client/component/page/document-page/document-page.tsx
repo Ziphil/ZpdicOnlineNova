@@ -24,14 +24,14 @@ export const DocumentPage = create(
     const path = params["*"] || "";
     const [source] = useSuspenseResponse("fetchDocument", {path, locale});
 
-    const title = source.match(/<!--\s*title:\s*(.+?)\s*-->/)?.[1];
-    const decommentedSource = source.replace(/<!--.*?-->/g, "");
+    const title = source.match(/^---\s*[\r\n]+title:\s*(.+?)\s*[\r\n]+---/)?.[1];
+    const content = source.replace(/^---[\s\S]*?---\s*/, "");
 
     return (
       <Page styleName="root" title={title} headerNode={<Header/>} {...rest}>
         <MainContainer>
           <Markdown mode="document" features={[]}>
-            {decommentedSource}
+            {content}
           </Markdown>
         </MainContainer>
       </Page>

@@ -1,4 +1,6 @@
-<!-- title: About Akrantiain -->
+---
+title: About Akrantiain
+---
 
 
 ## About Akrantiain
