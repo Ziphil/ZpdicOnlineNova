@@ -1,12 +1,12 @@
 //
 
-import dotenv from "dotenv";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
 import {EnvironmentPlugin} from "webpack";
+import {loadVault} from "./secret";
 
 
-dotenv.config({path: "./variable.env"});
+loadVault();
 
 const config = {
   entry: ["babel-polyfill", "./client/index.tsx"],
