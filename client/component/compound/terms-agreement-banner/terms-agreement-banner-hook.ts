@@ -10,12 +10,11 @@ import {switchResponse} from "/client/util/response";
 import {UserWithDetail} from "/server/internal/skeleton";
 
 
-export type TermsAgreementBannerType = "before" | "after" | null;
-
 export type TermsAgreementBannerSpec = {
   type: TermsAgreementBannerType,
-  agree: () => Promise<void>
+  handleSubmit: () => Promise<void>
 };
+type TermsAgreementBannerType = "before" | "after" | null;
 
 export function useTermsAgreementBanner(): TermsAgreementBannerSpec {
   const me = useMe();
@@ -23,14 +22,14 @@ export function useTermsAgreementBanner(): TermsAgreementBannerSpec {
   const refetchMe = useRefetchMe();
   const {dispatchSuccessToast} = useToast();
   const type = getBannerType(me);
-  const agree = useCallback(async function (): Promise<void> {
+  const handleSubmit = useCallback(async function (): Promise<void> {
     const response = await request("changeMyTermsAgreement", {termsVersion: TERMS_VERSION});
     await switchResponse(response, async () => {
       await refetchMe();
       dispatchSuccessToast("changeMyTermsAgreement");
     });
   }, [request, refetchMe, dispatchSuccessToast]);
-  return {type, agree};
+  return {type, handleSubmit};
 }
 
 /** ログイン中ユーザーの同意状況と現在時刻から、表示すべきバナーの種別を判定します。

@@ -20,7 +20,7 @@ export const TermsAgreementBanner = create(
 
     const {trans, transNode, transDate} = useTrans("termsAgreementBanner");
 
-    const {type, agree} = useTermsAgreementBanner();
+    const {type, handleSubmit} = useTermsAgreementBanner();
     const dateString = transDate(TERMS_DEEMED_CONSENT_DATE.tz("Asia/Tokyo"), "date");
 
     return (type !== null) ? (
@@ -35,7 +35,7 @@ export const TermsAgreementBanner = create(
                 privacyLink: (parts) => <Link href="/document/legal/privacy" scheme="secondary" variant="underline" target="_blank">{parts}</Link>
               })}
             </MultiLineText>
-            <Button styleName="button" variant="light" onClick={agree}>
+            <Button styleName="button" variant="light" onClick={handleSubmit}>
               <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
               {trans("button.agree")}
             </Button>
