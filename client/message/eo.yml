@@ -106,6 +106,8 @@ toast:
       Via retpoŝta adreso ŝanĝitas.
     changeMyPassword:
       Via pasvorto ŝanĝitas.
+    changeMyTermsAgreement:
+      Vi konsentis pri la uzkondiĉoj kaj privateca politiko.
     changeAppearance: |-
       La ŝajno ŝanĝitas.
     generateMyApiKey:
@@ -759,6 +761,17 @@ registerForm:
       Enigu pasvorton.
     agreeRequired: >-
       Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la privateca politiko.
+termsAgreementBanner:
+  message:
+    before: >-
+      La nova <termsLink>uzkondiĉoj</termsLink> kaj <privacyLink>privateca politiko</privacyLink> ekvalidos ekde {dateString}.
+      Bonvolu kontroli ilian enhavon kaj, se vi konsentas, premu la butonon “Konsenti”.
+      Notu, ke se vi daŭre uzas tiun aplikaĵon je aŭ post {dateString}, oni konsideros, ke vi konsentis pri ili.
+      Se vi ne konsentas, bonvolu forigi vian konton kaj eksporti viajn datumojn antaŭ tiam.
+    after: >-
+      La nova <termsLink>uzkondiĉoj</termsLink> kaj <privacyLink>privateca politiko</privacyLink> validas ekde {dateString}.
+  button:
+    agree: "Konsenti"
 issueUserResetTokenForm:
   label:
     name: *label.name

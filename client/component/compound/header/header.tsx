@@ -1,13 +1,14 @@
 //
 
 import {faBook, faQuotes, faSignInAlt} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement} from "react";
+import {Fragment, ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, LinkIconbag, useResponsiveDevice, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {Logo} from "/client/component/atom/logo";
 import {SimpleLink} from "/client/component/atom/simple-link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {ChangeLocaleForm} from "/client/component/compound/change-locale-form";
+import {TermsAgreementBanner} from "/client/component/compound/terms-agreement-banner";
 import {create} from "/client/component/create";
 import {useMe} from "/client/hook/auth";
 
@@ -26,40 +27,43 @@ export const Header = create(
     const device = useResponsiveDevice();
 
     return (
-      <header styleName="root" {...rest}>
-        <div styleName="left">
-          <SimpleLink styleName="logo" href="/">
-            <Logo type={(device === "desktop") ? "full" : "symbol"}/>
-          </SimpleLink>
-          <nav styleName="navigation">
-            <Link styleName="link" href="/dictionary" variant="unstyledUnderline">
-              <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
-              {trans("link.dictionary")}
-            </Link>
-            <Link styleName="link" href="/sentence" variant="unstyledUnderline">
-              <LinkIconbag><GeneralIcon icon={faQuotes}/></LinkIconbag>
-              {trans("link.exampleOffer")}
-            </Link>
-          </nav>
-        </div>
-        <div styleName="right">
-          <div styleName="menu">
-            <ChangeLocaleForm/>
-          </div>
-          <div styleName="rightmost">
-            {(me !== null) ? (
-              <SimpleLink href={`/user/${me.name}`}>
-                <UserAvatar styleName="avatar" user={me} insertAlt={true}/>
-              </SimpleLink>
-            ) : (
-              <Link styleName="link" href="/login" variant="unstyledUnderline">
-                <LinkIconbag><GeneralIcon icon={faSignInAlt}/></LinkIconbag>
-                {trans("link.login")}
+      <Fragment>
+        <header styleName="root" {...rest}>
+          <div styleName="left">
+            <SimpleLink styleName="logo" href="/">
+              <Logo type={(device === "desktop") ? "full" : "symbol"}/>
+            </SimpleLink>
+            <nav styleName="navigation">
+              <Link styleName="link" href="/dictionary" variant="unstyledUnderline">
+                <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
+                {trans("link.dictionary")}
               </Link>
-            )}
+              <Link styleName="link" href="/sentence" variant="unstyledUnderline">
+                <LinkIconbag><GeneralIcon icon={faQuotes}/></LinkIconbag>
+                {trans("link.exampleOffer")}
+              </Link>
+            </nav>
           </div>
-        </div>
-      </header>
+          <div styleName="right">
+            <div styleName="menu">
+              <ChangeLocaleForm/>
+            </div>
+            <div styleName="rightmost">
+              {(me !== null) ? (
+                <SimpleLink href={`/user/${me.name}`}>
+                  <UserAvatar styleName="avatar" user={me} insertAlt={true}/>
+                </SimpleLink>
+              ) : (
+                <Link styleName="link" href="/login" variant="unstyledUnderline">
+                  <LinkIconbag><GeneralIcon icon={faSignInAlt}/></LinkIconbag>
+                  {trans("link.login")}
+                </Link>
+              )}
+            </div>
+          </div>
+        </header>
+        <TermsAgreementBanner/>
+      </Fragment>
     );
 
   }
