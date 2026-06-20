@@ -17,7 +17,9 @@ title: Documents
 - ~~Errors~~
 
 ## Terms
+- [Terms of service](/document/legal/terms)
 - [Privacy policy](/document/legal/privacy)
+- [Licence of the example sentences](/document/legal/exmaple-offer-licence)
 
 ## Other documentations
 

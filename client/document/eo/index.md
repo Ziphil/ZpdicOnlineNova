@@ -3,6 +3,7 @@ title: Documentoj
 ---
 
 
-## Anonco
-La dokumentoj en Esperanto estas nuntempe konstruata.
-Bonvolu atendi iom da tempo.
+## Kondiĉoj
+- [Uzkondiĉoj](/document/legal/terms)
+- [Privateca politiko](/document/legal/privacy)
+- [Permesilo de la ekzemplaj frazaroj](/document/legal/exmaple-offer-licence)

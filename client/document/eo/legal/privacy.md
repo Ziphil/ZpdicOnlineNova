@@ -14,8 +14,9 @@ Tiu privateca politiko validas nur por tiu aplikaĵo.
 
 ## Celo de akirado kaj uzado de personaj informoj
 ### Administrado de uzantoj
-Por uzi tiun aplikaĵon, la uzanto devas registriĝi kaj ensaluti.
-Kiam la uzanto registriĝas kaj/aŭ uzas la servojn ĉe tiu aplikaĵo, ri devas sendi la sekvajn informojn.
+Iuj funkcioj de tiu aplikaĵo, kiel foliumado de vortaroj, uzeblas sen registriĝo.
+Tamen, por uzi iujn funkciojn kiel kreado aŭ redaktado de vortaroj, la uzanto devas registriĝi kaj ensaluti.
+Kiam la uzanto registriĝas, ri devas sendi la sekvajn informojn.
 
 - Nomo (aŭ kromnomo)
 - Retpoŝta adreso
@@ -24,6 +25,7 @@ Kiam la uzanto registriĝas kaj/aŭ uzas la servojn ĉe tiu aplikaĵo, ri devas 
 Tiuj informoj estos konservitaj en datumbazo administrata de tiu aplikaĵo, kaj estos uzataj por kontroli uzantajn informojn.
 La pasvorto estos konservita en haketita formato per kiu la origina signoĉeno ne povas esti reakirita.
 La retpoŝta adreso estos uzata por restarigi la pasvorton kiam la uzanto forgesos ĝin, kaj por sendi retpoŝtojn por sciigi la uzanton pri informoj en tiu aplikaĵo.
+Notu ke tiu aplikaĵo uzas [SendGrid](https://sendgrid.com/), eksteran servon, por sendi retpoŝtojn, kaj la retpoŝta adreso estas sendata al SendGrid kiam retpoŝto estas sendata.
 
 ### Kontaktado
 En tiu aplikaĵo, la uzanto povas esti petita sendi la sekvajn informojn kiam ri kontaktas nin per la kontakta formularo.
@@ -77,6 +79,11 @@ Tiu kolektado de datumoj estas submetita al la [privateca politiko](https://poli
 La kolektitaj datumoj estos uzataj por kompreni kiel tiu aplikaĵo estas uzata kaj por plibonigi la servojn.
 Tiuj datumoj estas kolektitaj anonime kaj ne identigas la uzanton.
 
+### Alŝuto de dosieroj
+Tiu aplikaĵo provizas funkcion por alŝuti dosierojn kiel bildojn rilatajn al vortaroj.
+Ĝi uzas [Amazon S3](https://aws.amazon.com/s3/) provizatan de Amazon por konservi la alŝutitajn dosierojn.
+Tiuj dosieroj estas konservataj sur serviloj administrataj de Amazon kaj estas uzataj por provizi la funkciojn de tiu aplikaĵo.
+
 ## Administrado de personaj informoj
 Tiu aplikaĵo taŭge administras personajn informojn, kaj ne malkaŝos aŭ forigos ilin krom en la sekvaj kazoj:
 
@@ -84,22 +91,18 @@ Tiu aplikaĵo taŭge administras personajn informojn, kaj ne malkaŝos aŭ forig
 - Kiam estos risko malobservi la rajtojn aŭ interesojn de uzanto aŭ de tria partio
 - Kiam necesos malkaŝi aŭ forigi la informojn laŭ leĝoj kaj regularoj
 
-## Malgarantio
-La kopirajtoj kaj portretaj rajtoj de la vortaraj kaj/aŭ bildaj datumoj publikigitaj de la uzanto en tiu aplikaĵo apartenas al la koncerna uzanto.
-La kopirajtoj de la dokumentoj kaj aliaj materialoj kiuj ne estas publikigitaj de la uzantoj apartenas al la programisto de tiu aplikaĵo.
-La programisto de tiu aplikaĵo ne respondecas pri ajnaj damaĝoj kaŭzitaj de tiuj enhavoj al la uzantoj.
-
-Kvankam ni klopodas certigi ke la informoj en tiu aplikaĵo estas kiel eble plej precizaj, ili povas enhavi erarojn aŭ malnoviĝi.
-
-Se la uzanto estas translokigita de tiu aplikaĵo al alia retejo per ligilo aŭ standardo, la programisto de tiu aplikaĵo ne prenas respondecon pri la informoj aŭ servoj provizitaj en la ligita retejo.
-
 ## Kontakti
 Se vi havas demandojn pri la privateca politiko de tiu aplikaĵo, bonvolu uzi la [kontaktan formularon](/contact) aŭ kontakti nin rekte per la sekva adreso:
 
 - Administranto — Ziphil Aleshlas
 - Retpoŝta adreso — ziphil.shaleiras❖gmail.com (❖ → @)
 
+## Reganta lingvo
+Tiu ĉi dokumento estas Esperanta traduko de la japana versio, provizita por referenco.
+En la okazo de iu ajn malkongruo inter tiu ĉi dokumento kaj la japana versio, la japana versio superregas.
+
 ## Dato de leĝigado
 - Leĝigita la 30an de januaro 2021
 - Parte reviziita la 28an de januaro 2022
 - Parte reviziita la 15an de junio 2022
+- Parte reviziita la 20an de junio 2026 (aldono de priskriboj pri Amazon S3 kaj SendGrid, kaj transmeto de la malgarantio al la uzkondiĉoj)
