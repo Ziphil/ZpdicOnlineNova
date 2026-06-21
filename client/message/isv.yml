@@ -605,10 +605,13 @@ shareMenu:
     bluesky: "Bluesky"
     misskey: "Misskey.io"
     copy: "Copy link"
+    saveScreenshot: "Save screenshot"
     other: "Others"
   toast:
     copy: |-
       Copied the link.
+    screenshot: |-
+      Saved the screenshot.
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"

@@ -652,10 +652,13 @@ shareMenu:
     misskey: "Misskey.io"
     copyUrl: "URL をコピー"
     copyMarkdownText: "Markdown をコピー"
+    saveScreenshot: "スクリーンショットを保存"
     other: "その他"
   toast:
     copy: |-
       リンクをコピーしました。
+    screenshot: |-
+      スクリーンショットを保存しました。
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"

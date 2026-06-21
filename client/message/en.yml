@@ -652,10 +652,13 @@ shareMenu:
     misskey: "Misskey.io"
     copyUrl: "Copy URL"
     copyMarkdownText: "Copy Markdown"
+    saveScreenshot: "Save screenshot"
     other: "Others"
   toast:
     copy: |-
       Copied the link.
+    screenshot: |-
+      Saved the screenshot.
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"
