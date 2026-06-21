@@ -15,11 +15,15 @@ La traktado de personaj informoj en tiu aplikaĵo estas regata de la aparte difi
 ## Artikolo 2 — Difinoj
 La terminoj uzataj en tiuj kondiĉoj estas difinitaj kiel sekvas:
 
-- “Tiu aplikaĵo” signifas la retservon provizatan sub la nomo “ZpDIC Online”, per kiu oni povas foliumi, krei, redakti kaj publikigi vortarojn de planlingvoj.
-- “La uzanto” signifas ĉiujn kiuj uzas tiun aplikaĵon post konsento pri tiuj kondiĉoj.
-- “Registrita uzanto” signifas uzanton kiu registriĝis ĉe tiu aplikaĵo kaj posedas konton.
-- “Enhavo” signifas ĉiujn informojn kiujn la uzanto kreas, afiŝas aŭ alŝutas per tiu aplikaĵo, kiel vortarajn datumojn (vortojn, difinojn, ekzemplajn frazojn, ktp.) kaj datumojn kunligitajn al vortaroj (priskribojn, bildajn dosierojn, ktp.).
-- “API” signifas la interfacon provizatan de tiu aplikaĵo sub la retadreso `/api`, per kiu oni povas atingi la datumojn de tiu aplikaĵo programe.
+“Tiu aplikaĵo” signifas la retservon provizatan sub la nomo “ZpDIC Online”, per kiu oni povas foliumi, krei, redakti kaj publikigi vortarojn de planlingvoj.
+
+“La uzanto” signifas ĉiujn kiuj uzas tiun aplikaĵon post konsento pri tiuj kondiĉoj.
+
+“Registrita uzanto” signifas uzanton kiu registriĝis ĉe tiu aplikaĵo kaj posedas konton.
+
+“Enhavo” signifas ĉiujn informojn kiujn la uzanto kreas, afiŝas aŭ alŝutas per tiu aplikaĵo, kiel vortarajn datumojn (vortojn, difinojn, ekzemplajn frazojn, ktp.) kaj datumojn kunligitajn al vortaroj (priskribojn, bildajn dosierojn, ktp.).
+
+“API” signifas la interfacon provizatan de tiu aplikaĵo sub la retadreso `/api`, per kiu oni povas atingi la datumojn de tiu aplikaĵo programe.
 
 ## Artikolo 3 — Registriĝo
 Iujn funkciojn de tiu aplikaĵo oni povas uzi per registriĝo.
@@ -28,9 +32,9 @@ Registriĝo okazas per kandidatiĝo en la maniero preskribita de tiu aplikaĵo p
 Tiu aplikaĵo povas malakcepti peton pri registriĝo se ĝi juĝas ke la petanto trafas iun el la jenaj kazoj.
 Tiukaze, ĝi ne havas la devon malkaŝi la kialon.
 
-- La petanto malobservis tiujn kondiĉojn en la pasinteco.
-- La registraj detaloj enhavas falsajn informojn.
-- Tiu aplikaĵo alimaniere juĝas ke la registriĝo estas malkonvena.
+- La petanto malobservis tiujn kondiĉojn en la pasinteco
+- La registraj detaloj enhavas falsajn informojn
+- Tiu aplikaĵo alimaniere juĝas ke la registriĝo estas malkonvena
 
 Registrita uzanto tuj ĝisdatigu siajn registrajn detalojn en la maniero preskribita de tiu aplikaĵo kiam ajn estas ŝanĝo en ili.
 
@@ -53,7 +57,6 @@ La kopirajtoj kaj aliaj rajtoj al la enhavo kreita de la uzanto per tiu aplikaĵ
 Tamen, la uzanto donas al la programisto de tiu aplikaĵo la rajton uzi tian enhavon senpage (reprodukti, konservi, publikigi, transsendi, montri, ktp.) en la amplekso necesa por provizi, konservi kaj plibonigi tiun aplikaĵon.
 
 La uzanto komprenas kaj konsentas ke enhavo agordita kiel publika fariĝos videbla aŭ akirebla de aliaj uzantoj aŭ de la ĝenerala publiko laŭ la specifoj de tiu aplikaĵo.
-
 La uzanto garantias ke ri havas la laŭleĝan rajton afiŝi la enhavon kiun ri afiŝas, kaj ke tia enhavo ne malobservas la rajtojn de iu ajn tria partio.
 
 La programisto de tiu aplikaĵo ne havas devon kontroli la enhavon kreitan de uzantoj, kaj ne garantias ĝian precizecon, plenecon, laŭleĝecon, aŭ simile.
@@ -105,9 +108,9 @@ Krome, se la programisto de tiu aplikaĵo transdonas la entreprenon rilatan al t
 ## Artikolo 10 — Limigo de uzado kaj nuligo de registriĝo
 La programisto de tiu aplikaĵo povas, sen antaŭa avizo, preni rimedojn kiel forigi enhavon, limigi la uzadon de tiu aplikaĵo, aŭ forigi la konton, se la uzanto trafas iun el la jenaj:
 
-- La uzanto malobservis iun dispozicion de tiuj kondiĉoj.
-- Montriĝas ke la registraj detaloj enhavas falsajn faktojn.
-- La programisto de tiu aplikaĵo alimaniere juĝas ke la uzado de tiu aplikaĵo estas malkonvena.
+- La uzanto malobservis iun dispozicion de tiuj kondiĉoj
+- Montriĝas ke la registraj detaloj enhavas falsajn faktojn
+- La programisto de tiu aplikaĵo alimaniere juĝas ke la uzado de tiu aplikaĵo estas malkonvena
 
 Krome, la programisto de tiu aplikaĵo povas forigi kontojn aŭ datumojn kiuj ne estis uzataj dum longa tempo sen antaŭa avizo al la uzanto, kaj ne havas devon restarigi la forigitajn kontojn aŭ datumojn.
 
