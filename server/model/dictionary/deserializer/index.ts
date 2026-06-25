@@ -4,10 +4,12 @@ import fs from "fs";
 import {BinaryDeserializer} from "/server/model/dictionary/deserializer/binary-deserializer";
 import {Deserializer} from "/server/model/dictionary/deserializer/deserializer";
 import {SlimeDeserializer} from "/server/model/dictionary/deserializer/slime-deserializer";
+import {ZpdicDeserializer} from "/server/model/dictionary/deserializer/zpdic-deserializer";
 import {Dictionary} from "/server/model/dictionary/dictionary";
 export * from "/server/model/dictionary/deserializer/deserializer";
 export * from "/server/model/dictionary/deserializer/binary-deserializer";
 export * from "/server/model/dictionary/deserializer/slime-deserializer";
+export * from "/server/model/dictionary/deserializer/zpdic-deserializer";
 
 
 /** 与えられたパスの拡張子を調べ、対応するデシリアライザを返します。
@@ -18,6 +20,8 @@ export function createDeserializer(path: string, originalPath: string, dictionar
     if (fs.existsSync(path)) {
       if (extension === "json") {
         return new SlimeDeserializer(path, dictionary, cacheSize);
+      } else if (extension === "zpdc") {
+        return new ZpdicDeserializer(path, dictionary, cacheSize);
       } else if (extension === "dic") {
         return new BinaryDeserializer(path, dictionary, cacheSize);
       } else {
