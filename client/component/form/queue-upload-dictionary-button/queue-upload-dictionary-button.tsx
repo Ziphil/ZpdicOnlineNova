@@ -38,7 +38,7 @@ export const QueueUploadDictionaryButton = create(
 
     const {form, handleSubmit} = useQueueUploadDictionary(dictionary);
     const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen({handleSubmit, onOpen: form.resetAll});
-    const {control, getFieldState} = form;
+    const {control, getFieldState, formState: {errors}} = form;
 
     return (
       <Fragment>
