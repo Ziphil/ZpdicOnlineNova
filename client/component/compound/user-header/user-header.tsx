@@ -1,14 +1,13 @@
 //
 
-import {faBell, faBook, faCode, faCog, faPalette, faSignOutAlt} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback} from "react";
-import {useNavigate} from "react-router-dom";
-import {AdditionalProps, Badge, GeneralIcon, SingleLineText, Tab, TabIconbag, TabList, useTrans} from "zographia";
+import {faBell, faBook, faCode, faCog, faPalette} from "@fortawesome/sharp-regular-svg-icons";
+import {ReactElement} from "react";
+import {AdditionalProps, Badge, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
 import {LinkTab} from "/client/component/atom/tab";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {MainContainer} from "/client/component/compound/page";
 import {create} from "/client/component/create";
-import {useLogoutRequest, useMe} from "/client/hook/auth";
+import {useMe} from "/client/hook/auth";
 import {useResponse} from "/client/hook/request";
 import {User} from "/server/internal/skeleton";
 import {ActivateMeCallout} from "./activate-me-callout";
@@ -30,20 +29,12 @@ export const UserHeader = create(
 
     const {trans, transNumber} = useTrans("userHeader");
 
-    const navigate = useNavigate();
-
     const me = useMe();
-    const logout = useLogoutRequest();
 
     const [dictionaries] = useResponse("fetchUserDictionaries", {name: user.name});
     const [editInvitations] = useResponse("fetchInvitations", (user.id === me?.id) && {type: "edit"});
     const [transferInvitations] = useResponse("fetchInvitations", (user.id === me?.id) && {type: "transfer"});
     const invitations = (editInvitations !== undefined && transferInvitations !== undefined) ? [...editInvitations, ...transferInvitations] : undefined;
-
-    const logoutAndBack = useCallback(async function (): Promise<void> {
-      await logout();
-      navigate("/");
-    }, [logout, navigate]);
 
     return (
       <header styleName="root" {...rest}>
@@ -102,12 +93,6 @@ export const UserHeader = create(
                 <TabIconbag><GeneralIcon icon={faCog}/></TabIconbag>
                 {trans("tab.setting")}
               </LinkTab>
-            )}
-            {(user.id === me?.id) && (
-              <Tab value="logout" onClick={logoutAndBack}>
-                <TabIconbag><GeneralIcon icon={faSignOutAlt}/></TabIconbag>
-                {trans("tab.logout")}
-              </Tab>
             )}
           </TabList>
         </MainContainer>

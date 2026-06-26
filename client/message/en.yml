@@ -669,7 +669,6 @@ userHeader:
     setting: "Settings"
     appearance: "Appearance"
     developer: "Developer"
-    logout: "Sign out"
   button:
     issueActivateToken: "Resend email"
   callout:
@@ -1057,6 +1056,9 @@ discardDictionaryButton:
       You cannot restore it afterwards.
       Are you really sure?
     confirm: "Delete"
+logoutButton:
+  button:
+    submit: "Sign out"
 discardMeButton:
   button:
     submit: "Delete"
@@ -1399,6 +1401,7 @@ userSettingPart:
     avatar: "Avatar icon"
     email: "Email address"
     password: "Password"
+    logout: "Sign out"
     discard: "Delete account"
   callout:
     discard: >-

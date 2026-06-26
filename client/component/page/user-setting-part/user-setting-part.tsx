@@ -10,6 +10,7 @@ import {ChangeMyEmailForm} from "/client/component/form/change-my-email-form";
 import {ChangeMyPasswordForm} from "/client/component/form/change-my-password-form";
 import {ChangeMyScreenNameForm} from "/client/component/form/change-my-screen-name-form";
 import {DiscardMeButton} from "/client/component/form/discard-me-button";
+import {LogoutButton} from "/client/component/form/logout-button";
 import {useMe} from "/client/hook/auth";
 
 
@@ -43,6 +44,10 @@ export const UserSettingPart = create(
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.password")}</h3>
           <ChangeMyPasswordForm me={me}/>
+        </section>
+        <section styleName="section">
+          <h3 styleName="heading">{trans("heading.logout")}</h3>
+          <LogoutButton/>
         </section>
         <section styleName="section">
           <h3 styleName="heading" {...data({danger: true})}>{trans("heading.discard")}</h3>

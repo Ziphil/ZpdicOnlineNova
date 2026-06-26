@@ -669,7 +669,6 @@ userHeader:
     setting: "設定"
     appearance: "外観"
     developer: "開発向け"
-    logout: "ログアウト"
   button:
     issueActivateToken: "メールを再送信"
   callout:
@@ -1055,6 +1054,9 @@ discardDictionaryButton:
       削除した後にデータを戻すことはできません。
       本当によろしいですか?
     confirm: "削除"
+logoutButton:
+  button:
+    submit: "ログアウト"
 discardMeButton:
   button:
     submit: "削除"
@@ -1401,6 +1403,7 @@ userSettingPart:
     avatar: "アイコン"
     email: "メールアドレス"
     password: "パスワード"
+    logout: "ログアウト"
     discard: "アカウント削除"
   callout:
     discard: >-

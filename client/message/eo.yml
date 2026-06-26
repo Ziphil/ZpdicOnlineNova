@@ -669,7 +669,6 @@ userHeader:
     setting: "Agordoj"
     appearance: "Šajno"
     developer: "Programado"
-    logout: "Elsaluti"
   button:
     issueActivateToken: "Resendi retpoŝton"
   callout:
@@ -1057,6 +1056,9 @@ discardDictionaryButton:
       Vi ne povas restaŭri ĝin poste.
       Ĉu vi vere certas?
     confirm: "Forigi"
+logoutButton:
+  button:
+    submit: "Elsaluti"
 discardMeButton:
   button:
     submit: "Forigi"
@@ -1399,6 +1401,7 @@ userSettingPart:
     avatar: "Bildeto"
     email: "Retpoŝta adreso"
     password: "Pasvorto"
+    logout: "Elsaluti"
     discard: "Forigi konton"
   callout:
     discard: >-
