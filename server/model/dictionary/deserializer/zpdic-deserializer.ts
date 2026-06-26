@@ -7,7 +7,7 @@ import {pick} from "stream-json/filters/Pick";
 import {streamArray} from "stream-json/streamers/StreamArray";
 import {WordCreator} from "/server/external-alpha/creator";
 import {ExampleCreator} from "/server/external-alpha/creator/example/example";
-import {EditableExample$In, EditableWord$In} from "/server/external-alpha/schema";
+import {EditableExample$In as EditableExample, EditableWord$In as EditableWord} from "/server/external-alpha/schema";
 import {Deserializer} from "/server/model/dictionary/deserializer/deserializer";
 import {Example, ExampleModel} from "/server/model/example/example";
 import {Word, WordModel} from "/server/model/word/word";
@@ -68,18 +68,18 @@ export class ZpdicDeserializer extends Deserializer {
   private createWord(raw: any): Word {
     const dictionary = this.dictionary;
     const number = raw["number"];
-    const enfleshed = WordCreator.enflesh(EditableWord$In.cast(raw));
     const updatedDate = new Date();
-    const word = new WordModel({dictionary, number, ...enfleshed, updatedDate});
+    const enfleshedWord = WordCreator.enflesh(EditableWord.cast(raw));
+    const word = new WordModel({dictionary, number, ...enfleshedWord, updatedDate});
     return word;
   }
 
   private createExample(raw: any): Example {
     const dictionary = this.dictionary;
     const number = raw["number"];
-    const enfleshed = ExampleCreator.enflesh(EditableExample$In.cast(raw));
     const updatedDate = new Date();
-    const example = new ExampleModel({dictionary, number, ...enfleshed, updatedDate});
+    const enfleshedExample = ExampleCreator.enflesh(EditableExample.cast(raw));
+    const example = new ExampleModel({dictionary, number, ...enfleshedExample, updatedDate});
     return example;
   }
 
