@@ -14,7 +14,7 @@ const SCHEMA = object({
   format: string().oneOf(["slime", "zpdic"]).required()
 });
 const DEFAULT_VALUE = {
-  format: "slime"
+  format: "zpdic"
 } satisfies FormValue;
 type FormValue = Asserts<typeof SCHEMA>;
 
