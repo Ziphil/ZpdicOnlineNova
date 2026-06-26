@@ -55,7 +55,7 @@ export const QueueDownloadDictionaryButton = create(
             <DialogBody is="form">
               <h2 styleName="dialog-heading">{trans("heading")}</h2>
               <div styleName="dialog-control">
-                <ControlContainer>
+                <ControlContainer label={false}>
                   <ControlLabel>{trans("label.format.label")}</ControlLabel>
                   <div styleName="card-group">
                     {["zpdic", "slime"].map((format) => (
