@@ -1065,12 +1065,22 @@ discardMeButton:
       本当によろしいですか?
     confirm: "削除"
 queueDownloadDictionaryButton:
+  heading: "エクスポート"
   label:
     format:
-      slime: "OneToMany-JSON 形式"
-      zpdic: "ZpDIC API 形式"
+      label: "形式"
+      slime: "OneToMany-JSON"
+      zpdic: "ZpDIC API"
+  labelHelper:
+    format:
+      zpdic: >-
+        ZpDIC 内で管理されている形式をそのまま保った形式です。
+      slime: >-
+        OneToMany-JSON 形式に対応した他のアプリケーションでも利用できる形式です。
+        単語のセクション分けが平坦化されるなど、一部の構造が簡略化される点に注意してください。
   button:
-    start: "エクスポート"
+    open: "エクスポート"
+    confirm: "決定"
 downloadDictionaryForm:
   button:
     download: "ダウンロード"

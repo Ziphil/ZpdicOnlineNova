@@ -20,7 +20,7 @@ type FormValue = Asserts<typeof SCHEMA>;
 
 export type QueueDownloadDictionarySpec = {
   form: UseFormReturn<FormValue>,
-  handleSubmit: (event: BaseSyntheticEvent) => Promise<void>
+  handleSubmit: (event: BaseSyntheticEvent, onSubmit?: () => unknown) => Promise<void>
 };
 
 export function useQueueDownloadDictionary(dictionary: Dictionary): QueueDownloadDictionarySpec {

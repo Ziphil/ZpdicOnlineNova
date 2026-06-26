@@ -1067,12 +1067,22 @@ discardMeButton:
       Are you really sure?
     confirm: "Delete"
 queueDownloadDictionaryButton:
+  heading: "Export"
   label:
     format:
-      slime: "OneToMany-JSON format"
-      zpdic: "ZpDIC API format"
+      label: "Format"
+      slime: "OneToMany-JSON"
+      zpdic: "ZpDIC API"
+  labelHelper:
+    format:
+      zpdic: >-
+        A format that preserves the structure managed within ZpDIC as is.
+      slime: >-
+        A format that can also be used by other applications supporting the OneToMany-JSON format.
+        Note that some structures are simplified; for example, the sectioning of words is flattened.
   button:
-    start: "Export"
+    open: "Export"
+    confirm: "Confirm"
 downloadDictionaryForm:
   button:
     download: "Download"
