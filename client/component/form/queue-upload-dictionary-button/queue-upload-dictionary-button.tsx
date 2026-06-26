@@ -63,7 +63,7 @@ export const QueueUploadDictionaryButton = create(
                       value={field.value}
                       onSet={field.onChange}
                       error={getFieldState("file").error !== undefined}
-                      accepts={[".json", ".dic"]}
+                      accepts={[".json", ".zpdc", ".dic"]}
                       multiple={false}
                     />
                   )}/>
