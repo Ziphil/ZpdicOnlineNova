@@ -1,5 +1,15 @@
 //
 
+import {InferType, number, object, string} from "yup";
+
+
+export const LinkedExampleOffer$In = object({
+
+  catalog: string().default(""),
+  number: number().defined()
+
+});
+
 
 export interface LinkedExampleOffer$Out {
 
@@ -7,3 +17,6 @@ export interface LinkedExampleOffer$Out {
   number: number;
 
 }
+
+
+export type LinkedExampleOffer$In = InferType<typeof LinkedExampleOffer$In>;

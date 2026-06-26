@@ -6,10 +6,10 @@ import {parser} from "stream-json";
 import {pick} from "stream-json/filters/Pick";
 import {streamArray} from "stream-json/streamers/StreamArray";
 import {WordCreator} from "/server/external-alpha/creator";
-import {EditableWord$In} from "/server/external-alpha/schema";
+import {ExampleCreator} from "/server/external-alpha/creator/example/example";
+import {EditableExample$In, EditableWord$In} from "/server/external-alpha/schema";
 import {Deserializer} from "/server/model/dictionary/deserializer/deserializer";
 import {Example, ExampleModel} from "/server/model/example/example";
-import {LinkedWordModel} from "/server/model/word/linked-word";
 import {Word, WordModel} from "/server/model/word/word";
 
 
@@ -77,14 +77,9 @@ export class ZpdicDeserializer extends Deserializer {
   private createExample(raw: any): Example {
     const dictionary = this.dictionary;
     const number = raw["number"];
-    const sentence = raw["sentence"] ?? "";
-    const translation = raw["translation"] ?? "";
-    const supplement = raw["supplement"] ?? "";
-    const tags = raw["tags"] ?? [];
-    const words = (raw["words"] ?? []).map((rawWord: any) => new LinkedWordModel({number: rawWord["number"]}));
-    const offer = (raw["offer"]) ? {catalog: raw["offer"]["catalog"] ?? "", number: parseInt(raw["offer"]["number"], 10)} : undefined;
+    const enfleshed = ExampleCreator.enflesh(EditableExample$In.cast(raw));
     const updatedDate = new Date();
-    const example = new ExampleModel({dictionary, number, sentence, translation, supplement, tags, words, offer, updatedDate});
+    const example = new ExampleModel({dictionary, number, ...enfleshed, updatedDate});
     return example;
   }
 
