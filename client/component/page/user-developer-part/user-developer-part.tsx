@@ -6,7 +6,7 @@ import {useParams} from "react-router-dom";
 import {AdditionalProps, Callout, CalloutBody, CalloutIconContainer, GeneralIcon, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
-import {GenerateMyApiKeyForm} from "/client/component/form/generate-my-api-key-form";
+import {GenerateMyApiCredentialForm} from "/client/component/form/generate-my-api-credential-form";
 import {useMe} from "/client/hook/auth";
 
 
@@ -41,7 +41,7 @@ export const UserDeveloperPart = create(
               </MultiLineText>
             </CalloutBody>
           </Callout>
-          <GenerateMyApiKeyForm/>
+          <GenerateMyApiCredentialForm/>
         </section>
       </div>
     ) : null;

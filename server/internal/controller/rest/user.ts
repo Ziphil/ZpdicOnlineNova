@@ -5,7 +5,7 @@ import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/
 import {checkMe, checkRecaptcha, login, logout} from "/server/internal/controller/rest/middleware";
 import {UserCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
-import {UserModel} from "/server/model";
+import {ApiCredentialModel, UserModel} from "/server/model";
 import {getStorageUploadFilePost} from "/server/util/aws";
 import {getMailSubject, getMailText, sendMail} from "/server/util/mail";
 
@@ -214,12 +214,16 @@ export class UserRestController extends InternalRestController {
     }
   }
 
-  @post("/generateMyApiKey")
+  @post("/generateMyApiCredential")
   @before(checkMe())
-  public async [Symbol()](request: Request<"generateMyApiKey">, response: Response<"generateMyApiKey">): Promise<void> {
+  public async [Symbol()](request: Request<"generateMyApiCredential">, response: Response<"generateMyApiCredential">): Promise<void> {
     const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
-    const apiKey = await me.generateApiKey();
-    InternalRestController.respond(response, {apiKey});
+    try {
+      const apiKey = await ApiCredentialModel.issue(me);
+      InternalRestController.respond(response, {apiKey});
+    } catch (error) {
+      InternalRestController.respondByCustomError(response, ["apiCredentialCountExceeded"], error);
+    }
   }
 
   @post("/suggestUsers")

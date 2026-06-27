@@ -110,7 +110,7 @@ toast:
       Vi konsentis pri la uzkondiĉoj kaj privateca politiko.
     changeAppearance: |-
       La ŝajno ŝanĝitas.
-    generateMyApiKey:
+    generateMyApiCredential:
       Via API-ŝlosilo generitas.
     issueMyActivateToken:
       Ni sendis retpoŝton al vi.
@@ -148,6 +148,9 @@ toast:
       Ne ekzistas uzanto kun la retpoŝta adreso.
     userAlreadyActivated: |-
       Tiu uzanto estas jam aktivigita.
+    apiCredentialCountExceeded: |-
+      Vi ne povas eldoni pliajn API-ŝlosilojn.
+      Bonvolu forigi ekzistantan API-ŝlosilon kaj reprovi.
     invalidActivateToken: |-
       Malsukcesis aktivigi la uzanton.
     invalidResetToken: |-
@@ -1121,7 +1124,7 @@ uploadDictionaryForm:
       Via dosiero estas importita.
     error: >-
       Malsukcesis importi vian dosieron.
-generateMyApiKeyForm:
+generateMyApiCredentialForm:
   button:
     generate: "Generi"
     copy: "Kopii"

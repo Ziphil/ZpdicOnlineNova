@@ -94,7 +94,7 @@ toast:
       Your email address has been changed.
     changeMyPassword:
       Your password has been changed.
-    generateMyApiKey:
+    generateMyApiCredential:
       Your API key has been generated.
     issueMyActivateToken:
       We sent an email to you.
@@ -132,6 +132,9 @@ toast:
       No user with the email address exists.
     userAlreadyActivated: |-
       This user has already been activated.
+    apiCredentialCountExceeded: |-
+      You cannot issue any more API keys.
+      Please delete an existing API key and try again.
     invalidActivateToken: |-
       Failed to activate the user.
     invalidResetToken: |-
@@ -869,7 +872,7 @@ downloadDictionaryButton:
   status:
     loading: "Processing"
     error: "Failed"
-generateMyApiKeyForm:
+generateMyApiCredentialForm:
   button:
     generate: "Generate"
     copy: "Copy"

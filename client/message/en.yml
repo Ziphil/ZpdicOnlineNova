@@ -110,7 +110,7 @@ toast:
       You have agreed to the terms of service and privacy policy.
     changeAppearance: |-
       The appearance has been changed.
-    generateMyApiKey: |-
+    generateMyApiCredential: |-
       Your API key has been generated.
     issueMyActivateToken:
       We sent an email to you.
@@ -148,6 +148,9 @@ toast:
       No user with the email address exists.
     userAlreadyActivated: |-
       This user has already been activated.
+    apiCredentialCountExceeded: |-
+      You cannot issue any more API keys.
+      Please delete an existing API key and try again.
     invalidActivateToken: |-
       Failed to activate the user.
     invalidResetToken: |-
@@ -1121,7 +1124,7 @@ uploadDictionaryForm:
       Your file has been imported.
     error: >-
       Failed to import your file.
-generateMyApiKeyForm:
+generateMyApiCredentialForm:
   button:
     generate: "Generate"
     copy: "Copy"
