@@ -29,6 +29,7 @@ title: ドキュメント
 
 ## その他のドキュメント
 
-- [ダウンロード JSON ファイルの仕様](/document/other/json-spec)
+- [OneToMany-JSON 形式の仕様](/document/other/slime-json-spec)
+- [ZpDIC API 形式の仕様](/document/other/zpdic-json-spec)
 - [利用可能な Markdown 構文](/document/other/markdown)
 - [正規表現入門](/document/other/regexp)
