@@ -53,7 +53,7 @@ export const EditTemplateWordFormRelationSection = create(
         <h4 styleName="heading">{trans("heading.relations")}</h4>
         <div styleName="list">
           {(relations.length > 0) ? (
-            <EditWordFormDndContext values={relations} setValues={setRelations}>
+            <EditWordFormDndContext values={relations} setValues={setRelations} move={relationOperations.move}>
               {relations.map((relation, index) => (
                 <EditTemplateWordFormRelationItem
                   styleName="item"

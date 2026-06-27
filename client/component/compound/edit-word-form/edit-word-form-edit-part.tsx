@@ -35,7 +35,8 @@ export const EditWordFormEditPart = create(
       append: sectionFieldArraySpec.append,
       insert: sectionFieldArraySpec.insert,
       update: sectionFieldArraySpec.update,
-      remove: sectionFieldArraySpec.remove
+      remove: sectionFieldArraySpec.remove,
+      move: sectionFieldArraySpec.move
     }), [sectionFieldArraySpec]);
 
     const sections = sectionFieldArraySpec.fields;
@@ -60,7 +61,7 @@ export const EditWordFormEditPart = create(
           <EditWordFormBasicSection dictionary={dictionary} form={form}/>
           {(dictionary.settings.enableAdvancedWord) ? (
             <div styleName="section-list">
-              <SwapAnimationContext values={sections} setValues={setSections}>
+              <SwapAnimationContext values={sections} setValues={setSections} move={sectionFieldArraySpec.move}>
                 {sections.map((section, sectionIndex) => (
                   <EditWordFormSectionSection
                     key={section.id}
@@ -82,7 +83,7 @@ export const EditWordFormEditPart = create(
             </div>
           ) : (
             <div styleName="section-list">
-              <SwapAnimationContext values={sections} setValues={setSections}>
+              <SwapAnimationContext values={sections} setValues={setSections} move={sectionFieldArraySpec.move}>
                 <EditWordFormSectionSection
                   key={sections[0].id}
                   dictionary={dictionary}
