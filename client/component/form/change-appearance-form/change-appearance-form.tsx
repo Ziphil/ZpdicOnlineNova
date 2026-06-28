@@ -6,8 +6,8 @@ import {
   AdditionalProps,
   Button,
   ButtonIconbag,
-  CheckableContainer,
-  CheckableLabel,
+  CheckableCard,
+  CheckableCardBody,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
@@ -35,26 +35,34 @@ export const ChangeAppearanceForm = create(
 
     return (
       <form styleName="root" {...rest}>
-        <ControlContainer>
+        <ControlContainer label={false}>
           <ControlLabel>{trans("label.theme.label")}</ControlLabel>
-          <div styleName="radio-group">
+          <div styleName="card-group">
             {APPEARANCE_SCHEMES.map((scheme) => THEMES.map((theme) => (
-              <CheckableContainer key={`${scheme}-${theme}`}>
+              <CheckableCard styleName="card" key={`${scheme}-${theme}`}>
                 <Radio value={`${scheme}-${theme}`} {...register("theme")}/>
-                <CheckableLabel>{trans(`label.scheme.${scheme}`)} · {trans(`label.theme.${theme}`)}</CheckableLabel>
-              </CheckableContainer>
+                <CheckableCardBody styleName="card-body">
+                  <div styleName="label">
+                    <div styleName="label-main">{trans(`label.scheme.${scheme}`)} · {trans(`label.theme.${theme}`)}</div>
+                  </div>
+                </CheckableCardBody>
+              </CheckableCard>
             )))}
           </div>
           <ControlErrorMessage name="theme" form={form} trans={trans}/>
         </ControlContainer>
-        <ControlContainer>
+        <ControlContainer label={false}>
           <ControlLabel>{trans("label.font.label")}</ControlLabel>
-          <div styleName="radio-group">
+          <div styleName="card-group">
             {APPEARANCE_FONTS.map((font) => (
-              <CheckableContainer key={font}>
+              <CheckableCard styleName="card" key={font}>
                 <Radio value={font} {...register("font")}/>
-                <CheckableLabel>{trans(`label.font.${font}`)}</CheckableLabel>
-              </CheckableContainer>
+                <CheckableCardBody styleName="card-body">
+                  <div styleName="label">
+                    <div styleName="label-main">{trans(`label.font.${font}`)}</div>
+                  </div>
+                </CheckableCardBody>
+              </CheckableCard>
             ))}
           </div>
           <ControlErrorMessage name="font" form={form} trans={trans}/>
