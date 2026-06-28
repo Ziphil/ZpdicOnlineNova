@@ -96,6 +96,8 @@ toast:
       Your password has been changed.
     generateMyApiCredential:
       Your API key has been generated.
+    discardMyApiCredential:
+      Your API key has been deleted.
     issueMyActivateToken:
       We sent an email to you.
       Please follow the instructions in the email.
@@ -135,6 +137,8 @@ toast:
     apiCredentialCountExceeded: |-
       You cannot issue any more API keys.
       Please delete an existing API key and try again.
+    noSuchApiCredential: |-
+      This API key does not exist.
     invalidActivateToken: |-
       Failed to activate the user.
     invalidResetToken: |-
@@ -884,9 +888,18 @@ generateMyApiCredentialForm:
 apiCredentialList:
   button:
     copy: "Copy"
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This API key will be deleted.
+        Any programs using this API key will no longer be able to access dictionaries.
+        Are you sure?
+      confirm: "Delete"
+  table:
+    createdDate: "Issued at"
   caution: >-
     Please copy this key now and save it in a safe place, as you will not be able to see it later.
-  createdDate: "Issued: {date}"
   empty: "You have not issued any API keys yet."
   toast:
     copy: >-

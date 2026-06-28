@@ -112,6 +112,8 @@ toast:
       La ŝajno ŝanĝitas.
     generateMyApiCredential:
       Via API-ŝlosilo generitas.
+    discardMyApiCredential:
+      Via API-ŝlosilo forigitas.
     issueMyActivateToken:
       Ni sendis retpoŝton al vi.
       Bonvolu sekvi la instrukciojn en la retpoŝto.
@@ -151,6 +153,8 @@ toast:
     apiCredentialCountExceeded: |-
       Vi ne povas eldoni pliajn API-ŝlosilojn.
       Bonvolu forigi ekzistantan API-ŝlosilon kaj reprovi.
+    noSuchApiCredential: |-
+      Tiu API-ŝlosilo ne ekzistas.
     invalidActivateToken: |-
       Malsukcesis aktivigi la uzanton.
     invalidResetToken: |-
@@ -1136,6 +1140,14 @@ generateMyApiCredentialForm:
 apiCredentialList:
   button:
     copy: "Kopii"
+    discard: "Forigi"
+  dialog:
+    discard:
+      message: >-
+        Tiu API-ŝlosilo estos forigita.
+        Programoj uzantaj tiun API-ŝlosilon ne plu povos aliri vortarojn.
+        Ĉu vi certas?
+      confirm: "Forigi"
   table:
     createdDate: "Eldonita je"
   caution: >-

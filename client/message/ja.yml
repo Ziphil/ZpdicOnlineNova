@@ -112,6 +112,8 @@ toast:
       外観を変更しました。
     generateMyApiCredential: |-
       API キーを生成しました。
+    discardMyApiCredential: |-
+      API キーを削除しました。
     issueMyActivateToken: |-
       メールを送信しました。
       メールの指示に従って操作を進めてください。
@@ -151,6 +153,8 @@ toast:
     apiCredentialCountExceeded: |-
       これ以上 API キーを発行することはできません。
       既存の API キーを削除してからもう一度お試しください。
+    noSuchApiCredential: |-
+      この API キーは存在しません。
     invalidActivateToken: |-
       ユーザーのアクティベートに失敗しました。
     invalidResetToken: |-
@@ -1136,6 +1140,14 @@ generateMyApiCredentialForm:
 apiCredentialList:
   button:
     copy: "コピー"
+    discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この API キーを削除します。
+        この API キーを使用しているプログラムからは辞書にアクセスできなくなります。
+        本当によろしいですか?
+      confirm: "削除"
   table:
     createdDate: "発行日"
   caution: >-

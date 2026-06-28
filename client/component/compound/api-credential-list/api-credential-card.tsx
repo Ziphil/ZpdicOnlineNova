@@ -1,13 +1,14 @@
 //
 
-import {faCopy} from "@fortawesome/sharp-regular-svg-icons";
+import {faCopy, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement, useCallback} from "react";
-import {AdditionalProps, Card, CardBody, GeneralIcon, IconButton, MultiLineText, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, IconButton, MultiLineText, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useToast} from "/client/hook/toast";
 import {copyToClipboard} from "/client/util/clipboard";
 import {ApiCredential} from "/server/internal/skeleton";
+import {useDiscardApiCredential} from "./api-credential-card-hook";
 
 
 export const ApiCredentialCard = create(
@@ -22,6 +23,8 @@ export const ApiCredentialCard = create(
 
     const {trans, transDate} = useTrans("apiCredentialList");
     const {dispatchInfoToast} = useToast();
+
+    const discardCredential = useDiscardApiCredential(credential);
 
     const copyKey = useCallback(async function (): Promise<void> {
       if (credential.key !== undefined) {
@@ -43,12 +46,12 @@ export const ApiCredentialCard = create(
                   <GeneralIcon icon={faCopy}/>
                 </IconButton>
               </div>
-              <MultiLineText styleName="caution">
+              <MultiLineText styleName="caution" lineHeight="narrow">
                 {trans("caution")}
               </MultiLineText>
             </div>
           ) : (
-            <pre styleName="code" data-masked={true}>
+            <pre styleName="code" {...data({masked: true})}>
               {"•".repeat(40)}
             </pre>
           )}
@@ -57,6 +60,12 @@ export const ApiCredentialCard = create(
             <dd styleName="table-value"><time dateTime={dayjs(credential.createdDate).toISOString()}>{transDate(credential.createdDate)}</time></dd>
           </dl>
         </CardBody>
+        <CardFooter styleName="footer">
+          <Button scheme="red" variant="underline" onClick={discardCredential}>
+            <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
+            {trans("button.discard")}
+          </Button>
+        </CardFooter>
       </Card>
     );
 

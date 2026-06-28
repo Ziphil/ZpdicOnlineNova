@@ -236,6 +236,19 @@ export class UserRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
+  @post("/discardMyApiCredential")
+  @before(checkMe())
+  public async [Symbol()](request: Request<"discardMyApiCredential">, response: Response<"discardMyApiCredential">): Promise<void> {
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
+    const {id} = request.body;
+    try {
+      await ApiCredentialModel.discard(me, id);
+      InternalRestController.respond(response, null);
+    } catch (error) {
+      InternalRestController.respondByCustomError(response, ["noSuchApiCredential"], error);
+    }
+  }
+
   @post("/suggestUsers")
   public async [Symbol()](request: Request<"suggestUsers">, response: Response<"suggestUsers">): Promise<void> {
     const {pattern} = request.body;

@@ -52,16 +52,13 @@ export const UserDeveloperPart = create(
 );
 
 
+/** API から取得した API キー一覧 (キー本体なし) に対し、発行直後に保持しているキー本体を id で照合して上書きします。
+ * 取得した一覧に含まれていない保持中のキーは表示しません。
+ * これにより、削除されて一覧から消えたキーが、保持中のキーとして表示され続けることを防ぎます。*/
 function mergeCredentials(credentials: Array<ApiCredential>, generatedCredential: ApiCredential | null): Array<ApiCredential> {
   if (generatedCredential !== null) {
-    const existingCredentials = credentials.some((credential) => credential.id === generatedCredential.id);
-    if (existingCredentials) {
-      const mergedCredentials = credentials.map((credential) => (credential.id === generatedCredential.id) ? generatedCredential : credential);
-      return mergedCredentials;
-    } else {
-      const mergedCredentials = [generatedCredential, ...credentials];
-      return mergedCredentials;
-    }
+    const mergedCredentials = credentials.map((credential) => (credential.id === generatedCredential.id) ? generatedCredential : credential);
+    return mergedCredentials;
   } else {
     return credentials;
   }

@@ -570,6 +570,13 @@ type ServerSpecs = {
       error: never
     }
   },
+  discardMyApiCredential: {
+    request: {id: ObjectId},
+    response: {
+      success: null,
+      error: CustomError<"noSuchApiCredential">
+    }
+  },
   suggestUsers: {
     request: {pattern: string},
     response: {

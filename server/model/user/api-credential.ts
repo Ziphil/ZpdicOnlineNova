@@ -48,6 +48,17 @@ export class ApiCredentialSchema {
     return credentials;
   }
 
+  /** 渡されたユーザーが保持している、指定された ID の API キーを削除します。
+   * そのユーザーが保持する API キーの中に該当するものが存在しない場合は、`noSuchApiCredential` エラーを発生させます。*/
+  public static async discard(user: User, id: string): Promise<void> {
+    const credential = await ApiCredentialModel.findById(id).where("user", user);
+    if (credential !== null) {
+      await credential.deleteOne();
+    } else {
+      throw new CustomError("noSuchApiCredential");
+    }
+  }
+
   /** 渡された API キーに合致するユーザーを返します。
    * 合致するキーが存在しない場合は `null` を返します。*/
   public static async fetchUserByKey(key: string): Promise<User | null> {
