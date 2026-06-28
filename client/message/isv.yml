@@ -881,6 +881,16 @@ generateMyApiCredentialForm:
       Copied your API key.
   caution: >-
     Please copy this key now and save it in a safe place, as you will not be able to see it later.
+apiCredentialList:
+  button:
+    copy: "Copy"
+  caution: >-
+    Please copy this key now and save it in a safe place, as you will not be able to see it later.
+  createdDate: "Issued: {date}"
+  empty: "You have not issued any API keys yet."
+  toast:
+    copy: >-
+      Copied your API key.
 queueUploadDictionaryButton:
   heading: "Import"
   label:

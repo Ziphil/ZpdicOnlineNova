@@ -1133,6 +1133,18 @@ generateMyApiCredentialForm:
   caution: >-
     API キーを後から確認することはできません。
     今の段階でコピーして保存しておいてください。
+apiCredentialList:
+  button:
+    copy: "コピー"
+  table:
+    createdDate: "発行日"
+  caution: >-
+    API キーを後から確認することはできません。
+    今の段階でコピーして保存しておいてください。
+  empty: "まだ API キーを発行していません"
+  toast:
+    copy: >-
+      API キーをコピーしました。
 
 contactPage:
   title: "お問い合わせ"

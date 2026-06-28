@@ -1133,6 +1133,17 @@ generateMyApiCredentialForm:
       Via API-ŝlosilo estas kopiita.
   caution: >-
     Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
+apiCredentialList:
+  button:
+    copy: "Kopii"
+  table:
+    createdDate: "Eldonita je"
+  caution: >-
+    Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
+  empty: "Vi ankoraŭ ne eldonis iun ajn API-ŝlosilon"
+  toast:
+    copy: >-
+      Via API-ŝlosilo estas kopiita.
 
 contactPage:
   title: "Kontakti"
