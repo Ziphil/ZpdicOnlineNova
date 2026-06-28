@@ -555,11 +555,11 @@ type ServerSpecs = {
       error: CustomError<"awsError">
     }
   },
-  generateMyApiKey: {
+  generateMyApiCredential: {
     request: {},
     response: {
       success: {apiKey: string},
-      error: never
+      error: CustomError<"apiCredentialCountExceeded">
     }
   },
   suggestUsers: {

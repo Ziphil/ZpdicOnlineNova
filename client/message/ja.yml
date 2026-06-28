@@ -110,7 +110,7 @@ toast:
       利用規約とプライバシーポリシーに同意しました。
     changeAppearance: |-
       外観を変更しました。
-    generateMyApiKey: |-
+    generateMyApiCredential: |-
       API キーを生成しました。
     issueMyActivateToken: |-
       メールを送信しました。
@@ -148,6 +148,9 @@ toast:
       そのメールアドレスのユーザーは存在しません。
     userAlreadyActivated: |-
       このユーザーはすでにアクティベートされています。
+    apiCredentialCountExceeded: |-
+      これ以上 API キーを発行することはできません。
+      既存の API キーを削除してからもう一度お試しください。
     invalidActivateToken: |-
       ユーザーのアクティベートに失敗しました。
     invalidResetToken: |-
@@ -1120,7 +1123,7 @@ uploadDictionaryForm:
       インポートが完了しました。
     error: >-
       インポートに失敗しました。
-generateMyApiKeyForm:
+generateMyApiCredentialForm:
   button:
     generate: "新規生成"
     copy: "コピー"

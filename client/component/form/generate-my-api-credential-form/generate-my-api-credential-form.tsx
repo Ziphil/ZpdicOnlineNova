@@ -6,21 +6,21 @@ import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, IconButton, MultiLi
 import {create} from "/client/component/create";
 import {useToast} from "/client/hook/toast";
 import {copyToClipboard} from "/client/util/clipboard";
-import {useGenerateMyApiKey} from "./generate-my-api-key-form-hook";
+import {useGenerateMyApiCredential} from "./generate-my-api-credential-form-hook";
 
 
-export const GenerateMyApiKeyForm = create(
-  require("./generate-my-api-key-form.scss"), "GenerateMyApiKeyForm",
+export const GenerateMyApiCredentialForm = create(
+  require("./generate-my-api-credential-form.scss"), "GenerateMyApiCredentialForm",
   function ({
     ...rest
   }: {
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("generateMyApiKeyForm");
+    const {trans} = useTrans("generateMyApiCredentialForm");
     const {dispatchInfoToast} = useToast();
 
-    const {apiKey, handleSubmit} = useGenerateMyApiKey();
+    const {apiKey, handleSubmit} = useGenerateMyApiCredential();
 
     const copyCode = useCallback(async function (): Promise<void> {
       if (apiKey !== null) {
