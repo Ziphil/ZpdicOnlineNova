@@ -1284,7 +1284,7 @@ dictionarySettingFilePart:
   description:
     upload: >-
       ファイルの内容をインポートして、現在のデータを上書きします。
-      OneToMany-JSON 形式 (拡張子 .json) と PDIC 形式 (拡張子 .dic) に対応しています。
+      ZpDIC API 形式 (拡張子 .zpdc), OneToMany-JSON 形式 (拡張子 .json), PDIC 形式 (拡張子 .dic) に対応しています。
     download: >-
       この辞書のデータを指定された形式でエクスポートします。
       詳細な仕様については<link>ドキュメント</link>をご覧ください。
