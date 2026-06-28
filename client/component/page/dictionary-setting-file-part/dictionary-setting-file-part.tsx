@@ -44,7 +44,7 @@ export const DictionarySettingFilePart = create(
           <h3 styleName="heading">{trans("heading.download")}</h3>
           <MultiLineText styleName="description">
             {transNode("description.download", {
-              link: (parts) => <Link href="/document/other/slime-json-spec" variant="unstyledUnderline">{parts}</Link>
+              link: (parts) => <Link href="/document" variant="unstyledUnderline">{parts}</Link>
             })}
           </MultiLineText>
           <QueueDownloadDictionaryButton dictionary={dictionary}/>
