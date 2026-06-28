@@ -110,8 +110,10 @@ toast:
       Vi konsentis pri la uzkondiĉoj kaj privateca politiko.
     changeAppearance: |-
       La ŝajno ŝanĝitas.
-    generateMyApiKey:
+    generateMyApiCredential:
       Via API-ŝlosilo generitas.
+    discardMyApiCredential:
+      Via API-ŝlosilo forigitas.
     issueMyActivateToken:
       Ni sendis retpoŝton al vi.
       Bonvolu sekvi la instrukciojn en la retpoŝto.
@@ -148,6 +150,11 @@ toast:
       Ne ekzistas uzanto kun la retpoŝta adreso.
     userAlreadyActivated: |-
       Tiu uzanto estas jam aktivigita.
+    apiCredentialCountExceeded: |-
+      Vi ne povas eldoni pliajn API-ŝlosilojn.
+      Bonvolu forigi ekzistantan API-ŝlosilon kaj reprovi.
+    noSuchApiCredential: |-
+      Tiu API-ŝlosilo ne ekzistas.
     invalidActivateToken: |-
       Malsukcesis aktivigi la uzanton.
     invalidResetToken: |-
@@ -652,10 +659,13 @@ shareMenu:
     misskey: "Misskey.io"
     copyUrl: "Kopii retadreson"
     copyMarkdownText: "Kopii Markdown"
+    saveScreenshot: "Konservi ekrankopion"
     other: "Aliaj"
   toast:
     copy: |-
       La ligilo estas kopiita.
+    screenshot: |-
+      La ekrankopio estas konservita.
 suggestionCard:
   maybe: "Ĉu vi celas…"
   message: "{title} <mute>de</mute> {nameNode}"
@@ -666,7 +676,6 @@ userHeader:
     setting: "Agordoj"
     appearance: "Šajno"
     developer: "Programado"
-    logout: "Elsaluti"
   button:
     issueActivateToken: "Resendi retpoŝton"
   callout:
@@ -1054,6 +1063,9 @@ discardDictionaryButton:
       Vi ne povas restaŭri ĝin poste.
       Ĉu vi vere certas?
     confirm: "Forigi"
+logoutButton:
+  button:
+    submit: "Elsaluti"
 discardMeButton:
   button:
     submit: "Forigi"
@@ -1064,12 +1076,22 @@ discardMeButton:
       Ĉu vi vere certas?
     confirm: "Forigi"
 queueDownloadDictionaryButton:
-  button:
-    start: "Eksporti"
+  heading: "Eksporti"
   label:
     format:
+      label: "Formato"
       slime: "OneToMany-JSON"
       zpdic: "ZpDIC API"
+  labelHelper:
+    format:
+      zpdic: >-
+        Formato kiu konservas la strukturon administratan ene de ZpDIC senŝanĝe.
+      slime: >-
+        Formato uzebla ankaŭ de aliaj aplikaĵoj subtenantaj la formaton OneToMany-JSON.
+        Notu ke iom da strukturoj simpliĝas; ekzemple, la sekciigo de vortoj platiĝas.
+  button:
+    open: "Eksporti"
+    confirm: "Konfirmi"
 downloadDictionaryForm:
   button:
     download: "Elŝuti"
@@ -1106,7 +1128,7 @@ uploadDictionaryForm:
       Via dosiero estas importita.
     error: >-
       Malsukcesis importi vian dosieron.
-generateMyApiKeyForm:
+generateMyApiCredentialForm:
   button:
     generate: "Generi"
     copy: "Kopii"
@@ -1115,6 +1137,27 @@ generateMyApiKeyForm:
       Via API-ŝlosilo estas kopiita.
   caution: >-
     Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
+apiCredentialList:
+  button:
+    copy: "Kopii"
+    discard: "Forigi"
+  dialog:
+    discard:
+      message: >-
+        Tiu API-ŝlosilo estos forigita.
+        Programoj uzantaj tiun API-ŝlosilon ne plu povos aliri vortarojn.
+        Ĉu vi certas?
+      confirm: "Forigi"
+  table:
+    createdDate: "Eldonita je"
+    lastUsedDate: "Laste uzita je"
+    neverUsed: "Neniam uzita"
+  caution: >-
+    Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
+  empty: "Vi ankoraŭ ne eldonis iun ajn API-ŝlosilon"
+  toast:
+    copy: >-
+      Via API-ŝlosilo estas kopiita.
 
 contactPage:
   title: "Kontakti"
@@ -1238,7 +1281,7 @@ dictionarySettingFilePart:
   description:
     upload: >-
       Importi la enhavon de dosiero kaj anstataŭigi la aktualan datumon.
-      La subtenataj formatoj estas: OneToMany-JSON (kun finaĵo .json) kaj PDIC (kun finaĵo .dic).
+      La subtenataj formatoj estas: ZpDIC API (kun finaĵo .zpdc), OneToMany-JSON (kun finaĵo .json) kaj PDIC (kun finaĵo .dic).
     download: >-
       Eksporti la datumon de la vortaro en la specifita formato.
       Vidu ankaŭ la <link>dokumentaron</link> por detala specifo.
@@ -1375,7 +1418,7 @@ userDeveloperPart:
   description:
     apiKey: >-
       Generi API-ŝlosilon permesos al vi uzi la API por serĉi kaj/aŭ redakti vortarojn el programo.
-      Por detaloj pri la uzo, bonvolu rilati al la <documentLink>dokumentaron</documentLink> kaj la <specificationLink>specifigon</specificationLink>.
+      Por detaloj pri la uzo, bonvolu rilati al la <documentLink>dokumentaron</documentLink>.
   callout:
     apiKey: >-
       Tiu funkcio estas ankoraŭ en testado.
@@ -1386,6 +1429,7 @@ userSettingPart:
     avatar: "Bildeto"
     email: "Retpoŝta adreso"
     password: "Pasvorto"
+    logout: "Elsaluti"
     discard: "Forigi konton"
   callout:
     discard: >-

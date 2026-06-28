@@ -94,8 +94,10 @@ toast:
       Your email address has been changed.
     changeMyPassword:
       Your password has been changed.
-    generateMyApiKey:
+    generateMyApiCredential:
       Your API key has been generated.
+    discardMyApiCredential:
+      Your API key has been deleted.
     issueMyActivateToken:
       We sent an email to you.
       Please follow the instructions in the email.
@@ -132,6 +134,11 @@ toast:
       No user with the email address exists.
     userAlreadyActivated: |-
       This user has already been activated.
+    apiCredentialCountExceeded: |-
+      You cannot issue any more API keys.
+      Please delete an existing API key and try again.
+    noSuchApiCredential: |-
+      This API key does not exist.
     invalidActivateToken: |-
       Failed to activate the user.
     invalidResetToken: |-
@@ -605,10 +612,13 @@ shareMenu:
     bluesky: "Bluesky"
     misskey: "Misskey.io"
     copy: "Copy link"
+    saveScreenshot: "Save screenshot"
     other: "Others"
   toast:
     copy: |-
       Copied the link.
+    screenshot: |-
+      Saved the screenshot.
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"
@@ -866,7 +876,7 @@ downloadDictionaryButton:
   status:
     loading: "Processing"
     error: "Failed"
-generateMyApiKeyForm:
+generateMyApiCredentialForm:
   button:
     generate: "Generate"
     copy: "Copy"
@@ -875,6 +885,27 @@ generateMyApiKeyForm:
       Copied your API key.
   caution: >-
     Please copy this key now and save it in a safe place, as you will not be able to see it later.
+apiCredentialList:
+  button:
+    copy: "Copy"
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This API key will be deleted.
+        Any programs using this API key will no longer be able to access dictionaries.
+        Are you sure?
+      confirm: "Delete"
+  table:
+    createdDate: "Issued at"
+    lastUsedDate: "Last used at"
+    neverUsed: "Never used"
+  caution: >-
+    Please copy this key now and save it in a safe place, as you will not be able to see it later.
+  empty: "You have not issued any API keys yet."
+  toast:
+    copy: >-
+      Copied your API key.
 queueUploadDictionaryButton:
   heading: "Import"
   label:

@@ -110,8 +110,10 @@ toast:
       利用規約とプライバシーポリシーに同意しました。
     changeAppearance: |-
       外観を変更しました。
-    generateMyApiKey: |-
+    generateMyApiCredential: |-
       API キーを生成しました。
+    discardMyApiCredential: |-
+      API キーを削除しました。
     issueMyActivateToken: |-
       メールを送信しました。
       メールの指示に従って操作を進めてください。
@@ -148,6 +150,11 @@ toast:
       そのメールアドレスのユーザーは存在しません。
     userAlreadyActivated: |-
       このユーザーはすでにアクティベートされています。
+    apiCredentialCountExceeded: |-
+      これ以上 API キーを発行することはできません。
+      既存の API キーを削除してからもう一度お試しください。
+    noSuchApiCredential: |-
+      この API キーは存在しません。
     invalidActivateToken: |-
       ユーザーのアクティベートに失敗しました。
     invalidResetToken: |-
@@ -652,10 +659,13 @@ shareMenu:
     misskey: "Misskey.io"
     copyUrl: "URL をコピー"
     copyMarkdownText: "Markdown をコピー"
+    saveScreenshot: "スクリーンショットを保存"
     other: "その他"
   toast:
     copy: |-
       リンクをコピーしました。
+    screenshot: |-
+      スクリーンショットを保存しました。
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"
@@ -666,7 +676,6 @@ userHeader:
     setting: "設定"
     appearance: "外観"
     developer: "開発向け"
-    logout: "ログアウト"
   button:
     issueActivateToken: "メールを再送信"
   callout:
@@ -1052,6 +1061,9 @@ discardDictionaryButton:
       削除した後にデータを戻すことはできません。
       本当によろしいですか?
     confirm: "削除"
+logoutButton:
+  button:
+    submit: "ログアウト"
 discardMeButton:
   button:
     submit: "削除"
@@ -1062,12 +1074,22 @@ discardMeButton:
       本当によろしいですか?
     confirm: "削除"
 queueDownloadDictionaryButton:
+  heading: "エクスポート"
   label:
     format:
-      slime: "OneToMany-JSON 形式"
-      zpdic: "ZpDIC API 形式"
+      label: "形式"
+      slime: "OneToMany-JSON"
+      zpdic: "ZpDIC API"
+  labelHelper:
+    format:
+      zpdic: >-
+        ZpDIC 内で管理されている形式をそのまま保った形式です。
+      slime: >-
+        OneToMany-JSON 形式に対応した他のアプリケーションでも利用できる形式です。
+        単語のセクション分けが平坦化されるなど、一部の構造が簡略化される点に注意してください。
   button:
-    start: "エクスポート"
+    open: "エクスポート"
+    confirm: "決定"
 downloadDictionaryForm:
   button:
     download: "ダウンロード"
@@ -1105,7 +1127,7 @@ uploadDictionaryForm:
       インポートが完了しました。
     error: >-
       インポートに失敗しました。
-generateMyApiKeyForm:
+generateMyApiCredentialForm:
   button:
     generate: "新規生成"
     copy: "コピー"
@@ -1115,6 +1137,28 @@ generateMyApiKeyForm:
   caution: >-
     API キーを後から確認することはできません。
     今の段階でコピーして保存しておいてください。
+apiCredentialList:
+  button:
+    copy: "コピー"
+    discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この API キーを削除します。
+        この API キーを使用しているプログラムからは辞書にアクセスできなくなります。
+        本当によろしいですか?
+      confirm: "削除"
+  table:
+    createdDate: "発行日時"
+    lastUsedDate: "最終使用日時"
+    neverUsed: "未使用"
+  caution: >-
+    API キーを後から確認することはできません。
+    今の段階でコピーして保存しておいてください。
+  empty: "まだ API キーを発行していません"
+  toast:
+    copy: >-
+      API キーをコピーしました。
 
 contactPage:
   title: "お問い合わせ"
@@ -1240,7 +1284,7 @@ dictionarySettingFilePart:
   description:
     upload: >-
       ファイルの内容をインポートして、現在のデータを上書きします。
-      OneToMany-JSON 形式 (拡張子 .json) と PDIC 形式 (拡張子 .dic) に対応しています。
+      ZpDIC API 形式 (拡張子 .zpdc), OneToMany-JSON 形式 (拡張子 .json), PDIC 形式 (拡張子 .dic) に対応しています。
     download: >-
       この辞書のデータを指定された形式でエクスポートします。
       詳細な仕様については<link>ドキュメント</link>をご覧ください。
@@ -1377,7 +1421,7 @@ userDeveloperPart:
   description:
     apiKey: >-
       API キーを生成することで、API を利用してプログラムから辞書の検索や操作ができるようになります。
-      利用方法の詳細は<documentLink>ドキュメント</documentLink>や<specificationLink>仕様書</specificationLink>を参照してください。
+      利用方法の詳細は<documentLink>ドキュメント</documentLink>やを参照してください。
   callout:
     apiKey: >-
       API 機能は試験運用中です。
@@ -1388,6 +1432,7 @@ userSettingPart:
     avatar: "アイコン"
     email: "メールアドレス"
     password: "パスワード"
+    logout: "ログアウト"
     discard: "アカウント削除"
   callout:
     discard: >-

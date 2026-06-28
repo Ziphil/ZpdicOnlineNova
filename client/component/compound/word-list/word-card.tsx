@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faCheck, faCircleInfo, faClone, faEdit, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback} from "react";
+import {ReactElement, useCallback, useRef} from "react";
 import {useHref} from "react-router";
 import {
   AdditionalProps,
@@ -60,9 +60,12 @@ export const WordCard = create(
 
     const device = useResponsiveDevice();
 
-    const shareText = `${word.spelling}\n#ZpDIC`;
-    const shareUrl = location.origin + useHref(getWordHref(dictionary, word.number));
-    const shareMarkdownText = getShareMarkdownText(word, dictionary);
+    const cardBodyRef = useRef<HTMLDivElement>(null);
+
+    const sharedText = `${word.spelling}\n#ZpDIC`;
+    const sharedUrl = location.origin + useHref(getWordHref(dictionary, word.number));
+    const screenshotFileName = `${word.spelling}.png`;
+    const markdownText = getShareMarkdownText(word, dictionary);
 
     const discardWord = useDiscardWord(dictionary, word);
 
@@ -72,7 +75,7 @@ export const WordCard = create(
 
     return (
       <Card styleName="root" {...rest}>
-        <CardBody styleName="body">
+        <CardBody styleName="body" ref={cardBodyRef}>
           {(showHeader) && (
             <WordCardHeader dictionary={dictionary} word={word}/>
           )}
@@ -125,16 +128,23 @@ export const WordCard = create(
               </Button>
             </div>
             <div styleName="footer-right">
-              <ShareMenu text={shareText} url={shareUrl} markdownText={shareMarkdownText} trigger={(device === "desktop") ? (
-                <Button scheme="secondary" variant="underline">
-                  <ButtonIconbag><GeneralIcon icon={faShare}/></ButtonIconbag>
-                  {trans("button.share")}
-                </Button>
-              ) : (
-                <Button scheme="secondary" variant="underline">
-                  <GeneralIcon icon={faShare}/>
-                </Button>
-              )}/>
+              <ShareMenu
+                sharedText={sharedText}
+                sharedUrl={sharedUrl}
+                markdownText={markdownText}
+                screenshotTarget={cardBodyRef}
+                screenshotFileName={screenshotFileName}
+                trigger={(device === "desktop") ? (
+                  <Button scheme="secondary" variant="underline">
+                    <ButtonIconbag><GeneralIcon icon={faShare}/></ButtonIconbag>
+                    {trans("button.share")}
+                  </Button>
+                ) : (
+                  <Button scheme="secondary" variant="underline">
+                    <GeneralIcon icon={faShare}/>
+                  </Button>
+                )}
+              />
               {(showInfo) && (
                 <WordCardInfoPopover word={word} trigger={(device === "desktop") ? (
                   <Button scheme="secondary" variant="underline">

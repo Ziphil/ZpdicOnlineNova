@@ -1,7 +1,12 @@
 //
 
 import {createReadStream} from "fs";
-import oboe from "oboe";
+import {chain} from "stream-chain";
+import {parser} from "stream-json";
+import {ignore} from "stream-json/filters/Ignore";
+import {pick} from "stream-json/filters/Pick";
+import {streamArray} from "stream-json/streamers/StreamArray";
+import {streamObject} from "stream-json/streamers/StreamObject";
 import {Deserializer} from "/server/model/dictionary/deserializer/deserializer";
 import {Example, ExampleModel} from "/server/model/example/example";
 import {EquivalentModel} from "/server/model/word/equivalent";
@@ -19,61 +24,77 @@ export class SlimeDeserializer extends Deserializer {
   private ignoredEquivalentPattern?: string;
 
   public start(): void {
-    this.readSettings().then(() => this.readMain()).catch((error) => {
+    this.readSettings().then(() => Promise.all([this.readWords(), this.readExamples()])).then(() => {
+      this.emit("end");
+    }).catch((error) => {
       this.emit("error", error);
     });
   }
 
+  /** トップレベルのプロパティを順に読み込み、設定および外部データのイベントを発火します。
+   * `words` と `examples` の配列は巨大になり得るためここでは展開せず、それぞれ別パスで逐次読み込みます。 */
   private readSettings(): Promise<void> {
     const promise = new Promise<void>((resolve, reject) => {
-      const stream = oboe(createReadStream(this.path));
-      stream.on("node:!.*", (data, jsonPath) => {
-        this.emitSettings(data, jsonPath[0]);
-        return oboe.drop;
+      const stream = chain([createReadStream(this.path), parser(), ignore({filter: "words"}), ignore({filter: "examples"}), streamObject()]);
+      stream.on("data", ({key, value}) => {
+        try {
+          this.emitSettings(value, key);
+          if (key !== "version") {
+            this.emit("external", key, value);
+          }
+        } catch (error) {
+          this.emit("error", error);
+        }
       });
-      stream.on("done", () => {
+      stream.on("end", () => {
         resolve();
       });
-      stream.on("fail", (reason) => {
-        reject(reason.thrown);
+      stream.on("error", (error) => {
+        reject(error);
       });
     });
     return promise;
   }
 
-  private readMain(): Promise<void> {
+  /** `words` 配列の要素を 1 個ずつ逐次読み込み、単語イベントを発火します。 */
+  private readWords(): Promise<void> {
     const promise = new Promise<void>((resolve, reject) => {
-      const stream = oboe(createReadStream(this.path));
-      stream.on("node:!.words.*", (data, jsonPath) => {
+      const stream = chain([createReadStream(this.path), parser(), pick({filter: "words"}), streamArray()]);
+      stream.on("data", ({value}) => {
         try {
-          const word = this.createWord(data);
+          const word = this.createWord(value);
           this.emit("word", word);
         } catch (error) {
           this.emit("error", error);
         }
-        return oboe.drop;
       });
-      stream.on("node:!.examples.*", (data, jsonPath) => {
+      stream.on("end", () => {
+        resolve();
+      });
+      stream.on("error", (error) => {
+        reject(error);
+      });
+    });
+    return promise;
+  }
+
+  /** `examples` 配列の要素を 1 個ずつ逐次読み込み、例文イベントを発火します。 */
+  private readExamples(): Promise<void> {
+    const promise = new Promise<void>((resolve, reject) => {
+      const stream = chain([createReadStream(this.path), parser(), pick({filter: "examples"}), streamArray()]);
+      stream.on("data", ({value}) => {
         try {
-          const example = this.createExample(data);
+          const example = this.createExample(value);
           this.emit("example", example);
         } catch (error) {
           this.emit("error", error);
         }
-        return oboe.drop;
       });
-      stream.on("node:!.*", (data, jsonPath) => {
-        if (jsonPath[0] !== "words" && jsonPath[0] !== "version") {
-          this.emit("external", jsonPath[0], data);
-        }
-        return oboe.drop;
-      });
-      stream.on("done", () => {
-        this.emit("end");
+      stream.on("end", () => {
         resolve();
       });
-      stream.on("fail", (reason) => {
-        reject(reason.thrown);
+      stream.on("error", (error) => {
+        reject(error);
       });
     });
     return promise;

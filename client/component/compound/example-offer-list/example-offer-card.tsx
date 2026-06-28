@@ -70,7 +70,7 @@ export const ExampleOfferCard = create(
                 <time dateTime={zonedCreatedDate.format("YYYY-MM-DD")}>{transDate(zonedCreatedDate, "date")}</time>
               </div>
             )}
-            <MultiLineText styleName="translation" is="p" {...data({large: showExamples})}>
+            <MultiLineText styleName="translation" is="p" lineHeight="normalFixed" {...data({large: showExamples})}>
               {offer.translation}
             </MultiLineText>
             {(offer.supplement && showSupplement) && (

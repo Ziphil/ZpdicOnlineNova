@@ -242,12 +242,9 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async fetchWordSpellings<N extends number>(this: Dictionary, numbers: Array<N>): Promise<Record<N, string | null>> {
-    const promises = numbers.map((number) => {
-      const query = WordModel.findOneExist().where("dictionary", this).where("number", number);
-      const promise = query.exec().then((word) => [number, word?.name ?? null] as const);
-      return promise;
-    });
-    const entries = await Promise.all(promises);
+    const words = await WordModel.findExist().where("dictionary", this).where("number", numbers).select(["number", "name"]).lean();
+    const spellingMap = new Map(words.map((word) => [word.number, word.name]));
+    const entries = numbers.map((number) => [number, spellingMap.get(number) ?? null] as const);
     const names = Object.fromEntries(entries) as any;
     return names;
   }

@@ -10,9 +10,9 @@ import {compareSync, hashSync} from "bcrypt";
 import Fuse from "fuse.js";
 import {DictionaryModel} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
+import {ApiCredentialModel} from "/server/model/user/api-credential";
 import {ResetTokenModel, ResetTokenSchema} from "/server/model/user/reset-token";
 import {TermsAgreementSchema} from "/server/model/user/terms-agreement";
-import {createRandomString} from "/server/util/misc";
 import {EMAIL_REGEXP, IDENTIFIER_REGEXP, validatePassword} from "/server/util/validation";
 
 
@@ -39,9 +39,6 @@ export class UserSchema {
 
   @prop()
   public activateToken?: ResetTokenSchema;
-
-  @prop({unique: true})
-  public apiKey?: string;
 
   @prop()
   public authority?: string;
@@ -150,10 +147,11 @@ export class UserSchema {
   }
 
   /** このユーザーを削除します。
-   * 同時に、このユーザーが所有する辞書も全て削除します。*/
+   * 同時に、このユーザーが所有する辞書、および発行済みの API 認証情報も全て削除します。*/
   public async discard(this: User): Promise<User> {
     const dictionaries = await DictionaryModel.fetchByUser(this, "own", "all");
     await Promise.all(dictionaries.map((dictionary) => dictionary.discard()));
+    await ApiCredentialModel.deleteMany().where("user", this);
     await this.deleteOne();
     return this;
   }
@@ -211,13 +209,6 @@ export class UserSchema {
     this.termsAgreement = {version, date: new Date()};
     await this.save();
     return this;
-  }
-
-  public async generateApiKey(this: User): Promise<string> {
-    const apiKey = createRandomString(64, false);
-    this.apiKey = apiKey;
-    await this.save();
-    return apiKey;
   }
 
   /** 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。

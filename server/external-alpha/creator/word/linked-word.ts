@@ -1,6 +1,7 @@
 //
 
 import type {
+  LinkedWord$In,
   LinkedWord$Out
 } from "/server/external-alpha/schema";
 import {
@@ -15,6 +16,13 @@ export namespace LinkedWordCreator {
       number: raw.number
     } satisfies LinkedWord$Out;
     return skeleton;
+  }
+
+  export function enflesh(input: LinkedWord$In): LinkedWord {
+    const raw = {
+      number: input.number
+    } satisfies LinkedWord;
+    return raw;
   }
 
 }

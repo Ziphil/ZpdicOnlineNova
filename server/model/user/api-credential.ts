@@ -1,0 +1,81 @@
+//
+
+import {
+  DocumentType,
+  Ref,
+  getModelForClass,
+  isDocument,
+  modelOptions,
+  prop
+} from "@typegoose/typegoose";
+import {CustomError} from "/server/model/error";
+import {User, UserSchema} from "/server/model/user/user";
+import {createRandomString} from "/server/util/misc";
+
+
+const MAX_API_CREDENTIAL_COUNT = 1;
+
+
+@modelOptions({schemaOptions: {collection: "apiCredentials"}})
+export class ApiCredentialSchema {
+
+  @prop({required: true, ref: "UserSchema"})
+  public user!: Ref<UserSchema>;
+
+  @prop({required: true, unique: true})
+  public key!: string;
+
+  @prop()
+  public createdDate?: Date;
+
+  @prop()
+  public lastUsedDate?: Date;
+
+  /** 渡されたユーザーに対して新しい API キーを発行し、その API キーデータを返します。
+   * すでにそのユーザーが保持している API キーの数が上限に達している場合は、`apiCredentialCountExceeded` エラーを発生させます。*/
+  public static async issue(user: User): Promise<ApiCredential> {
+    const count = await ApiCredentialModel.countDocuments().where("user", user);
+    if (count < MAX_API_CREDENTIAL_COUNT) {
+      const key = createRandomString(64, false);
+      const createdDate = new Date();
+      const credential = new ApiCredentialModel({user, key, createdDate});
+      await credential.save();
+      return credential;
+    } else {
+      throw new CustomError("apiCredentialCountExceeded");
+    }
+  }
+
+  public static async fetchByUser(user: User): Promise<Array<ApiCredential>> {
+    const credentials = await ApiCredentialModel.find().where("user", user).exec();
+    return credentials;
+  }
+
+  /** 渡されたユーザーが保持している、指定された ID の API キーを削除します。
+   * そのユーザーが保持する API キーの中に該当するものが存在しない場合は、`noSuchApiCredential` エラーを発生させます。*/
+  public static async discard(user: User, id: string): Promise<void> {
+    const credential = await ApiCredentialModel.findById(id).where("user", user);
+    if (credential !== null) {
+      await credential.deleteOne();
+    } else {
+      throw new CustomError("noSuchApiCredential");
+    }
+  }
+
+  /** 渡された API キーに合致するユーザーを返します。
+   * 合致するキーが存在しない場合は `null` を返します。
+   * また、合致するキーが存在した場合は、そのキーの最終使用日時を現在の日時に更新します。*/
+  public static async fetchUserByKey(key: string): Promise<User | null> {
+    const credential = await ApiCredentialModel.findOne().where("key", key).populate("user").exec();
+    if (credential !== null) {
+      await credential.updateOne({lastUsedDate: new Date()});
+    }
+    const user = (credential !== null && isDocument(credential.user)) ? credential.user : null;
+    return user;
+  }
+
+}
+
+
+export type ApiCredential = DocumentType<ApiCredentialSchema>;
+export const ApiCredentialModel = getModelForClass(ApiCredentialSchema);

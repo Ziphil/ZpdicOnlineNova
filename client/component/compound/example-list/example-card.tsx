@@ -2,7 +2,7 @@
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleInfo, faEdit, faHandPointRight, faShare, faTrashAlt, faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, ReactElement} from "react";
+import {Fragment, ReactElement, useRef} from "react";
 import {useHref} from "react-router-dom";
 import {
   AdditionalProps,
@@ -55,8 +55,11 @@ export const ExampleCard = create(
 
     const device = useResponsiveDevice();
 
-    const shareText = `${example.sentence} — ${example.translation}\n#ZpDIC`;
-    const shareUrl = location.origin + useHref(getExampleHref(dictionary, example.number));
+    const cardBodyRef = useRef<HTMLDivElement>(null);
+
+    const sharedText = `${example.sentence} — ${example.translation}\n#ZpDIC`;
+    const sharedUrl = location.origin + useHref(getExampleHref(dictionary, example.number));
+    const screenshotFileName = `${example.number}.png`;
 
     const filledExample = useFilledExample(dictionary, example);
 
@@ -64,7 +67,7 @@ export const ExampleCard = create(
 
     return (
       <Card styleName="root" {...rest}>
-        <CardBody styleName="body">
+        <CardBody styleName="body" ref={cardBodyRef}>
           {(example.offer !== null || example.tags.length > 0) && (
             <div styleName="tag">
               {(example.offer !== null) && (
@@ -131,16 +134,22 @@ export const ExampleCard = create(
               </Button>
             </div>
             <div styleName="footer-right">
-              <ShareMenu text={shareText} url={shareUrl} trigger={(device === "desktop") ? (
-                <Button scheme="secondary" variant="underline">
-                  <ButtonIconbag><GeneralIcon icon={faShare}/></ButtonIconbag>
-                  {trans("button.share")}
-                </Button>
-              ) : (
-                <Button scheme="secondary" variant="underline">
-                  <GeneralIcon icon={faShare}/>
-                </Button>
-              )}/>
+              <ShareMenu
+                sharedText={sharedText}
+                sharedUrl={sharedUrl}
+                screenshotTarget={cardBodyRef}
+                screenshotFileName={screenshotFileName}
+                trigger={(device === "desktop") ? (
+                  <Button scheme="secondary" variant="underline">
+                    <ButtonIconbag><GeneralIcon icon={faShare}/></ButtonIconbag>
+                    {trans("button.share")}
+                  </Button>
+                ) : (
+                  <Button scheme="secondary" variant="underline">
+                    <GeneralIcon icon={faShare}/>
+                  </Button>
+                )}
+              />
               {(showInfo) && (
                 <ExampleCardInfoPopover example={example} trigger={(device === "desktop") ? (
                   <Button scheme="secondary" variant="underline">

@@ -14,13 +14,13 @@ const SCHEMA = object({
   format: string().oneOf(["slime", "zpdic"]).required()
 });
 const DEFAULT_VALUE = {
-  format: "slime"
+  format: "zpdic"
 } satisfies FormValue;
 type FormValue = Asserts<typeof SCHEMA>;
 
 export type QueueDownloadDictionarySpec = {
   form: UseFormReturn<FormValue>,
-  handleSubmit: (event: BaseSyntheticEvent) => Promise<void>
+  handleSubmit: (event: BaseSyntheticEvent, onSubmit?: () => unknown) => Promise<void>
 };
 
 export function useQueueDownloadDictionary(dictionary: Dictionary): QueueDownloadDictionarySpec {

@@ -27,3 +27,13 @@ export interface TermsAgreement {
   date: DateString;
 
 }
+
+
+export interface ApiCredential {
+
+  id: ObjectId;
+  key?: string;
+  createdDate?: DateString;
+  lastUsedDate: DateString | null;
+
+}

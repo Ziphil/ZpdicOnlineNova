@@ -150,3 +150,15 @@ db.dictionaries.updateMany({"settings.enableMarkdown": false}, {$set: {"settings
 
 db.dictionaries.updateMany({}, {$set: {"settings.fontTargets": ["heading", "phrase", "variation", "relation", "example", "text"]}});
 ```
+
+### → ver 3.25.0
+API キーをユーザードキュメントの `apiKey` フィールドではなく、独立した `apiCredentials` コレクションで管理するように変更しました。
+既存のユーザーがもつ `apiKey` を新しいコレクションに移行するため、Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+db.users.find({"apiKey": {$exists: true, $ne: null}}).forEach(function (user) {
+  db.apiCredentials.insertOne({
+    "user": user._id,
+    "key": user.apiKey
+  });
+});
+```

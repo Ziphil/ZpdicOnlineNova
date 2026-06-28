@@ -2,7 +2,7 @@
 
 import {NextFunction, Request, RequestHandler, Response} from "express";
 import {MiddlewareBody} from "/server/external-alpha/controller/rest/base";
-import {UserModel} from "/server/model";
+import {ApiCredentialModel} from "/server/model";
 
 
 /** リクエストヘッダーに書き込まれた API キーを検証します。
@@ -13,7 +13,7 @@ export function parseMe(): RequestHandler {
     const apiKey = request.headers["x-api-key"];
     try {
       if (apiKey !== undefined && typeof apiKey === "string") {
-        const me = await UserModel.findOne().where("apiKey", apiKey).exec();
+        const me = await ApiCredentialModel.fetchUserByKey(apiKey);
         request.middlewareBody.me = me;
       } else {
         request.middlewareBody.me = null;

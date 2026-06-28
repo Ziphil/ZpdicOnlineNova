@@ -110,8 +110,10 @@ toast:
       You have agreed to the terms of service and privacy policy.
     changeAppearance: |-
       The appearance has been changed.
-    generateMyApiKey: |-
+    generateMyApiCredential: |-
       Your API key has been generated.
+    discardMyApiCredential: |-
+      Your API key has been deleted.
     issueMyActivateToken:
       We sent an email to you.
       Please follow the instructions in the email.
@@ -148,6 +150,11 @@ toast:
       No user with the email address exists.
     userAlreadyActivated: |-
       This user has already been activated.
+    apiCredentialCountExceeded: |-
+      You cannot issue any more API keys.
+      Please delete an existing API key and try again.
+    noSuchApiCredential: |-
+      This API key does not exist.
     invalidActivateToken: |-
       Failed to activate the user.
     invalidResetToken: |-
@@ -652,10 +659,13 @@ shareMenu:
     misskey: "Misskey.io"
     copyUrl: "Copy URL"
     copyMarkdownText: "Copy Markdown"
+    saveScreenshot: "Save screenshot"
     other: "Others"
   toast:
     copy: |-
       Copied the link.
+    screenshot: |-
+      Saved the screenshot.
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"
@@ -666,7 +676,6 @@ userHeader:
     setting: "Settings"
     appearance: "Appearance"
     developer: "Developer"
-    logout: "Sign out"
   button:
     issueActivateToken: "Resend email"
   callout:
@@ -1054,6 +1063,9 @@ discardDictionaryButton:
       You cannot restore it afterwards.
       Are you really sure?
     confirm: "Delete"
+logoutButton:
+  button:
+    submit: "Sign out"
 discardMeButton:
   button:
     submit: "Delete"
@@ -1064,12 +1076,22 @@ discardMeButton:
       Are you really sure?
     confirm: "Delete"
 queueDownloadDictionaryButton:
+  heading: "Export"
   label:
     format:
-      slime: "OneToMany-JSON format"
-      zpdic: "ZpDIC API format"
+      label: "Format"
+      slime: "OneToMany-JSON"
+      zpdic: "ZpDIC API"
+  labelHelper:
+    format:
+      zpdic: >-
+        A format that preserves the structure managed within ZpDIC as is.
+      slime: >-
+        A format that can also be used by other applications supporting the OneToMany-JSON format.
+        Note that some structures are simplified; for example, the sectioning of words is flattened.
   button:
-    start: "Export"
+    open: "Export"
+    confirm: "Confirm"
 downloadDictionaryForm:
   button:
     download: "Download"
@@ -1106,7 +1128,7 @@ uploadDictionaryForm:
       Your file has been imported.
     error: >-
       Failed to import your file.
-generateMyApiKeyForm:
+generateMyApiCredentialForm:
   button:
     generate: "Generate"
     copy: "Copy"
@@ -1115,6 +1137,27 @@ generateMyApiKeyForm:
       Copied your API key.
   caution: >-
     Please copy this key now and save it in a safe place, as you will not be able to see it later.
+apiCredentialList:
+  button:
+    copy: "Copy"
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This API key will be deleted.
+        Any programs using this API key will no longer be able to access dictionaries.
+        Are you sure?
+      confirm: "Delete"
+  table:
+    createdDate: "Issued at"
+    lastUsedDate: "Last used at"
+    neverUsed: "Never used"
+  caution: >-
+    Please copy this key now and save it in a safe place, as you will not be able to see it later.
+  empty: "You have not issued any API keys yet"
+  toast:
+    copy: >-
+      Copied your API key.
 
 contactPage:
   title: "Contact"
@@ -1238,7 +1281,7 @@ dictionarySettingFilePart:
   description:
     upload: >-
       Import the contents of a file and overwrite the current data.
-      The supported formats are: OneToMany-JSON format (with extension .json) and PDIC format (with extension .dic).
+      The supported formats are: ZpDIC API format (with extension .zpdc), OneToMany-JSON format (with extension .json) and PDIC format (with extension .dic).
     download: >-
       Export the dictionary data in the specified format.
       See also the <link>documentation</link> for detailed specification.
@@ -1375,7 +1418,7 @@ userDeveloperPart:
   description:
     apiKey: >-
       Generating an API key allows you to use the API to search for and/or operate dictionaries from a program.
-      For details on how to use it, please refer to the <documentLink>documentation</documentLink> and the <specificationLink>specification</specificationLink>.
+      For details on how to use it, please refer to the <documentLink>documentation</documentLink>.
   callout:
     apiKey: >-
       This feature is under testing.
@@ -1386,6 +1429,7 @@ userSettingPart:
     avatar: "Avatar icon"
     email: "Email address"
     password: "Password"
+    logout: "Sign out"
     discard: "Delete account"
   callout:
     discard: >-

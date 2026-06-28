@@ -15,11 +15,15 @@ The handling of personal information in this application is governed by the sepa
 ## Article 2 — Definitions
 The terms used in these terms are defined as follows:
 
-- ‘This application’ refers to the web service provided under the name ‘ZpDIC Online’, with which one can browse, create, edit and publish dictionaries of constructed languages.
-- ‘The user’ refers to all those who use this application after agreeing to these terms.
-- ‘Registered user’ refers to a user who has signed up for this application and holds an account.
-- ‘Content’ refers to all information that the user creates, posts or uploads through this application, such as dictionary data (words, definitions, example sentences, etc.) and data attached to dictionaries (descriptions, image files, etc.).
-- ‘API’ refers to the interface provided by this application under the URL `/api`, through which the data of this application can be accessed programmatically.
+‘This application’ refers to the web service provided under the name ‘ZpDIC Online’, with which one can browse, create, edit and publish dictionaries of constructed languages.
+
+‘The user’ refers to all those who use this application after agreeing to these terms.
+
+‘Registered user’ refers to a user who has signed up for this application and holds an account.
+
+‘Content’ refers to all information that the user creates, posts or uploads through this application, such as dictionary data (words, definitions, example sentences, etc.) and data attached to dictionaries (descriptions, image files, etc.).
+
+‘API’ refers to the interface provided by this application under the URL `/api`, through which the data of this application can be accessed programmatically.
 
 ## Article 3 — Sign-up
 Some features of this application can be used by signing up.
@@ -28,9 +32,9 @@ Sign-up is carried out by applying in the manner prescribed by this application 
 This application may decline an application for sign-up if it determines that the applicant falls under any of the following.
 In this case, this application is under no obligation to disclose the reason.
 
-- The applicant has violated these terms in the past.
-- The registration details contain false information.
-- This application otherwise determines that the sign-up is inappropriate.
+- The applicant has violated these terms in the past
+- The registration details contain false information
+- This application otherwise determines that the sign-up is inappropriate
 
 A registered user shall promptly update their registration details in the manner prescribed by this application whenever there is a change to them.
 
@@ -53,7 +57,6 @@ The copyrights and other rights to the content created by the user through this 
 However, the user grants the developer of this application the right to use such content free of charge (reproducing, storing, publishing, transmitting, displaying, etc.) to the extent necessary for providing, maintaining and improving this application.
 
 The user understands and agrees that content set to public will become viewable or obtainable by other users or by the general public in accordance with the specifications of this application.
-
 The user warrants that they have the lawful right to post the content they post, and that such content does not infringe the rights of any third party.
 
 The developer of this application is under no obligation to monitor the content created by users, and does not guarantee its accuracy, completeness, lawfulness, or the like.
@@ -105,9 +108,9 @@ Furthermore, if the developer of this application transfers the business pertain
 ## Article 10 — Restriction of use and cancellation of registration
 The developer of this application may, without prior notice, take measures such as deleting content, restricting the use of this application, or deleting the account, if the user falls under any of the following:
 
-- The user has violated any provision of these terms.
-- It turns out that the registration details contain false facts.
-- The developer of this application otherwise determines that the use of this application is inappropriate.
+- The user has violated any provision of these terms
+- It turns out that the registration details contain false facts
+- The developer of this application otherwise determines that the use of this application is inappropriate
 
 In addition, the developer of this application may delete accounts or data that have not been used for a long period of time without prior notice to the user, and is under no obligation to restore the deleted accounts or data.
 

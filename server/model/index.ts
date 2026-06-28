@@ -21,6 +21,7 @@ export * from "./template-word/template-phrase";
 export * from "./template-word/template-relation";
 export * from "./template-word/template-section";
 export * from "./template-word/template-word";
+export * from "./user/api-credential";
 export * from "./user/reset-token";
 export * from "./user/terms-agreement";
 export * from "./user/user";
