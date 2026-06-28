@@ -3,7 +3,7 @@
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkMe, checkRecaptcha, login, logout} from "/server/internal/controller/rest/middleware";
-import {UserCreator} from "/server/internal/creator";
+import {ApiCredentialCreator, UserCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {ApiCredentialModel, UserModel} from "/server/model";
 import {getStorageUploadFilePost} from "/server/util/aws";
@@ -219,11 +219,21 @@ export class UserRestController extends InternalRestController {
   public async [Symbol()](request: Request<"generateMyApiCredential">, response: Response<"generateMyApiCredential">): Promise<void> {
     const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     try {
-      const apiKey = await ApiCredentialModel.issue(me);
-      InternalRestController.respond(response, {apiKey});
+      const credential = await ApiCredentialModel.issue(me);
+      const body = ApiCredentialCreator.skeletonizeWithKey(credential);
+      InternalRestController.respond(response, body);
     } catch (error) {
       InternalRestController.respondByCustomError(response, ["apiCredentialCountExceeded"], error);
     }
+  }
+
+  @post("/fetchMyApiCredentials")
+  @before(checkMe())
+  public async [Symbol()](request: Request<"fetchMyApiCredentials">, response: Response<"fetchMyApiCredentials">): Promise<void> {
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
+    const credentials = await ApiCredentialModel.fetchByUser(me);
+    const body = credentials.map(ApiCredentialCreator.skeletonize);
+    InternalRestController.respond(response, body);
   }
 
   @post("/suggestUsers")

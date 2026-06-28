@@ -18,7 +18,7 @@ export function useGenerateMyApiCredential(): GenerateMyApiCredentialSpec {
   const handleSubmit = useCallback(async () => {
     const response = await request("generateMyApiCredential", {});
     await switchResponse(response, async (body) => {
-      setApiKey(body.apiKey);
+      setApiKey(body.key ?? null);
       dispatchSuccessToast("generateMyApiCredential");
     });
   }, [request, dispatchSuccessToast]);

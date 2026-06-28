@@ -2,6 +2,7 @@
 
 import type {
   Aggregation,
+  ApiCredential,
   Article,
   CustomError,
   Dictionary,
@@ -558,8 +559,15 @@ type ServerSpecs = {
   generateMyApiCredential: {
     request: {},
     response: {
-      success: {apiKey: string},
+      success: ApiCredential,
       error: CustomError<"apiCredentialCountExceeded">
+    }
+  },
+  fetchMyApiCredentials: {
+    request: {},
+    response: {
+      success: Array<ApiCredential>,
+      error: never
     }
   },
   suggestUsers: {

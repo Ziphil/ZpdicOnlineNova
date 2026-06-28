@@ -28,19 +28,24 @@ export class ApiCredentialSchema {
   @prop()
   public createdDate?: Date;
 
-  /** 渡されたユーザーに対して新しい API キーを発行し、その文字列を返します。
+  /** 渡されたユーザーに対して新しい API キーを発行し、その API キーデータを返します。
    * すでにそのユーザーが保持している API キーの数が上限に達している場合は、`apiCredentialCountExceeded` エラーを発生させます。*/
-  public static async issue(user: User): Promise<string> {
+  public static async issue(user: User): Promise<ApiCredential> {
     const count = await ApiCredentialModel.countDocuments().where("user", user);
     if (count < MAX_API_CREDENTIAL_COUNT) {
       const key = createRandomString(64, false);
       const createdDate = new Date();
       const credential = new ApiCredentialModel({user, key, createdDate});
       await credential.save();
-      return key;
+      return credential;
     } else {
       throw new CustomError("apiCredentialCountExceeded");
     }
+  }
+
+  public static async fetchByUser(user: User): Promise<Array<ApiCredential>> {
+    const credentials = await ApiCredentialModel.find().where("user", user).exec();
+    return credentials;
   }
 
   /** 渡された API キーに合致するユーザーを返します。
