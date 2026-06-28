@@ -58,6 +58,14 @@ export const ApiCredentialCard = create(
           <dl styleName="table">
             <dt styleName="table-label">{trans("table.createdDate")}</dt>
             <dd styleName="table-value"><time dateTime={dayjs(credential.createdDate).toISOString()}>{transDate(credential.createdDate)}</time></dd>
+            <dt styleName="table-label">{trans("table.lastUsedDate")}</dt>
+            <dd styleName="table-value">
+              {(credential.lastUsedDate !== null) ? (
+                <time dateTime={dayjs(credential.lastUsedDate).toISOString()}>{transDate(credential.lastUsedDate)}</time>
+              ) : (
+                trans("table.neverUsed")
+              )}
+            </dd>
           </dl>
         </CardBody>
         <CardFooter styleName="footer">

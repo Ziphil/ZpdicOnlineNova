@@ -898,6 +898,8 @@ apiCredentialList:
       confirm: "Delete"
   table:
     createdDate: "Issued at"
+    lastUsedDate: "Last used at"
+    neverUsed: "Never used"
   caution: >-
     Please copy this key now and save it in a safe place, as you will not be able to see it later.
   empty: "You have not issued any API keys yet."

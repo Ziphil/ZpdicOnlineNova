@@ -13,7 +13,8 @@ export namespace ApiCredentialCreator {
   export function skeletonize(raw: ApiCredential): ApiCredentialSkeleton {
     const skeleton = {
       id: raw.id,
-      createdDate: raw.createdDate?.toISOString()
+      createdDate: raw.createdDate?.toISOString(),
+      lastUsedDate: raw.lastUsedDate?.toISOString() ?? null
     } satisfies ApiCredentialSkeleton;
     return skeleton;
   }

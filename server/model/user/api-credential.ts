@@ -28,6 +28,9 @@ export class ApiCredentialSchema {
   @prop()
   public createdDate?: Date;
 
+  @prop()
+  public lastUsedDate?: Date;
+
   /** 渡されたユーザーに対して新しい API キーを発行し、その API キーデータを返します。
    * すでにそのユーザーが保持している API キーの数が上限に達している場合は、`apiCredentialCountExceeded` エラーを発生させます。*/
   public static async issue(user: User): Promise<ApiCredential> {
@@ -60,9 +63,13 @@ export class ApiCredentialSchema {
   }
 
   /** 渡された API キーに合致するユーザーを返します。
-   * 合致するキーが存在しない場合は `null` を返します。*/
+   * 合致するキーが存在しない場合は `null` を返します。
+   * また、合致するキーが存在した場合は、そのキーの最終使用日時を現在の日時に更新します。*/
   public static async fetchUserByKey(key: string): Promise<User | null> {
     const credential = await ApiCredentialModel.findOne().where("key", key).populate("user").exec();
+    if (credential !== null) {
+      await credential.updateOne({lastUsedDate: new Date()});
+    }
     const user = (credential !== null && isDocument(credential.user)) ? credential.user : null;
     return user;
   }

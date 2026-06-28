@@ -1149,7 +1149,9 @@ apiCredentialList:
         本当によろしいですか?
       confirm: "削除"
   table:
-    createdDate: "発行日"
+    createdDate: "発行日時"
+    lastUsedDate: "最終使用日時"
+    neverUsed: "未使用"
   caution: >-
     API キーを後から確認することはできません。
     今の段階でコピーして保存しておいてください。

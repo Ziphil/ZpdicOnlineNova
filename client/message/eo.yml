@@ -1150,6 +1150,8 @@ apiCredentialList:
       confirm: "Forigi"
   table:
     createdDate: "Eldonita je"
+    lastUsedDate: "Laste uzita je"
+    neverUsed: "Neniam uzita"
   caution: >-
     Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
   empty: "Vi ankoraŭ ne eldonis iun ajn API-ŝlosilon"
