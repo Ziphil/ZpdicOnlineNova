@@ -503,9 +503,9 @@ export class DictionarySchema extends DiscardableSchema {
           if (authority === "own") {
             return this.user.id === user.id;
           } else if (authority === "edit") {
-            return this.user.id === user.id || await MemberModel.existsMember(this, user, "edit");
+            return this.user.id === user.id || await MemberModel.existMember(this, user, "edit");
           } else if (authority === "view") {
-            return (this.visibility === "public" || this.visibility === "unlisted") || this.user.id === user.id || await MemberModel.existsMember(this, user, "edit");
+            return this.user.id === user.id || (this.visibility === "public" || this.visibility === "unlisted") || await MemberModel.existMember(this, user, "edit");
           } else {
             authority satisfies never;
             throw new Error("cannot happen");
