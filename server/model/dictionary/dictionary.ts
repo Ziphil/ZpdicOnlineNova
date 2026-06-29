@@ -118,37 +118,20 @@ export class DictionarySchema extends DiscardableSchema {
 
   /** 指定されたユーザーが指定された権限をもっている辞書を全て返します。
    * `me` にユーザーを指定すると、`me` が見ることのできる辞書のみを返します。
-   * `me` に `null` を指定すると、ユーザーに関わらず全員が見ることのできる辞書のみを返します (公開範囲が限定公開以下のものは除外される)。
-   * `me` に `undefined` を指定するか省略すると、公開範囲に関係なく全ての辞書を返します。*/
-  public static async fetchByUser(user: User, authority: DictionaryAuthority, me: Pick<User, "id"> | "all" | null): Promise<Array<Dictionary>> {
-    const rawQuery = (() => {
-      if (authority === "own") {
-        if (me === "all") {
-          const query = DictionaryModel.findExist().where({"user": user});
-          return query;
-        } else {
-          const query = DictionaryModel.findExist().where({"user": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]);
-          return query;
-        }
-      } else {
-        if (me === "all") {
-          const query = DictionaryModel.findExist().or([
-            DictionaryModel.find({"user": user}).getFilter(),
-            DictionaryModel.find({"editUsers": user}).getFilter()
-          ]);
-          return query;
-        } else {
-          const query = DictionaryModel.findExist().or([
-            DictionaryModel.find({"user": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]).getFilter(),
-            DictionaryModel.find({"editUsers": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]).getFilter()
-          ]);
-          return query;
-        }
-      }
-    })();
-    const query = rawQuery.sort("-updatedDate -number");
-    const dictionaries = await query.exec();
-    return dictionaries;
+   * `me` に `null` を指定すると、ユーザーに関わらず全員が見ることのできる辞書のみを返します (公開範囲が限定公開以下のものは除外される)。*/
+  public static async fetchByUser(user: User, authority: DictionaryAuthority, me: Pick<User, "id"> | null): Promise<Array<Dictionary>> {
+    if (authority === "own") {
+      const query = DictionaryModel.findExist().where({"user": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]).sort({"updatedDate": -1, "number": -1});
+      const dictionaries = await query.exec();
+      return dictionaries;
+    } else {
+      const query = DictionaryModel.findExist().or([
+        DictionaryModel.find({"user": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]).getFilter(),
+        DictionaryModel.find({"editUsers": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]).getFilter()
+      ]).sort({"updatedDate": -1, "number": -1});
+      const dictionaries = await query.exec();
+      return dictionaries;
+    }
   }
 
   public static async search(parameter: DictionaryParameter, range?: QueryRange): Promise<WithSize<Dictionary>> {
