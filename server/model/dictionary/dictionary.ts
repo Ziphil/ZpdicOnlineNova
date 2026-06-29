@@ -115,25 +115,24 @@ export class DictionarySchema extends DiscardableSchema {
   /** 指定されたユーザーが指定された権限をもっている辞書を全て返します。
    * `me` にユーザーを指定すると、`me` が見ることのできる辞書のみを返します。
    * `me` に `null` を指定すると、ユーザーに関わらず全員が見ることのできる辞書のみを返します (公開範囲が限定公開以下のものは除外される)。*/
-  public static async fetchByUser(user: User, authority: DictionaryAuthority, me: Pick<User, "id"> | null): Promise<Array<Dictionary>> {
+  public static async fetchByUser(user: User, authority: Exclude<DictionaryAuthority, "view">, me: Pick<User, "id"> | null): Promise<Array<Dictionary>> {
     const meDictionaryIds = (me !== null) ? await MemberModel.fetchDictionaryIdsByUser(me, "edit") : [];
-    const visibleFilters = [
-      {"visibility": "public"},
-      {"user": me},
-      DictionaryModel.find().in("_id", meDictionaryIds).getFilter()
-    ];
+    const visibleFilters = [{"visibility": "public"}, {"user": me}, DictionaryModel.find().in("_id", meDictionaryIds).getFilter()];
     if (authority === "own") {
-      const query = DictionaryModel.findExist().where({"user": user}).or(visibleFilters).sort({"updatedDate": -1, "number": -1});
-      const dictionaries = await query.exec();
+      const query = DictionaryModel.findExist().where("user", user).or(visibleFilters);
+      const dictionaries = await query.sort({"updatedDate": -1, "number": -1}).exec();
       return dictionaries;
-    } else {
+    } else if (authority === "edit") {
       const userDictionaryIds = await MemberModel.fetchDictionaryIdsByUser(user, "edit");
       const query = DictionaryModel.findExist().or([
-        DictionaryModel.find({"user": user}).or(visibleFilters).getFilter(),
+        DictionaryModel.find().where("user", user).or(visibleFilters).getFilter(),
         DictionaryModel.find().in("_id", userDictionaryIds).or(visibleFilters).getFilter()
-      ]).sort({"updatedDate": -1, "number": -1});
-      const dictionaries = await query.exec();
+      ]);
+      const dictionaries = await query.sort({"updatedDate": -1, "number": -1}).exec();
       return dictionaries;
+    } else {
+      authority satisfies never;
+      throw new Error("cannot happen");
     }
   }
 
