@@ -117,15 +117,20 @@ export class DictionarySchema extends DiscardableSchema {
    * `me` に `null` を指定すると、ユーザーに関わらず全員が見ることのできる辞書のみを返します (公開範囲が限定公開以下のものは除外される)。*/
   public static async fetchByUser(user: User, authority: DictionaryAuthority, me: Pick<User, "id"> | null): Promise<Array<Dictionary>> {
     const meDictionaryIds = (me !== null) ? await MemberModel.fetchDictionaryIdsByUser(me, "edit") : [];
+    const visibleFilters = [
+      {"visibility": "public"},
+      {"user": me},
+      DictionaryModel.find().where("_id").in(meDictionaryIds).getFilter()
+    ];
     if (authority === "own") {
-      const query = DictionaryModel.findExist().where({"user": user}).or([{"visibility": "public"}, {"user": me}, {"_id": {"$in": meDictionaryIds}}]).sort({"updatedDate": -1, "number": -1});
+      const query = DictionaryModel.findExist().where({"user": user}).or(visibleFilters).sort({"updatedDate": -1, "number": -1});
       const dictionaries = await query.exec();
       return dictionaries;
     } else {
       const userDictionaryIds = await MemberModel.fetchDictionaryIdsByUser(user, "edit");
       const query = DictionaryModel.findExist().or([
-        DictionaryModel.find({"user": user}).or([{"visibility": "public"}, {"user": me}, {"_id": {"$in": meDictionaryIds}}]).getFilter(),
-        DictionaryModel.find({"_id": {"$in": userDictionaryIds}}).or([{"visibility": "public"}, {"user": me}, {"_id": {"$in": meDictionaryIds}}]).getFilter()
+        DictionaryModel.find({"user": user}).or(visibleFilters).getFilter(),
+        DictionaryModel.find().where("_id").in(userDictionaryIds).or(visibleFilters).getFilter()
       ]).sort({"updatedDate": -1, "number": -1});
       const dictionaries = await query.exec();
       return dictionaries;
