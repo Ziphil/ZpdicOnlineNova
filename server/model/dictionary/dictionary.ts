@@ -120,7 +120,7 @@ export class DictionarySchema extends DiscardableSchema {
     const visibleFilters = [
       {"visibility": "public"},
       {"user": me},
-      DictionaryModel.find().where("_id").in(meDictionaryIds).getFilter()
+      DictionaryModel.find().in("_id", meDictionaryIds).getFilter()
     ];
     if (authority === "own") {
       const query = DictionaryModel.findExist().where({"user": user}).or(visibleFilters).sort({"updatedDate": -1, "number": -1});
@@ -130,7 +130,7 @@ export class DictionarySchema extends DiscardableSchema {
       const userDictionaryIds = await MemberModel.fetchDictionaryIdsByUser(user, "edit");
       const query = DictionaryModel.findExist().or([
         DictionaryModel.find({"user": user}).or(visibleFilters).getFilter(),
-        DictionaryModel.find().where("_id").in(userDictionaryIds).or(visibleFilters).getFilter()
+        DictionaryModel.find().in("_id", userDictionaryIds).or(visibleFilters).getFilter()
       ]).sort({"updatedDate": -1, "number": -1});
       const dictionaries = await query.exec();
       return dictionaries;
