@@ -5,7 +5,6 @@ import {
   Ref,
   getModelForClass,
   isDocument,
-  isDocumentArray,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -16,6 +15,7 @@ import {DiscardableSchema} from "/server/model/base";
 import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityQuery, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
+import {MemberModel} from "/server/model/dictionary/member";
 import {Serializer} from "/server/model/dictionary/serializer";
 import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
 import {CustomError} from "/server/model/error";
@@ -51,9 +51,6 @@ export class DictionarySchema extends DiscardableSchema {
   @prop({required: true, ref: "UserSchema"})
   public user!: Ref<UserSchema>;
 
-  @prop({required: true, ref: "UserSchema"})
-  public editUsers!: Array<Ref<UserSchema>>;
-
   @prop({required: true, unique: true})
   public number!: number;
 
@@ -84,7 +81,6 @@ export class DictionarySchema extends DiscardableSchema {
   public static async addEmpty(name: string, user: User): Promise<Dictionary> {
     const dictionary = new DictionaryModel({
       user,
-      editUsers: new Array<User>(),
       number: await DictionaryModel.fetchNextNumber(),
       name,
       status: "ready",
@@ -119,18 +115,24 @@ export class DictionarySchema extends DiscardableSchema {
   /** 指定されたユーザーが指定された権限をもっている辞書を全て返します。
    * `me` にユーザーを指定すると、`me` が見ることのできる辞書のみを返します。
    * `me` に `null` を指定すると、ユーザーに関わらず全員が見ることのできる辞書のみを返します (公開範囲が限定公開以下のものは除外される)。*/
-  public static async fetchByUser(user: User, authority: DictionaryAuthority, me: Pick<User, "id"> | null): Promise<Array<Dictionary>> {
+  public static async fetchByUser(user: User, authority: Exclude<DictionaryAuthority, "view">, me: Pick<User, "id"> | null): Promise<Array<Dictionary>> {
+    const meDictionaryIds = (me !== null) ? await MemberModel.fetchDictionaryIdsByUser(me, "edit") : [];
+    const visibleFilters = [{"visibility": "public"}, {"user": me}, DictionaryModel.find().in("_id", meDictionaryIds).getFilter()];
     if (authority === "own") {
-      const query = DictionaryModel.findExist().where({"user": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]).sort({"updatedDate": -1, "number": -1});
-      const dictionaries = await query.exec();
+      const query = DictionaryModel.findExist().where("user", user).or(visibleFilters);
+      const dictionaries = await query.sort({"updatedDate": -1, "number": -1}).exec();
+      return dictionaries;
+    } else if (authority === "edit") {
+      const userDictionaryIds = await MemberModel.fetchDictionaryIdsByUser(user, "edit");
+      const query = DictionaryModel.findExist().or([
+        DictionaryModel.find().where("user", user).or(visibleFilters).getFilter(),
+        DictionaryModel.find().in("_id", userDictionaryIds).or(visibleFilters).getFilter()
+      ]);
+      const dictionaries = await query.sort({"updatedDate": -1, "number": -1}).exec();
       return dictionaries;
     } else {
-      const query = DictionaryModel.findExist().or([
-        DictionaryModel.find({"user": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]).getFilter(),
-        DictionaryModel.find({"editUsers": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]).getFilter()
-      ]).sort({"updatedDate": -1, "number": -1});
-      const dictionaries = await query.exec();
-      return dictionaries;
+      authority satisfies never;
+      throw new Error("cannot happen");
     }
   }
 
@@ -495,15 +497,15 @@ export class DictionarySchema extends DiscardableSchema {
    * `user` が `null` の場合は、匿名ユーザー (限定公開以上の辞書に対して閲覧権限のみがある) として扱います。 */
   public async hasAuthority(this: Dictionary, user: User | null, authority: DictionaryAuthority): Promise<boolean> {
     if (user !== null) {
-      await this.populate(["user", "editUsers"]);
-      if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
+      await this.populate("user");
+      if (isDocument(this.user)) {
         if (user.authority !== "admin") {
           if (authority === "own") {
             return this.user.id === user.id;
           } else if (authority === "edit") {
-            return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+            return this.user.id === user.id || await MemberModel.existMember(this, user, "edit");
           } else if (authority === "view") {
-            return (this.visibility === "public" || this.visibility === "unlisted") || this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+            return this.user.id === user.id || (this.visibility === "public" || this.visibility === "unlisted") || await MemberModel.existMember(this, user, "edit");
           } else {
             authority satisfies never;
             throw new Error("cannot happen");
@@ -535,27 +537,21 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async fetchAuthorizedUsers(this: Dictionary, authorityQuery: DictionaryAuthorityQuery): Promise<Array<User>> {
-    await this.populate(["user", "editUsers"]);
-    if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
+    await this.populate("user");
+    if (isDocument(this.user)) {
       const authority = authorityQuery.authority;
-      if (authorityQuery.exact) {
-        if (authority === "own") {
-          return [this.user];
-        } else if (authority === "edit") {
-          return this.editUsers;
+      if (authority === "own") {
+        return [this.user];
+      } else if (authority === "edit") {
+        const editUsers = await MemberModel.fetchUsersByDictionary(this, "edit");
+        if (authorityQuery.exact) {
+          return editUsers;
         } else {
-          authority satisfies never;
-          throw new Error("cannot happen");
+          return [this.user, ...editUsers];
         }
       } else {
-        if (authority === "own") {
-          return [this.user];
-        } else if (authority === "edit") {
-          return [this.user, ...this.editUsers];
-        } else {
-          authority satisfies never;
-          throw new Error("cannot happen");
-        }
+        authority satisfies never;
+        throw new Error("cannot happen");
       }
     } else {
       throw new Error("cannot happen");
@@ -563,18 +559,11 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async discardAuthorizedUser(this: Dictionary, user: User): Promise<true> {
-    await this.populate("editUsers");
-    if (isDocumentArray(this.editUsers)) {
-      const exist = this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
-      if (exist) {
-        this.editUsers = this.editUsers.filter((editUser) => editUser.id !== user.id);
-        await this.save();
-        return true;
-      } else {
-        throw new CustomError("noSuchDictionaryAuthorizedUser");
-      }
+    const existed = await MemberModel.discard(this, user);
+    if (existed) {
+      return true;
     } else {
-      throw new Error("cannot happen");
+      throw new CustomError("noSuchDictionaryAuthorizedUser");
     }
   }
 

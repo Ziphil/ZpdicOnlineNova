@@ -162,3 +162,19 @@ db.users.find({"apiKey": {$exists: true, $ne: null}}).forEach(function (user) {
   });
 });
 ```
+
+### → ver 3.26.0
+辞書の共同編集者を、辞書ドキュメントの `editUsers` フィールドではなく、独立した `members` コレクションで管理するように変更しました。
+既存の `editUsers` を新しいコレクションに移行するため、Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+db.dictionaries.find({"editUsers": {$exists: true}}).forEach(function (dictionary) {
+  (dictionary.editUsers || []).forEach(function (userId) {
+    db.members.insertOne({
+      "dictionary": dictionary._id,
+      "user": userId,
+      "authority": "edit"
+    });
+  });
+});
+db.dictionaries.updateMany({}, {$unset: {"editUsers": ""}});
+```
