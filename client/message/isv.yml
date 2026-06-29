@@ -36,7 +36,7 @@ toast:
         The setting has been changed.
       ignoredEquivalentPattern: |-
         The setting has been changed.
-    discardDictionaryAuthorizedUser: |-
+    discardMembers: |-
       The permission has been revoked.
     addWord: |-
       A new word has been created.
@@ -179,7 +179,7 @@ toast:
       The user has already been invited.
     noSuchInvitation: |-
       This invitation does not exist.
-    noSuchDictionaryAuthorizedUser: |-
+    noSuchMember: |-
       The user does not have the permission.
     emptyCommissionName: |-
       The word to request is empty.
@@ -326,7 +326,7 @@ contactForm:
       Enter your message.
     agreeRequired: >-
       Read the privacy policy and agree to it.
-dictionaryAuthorizedUserList:
+memberList:
   empty: "No users have editing permission"
   button:
     discard: "Revoke"

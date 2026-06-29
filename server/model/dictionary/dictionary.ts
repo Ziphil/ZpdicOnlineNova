@@ -536,7 +536,7 @@ export class DictionarySchema extends DiscardableSchema {
     return filteredAuthorities;
   }
 
-  public async fetchAuthorizedUsers(this: Dictionary, authorityQuery: DictionaryAuthorityQuery): Promise<Array<User>> {
+  public async fetchMembers(this: Dictionary, authorityQuery: DictionaryAuthorityQuery): Promise<Array<User>> {
     await this.populate("user");
     if (isDocument(this.user)) {
       const authority = authorityQuery.authority;
@@ -558,12 +558,12 @@ export class DictionarySchema extends DiscardableSchema {
     }
   }
 
-  public async discardAuthorizedUser(this: Dictionary, user: User): Promise<true> {
+  public async discardMember(this: Dictionary, user: User): Promise<true> {
     const existed = await MemberModel.discard(this, user);
     if (existed) {
       return true;
     } else {
-      throw new CustomError("noSuchDictionaryAuthorizedUser");
+      throw new CustomError("noSuchMember");
     }
   }
 

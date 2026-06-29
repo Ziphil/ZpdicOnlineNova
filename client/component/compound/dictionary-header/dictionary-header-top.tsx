@@ -22,7 +22,7 @@ export const DictionaryHeaderTop = create(
 
     const {trans, transNode} = useTrans("dictionaryHeader");
 
-    const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number: dictionary.number, authorityQuery: {authority: "edit", exact: true}});
+    const [members] = useResponse("fetchMembers", {number: dictionary.number, authorityQuery: {authority: "edit", exact: true}});
 
     return (
       <div styleName="root">
@@ -40,10 +40,10 @@ export const DictionaryHeaderTop = create(
                   </Link>
                 </SingleLineText>
               </span>
-              {(authorizedUsers !== undefined && authorizedUsers.length > 0) && (
+              {(members !== undefined && members.length > 0) && (
                 <span styleName="user-count">
                   {transNode("userCount", {
-                    count: authorizedUsers.length,
+                    count: members.length,
                     plus: (parts) => <span styleName="plus">{parts}</span>
                   })}
                 </span>

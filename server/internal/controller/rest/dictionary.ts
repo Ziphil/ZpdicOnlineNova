@@ -67,21 +67,21 @@ export class DictionaryRestController extends InternalRestController {
     }
   }
 
-  @post("/discardDictionaryAuthorizedUser")
+  @post("/discardMembers")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: FilledRequest<"discardDictionaryAuthorizedUser", "me" | "dictionary">, response: Response<"discardDictionaryAuthorizedUser">): Promise<void> {
+  public async [Symbol()](request: FilledRequest<"discardMembers", "me" | "dictionary">, response: Response<"discardMembers">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {id} = request.body;
     const user = await UserModel.findById(id);
     if (user) {
       try {
-        await dictionary.discardAuthorizedUser(user);
+        await dictionary.discardMember(user);
         InternalRestController.respond(response, null);
       } catch (error) {
-        InternalRestController.respondByCustomError(response, ["noSuchDictionaryAuthorizedUser"], error);
+        InternalRestController.respondByCustomError(response, ["noSuchMember"], error);
       }
     } else {
-      InternalRestController.respondError(response, "noSuchDictionaryAuthorizedUser");
+      InternalRestController.respondError(response, "noSuchMember");
     }
   }
 
@@ -300,12 +300,12 @@ export class DictionaryRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
-  @post("/fetchDictionaryAuthorizedUsers")
+  @post("/fetchMembers")
   @before(parseMe(), checkDictionary("view"))
-  public async [Symbol()](request: FilledRequest<"fetchDictionaryAuthorizedUsers", "dictionary">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
+  public async [Symbol()](request: FilledRequest<"fetchMembers", "dictionary">, response: Response<"fetchMembers">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {authorityQuery} = request.body;
-    const users = await dictionary.fetchAuthorizedUsers(authorityQuery);
+    const users = await dictionary.fetchMembers(authorityQuery);
     const body = users.map(UserCreator.skeletonize);
     InternalRestController.respond(response, body);
   }

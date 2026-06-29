@@ -48,7 +48,7 @@ toast:
       テンプレートを編集しました。
     discardDictionaryTemplateWord: |-
       テンプレートを削除しました。
-    discardDictionaryAuthorizedUser: |-
+    discardMembers: |-
       編集権限を解除しました。
     addWord: |-
       単語を新しく作成しました。
@@ -195,7 +195,7 @@ toast:
       そのユーザーにはすでに招待を行っています。
     noSuchInvitation: |-
       この招待は存在しません。
-    noSuchDictionaryAuthorizedUser: |-
+    noSuchMember: |-
       そのユーザーは権限を保有していません。
     emptyProposalName: |-
       造語依頼する単語が空です。
@@ -339,7 +339,7 @@ contactForm:
       お問い合わせ内容を入力してください。
     agreeRequired: >-
       プライバシーポリシーを読んで同意してください。
-dictionaryAuthorizedUserList:
+memberList:
   empty: "編集権限のあるユーザーはいません"
   button:
     discard: "解除"

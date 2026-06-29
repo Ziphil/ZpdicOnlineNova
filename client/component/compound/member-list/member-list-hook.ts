@@ -10,18 +10,18 @@ import {switchResponse} from "/client/util/response";
 import {Dictionary, User} from "/server/internal/skeleton";
 
 
-export function useDiscardDictionaryAuthorizedUser(dictionary: Dictionary, user: User): () => void {
-  const {trans} = useTrans("dictionaryAuthorizedUserList");
+export function useDiscardMember(dictionary: Dictionary, user: User): () => void {
+  const {trans} = useTrans("memberList");
   const request = useRequest();
   const openAlert = useCommonAlert();
   const {dispatchSuccessToast} = useToast();
   const doRequest = useCallback(async function (): Promise<void> {
     const number = dictionary.number;
     const id = user.id;
-    const response = await request("discardDictionaryAuthorizedUser", {number, id});
+    const response = await request("discardMembers", {number, id});
     await switchResponse(response, async () => {
-      await invalidateResponses("fetchDictionaryAuthorizedUsers", (query) => query.number === dictionary.number);
-      dispatchSuccessToast("discardDictionaryAuthorizedUser");
+      await invalidateResponses("fetchMembers", (query) => query.number === dictionary.number);
+      dispatchSuccessToast("discardMembers");
     });
   }, [dictionary.number, user.id, request, dispatchSuccessToast]);
   const execute = useCallback(function (): void {

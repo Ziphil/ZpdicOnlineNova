@@ -48,7 +48,7 @@ toast:
       La ŝablono redaktitas.
     discardDictionaryTemplateWord: |-
       La ŝablono forigitas.
-    discardDictionaryAuthorizedUser: |-
+    discardMembers: |-
       La permeso revokitas.
     addWord: |-
       Nova vorto kreitas.
@@ -195,7 +195,7 @@ toast:
       La uzanto jam estas invitita.
     noSuchInvitation: |-
       Ne ekzistas tiu invito.
-    noSuchDictionaryAuthorizedUser: |-
+    noSuchMember: |-
       La uzanto ne havas la permeson.
     emptyCommissionName: |-
       La vorto por peti estas malplena.
@@ -339,7 +339,7 @@ contactForm:
       Enigu vian mesaĝon.
     agreeRequired: >-
       Legu kaj konsentu pri la privateca politiko.
-dictionaryAuthorizedUserList:
+memberList:
   empty: "Neniuj uzantoj havas redaktan permeson"
   button:
     discard: "Revoki"

@@ -6,11 +6,11 @@ import {UserList} from "/client/component/compound/user-list";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
-import {DictionaryAuthorizedUserFooter} from "./dictionary-authorized-user-footer";
+import {MemberFooter} from "./member-footer";
 
 
-export const DictionaryAuthorizedUserList = create(
-  null, "DictionaryAuthorizedUserList",
+export const MemberList = create(
+  null, "MemberList",
   function ({
     dictionary,
     pageSpec,
@@ -21,14 +21,14 @@ export const DictionaryAuthorizedUserList = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionaryAuthorizedUserList");
+    const {trans} = useTrans("memberList");
 
     const number = dictionary.number;
-    const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number, authorityQuery: {authority: "edit", exact: true}});
+    const [members] = useResponse("fetchMembers", {number, authorityQuery: {authority: "edit", exact: true}});
 
     return (
-      <UserList users={authorizedUsers} pageSpec={{size: 20}} emptyMessage={trans("empty")} {...rest} renderFooter={(user) => (
-        <DictionaryAuthorizedUserFooter dictionary={dictionary} user={user}/>
+      <UserList users={members} pageSpec={{size: 20}} emptyMessage={trans("empty")} {...rest} renderFooter={(user) => (
+        <MemberFooter dictionary={dictionary} user={user}/>
       )}/>
     );
 

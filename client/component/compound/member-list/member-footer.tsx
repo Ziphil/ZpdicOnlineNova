@@ -5,11 +5,11 @@ import {Fragment, ReactElement} from "react";
 import {Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, User} from "/server/internal/skeleton";
-import {useDiscardDictionaryAuthorizedUser} from "./dictionary-authorized-user-list-hook";
+import {useDiscardMember} from "./member-list-hook";
 
 
-export const DictionaryAuthorizedUserFooter = create(
-  null, "DictionaryAuthorizedUserFooter",
+export const MemberFooter = create(
+  null, "MemberFooter",
   function ({
     dictionary,
     user
@@ -18,13 +18,13 @@ export const DictionaryAuthorizedUserFooter = create(
     user: User
   }): ReactElement {
 
-    const {trans} = useTrans("dictionaryAuthorizedUserList");
+    const {trans} = useTrans("memberList");
 
-    const discardAuthorizedUser = useDiscardDictionaryAuthorizedUser(dictionary, user);
+    const discardMember = useDiscardMember(dictionary, user);
 
     return (
       <Fragment>
-        <Button scheme="red" variant="underline" onClick={discardAuthorizedUser}>
+        <Button scheme="red" variant="underline" onClick={discardMember}>
           <ButtonIconbag><GeneralIcon icon={faBan}/></ButtonIconbag>
           {trans("button.discard")}
         </Button>

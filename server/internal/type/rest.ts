@@ -108,11 +108,11 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "noSuchDictionaryTemplateWord">
     }
   },
-  discardDictionaryAuthorizedUser: {
+  discardMembers: {
     request: {number: number, id: ObjectId},
     response: {
       success: null,
-      error: CustomError<"noSuchDictionary" | "noSuchDictionaryAuthorizedUser">
+      error: CustomError<"noSuchDictionary" | "noSuchMember">
     }
   },
   addInvitation: {
@@ -262,7 +262,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
-  fetchDictionaryAuthorizedUsers: {
+  fetchMembers: {
     request: {number: number, authorityQuery: DictionaryAuthorityQuery},
     response: {
       success: Array<User>,
