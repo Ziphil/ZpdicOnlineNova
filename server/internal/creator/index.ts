@@ -28,4 +28,5 @@ export * from "./article";
 export * from "./proposal";
 export * from "./history";
 export * from "./invitation";
+export * from "./member";
 export * from "./notification";

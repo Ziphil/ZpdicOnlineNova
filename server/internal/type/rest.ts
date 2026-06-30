@@ -7,7 +7,6 @@ import type {
   CustomError,
   Dictionary,
   DictionaryAuthority,
-  DictionaryAuthorityQuery,
   DictionaryParameter,
   DictionarySettings,
   DictionaryStatistics,
@@ -26,6 +25,7 @@ import type {
   History,
   Invitation,
   InvitationType,
+  Member,
   Notification,
   ObjectId,
   Proposal,
@@ -108,7 +108,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "noSuchDictionaryTemplateWord">
     }
   },
-  discardMembers: {
+  discardMember: {
     request: {number: number, id: ObjectId},
     response: {
       success: null,
@@ -263,9 +263,9 @@ type ServerSpecs = {
     }
   },
   fetchMembers: {
-    request: {number: number, authorityQuery: DictionaryAuthorityQuery},
+    request: {number: number},
     response: {
-      success: Array<User>,
+      success: Array<Member>,
       error: CustomError<"noSuchDictionary">
     }
   },

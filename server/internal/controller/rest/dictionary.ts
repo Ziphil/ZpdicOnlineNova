@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledRequest, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
-import {DictionaryCreator, DictionaryParameterCreator, SuggestionCreator, TemplateWordCreator, UserCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
+import {DictionaryCreator, DictionaryParameterCreator, MemberCreator, SuggestionCreator, TemplateWordCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {SOCKET_PATH_PREFIX} from "/server/internal/type/socket";
 import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
@@ -67,9 +67,9 @@ export class DictionaryRestController extends InternalRestController {
     }
   }
 
-  @post("/discardMembers")
+  @post("/discardMember")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: FilledRequest<"discardMembers", "me" | "dictionary">, response: Response<"discardMembers">): Promise<void> {
+  public async [Symbol()](request: FilledRequest<"discardMember", "me" | "dictionary">, response: Response<"discardMember">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {id} = request.body;
     const user = await UserModel.findById(id);
@@ -304,9 +304,8 @@ export class DictionaryRestController extends InternalRestController {
   @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchMembers", "dictionary">, response: Response<"fetchMembers">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const {authorityQuery} = request.body;
-    const users = await dictionary.fetchMembers(authorityQuery);
-    const body = users.map(UserCreator.skeletonize);
+    const members = await dictionary.fetchMembers();
+    const body = await Promise.all(members.map((member) => MemberCreator.skeletonize(member)));
     InternalRestController.respond(response, body);
   }
 

@@ -36,7 +36,7 @@ toast:
         The setting has been changed.
       ignoredEquivalentPattern: |-
         The setting has been changed.
-    discardMembers: |-
+    discardMember: |-
       The permission has been revoked.
     addWord: |-
       A new word has been created.
