@@ -48,7 +48,7 @@ toast:
       The template has been edited.
     discardDictionaryTemplateWord: |-
       The template has been deleted.
-    discardMembers: |-
+    discardMember: |-
       The permission has been revoked.
     addWord: |-
       A new word has been created.

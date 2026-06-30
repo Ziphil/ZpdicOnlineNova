@@ -9,8 +9,8 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
-import {MemberModel} from "/server/model/dictionary/member";
 import {CustomError} from "/server/model/error";
+import {MemberModel} from "/server/model/member/member";
 import {User, UserSchema} from "/server/model/user/user";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 

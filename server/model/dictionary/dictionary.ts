@@ -13,15 +13,15 @@ import type {DictionaryStatistics, WordSpellingFrequencies} from "/server/intern
 import {Article, ArticleModel, EditableArticle} from "/server/model/article";
 import {DiscardableSchema} from "/server/model/base";
 import {Deserializer} from "/server/model/dictionary/deserializer";
-import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityQuery, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
+import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
-import {MemberModel} from "/server/model/dictionary/member";
 import {Serializer} from "/server/model/dictionary/serializer";
 import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
 import {CustomError} from "/server/model/error";
 import {EditableExample, Example, ExampleModel} from "/server/model/example/example";
 import {ExampleParameter} from "/server/model/example-parameter/example-parameter";
 import {InvitationModel} from "/server/model/invitation";
+import {Member, MemberModel} from "/server/model/member/member";
 import {EditableTemplateWord} from "/server/model/template-word/template-word";
 import {User, UserSchema} from "/server/model/user/user";
 import {Relation} from "/server/model/word/relation";
@@ -536,26 +536,9 @@ export class DictionarySchema extends DiscardableSchema {
     return filteredAuthorities;
   }
 
-  public async fetchMembers(this: Dictionary, authorityQuery: DictionaryAuthorityQuery): Promise<Array<User>> {
-    await this.populate("user");
-    if (isDocument(this.user)) {
-      const authority = authorityQuery.authority;
-      if (authority === "own") {
-        return [this.user];
-      } else if (authority === "edit") {
-        const editUsers = await MemberModel.fetchUsersByDictionary(this, "edit");
-        if (authorityQuery.exact) {
-          return editUsers;
-        } else {
-          return [this.user, ...editUsers];
-        }
-      } else {
-        authority satisfies never;
-        throw new Error("cannot happen");
-      }
-    } else {
-      throw new Error("cannot happen");
-    }
+  public async fetchMembers(this: Dictionary): Promise<Array<Member>> {
+    const members = await MemberModel.fetchByDictionary(this, "edit");
+    return members;
   }
 
   public async discardMember(this: Dictionary, user: User): Promise<void> {

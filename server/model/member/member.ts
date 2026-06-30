@@ -4,13 +4,12 @@ import {
   DocumentType,
   Ref,
   getModelForClass,
-  isDocument,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
-import {MEMBER_AUTHORITIES, MemberAuthority} from "/server/model/dictionary/member-authority";
 import {CustomError} from "/server/model/error";
+import {MEMBER_AUTHORITIES, MemberAuthority} from "/server/model/member/member-authority";
 import {User, UserSchema} from "/server/model/user/user";
 
 
@@ -52,10 +51,9 @@ export class MemberSchema {
     return exist;
   }
 
-  public static async fetchUsersByDictionary(dictionary: Dictionary, authority: MemberAuthority): Promise<Array<User>> {
+  public static async fetchByDictionary(dictionary: Dictionary, authority: MemberAuthority): Promise<Array<Member>> {
     const members = await MemberModel.find().where("dictionary", dictionary).where("authority", authority).populate("user");
-    const users = members.flatMap((member) => (isDocument(member.user)) ? [member.user] : []);
-    return users;
+    return members;
   }
 
   public static async fetchDictionaryIdsByUser(user: Pick<User, "id">, authority: MemberAuthority): Promise<Array<Ref<DictionarySchema>>> {

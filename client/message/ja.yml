@@ -48,7 +48,7 @@ toast:
       テンプレートを編集しました。
     discardDictionaryTemplateWord: |-
       テンプレートを削除しました。
-    discardMembers: |-
+    discardMember: |-
       編集権限を解除しました。
     addWord: |-
       単語を新しく作成しました。

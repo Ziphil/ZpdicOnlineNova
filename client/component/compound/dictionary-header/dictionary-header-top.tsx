@@ -22,7 +22,7 @@ export const DictionaryHeaderTop = create(
 
     const {trans, transNode} = useTrans("dictionaryHeader");
 
-    const [members] = useResponse("fetchMembers", {number: dictionary.number, authorityQuery: {authority: "edit", exact: true}});
+    const [members] = useResponse("fetchMembers", {number: dictionary.number});
 
     return (
       <div styleName="root">

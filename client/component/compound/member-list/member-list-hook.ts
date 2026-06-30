@@ -18,10 +18,10 @@ export function useDiscardMember(dictionary: Dictionary, user: User): () => void
   const doRequest = useCallback(async function (): Promise<void> {
     const number = dictionary.number;
     const id = user.id;
-    const response = await request("discardMembers", {number, id});
+    const response = await request("discardMember", {number, id});
     await switchResponse(response, async () => {
       await invalidateResponses("fetchMembers", (query) => query.number === dictionary.number);
-      dispatchSuccessToast("discardMembers");
+      dispatchSuccessToast("discardMember");
     });
   }, [dictionary.number, user.id, request, dispatchSuccessToast]);
   const execute = useCallback(function (): void {
