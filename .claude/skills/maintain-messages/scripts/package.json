@@ -1,0 +1,17 @@
+{
+  "name": "maintain-messages-scripts",
+  "private": true,
+  "description": "maintain-messages skill 専用のツール依存 (アプリ本体の依存とは分離)",
+  "scripts": {
+    "check": "ts-node --transpile-only check-messages.ts",
+    "reorder": "ts-node --transpile-only reorder-messages.ts"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2",
+    "yaml": "^1.10.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5"
+  }
+}
