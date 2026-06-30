@@ -78,6 +78,14 @@ gh pr list --state open --base develop --json number,title,headRefName \
 ## Step 2: 整備用ブランチの作成
 `develop` から整備用のブランチを切る。
 ブランチ名は `maintenance/messages-<yyyymmdd>` 形式 (`<yyyymmdd>` は今日の日付, 例: `maintenance/messages-20260630`)。
+
+`<yyyymmdd>` に入れる今日の日付は、**実行環境のタイムゾーンが JST とは限らないため、必ず JST を明示して取得する** (この日付は後続の PR タイトルでも使う)。
+```bash
+date '+%Y%m%d' --date='TZ="Asia/Tokyo" now'
+```
+または Python で `datetime.now(timezone(timedelta(hours=9))).strftime("%Y%m%d")` から得る。
+
+求めた日付でブランチを切る。
 ```bash
 git switch -c maintenance/messages-<yyyymmdd>
 ```
@@ -174,7 +182,7 @@ git status --short client/message/
   git commit -m "メッセージファイルを体裁に則る形に変更"
   ```
 - ブランチを push して PR を作成する (base は `develop`)。
-  `<yyyymmdd>` の箇所は今日の日付を入れる。
+  `<yyyymmdd>` には Step 2 で求めたものと同じ日付 (JST) を入れる。
   ```bash
   git push -u origin maintenance/messages-<yyyymmdd>
   gh pr create --base develop --title "メッセージファイル整備: <yyyymmdd>" --body "<本文>"
