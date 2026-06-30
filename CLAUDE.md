@@ -125,6 +125,10 @@ export const Foo = create(
 - 既存の命名・ファイル分割パターン (model, creator, skeleton, controller の 4 層) を踏襲する。
 
 ## 注意点
+**ワークツリーのクリーンアップ手順**。
+git ワークツリーを使った作業の後片付け (クリーンアップ) を行う際は、`worktree-cleanup` skill の手順に従うこと。
+特に、ワークツリーフォルダ自身は (エディタにロックされて詰まるのを避けるため) 削除せず、手動削除を促す。
+
 **機密ファイルは読み取り禁止**。
 リポジトリトップの `variable.env` (環境変数) と `secret.ts` は機密情報を含む。
 `Read` ツールでは `.claude/settings.json` の `deny` で遮断済みだが、`cat`, `Get-Content` 等の Bash 経由でも**絶対に内容を読み込まないこと**。
