@@ -1,12 +1,10 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps, Card, CardBody, CardFooter, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec, SingleLineText, useTrans} from "zographia";
-import {Link} from "/client/component/atom/link";
-import {UserAvatar} from "/client/component/atom/user-avatar";
+import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Member} from "/server/internal/skeleton";
-import {MemberFooter} from "./member-footer";
+import {MemberCard} from "./member-card";
 
 
 export const MemberList = create(
@@ -28,28 +26,7 @@ export const MemberList = create(
     return (
       <List styleName="root" items={members} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(member) => (
-            <Card key={member.id}>
-              <CardBody>
-                <div styleName="top">
-                  <UserAvatar styleName="avatar" user={member.user}/>
-                  <div styleName="name-container">
-                    <Link styleName="screen-name" href={`/user/${member.user.name}`} variant="unstyledSimple">
-                      <SingleLineText>
-                        {member.user.screenName}
-                      </SingleLineText>
-                    </Link>
-                    <SingleLineText styleName="name">
-                      @{member.user.name}
-                    </SingleLineText>
-                  </div>
-                </div>
-              </CardBody>
-              <CardFooter styleName="footer">
-                <MemberFooter dictionary={dictionary} user={member.user}/>
-              </CardFooter>
-            </Card>
-          )}
+          {(member) => <MemberCard key={member.id} dictionary={dictionary} member={member}/>}
           <ListLoadingView styleName="loading"/>
           <ListEmptyView styleName="loading">
             {trans("empty")}
