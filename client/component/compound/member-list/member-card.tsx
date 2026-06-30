@@ -1,12 +1,13 @@
 //
 
+import {faBan} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Card, CardBody, CardFooter, SingleLineText} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, SingleLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Member} from "/server/internal/skeleton";
-import {MemberFooter} from "./member-footer";
+import {useDiscardMember} from "./member-list-hook";
 
 
 export const MemberCard = create(
@@ -21,7 +22,10 @@ export const MemberCard = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const {trans} = useTrans("memberList");
+
     const user = member.user;
+    const discardMember = useDiscardMember(dictionary, user);
 
     return (
       <Card styleName="root" {...rest}>
@@ -41,7 +45,10 @@ export const MemberCard = create(
           </div>
         </CardBody>
         <CardFooter styleName="footer">
-          <MemberFooter dictionary={dictionary} user={user}/>
+          <Button scheme="red" variant="underline" onClick={discardMember}>
+            <ButtonIconbag><GeneralIcon icon={faBan}/></ButtonIconbag>
+            {trans("button.discard")}
+          </Button>
         </CardFooter>
       </Card>
     );
