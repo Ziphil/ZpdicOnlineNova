@@ -25,7 +25,7 @@ export const MemberCard = create(
     const {trans} = useTrans("memberList");
 
     const user = member.user;
-    const discardMember = useDiscardMember(dictionary, user);
+    const discardMember = useDiscardMember(dictionary, member);
 
     return (
       <Card styleName="root" {...rest}>

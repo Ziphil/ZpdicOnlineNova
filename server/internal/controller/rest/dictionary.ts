@@ -72,16 +72,11 @@ export class DictionaryRestController extends InternalRestController {
   public async [Symbol()](request: FilledRequest<"discardMember", "me" | "dictionary">, response: Response<"discardMember">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {id} = request.body;
-    const user = await UserModel.findById(id);
-    if (user) {
-      try {
-        await dictionary.discardMember(user);
-        InternalRestController.respond(response, null);
-      } catch (error) {
-        InternalRestController.respondByCustomError(response, ["noSuchMember"], error);
-      }
-    } else {
-      InternalRestController.respondError(response, "noSuchMember");
+    try {
+      await dictionary.discardMember(id);
+      InternalRestController.respond(response, null);
+    } catch (error) {
+      InternalRestController.respondByCustomError(response, ["noSuchMember"], error);
     }
   }
 
