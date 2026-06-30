@@ -36,8 +36,8 @@ export class MemberSchema {
     }
   }
 
-  public static async discard(dictionary: Dictionary, user: User): Promise<void> {
-    const member = await MemberModel.findOne().where("dictionary", dictionary).where("user", user);
+  public static async discard(dictionary: Dictionary, id: string): Promise<void> {
+    const member = await MemberModel.findById(id).where("dictionary", dictionary);
     if (member !== null) {
       await member.deleteOne();
     } else {

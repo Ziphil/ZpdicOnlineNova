@@ -541,8 +541,8 @@ export class DictionarySchema extends DiscardableSchema {
     return members;
   }
 
-  public async discardMember(this: Dictionary, user: User): Promise<void> {
-    await MemberModel.discard(this, user);
+  public async discardMember(this: Dictionary, id: string): Promise<void> {
+    await MemberModel.discard(this, id);
   }
 
   private static async fetchNextNumber(): Promise<number> {
