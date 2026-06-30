@@ -1,3 +1,4 @@
+# toast
 toast:
   success:
     addDictionary: |-
@@ -238,6 +239,7 @@ toast:
       予期しないエラーが発生しました。
       お手数ですが管理者までご連絡ください。
 
+# atom
 commonAlert:
   confirm: "決定"
   cancel: "キャンセル"
@@ -287,6 +289,7 @@ wordTypeSelect:
     exact: "完全"
     regular: "正規"
 
+# compound
 addProposalDialog:
   heading: "造語依頼"
   label:
@@ -802,6 +805,7 @@ resetUserPasswordForm:
   button:
     confirm: "リセット"
 
+# form
 commonForm:
   button:
     change: "変更"
@@ -1160,6 +1164,7 @@ apiCredentialList:
     copy: >-
       API キーをコピーしました。
 
+# page
 contactPage:
   title: "お問い合わせ"
   heading: "お問い合わせ"
@@ -1439,6 +1444,7 @@ userSettingPart:
       アカウントを削除すると、所有している辞書も全て削除されます。
       後からデータを復元することはできないので、慎重に行ってください。
 
+# other
 alert:
   message: |-
     行った変更が保存されない可能性があります。

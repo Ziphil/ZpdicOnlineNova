@@ -1,3 +1,4 @@
+# toast
 toast:
   success:
     addDictionary: |-
@@ -238,6 +239,7 @@ toast:
       Neatendita eraro okazis.
       Bonvolu sciigi la administranton.
 
+# atom
 commonAlert:
   confirm: "Konfirmi"
   cancel: "Nuligi"
@@ -287,6 +289,7 @@ wordTypeSelect:
     exact: "Ekzakta"
     regular: "Regesp"
 
+# compound
 addProposalDialog:
   heading: "Peti kreadon de vorto"
   label:
@@ -803,6 +806,7 @@ resetUserPasswordForm:
   button:
     confirm: "Restarigi"
 
+# form
 commonForm:
   button:
     change: "Ŝanĝi"
@@ -1159,6 +1163,7 @@ apiCredentialList:
     copy: >-
       Via API-ŝlosilo estas kopiita.
 
+# page
 contactPage:
   title: "Kontakti"
   heading: "Kontakti"
@@ -1436,6 +1441,7 @@ userSettingPart:
       Forigi vian konton ankaŭ forigos ĉiujn vortarojn kiujn vi posedas.
       Bonvolu esti certa, ĉar ne estas reiro.
 
+# other
 alert:
   message: |-
     La ŝanĝoj kiujn vi faris ne estos konservitaj.

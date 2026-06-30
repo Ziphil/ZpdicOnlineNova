@@ -1,3 +1,4 @@
+# toast
 toast:
   success:
     addDictionary: |-
@@ -238,6 +239,7 @@ toast:
       An unexpected error occurred.
       Please notify the administrator.
 
+# atom
 commonAlert:
   confirm: "Confirm"
   cancel: "Cancel"
@@ -287,6 +289,7 @@ wordTypeSelect:
     exact: "Exact"
     regular: "Regex"
 
+# compound
 addProposalDialog:
   heading: "Request word creation"
   label:
@@ -803,6 +806,7 @@ resetUserPasswordForm:
   button:
     confirm: "Reset"
 
+# form
 commonForm:
   button:
     change: "Change"
@@ -1137,6 +1141,8 @@ generateMyApiCredentialForm:
       Copied your API key.
   caution: >-
     Please copy this key now and save it in a safe place, as you will not be able to see it later.
+
+# compound
 apiCredentialList:
   button:
     copy: "Copy"
@@ -1159,6 +1165,7 @@ apiCredentialList:
     copy: >-
       Copied your API key.
 
+# page
 contactPage:
   title: "Contact"
   heading: "Contact"
@@ -1436,6 +1443,7 @@ userSettingPart:
       Deleting your account will also delete all the dictionaries you own.
       Please be certain, as there is no going back.
 
+# other
 alert:
   message: |-
     The changes you made will not be saved.
