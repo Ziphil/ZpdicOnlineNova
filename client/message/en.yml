@@ -243,6 +243,13 @@ toast:
 commonAlert:
   confirm: "Confirm"
   cancel: "Cancel"
+exampleModeSelect:
+  label:
+    sentence: "Sentence"
+    translation: "Translation"
+    both: "Both"
+    tag: "Tag"
+    content: "Whole"
 exampleOfferTag:
   catalog:
     zpdicDaily: "Daily sentences"
@@ -257,13 +264,6 @@ exampleOfferTag:
     arithmetic: "Arithmetic sentences"
     adposition: "Sentences for cases and adpositions"
   number: "#{number, number}"
-exampleModeSelect:
-  label:
-    sentence: "Sentence"
-    translation: "Translation"
-    both: "Both"
-    tag: "Tag"
-    content: "Whole"
 exampleTypeSelect:
   label:
     prefix: "Prefix"
@@ -300,6 +300,27 @@ addProposalDialog:
   error:
     nameRequired: >-
       Enter the word to request.
+apiCredentialList:
+  button:
+    copy: "Copy"
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This API key will be deleted.
+        Any programs using this API key will no longer be able to access dictionaries.
+        Are you sure?
+      confirm: "Delete"
+  table:
+    createdDate: "Issued at"
+    lastUsedDate: "Last used at"
+    neverUsed: "Never used"
+  caution: >-
+    Please copy this key now and save it in a safe place, as you will not be able to see it later.
+  empty: "You have not issued any API keys yet"
+  toast:
+    copy: >-
+      Copied your API key.
 articleList:
   empty: "No articles are created"
   button:
@@ -315,17 +336,6 @@ articleList:
       confirm: "Delete"
 changeLocaleForm:
   label: "Language"
-proposalList:
-  empty: "No words are requested"
-  button:
-    add: "Create"
-    discard: "Delete"
-  dialog:
-    discard:
-      message: >-
-        This request will be deleted permanently.
-        Are you really sure?
-      confirm: "Delete"
 contactForm:
   label:
     name: "Name"
@@ -342,16 +352,6 @@ contactForm:
       Enter your message.
     agreeRequired: >-
       Read the privacy policy and agree to it.
-memberList:
-  empty: "No users have editing permission"
-  button:
-    discard: "Revoke"
-  dialog:
-    discard:
-      message: >-
-        The permission of this user will be revoked.
-        Are you really sure?
-      confirm: "Revoke"
 dictionaryHeader:
   tab:
     dictionary: "Dictionary"
@@ -595,6 +595,30 @@ invitationList:
   button:
     accept: "Accept"
     reject: "Decline"
+loginForm:
+  label:
+    name: "Username"
+    password: "Password"
+  button:
+    confirm: "Sign in"
+    register: "Create account"
+    resetPassword: "Reset password"
+  or: "or"
+  error:
+    nameRequired: >-
+      Enter your username.
+    passwordRequired: >-
+      Enter your password.
+memberList:
+  empty: "No users have editing permission"
+  button:
+    discard: "Revoke"
+  dialog:
+    discard:
+      message: >-
+        The permission of this user will be revoked.
+        Are you really sure?
+      confirm: "Revoke"
 notificationList:
   tag:
     update: "Update"
@@ -611,6 +635,64 @@ orderModeSelect:
   custom: "Custom"
   updatedDate: "Update time"
   createdDate: "Creation time"
+proposalList:
+  empty: "No words are requested"
+  button:
+    add: "Create"
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This request will be deleted permanently.
+        Are you really sure?
+      confirm: "Delete"
+registerForm:
+  label:
+    name: &label.name "Username"
+    email: &label.email "Email address"
+    password: "Password"
+    agree: "Agree to the <termsLink>terms of service</termsLink> and <privacyLink>privacy policy</privacyLink>"
+  button:
+    confirm: "Create account"
+  error:
+    nameInvalid: >-
+      The username must be composed of alphanumeric characters, underscores and hyphens.
+      It must also contain at least one non-digit.
+    nameTooLong: >-
+      The username must contain no more than 30 characters.
+    nameRequired: &error.nameRequired >-
+      Enter a username.
+    emailInvalid: &error.emailInvalid >-
+      Enter a valid email address.
+    emailRequired: &error.emailRequired >-
+      Enter an email address.
+    passwordTooShort: &error.passwordTooShort >-
+      The password must contain at least 6 characters.
+    passwordTooLong: &error.passwordTooLong >-
+      The password must contain no more than 50 characters.
+    passwordRequired: &error.passwordRequired >-
+      Enter a password.
+    agreeRequired: >-
+      In order to use this application, you must read and agree to the privacy policy.
+issueUserResetTokenForm:
+  label:
+    name: *label.name
+    email: *label.email
+  error:
+    nameRequired: *error.nameRequired
+    emailInvalid: *error.emailInvalid
+    emailRequired: *error.emailRequired
+  button:
+    confirm: "Send"
+resetUserPasswordForm:
+  label:
+    password: "New password"
+  error:
+    tooShort: *error.passwordTooShort
+    tooLong: *error.passwordTooLong
+    required: *error.passwordRequired
+  button:
+    confirm: "Reset"
 resourceList:
   empty: "No images are uploaded"
   button:
@@ -644,6 +726,8 @@ searchWordAdvancedDialog:
     text: "Keyword"
   absent:
     element: "No conditions"
+  discard:
+    equivalent: "Delete"
   button:
     add:
       element: "Add condition"
@@ -672,6 +756,35 @@ shareMenu:
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"
+templateWordList:
+  empty: "No templates are created"
+  button:
+    edit: "Detail · Edit"
+    discard: "Delete"
+  label:
+    equivalent: "Translations ×{count}"
+    information: "Contents ×{count}"
+    phrase: "Idiomatic expressions ×{count}"
+    variation: "Variation forms ×{count}"
+    relation: "Related words ×{count}"
+  dialog:
+    discard:
+      message: >-
+        This template will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
+termsAgreementBanner:
+  message:
+    before: >-
+      The new <termsLink>terms of service</termsLink> and <privacyLink>privacy policy</privacyLink> are scheduled to take effect on {dateString}.
+      Please review them, and if you agree, press the ‘Agree’ button.
+      Note that if you continue to use this application on or after {dateString}, you will be deemed to have agreed to them.
+      If you do not agree, please delete your account and export your data before then.
+    after: >-
+      The new <termsLink>terms of service</termsLink> and <privacyLink>privacy policy</privacyLink> have been in effect since {dateString}.
+  button:
+    agree: "Agree"
 userHeader:
   tab:
     dictionary: "Dictionaries"
@@ -710,126 +823,13 @@ wordList:
         You cannot restore it afterwards.
         Are you really sure?
       confirm: "Delete"
-templateWordList:
-  empty: "No templates are created"
-  button:
-    edit: "Detail · Edit"
-    discard: "Delete"
-  label:
-    equivalent: "Translations ×{count}"
-    information: "Contents ×{count}"
-    phrase: "Idiomatic expressions ×{count}"
-    variation: "Variation forms ×{count}"
-    relation: "Related words ×{count}"
-  dialog:
-    discard:
-      message: >-
-        This template will be deleted permanently.
-        You cannot restore it afterwards.
-        Are you really sure?
-      confirm: "Delete"
 wordNameFrequencyChart:
   other: "Others"
 wordPopover:
   button:
     edit: "Edit"
-loginForm:
-  label:
-    name: "Username"
-    password: "Password"
-  button:
-    confirm: "Sign in"
-    register: "Create account"
-    resetPassword: "Reset password"
-  or: "or"
-  error:
-    nameRequired: >-
-      Enter your username.
-    passwordRequired: >-
-      Enter your password.
-registerForm:
-  label:
-    name: &label.name "Username"
-    email: &label.email "Email address"
-    password: "Password"
-    agree: "Agree to the <termsLink>terms of service</termsLink> and <privacyLink>privacy policy</privacyLink>"
-  button:
-    confirm: "Create account"
-  error:
-    nameInvalid: >-
-      The username must be composed of alphanumeric characters, underscores and hyphens.
-      It must also contain at least one non-digit.
-    nameTooLong: >-
-      The username must contain no more than 30 characters.
-    nameRequired: &error.nameRequired >-
-      Enter a username.
-    emailInvalid: &error.emailInvalid >-
-      Enter a valid email address.
-    emailRequired: &error.emailRequired >-
-      Enter an email address.
-    passwordTooShort: &error.passwordTooShort >-
-      The password must contain at least 6 characters.
-    passwordTooLong: &error.passwordTooLong >-
-      The password must contain no more than 50 characters.
-    passwordRequired: &error.passwordRequired >-
-      Enter a password.
-    agreeRequired: >-
-      In order to use this application, you must read and agree to the privacy policy.
-termsAgreementBanner:
-  message:
-    before: >-
-      The new <termsLink>terms of service</termsLink> and <privacyLink>privacy policy</privacyLink> are scheduled to take effect on {dateString}.
-      Please review them, and if you agree, press the ‘Agree’ button.
-      Note that if you continue to use this application on or after {dateString}, you will be deemed to have agreed to them.
-      If you do not agree, please delete your account and export your data before then.
-    after: >-
-      The new <termsLink>terms of service</termsLink> and <privacyLink>privacy policy</privacyLink> have been in effect since {dateString}.
-  button:
-    agree: "Agree"
-issueUserResetTokenForm:
-  label:
-    name: *label.name
-    email: *label.email
-  error:
-    nameRequired: *error.nameRequired
-    emailInvalid: *error.emailInvalid
-    emailRequired: *error.emailRequired
-  button:
-    confirm: "Send"
-resetUserPasswordForm:
-  label:
-    password: "New password"
-  error:
-    tooShort: *error.passwordTooShort
-    tooLong: *error.passwordTooLong
-    required: *error.passwordRequired
-  button:
-    confirm: "Reset"
 
 # form
-commonForm:
-  button:
-    change: "Change"
-addEditInvitationButton:
-  heading: "Grant editing permission"
-  label:
-    user: "Grant permission to"
-  button:
-    open: "Grant editing permission"
-    confirm: "Confirm"
-  error:
-    required: >-
-      Select a user.
-addTransferInvitationButton:
-  heading: "Transfer"
-  label:
-    user: "Transfer to"
-  button:
-    open: "Transfer"
-    confirm: "Confirm"
-  error:
-    required: >-
-      Select a user.
 addDictionaryButton:
   heading: "Create new dictionary"
   label:
@@ -840,6 +840,16 @@ addDictionaryButton:
   error:
     required: >-
       Enter a name.
+addEditInvitationButton:
+  heading: "Grant editing permission"
+  label:
+    user: "Grant permission to"
+  button:
+    open: "Grant editing permission"
+    confirm: "Confirm"
+  error:
+    required: >-
+      Select a user.
 addResourceButton:
   heading: "Upload image"
   label:
@@ -853,6 +863,16 @@ addResourceButton:
     tooLarge: >-
       The file is too large.
       You cannot upload files larger than 1 MB.
+addTransferInvitationButton:
+  heading: "Transfer"
+  label:
+    user: "Transfer to"
+  button:
+    open: "Transfer"
+    confirm: "Confirm"
+  error:
+    required: >-
+      Select a user.
 changeAppearanceForm:
   label: 
     font:
@@ -866,17 +886,6 @@ changeAppearanceForm:
       label: "Color theme"
       light: "Light"
       dark: "Dark"
-changeDictionaryNameForm:
-  error:
-    required: >-
-      Enter a name.
-changeDictionaryParamNameForm:
-  error:
-    invalid: >-
-      The identifier must be composed of alphanumeric characters, underscores and hyphens.
-      It must also contain at least one non-digit.
-    tooLong: >-
-      The identifier must contain no more than 30 characters.
 changeDictionaryFontForm:
   label:
     kind:
@@ -961,6 +970,17 @@ changeDictionaryMarkdownFeaturesForm:
       font: >-
         The text enclosed in <pre>'{'</pre> and <pre>'}'</pre> will be displayed in the custom font.
         Please also enable ‘Contents’ in the ‘Custom font’ section above.
+changeDictionaryNameForm:
+  error:
+    required: >-
+      Enter a name.
+changeDictionaryParamNameForm:
+  error:
+    invalid: >-
+      The identifier must be composed of alphanumeric characters, underscores and hyphens.
+      It must also contain at least one non-digit.
+    tooLong: >-
+      The identifier must contain no more than 30 characters.
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:
@@ -1015,10 +1035,9 @@ changeDictionaryShowNumbersForm:
 changeDictionarySlimeTitlesForm:
   label:
     pronunciation: "For pronunciations"
-changeDictionaryWordCardTitlesForm:
-  label:
-    phrase: "For idiomatic expressions"
-    example: "For example sentences"
+changeDictionarySourceForm:
+  button:
+    try: "Try"
 changeDictionaryVisibilityForm:
   label:
     public: "Public"
@@ -1032,9 +1051,10 @@ changeDictionaryVisibilityForm:
     private: >-
       Only users with editing permission can view this dictionary.
       Users without permission cannot access it even if they know the URL.
-changeDictionarySourceForm:
-  button:
-    try: "Try"
+changeDictionaryWordCardTitlesForm:
+  label:
+    phrase: "For idiomatic expressions"
+    example: "For example sentences"
 changeMyEmailForm:
   error:
     invalid: >-
@@ -1058,6 +1078,9 @@ changeMyScreenNameForm:
   error:
     required: >-
       Enter a nickname.
+commonForm:
+  button:
+    change: "Change"
 discardDictionaryButton:
   button:
     submit: "Delete"
@@ -1067,9 +1090,6 @@ discardDictionaryButton:
       You cannot restore it afterwards.
       Are you really sure?
     confirm: "Delete"
-logoutButton:
-  button:
-    submit: "Sign out"
 discardMeButton:
   button:
     submit: "Delete"
@@ -1079,6 +1099,30 @@ discardMeButton:
       You cannot restore it afterwards.
       Are you really sure?
     confirm: "Delete"
+downloadDictionaryForm:
+  button:
+    download: "Download"
+    back: "Back to dictionary page"
+  message:
+    processing: >-
+      Creating a file.
+    success: >-
+      The file has been created.
+      You can download it from the button below.
+    error: >-
+      Failed to create the file.
+generateMyApiCredentialForm:
+  button:
+    generate: "Generate"
+    copy: "Copy"
+  toast: 
+    copy: >-
+      Copied your API key.
+  caution: >-
+    Please copy this key now and save it in a safe place, as you will not be able to see it later.
+logoutButton:
+  button:
+    submit: "Sign out"
 queueDownloadDictionaryButton:
   heading: "Export"
   label:
@@ -1096,18 +1140,6 @@ queueDownloadDictionaryButton:
   button:
     open: "Export"
     confirm: "Confirm"
-downloadDictionaryForm:
-  button:
-    download: "Download"
-    back: "Back to dictionary page"
-  message:
-    processing: >-
-      Creating a file.
-    success: >-
-      The file has been created.
-      You can download it from the button below.
-    error: >-
-      Failed to create the file.
 queueUploadDictionaryButton:
   heading: "Import"
   label:
@@ -1132,38 +1164,6 @@ uploadDictionaryForm:
       Your file has been imported.
     error: >-
       Failed to import your file.
-generateMyApiCredentialForm:
-  button:
-    generate: "Generate"
-    copy: "Copy"
-  toast: 
-    copy: >-
-      Copied your API key.
-  caution: >-
-    Please copy this key now and save it in a safe place, as you will not be able to see it later.
-
-# compound
-apiCredentialList:
-  button:
-    copy: "Copy"
-    discard: "Delete"
-  dialog:
-    discard:
-      message: >-
-        This API key will be deleted.
-        Any programs using this API key will no longer be able to access dictionaries.
-        Are you sure?
-      confirm: "Delete"
-  table:
-    createdDate: "Issued at"
-    lastUsedDate: "Last used at"
-    neverUsed: "Never used"
-  caution: >-
-    Please copy this key now and save it in a safe place, as you will not be able to see it later.
-  empty: "You have not issued any API keys yet"
-  toast:
-    copy: >-
-      Copied your API key.
 
 # page
 contactPage:
@@ -1177,18 +1177,12 @@ contactPage:
     If your enquiry is a question about the service, you can use this as well.
   disclaimer: |-
     Please note that we may not be able to answer all enquiries directly.
-exampleOfferListPage:
-  title: "Sentences"
-  heading: "Sentences"
 dictionaryArticlePart:
   button:
     addArticle: "Create article"
 dictionaryArticleSinglePart:
   button:
     back: "Back to list"
-dictionaryProposalPart:
-  button:
-    addProposal: "Create request"
 dictionaryExamplePart:
   heading:
     offer: "Today’s sentence"
@@ -1209,18 +1203,13 @@ dictionaryMainPart:
     addWord: "Create word"
     addWordFromTemplate: "Create word from template"
     addProposal: "Request"
+dictionaryProposalPart:
+  button:
+    addProposal: "Create request"
 dictionaryResourcePart:
   explanation: >-
     You can use the uploaded images in the description of the dictionary and the content of words.
     Copy the code below the image and paste it into a text box.
-dictionarySettingPart:
-  tab:
-    general: "General"
-    display: "Display"
-    editing: "Editing"
-    template: "Templates"
-    authority: "Permissions"
-    file: "File"
 dictionarySettingAuthorityPart:
   heading:
     editInvitation: "Editing permission"
@@ -1319,6 +1308,14 @@ dictionarySettingGeneralPart:
     discard: >-
       Deleting this dictionary will also delete all the relevant data, including words and example sentences.
       Please be certain, as there is no going back.
+dictionarySettingPart:
+  tab:
+    general: "General"
+    display: "Display"
+    editing: "Editing"
+    template: "Templates"
+    authority: "Permissions"
+    file: "File"
 dictionarySettingTemplatePart:
   heading:
     templateWords: "Templates"
@@ -1354,6 +1351,9 @@ errorPage:
   button:
     back: "Back to top page"
     refresh: "Refresh page"
+exampleOfferListPage:
+  title: "Sentences"
+  heading: "Sentences"
 examplePage:
   add: "Create new sentence"
 loginPage:

@@ -243,6 +243,13 @@ toast:
 commonAlert:
   confirm: "決定"
   cancel: "キャンセル"
+exampleModeSelect:
+  label:
+    sentence: "例文"
+    translation: "訳文"
+    both: "例文＋訳文"
+    tag: "タグ"
+    content: "全文"
 exampleOfferTag:
   catalog:
     zpdicDaily: "今日の例文"
@@ -257,13 +264,6 @@ exampleOfferTag:
     arithmetic: "算数例文"
     adposition: "格や接置詞のための例文集"
   number: "#{number, number}"
-exampleModeSelect:
-  label:
-    sentence: "例文"
-    translation: "訳文"
-    both: "例文＋訳文"
-    tag: "タグ"
-    content: "全文"
 exampleTypeSelect:
   label:
     prefix: "前方"
@@ -300,6 +300,28 @@ addProposalDialog:
   error:
     nameRequired: >-
       単語を入力してください。
+apiCredentialList:
+  button:
+    copy: "コピー"
+    discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この API キーを削除します。
+        この API キーを使用しているプログラムからは辞書にアクセスできなくなります。
+        本当によろしいですか?
+      confirm: "削除"
+  table:
+    createdDate: "発行日時"
+    lastUsedDate: "最終使用日時"
+    neverUsed: "未使用"
+  caution: >-
+    API キーを後から確認することはできません。
+    今の段階でコピーして保存しておいてください。
+  empty: "まだ API キーを発行していません"
+  toast:
+    copy: >-
+      API キーをコピーしました。
 articleList:
   empty: "記事は作成されていません"
   button:
@@ -315,17 +337,6 @@ articleList:
       confirm: "削除"
 changeLocaleForm:
   label: "言語"
-proposalList:
-  empty: "造語依頼はされていません"
-  button:
-    add: "造語"
-    discard: "削除"
-  dialog:
-    discard:
-      message: >-
-        この造語依頼を削除します。
-        本当によろしいですか?
-      confirm: "削除"
 contactForm:
   label:
     name: "名前"
@@ -342,16 +353,6 @@ contactForm:
       お問い合わせ内容を入力してください。
     agreeRequired: >-
       プライバシーポリシーを読んで同意してください。
-memberList:
-  empty: "編集権限のあるユーザーはいません"
-  button:
-    discard: "解除"
-  dialog:
-    discard:
-      message: >-
-        このユーザーの編集権限を解除します。
-        本当によろしいですか?
-      confirm: "解除"
 dictionaryHeader:
   tab:
     dictionary: "辞書"
@@ -595,6 +596,30 @@ invitationList:
   button:
     accept: "承認"
     reject: "拒否"
+loginForm:
+  label:
+    name: "ユーザー ID"
+    password: "パスワード"
+  button:
+    confirm: "ログイン"
+    register: "新規登録"
+    resetPassword: "パスワードリセット"
+  or: "or"
+  error:
+    nameRequired: >-
+      ユーザー ID を入力してください。
+    passwordRequired: >-
+      パスワードを入力してください。
+memberList:
+  empty: "編集権限のあるユーザーはいません"
+  button:
+    discard: "解除"
+  dialog:
+    discard:
+      message: >-
+        このユーザーの編集権限を解除します。
+        本当によろしいですか?
+      confirm: "解除"
 notificationList:
   tag:
     update: "アップデート"
@@ -611,6 +636,63 @@ orderModeSelect:
   custom: "独自順"
   updatedDate: "更新日時"
   createdDate: "作成日時"
+proposalList:
+  empty: "造語依頼はされていません"
+  button:
+    add: "造語"
+    discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この造語依頼を削除します。
+        本当によろしいですか?
+      confirm: "削除"
+registerForm:
+  label:
+    name: &label.name "ユーザー ID"
+    email: &label.email "メールアドレス"
+    password: "パスワード"
+    agree: "<termsLink>利用規約</termsLink>と<privacyLink>プライバシーポリシー</privacyLink>に同意する"
+  button:
+    confirm: "新規登録"
+  error:
+    nameInvalid: >-
+      ユーザー ID は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
+    nameTooLong: >-
+      ユーザー ID は 30 文字以下である必要があります。
+    nameRequired: &error.nameRequired >-
+      ユーザー ID を入力してください。
+    emailInvalid: &error.emailInvalid >-
+      正しい形式のメールアドレスを入力してください。
+    emailRequired: &error.emailRequired >-
+      メールアドレスを入力してください。
+    passwordTooShort: &error.passwordTooShort >-
+      パスワードは 6 文字以上である必要があります。
+    passwordTooLong: &error.passwordTooLong >-
+      パスワードは 50 文字以下である必要があります。
+    passwordRequired: &error.passwordRequired >-
+      パスワードを入力してください。
+    agreeRequired: >-
+      このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
+issueUserResetTokenForm:
+  label:
+    name: *label.name
+    email: *label.email
+  error:
+    nameRequired: *error.nameRequired
+    emailInvalid: *error.emailInvalid
+    emailRequired: *error.emailRequired
+  button:
+    confirm: "送信"
+resetUserPasswordForm:
+  label:
+    password: "新しいパスワード"
+  error:
+    tooShort: *error.passwordTooShort
+    tooLong: *error.passwordTooLong
+    required: *error.passwordRequired
+  button:
+    confirm: "リセット"
 resourceList:
   empty: "画像は登録されていません"
   button:
@@ -644,6 +726,8 @@ searchWordAdvancedDialog:
     text: "検索内容"
   absent:
     element: "条件が設定されていません"
+  discard:
+    equivalent: "削除"
   button:
     add:
       element: "条件を追加"
@@ -672,6 +756,35 @@ shareMenu:
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"
+templateWordList:
+  empty: "テンプレートは作成されていません"
+  button:
+    edit: "詳細 · 編集"
+    discard: "削除"
+  label:
+    equivalent: "訳語 ×{count}"
+    information: "内容 ×{count}"
+    phrase: "成句 ×{count}"
+    variation: "変化形 ×{count}"
+    relation: "関連語 ×{count}"
+  dialog:
+    discard:
+      message: >-
+        このテンプレートを削除します。
+        削除した後にデータを戻すことはできません。
+        本当によろしいですか?
+      confirm: "削除"
+termsAgreementBanner:
+  message:
+    before: >-
+      新しい<termsLink>利用規約</termsLink>と<privacyLink>プライバシーポリシー</privacyLink>が {dateString} から適用される予定です。
+      内容をご確認の上、同意いただける場合は「同意する」ボタンを押してください。
+      なお、{dateString} 以降も利用を続けられた場合は、これらに同意したものと見なします。
+      同意いただけない場合は、それまでに退会およびデータのエクスポートをお願いします。
+    after: >-
+      新しい<termsLink>利用規約</termsLink>と<privacyLink>プライバシーポリシー</privacyLink>が {dateString} から適用されています。
+  button:
+    agree: "同意する"
 userHeader:
   tab:
     dictionary: "辞書"
@@ -710,125 +823,13 @@ wordList:
         削除した後にデータを戻すことはできません。
         本当によろしいですか?
       confirm: "削除"
-templateWordList:
-  empty: "テンプレートは作成されていません"
-  button:
-    edit: "詳細 · 編集"
-    discard: "削除"
-  label:
-    equivalent: "訳語 ×{count}"
-    information: "内容 ×{count}"
-    phrase: "成句 ×{count}"
-    variation: "変化形 ×{count}"
-    relation: "関連語 ×{count}"
-  dialog:
-    discard:
-      message: >-
-        このテンプレートを削除します。
-        削除した後にデータを戻すことはできません。
-        本当によろしいですか?
-      confirm: "削除"
 wordNameFrequencyChart:
   other: "その他"
 wordPopover:
   button:
     edit: "編集"
-loginForm:
-  label:
-    name: "ユーザー ID"
-    password: "パスワード"
-  button:
-    confirm: "ログイン"
-    register: "新規登録"
-    resetPassword: "パスワードリセット"
-  or: "or"
-  error:
-    nameRequired: >-
-      ユーザー ID を入力してください。
-    passwordRequired: >-
-      パスワードを入力してください。
-registerForm:
-  label:
-    name: &label.name "ユーザー ID"
-    email: &label.email "メールアドレス"
-    password: "パスワード"
-    agree: "<termsLink>利用規約</termsLink>と<privacyLink>プライバシーポリシー</privacyLink>に同意する"
-  button:
-    confirm: "新規登録"
-  error:
-    nameInvalid: >-
-      ユーザー ID は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
-    nameTooLong: >-
-      ユーザー ID は 30 文字以下である必要があります。
-    nameRequired: &error.nameRequired >-
-      ユーザー ID を入力してください。
-    emailInvalid: &error.emailInvalid >-
-      正しい形式のメールアドレスを入力してください。
-    emailRequired: &error.emailRequired >-
-      メールアドレスを入力してください。
-    passwordTooShort: &error.passwordTooShort >-
-      パスワードは 6 文字以上である必要があります。
-    passwordTooLong: &error.passwordTooLong >-
-      パスワードは 50 文字以下である必要があります。
-    passwordRequired: &error.passwordRequired >-
-      パスワードを入力してください。
-    agreeRequired: >-
-      このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
-termsAgreementBanner:
-  message:
-    before: >-
-      新しい<termsLink>利用規約</termsLink>と<privacyLink>プライバシーポリシー</privacyLink>が {dateString} から適用される予定です。
-      内容をご確認の上、同意いただける場合は「同意する」ボタンを押してください。
-      なお、{dateString} 以降も利用を続けられた場合は、これらに同意したものと見なします。
-      同意いただけない場合は、それまでに退会およびデータのエクスポートをお願いします。
-    after: >-
-      新しい<termsLink>利用規約</termsLink>と<privacyLink>プライバシーポリシー</privacyLink>が {dateString} から適用されています。
-  button:
-    agree: "同意する"
-issueUserResetTokenForm:
-  label:
-    name: *label.name
-    email: *label.email
-  error:
-    nameRequired: *error.nameRequired
-    emailInvalid: *error.emailInvalid
-    emailRequired: *error.emailRequired
-  button:
-    confirm: "送信"
-resetUserPasswordForm:
-  label:
-    password: "新しいパスワード"
-  error:
-    tooShort: *error.passwordTooShort
-    tooLong: *error.passwordTooLong
-    required: *error.passwordRequired
-  button:
-    confirm: "リセット"
 
 # form
-commonForm:
-  button:
-    change: "変更"
-addEditInvitationButton:
-  heading: "編集権限を付与"
-  label:
-    user: "権限を付与するユーザー"
-  button:
-    open: "編集権限をユーザーに付与"
-    confirm: "決定"
-  error:
-    required: >-
-      ユーザーを選択してください。
-addTransferInvitationButton:
-  heading: "譲渡"
-  label:
-    user: "譲渡先のユーザー"
-  button:
-    open: "譲渡"
-    confirm: "決定"
-  error:
-    required: >-
-      ユーザーを選択してください。
 addDictionaryButton:
   heading: "新しい辞書を作成"
   label:
@@ -839,6 +840,16 @@ addDictionaryButton:
   error:
     required: >-
       名前を選択してください。
+addEditInvitationButton:
+  heading: "編集権限を付与"
+  label:
+    user: "権限を付与するユーザー"
+  button:
+    open: "編集権限をユーザーに付与"
+    confirm: "決定"
+  error:
+    required: >-
+      ユーザーを選択してください。
 addResourceButton:
   heading: "画像をアップロード"
   label:
@@ -852,6 +863,16 @@ addResourceButton:
     tooLarge: >-
       ファイルのサイズが大きすぎます。
       1 MB より大きなファイルはアップロードすることができません。
+addTransferInvitationButton:
+  heading: "譲渡"
+  label:
+    user: "譲渡先のユーザー"
+  button:
+    open: "譲渡"
+    confirm: "決定"
+  error:
+    required: >-
+      ユーザーを選択してください。
 changeAppearanceForm:
   label: 
     font:
@@ -865,16 +886,6 @@ changeAppearanceForm:
       label: "配色テーマ"
       light: "ライト"
       dark: "ダーク"
-changeDictionaryNameForm:
-  error:
-    required: >-
-      名前を入力してください。
-changeDictionaryParamNameForm:
-  error:
-    invalid: >-
-      識別子は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
-    tooLong: >-
-      識別子は 30 文字以下である必要があります。
 changeDictionaryFontForm:
   label:
     kind:
@@ -959,6 +970,16 @@ changeDictionaryMarkdownFeaturesForm:
       font: >-
         <pre>'{'</pre> と <pre>'}'</pre> で囲まれた箇所が専用フォントで表示されるようになります。
         上の「専用フォント」項目で「本文」にチェックを入れてください。
+changeDictionaryNameForm:
+  error:
+    required: >-
+      名前を入力してください。
+changeDictionaryParamNameForm:
+  error:
+    invalid: >-
+      識別子は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
+    tooLong: >-
+      識別子は 30 文字以下である必要があります。
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:
@@ -1013,10 +1034,9 @@ changeDictionaryShowNumbersForm:
 changeDictionarySlimeTitlesForm:
   label:
     pronunciation: "発音"
-changeDictionaryWordCardTitlesForm:
-  label:
-    phrase: "成句"
-    example: "例文"
+changeDictionarySourceForm:
+  button:
+    try: "試す"
 changeDictionaryVisibilityForm:
   label:
     public: "全体公開"
@@ -1030,9 +1050,10 @@ changeDictionaryVisibilityForm:
     private: >-
       編集権限がある人のみ閲覧できます。
       権限がない人は URL から直接アクセスしても閲覧できません。
-changeDictionarySourceForm:
-  button:
-    try: "試す"
+changeDictionaryWordCardTitlesForm:
+  label:
+    phrase: "成句"
+    example: "例文"
 changeMyEmailForm:
   error:
     invalid: >-
@@ -1056,6 +1077,9 @@ changeMyScreenNameForm:
   error:
     required: >-
       ニックネームを入力してください。
+commonForm:
+  button:
+    change: "変更"
 discardDictionaryButton:
   button:
     submit: "削除"
@@ -1065,9 +1089,6 @@ discardDictionaryButton:
       削除した後にデータを戻すことはできません。
       本当によろしいですか?
     confirm: "削除"
-logoutButton:
-  button:
-    submit: "ログアウト"
 discardMeButton:
   button:
     submit: "削除"
@@ -1077,6 +1098,32 @@ discardMeButton:
       削除した後にデータを戻すことはできません。
       本当によろしいですか?
     confirm: "削除"
+downloadDictionaryForm:
+  button:
+    download: "ダウンロード"
+    back: "辞書ページに戻る"
+  message:
+    processing: >-
+      ファイルを作成中です。
+      このページを開いたまましばらくお待ちください。
+    success: >-
+      ファイルの作成が完了しました。
+      以下のボタンからダウンロードできます。
+    error: >-
+      ファイルの作成に失敗しました。
+generateMyApiCredentialForm:
+  button:
+    generate: "新規生成"
+    copy: "コピー"
+  toast: 
+    copy: >-
+      API キーをコピーしました。
+  caution: >-
+    API キーを後から確認することはできません。
+    今の段階でコピーして保存しておいてください。
+logoutButton:
+  button:
+    submit: "ログアウト"
 queueDownloadDictionaryButton:
   heading: "エクスポート"
   label:
@@ -1094,19 +1141,6 @@ queueDownloadDictionaryButton:
   button:
     open: "エクスポート"
     confirm: "決定"
-downloadDictionaryForm:
-  button:
-    download: "ダウンロード"
-    back: "辞書ページに戻る"
-  message:
-    processing: >-
-      ファイルを作成中です。
-      このページを開いたまましばらくお待ちください。
-    success: >-
-      ファイルの作成が完了しました。
-      以下のボタンからダウンロードできます。
-    error: >-
-      ファイルの作成に失敗しました。
 queueUploadDictionaryButton:
   heading: "インポート"
   label:
@@ -1131,38 +1165,6 @@ uploadDictionaryForm:
       インポートが完了しました。
     error: >-
       インポートに失敗しました。
-generateMyApiCredentialForm:
-  button:
-    generate: "新規生成"
-    copy: "コピー"
-  toast: 
-    copy: >-
-      API キーをコピーしました。
-  caution: >-
-    API キーを後から確認することはできません。
-    今の段階でコピーして保存しておいてください。
-apiCredentialList:
-  button:
-    copy: "コピー"
-    discard: "削除"
-  dialog:
-    discard:
-      message: >-
-        この API キーを削除します。
-        この API キーを使用しているプログラムからは辞書にアクセスできなくなります。
-        本当によろしいですか?
-      confirm: "削除"
-  table:
-    createdDate: "発行日時"
-    lastUsedDate: "最終使用日時"
-    neverUsed: "未使用"
-  caution: >-
-    API キーを後から確認することはできません。
-    今の段階でコピーして保存しておいてください。
-  empty: "まだ API キーを発行していません"
-  toast:
-    copy: >-
-      API キーをコピーしました。
 
 # page
 contactPage:
@@ -1177,18 +1179,12 @@ contactPage:
   disclaimer: |-
     なお、全てのお問い合わせに直接お答えできるとは限りません。
     あらかじめご了承ください。
-exampleOfferListPage:
-  title: "例文集"
-  heading: "例文集"
 dictionaryArticlePart:
   button:
     addArticle: "記事を作成"
 dictionaryArticleSinglePart:
   button:
     back: "一覧に戻る"
-dictionaryProposalPart:
-  button:
-    addProposal: "造語依頼"
 dictionaryExamplePart:
   heading:
     offer: "今日の例文"
@@ -1209,18 +1205,13 @@ dictionaryMainPart:
     addWord: "単語を作成"
     addWordFromTemplate: "テンプレートから単語を作成"
     addProposal: "造語依頼"
+dictionaryProposalPart:
+  button:
+    addProposal: "造語依頼"
 dictionaryResourcePart:
   explanation: >-
     アップロードした画像は、辞書の説明欄や単語の内容欄で使用することができます。
     画像の下に表示されているコードを貼り付けてください。
-dictionarySettingPart:
-  tab:
-    general: "一般"
-    display: "表示"
-    editing: "編集"
-    template: "テンプレート"
-    authority: "権限"
-    file: "ファイル"
 dictionarySettingAuthorityPart:
   heading:
     editInvitation: "編集権限"
@@ -1320,6 +1311,14 @@ dictionarySettingGeneralPart:
     discard: >-
       この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。
       後からデータを復元することはできないので、慎重に行ってください。
+dictionarySettingPart:
+  tab:
+    general: "一般"
+    display: "表示"
+    editing: "編集"
+    template: "テンプレート"
+    authority: "権限"
+    file: "ファイル"
 dictionarySettingTemplatePart:
   heading:
     templateWords: "テンプレート"
@@ -1355,6 +1354,9 @@ errorPage:
   button:
     back: "トップページへ"
     refresh: "ページを再読み込み"
+exampleOfferListPage:
+  title: "例文集"
+  heading: "例文集"
 examplePage:
   add: "新しい単語を作成"
 loginPage:
