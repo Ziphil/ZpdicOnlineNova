@@ -1,15 +1,14 @@
-/* eslint-disable react/jsx-closing-bracket-location */
+//
 
 import {ReactElement} from "react";
-import {AdditionalProps, PageSpec, useTrans} from "zographia";
-import {UserList} from "/client/component/compound/user-list";
+import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Member} from "/server/internal/skeleton";
-import {MemberFooter} from "./member-footer";
+import {MemberCard} from "./member-card";
 
 
 export const MemberList = create(
-  null, "MemberList",
+  require("./member-list.scss"), "MemberList",
   function ({
     dictionary,
     members,
@@ -25,9 +24,16 @@ export const MemberList = create(
     const {trans} = useTrans("memberList");
 
     return (
-      <UserList users={members?.map((member) => member.user)} pageSpec={pageSpec} emptyMessage={trans("empty")} {...rest} renderFooter={(user) => (
-        <MemberFooter dictionary={dictionary} user={user}/>
-      )}/>
+      <List styleName="root" items={members} pageSpec={pageSpec} {...rest}>
+        <ListBody styleName="body">
+          {(member) => <MemberCard key={member.id} dictionary={dictionary} member={member}/>}
+          <ListLoadingView styleName="loading"/>
+          <ListEmptyView styleName="loading">
+            {trans("empty")}
+          </ListEmptyView>
+        </ListBody>
+        <ListPagination styleName="pagination"/>
+      </List>
     );
 
   }
