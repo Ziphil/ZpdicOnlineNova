@@ -10,6 +10,7 @@ import {
 } from "@typegoose/typegoose";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {MEMBER_AUTHORITIES, MemberAuthority} from "/server/model/dictionary/member-authority";
+import {CustomError} from "/server/model/error";
 import {User, UserSchema} from "/server/model/user/user";
 
 
@@ -36,10 +37,13 @@ export class MemberSchema {
     }
   }
 
-  public static async discard(dictionary: Dictionary, user: User): Promise<boolean> {
-    const result = await MemberModel.deleteMany({}).where("dictionary", dictionary).where("user", user);
-    const exist = result.deletedCount > 0;
-    return exist;
+  public static async discard(dictionary: Dictionary, user: User): Promise<void> {
+    const member = await MemberModel.findOne().where("dictionary", dictionary).where("user", user);
+    if (member !== null) {
+      await member.deleteOne();
+    } else {
+      throw new CustomError("noSuchMember");
+    }
   }
 
   public static async existMember(dictionary: Dictionary, user: User, authority: MemberAuthority): Promise<boolean> {

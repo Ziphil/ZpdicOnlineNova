@@ -103,9 +103,11 @@ export class InvitationSchema {
     if (isDocument(this.dictionary)) {
       await this.dictionary.populate("user");
       if (isDocument(this.dictionary.user)) {
-        const previousUser = this.dictionary.user;
-        await MemberModel.discard(this.dictionary, user);
-        await MemberModel.add(this.dictionary, previousUser, "edit");
+        const previousMember = await MemberModel.findOne().where("dictionary", this.dictionary).where("user", this.dictionary.user);
+        if (previousMember !== null) {
+          await previousMember.deleteOne();
+        }
+        await MemberModel.add(this.dictionary, this.dictionary.user, "edit");
         this.dictionary.user = user;
         await this.dictionary.save();
       }

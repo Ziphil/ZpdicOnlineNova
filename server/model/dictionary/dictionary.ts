@@ -558,13 +558,8 @@ export class DictionarySchema extends DiscardableSchema {
     }
   }
 
-  public async discardMember(this: Dictionary, user: User): Promise<true> {
-    const existed = await MemberModel.discard(this, user);
-    if (existed) {
-      return true;
-    } else {
-      throw new CustomError("noSuchMember");
-    }
+  public async discardMember(this: Dictionary, user: User): Promise<void> {
+    await MemberModel.discard(this, user);
   }
 
   private static async fetchNextNumber(): Promise<number> {
