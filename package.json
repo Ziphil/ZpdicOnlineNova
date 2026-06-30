@@ -30,7 +30,12 @@
       "ziphil",
       "plugin:react-hooks/recommended"
     ],
-    "ignorePatterns": "webpack-*.ts",
+    "ignorePatterns": [
+      "webpack-*.ts",
+      "!.claude",
+      "!.claude/skills",
+      "!.claude/skills/**"
+    ],
     "rules": {
       "object-shorthand": "off",
       "quote-props": "off",

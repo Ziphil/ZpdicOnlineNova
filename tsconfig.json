@@ -27,6 +27,7 @@
     "client/**/*",
     "server/**/*",
     "worker/**/*",
+    ".claude/skills/**/*",
     "secret.ts"
   ]
 }
