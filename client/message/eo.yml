@@ -727,7 +727,7 @@ searchWordAdvancedDialog:
   absent:
     element: "Neniuj kondiĉoj"
   discard:
-    equivalent: "<NOT SET>"
+    equivalent: "Forigi"
   button:
     add:
       element: "Aldoni kondiĉon"

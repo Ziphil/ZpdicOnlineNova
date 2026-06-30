@@ -727,7 +727,7 @@ searchWordAdvancedDialog:
   absent:
     element: "No conditions"
   discard:
-    equivalent: "<NOT SET>"
+    equivalent: "Delete"
   button:
     add:
       element: "Add condition"

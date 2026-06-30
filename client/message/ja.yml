@@ -727,7 +727,7 @@ searchWordAdvancedDialog:
   absent:
     element: "条件が設定されていません"
   discard:
-    equivalent: "<NOT SET>"
+    equivalent: "削除"
   button:
     add:
       element: "条件を追加"
