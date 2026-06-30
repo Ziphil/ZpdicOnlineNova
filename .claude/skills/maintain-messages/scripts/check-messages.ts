@@ -15,7 +15,7 @@ type MissingEntry = {
 /** コードが参照しているメッセージキーのうち、各言語のメッセージファイルに存在しないものを検出して報告します。
  * 破壊的な変更は行わず、レポートを出力するだけです。*/
 function main(): void {
-  const {static: staticReferences, dynamic: dynamicReferences, unresolved: unresolvedReferences} = getReferences();
+  const {static: staticReferences, unresolved: unresolvedReferences} = getReferences();
   const namespaceSections = getNamespaceSections();
   const messages = Object.fromEntries(LANGS.map((lang) => [lang, loadMessages(lang)])) as Record<Lang, Record<string, unknown>>;
   const missingEntries = Object.fromEntries(LANGS.map((lang) => [lang, [] as Array<MissingEntry>])) as Record<Lang, Array<MissingEntry>>;
@@ -39,11 +39,12 @@ function main(): void {
       }
     }
   }
-  printReport(missingEntries, dynamicReferences, unresolvedReferences);
+  printReport(missingEntries, unresolvedReferences);
 }
 
-/** レポートを人間向けの要約と機械可読な JSON の両方で出力します。 */
-function printReport(missingEntries: Record<Lang, Array<MissingEntry>>, dynamicReferences: References["dynamic"], unresolvedReferences: References["unresolved"]): void {
+/** レポートを人間向けの要約と機械可読な JSON の両方で出力します。
+ * 動的キー (テンプレートリテラルで組み立てられる参照) は `getReferences` 内では引き続き解析するが、このスキルの管理対象外なので、ここでは意図的に通知しない。*/
+function printReport(missingEntries: Record<Lang, Array<MissingEntry>>, unresolvedReferences: References["unresolved"]): void {
   const lines = [] as Array<string>;
   lines.push("===== メッセージファイル整備レポート =====");
   lines.push("");
@@ -56,11 +57,6 @@ function printReport(missingEntries: Record<Lang, Array<MissingEntry>>, dynamicR
     }
     lines.push("");
   }
-  lines.push(`[動的キー] テンプレートリテラルで組み立てられ自動解決できない参照: ${dynamicReferences.length} 件 (手動確認)`);
-  for (const entry of dynamicReferences) {
-    lines.push(`  - ${entry.raw}  (scope=${entry.scope ?? "?"})  @ ${entry.file}`);
-  }
-  lines.push("");
   lines.push(`[スコープ未特定] useTrans のスコープを一意に解決できない参照: ${unresolvedReferences.length} 件 (手動確認)`);
   for (const entry of unresolvedReferences) {
     lines.push(`  - ${entry.raw}  @ ${entry.file}`);
@@ -68,7 +64,7 @@ function printReport(missingEntries: Record<Lang, Array<MissingEntry>>, dynamicR
   lines.push("");
   lines.push("===== JSON =====");
   console.log(lines.join("\n"));
-  console.log(JSON.stringify({missing: missingEntries, dynamic: dynamicReferences, unresolved: unresolvedReferences}, null, 2));
+  console.log(JSON.stringify({missing: missingEntries, unresolved: unresolvedReferences}, null, 2));
 }
 
 main();
