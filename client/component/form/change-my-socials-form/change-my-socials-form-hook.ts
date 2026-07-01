@@ -19,6 +19,7 @@ const SCHEMA = object({
   })).required()
 });
 type FormValue = Asserts<typeof SCHEMA>;
+export type ChangeMySocialsFormValue = FormValue;
 
 export type ChangeMySocialsSpec = {
   form: UseFormReturn<FormValue>,
