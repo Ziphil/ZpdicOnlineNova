@@ -9,20 +9,6 @@ import {create} from "/client/component/create";
 import {USER_SOCIAL_TYPES, UserSocialType} from "/server/internal/skeleton";
 
 
-/** 各リンク種別に対応するアイコン。
- * Font Awesome に専用のブランドアイコンがない種別 (misskey, note, migdal など) には、暫定的に汎用アイコンを割り当てている (後でカスタムアイコンに差し替える予定)。*/
-const USER_SOCIAL_TYPE_ICONS = {
-  website: faGlobe,
-  x: faXTwitter,
-  bluesky: faBluesky,
-  misskey: faLink,
-  note: faLink,
-  migdal: faLink,
-  discord: faDiscord,
-  other: faLink
-} satisfies Record<UserSocialType, IconDefinition>;
-
-
 export const UserSocialTypeSelect = create(
   require("./user-social-type-select.scss"), "UserSocialTypeSelect",
   function ({
@@ -55,3 +41,15 @@ export const UserSocialTypeSelect = create(
 
   }
 );
+
+
+const USER_SOCIAL_TYPE_ICONS = {
+  website: faGlobe,
+  x: faXTwitter,
+  bluesky: faBluesky,
+  misskey: faLink,
+  note: faLink,
+  migdal: faLink,
+  discord: faDiscord,
+  other: faLink
+} satisfies Record<UserSocialType, IconDefinition>;

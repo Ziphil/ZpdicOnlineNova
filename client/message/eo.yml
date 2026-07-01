@@ -107,6 +107,8 @@ toast:
       Via retpoŝta adreso ŝanĝitas.
     changeMyPassword:
       Via pasvorto ŝanĝitas.
+    changeMySocials:
+      Viaj sociaj ligiloj ŝanĝitas.
     changeMyTermsAgreement:
       Vi konsentis pri la uzkondiĉoj kaj privateca politiko.
     changeAppearance: |-
@@ -1088,6 +1090,9 @@ changeMyScreenNameForm:
   error:
     required: >-
       Enigu kromnomon.
+changeMySocialsForm:
+  placeholder:
+    url: "https://..."
 commonForm:
   button:
     change: "Ŝanĝi"
@@ -1444,6 +1449,7 @@ userSettingPart:
   heading:
     screenName: "Kromnomo"
     avatar: "Bildeto"
+    socials: "Sociaj ligiloj"
     email: "Retpoŝta adreso"
     password: "Pasvorto"
     logout: "Elsaluti"

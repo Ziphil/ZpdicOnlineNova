@@ -107,6 +107,8 @@ toast:
       メールアドレスを変更しました。
     changeMyPassword: |-
       パスワードを変更しました。
+    changeMySocials: |-
+      ソーシャルリンクを変更しました。
     changeMyTermsAgreement: |-
       利用規約とプライバシーポリシーに同意しました。
     changeAppearance: |-
@@ -1087,6 +1089,9 @@ changeMyScreenNameForm:
   error:
     required: >-
       ニックネームを入力してください。
+changeMySocialsForm:
+  placeholder:
+    url: "https://..."
 commonForm:
   button:
     change: "変更"
@@ -1447,6 +1452,7 @@ userSettingPart:
   heading:
     screenName: "ニックネーム"
     avatar: "アイコン"
+    socials: "ソーシャルリンク"
     email: "メールアドレス"
     password: "パスワード"
     logout: "ログアウト"
