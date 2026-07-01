@@ -32,6 +32,7 @@ import type {
   Relation,
   Suggestion,
   User,
+  UserSocial,
   UserWithDetail,
   Word,
   WordParameter,
@@ -495,6 +496,13 @@ type ServerSpecs = {
   },
   changeMyTermsAgreement: {
     request: {termsVersion: number},
+    response: {
+      success: User,
+      error: never
+    }
+  },
+  changeMySocials: {
+    request: {socials: Array<UserSocial>},
     response: {
       success: User,
       error: never

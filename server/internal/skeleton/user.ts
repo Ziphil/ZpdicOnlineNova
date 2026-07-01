@@ -8,6 +8,15 @@ export interface User {
   id: ObjectId;
   name: string;
   screenName: string;
+  socials: Array<UserSocial>;
+
+}
+
+
+export interface UserSocial {
+
+  type: string;
+  url: string;
 
 }
 

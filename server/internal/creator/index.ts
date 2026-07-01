@@ -5,6 +5,7 @@ export * from "./dictionary/dictionary";
 export * from "./dictionary-parameter/dictionary-parameter";
 export * from "./user/api-credential";
 export * from "./user/user";
+export * from "./user/user-social";
 export * from "./example/example";
 export * from "./example-offer/example-offer";
 export * from "./example-parameter/example-parameter";
