@@ -78,7 +78,7 @@ function guessUserSocialType(url: string): UserSocialType | null {
       type = "misskey";
     } else if (host === "note.com") {
       type = "note";
-    } else if (host.includes("migdal")) {
+    } else if (host === "migdal.jp") {
       type = "migdal";
     } else if (host === "discord.gg" || host === "discord.com" || host === "discordapp.com") {
       type = "discord";
