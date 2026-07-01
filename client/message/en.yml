@@ -648,8 +648,8 @@ proposalList:
       confirm: "Delete"
 registerForm:
   label:
-    name: &label.name "Username"
-    email: &label.email "Email address"
+    name: "Username"
+    email: "Email address"
     password: "Password"
     agree: "Agree to the <termsLink>terms of service</termsLink> and <privacyLink>privacy policy</privacyLink>"
   button:
@@ -660,37 +660,43 @@ registerForm:
       It must also contain at least one non-digit.
     nameTooLong: >-
       The username must contain no more than 30 characters.
-    nameRequired: &error.nameRequired >-
+    nameRequired: >-
       Enter a username.
-    emailInvalid: &error.emailInvalid >-
+    emailInvalid: >-
       Enter a valid email address.
-    emailRequired: &error.emailRequired >-
+    emailRequired: >-
       Enter an email address.
-    passwordTooShort: &error.passwordTooShort >-
+    passwordTooShort: >-
       The password must contain at least 6 characters.
-    passwordTooLong: &error.passwordTooLong >-
+    passwordTooLong: >-
       The password must contain no more than 50 characters.
-    passwordRequired: &error.passwordRequired >-
+    passwordRequired: >-
       Enter a password.
     agreeRequired: >-
       In order to use this application, you must read and agree to the privacy policy.
 issueUserResetTokenForm:
   label:
-    name: *label.name
-    email: *label.email
+    name: "Username"
+    email: "Email address"
   error:
-    nameRequired: *error.nameRequired
-    emailInvalid: *error.emailInvalid
-    emailRequired: *error.emailRequired
+    nameRequired: >-
+      Enter a username.
+    emailInvalid: >-
+      Enter a valid email address.
+    emailRequired: >-
+      Enter an email address.
   button:
     confirm: "Send"
 resetUserPasswordForm:
   label:
     password: "New password"
   error:
-    tooShort: *error.passwordTooShort
-    tooLong: *error.passwordTooLong
-    required: *error.passwordRequired
+    tooShort: >-
+      The password must contain at least 6 characters.
+    tooLong: >-
+      The password must contain no more than 50 characters.
+    required: >-
+      Enter a password.
   button:
     confirm: "Reset"
 resourceList:
