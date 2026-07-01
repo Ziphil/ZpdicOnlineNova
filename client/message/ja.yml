@@ -661,8 +661,8 @@ proposalList:
       confirm: "削除"
 registerForm:
   label:
-    name: &label.name "ユーザー ID"
-    email: &label.email "メールアドレス"
+    name: "ユーザー ID"
+    email: "メールアドレス"
     password: "パスワード"
     agree: "<termsLink>利用規約</termsLink>と<privacyLink>プライバシーポリシー</privacyLink>に同意する"
   button:
@@ -672,37 +672,43 @@ registerForm:
       ユーザー ID は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
     nameTooLong: >-
       ユーザー ID は 30 文字以下である必要があります。
-    nameRequired: &error.nameRequired >-
+    nameRequired: >-
       ユーザー ID を入力してください。
-    emailInvalid: &error.emailInvalid >-
+    emailInvalid: >-
       正しい形式のメールアドレスを入力してください。
-    emailRequired: &error.emailRequired >-
+    emailRequired: >-
       メールアドレスを入力してください。
-    passwordTooShort: &error.passwordTooShort >-
+    passwordTooShort: >-
       パスワードは 6 文字以上である必要があります。
-    passwordTooLong: &error.passwordTooLong >-
+    passwordTooLong: >-
       パスワードは 50 文字以下である必要があります。
-    passwordRequired: &error.passwordRequired >-
+    passwordRequired: >-
       パスワードを入力してください。
     agreeRequired: >-
       このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
 issueUserResetTokenForm:
   label:
-    name: *label.name
-    email: *label.email
+    name: "ユーザー ID"
+    email: "メールアドレス"
   error:
-    nameRequired: *error.nameRequired
-    emailInvalid: *error.emailInvalid
-    emailRequired: *error.emailRequired
+    nameRequired: >-
+      ユーザー ID を入力してください。
+    emailInvalid: >-
+      正しい形式のメールアドレスを入力してください。
+    emailRequired: >-
+      メールアドレスを入力してください。
   button:
     confirm: "送信"
 resetUserPasswordForm:
   label:
     password: "新しいパスワード"
   error:
-    tooShort: *error.passwordTooShort
-    tooLong: *error.passwordTooLong
-    required: *error.passwordRequired
+    tooShort: >-
+      パスワードは 6 文字以上である必要があります。
+    tooLong: >-
+      パスワードは 50 文字以下である必要があります。
+    required: >-
+      パスワードを入力してください。
   button:
     confirm: "リセット"
 resourceList:
