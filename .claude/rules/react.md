@@ -40,8 +40,8 @@ foo: "残り {count, number} 問"
 ```
 
 ### テキストの表示に関する注意
-本リポジトリでは UI 部品は `zographia` を用います。
-長めのテキストや、ユーザー入力など長くなり得るテキストを表示する際は、`zographia` の該当コンポーネント (`SingleLineText`, `MultiLineText`) を利用してください。
+本リポジトリでは UI 部品は zographia を用います。
+長めのテキストや、ユーザー入力など長くなり得るテキストを表示する際は、zographia の該当コンポーネント (`SingleLineText`, `MultiLineText`) を利用してください。
 
 ## コンポーネント内の関数
 コンポーネント内に関数を定義する場合は、原則として全て `useCallback` で囲んでください。

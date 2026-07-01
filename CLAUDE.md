@@ -9,7 +9,7 @@
 ## 技術スタック
 - **言語** — TypeScript (strict, `target: es5`, `module: commonjs`)
 - **フロント** — React 18, Recoil, react-query, react-router-dom v6, react-hook-form, react-intl
-  - **UI コンポーネントライブラリ** — Zographia (作者自作, `zographia` パッケージ)
+  - **UI コンポーネントライブラリ** — Zographia (作者自作, zographia パッケージ)
   - **スタイリング** — SCSS + react-css-modules (`.scss` を各コンポーネントに同梱)
 - **サーバー** — Express, Socket.io, Agenda (ジョブスケジューラ)
   - ただし Socket.io は現状未使用
@@ -46,8 +46,8 @@
 - **`document/`** — 環境構築・デプロイ・マイグレーションの備忘録 (基本的に作者用, 普段は参照不要)
 
 **パスエイリアス (tsconfig + webpack) の設定がある**。
- `/client`, `/server`, `/worker` がリポジトリルートからの絶対インポートになる (例: `import {WordModel} from "/server/model"`)。
- インポートは原則この形にする。
+`/client`, `/server`, `/worker` がリポジトリルートからの絶対インポートになる (例: `import {WordModel} from "/server/model"`)。
+インポートは原則この形にする。
 
 ### サーバー構成 (`server/`)
 API は 3 系統に分かれており、それぞれ `controller`, `creator`, `skeleton` (or `type`) を持つ:
@@ -107,8 +107,8 @@ export const Foo = create(
 ```
 
 #### API 呼び出し
-`useRequest()` (命令的) と `useResponse()` / `useSuspenseResponse()` (react-query ベースの取得) を使う。
-第 1 引数は ProcessName、第 2 引数は型付き request data。
+`useRequest()` (命令的) もしくは `useResponse()`, `useSuspenseResponse()` (react-query ベースの取得) を使う。
+第 1 引数は `ProcessName`、第 2 引数は型付き request data。
 
 ## コーディング規約
 詳細な規約は `.claude/rules/` に定義されており、**Claude Code はこれらを必ず守る**こと:
@@ -125,10 +125,9 @@ export const Foo = create(
 - 既存の命名・ファイル分割パターン (model, creator, skeleton, controller の 4 層) を踏襲する。
 
 ## 注意点
-git ワークツリーで作業していて、ワークツリーを使った作業の後片付け (クリーンアップ) を行う際は、**`cleanup-worktree` skill の手順に従うこと**。
+git ワークツリーで作業していて、ワークツリーを使った作業の後片付け (クリーンアップ) を行う際は、**cleanup-worktree スキルの手順に従うこと**。
 特に、ワークツリーフォルダ自身は (エディタにロックされて詰まるのを避けるため) 削除せず、手動削除を促す。
 
 **機密ファイルは読み取り禁止**。
 リポジトリトップの `variable.env` (環境変数) と `secret.ts` は機密情報を含む。
 `Read` ツールでは `.claude/settings.json` の `deny` で遮断済みだが、`cat`, `Get-Content` 等の Bash 経由でも**絶対に内容を読み込まないこと**。
-
