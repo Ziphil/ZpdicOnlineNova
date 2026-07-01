@@ -275,13 +275,14 @@ exampleTypeSelect:
     regular: "Regesp"
 userSocialTypeSelect:
   label:
-    website: "Hejmpaĝo"
     x: "X"
     bluesky: "Bluesky"
     misskey: "Misskey"
+    youtube: "YouTube"
     note: "note"
     migdal: "Migdal"
     discord: "Discord"
+    website: "Hejmpaĝo"
     other: "Alia"
 wordModeSelect:
   label:
@@ -817,15 +818,15 @@ userHeader:
       Tiu uzanto ankoraŭ ne estas aktivigita.
       Por aktivigi, bonvolu sekvi la instrukciojn en la retpoŝto kiun vi ricevis dum kreado de via konto.
       Neaktivigitaj uzantoj eble havas limigitan funkciecon.
-userHeaderSocialList:
-  label:
-    website: "Hejmpaĝo"
+  social:
     x: "X"
     bluesky: "Bluesky"
     misskey: "Misskey"
+    youtube: "YouTube"
     note: "note"
     migdal: "Migdal"
     discord: "Discord"
+    website: "Hejmpaĝo"
     other: "Alia"
 wordList:
   empty: "Neniuj kongruaj vortoj estis trovitaj"

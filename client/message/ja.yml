@@ -275,13 +275,14 @@ exampleTypeSelect:
     regular: "正規"
 userSocialTypeSelect:
   label:
-    website: "ホームページ"
     x: "X"
     bluesky: "Bluesky"
     misskey: "Misskey"
+    youtube: "YouTube"
     note: "note"
     migdal: "Migdal"
     discord: "Discord"
+    website: "ホームページ"
     other: "その他"
 wordModeSelect:
   label:
@@ -817,15 +818,15 @@ userHeader:
       このユーザーはまだアクティベートされていません。
       アカウント作成時に送られたメールの指示に従って、ユーザーをアクティベートしてください。
       アクティベートされていないユーザーは、機能を制限される可能性があります。
-userHeaderSocialList:
-  label:
-    website: "ホームページ"
+  social:
     x: "X"
     bluesky: "Bluesky"
     misskey: "Misskey"
+    youtube: "YouTube"
     note: "note"
     migdal: "Migdal"
     discord: "Discord"
+    website: "ホームページ"
     other: "その他"
 wordList:
   empty: "該当する単語は見つかりませんでした"

@@ -56,6 +56,8 @@ function guessUserSocialType(url: string): UserSocialType | null {
       return "bluesky";
     } else if (host.includes("misskey")) {
       return "misskey";
+    } else if (host.includes("youtube")) {
+      return "youtube";
     } else if (host === "note.com") {
       return "note";
     } else if (host === "migdal.jp") {

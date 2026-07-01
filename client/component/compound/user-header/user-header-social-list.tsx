@@ -17,13 +17,13 @@ export const UserHeaderSocialList = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("userHeaderSocialList");
+    const {trans} = useTrans("userHeader");
 
     return (
       <ul styleName="root" {...rest}>
         {socials.map((social, index) => (
           <li styleName="item" key={index}>
-            <a styleName="link" href={social.url} target="_blank" rel="noopener noreferrer" title={trans(`label.${social.type}`)}>
+            <a styleName="link" href={social.url} target="_blank" rel="noopener noreferrer" title={trans(`social.${social.type}`)}>
               <GeneralIcon icon={getSocialIconDefinition(UserSocialTypeUtil.cast(social.type))} style={{color: getSocialIconColor(UserSocialTypeUtil.cast(social.type))}}/>
             </a>
           </li>

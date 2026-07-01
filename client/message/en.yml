@@ -275,13 +275,14 @@ exampleTypeSelect:
     regular: "Regex"
 userSocialTypeSelect:
   label:
-    website: "Homepage"
     x: "X"
     bluesky: "Bluesky"
     misskey: "Misskey"
+    youtube: "YouTube"
     note: "note"
     migdal: "Migdal"
     discord: "Discord"
+    website: "Homepage"
     other: "Other"
 wordModeSelect:
   label:
@@ -817,15 +818,15 @@ userHeader:
       This user has not yet been activated.
       To activate, please follow the instructions in the email you received when creating your account.
       Unactivated users may have limited functionality.
-userHeaderSocialList:
-  label:
-    website: "Homepage"
+  social:
     x: "X"
     bluesky: "Bluesky"
     misskey: "Misskey"
+    youtube: "YouTube"
     note: "note"
     migdal: "Migdal"
     discord: "Discord"
+    website: "Homepage"
     other: "Other"
 wordList:
   empty: "No matching words were found"

@@ -22,7 +22,7 @@ export interface UserSocial {
 }
 
 
-export const USER_SOCIAL_TYPES = ["website", "x", "bluesky", "misskey", "note", "migdal", "discord", "other"] as const;
+export const USER_SOCIAL_TYPES = ["x", "bluesky", "misskey", "youtube", "note", "migdal", "discord", "website", "other"] as const;
 export type UserSocialType = LiteralType<typeof USER_SOCIAL_TYPES>;
 export const UserSocialTypeUtil = LiteralUtilType.create(USER_SOCIAL_TYPES);
 
