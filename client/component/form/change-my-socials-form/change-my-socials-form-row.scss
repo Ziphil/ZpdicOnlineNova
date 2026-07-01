@@ -2,16 +2,13 @@
 
 
 .root {
-  column-gap: 2zu;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
 }
 
 .type {
-  flex: 0 0 auto;
-  inline-size: 40zu;
 }
 
 .url {
-  flex: 1 1 auto;
 }

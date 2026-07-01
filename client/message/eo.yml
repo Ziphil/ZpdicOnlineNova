@@ -1098,7 +1098,7 @@ changeMyScreenNameForm:
       Enigu kromnomon.
 changeMySocialsForm:
   placeholder:
-    url: "https://..."
+    url: "https://…"
 commonForm:
   button:
     change: "Ŝanĝi"

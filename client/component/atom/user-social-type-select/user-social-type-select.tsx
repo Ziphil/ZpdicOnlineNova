@@ -1,12 +1,10 @@
 //
 
-import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
-import {faBluesky, faDiscord, faXTwitter} from "@fortawesome/free-brands-svg-icons";
-import {faGlobe, faLink} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, GeneralIcon, Select, SelectOption, useTrans} from "zographia";
+import {AdditionalProps, Select, SelectOption} from "zographia";
 import {create} from "/client/component/create";
 import {USER_SOCIAL_TYPES, UserSocialType} from "/server/internal/skeleton";
+import {UserSocialTypeSelectLabel} from "./user-social-type-select-label";
 
 
 export const UserSocialTypeSelect = create(
@@ -23,17 +21,15 @@ export const UserSocialTypeSelect = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("userSocialTypeSelect");
-
     return (
       <Select styleName="root" value={type} onSet={onSet} {...rest}>
         {optionTypes.map((optionType) => (
           <SelectOption
             key={optionType}
             value={optionType}
-            label={<span styleName="label"><GeneralIcon styleName="icon" icon={USER_SOCIAL_TYPE_ICONS[optionType]}/>{trans(`label.${optionType}`)}</span>}
+            label={<UserSocialTypeSelectLabel type={optionType}/>}
           >
-            <span styleName="label"><GeneralIcon styleName="icon" icon={USER_SOCIAL_TYPE_ICONS[optionType]}/>{trans(`label.${optionType}`)}</span>
+            <UserSocialTypeSelectLabel type={optionType}/>
           </SelectOption>
         ))}
       </Select>
@@ -41,15 +37,3 @@ export const UserSocialTypeSelect = create(
 
   }
 );
-
-
-const USER_SOCIAL_TYPE_ICONS = {
-  website: faGlobe,
-  x: faXTwitter,
-  bluesky: faBluesky,
-  misskey: faLink,
-  note: faLink,
-  migdal: faLink,
-  discord: faDiscord,
-  other: faLink
-} satisfies Record<UserSocialType, IconDefinition>;

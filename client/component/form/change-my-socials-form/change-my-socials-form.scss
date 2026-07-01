@@ -9,6 +9,7 @@
 
 .table {
   row-gap: 2zu;
-  display: flex;
-  flex-direction: column;
+  column-gap: 2zu;
+  display: grid;
+  grid-template-columns: 40zu 1fr;
 }

@@ -1097,7 +1097,7 @@ changeMyScreenNameForm:
       ニックネームを入力してください。
 changeMySocialsForm:
   placeholder:
-    url: "https://..."
+    url: "https://…"
 commonForm:
   button:
     change: "変更"

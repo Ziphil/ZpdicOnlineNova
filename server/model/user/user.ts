@@ -29,6 +29,9 @@ export class UserSchema {
   @prop({required: true, validate: EMAIL_REGEXP})
   public email!: string;
 
+  @prop({type: UserSocialSchema})
+  public socials?: Array<UserSocialSchema>;
+
   @prop({required: true})
   public hash!: string;
 
@@ -46,9 +49,6 @@ export class UserSchema {
 
   @prop()
   public termsAgreement?: TermsAgreementSchema;
-
-  @prop({type: UserSocialSchema})
-  public socials?: Array<UserSocialSchema>;
 
   /** 渡された情報からユーザーを作成し、データベースに保存します。
    * このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
