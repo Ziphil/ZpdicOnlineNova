@@ -3,7 +3,7 @@
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkMe, checkRecaptcha, login, logout} from "/server/internal/controller/rest/middleware";
-import {ApiCredentialCreator, UserCreator} from "/server/internal/creator";
+import {ApiCredentialCreator, UserCreator, UserSocialCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {ApiCredentialModel, UserModel} from "/server/model";
 import {getStorageUploadFilePost} from "/server/util/aws";
@@ -107,6 +107,17 @@ export class UserRestController extends InternalRestController {
     const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     const {termsVersion} = request.body;
     await me.changeTermsAgreement(termsVersion);
+    const body = UserCreator.skeletonize(me);
+    InternalRestController.respond(response, body);
+  }
+
+  @post("/changeMySocials")
+  @before(checkMe())
+  public async [Symbol()](request: Request<"changeMySocials">, response: Response<"changeMySocials">): Promise<void> {
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
+    const {socials} = request.body;
+    const rawSocials = socials.map(UserSocialCreator.enflesh);
+    await me.changeSocials(rawSocials);
     const body = UserCreator.skeletonize(me);
     InternalRestController.respond(response, body);
   }

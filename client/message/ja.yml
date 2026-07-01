@@ -107,6 +107,8 @@ toast:
       メールアドレスを変更しました。
     changeMyPassword: |-
       パスワードを変更しました。
+    changeMySocials: |-
+      ソーシャルリンクを変更しました。
     changeMyTermsAgreement: |-
       利用規約とプライバシーポリシーに同意しました。
     changeAppearance: |-
@@ -271,6 +273,16 @@ exampleTypeSelect:
     part: "部分"
     exact: "完全"
     regular: "正規"
+userSocialTypeSelect:
+  label:
+    website: "ウェブサイト"
+    x: "X"
+    bluesky: "Bluesky"
+    misskey: "Misskey"
+    note: "note"
+    migdal: "Migdal"
+    discord: "Discord"
+    other: "その他"
 wordModeSelect:
   label:
     spelling: "単語"
@@ -1077,6 +1089,9 @@ changeMyScreenNameForm:
   error:
     required: >-
       ニックネームを入力してください。
+changeMySocialsForm:
+  placeholder:
+    url: "https://..."
 commonForm:
   button:
     change: "変更"
@@ -1437,6 +1452,7 @@ userSettingPart:
   heading:
     screenName: "ニックネーム"
     avatar: "アイコン"
+    socials: "ソーシャルリンク"
     email: "メールアドレス"
     password: "パスワード"
     logout: "ログアウト"

@@ -107,6 +107,8 @@ toast:
       Your email address has been changed.
     changeMyPassword:
       Your password has been changed.
+    changeMySocials:
+      Your social links have been changed.
     changeMyTermsAgreement:
       You have agreed to the terms of service and privacy policy.
     changeAppearance: |-
@@ -271,6 +273,16 @@ exampleTypeSelect:
     part: "Partial"
     exact: "Exact"
     regular: "Regex"
+userSocialTypeSelect:
+  label:
+    website: "Website"
+    x: "X"
+    bluesky: "Bluesky"
+    misskey: "Misskey"
+    note: "note"
+    migdal: "Migdal"
+    discord: "Discord"
+    other: "Other"
 wordModeSelect:
   label:
     spelling: "Headword"
@@ -1078,6 +1090,9 @@ changeMyScreenNameForm:
   error:
     required: >-
       Enter a nickname.
+changeMySocialsForm:
+  placeholder:
+    url: "https://..."
 commonForm:
   button:
     change: "Change"
@@ -1434,6 +1449,7 @@ userSettingPart:
   heading:
     screenName: "Nickname"
     avatar: "Avatar icon"
+    socials: "Social links"
     email: "Email address"
     password: "Password"
     logout: "Sign out"

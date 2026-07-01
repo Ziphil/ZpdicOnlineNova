@@ -13,6 +13,7 @@ import {CustomError} from "/server/model/error";
 import {ApiCredentialModel} from "/server/model/user/api-credential";
 import {ResetTokenModel, ResetTokenSchema} from "/server/model/user/reset-token";
 import {TermsAgreementSchema} from "/server/model/user/terms-agreement";
+import {UserSocialSchema} from "/server/model/user/user-social";
 import {EMAIL_REGEXP, IDENTIFIER_REGEXP, validatePassword} from "/server/util/validation";
 
 
@@ -45,6 +46,9 @@ export class UserSchema {
 
   @prop()
   public termsAgreement?: TermsAgreementSchema;
+
+  @prop({type: UserSocialSchema})
+  public socials?: Array<UserSocialSchema>;
 
   /** 渡された情報からユーザーを作成し、データベースに保存します。
    * このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
@@ -207,6 +211,13 @@ export class UserSchema {
 
   public async changeTermsAgreement(this: User, version: number): Promise<User> {
     this.termsAgreement = {version, date: new Date()};
+    await this.save();
+    return this;
+  }
+
+  /** このユーザーの SNS などのリンク情報を、渡された配列で全件上書きします。*/
+  public async changeSocials(this: User, socials: Array<UserSocialSchema>): Promise<User> {
+    this.socials = socials;
     await this.save();
     return this;
   }

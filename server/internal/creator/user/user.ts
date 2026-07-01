@@ -1,5 +1,6 @@
 //
 
+import {UserSocialCreator} from "/server/internal/creator/user/user-social";
 import type {
   User as UserSkeleton,
   UserWithDetail as UserSkeletonWithDetail
@@ -15,7 +16,8 @@ export namespace UserCreator {
     const skeleton = {
       id: raw.id,
       name: raw.name,
-      screenName: raw.screenName
+      screenName: raw.screenName,
+      socials: (raw.socials ?? []).map(UserSocialCreator.skeletonize)
     } satisfies UserSkeleton;
     return skeleton;
   }
