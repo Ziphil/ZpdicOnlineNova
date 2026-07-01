@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback} from "react";
+import {FocusEvent, ReactElement, useCallback} from "react";
 import {Controller} from "react-hook-form";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, Input, useTrans} from "zographia";
 import {UserSocialTypeSelect} from "/client/component/atom/user-social-type-select";
@@ -25,10 +25,10 @@ export const ChangeMySocialsForm = create(
     const {form, handleSubmit} = useChangeMySocials(me);
     const {control, register, setValue} = form;
 
-    const handleBlur = useCallback(function (index: number, url: string): void {
-      const type = guessUserSocialType(url);
+    const handleBlur = useCallback(function (event: FocusEvent<HTMLInputElement>): void {
+      const type = guessUserSocialType(event.target.value);
       if (type !== null) {
-        setValue(`socials.${index}.type`, type);
+        setValue(event.target.name.replace(/\.url$/, ".type") as `socials.${number}.type`, type);
       }
     }, [setValue]);
 
@@ -40,7 +40,7 @@ export const ChangeMySocialsForm = create(
               <Controller name={`socials.${index}.type`} control={control} render={({field}) => (
                 <UserSocialTypeSelect styleName="type" type={field.value} onSet={field.onChange}/>
               )}/>
-              <Input styleName="url" placeholder={trans("placeholder.url")} {...register(`socials.${index}.url`, {onBlur: (event) => handleBlur(index, event.target.value)})}/>
+              <Input styleName="url" placeholder={trans("placeholder.url")} {...register(`socials.${index}.url`, {onBlur: handleBlur})}/>
             </div>
           ))}
         </div>
