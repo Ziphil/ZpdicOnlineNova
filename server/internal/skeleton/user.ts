@@ -1,6 +1,7 @@
 //
 
 import {DateString, ObjectId} from "/server/internal/skeleton/common";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 
 export interface User {
@@ -19,6 +20,11 @@ export interface UserSocial {
   url: string;
 
 }
+
+
+export const USER_SOCIAL_TYPES = ["website", "x", "bluesky", "misskey", "note", "migdal", "discord", "other"] as const;
+export type UserSocialType = LiteralType<typeof USER_SOCIAL_TYPES>;
+export const UserSocialTypeUtil = LiteralUtilType.create(USER_SOCIAL_TYPES);
 
 
 export interface UserWithDetail extends User {
