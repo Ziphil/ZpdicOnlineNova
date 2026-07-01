@@ -44,8 +44,6 @@ export function useChangeMySocials(me: UserWithDetail): ChangeMySocialsSpec {
   return {form, handleSubmit};
 }
 
-/** ユーザーが保持しているリンク情報を、フォームの固定行数に合わせた初期値に変換します。
- * 既存のリンクが行数に満たない部分は、空欄の行で埋めます。*/
 function getDefaultValue(me: UserWithDetail): FormValue {
   const socials = Array.from({length: SOCIAL_ROW_COUNT}, (dummy, index) => {
     const social = me.socials[index];

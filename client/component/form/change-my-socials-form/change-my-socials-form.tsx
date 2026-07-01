@@ -25,7 +25,7 @@ export const ChangeMySocialsForm = create(
     const {form, handleSubmit} = useChangeMySocials(me);
     const {control, register, setValue} = form;
 
-    const guessType = useCallback(function (index: number, url: string): void {
+    const handleBlur = useCallback(function (index: number, url: string): void {
       const type = guessUserSocialType(url);
       if (type !== null) {
         setValue(`socials.${index}.type`, type);
@@ -35,20 +35,14 @@ export const ChangeMySocialsForm = create(
     return (
       <form styleName="root" {...rest}>
         <div styleName="table">
-          {Array.from({length: SOCIAL_ROW_COUNT}, (dummy, index) => {
-            const urlField = register(`socials.${index}.url`);
-            return (
-              <div styleName="row" key={index}>
-                <Controller name={`socials.${index}.type`} control={control} render={({field}) => (
-                  <UserSocialTypeSelect styleName="type" type={field.value} onSet={field.onChange}/>
-                )}/>
-                <Input styleName="url" placeholder={trans("placeholder.url")} {...urlField} onBlur={(event) => {
-                  urlField.onBlur(event);
-                  guessType(index, event.target.value);
-                }}/>
-              </div>
-            );
-          })}
+          {Array.from({length: SOCIAL_ROW_COUNT}, (dummy, index) => (
+            <div styleName="row" key={index}>
+              <Controller name={`socials.${index}.type`} control={control} render={({field}) => (
+                <UserSocialTypeSelect styleName="type" type={field.value} onSet={field.onChange}/>
+              )}/>
+              <Input styleName="url" placeholder={trans("placeholder.url")} {...register(`socials.${index}.url`, {onBlur: (event) => handleBlur(index, event.target.value)})}/>
+            </div>
+          ))}
         </div>
         <div>
           <Button variant="light" type="submit" onClick={handleSubmit}>
@@ -63,30 +57,26 @@ export const ChangeMySocialsForm = create(
 );
 
 
-/** リンクの URL からリンク種別を推測します。
- * 既知のサービスに合致した場合はその種別を返し、無効な URL や未知のサービスの場合は `null` を返します (この場合はユーザーの選択を上書きしません)。*/
 function guessUserSocialType(url: string): UserSocialType | null {
-  let type = null as UserSocialType | null;
   try {
     const normalizedUrl = (/^https?:\/\//.test(url)) ? url : `https://${url}`;
     const host = new URL(normalizedUrl).hostname.replace(/^www\./, "");
     if (host === "x.com" || host === "twitter.com") {
-      type = "x";
+      return "x";
     } else if (host === "bsky.app") {
-      type = "bluesky";
+      return "bluesky";
     } else if (host.includes("misskey")) {
-      type = "misskey";
+      return "misskey";
     } else if (host === "note.com") {
-      type = "note";
+      return "note";
     } else if (host === "migdal.jp") {
-      type = "migdal";
+      return "migdal";
     } else if (host === "discord.gg" || host === "discord.com" || host === "discordapp.com") {
-      type = "discord";
+      return "discord";
     } else {
-      type = null;
+      return null;
     }
   } catch (error) {
-    type = null;
+    return null;
   }
-  return type;
 }
