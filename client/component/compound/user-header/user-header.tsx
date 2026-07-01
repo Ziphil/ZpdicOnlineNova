@@ -11,6 +11,7 @@ import {useMe} from "/client/hook/auth";
 import {useResponse} from "/client/hook/request";
 import {User} from "/server/internal/skeleton";
 import {ActivateMeCallout} from "./activate-me-callout";
+import {UserHeaderSocialList} from "./user-header-social-list";
 
 
 export const UserHeader = create(
@@ -40,14 +41,19 @@ export const UserHeader = create(
       <header styleName="root" {...rest}>
         <MainContainer width={width}>
           <div styleName="top">
-            <UserAvatar styleName="avatar" user={user}/>
-            <div styleName="name-container">
-              <SingleLineText styleName="screen-name" is="h2">
-                {user.screenName}
-              </SingleLineText>
-              <SingleLineText styleName="name" is="span">
-                @{user.name}
-              </SingleLineText>
+            <div styleName="left">
+              <UserAvatar styleName="avatar" user={user}/>
+              <div styleName="name-container">
+                <SingleLineText styleName="screen-name" is="h2">
+                  {user.screenName}
+                </SingleLineText>
+                <SingleLineText styleName="name" is="span">
+                  @{user.name}
+                </SingleLineText>
+              </div>
+            </div>
+            <div styleName="right">
+              <UserHeaderSocialList socials={user.socials}/>
             </div>
           </div>
           {(me !== null && me.name === user.name && !me.activated) && (

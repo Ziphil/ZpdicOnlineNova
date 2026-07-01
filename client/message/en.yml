@@ -817,6 +817,16 @@ userHeader:
       This user has not yet been activated.
       To activate, please follow the instructions in the email you received when creating your account.
       Unactivated users may have limited functionality.
+userHeaderSocialList:
+  label:
+    website: "Homepage"
+    x: "X"
+    bluesky: "Bluesky"
+    misskey: "Misskey"
+    note: "note"
+    migdal: "Migdal"
+    discord: "Discord"
+    other: "Other"
 wordList:
   empty: "No matching words were found"
   button:

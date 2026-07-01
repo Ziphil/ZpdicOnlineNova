@@ -22,9 +22,28 @@
 }
 
 .top {
+  column-gap: 8zu;
+  row-gap: 4zu;
+  display: flex;
+  justify-content: space-between;
+  @include device("desktop") {
+    flex-direction: row;
+    align-items: center;
+  }
+  @include device("mobile") {
+    flex-direction: column;
+  }
+}
+
+.left {
   column-gap: 4zu;
   display: flex;
   align-items: center;
+  flex: 1 1 auto;
+}
+
+.right {
+  flex: 0 0 auto;
 }
 
 .avatar {

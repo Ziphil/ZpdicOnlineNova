@@ -817,6 +817,16 @@ userHeader:
       Tiu uzanto ankoraŭ ne estas aktivigita.
       Por aktivigi, bonvolu sekvi la instrukciojn en la retpoŝto kiun vi ricevis dum kreado de via konto.
       Neaktivigitaj uzantoj eble havas limigitan funkciecon.
+userHeaderSocialList:
+  label:
+    website: "Hejmpaĝo"
+    x: "X"
+    bluesky: "Bluesky"
+    misskey: "Misskey"
+    note: "note"
+    migdal: "Migdal"
+    discord: "Discord"
+    other: "Alia"
 wordList:
   empty: "Neniuj kongruaj vortoj estis trovitaj"
   button:
