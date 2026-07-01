@@ -271,6 +271,16 @@ exampleTypeSelect:
     part: "Parta"
     exact: "Ekzakta"
     regular: "Regesp"
+userSocialTypeSelect:
+  label:
+    website: "Retejo"
+    x: "X"
+    bluesky: "Bluesky"
+    misskey: "Misskey"
+    note: "note"
+    migdal: "Migdal"
+    discord: "Discord"
+    other: "Alia"
 wordModeSelect:
   label:
     spelling: "Kapvorto"

@@ -271,6 +271,16 @@ exampleTypeSelect:
     part: "部分"
     exact: "完全"
     regular: "正規"
+userSocialTypeSelect:
+  label:
+    website: "ウェブサイト"
+    x: "X"
+    bluesky: "Bluesky"
+    misskey: "Misskey"
+    note: "note"
+    migdal: "Migdal"
+    discord: "Discord"
+    other: "その他"
 wordModeSelect:
   label:
     spelling: "単語"

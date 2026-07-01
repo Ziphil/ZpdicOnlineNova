@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+
+.root {
+  inline-size: 40zu;
+}
+
+.label {
+  column-gap: 1zu;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  inline-size: 1.2em;
+}

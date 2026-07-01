@@ -271,6 +271,16 @@ exampleTypeSelect:
     part: "Partial"
     exact: "Exact"
     regular: "Regex"
+userSocialTypeSelect:
+  label:
+    website: "Website"
+    x: "X"
+    bluesky: "Bluesky"
+    misskey: "Misskey"
+    note: "note"
+    migdal: "Migdal"
+    discord: "Discord"
+    other: "Other"
 wordModeSelect:
   label:
     spelling: "Headword"
