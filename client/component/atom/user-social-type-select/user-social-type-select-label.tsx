@@ -21,7 +21,9 @@ export const UserSocialTypeSelectLabel = create(
 
     return (
       <span styleName="root" {...rest}>
-        <GeneralIcon styleName="icon" icon={getSocialIconDefinition(type)} style={{color: getSocialIconColor(type)}}/>
+        <span styleName="icon">
+          <GeneralIcon icon={getSocialIconDefinition(type)} style={{color: getSocialIconColor(type)}}/>
+        </span>
         {trans(`label.${type}`)}
       </span>
     );

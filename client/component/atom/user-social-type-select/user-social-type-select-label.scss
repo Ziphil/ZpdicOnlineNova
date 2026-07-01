@@ -2,12 +2,14 @@
 
 
 .root {
-  column-gap: var(--glob-blank-gap);
   display: flex;
   align-items: center;
 }
 
 .icon {
-  inline-size: 1.1em;
+  width: 1.1em;
+  margin-inline-end: var(--glob-blank-gap);
   color: var(--glob-mute-text-color);
+  display: inline-block;
+  text-align: center;
 }

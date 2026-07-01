@@ -275,7 +275,7 @@ exampleTypeSelect:
     regular: "正規"
 userSocialTypeSelect:
   label:
-    website: "ウェブサイト"
+    website: "ホームページ"
     x: "X"
     bluesky: "Bluesky"
     misskey: "Misskey"

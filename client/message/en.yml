@@ -275,7 +275,7 @@ exampleTypeSelect:
     regular: "Regex"
 userSocialTypeSelect:
   label:
-    website: "Website"
+    website: "Homepage"
     x: "X"
     bluesky: "Bluesky"
     misskey: "Misskey"

@@ -1,17 +1,18 @@
 //
 
 import {faBluesky, faDiscord, faXTwitter} from "@fortawesome/free-brands-svg-icons";
-import {IconDefinition, faGlobe, faLink} from "@fortawesome/sharp-regular-svg-icons";
+import {IconDefinition, faHouse, faLink} from "@fortawesome/sharp-regular-svg-icons";
+import {fakMigdal, fakMisskey, fakNote} from "/client/component/atom/icon";
 import {UserSocialType} from "/server/internal/skeleton";
 
 
 const SOCIAL_SPEC = {
-  website: [faGlobe, undefined],
+  website: [faHouse, undefined],
   x: [faXTwitter, "#000000"],
   bluesky: [faBluesky, "#0A7AFF"],
-  misskey: [faLink, "#86B300"],
-  note: [faLink, "#000000"],
-  migdal: [faLink, "#8FC31F"],
+  misskey: [fakMisskey, "#86B300"],
+  note: [fakNote, "#000000"],
+  migdal: [fakMigdal, "#8FC31F"],
   discord: [faDiscord, "#5865F2"],
   other: [faLink, undefined]
 } satisfies Record<UserSocialType, [IconDefinition, string | undefined]>;
