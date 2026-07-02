@@ -48,7 +48,7 @@ export function useChangeMySocials(me: UserWithDetail): ChangeMySocialsSpec {
 function getDefaultValue(me: UserWithDetail): FormValue {
   const socials = Array.from({length: SOCIAL_ROW_COUNT}, (dummy, index) => {
     const social = me.socials[index];
-    return (social !== undefined) ? {type: UserSocialTypeUtil.cast(social.type), url: social.url} : {type: "website" as const, url: ""};
+    return (social !== undefined) ? {type: UserSocialTypeUtil.cast(social.type), url: social.url} : {type: "other" as const, url: ""};
   });
   return {socials};
 }

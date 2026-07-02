@@ -2,7 +2,7 @@
 
 import {FocusEvent, ReactElement, useCallback} from "react";
 import {Controller} from "react-hook-form";
-import {AdditionalProps, Input, useTrans} from "zographia";
+import {AdditionalProps, ControlGroup, Input, useTrans} from "zographia";
 import {UserSocialTypeSelect} from "/client/component/atom/user-social-type-select";
 import {create} from "/client/component/create";
 import {UseFormReturn} from "/client/hook/form";
@@ -35,10 +35,12 @@ export const ChangeMySocialsFormRow = create(
 
     return (
       <div styleName="root" {...rest}>
-        <Controller name={`socials.${index}.type`} control={control} render={({field}) => (
-          <UserSocialTypeSelect styleName="type" type={field.value} onSet={field.onChange}/>
-        )}/>
-        <Input styleName="url" placeholder={trans("placeholder.url")} {...register(`socials.${index}.url`, {onBlur: handleBlur})}/>
+        <ControlGroup styleName="group">
+          <Controller name={`socials.${index}.type`} control={control} render={({field}) => (
+            <UserSocialTypeSelect type={field.value} onSet={field.onChange}/>
+          )}/>
+          <Input styleName="url" placeholder={trans("placeholder.url")} {...register(`socials.${index}.url`, {onBlur: handleBlur})}/>
+        </ControlGroup>
       </div>
     );
 
