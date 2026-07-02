@@ -14,6 +14,15 @@ export interface User {
 }
 
 
+export interface UserWithDetail extends User {
+
+  email: string;
+  activated: boolean;
+  termsAgreement: TermsAgreement;
+
+}
+
+
 export interface UserSocial {
 
   type: string;
@@ -25,15 +34,6 @@ export interface UserSocial {
 export const USER_SOCIAL_TYPES = ["x", "bluesky", "misskey", "youtube", "note", "migdal", "discord", "website", "other"] as const;
 export type UserSocialType = LiteralType<typeof USER_SOCIAL_TYPES>;
 export const UserSocialTypeUtil = LiteralUtilType.create(USER_SOCIAL_TYPES);
-
-
-export interface UserWithDetail extends User {
-
-  email: string;
-  activated: boolean;
-  termsAgreement: TermsAgreement;
-
-}
 
 
 export interface TermsAgreement {
