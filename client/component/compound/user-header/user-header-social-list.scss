@@ -5,7 +5,7 @@
 
 .root {
   @include theme("light") {
-    --border-color: #{leveled-color("gray", 3)};
+    --border-color: #{leveled-color("gray", 2)};
     --background-color: transparent;
     --hover-background-color: #{leveled-color("gray", 0)};
     --focus-color: #{leveled-color("gray", 5, var(--glob-focus-alpha))};
