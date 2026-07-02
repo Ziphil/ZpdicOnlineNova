@@ -128,7 +128,7 @@ export class DictionarySchema extends DiscardableSchema {
    * これは、自分が所有している辞書と、自分が編集権限をもっている辞書から成ります。 */
   public static async fetchInvolvedByMe(me: Pick<User, "id">): Promise<Array<Dictionary>> {
     const meInvolvedDictionaryIds = await MemberModel.fetchDictionaryIdsByUser(me, "edit");
-    const dictionaries = DictionaryModel.findExist().or([
+    const dictionaries = await DictionaryModel.findExist().or([
       DictionaryModel.find().where("user", me).getFilter(),
       DictionaryModel.find().in("_id", meInvolvedDictionaryIds).getFilter()
     ]).sort({"updatedDate": -1, "number": -1}).exec();
