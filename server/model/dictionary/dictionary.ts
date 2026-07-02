@@ -298,7 +298,7 @@ export class DictionarySchema extends DiscardableSchema {
     return this;
   }
 
-  public async deleteTemplateWord(this: Dictionary, id: string): Promise<Dictionary> {
+  public async discardTemplateWord(this: Dictionary, id: string): Promise<Dictionary> {
     const currentTemplateWords = this.settings.templateWords ?? [];
     const index = currentTemplateWords.findIndex((currentTemplateWord) => (currentTemplateWord as any)["_id"].toString() === id);
     if (index >= 0) {

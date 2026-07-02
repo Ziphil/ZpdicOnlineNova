@@ -126,7 +126,7 @@ export class DictionaryRestController extends InternalRestController {
     const {dictionary} = request.middlewareBody;
     const {id} = request.body;
     try {
-      await dictionary.deleteTemplateWord(id);
+      await dictionary.discardTemplateWord(id);
       const body = DictionaryCreator.skeletonize(dictionary);
       InternalRestController.respond(response, body);
     } catch (error) {
