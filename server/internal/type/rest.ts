@@ -7,7 +7,6 @@ import type {
   CustomError,
   Dictionary,
   DictionaryAuthority,
-  DictionaryAuthorityQuery,
   DictionaryParameter,
   DictionarySettings,
   DictionaryStatistics,
@@ -26,12 +25,14 @@ import type {
   History,
   Invitation,
   InvitationType,
+  Member,
   Notification,
   ObjectId,
   Proposal,
   Relation,
   Suggestion,
   User,
+  UserSocial,
   UserWithDetail,
   Word,
   WordParameter,
@@ -108,11 +109,11 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "noSuchDictionaryTemplateWord">
     }
   },
-  discardDictionaryAuthorizedUser: {
+  discardMember: {
     request: {number: number, id: ObjectId},
     response: {
       success: null,
-      error: CustomError<"noSuchDictionary" | "noSuchDictionaryAuthorizedUser">
+      error: CustomError<"noSuchDictionary" | "noSuchMember">
     }
   },
   addInvitation: {
@@ -262,10 +263,10 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
-  fetchDictionaryAuthorizedUsers: {
-    request: {number: number, authorityQuery: DictionaryAuthorityQuery},
+  fetchMembers: {
+    request: {number: number},
     response: {
-      success: Array<User>,
+      success: Array<Member>,
       error: CustomError<"noSuchDictionary">
     }
   },
@@ -495,6 +496,13 @@ type ServerSpecs = {
   },
   changeMyTermsAgreement: {
     request: {termsVersion: number},
+    response: {
+      success: User,
+      error: never
+    }
+  },
+  changeMySocials: {
+    request: {socials: Array<UserSocial>},
     response: {
       success: User,
       error: never

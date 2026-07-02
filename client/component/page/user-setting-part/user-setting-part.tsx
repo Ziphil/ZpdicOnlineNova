@@ -9,6 +9,7 @@ import {ChangeMyAvatarForm} from "/client/component/form/change-my-avatar-form";
 import {ChangeMyEmailForm} from "/client/component/form/change-my-email-form";
 import {ChangeMyPasswordForm} from "/client/component/form/change-my-password-form";
 import {ChangeMyScreenNameForm} from "/client/component/form/change-my-screen-name-form";
+import {ChangeMySocialsForm} from "/client/component/form/change-my-socials-form";
 import {DiscardMeButton} from "/client/component/form/discard-me-button";
 import {LogoutButton} from "/client/component/form/logout-button";
 import {useMe} from "/client/hook/auth";
@@ -36,6 +37,10 @@ export const UserSettingPart = create(
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.avatar")}</h3>
           <ChangeMyAvatarForm me={me}/>
+        </section>
+        <section styleName="section">
+          <h3 styleName="heading">{trans("heading.socials")}</h3>
+          <ChangeMySocialsForm me={me}/>
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.email")}</h3>

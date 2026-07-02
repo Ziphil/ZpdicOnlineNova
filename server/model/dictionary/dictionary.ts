@@ -5,7 +5,6 @@ import {
   Ref,
   getModelForClass,
   isDocument,
-  isDocumentArray,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -14,7 +13,7 @@ import type {DictionaryStatistics, WordSpellingFrequencies} from "/server/intern
 import {Article, ArticleModel, EditableArticle} from "/server/model/article";
 import {DiscardableSchema} from "/server/model/base";
 import {Deserializer} from "/server/model/dictionary/deserializer";
-import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityQuery, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
+import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
 import {Serializer} from "/server/model/dictionary/serializer";
 import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
@@ -22,6 +21,7 @@ import {CustomError} from "/server/model/error";
 import {EditableExample, Example, ExampleModel} from "/server/model/example/example";
 import {ExampleParameter} from "/server/model/example-parameter/example-parameter";
 import {InvitationModel} from "/server/model/invitation";
+import {Member, MemberModel} from "/server/model/member/member";
 import {EditableTemplateWord} from "/server/model/template-word/template-word";
 import {User, UserSchema} from "/server/model/user/user";
 import {Relation} from "/server/model/word/relation";
@@ -50,9 +50,6 @@ export class DictionarySchema extends DiscardableSchema {
 
   @prop({required: true, ref: "UserSchema"})
   public user!: Ref<UserSchema>;
-
-  @prop({required: true, ref: "UserSchema"})
-  public editUsers!: Array<Ref<UserSchema>>;
 
   @prop({required: true, unique: true})
   public number!: number;
@@ -84,7 +81,6 @@ export class DictionarySchema extends DiscardableSchema {
   public static async addEmpty(name: string, user: User): Promise<Dictionary> {
     const dictionary = new DictionaryModel({
       user,
-      editUsers: new Array<User>(),
       number: await DictionaryModel.fetchNextNumber(),
       name,
       status: "ready",
@@ -116,38 +112,26 @@ export class DictionarySchema extends DiscardableSchema {
     return dictionary;
   }
 
-  /** 指定されたユーザーが指定された権限をもっている辞書を全て返します。
-   * `me` にユーザーを指定すると、`me` が見ることのできる辞書のみを返します。
-   * `me` に `null` を指定すると、ユーザーに関わらず全員が見ることのできる辞書のみを返します (公開範囲が限定公開以下のものは除外される)。
-   * `me` に `undefined` を指定するか省略すると、公開範囲に関係なく全ての辞書を返します。*/
-  public static async fetchByUser(user: User, authority: DictionaryAuthority, me: Pick<User, "id"> | "all" | null): Promise<Array<Dictionary>> {
-    const rawQuery = (() => {
-      if (authority === "own") {
-        if (me === "all") {
-          const query = DictionaryModel.findExist().where({"user": user});
-          return query;
-        } else {
-          const query = DictionaryModel.findExist().where({"user": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]);
-          return query;
-        }
-      } else {
-        if (me === "all") {
-          const query = DictionaryModel.findExist().or([
-            DictionaryModel.find({"user": user}).getFilter(),
-            DictionaryModel.find({"editUsers": user}).getFilter()
-          ]);
-          return query;
-        } else {
-          const query = DictionaryModel.findExist().or([
-            DictionaryModel.find({"user": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]).getFilter(),
-            DictionaryModel.find({"editUsers": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]).getFilter()
-          ]);
-          return query;
-        }
-      }
-    })();
-    const query = rawQuery.sort("-updatedDate -number");
-    const dictionaries = await query.exec();
+  /** 指定されたユーザーが関与している辞書のうち、自分自身から見ることのできるものを全て返します。
+   * `me` に `null` を指定した場合は、ユーザーに関わらず全員が見ることのできる辞書のみを返します (公開範囲が限定公開以下のものは除外される)。*/
+  public static async fetchByUser(user: User, me: Pick<User, "id"> | null): Promise<Array<Dictionary>> {
+    const meInvolvedDictionaryIds = (me !== null) ? await MemberModel.fetchDictionaryIdsByUser(me, "edit") : [];
+    const dictionaries = await DictionaryModel.find().where("user", user).or([
+      {"visibility": "public"},
+      {"user": me},
+      DictionaryModel.find().in("_id", meInvolvedDictionaryIds).getFilter()
+    ]).sort({"updatedDate": -1, "number": -1}).exec();
+    return dictionaries;
+  }
+
+  /** 自分自身が関与している辞書を全て返します。
+   * これは、自分が所有している辞書と、自分が編集権限をもっている辞書から成ります。 */
+  public static async fetchInvolvedByMe(me: Pick<User, "id">): Promise<Array<Dictionary>> {
+    const meInvolvedDictionaryIds = await MemberModel.fetchDictionaryIdsByUser(me, "edit");
+    const dictionaries = await DictionaryModel.findExist().or([
+      DictionaryModel.find().where("user", me).getFilter(),
+      DictionaryModel.find().in("_id", meInvolvedDictionaryIds).getFilter()
+    ]).sort({"updatedDate": -1, "number": -1}).exec();
     return dictionaries;
   }
 
@@ -314,7 +298,7 @@ export class DictionarySchema extends DiscardableSchema {
     return this;
   }
 
-  public async deleteTemplateWord(this: Dictionary, id: string): Promise<Dictionary> {
+  public async discardTemplateWord(this: Dictionary, id: string): Promise<Dictionary> {
     const currentTemplateWords = this.settings.templateWords ?? [];
     const index = currentTemplateWords.findIndex((currentTemplateWord) => (currentTemplateWord as any)["_id"].toString() === id);
     if (index >= 0) {
@@ -512,15 +496,15 @@ export class DictionarySchema extends DiscardableSchema {
    * `user` が `null` の場合は、匿名ユーザー (限定公開以上の辞書に対して閲覧権限のみがある) として扱います。 */
   public async hasAuthority(this: Dictionary, user: User | null, authority: DictionaryAuthority): Promise<boolean> {
     if (user !== null) {
-      await this.populate(["user", "editUsers"]);
-      if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
+      await this.populate("user");
+      if (isDocument(this.user)) {
         if (user.authority !== "admin") {
           if (authority === "own") {
             return this.user.id === user.id;
           } else if (authority === "edit") {
-            return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+            return this.user.id === user.id || await MemberModel.existMember(this, user, "edit");
           } else if (authority === "view") {
-            return (this.visibility === "public" || this.visibility === "unlisted") || this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+            return this.user.id === user.id || (this.visibility === "public" || this.visibility === "unlisted") || await MemberModel.existMember(this, user, "edit");
           } else {
             authority satisfies never;
             throw new Error("cannot happen");
@@ -551,48 +535,13 @@ export class DictionarySchema extends DiscardableSchema {
     return filteredAuthorities;
   }
 
-  public async fetchAuthorizedUsers(this: Dictionary, authorityQuery: DictionaryAuthorityQuery): Promise<Array<User>> {
-    await this.populate(["user", "editUsers"]);
-    if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
-      const authority = authorityQuery.authority;
-      if (authorityQuery.exact) {
-        if (authority === "own") {
-          return [this.user];
-        } else if (authority === "edit") {
-          return this.editUsers;
-        } else {
-          authority satisfies never;
-          throw new Error("cannot happen");
-        }
-      } else {
-        if (authority === "own") {
-          return [this.user];
-        } else if (authority === "edit") {
-          return [this.user, ...this.editUsers];
-        } else {
-          authority satisfies never;
-          throw new Error("cannot happen");
-        }
-      }
-    } else {
-      throw new Error("cannot happen");
-    }
+  public async fetchMembers(this: Dictionary): Promise<Array<Member>> {
+    const members = await MemberModel.fetchByDictionary(this, "edit");
+    return members;
   }
 
-  public async discardAuthorizedUser(this: Dictionary, user: User): Promise<true> {
-    await this.populate("editUsers");
-    if (isDocumentArray(this.editUsers)) {
-      const exist = this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
-      if (exist) {
-        this.editUsers = this.editUsers.filter((editUser) => editUser.id !== user.id);
-        await this.save();
-        return true;
-      } else {
-        throw new CustomError("noSuchDictionaryAuthorizedUser");
-      }
-    } else {
-      throw new Error("cannot happen");
-    }
+  public async discardMember(this: Dictionary, id: string): Promise<void> {
+    await MemberModel.discard(this, id);
   }
 
   private static async fetchNextNumber(): Promise<number> {

@@ -5,12 +5,12 @@ import {
   Ref,
   getModelForClass,
   isDocument,
-  isDocumentArray,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
+import {MemberModel} from "/server/model/member/member";
 import {User, UserSchema} from "/server/model/user/user";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
@@ -94,20 +94,21 @@ export class InvitationSchema {
   private async respondEdit(this: Invitation, user: User): Promise<void> {
     await this.populate("dictionary");
     if (isDocument(this.dictionary)) {
-      this.dictionary.editUsers = [...this.dictionary.editUsers, user];
-      await this.dictionary.save();
+      await MemberModel.add(this.dictionary, user, "edit");
     }
   }
 
   private async respondTransfer(this: Invitation, user: User): Promise<void> {
     await this.populate("dictionary");
     if (isDocument(this.dictionary)) {
-      await this.dictionary.populate(["user", "editUsers"]);
-      if (isDocument(this.dictionary.user) && isDocumentArray(this.dictionary.editUsers)) {
-        const previousUser = this.dictionary.user;
-        const nextEditUsers = this.dictionary.editUsers.filter((editUser) => editUser.id !== user.id && editUser.id !== previousUser.id);
+      await this.dictionary.populate("user");
+      if (isDocument(this.dictionary.user)) {
+        const previousMember = await MemberModel.findOne().where("dictionary", this.dictionary).where("user", this.dictionary.user);
+        if (previousMember !== null) {
+          await previousMember.deleteOne();
+        }
+        await MemberModel.add(this.dictionary, this.dictionary.user, "edit");
         this.dictionary.user = user;
-        this.dictionary.editUsers = [...nextEditUsers, previousUser];
         await this.dictionary.save();
       }
     }

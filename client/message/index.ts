@@ -1,12 +1,10 @@
 /* eslint-disable no-useless-computed-key */
 
-import {MessageInventory, convertInterslavicCyrillicToLatin, convertMessages} from "zographia";
+import {MessageInventory} from "zographia";
 
 
 export const messageInventory = {
   ["ja"]: () => import("./ja.yml"),
   ["en"]: () => import("./en.yml"),
-  ["eo"]: () => import("./eo.yml"),
-  ["isv-Cyrl"]: () => import("./isv.yml"),
-  ["isv-Latn"]: () => import("./isv.yml").then((messages) => convertMessages(messages.default, convertInterslavicCyrillicToLatin))
+  ["eo"]: () => import("./eo.yml")
 } as any as MessageInventory;

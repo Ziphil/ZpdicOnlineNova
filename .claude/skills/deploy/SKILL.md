@@ -14,12 +14,13 @@ ZpDIC Online を新しいバージョンとしてリリースする。
 
 ## 全体の流れ
 1. 事前確認 (ブランチ・working tree)
-2. バージョン番号のインクリメント
-3. バージョン変更のコミット
-4. `master` へのマージ
-5. タグ付け
-6. origin への push
-7. `develop` に戻る
+2. ビルドが通るかの確認
+3. バージョン番号のインクリメント
+4. バージョン変更のコミット
+5. `master` へのマージ
+6. タグ付け
+7. origin への push
+8. `develop` に戻る
 
 破壊的・外部反映を伴う操作 (マージ・タグ・push) に入る前に、後述の「実行前の最終確認」でユーザーに一度確認してから進めること。
 
@@ -29,18 +30,27 @@ ZpDIC Online を新しいバージョンとしてリリースする。
 git status
 ```
 
-**注意点**:
+**確認する内容**:
 - **`develop` ブランチにいること**を確認する。違うブランチにいる場合は、ここで中断してユーザーに報告する (勝手に `develop` に切り替えない)。
 - **working tree が clean であること**を確認する。未コミットの変更がある場合は中断してユーザーに報告する。
 
 両方を満たしている場合のみ次に進む。
 
-## Step 2: バージョン番号のインクリメント
+## Step 2: ビルドが通るかの確認
+リリース前に、本番ビルドが正常に通ることを確認する。
+```bash
+npm run build
+```
+
+**注意点**:
+- ビルドが失敗した場合は、ここで中断してユーザーにエラー内容を報告する。バージョンインクリメント以降の操作には進まない。
+- ビルドが成功した場合のみ次に進む。
+
+## Step 3: バージョン番号のインクリメント
 `package.json` の `version` フィールドを読み取る。
 値は semver 形式 (`X.Y.Z`)。
 
-どの部分をインクリメントするかをユーザーに確認する。
-`AskUserQuestion` で major, minor, patch を選んでもらうと良い。
+ `AskUserQuestion` を用いて、major, minor, patch のうちのどの部分をインクリメントするかをユーザーに確認する。
 
 - **major** (`X`) — `X.Y.Z` → `(X+1).0.0`
 - **minor** (`Y`) — `X.Y.Z` → `X.(Y+1).0`
@@ -49,7 +59,7 @@ git status
 インクリメント後のバージョン番号 (以降この手順では `X.Y.Z` と表記) を確定させ、`package.json` の `version` の値だけを更新する。
 他のフィールドには触れない。
 
-## Step 3: バージョン変更のコミット
+## Step 4: バージョン変更のコミット
 `package.json` の変更**のみ**をコミットする。
 他のファイルを巻き込まないよう、明示的に `package.json` だけをステージする。
 ```bash
@@ -63,13 +73,16 @@ git commit -m "バージョン番号を変更"
 ここから先 (マージ・タグ・push) は取り消しが難しく、push は外部 (origin) への反映を伴う。
 実行前に、これから行う内容を簡潔にユーザーへ提示して一度確認を取る。
 
-**提示する内容**:
+確認は `AskUserQuestion` を使い、ワンクリックで進められるようにする。
+質問文や選択肢の説明の中で、以下の内容が伝わるようにする。
+
+**伝える内容**:
 - インクリメント後のバージョン (`X.Y.Z`)。
 - これから `master` に `develop` をマージし、`vX.Y.Z` タグを付け、`develop`・`master`・タグを `origin` に push すること。
 
-ユーザーが了承したら次に進む。
+選択肢は「進める」「中止する」のような 2 択にし、ユーザーが「進める」を選んだ場合のみ次に進む。
 
-## Step 4: master へのマージ
+## Step 5: `master` へのマージ
 `master` をチェックアウトし、`develop` を fast-forward なし (`--no-ff`) でマージする。
 ```bash
 git checkout master
@@ -80,7 +93,7 @@ git merge --no-ff develop -m "developブランチをマージ"
 - `--no-ff` を必ず付け、マージコミットを作る (fast-forward させない)。
 - マージコミットメッセージは `developブランチをマージ` で固定。
 
-## Step 5: タグ付け
+## Step 6: タグ付け
 直前のマージコミットに注釈付きタグを付ける。
 ```bash
 git tag -a vX.Y.Z -m "verX.Y.Zをリリース"
@@ -90,14 +103,14 @@ git tag -a vX.Y.Z -m "verX.Y.Zをリリース"
 - タグ名は `vX.Y.Z` (例: バージョンが `3.25.0` なら `v3.25.0`)。
 - タグメッセージは `verX.Y.Zをリリース` で固定 (例: `ver3.25.0をリリース`)。
 
-## Step 6: origin への push
+## Step 7: origin への push
 `develop` ブランチ・`master` ブランチ・作成したタグを origin に push する。
 ```bash
 git push origin develop master
 git push origin vX.Y.Z
 ```
 
-## Step 7: develop に戻る
+## Step 8: `develop` に戻る
 作業ブランチを `develop` に戻して終了する。
 ```bash
 git checkout develop

@@ -40,5 +40,6 @@ export * from "./common";
 export * from "./error";
 export * from "./history";
 export * from "./invitation";
+export * from "./member";
 export * from "./notification";
 export * from "./user";

@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
+.group >:first-child{
+  width: 40zu;
+  flex: 0 0 auto;
+}
+
+.url {
+  flex: 1 1 auto;
+}

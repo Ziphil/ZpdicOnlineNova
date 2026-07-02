@@ -13,6 +13,7 @@ import {CustomError} from "/server/model/error";
 import {ApiCredentialModel} from "/server/model/user/api-credential";
 import {ResetTokenModel, ResetTokenSchema} from "/server/model/user/reset-token";
 import {TermsAgreementSchema} from "/server/model/user/terms-agreement";
+import {UserSocialSchema} from "/server/model/user/user-social";
 import {EMAIL_REGEXP, IDENTIFIER_REGEXP, validatePassword} from "/server/util/validation";
 
 
@@ -27,6 +28,9 @@ export class UserSchema {
 
   @prop({required: true, validate: EMAIL_REGEXP})
   public email!: string;
+
+  @prop({type: UserSocialSchema})
+  public socials?: Array<UserSocialSchema>;
 
   @prop({required: true})
   public hash!: string;
@@ -149,7 +153,7 @@ export class UserSchema {
   /** このユーザーを削除します。
    * 同時に、このユーザーが所有する辞書、および発行済みの API 認証情報も全て削除します。*/
   public async discard(this: User): Promise<User> {
-    const dictionaries = await DictionaryModel.fetchByUser(this, "own", "all");
+    const dictionaries = await DictionaryModel.findExist().where("user", this);
     await Promise.all(dictionaries.map((dictionary) => dictionary.discard()));
     await ApiCredentialModel.deleteMany().where("user", this);
     await this.deleteOne();
@@ -207,6 +211,13 @@ export class UserSchema {
 
   public async changeTermsAgreement(this: User, version: number): Promise<User> {
     this.termsAgreement = {version, date: new Date()};
+    await this.save();
+    return this;
+  }
+
+  /** このユーザーの SNS などのリンク情報を、渡された配列で全件上書きします。*/
+  public async changeSocials(this: User, socials: Array<UserSocialSchema>): Promise<User> {
+    this.socials = socials;
     await this.save();
     return this;
   }

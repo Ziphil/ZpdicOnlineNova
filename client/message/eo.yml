@@ -1,3 +1,4 @@
+# toast
 toast:
   success:
     addDictionary: |-
@@ -48,7 +49,7 @@ toast:
       La ŝablono redaktitas.
     discardDictionaryTemplateWord: |-
       La ŝablono forigitas.
-    discardDictionaryAuthorizedUser: |-
+    discardMember: |-
       La permeso revokitas.
     addWord: |-
       Nova vorto kreitas.
@@ -106,6 +107,8 @@ toast:
       Via retpoŝta adreso ŝanĝitas.
     changeMyPassword:
       Via pasvorto ŝanĝitas.
+    changeMySocials:
+      Viaj sociaj ligiloj ŝanĝitas.
     changeMyTermsAgreement:
       Vi konsentis pri la uzkondiĉoj kaj privateca politiko.
     changeAppearance: |-
@@ -195,7 +198,7 @@ toast:
       La uzanto jam estas invitita.
     noSuchInvitation: |-
       Ne ekzistas tiu invito.
-    noSuchDictionaryAuthorizedUser: |-
+    noSuchMember: |-
       La uzanto ne havas la permeson.
     emptyCommissionName: |-
       La vorto por peti estas malplena.
@@ -238,9 +241,17 @@ toast:
       Neatendita eraro okazis.
       Bonvolu sciigi la administranton.
 
+# atom
 commonAlert:
   confirm: "Konfirmi"
   cancel: "Nuligi"
+exampleModeSelect:
+  label:
+    sentence: "Frazo"
+    translation: "Tradukaĵo"
+    both: "Ambaŭ"
+    tag: "Etikedo"
+    content: "Tuto"
 exampleOfferTag:
   catalog:
     zpdicDaily: "Ĉiutagaj frazoj"
@@ -255,13 +266,6 @@ exampleOfferTag:
     arithmetic: "Aritmetikaj frazoj"
     adposition: "Frazoj por kazoj kaj adpozicioj"
   number: "#{number, number}"
-exampleModeSelect:
-  label:
-    sentence: "Frazo"
-    translation: "Tradukaĵo"
-    both: "Ambaŭ"
-    tag: "Etikedo"
-    content: "Tuto"
 exampleTypeSelect:
   label:
     prefix: "Prefiksa"
@@ -269,6 +273,17 @@ exampleTypeSelect:
     part: "Parta"
     exact: "Ekzakta"
     regular: "Regesp"
+userSocialTypeSelect:
+  label:
+    x: "X"
+    bluesky: "Bluesky"
+    misskey: "Misskey"
+    youtube: "YouTube"
+    note: "note"
+    migdal: "Migdal"
+    discord: "Discord"
+    website: "Hejmpaĝo"
+    other: "Alia"
 wordModeSelect:
   label:
     spelling: "Kapvorto"
@@ -287,6 +302,7 @@ wordTypeSelect:
     exact: "Ekzakta"
     regular: "Regesp"
 
+# compound
 addProposalDialog:
   heading: "Peti kreadon de vorto"
   label:
@@ -297,6 +313,27 @@ addProposalDialog:
   error:
     nameRequired: >-
       Enigu la vorton kies kreadon vi petas.
+apiCredentialList:
+  button:
+    copy: "Kopii"
+    discard: "Forigi"
+  dialog:
+    discard:
+      message: >-
+        Tiu API-ŝlosilo estos forigita.
+        Programoj uzantaj tiun API-ŝlosilon ne plu povos aliri vortarojn.
+        Ĉu vi certas?
+      confirm: "Forigi"
+  table:
+    createdDate: "Eldonita je"
+    lastUsedDate: "Laste uzita je"
+    neverUsed: "Neniam uzita"
+  caution: >-
+    Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
+  empty: "Vi ankoraŭ ne eldonis iun ajn API-ŝlosilon"
+  toast:
+    copy: >-
+      Via API-ŝlosilo estas kopiita.
 articleList:
   empty: "Neniuj artikoloj estas kreitaj"
   button:
@@ -312,17 +349,6 @@ articleList:
       confirm: "Forigi"
 changeLocaleForm:
   label: "Lingvo"
-proposalList:
-  empty: "Neniuj vortoj estas petitaj"
-  button:
-    add: "Krei"
-    discard: "Forigi"
-  dialog:
-    discard:
-      message: >-
-        Tiu peto estos forigita konstante.
-        Ĉu vi vere certas?
-      confirm: "Forigi"
 contactForm:
   label:
     name: "Nomo"
@@ -339,16 +365,6 @@ contactForm:
       Enigu vian mesaĝon.
     agreeRequired: >-
       Legu kaj konsentu pri la privateca politiko.
-dictionaryAuthorizedUserList:
-  empty: "Neniuj uzantoj havas redaktan permeson"
-  button:
-    discard: "Revoki"
-  dialog:
-    discard:
-      message: >-
-        La permeso de tiu uzanto estos revokita.
-        Ĉu vi vere certas?
-      confirm: "Revoki"
 dictionaryHeader:
   tab:
     dictionary: "Vortaro"
@@ -592,6 +608,30 @@ invitationList:
   button:
     accept: "Akcepti"
     reject: "Malakcepti"
+loginForm:
+  label:
+    name: "Salutnomo"
+    password: "Pasvorto"
+  button:
+    confirm: "Ensaluti"
+    register: "Krei konton"
+    resetPassword: "Restarigi pasvorton"
+  or: "aŭ"
+  error:
+    nameRequired: >-
+      Enigu vian salutnomon.
+    passwordRequired: >-
+      Enigu vian pasvorton.
+memberList:
+  empty: "Neniuj uzantoj havas redaktan permeson"
+  button:
+    discard: "Revoki"
+  dialog:
+    discard:
+      message: >-
+        La permeso de tiu uzanto estos revokita.
+        Ĉu vi vere certas?
+      confirm: "Revoki"
 notificationList:
   tag:
     update: "Ĝisdatigo"
@@ -608,6 +648,70 @@ orderModeSelect:
   custom: "Propra ordo"
   updatedDate: "Ĝisdatigado"
   createdDate: "Kreado"
+proposalList:
+  empty: "Neniuj vortoj estas petitaj"
+  button:
+    add: "Krei"
+    discard: "Forigi"
+  dialog:
+    discard:
+      message: >-
+        Tiu peto estos forigita konstante.
+        Ĉu vi vere certas?
+      confirm: "Forigi"
+registerForm:
+  label:
+    name: "Salutnomo"
+    email: "Retpoŝta adreso"
+    password: "Pasvorto"
+    agree: "Konsenti pri la <termsLink>uzkondiĉoj</termsLink> kaj <privacyLink>privateca politiko</privacyLink>"
+  button:
+    confirm: "Krei konton"
+  error:
+    nameInvalid: >-
+      La salutnomo devas ampleksi alfanombraj signoj, substrekoj kaj streketoj.
+      Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon.
+    nameTooLong: >-
+      La salutnomo devas havi apenaŭ 30 signojn.
+    nameRequired: >-
+      Enigu salutnomon.
+    emailInvalid: >-
+      Enigu validan retpoŝtan adreson.
+    emailRequired: >-
+      Enigu retpoŝtan adreson.
+    passwordTooShort: >-
+      La pasvorto devas havi almenaŭ 6 signojn.
+    passwordTooLong: >-
+      La pasvorto devas havi apenaŭ 50 signojn.
+    passwordRequired: >-
+      Enigu pasvorton.
+    agreeRequired: >-
+      Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la privateca politiko.
+issueUserResetTokenForm:
+  label:
+    name: "Salutnomo"
+    email: "Retpoŝta adreso"
+  error:
+    nameRequired: >-
+      Enigu salutnomon.
+    emailInvalid: >-
+      Enigu validan retpoŝtan adreson.
+    emailRequired: >-
+      Enigu retpoŝtan adreson.
+  button:
+    confirm: "Sendi"
+resetUserPasswordForm:
+  label:
+    password: "Nova pasvorto"
+  error:
+    tooShort: >-
+      La pasvorto devas havi almenaŭ 6 signojn.
+    tooLong: >-
+      La pasvorto devas havi apenaŭ 50 signojn.
+    required: >-
+      Enigu pasvorton.
+  button:
+    confirm: "Restarigi"
 resourceList:
   empty: "Neniuj bildoj estas alŝutitaj"
   button:
@@ -641,6 +745,8 @@ searchWordAdvancedDialog:
     text: "Ŝlosilvorto"
   absent:
     element: "Neniuj kondiĉoj"
+  discard:
+    equivalent: "Forigi"
   button:
     add:
       element: "Aldoni kondiĉon"
@@ -669,6 +775,35 @@ shareMenu:
 suggestionCard:
   maybe: "Ĉu vi celas…"
   message: "{title} <mute>de</mute> {nameNode}"
+templateWordList:
+  empty: "Neniuj ŝablonoj estas kreitaj"
+  button:
+    edit: "Detalo · Redakti"
+    discard: "Forigi"
+  label:
+    equivalent: "Tradukaĵoj ×{count}"
+    information: "Enhavoj ×{count}"
+    phrase: "Idiomaĵoj ×{count}"
+    variation: "Variaĵaj formoj ×{count}"
+    relation: "Rilataj vortoj ×{count}"
+  dialog:
+    discard:
+      message: >-
+        Tiu ŝablono estos forigita konstante.
+        Vi ne povas restaŭri ĝin poste.
+        Ĉu vi vere certas?
+      confirm: "Forigi"
+termsAgreementBanner:
+  message:
+    before: >-
+      La nova <termsLink>uzkondiĉoj</termsLink> kaj <privacyLink>privateca politiko</privacyLink> ekvalidos ekde {dateString}.
+      Bonvolu kontroli ilian enhavon kaj, se vi konsentas, premu la butonon “Konsenti”.
+      Notu, ke se vi daŭre uzas tiun aplikaĵon je aŭ post {dateString}, oni konsideros, ke vi konsentis pri ili.
+      Se vi ne konsentas, bonvolu forigi vian konton kaj eksporti viajn datumojn antaŭ tiam.
+    after: >-
+      La nova <termsLink>uzkondiĉoj</termsLink> kaj <privacyLink>privateca politiko</privacyLink> validas ekde {dateString}.
+  button:
+    agree: "Konsenti"
 userHeader:
   tab:
     dictionary: "Vortaroj"
@@ -683,6 +818,16 @@ userHeader:
       Tiu uzanto ankoraŭ ne estas aktivigita.
       Por aktivigi, bonvolu sekvi la instrukciojn en la retpoŝto kiun vi ricevis dum kreado de via konto.
       Neaktivigitaj uzantoj eble havas limigitan funkciecon.
+  social:
+    x: "X"
+    bluesky: "Bluesky"
+    misskey: "Misskey"
+    youtube: "YouTube"
+    note: "note"
+    migdal: "Migdal"
+    discord: "Discord"
+    website: "Hejmpaĝo"
+    other: "Alia"
 wordList:
   empty: "Neniuj kongruaj vortoj estis trovitaj"
   button:
@@ -707,125 +852,13 @@ wordList:
         Vi ne povas restaŭri ĝin poste.
         Ĉu vi vere certas?
       confirm: "Forigi"
-templateWordList:
-  empty: "Neniuj ŝablonoj estas kreitaj"
-  button:
-    edit: "Detalo · Redakti"
-    discard: "Forigi"
-  label:
-    equivalent: "Tradukaĵoj ×{count}"
-    information: "Enhavoj ×{count}"
-    phrase: "Idiomaĵoj ×{count}"
-    variation: "Variaĵaj formoj ×{count}"
-    relation: "Rilataj vortoj ×{count}"
-  dialog:
-    discard:
-      message: >-
-        Tiu ŝablono estos forigita konstante.
-        Vi ne povas restaŭri ĝin poste.
-        Ĉu vi vere certas?
-      confirm: "Forigi"
 wordNameFrequencyChart:
   other: "Aliaj"
 wordPopover:
   button:
     edit: "Redakti"
-loginForm:
-  label:
-    name: "Salutnomo"
-    password: "Pasvorto"
-  button:
-    confirm: "Ensaluti"
-    register: "Krei konton"
-    resetPassword: "Restarigi pasvorton"
-  or: "aŭ"
-  error:
-    nameRequired: >-
-      Enigu vian salutnomon.
-    passwordRequired: >-
-      Enigu vian pasvorton.
-registerForm:
-  label:
-    name: &label.name "Salutnomo"
-    email: &label.email "Retpoŝta adreso"
-    password: "Pasvorto"
-    agree: "Konsenti pri la <termsLink>uzkondiĉoj</termsLink> kaj <privacyLink>privateca politiko</privacyLink>"
-  button:
-    confirm: "Krei konton"
-  error:
-    nameInvalid: >-
-      La salutnomo devas ampleksi alfanombraj signoj, substrekoj kaj streketoj.
-      Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon.
-    nameTooLong: >-
-      La salutnomo devas havi apenaŭ 30 signojn.
-    nameRequired: &error.nameRequired >-
-      Enigu salutnomon.
-    emailInvalid: &error.emailInvalid >-
-      Enigu validan retpoŝtan adreson.
-    emailRequired: &error.emailRequired >-
-      Enigu retpoŝtan adreson.
-    passwordTooShort: &error.passwordTooShort >-
-      La pasvorto devas havi almenaŭ 6 signojn.
-    passwordTooLong: &error.passwordTooLong >-
-      La pasvorto devas havi apenaŭ 50 signojn.
-    passwordRequired: &error.passwordRequired >-
-      Enigu pasvorton.
-    agreeRequired: >-
-      Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la privateca politiko.
-termsAgreementBanner:
-  message:
-    before: >-
-      La nova <termsLink>uzkondiĉoj</termsLink> kaj <privacyLink>privateca politiko</privacyLink> ekvalidos ekde {dateString}.
-      Bonvolu kontroli ilian enhavon kaj, se vi konsentas, premu la butonon “Konsenti”.
-      Notu, ke se vi daŭre uzas tiun aplikaĵon je aŭ post {dateString}, oni konsideros, ke vi konsentis pri ili.
-      Se vi ne konsentas, bonvolu forigi vian konton kaj eksporti viajn datumojn antaŭ tiam.
-    after: >-
-      La nova <termsLink>uzkondiĉoj</termsLink> kaj <privacyLink>privateca politiko</privacyLink> validas ekde {dateString}.
-  button:
-    agree: "Konsenti"
-issueUserResetTokenForm:
-  label:
-    name: *label.name
-    email: *label.email
-  error:
-    nameRequired: *error.nameRequired
-    emailInvalid: *error.emailInvalid
-    emailRequired: *error.emailRequired
-  button:
-    confirm: "Sendi"
-resetUserPasswordForm:
-  label:
-    password: "Nova pasvorto"
-  error:
-    tooShort: *error.passwordTooShort
-    tooLong: *error.passwordTooLong
-    required: *error.passwordRequired
-  button:
-    confirm: "Restarigi"
 
-commonForm:
-  button:
-    change: "Ŝanĝi"
-addEditInvitationButton:
-  heading: "Doni redaktan permeson"
-  label:
-    user: "Doni permeson al"
-  button:
-    open: "Doni redaktan permeson"
-    confirm: "Konfirmi"
-  error:
-    required: >-
-      Elektu uzanton.
-addTransferInvitationButton:
-  heading: "Transdoni"
-  label:
-    user: "Transdoni al"
-  button:
-    open: "Transdoni"
-    confirm: "Konfirmi"
-  error:
-    required: >-
-      Elektu uzanton.
+# form
 addDictionaryButton:
   heading: "Krei novan vortaron"
   label:
@@ -836,6 +869,16 @@ addDictionaryButton:
   error:
     required: >-
       Enigu nomon.
+addEditInvitationButton:
+  heading: "Doni redaktan permeson"
+  label:
+    user: "Doni permeson al"
+  button:
+    open: "Doni redaktan permeson"
+    confirm: "Konfirmi"
+  error:
+    required: >-
+      Elektu uzanton.
 addResourceButton:
   heading: "Alŝuti bildon"
   label:
@@ -849,6 +892,16 @@ addResourceButton:
     tooLarge: >-
       La dosiero estas tro granda.
       Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
+addTransferInvitationButton:
+  heading: "Transdoni"
+  label:
+    user: "Transdoni al"
+  button:
+    open: "Transdoni"
+    confirm: "Konfirmi"
+  error:
+    required: >-
+      Elektu uzanton.
 changeAppearanceForm:
   label: 
     font:
@@ -862,17 +915,6 @@ changeAppearanceForm:
       label: "Kolora skemo"
       light: "Luma"
       dark: "Malluma"
-changeDictionaryNameForm:
-  error:
-    required: >-
-      Enigu nomon.
-changeDictionaryParamNameForm:
-  error:
-    invalid: >-
-      La identigilo devas ampleksi alfanombraj signoj, substrekoj kaj streketoj.
-      Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon.
-    tooLong: >-
-      La identigilo devas havi apenaŭ 30 signojn.
 changeDictionaryFontForm:
   label:
     kind:
@@ -957,6 +999,17 @@ changeDictionaryMarkdownFeaturesForm:
       font: >-
         La teksto enkludita en <pre>'{'</pre> kaj <pre>'}'</pre> estos montrata en la propran tiparon.
         Bonvolu ankaŭ ebligi “Enhavoj” en la sekcio “Propran tiparon” supre.
+changeDictionaryNameForm:
+  error:
+    required: >-
+      Enigu nomon.
+changeDictionaryParamNameForm:
+  error:
+    invalid: >-
+      La identigilo devas ampleksi alfanombraj signoj, substrekoj kaj streketoj.
+      Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon.
+    tooLong: >-
+      La identigilo devas havi apenaŭ 30 signojn.
 changeDictionarySettingsForm:
   label:
     enableAdvancedWord:
@@ -1011,10 +1064,9 @@ changeDictionaryShowNumbersForm:
 changeDictionarySlimeTitlesForm:
   label:
     pronunciation: "Por elparoloj"
-changeDictionaryWordCardTitlesForm:
-  label:
-    phrase: "Por idiomaĵoj"
-    example: "Por ekzemplaj frazoj"
+changeDictionarySourceForm:
+  button:
+    try: "Provi"
 changeDictionaryVisibilityForm:
   label:
     public: "Publika"
@@ -1028,9 +1080,10 @@ changeDictionaryVisibilityForm:
     private: >-
       Nur uzantoj kun redakta permeso povos vidi tiun vortaron.
       Uzantoj sen permeso ne povos aliri ĝin eĉ se ili scias la retadreson.
-changeDictionarySourceForm:
-  button:
-    try: "Provi"
+changeDictionaryWordCardTitlesForm:
+  label:
+    phrase: "Por idiomaĵoj"
+    example: "Por ekzemplaj frazoj"
 changeMyEmailForm:
   error:
     invalid: >-
@@ -1054,6 +1107,12 @@ changeMyScreenNameForm:
   error:
     required: >-
       Enigu kromnomon.
+changeMySocialsForm:
+  placeholder:
+    url: "https://…"
+commonForm:
+  button:
+    change: "Ŝanĝi"
 discardDictionaryButton:
   button:
     submit: "Forigi"
@@ -1063,9 +1122,6 @@ discardDictionaryButton:
       Vi ne povas restaŭri ĝin poste.
       Ĉu vi vere certas?
     confirm: "Forigi"
-logoutButton:
-  button:
-    submit: "Elsaluti"
 discardMeButton:
   button:
     submit: "Forigi"
@@ -1075,6 +1131,30 @@ discardMeButton:
       Vi ne povas restaŭri ĝin poste.
       Ĉu vi vere certas?
     confirm: "Forigi"
+downloadDictionaryForm:
+  button:
+    download: "Elŝuti"
+    back: "Reiri al paĝo de vortaro"
+  message:
+    processing: >-
+      Kreadas dosiero.
+    success: >-
+      La dosiero estas kreita.
+      Vi povas elŝuti ĝin per la butono sube.
+    error: >-
+      Malsukcesis krei la dosieron.
+generateMyApiCredentialForm:
+  button:
+    generate: "Generi"
+    copy: "Kopii"
+  toast: 
+    copy: >-
+      Via API-ŝlosilo estas kopiita.
+  caution: >-
+    Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
+logoutButton:
+  button:
+    submit: "Elsaluti"
 queueDownloadDictionaryButton:
   heading: "Eksporti"
   label:
@@ -1092,18 +1172,6 @@ queueDownloadDictionaryButton:
   button:
     open: "Eksporti"
     confirm: "Konfirmi"
-downloadDictionaryForm:
-  button:
-    download: "Elŝuti"
-    back: "Reiri al paĝo de vortaro"
-  message:
-    processing: >-
-      Kreadas dosiero.
-    success: >-
-      La dosiero estas kreita.
-      Vi povas elŝuti ĝin per la butono sube.
-    error: >-
-      Malsukcesis krei la dosieron.
 queueUploadDictionaryButton:
   heading: "Importi"
   label:
@@ -1128,37 +1196,8 @@ uploadDictionaryForm:
       Via dosiero estas importita.
     error: >-
       Malsukcesis importi vian dosieron.
-generateMyApiCredentialForm:
-  button:
-    generate: "Generi"
-    copy: "Kopii"
-  toast: 
-    copy: >-
-      Via API-ŝlosilo estas kopiita.
-  caution: >-
-    Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
-apiCredentialList:
-  button:
-    copy: "Kopii"
-    discard: "Forigi"
-  dialog:
-    discard:
-      message: >-
-        Tiu API-ŝlosilo estos forigita.
-        Programoj uzantaj tiun API-ŝlosilon ne plu povos aliri vortarojn.
-        Ĉu vi certas?
-      confirm: "Forigi"
-  table:
-    createdDate: "Eldonita je"
-    lastUsedDate: "Laste uzita je"
-    neverUsed: "Neniam uzita"
-  caution: >-
-    Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
-  empty: "Vi ankoraŭ ne eldonis iun ajn API-ŝlosilon"
-  toast:
-    copy: >-
-      Via API-ŝlosilo estas kopiita.
 
+# page
 contactPage:
   title: "Kontakti"
   heading: "Kontakti"
@@ -1170,18 +1209,12 @@ contactPage:
     Vi ankaŭ povas uzi tion.
   disclaimer: |-
     Bonvolu noti, ke ni eble ne povos respondi ĉiujn demandojn rekte.
-exampleOfferListPage:
-  title: "Frazoj"
-  heading: "Frazoj"
 dictionaryArticlePart:
   button:
     addArticle: "Krei artikolon"
 dictionaryArticleSinglePart:
   button:
     back: "Reiri al listo"
-dictionaryProposalPart:
-  button:
-    addProposal: "Krei peton"
 dictionaryExamplePart:
   heading:
     offer: "Hodiaŭa frazo"
@@ -1197,23 +1230,18 @@ dictionaryInformationPart:
       La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
     wordNameFrequency: >-
       La jena diagramo montras kiom ofta ĉiu signo aperas en la kapvortoj en tiu vortaro.
-dictionaryResourcePart:
-  explanation: >-
-    Vi povas uzi la alŝutitajn bildojn en la priskribo de la vortaro kaj la enhavoj de vortoj.
-    Kopiu la kodon sub la bildo kaj algluu ĝin en tekstujon.
 dictionaryMainPart:
   button:
     addWord: "Krei vorton"
     addWordFromTemplate: "Krei vorton de ŝablono"
     addProposal: "Peti"
-dictionarySettingPart:
-  tab:
-    general: "Ĝenerala"
-    display: "Vidigo"
-    editing: "Redaktado"
-    template: "Ŝablonoj"
-    authority: "Permesoj"
-    file: "Dosiero"
+dictionaryProposalPart:
+  button:
+    addProposal: "Krei peton"
+dictionaryResourcePart:
+  explanation: >-
+    Vi povas uzi la alŝutitajn bildojn en la priskribo de la vortaro kaj la enhavoj de vortoj.
+    Kopiu la kodon sub la bildo kaj algluu ĝin en tekstujon.
 dictionarySettingAuthorityPart:
   heading:
     editInvitation: "Permeso por redaktado"
@@ -1312,6 +1340,14 @@ dictionarySettingGeneralPart:
     discard: >-
       Forigi tiun vortaron ankaŭ forigos ĉiujn rilatajn datumojn, inkluzive de vortoj kaj ekzemplaj frazoj.
       Bonvolu esti certa, ĉar ne estas reiro.
+dictionarySettingPart:
+  tab:
+    general: "Ĝenerala"
+    display: "Vidigo"
+    editing: "Redaktado"
+    template: "Ŝablonoj"
+    authority: "Permesoj"
+    file: "Dosiero"
 dictionarySettingTemplatePart:
   heading:
     templateWords: "Ŝablonoj"
@@ -1347,6 +1383,9 @@ errorPage:
   button:
     back: "Reiri al ĉefpaĝo"
     refresh: "Reŝargi paĝon"
+exampleOfferListPage:
+  title: "Frazoj"
+  heading: "Frazoj"
 examplePage:
   add: "Krei novan frazon"
 loginPage:
@@ -1427,6 +1466,7 @@ userSettingPart:
   heading:
     screenName: "Kromnomo"
     avatar: "Bildeto"
+    socials: "Sociaj ligiloj"
     email: "Retpoŝta adreso"
     password: "Pasvorto"
     logout: "Elsaluti"
@@ -1436,6 +1476,7 @@ userSettingPart:
       Forigi vian konton ankaŭ forigos ĉiujn vortarojn kiujn vi posedas.
       Bonvolu esti certa, ĉar ne estas reiro.
 
+# other
 alert:
   message: |-
     La ŝanĝoj kiujn vi faris ne estos konservitaj.

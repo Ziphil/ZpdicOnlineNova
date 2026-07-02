@@ -11,6 +11,7 @@ import {ChangeLocaleForm} from "/client/component/compound/change-locale-form";
 import {TermsAgreementBanner} from "/client/component/compound/terms-agreement-banner";
 import {create} from "/client/component/create";
 import {useMe} from "/client/hook/auth";
+import {ActivateMeBanner} from "./activate-me-banner";
 
 
 export const Header = create(
@@ -63,6 +64,7 @@ export const Header = create(
           </div>
         </header>
         <TermsAgreementBanner/>
+        <ActivateMeBanner me={me}/>
       </Fragment>
     );
 

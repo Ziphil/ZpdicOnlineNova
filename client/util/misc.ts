@@ -22,11 +22,12 @@ export function toLatinNumeral(number: number): string {
   }
 }
 
+const ROMAN_NUMERAL_DATA = [[1000, "M"], [900, "CM"], [500, "D"], [400, "CD"], [100, "C"], [90, "XC"], [50, "L"], [40, "XL"], [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]] as const;
+
 export function toRomanNumeral(number: number): string {
   if (number > 0 && number < 4000) {
-    const data = [[1000, "M"], [900, "CM"], [500, "D"], [400, "CD"], [100, "C"], [90, "XC"], [50, "L"], [40, "XL"], [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]] as const;
     let result = "";
-    for (const [value, roman] of data) {
+    for (const [value, roman] of ROMAN_NUMERAL_DATA) {
       while (number >= value) {
         result += roman;
         number -= value;

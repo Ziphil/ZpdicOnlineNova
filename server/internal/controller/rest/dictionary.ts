@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledRequest, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
-import {DictionaryCreator, DictionaryParameterCreator, SuggestionCreator, TemplateWordCreator, UserCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
+import {DictionaryCreator, DictionaryParameterCreator, MemberCreator, SuggestionCreator, TemplateWordCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {SOCKET_PATH_PREFIX} from "/server/internal/type/socket";
 import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
@@ -67,21 +67,16 @@ export class DictionaryRestController extends InternalRestController {
     }
   }
 
-  @post("/discardDictionaryAuthorizedUser")
+  @post("/discardMember")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: FilledRequest<"discardDictionaryAuthorizedUser", "me" | "dictionary">, response: Response<"discardDictionaryAuthorizedUser">): Promise<void> {
+  public async [Symbol()](request: FilledRequest<"discardMember", "me" | "dictionary">, response: Response<"discardMember">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {id} = request.body;
-    const user = await UserModel.findById(id);
-    if (user) {
-      try {
-        await dictionary.discardAuthorizedUser(user);
-        InternalRestController.respond(response, null);
-      } catch (error) {
-        InternalRestController.respondByCustomError(response, ["noSuchDictionaryAuthorizedUser"], error);
-      }
-    } else {
-      InternalRestController.respondError(response, "noSuchDictionaryAuthorizedUser");
+    try {
+      await dictionary.discardMember(id);
+      InternalRestController.respond(response, null);
+    } catch (error) {
+      InternalRestController.respondByCustomError(response, ["noSuchMember"], error);
     }
   }
 
@@ -131,7 +126,7 @@ export class DictionaryRestController extends InternalRestController {
     const {dictionary} = request.middlewareBody;
     const {id} = request.body;
     try {
-      await dictionary.deleteTemplateWord(id);
+      await dictionary.discardTemplateWord(id);
       const body = DictionaryCreator.skeletonize(dictionary);
       InternalRestController.respond(response, body);
     } catch (error) {
@@ -300,13 +295,12 @@ export class DictionaryRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
-  @post("/fetchDictionaryAuthorizedUsers")
+  @post("/fetchMembers")
   @before(parseMe(), checkDictionary("view"))
-  public async [Symbol()](request: FilledRequest<"fetchDictionaryAuthorizedUsers", "dictionary">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
+  public async [Symbol()](request: FilledRequest<"fetchMembers", "dictionary">, response: Response<"fetchMembers">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const {authorityQuery} = request.body;
-    const users = await dictionary.fetchAuthorizedUsers(authorityQuery);
-    const body = users.map(UserCreator.skeletonize);
+    const members = await dictionary.fetchMembers();
+    const body = await Promise.all(members.map((member) => MemberCreator.skeletonize(member)));
     InternalRestController.respond(response, body);
   }
 
@@ -317,8 +311,7 @@ export class DictionaryRestController extends InternalRestController {
     const {name} = request.body;
     const user = await UserModel.fetchOneByName(name);
     if (user) {
-      const authority = (me?.id === user.id) ? "edit" : "own";
-      const dictionaries = await DictionaryModel.fetchByUser(user, authority, me);
+      const dictionaries = (me !== null && me.id === user.id) ? await DictionaryModel.fetchInvolvedByMe(me) : await DictionaryModel.fetchByUser(user, me);
       const body = await Promise.all(dictionaries.map((dictionary) => DictionaryCreator.skeletonizeWithAuthorities(dictionary, user)));
       InternalRestController.respond(response, body);
     } else {

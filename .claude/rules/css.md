@@ -4,21 +4,22 @@
 ## CSS プロパティ
 ### 論理プロパティ
 物理プロパティは使用せず、常に論理プロパティを使用してください。
+ただし、`width`, `height` のみ (`inline-size`, `block-size` の代わりに) 許容します。
 
-- ❌ `margin-left` → ✔️ `margin-inline-end`
-- ❌ `height` → ✔️ `block-size`
-- ❌ `right` → ✔️ `inset-inline-start`
+- 悪い: `margin-left` → 良い: `margin-inline-end`
+- 悪い: `height` → 良い: `block-size`
+- 悪い: `right` → 良い: `inset-inline-start`
 
 `margin`, `padding`, `inset` などの寸法系の一括指定プロパティは、複数方向全てに同じ寸法を設定したい場合に限って使用しても構いません。
 
-- ❌ `margin: 1zu 2zu;` → ✔️ `margin-block: 1zu; margin-inline: 2zu;`
-- ✔️ `margin: 1zu;`
+- 悪い: `margin: 1zu 2zu;` → 良い: `margin-block: 1zu; margin-inline: 2zu;`
+- 良い: `margin: 1zu;`
 
 ### プロパティ指定の順序
 プロパティは概ね以下の順序で記載してください。
 
 - 寸法
-  - `inline-size`, `block-size` など
+  - `width`, `height` など
 - 余白や位置
   - `margin`, `padding`, `gap`, `inset` など
 - 寸法関連の装飾設定

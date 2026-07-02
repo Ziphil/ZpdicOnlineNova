@@ -3,10 +3,11 @@
 import {ReactElement} from "react";
 import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, MultiLineText, data, useTrans} from "zographia";
-import {DictionaryAuthorizedUserList} from "/client/component/compound/dictionary-authorized-user-list";
+import {MemberList} from "/client/component/compound/member-list";
 import {create} from "/client/component/create";
 import {AddEditInvitationButton} from "/client/component/form/add-edit-invitation-button";
 import {AddTransferInvitationButton} from "/client/component/form/add-transfer-invitation-button";
+import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
 
 
@@ -21,6 +22,7 @@ export const DictionarySettingAuthorityPart = create(
     const {trans} = useTrans("dictionarySettingAuthorityPart");
 
     const {dictionary} = useOutletContext<{dictionary: DictionaryWithExecutors}>();
+    const [members] = useResponse("fetchMembers", {number: dictionary.number});
 
     return (
       <div styleName="root" {...rest}>
@@ -31,7 +33,7 @@ export const DictionarySettingAuthorityPart = create(
           </MultiLineText>
           <div styleName="list-container">
             <AddEditInvitationButton dictionary={dictionary}/>
-            <DictionaryAuthorizedUserList dictionary={dictionary} pageSpec={{size: 20}}/>
+            <MemberList dictionary={dictionary} members={members} pageSpec={{size: 20}}/>
           </div>
         </section>
         <section styleName="section">
