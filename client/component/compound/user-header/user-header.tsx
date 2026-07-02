@@ -10,7 +10,6 @@ import {create} from "/client/component/create";
 import {useMe} from "/client/hook/auth";
 import {useResponse} from "/client/hook/request";
 import {User} from "/server/internal/skeleton";
-import {ActivateMeCallout} from "./activate-me-callout";
 import {UserHeaderSocialList} from "./user-header-social-list";
 
 
@@ -56,11 +55,6 @@ export const UserHeader = create(
               <UserHeaderSocialList socials={user.socials}/>
             </div>
           </div>
-          {(me !== null && me.name === user.name && !me.activated) && (
-            <div styleName="activate">
-              <ActivateMeCallout/>
-            </div>
-          )}
           <TabList styleName="tab-list" value={tabValue ?? ""}>
             <LinkTab value="dictionary" href={`/user/${user.name}`}>
               <TabIconbag><GeneralIcon icon={faBook}/></TabIconbag>
