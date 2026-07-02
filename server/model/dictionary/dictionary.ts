@@ -112,28 +112,27 @@ export class DictionarySchema extends DiscardableSchema {
     return dictionary;
   }
 
-  /** 指定されたユーザーが指定された権限をもっている辞書を全て返します。
-   * `me` にユーザーを指定すると、`me` が見ることのできる辞書のみを返します。
-   * `me` に `null` を指定すると、ユーザーに関わらず全員が見ることのできる辞書のみを返します (公開範囲が限定公開以下のものは除外される)。*/
-  public static async fetchByUser(user: User, authority: Exclude<DictionaryAuthority, "view">, me: Pick<User, "id"> | null): Promise<Array<Dictionary>> {
-    const meDictionaryIds = (me !== null) ? await MemberModel.fetchDictionaryIdsByUser(me, "edit") : [];
-    const visibleFilters = [{"visibility": "public"}, {"user": me}, DictionaryModel.find().in("_id", meDictionaryIds).getFilter()];
-    if (authority === "own") {
-      const query = DictionaryModel.findExist().where("user", user).or(visibleFilters);
-      const dictionaries = await query.sort({"updatedDate": -1, "number": -1}).exec();
-      return dictionaries;
-    } else if (authority === "edit") {
-      const userDictionaryIds = await MemberModel.fetchDictionaryIdsByUser(user, "edit");
-      const query = DictionaryModel.findExist().or([
-        DictionaryModel.find().where("user", user).or(visibleFilters).getFilter(),
-        DictionaryModel.find().in("_id", userDictionaryIds).or(visibleFilters).getFilter()
-      ]);
-      const dictionaries = await query.sort({"updatedDate": -1, "number": -1}).exec();
-      return dictionaries;
-    } else {
-      authority satisfies never;
-      throw new Error("cannot happen");
-    }
+  /** 指定されたユーザーが関与している辞書のうち、自分自身から見ることのできるものを全て返します。
+   * `me` に `null` を指定した場合は、ユーザーに関わらず全員が見ることのできる辞書のみを返します (公開範囲が限定公開以下のものは除外される)。*/
+  public static async fetchByUser(user: User, me: Pick<User, "id"> | null): Promise<Array<Dictionary>> {
+    const meInvolvedDictionaryIds = (me !== null) ? await MemberModel.fetchDictionaryIdsByUser(me, "edit") : [];
+    const dictionaries = await DictionaryModel.find().where("user", user).or([
+      {"visibility": "public"},
+      {"user": me},
+      DictionaryModel.find().in("_id", meInvolvedDictionaryIds).getFilter()
+    ]).sort({"updatedDate": -1, "number": -1}).exec();
+    return dictionaries;
+  }
+
+  /** 自分自身が関与している辞書を全て返します。
+   * これは、自分が所有している辞書と、自分が編集権限をもっている辞書から成ります。 */
+  public static async fetchInvolvedByMe(me: Pick<User, "id">): Promise<Array<Dictionary>> {
+    const meInvolvedDictionaryIds = await MemberModel.fetchDictionaryIdsByUser(me, "edit");
+    const dictionaries = DictionaryModel.findExist().or([
+      DictionaryModel.find().where("user", me).getFilter(),
+      DictionaryModel.find().in("_id", meInvolvedDictionaryIds).getFilter()
+    ]).sort({"updatedDate": -1, "number": -1}).exec();
+    return dictionaries;
   }
 
   public static async search(parameter: DictionaryParameter, range?: QueryRange): Promise<WithSize<Dictionary>> {

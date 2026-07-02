@@ -311,8 +311,7 @@ export class DictionaryRestController extends InternalRestController {
     const {name} = request.body;
     const user = await UserModel.fetchOneByName(name);
     if (user) {
-      const authority = (me?.id === user.id) ? "edit" : "own";
-      const dictionaries = await DictionaryModel.fetchByUser(user, authority, me);
+      const dictionaries = (me !== null && me.id === user.id) ? await DictionaryModel.fetchInvolvedByMe(me) : await DictionaryModel.fetchByUser(user, me);
       const body = await Promise.all(dictionaries.map((dictionary) => DictionaryCreator.skeletonizeWithAuthorities(dictionary, user)));
       InternalRestController.respond(response, body);
     } else {
