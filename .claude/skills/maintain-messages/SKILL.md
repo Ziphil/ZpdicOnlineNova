@@ -74,9 +74,9 @@ git ls-remote --heads origin 'maintenance/messages-*'
 `develop` から切り直すと同じ変更を重複して PR 化してしまい、コンフリクトの原因になるので、**ここで中断し、その PR を先にマージもしくはクローズするようユーザーに促す**。
 
 > ⚠️ **GitHub の PR 一覧 API (`gh pr list` や `list_pull_requests`) は使わない**。
-> 一覧取得はキャッシュにより結果が古くなることがあり、マージ済みの PR を `open` と誤って返す場合がある。
+> 一覧取得はキャッシュにより結果が古くなることがあり、マージ済みの PR を open と誤って返す場合がある。
 > リモートブランチの有無はローカル git が返す確定情報なので、こちらを判定の根拠にする。
-> 万一ブランチ自動削除が無効な運用に変わっていた場合の保険として、出力された各ブランチが `git merge-base --is-ancestor origin/<branch> origin/develop` で `develop` の先祖 (= マージ済み) かどうかを確認し、マージ済みのものは無視してよい。
+> 万一ブランチ自動削除が無効な運用に変わっていた場合の保険として、出力された各ブランチが `git merge-base --is-ancestor origin/<branch> origin/develop` で `develop` の先祖 (＝マージ済み) かどうかを確認し、マージ済みのものは無視して良い。
 
 全て満たす場合のみ次に進む。
 
