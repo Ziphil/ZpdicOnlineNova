@@ -3,6 +3,7 @@
 @use "zographia/source/component/function.scss" as *;
 
 
-.button {
-  align-self: flex-start;
+.root {
+  font-size: 10zu;
+  color: var(--icon-color);
 }

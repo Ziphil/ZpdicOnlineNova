@@ -3,6 +3,8 @@
 @use "zographia/source/component/function.scss" as *;
 
 
-.button {
-  align-self: flex-start;
+.root {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
 }

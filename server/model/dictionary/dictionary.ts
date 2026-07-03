@@ -116,7 +116,7 @@ export class DictionarySchema extends DiscardableSchema {
    * `me` に `null` を指定した場合は、ユーザーに関わらず全員が見ることのできる辞書のみを返します (公開範囲が限定公開以下のものは除外される)。*/
   public static async fetchByUser(user: User, me: Pick<User, "id"> | null): Promise<Array<Dictionary>> {
     const meInvolvedDictionaryIds = (me !== null) ? await MemberModel.fetchDictionaryIdsByUser(me, "edit") : [];
-    const dictionaries = await DictionaryModel.find().where("user", user).or([
+    const dictionaries = await DictionaryModel.findExist().where("user", user).or([
       {"visibility": "public"},
       {"user": me},
       DictionaryModel.find().in("_id", meInvolvedDictionaryIds).getFilter()

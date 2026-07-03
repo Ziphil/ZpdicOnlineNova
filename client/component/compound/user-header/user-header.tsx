@@ -51,9 +51,11 @@ export const UserHeader = create(
                 </SingleLineText>
               </div>
             </div>
-            <div styleName="right">
-              <UserHeaderSocialList socials={user.socials}/>
-            </div>
+            {(user.socials.length > 0) && (
+              <div styleName="right">
+                <UserHeaderSocialList socials={user.socials}/>
+              </div>
+            )}
           </div>
           <TabList styleName="tab-list" value={tabValue ?? ""}>
             <LinkTab value="dictionary" href={`/user/${user.name}`}>
