@@ -37,14 +37,14 @@ git status
 
 両方を満たしている場合のみ次に進む。
 
-**例外 (クラウド環境かつ develop と差分なしの場合のみ)**:
+### クラウド環境で実行中の場合
 クラウド環境 (Claude Code on the web) では、セッションは `develop` ではなく自動生成された作業ブランチ (`claude/...`) 上で開始する。
-この場合に限り、以下の**両方**を満たすときは、確認を挟まずに自動的に `develop` に移動して手順を続行してよい。
+この場合に限り、以下の**両方**を満たすときは、確認を挟まずに自動的に `develop` に移動して手順を続行して良い。
 - クラウド環境で作業していること。
 - **現在のブランチと `develop` の間に差分がないこと** (現在のブランチの内容が `origin/develop` と一致していること)。まず `git fetch origin develop` してから比較する。
 
 この条件を満たす場合は、`develop` に移動し、ローカル `develop` が古ければ `origin/develop` に揃えて (fast-forward) 続行する。
-上記のいずれかを満たさない場合 (develop との間に差分がある、ローカル環境である、working tree が clean でない など) は、これまで通り中断してユーザーに確認する。
+上記のいずれかを満たさない場合 (develop との間に差分がある, ローカル環境である, working tree が clean でない等) は、これまで通り中断してユーザーに確認する。
 
 ## Step 2: ビルドが通るかの確認
 リリース前に、本番ビルドが正常に通ることを確認する。
@@ -60,7 +60,7 @@ npm run build
 `package.json` の `version` フィールドを読み取る。
 値は semver 形式 (`X.Y.Z`)。
 
- `AskUserQuestion` を用いて、major, minor, patch のうちのどの部分をインクリメントするかをユーザーに確認する。
+`AskUserQuestion` を用いて、major, minor, patch のうちのどの部分をインクリメントするかをユーザーに確認する。
 
 - **major** (`X`) — `X.Y.Z` → `(X+1).0.0`
 - **minor** (`Y`) — `X.Y.Z` → `X.(Y+1).0`
@@ -120,16 +120,20 @@ git push origin develop master
 git push origin vX.Y.Z
 ```
 
-**クラウド環境 (Claude Code on the web) での注意点**:
-- クラウド環境では GitHub 連携 (GitHub App) の権限が作業ブランチへの push に限定されており、**タグ ref (`refs/tags/*`) の push は `403 Forbidden` で必ず失敗する** (ブランチの push は成功する)。これは一時的な問題ではなく恒常的な制約。
-- そのため、クラウド環境ではタグの push (`git push origin vX.Y.Z`) は**無理に試みず、スキップする**。ブランチ (`develop`・`master`) の push のみ行う。
-- タグはローカルに作成したまま残し、最後にユーザーへ「タグはローカル権限のある環境で以下を実行して push してほしい」と、コマンドを添えて報告する。
-  ```bash
-  git fetch origin master
-  git tag -a vX.Y.Z origin/master -m "verX.Y.Zをリリース"
-  git push origin vX.Y.Z
-  ```
-- ローカル環境で実行している場合は、従来どおりタグも push する。
+### クラウド環境で実行中の場合
+クラウド環境では GitHub 連携 (GitHub App) の権限が作業ブランチへの push に限定されており、**タグ ref (`refs/tags/*`) の push は 403 Forbidden で失敗する可能性が高い** (ブランチの push は成功する)。
+これは一時的な問題ではなく恒常的な制約である。
+
+そのため、クラウド環境ではタグの push (`git push origin vX.Y.Z`) は**無理に試みず、スキップする**。
+ブランチ (`develop`・`master`) の push のみ行う。
+タグはローカルに作成したまま残し、最後にユーザーへ「タグはローカル権限のある環境で以下を実行して push してほしい」と、コマンドを添えて報告する。
+```bash
+git fetch origin master
+git tag -a vX.Y.Z origin/master -m "verX.Y.Zをリリース"
+git push origin vX.Y.Z
+```
+
+ローカル環境で実行している場合は、従来どおりタグも push する。
 
 ## Step 8: `develop` に戻る
 作業ブランチを `develop` に戻して終了する。
