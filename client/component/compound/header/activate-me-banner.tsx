@@ -25,7 +25,7 @@ export const ActivateMeBanner = create(
 
     return (me !== null && !me.activated) ? (
       <Banner {...rest}>
-        <BannerIconContainer icon={faExclamationCircle}/>
+        <BannerIconContainer><GeneralIcon icon={faExclamationCircle}/></BannerIconContainer>
         <BannerBody>
           <MultiLineText is="p">
             {trans("callout.activate")}

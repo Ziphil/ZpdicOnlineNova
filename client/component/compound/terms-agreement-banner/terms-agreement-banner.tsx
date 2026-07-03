@@ -25,7 +25,7 @@ export const TermsAgreementBanner = create(
 
     return (type !== null) ? (
       <Banner {...rest}>
-        <BannerIconContainer icon={faInfoCircle}/>
+        <BannerIconContainer><GeneralIcon icon={faInfoCircle}/></BannerIconContainer>
         <BannerBody>
           <MultiLineText is="p">
             {transNode(`message.${type}`, {
