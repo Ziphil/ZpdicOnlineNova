@@ -64,14 +64,19 @@ git status
 - **`develop` ブランチにいること**を確認する。違う場合は中断してユーザーに報告する (勝手に切り替えない)。
 - **working tree が clean であること**を確認する。未コミットの変更がある場合は中断して報告する。
 
-この後で、さらに**未マージの整備 PR がないこと**も確認する。
-以下で `maintenance/messages-*` の open PR を調べる。
+この後で、さらに**未マージの整備ブランチがないこと**も確認する。
+リモートに残っている `maintenance/messages-*` ブランチを調べる。
 ```bash
-gh pr list --state open --base develop --json number,title,headRefName \
-  --jq '.[] | select(.headRefName | startswith("maintenance/messages-")) | "#\(.number) \(.title) (\(.headRefName))"'
+git ls-remote --heads origin 'maintenance/messages-*'
 ```
-出力があれば、前回以前の整備 PR がまだマージされていない。
+本リポジトリは PR マージ時に head ブランチを自動削除する運用のため、ここに残っているのは**未マージの整備ブランチだけ**になる。
+今日の日付のブランチ (Step 2 で作るもの) 以外が 1 つでも出力されたら、前回以前の整備 PR がまだマージされていない。
 `develop` から切り直すと同じ変更を重複して PR 化してしまい、コンフリクトの原因になるので、**ここで中断し、その PR を先にマージもしくはクローズするようユーザーに促す**。
+
+> ⚠️ **GitHub の PR 一覧 API (`gh pr list` や `list_pull_requests`) は使わない**。
+> 一覧取得はキャッシュにより結果が古くなることがあり、マージ済みの PR を `open` と誤って返す場合がある。
+> リモートブランチの有無はローカル git が返す確定情報なので、こちらを判定の根拠にする。
+> 万一ブランチ自動削除が無効な運用に変わっていた場合の保険として、出力された各ブランチが `git merge-base --is-ancestor origin/<branch> origin/develop` で `develop` の先祖 (= マージ済み) かどうかを確認し、マージ済みのものは無視してよい。
 
 全て満たす場合のみ次に進む。
 

@@ -61,7 +61,7 @@ function reorderFile(lang: string, namespaceSections: Map<string, Section>): voi
       output.push(...block.lines);
     }
   });
-  const eol = "\r\n";
+  const eol = raw.includes("\r\n") ? "\r\n" : "\n";
   let result = output.join(eol);
   if (hadTrailingNewline) {
     result += eol;
