@@ -608,6 +608,19 @@ invitationList:
   button:
     accept: "Akcepti"
     reject: "Malakcepti"
+issueUserResetTokenForm:
+  label:
+    name: "Salutnomo"
+    email: "Retpoŝta adreso"
+  error:
+    nameRequired: >-
+      Enigu salutnomon.
+    emailInvalid: >-
+      Enigu validan retpoŝtan adreson.
+    emailRequired: >-
+      Enigu retpoŝtan adreson.
+  button:
+    confirm: "Sendi"
 loginForm:
   label:
     name: "Salutnomo"
@@ -687,19 +700,6 @@ registerForm:
       Enigu pasvorton.
     agreeRequired: >-
       Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la privateca politiko.
-issueUserResetTokenForm:
-  label:
-    name: "Salutnomo"
-    email: "Retpoŝta adreso"
-  error:
-    nameRequired: >-
-      Enigu salutnomon.
-    emailInvalid: >-
-      Enigu validan retpoŝtan adreson.
-    emailRequired: >-
-      Enigu retpoŝtan adreson.
-  button:
-    confirm: "Sendi"
 resetUserPasswordForm:
   label:
     password: "Nova pasvorto"
