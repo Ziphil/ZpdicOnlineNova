@@ -111,6 +111,17 @@ git push origin develop master
 git push origin vX.Y.Z
 ```
 
+**クラウド環境 (Claude Code on the web) での注意点**:
+- クラウド環境では GitHub 連携 (GitHub App) の権限が作業ブランチへの push に限定されており、**タグ ref (`refs/tags/*`) の push は `403 Forbidden` で必ず失敗する** (ブランチの push は成功する)。これは一時的な問題ではなく恒常的な制約。
+- そのため、クラウド環境ではタグの push (`git push origin vX.Y.Z`) は**無理に試みず、スキップする**。ブランチ (`develop`・`master`) の push のみ行う。
+- タグはローカルに作成したまま残し、最後にユーザーへ「タグはローカル権限のある環境で以下を実行して push してほしい」と、コマンドを添えて報告する。
+  ```bash
+  git fetch origin master
+  git tag -a vX.Y.Z origin/master -m "verX.Y.Zをリリース"
+  git push origin vX.Y.Z
+  ```
+- ローカル環境で実行している場合は、従来どおりタグも push する。
+
 ## Step 8: `develop` に戻る
 作業ブランチを `develop` に戻して終了する。
 ```bash
