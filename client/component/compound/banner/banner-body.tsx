@@ -6,7 +6,7 @@ import {create} from "/client/component/create";
 
 
 export const BannerBody = create(
-  require("./banner.scss"), "BannerBody",
+  require("./banner-body.scss"), "BannerBody",
   function ({
     children,
     ...rest
@@ -16,7 +16,7 @@ export const BannerBody = create(
   } & AdditionalProps): ReactElement {
 
     return (
-      <div styleName="content" {...rest}>
+      <div styleName="root" {...rest}>
         {children}
       </div>
     );

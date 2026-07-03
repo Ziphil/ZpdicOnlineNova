@@ -6,7 +6,7 @@ import {create} from "/client/component/create";
 
 
 export const BannerIconContainer = create(
-  require("./banner.scss"), "BannerIconContainer",
+  require("./banner-icon-container.scss"), "BannerIconContainer",
   function ({
     children,
     ...rest
@@ -16,7 +16,7 @@ export const BannerIconContainer = create(
   } & AdditionalProps): ReactElement {
 
     return (
-      <div styleName="icon" {...rest}>
+      <div styleName="root" {...rest}>
         {children}
       </div>
     );

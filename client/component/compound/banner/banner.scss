@@ -23,14 +23,3 @@
   grid-template-columns: max-content 1fr;
   align-items: center;
 }
-
-.content {
-  row-gap: 3zu;
-  display: flex;
-  flex-direction: column;
-}
-
-.icon {
-  font-size: 10zu;
-  color: var(--icon-color);
-}
