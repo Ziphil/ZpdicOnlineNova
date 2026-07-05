@@ -14,9 +14,6 @@ import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {LogUtil} from "/server/util/log";
 
 
-/** 削除された用例データ (過去の版) を保管するスキーマです。
- * `ExampleSchema` と全く同じプロパティ構成に加え、削除された日時を表す `removedDate` を必須で持ちます。
- * 用例データを論理削除する際は、`examples` コレクションから削除した上で、同じ内容をこの `oldexamples` コレクションに移動します。*/
 @modelOptions({schemaOptions: {collection: "oldexamples"}})
 export class OldExampleSchema {
 

@@ -13,9 +13,6 @@ import {SectionSchema} from "/server/model/word/section";
 import {LogUtil} from "/server/util/log";
 
 
-/** 削除された単語データ (過去の版) を保管するスキーマです。
- * `WordSchema` と全く同じプロパティ構成に加え、削除された日時を表す `removedDate` を必須で持ちます。
- * 単語データを論理削除する際は、`words` コレクションから削除した上で、同じ内容をこの `oldwords` コレクションに移動します。*/
 @modelOptions({schemaOptions: {collection: "oldwords"}})
 export class OldWordSchema {
 
