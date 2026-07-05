@@ -207,13 +207,15 @@ export class WordSchema {
     return word;
   }
 
+  /** 指定された辞書において次に単語データに割り振るべき番号を返します。
+   * すでに削除された単語データの番号と重複しないように、`oldwords` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
   private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
-    const words = await WordModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1);
-    if (words.length > 0) {
-      return words[0].number + 1;
-    } else {
-      return 1;
-    }
+    const [words, oldWords] = await Promise.all([
+      WordModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1),
+      OldWordModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1)
+    ]);
+    const maxNumber = Math.max(words[0]?.number ?? 0, oldWords[0]?.number ?? 0);
+    return maxNumber + 1;
   }
 
 }
