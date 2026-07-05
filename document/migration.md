@@ -211,3 +211,10 @@ db.dictionaries.aggregate([
 ]);
 db.dictionaries.deleteMany({"removedDate": {$exists: true, $ne: null}});
 ```
+
+また、外部 API の呼び出し制限を API キーごとに設定できるように変更し、API キーデータに呼び出し制限を表す `limit` フィールド (1 分あたりの呼び出し回数の上限) を追加しました。
+このフィールドは必須であり、値をもたない API キーによるリクエストはエラーになります。
+既存の API キーに既定の呼び出し制限 (10 回) を設定するため、Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+db.apiCredentials.updateMany({"limit": {$exists: false}}, {$set: {"limit": 10}});
+```

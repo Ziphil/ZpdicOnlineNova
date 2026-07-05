@@ -5,7 +5,11 @@ import {rateLimit} from "express-rate-limit";
 
 export const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  limit: 10,
+  limit: (request, response) => {
+    const castRequest = request as any;
+    const limit = castRequest.middlewareBody.limit as number;
+    return limit;
+  },
   standardHeaders: true,
   legacyHeaders: false,
   handler: (request, response, next, options) => {

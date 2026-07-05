@@ -1,22 +1,25 @@
 //
 
+import {isDocument} from "@typegoose/typegoose";
 import {NextFunction, Request, RequestHandler, Response} from "express";
 import {MiddlewareBody} from "/server/external-alpha/controller/rest/base";
 import {ApiCredentialModel} from "/server/model";
 
 
 /** リクエストヘッダーに書き込まれた API キーを検証します。
-  * 検証に成功した場合は、リクエストオブジェクトの `me` プロパティにユーザーオブジェクトを書き込みます。
+  * 検証に成功した場合は、リクエストオブジェクトの `me` プロパティにユーザーオブジェクトを、`limit` プロパティにそのキーの呼び出し制限を書き込みます。
   * 検証に失敗した場合は、リクエストオブジェクトの `me` プロパティに `null` を書き込みます。*/
 export function parseMe(): RequestHandler {
   const handler = async function (request: Request & {middlewareBody: MiddlewareBody}, response: Response, next: NextFunction): Promise<void> {
     const apiKey = request.headers["x-api-key"];
     try {
       if (apiKey !== undefined && typeof apiKey === "string") {
-        const me = await ApiCredentialModel.fetchUserByKey(apiKey);
-        request.middlewareBody.me = me;
+        const credential = await ApiCredentialModel.fetchByKey(apiKey);
+        request.middlewareBody.me = (credential !== null && isDocument(credential.user)) ? credential.user : null;
+        request.middlewareBody.limit = credential?.limit ?? null;
       } else {
         request.middlewareBody.me = null;
+        request.middlewareBody.limit = null;
       }
       next();
     } catch (error) {

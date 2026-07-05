@@ -4,7 +4,6 @@ import {
   DocumentType,
   Ref,
   getModelForClass,
-  isDocument,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -14,6 +13,7 @@ import {createRandomString} from "/server/util/misc";
 
 
 const MAX_API_CREDENTIAL_COUNT = 1;
+const DEFAULT_API_CREDENTIAL_LIMIT = 10;
 
 
 @modelOptions({schemaOptions: {collection: "apiCredentials"}})
@@ -24,6 +24,9 @@ export class ApiCredentialSchema {
 
   @prop({required: true, unique: true})
   public key!: string;
+
+  @prop({required: true})
+  public limit!: number;
 
   @prop()
   public createdDate?: Date;
@@ -37,8 +40,9 @@ export class ApiCredentialSchema {
     const count = await ApiCredentialModel.countDocuments().where("user", user);
     if (count < MAX_API_CREDENTIAL_COUNT) {
       const key = createRandomString(64, false);
+      const limit = DEFAULT_API_CREDENTIAL_LIMIT;
       const createdDate = new Date();
-      const credential = new ApiCredentialModel({user, key, createdDate});
+      const credential = new ApiCredentialModel({user, key, limit, createdDate});
       await credential.save();
       return credential;
     } else {
@@ -62,16 +66,15 @@ export class ApiCredentialSchema {
     }
   }
 
-  /** 渡された API キーに合致するユーザーを返します。
+  /** 渡された API キーに合致する API キーデータを返します。
    * 合致するキーが存在しない場合は `null` を返します。
    * また、合致するキーが存在した場合は、そのキーの最終使用日時を現在の日時に更新します。*/
-  public static async fetchUserByKey(key: string): Promise<User | null> {
+  public static async fetchByKey(key: string): Promise<ApiCredential | null> {
     const credential = await ApiCredentialModel.findOne().where("key", key).populate("user").exec();
     if (credential !== null) {
       await credential.updateOne({lastUsedDate: new Date()});
     }
-    const user = (credential !== null && isDocument(credential.user)) ? credential.user : null;
-    return user;
+    return credential;
   }
 
 }
