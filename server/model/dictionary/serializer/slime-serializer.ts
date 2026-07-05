@@ -66,7 +66,7 @@ export class SlimeSerializer extends Serializer {
 
   private writeExamples(writer: WriteStream): Promise<void> {
     const promise = new Promise<void>((resolve, reject) => {
-      const stream = ExampleModel.findExist().where("dictionary", this.dictionary).lean().cursor();
+      const stream = ExampleModel.find().where("dictionary", this.dictionary).lean().cursor();
       let first = true;
       writer.write("[");
       stream.on("data", (example) => {

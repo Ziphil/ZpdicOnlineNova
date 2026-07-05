@@ -9,6 +9,7 @@ export * from "./dictionary/dictionary";
 export * from "./dictionary-parameter/dictionary-parameter";
 export * from "./dictionary-parameter/normal-dictionary-parameter";
 export * from "./example/example";
+export * from "./example/old-example";
 export * from "./example-offer/example-offer";
 export * from "./example-offer/linked-example-offer";
 export * from "./example-parameter/example-parameter";

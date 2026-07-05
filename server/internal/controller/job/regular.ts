@@ -3,7 +3,7 @@
 import {Job} from "agenda";
 import {JobController} from "/server/controller/job/controller";
 import {job, jobController, schedule} from "/server/controller/job/decorator";
-import {ArticleModel, ExampleModel, ExampleOfferModel, HistoryModel, OldWordModel} from "/server/model";
+import {ArticleModel, ExampleOfferModel, HistoryModel, OldExampleModel, OldWordModel} from "/server/model";
 import {LogUtil} from "/server/util/log";
 
 
@@ -16,7 +16,7 @@ export class RegularJobController extends JobController {
     LogUtil.log("worker/discardOlds", {});
     await Promise.all([
       OldWordModel.discardOlds(90),
-      ExampleModel.discardOlds(90),
+      OldExampleModel.discardOlds(90),
       ArticleModel.discardOlds(90)
     ]);
   }

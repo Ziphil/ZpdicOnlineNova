@@ -194,7 +194,7 @@ export class DictionarySchema extends DiscardableSchema {
     await this.save();
     await Promise.all([
       WordModel.deleteMany().where("dictionary", this),
-      ExampleModel.deleteManyExist().where("dictionary", this)
+      ExampleModel.deleteMany().where("dictionary", this)
     ]);
     LogUtil.log("model/dictionary/startUpload", {number: this.number});
   }
@@ -343,7 +343,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async fetchOneExampleByNumber(this: Dictionary, number: number): Promise<Example | null> {
-    const query = ExampleModel.findOneExist().where("dictionary", this).where("number", number);
+    const query = ExampleModel.findOne().where("dictionary", this).where("number", number);
     const example = await query.exec();
     return example;
   }
@@ -476,7 +476,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async countExamples(): Promise<number> {
-    const count = await ExampleModel.findExist().where("dictionary", this).countDocuments();
+    const count = await ExampleModel.find().where("dictionary", this).countDocuments();
     return count;
   }
 
@@ -488,7 +488,7 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async calcStatistics(): Promise<DictionaryStatistics> {
     const wordCursor = WordModel.find().where("dictionary", this).select(["name", "sections.equivalents", "sections.informations"]).lean().cursor();
-    const exampleCursor = ExampleModel.findExist().where("dictionary", this).select(["sentence"]).lean().cursor();
+    const exampleCursor = ExampleModel.find().where("dictionary", this).select(["sentence"]).lean().cursor();
     const statistics = await calcDictionaryStatistics(wordCursor, exampleCursor);
     return statistics;
   }
