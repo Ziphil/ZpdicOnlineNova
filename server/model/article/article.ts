@@ -8,9 +8,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
+import {OldArticleModel} from "/server/model/article/old-article";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
-import {OldArticleModel} from "/server/model/old-article";
 import {User} from "/server/model/user/user";
 import {LogUtil} from "/server/util/log";
 

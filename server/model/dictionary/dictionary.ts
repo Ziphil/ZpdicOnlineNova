@@ -10,7 +10,7 @@ import {
 } from "@typegoose/typegoose";
 import Fuse from "fuse.js";
 import type {DictionaryStatistics, WordSpellingFrequencies} from "/server/internal/skeleton";
-import {Article, ArticleModel, EditableArticle} from "/server/model/article";
+import {Article, ArticleModel, EditableArticle} from "/server/model/article/article";
 import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
