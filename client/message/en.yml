@@ -608,6 +608,19 @@ invitationList:
   button:
     accept: "Accept"
     reject: "Decline"
+issueUserResetTokenForm:
+  label:
+    name: "Username"
+    email: "Email address"
+  error:
+    nameRequired: >-
+      Enter a username.
+    emailInvalid: >-
+      Enter a valid email address.
+    emailRequired: >-
+      Enter an email address.
+  button:
+    confirm: "Send"
 loginForm:
   label:
     name: "Username"
@@ -687,19 +700,6 @@ registerForm:
       Enter a password.
     agreeRequired: >-
       In order to use this application, you must read and agree to the privacy policy.
-issueUserResetTokenForm:
-  label:
-    name: "Username"
-    email: "Email address"
-  error:
-    nameRequired: >-
-      Enter a username.
-    emailInvalid: >-
-      Enter a valid email address.
-    emailRequired: >-
-      Enter an email address.
-  button:
-    confirm: "Send"
 resetUserPasswordForm:
   label:
     password: "New password"

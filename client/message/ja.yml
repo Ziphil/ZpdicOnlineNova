@@ -609,6 +609,19 @@ invitationList:
   button:
     accept: "承認"
     reject: "拒否"
+issueUserResetTokenForm:
+  label:
+    name: "ユーザー ID"
+    email: "メールアドレス"
+  error:
+    nameRequired: >-
+      ユーザー ID を入力してください。
+    emailInvalid: >-
+      正しい形式のメールアドレスを入力してください。
+    emailRequired: >-
+      メールアドレスを入力してください。
+  button:
+    confirm: "送信"
 loginForm:
   label:
     name: "ユーザー ID"
@@ -687,19 +700,6 @@ registerForm:
       パスワードを入力してください。
     agreeRequired: >-
       このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
-issueUserResetTokenForm:
-  label:
-    name: "ユーザー ID"
-    email: "メールアドレス"
-  error:
-    nameRequired: >-
-      ユーザー ID を入力してください。
-    emailInvalid: >-
-      正しい形式のメールアドレスを入力してください。
-    emailRequired: >-
-      メールアドレスを入力してください。
-  button:
-    confirm: "送信"
 resetUserPasswordForm:
   label:
     password: "新しいパスワード"
