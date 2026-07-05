@@ -219,7 +219,7 @@ export class DictionarySchema {
   public async discard(this: Dictionary): Promise<void> {
     await InvitationModel.deleteMany({}).where("dictionary", this);
     const oldDictionary = new OldDictionaryModel(this.toObject({depopulate: true}));
-    oldDictionary.removedDate = new Date();
+    oldDictionary.deletedDate = new Date();
     await oldDictionary.save();
     await DictionaryModel.deleteOne().where("_id", this["_id"]);
   }

@@ -189,7 +189,7 @@ export class WordSchema {
 
   public async deleteOneSoftly(this: Word): Promise<void> {
     const oldWord = new OldWordModel(this.toObject({depopulate: true}));
-    oldWord.removedDate = new Date();
+    oldWord.deletedDate = new Date();
     await oldWord.save();
     await WordModel.deleteOne().where("_id", this["_id"]);
   }

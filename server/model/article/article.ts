@@ -81,7 +81,7 @@ export class ArticleSchema {
 
   public async deleteOneSoftly(this: Article): Promise<void> {
     const oldArticle = new OldArticleModel(this.toObject({depopulate: true}));
-    oldArticle.removedDate = new Date();
+    oldArticle.deletedDate = new Date();
     await oldArticle.save();
     await ArticleModel.deleteOne().where("_id", this["_id"]);
   }

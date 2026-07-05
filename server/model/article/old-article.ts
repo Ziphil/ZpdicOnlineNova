@@ -40,13 +40,13 @@ export class OldArticleSchema {
   public updatedDate!: Date;
 
   @prop({required: true})
-  public removedDate!: Date;
+  public deletedDate!: Date;
 
   /** 古い記事履歴データを完全に削除します。
    * 論理削除ではなく物理削除を行うので、もとには戻せません。*/
   public static async discardOlds(duration: number): Promise<void> {
     const date = new Date(Date.now() - duration * 24 * 60 * 60 * 1000);
-    const result = await OldArticleModel.deleteMany().lt("removedDate", date);
+    const result = await OldArticleModel.deleteMany().lt("deletedDate", date);
     LogUtil.log("model/old-article/discardOld", {count: result.deletedCount});
   }
 

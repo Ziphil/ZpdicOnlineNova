@@ -46,7 +46,7 @@ export class OldDictionarySchema {
   public updatedDate?: Date;
 
   @prop({required: true})
-  public removedDate!: Date;
+  public deletedDate!: Date;
 
 }
 

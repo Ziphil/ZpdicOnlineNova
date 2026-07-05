@@ -51,13 +51,13 @@ export class OldExampleSchema {
   public updatedDate?: Date;
 
   @prop({required: true})
-  public removedDate!: Date;
+  public deletedDate!: Date;
 
   /** 古い用例履歴データを完全に削除します。
    * 論理削除ではなく物理削除を行うので、もとには戻せません。*/
   public static async discardOlds(duration: number): Promise<void> {
     const date = new Date(Date.now() - duration * 24 * 60 * 60 * 1000);
-    const result = await OldExampleModel.deleteMany().lt("removedDate", date);
+    const result = await OldExampleModel.deleteMany().lt("deletedDate", date);
     LogUtil.log("model/old-example/discardOld", {count: result.deletedCount});
   }
 

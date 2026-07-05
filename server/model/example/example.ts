@@ -133,7 +133,7 @@ export class ExampleSchema {
 
   public async deleteOneSoftly(this: Example): Promise<void> {
     const oldExample = new OldExampleModel(this.toObject({depopulate: true}));
-    oldExample.removedDate = new Date();
+    oldExample.deletedDate = new Date();
     await oldExample.save();
     await ExampleModel.deleteOne().where("_id", this["_id"]);
   }
