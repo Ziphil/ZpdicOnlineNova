@@ -6,6 +6,7 @@ export * from "./dictionary/dictionary-authority";
 export * from "./dictionary/dictionary-font";
 export * from "./dictionary/dictionary-settings";
 export * from "./dictionary/dictionary";
+export * from "./dictionary/old-dictionary";
 export * from "./dictionary-parameter/dictionary-parameter";
 export * from "./dictionary-parameter/normal-dictionary-parameter";
 export * from "./example/example";

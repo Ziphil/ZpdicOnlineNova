@@ -180,10 +180,11 @@ db.dictionaries.updateMany({}, {$unset: {"editUsers": ""}});
 ```
 
 ### → ver 3.27.0
-単語データ・用例データ・記事データの論理削除方式を変更しました。
-これまでは削除済みのデータも `words` / `examples` / `articles` コレクション内に残し、`removedDate` フィールドの有無で削除済みかどうかを判定していましたが、削除済みのデータを独立した `oldwords` / `oldexamples` / `oldarticles` コレクションに移動して管理するように変更しました。
-これに伴い、`words` / `examples` / `articles` コレクション内に残っている削除済み (`removedDate` が設定されている) のデータを、それぞれ `oldwords` / `oldexamples` / `oldarticles` コレクションに移動する必要があります。
+単語データ・用例データ・記事データ・辞書データの論理削除方式を変更しました。
+これまでは削除済みのデータも `words` / `examples` / `articles` / `dictionaries` コレクション内に残し、`removedDate` フィールドの有無で削除済みかどうかを判定していましたが、削除済みのデータを独立した `oldwords` / `oldexamples` / `oldarticles` / `olddictionaries` コレクションに移動して管理するように変更しました。
+これに伴い、各コレクション内に残っている削除済み (`removedDate` が設定されている) のデータを、それぞれ対応する `old*` コレクションに移動する必要があります。
 この処理を行わなかった場合、削除済みのデータが通常のデータとして検索に表示されるようになってしまいます。
+なお、辞書データについては、万が一の復元に備えて `_id` を保持したまま移動します (`$merge` は既定で `_id` を突き合わせるため、下記の処理で `_id` は維持されます)。
 Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
 ```js
 db.words.aggregate([
@@ -203,4 +204,10 @@ db.articles.aggregate([
   {$merge: {into: "oldarticles", whenMatched: "replace", whenNotMatched: "insert"}}
 ]);
 db.articles.deleteMany({"removedDate": {$exists: true, $ne: null}});
+
+db.dictionaries.aggregate([
+  {$match: {"removedDate": {$exists: true, $ne: null}}},
+  {$merge: {into: "olddictionaries", whenMatched: "replace", whenNotMatched: "insert"}}
+]);
+db.dictionaries.deleteMany({"removedDate": {$exists: true, $ne: null}});
 ```

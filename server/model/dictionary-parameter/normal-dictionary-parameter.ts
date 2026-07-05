@@ -29,7 +29,7 @@ export class NormalDictionaryParameter extends DictionaryParameter {
       const promise = (async () => {
         const user = await UserModel.findOne().where("name", this.userName);
         if (user !== null) {
-          const dictionaries = await DictionaryModel.findExist().where("visibility", "public").where("name", needle).where("user", user).sort(sortKey);
+          const dictionaries = await DictionaryModel.find().where("visibility", "public").where("name", needle).where("user", user).sort(sortKey);
           return dictionaries;
         } else {
           return [];
@@ -37,7 +37,7 @@ export class NormalDictionaryParameter extends DictionaryParameter {
       })();
       return promise;
     } else {
-      const query = DictionaryModel.findExist().where("visibility", "public").where("name", needle).sort(sortKey);
+      const query = DictionaryModel.find().where("visibility", "public").where("name", needle).sort(sortKey);
       return query;
     }
   }

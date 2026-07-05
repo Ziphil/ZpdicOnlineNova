@@ -153,7 +153,7 @@ export class UserSchema {
   /** このユーザーを削除します。
    * 同時に、このユーザーが所有する辞書、および発行済みの API 認証情報も全て削除します。*/
   public async discard(this: User): Promise<User> {
-    const dictionaries = await DictionaryModel.findExist().where("user", this);
+    const dictionaries = await DictionaryModel.find().where("user", this);
     await Promise.all(dictionaries.map((dictionary) => dictionary.discard()));
     await ApiCredentialModel.deleteMany().where("user", this);
     await this.deleteOne();
