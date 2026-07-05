@@ -43,35 +43,35 @@ export class ArticleSchema {
   public updatedDate!: Date;
 
   public static async edit(dictionary: Dictionary, example: EditableArticle, user: User): Promise<Article> {
-    const currentExample = await ArticleModel.findOne().where("dictionary", dictionary).where("number", example.number);
-    let resultExample;
-    if (currentExample) {
-      resultExample = new ArticleModel(example);
-      resultExample.dictionary = dictionary;
-      resultExample.updatedUser = user;
-      resultExample.createdDate = currentExample.createdDate;
-      resultExample.updatedDate = new Date();
-      await currentExample.discardSoftly();
-      await resultExample.save();
+    const currentArticle = await ArticleModel.findOne().where("dictionary", dictionary).where("number", example.number);
+    let resultArticle;
+    if (currentArticle) {
+      resultArticle = new ArticleModel(example);
+      resultArticle.dictionary = dictionary;
+      resultArticle.updatedUser = user;
+      resultArticle.createdDate = currentArticle.createdDate;
+      resultArticle.updatedDate = new Date();
+      await currentArticle.deleteOneSoftly();
+      await resultArticle.save();
     } else {
       if (example.number === null) {
         example.number = await this.fetchNextNumber(dictionary);
       }
-      resultExample = new ArticleModel(example);
-      resultExample.dictionary = dictionary;
-      resultExample.updatedUser = user;
-      resultExample.createdDate = new Date();
-      resultExample.updatedDate = new Date();
-      await resultExample.save();
+      resultArticle = new ArticleModel(example);
+      resultArticle.dictionary = dictionary;
+      resultArticle.updatedUser = user;
+      resultArticle.createdDate = new Date();
+      resultArticle.updatedDate = new Date();
+      await resultArticle.save();
     }
-    LogUtil.log("model/article/edit", {number: dictionary.number, currentId: currentExample?.id, resultId: resultExample.id});
-    return resultExample;
+    LogUtil.log("model/article/edit", {number: dictionary.number, currentId: currentArticle?.id, resultId: resultArticle.id});
+    return resultArticle;
   }
 
   public static async discard(dictionary: Dictionary, number: number): Promise<Article> {
     const example = await ArticleModel.findOne().where("dictionary", dictionary).where("number", number);
     if (example) {
-      await example.discardSoftly();
+      await example.deleteOneSoftly();
     } else {
       throw new CustomError("noSuchArticle");
     }
@@ -79,7 +79,7 @@ export class ArticleSchema {
     return example;
   }
 
-  public async discardSoftly(this: Article): Promise<void> {
+  public async deleteOneSoftly(this: Article): Promise<void> {
     const oldArticle = new OldArticleModel(this.toObject({depopulate: true}));
     oldArticle.removedDate = new Date();
     await oldArticle.save();

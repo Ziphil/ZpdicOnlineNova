@@ -61,7 +61,7 @@ export class WordSchema {
       resultWord.createdDate = currentWord.createdDate;
       resultWord.updatedDate = new Date();
       await this.filterRelations(dictionary, resultWord);
-      await currentWord.discardSoftly();
+      await currentWord.deleteOneSoftly();
       await resultWord.save();
       if (currentWord.name !== resultWord.name) {
         await this.correctRelationsByEdit(dictionary, resultWord);
@@ -85,7 +85,7 @@ export class WordSchema {
   public static async discard(dictionary: Dictionary, number: number): Promise<Word> {
     const word = await WordModel.findOne().where("dictionary", dictionary).where("number", number);
     if (word) {
-      await word.discardSoftly();
+      await word.deleteOneSoftly();
       await this.correctRelationsByDiscard(dictionary, word);
     } else {
       throw new CustomError("noSuchWord");
@@ -111,7 +111,7 @@ export class WordSchema {
         }
         resultWord.createdDate = currentWord.createdDate;
         resultWord.updatedDate = new Date();
-        await currentWord.discardSoftly();
+        await currentWord.deleteOneSoftly();
         await resultWord.save();
         LogUtil.log("model/word/addRelation", {number: dictionary.number, currentId: currentWord?.id, resultId: resultWord.id});
         return resultWord;
@@ -168,16 +168,9 @@ export class WordSchema {
     }
     LogUtil.log("model/word/correctRelationsByDiscard", {number: dictionary.number, affectedIds: affectedWords.map((word) => word.id)});
     await Promise.all([
-      ...affectedWords.map((affectedWord) => affectedWord.discardSoftly()),
+      ...affectedWords.map((affectedWord) => affectedWord.deleteOneSoftly()),
       ...changedWords.map((changedWord) => changedWord.save())
     ]);
-  }
-
-  public async discardSoftly(this: Word): Promise<void> {
-    const oldWord = new OldWordModel(this.toObject({depopulate: true}));
-    oldWord.removedDate = new Date();
-    await oldWord.save();
-    await WordModel.deleteOne().where("_id", this["_id"]);
   }
 
   /** この単語データをコピーした新しい単語データを返します。*/
@@ -192,6 +185,13 @@ export class WordSchema {
       createdDate: this.createdDate
     });
     return word;
+  }
+
+  public async deleteOneSoftly(this: Word): Promise<void> {
+    const oldWord = new OldWordModel(this.toObject({depopulate: true}));
+    oldWord.removedDate = new Date();
+    await oldWord.save();
+    await WordModel.deleteOne().where("_id", this["_id"]);
   }
 
   /** 指定された辞書において次に単語データに割り振るべき番号を返します。

@@ -96,7 +96,7 @@ export class ExampleSchema {
       resultExample.createdDate = currentExample.createdDate;
       resultExample.updatedDate = new Date();
       await this.filterWords(dictionary, resultExample);
-      await currentExample.discardSoftly();
+      await currentExample.deleteOneSoftly();
       await resultExample.save();
     } else {
       if (example.number === null) {
@@ -117,7 +117,7 @@ export class ExampleSchema {
   public static async discard(dictionary: Dictionary, number: number): Promise<Example> {
     const example = await ExampleModel.findOne().where("dictionary", dictionary).where("number", number);
     if (example) {
-      await example.discardSoftly();
+      await example.deleteOneSoftly();
     } else {
       throw new CustomError("noSuchExample");
     }
@@ -125,18 +125,19 @@ export class ExampleSchema {
     return example;
   }
 
-  public async discardSoftly(this: Example): Promise<void> {
+  private static async filterWords(dictionary: Dictionary, example: Example): Promise<void> {
+    const linkedNumbers = example.words.map((word) => word.number);
+    const linkedWords = await WordModel.find().where("dictionary", dictionary).where("number", linkedNumbers);
+    example.words = example.words.filter((word) => linkedWords.some((linkedWord) => linkedWord.number === word.number));
+  }
+
+  public async deleteOneSoftly(this: Example): Promise<void> {
     const oldExample = new OldExampleModel(this.toObject({depopulate: true}));
     oldExample.removedDate = new Date();
     await oldExample.save();
     await ExampleModel.deleteOne().where("_id", this["_id"]);
   }
 
-  private static async filterWords(dictionary: Dictionary, example: Example): Promise<void> {
-    const linkedNumbers = example.words.map((word) => word.number);
-    const linkedWords = await WordModel.find().where("dictionary", dictionary).where("number", linkedNumbers);
-    example.words = example.words.filter((word) => linkedWords.some((linkedWord) => linkedWord.number === word.number));
-  }
 
   /** 指定された辞書において次に用例データに割り振るべき番号を返します。
    * すでに削除された用例データの番号と重複しないように、`oldexamples` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
