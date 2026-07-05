@@ -319,9 +319,7 @@ export class DictionarySchema {
   public async editWord(this: Dictionary, word: EditableWord, user: User): Promise<Word> {
     if (this.status !== "saving") {
       const resultWord = await WordModel.edit(this, word, user);
-      this.status = "ready";
-      this.updatedDate = new Date();
-      await this.save();
+      await this.updateOne({status: "ready", updatedDate: new Date()});
       return resultWord;
     } else {
       throw new CustomError("dictionarySaving");
@@ -355,9 +353,7 @@ export class DictionarySchema {
   public async editExample(this: Dictionary, example: EditableExample, user: User): Promise<Example> {
     if (this.status !== "saving") {
       const resultExample = await ExampleModel.edit(this, example, user);
-      this.status = "ready";
-      this.updatedDate = new Date();
-      await this.save();
+      await this.updateOne({status: "ready", updatedDate: new Date()});
       return resultExample;
     } else {
       throw new CustomError("dictionarySaving");
@@ -379,12 +375,10 @@ export class DictionarySchema {
     return article;
   }
 
-  public async editArticle(this: Dictionary, example: EditableArticle, user: User): Promise<Article> {
+  public async editArticle(this: Dictionary, article: EditableArticle, user: User): Promise<Article> {
     if (this.status !== "saving") {
-      const resultArticle = await ArticleModel.edit(this, example, user);
-      this.status = "ready";
-      this.updatedDate = new Date();
-      await this.save();
+      const resultArticle = await ArticleModel.edit(this, article, user);
+      await this.updateOne({status: "ready", updatedDate: new Date()});
       return resultArticle;
     } else {
       throw new CustomError("dictionarySaving");

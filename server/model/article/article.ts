@@ -42,11 +42,11 @@ export class ArticleSchema {
   @prop({required: true})
   public updatedDate!: Date;
 
-  public static async edit(dictionary: Dictionary, example: EditableArticle, user: User): Promise<Article> {
-    const currentArticle = await ArticleModel.findOne().where("dictionary", dictionary).where("number", example.number);
+  public static async edit(dictionary: Dictionary, article: EditableArticle, user: User): Promise<Article> {
+    const currentArticle = await ArticleModel.findOne().where("dictionary", dictionary).where("number", article.number);
     let resultArticle;
     if (currentArticle) {
-      resultArticle = new ArticleModel(example);
+      resultArticle = new ArticleModel(article);
       resultArticle.dictionary = dictionary;
       resultArticle.updatedUser = user;
       resultArticle.createdDate = currentArticle.createdDate;
@@ -54,10 +54,10 @@ export class ArticleSchema {
       await currentArticle.deleteOneSoftly();
       await resultArticle.save();
     } else {
-      if (example.number === null) {
-        example.number = await this.fetchNextNumber(dictionary);
+      if (article.number === null) {
+        article.number = await this.fetchNextNumber(dictionary);
       }
-      resultArticle = new ArticleModel(example);
+      resultArticle = new ArticleModel(article);
       resultArticle.dictionary = dictionary;
       resultArticle.updatedUser = user;
       resultArticle.createdDate = new Date();
