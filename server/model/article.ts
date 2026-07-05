@@ -8,15 +8,15 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
-import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
+import {OldArticleModel} from "/server/model/old-article";
 import {User} from "/server/model/user/user";
 import {LogUtil} from "/server/util/log";
 
 
 @modelOptions({schemaOptions: {collection: "articles"}})
-export class ArticleSchema extends DiscardableSchema {
+export class ArticleSchema {
 
   @prop({required: true, ref: "DictionarySchema"})
   public dictionary!: Ref<DictionarySchema>;
@@ -43,7 +43,7 @@ export class ArticleSchema extends DiscardableSchema {
   public updatedDate!: Date;
 
   public static async edit(dictionary: Dictionary, example: EditableArticle, user: User): Promise<Article> {
-    const currentExample = await ArticleModel.findOneExist().where("dictionary", dictionary).where("number", example.number);
+    const currentExample = await ArticleModel.findOne().where("dictionary", dictionary).where("number", example.number);
     let resultExample;
     if (currentExample) {
       resultExample = new ArticleModel(example);
@@ -51,7 +51,7 @@ export class ArticleSchema extends DiscardableSchema {
       resultExample.updatedUser = user;
       resultExample.createdDate = currentExample.createdDate;
       resultExample.updatedDate = new Date();
-      await currentExample.flagDiscarded();
+      await currentExample.discardToOld();
       await resultExample.save();
     } else {
       if (example.number === null) {
@@ -69,9 +69,9 @@ export class ArticleSchema extends DiscardableSchema {
   }
 
   public static async discard(dictionary: Dictionary, number: number): Promise<Article> {
-    const example = await ArticleModel.findOneExist().where("dictionary", dictionary).where("number", number);
+    const example = await ArticleModel.findOne().where("dictionary", dictionary).where("number", number);
     if (example) {
-      await example.flagDiscarded();
+      await example.discardToOld();
     } else {
       throw new CustomError("noSuchArticle");
     }
@@ -79,21 +79,34 @@ export class ArticleSchema extends DiscardableSchema {
     return example;
   }
 
-  /** 古い履歴データを完全に削除します。
-     * 論理削除ではなく物理削除を行うので、もとには戻せません。*/
-  public static async discardOlds(duration: number): Promise<void> {
-    const date = new Date(Date.now() - duration * 24 * 60 * 60 * 1000);
-    const result = await ArticleModel.deleteMany().lt("removedDate", date);
-    LogUtil.log("model/article/discardOld", {count: result.deletedCount});
+  /** この記事データを論理削除します。
+   * この記事データを `articles` コレクションから物理削除した上で、同じ内容に削除日時を付加した履歴データを `oldarticles` コレクションに保存します。
+   * これにより、削除された記事データは通常の検索対象から外れ、過去の版として保管されます。*/
+  public async discardToOld(this: Article): Promise<void> {
+    const oldArticle = new OldArticleModel({
+      dictionary: this.dictionary,
+      number: this.number,
+      tags: this.tags,
+      title: this.title,
+      content: this.content,
+      updatedUser: this.updatedUser,
+      createdDate: this.createdDate,
+      updatedDate: this.updatedDate,
+      removedDate: new Date()
+    });
+    await oldArticle.save();
+    await ArticleModel.deleteOne().where("_id", this["_id"]);
   }
 
+  /** 指定された辞書において次に記事データに割り振るべき番号を返します。
+   * すでに削除された記事データの番号と重複しないように、`oldarticles` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
   private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
-    const examples = await ArticleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1);
-    if (examples.length > 0) {
-      return examples[0].number + 1;
-    } else {
-      return 1;
-    }
+    const [articles, oldArticles] = await Promise.all([
+      ArticleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1),
+      OldArticleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1)
+    ]);
+    const maxNumber = Math.max(articles[0]?.number ?? 0, oldArticles[0]?.number ?? 0);
+    return maxNumber + 1;
   }
 
 }

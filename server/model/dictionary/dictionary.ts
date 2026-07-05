@@ -370,7 +370,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async fetchOneArticleByNumber(this: Dictionary, number: number): Promise<Article | null> {
-    const query = ArticleModel.findOneExist().where("dictionary", this).where("number", number);
+    const query = ArticleModel.findOne().where("dictionary", this).where("number", number);
     const article = await query.exec();
     return article;
   }
@@ -429,7 +429,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async searchArticles(this: Dictionary, range?: QueryRange): Promise<WithSize<Article>> {
-    const query = ArticleModel.findExist().where("dictionary", this).sort("-updatedDate");
+    const query = ArticleModel.find().where("dictionary", this).sort("-updatedDate");
     const examples = await QueryRange.restrictWithSize(query, range);
     return examples;
   }

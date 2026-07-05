@@ -44,6 +44,7 @@ export * from "./word-parameter/normal-word-parameter";
 export * from "./member/member-authority";
 export * from "./member/member";
 export * from "./article";
+export * from "./old-article";
 export * from "./proposal";
 export * from "./error";
 export * from "./history";
