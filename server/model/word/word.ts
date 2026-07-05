@@ -61,7 +61,7 @@ export class WordSchema {
       resultWord.createdDate = currentWord.createdDate;
       resultWord.updatedDate = new Date();
       await this.filterRelations(dictionary, resultWord);
-      await currentWord.discardToOld();
+      await currentWord.discardSoftly();
       await resultWord.save();
       if (currentWord.name !== resultWord.name) {
         await this.correctRelationsByEdit(dictionary, resultWord);
@@ -85,7 +85,7 @@ export class WordSchema {
   public static async discard(dictionary: Dictionary, number: number): Promise<Word> {
     const word = await WordModel.findOne().where("dictionary", dictionary).where("number", number);
     if (word) {
-      await word.discardToOld();
+      await word.discardSoftly();
       await this.correctRelationsByDiscard(dictionary, word);
     } else {
       throw new CustomError("noSuchWord");
@@ -111,7 +111,7 @@ export class WordSchema {
         }
         resultWord.createdDate = currentWord.createdDate;
         resultWord.updatedDate = new Date();
-        await currentWord.discardToOld();
+        await currentWord.discardSoftly();
         await resultWord.save();
         LogUtil.log("model/word/addRelation", {number: dictionary.number, currentId: currentWord?.id, resultId: resultWord.id});
         return resultWord;
@@ -168,27 +168,14 @@ export class WordSchema {
     }
     LogUtil.log("model/word/correctRelationsByDiscard", {number: dictionary.number, affectedIds: affectedWords.map((word) => word.id)});
     await Promise.all([
-      ...affectedWords.map((affectedWord) => affectedWord.discardToOld()),
+      ...affectedWords.map((affectedWord) => affectedWord.discardSoftly()),
       ...changedWords.map((changedWord) => changedWord.save())
     ]);
   }
 
-  /** この単語データを論理削除します。
-   * この単語データを `words` コレクションから物理削除した上で、同じ内容に削除日時を付加した履歴データを `oldwords` コレクションに保存します。
-   * これにより、削除された単語データは通常の検索対象から外れ、過去の版 (編集履歴) としてのみ参照できるようになります。*/
-  public async discardToOld(this: Word): Promise<void> {
-    const oldWord = new OldWordModel({
-      dictionary: this.dictionary,
-      number: this.number,
-      name: this.name,
-      pronunciation: this.pronunciation,
-      tags: this.tags,
-      sections: this.sections.map((section) => new SectionModel(section)),
-      updatedUser: this.updatedUser,
-      createdDate: this.createdDate,
-      updatedDate: this.updatedDate,
-      removedDate: new Date()
-    });
+  public async discardSoftly(this: Word): Promise<void> {
+    const oldWord = new OldWordModel(this.toObject({depopulate: true}));
+    oldWord.removedDate = new Date();
     await oldWord.save();
     await WordModel.deleteOne().where("_id", this["_id"]);
   }

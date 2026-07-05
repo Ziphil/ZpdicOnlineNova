@@ -51,7 +51,7 @@ export class ArticleSchema {
       resultExample.updatedUser = user;
       resultExample.createdDate = currentExample.createdDate;
       resultExample.updatedDate = new Date();
-      await currentExample.discardToOld();
+      await currentExample.discardSoftly();
       await resultExample.save();
     } else {
       if (example.number === null) {
@@ -71,7 +71,7 @@ export class ArticleSchema {
   public static async discard(dictionary: Dictionary, number: number): Promise<Article> {
     const example = await ArticleModel.findOne().where("dictionary", dictionary).where("number", number);
     if (example) {
-      await example.discardToOld();
+      await example.discardSoftly();
     } else {
       throw new CustomError("noSuchArticle");
     }
@@ -79,21 +79,9 @@ export class ArticleSchema {
     return example;
   }
 
-  /** この記事データを論理削除します。
-   * この記事データを `articles` コレクションから物理削除した上で、同じ内容に削除日時を付加した履歴データを `oldarticles` コレクションに保存します。
-   * これにより、削除された記事データは通常の検索対象から外れ、過去の版として保管されます。*/
-  public async discardToOld(this: Article): Promise<void> {
-    const oldArticle = new OldArticleModel({
-      dictionary: this.dictionary,
-      number: this.number,
-      tags: this.tags,
-      title: this.title,
-      content: this.content,
-      updatedUser: this.updatedUser,
-      createdDate: this.createdDate,
-      updatedDate: this.updatedDate,
-      removedDate: new Date()
-    });
+  public async discardSoftly(this: Article): Promise<void> {
+    const oldArticle = new OldArticleModel(this.toObject({depopulate: true}));
+    oldArticle.removedDate = new Date();
     await oldArticle.save();
     await ArticleModel.deleteOne().where("_id", this["_id"]);
   }

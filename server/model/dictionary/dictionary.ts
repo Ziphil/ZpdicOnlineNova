@@ -218,20 +218,8 @@ export class DictionarySchema {
    * 万が一削除した辞書を復元する必要が生じたときに削除する直前の状態に戻せるように、`_id` を保持したまま移動し、また、この辞書に属する単語データなどの削除は行いません。*/
   public async discard(this: Dictionary): Promise<void> {
     await InvitationModel.deleteMany({}).where("dictionary", this);
-    const oldDictionary = new OldDictionaryModel({
-      _id: this["_id"],
-      user: this.user,
-      number: this.number,
-      paramName: this.paramName,
-      name: this.name,
-      status: this.status,
-      visibility: this.visibility,
-      explanation: this.explanation,
-      settings: this.settings,
-      createdDate: this.createdDate,
-      updatedDate: this.updatedDate,
-      removedDate: new Date()
-    });
+    const oldDictionary = new OldDictionaryModel(this.toObject({depopulate: true}));
+    oldDictionary.removedDate = new Date();
     await oldDictionary.save();
     await DictionaryModel.deleteOne().where("_id", this["_id"]);
   }

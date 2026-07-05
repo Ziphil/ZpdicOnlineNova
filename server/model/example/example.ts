@@ -96,7 +96,7 @@ export class ExampleSchema {
       resultExample.createdDate = currentExample.createdDate;
       resultExample.updatedDate = new Date();
       await this.filterWords(dictionary, resultExample);
-      await currentExample.discardToOld();
+      await currentExample.discardSoftly();
       await resultExample.save();
     } else {
       if (example.number === null) {
@@ -117,7 +117,7 @@ export class ExampleSchema {
   public static async discard(dictionary: Dictionary, number: number): Promise<Example> {
     const example = await ExampleModel.findOne().where("dictionary", dictionary).where("number", number);
     if (example) {
-      await example.discardToOld();
+      await example.discardSoftly();
     } else {
       throw new CustomError("noSuchExample");
     }
@@ -125,24 +125,9 @@ export class ExampleSchema {
     return example;
   }
 
-  /** この用例データを論理削除します。
-   * この用例データを `examples` コレクションから物理削除した上で、同じ内容に削除日時を付加した履歴データを `oldexamples` コレクションに保存します。
-   * これにより、削除された用例データは通常の検索対象から外れ、過去の版として保管されます。*/
-  public async discardToOld(this: Example): Promise<void> {
-    const oldExample = new OldExampleModel({
-      dictionary: this.dictionary,
-      number: this.number,
-      tags: this.tags,
-      words: this.words,
-      sentence: this.sentence,
-      translation: this.translation,
-      supplement: this.supplement,
-      offer: this.offer,
-      updatedUser: this.updatedUser,
-      createdDate: this.createdDate,
-      updatedDate: this.updatedDate,
-      removedDate: new Date()
-    });
+  public async discardSoftly(this: Example): Promise<void> {
+    const oldExample = new OldExampleModel(this.toObject({depopulate: true}));
+    oldExample.removedDate = new Date();
     await oldExample.save();
     await ExampleModel.deleteOne().where("_id", this["_id"]);
   }
