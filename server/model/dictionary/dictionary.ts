@@ -10,11 +10,11 @@ import {
 } from "@typegoose/typegoose";
 import Fuse from "fuse.js";
 import type {DictionaryStatistics, WordSpellingFrequencies} from "/server/internal/skeleton";
-import {Article, ArticleModel, EditableArticle} from "/server/model/article";
-import {DiscardableSchema} from "/server/model/base";
+import {Article, ArticleModel, EditableArticle} from "/server/model/article/article";
 import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
+import {OldDictionaryModel} from "/server/model/dictionary/old-dictionary";
 import {Serializer} from "/server/model/dictionary/serializer";
 import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
 import {CustomError} from "/server/model/error";
@@ -24,6 +24,7 @@ import {InvitationModel} from "/server/model/invitation";
 import {Member, MemberModel} from "/server/model/member/member";
 import {EditableTemplateWord} from "/server/model/template-word/template-word";
 import {User, UserSchema} from "/server/model/user/user";
+import {OldWord, OldWordModel} from "/server/model/word/old-word";
 import {Relation} from "/server/model/word/relation";
 import {Suggestion} from "/server/model/word/suggestion";
 import {EditableWord, Word, WordModel} from "/server/model/word/word";
@@ -46,7 +47,7 @@ export const DictionaryVisibilityUtil = LiteralUtilType.create(DICTIONARY_VISIBI
 
 
 @modelOptions({schemaOptions: {collection: "dictionaries", minimize: false}})
-export class DictionarySchema extends DiscardableSchema {
+export class DictionarySchema {
 
   @prop({required: true, ref: "UserSchema"})
   public user!: Ref<UserSchema>;
@@ -95,20 +96,20 @@ export class DictionarySchema extends DiscardableSchema {
 
   public static async fetch(order: string, range?: QueryRange): Promise<WithSize<Dictionary>> {
     const sortArg = (order === "createdDate") ? "-createdDate -updatedDate -number" : "-updatedDate -number";
-    const query = DictionaryModel.findExist().where("visibility", "public").sort(sortArg);
+    const query = DictionaryModel.find().where("visibility", "public").sort(sortArg);
     const result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
 
   public static async fetchOneByNumber(number: number): Promise<Dictionary | null> {
-    const dictionary = await DictionaryModel.findOneExist().where("number", number);
+    const dictionary = await DictionaryModel.findOne().where("number", number);
     return dictionary;
   }
 
   public static async fetchOneByIdentifier(identifier: number | string): Promise<Dictionary | null> {
     const value = (typeof identifier === "number") ? identifier : (identifier.match(/^\d+$/)) ? +identifier : identifier;
     const key = (typeof value === "number") ? "number" : "paramName";
-    const dictionary = await DictionaryModel.findOneExist().where(key, value);
+    const dictionary = await DictionaryModel.findOne().where(key, value);
     return dictionary;
   }
 
@@ -116,7 +117,7 @@ export class DictionarySchema extends DiscardableSchema {
    * `me` に `null` を指定した場合は、ユーザーに関わらず全員が見ることのできる辞書のみを返します (公開範囲が限定公開以下のものは除外される)。*/
   public static async fetchByUser(user: User, me: Pick<User, "id"> | null): Promise<Array<Dictionary>> {
     const meInvolvedDictionaryIds = (me !== null) ? await MemberModel.fetchDictionaryIdsByUser(me, "edit") : [];
-    const dictionaries = await DictionaryModel.findExist().where("user", user).or([
+    const dictionaries = await DictionaryModel.find().where("user", user).or([
       {"visibility": "public"},
       {"user": me},
       DictionaryModel.find().in("_id", meInvolvedDictionaryIds).getFilter()
@@ -128,7 +129,7 @@ export class DictionarySchema extends DiscardableSchema {
    * これは、自分が所有している辞書と、自分が編集権限をもっている辞書から成ります。 */
   public static async fetchInvolvedByMe(me: Pick<User, "id">): Promise<Array<Dictionary>> {
     const meInvolvedDictionaryIds = await MemberModel.fetchDictionaryIdsByUser(me, "edit");
-    const dictionaries = await DictionaryModel.findExist().or([
+    const dictionaries = await DictionaryModel.find().or([
       DictionaryModel.find().where("user", me).getFilter(),
       DictionaryModel.find().in("_id", meInvolvedDictionaryIds).getFilter()
     ]).sort({"updatedDate": -1, "number": -1}).exec();
@@ -192,8 +193,8 @@ export class DictionarySchema extends DiscardableSchema {
     this.updatedDate = new Date();
     await this.save();
     await Promise.all([
-      WordModel.deleteManyExist().where("dictionary", this),
-      ExampleModel.deleteManyExist().where("dictionary", this)
+      WordModel.deleteMany().where("dictionary", this),
+      ExampleModel.deleteMany().where("dictionary", this)
     ]);
     LogUtil.log("model/dictionary/startUpload", {number: this.number});
   }
@@ -212,21 +213,25 @@ export class DictionarySchema extends DiscardableSchema {
     });
   }
 
-  /** この辞書を削除 (削除フラグを付加) します。
-   * 削除した辞書を後で削除する直前の状態に戻せるように、この辞書に属する単語データの削除は行いません。*/
+  /** この辞書を削除します。
+   * この辞書データを `dictionaries` コレクションから物理削除した上で、同じ内容に削除日時を付加した履歴データを `olddictionaries` コレクションに移動します。
+   * 万が一削除した辞書を復元する必要が生じたときに削除する直前の状態に戻せるように、`_id` を保持したまま移動し、また、この辞書に属する単語データなどの削除は行いません。*/
   public async discard(this: Dictionary): Promise<void> {
     await InvitationModel.deleteMany({}).where("dictionary", this);
-    await this.flagDiscarded();
+    const oldDictionary = new OldDictionaryModel(this.toObject({depopulate: true}));
+    oldDictionary.removedDate = new Date();
+    await oldDictionary.save();
+    await DictionaryModel.deleteOne().where("_id", this["_id"]);
   }
 
   public async fetchOneWordByNumber(this: Dictionary, number: number): Promise<Word | null> {
-    const query = WordModel.findOneExist().where("dictionary", this).where("number", number);
+    const query = WordModel.findOne().where("dictionary", this).where("number", number);
     const word = await query.exec();
     return word;
   }
 
   public async fetchWordSpellings<N extends number>(this: Dictionary, numbers: Array<N>): Promise<Record<N, string | null>> {
-    const words = await WordModel.findExist().where("dictionary", this).where("number", numbers).select(["number", "name"]).lean();
+    const words = await WordModel.find().where("dictionary", this).where("number", numbers).select(["number", "name"]).lean();
     const spellingMap = new Map(words.map((word) => [word.number, word.name]));
     const entries = numbers.map((number) => [number, spellingMap.get(number) ?? null] as const);
     const names = Object.fromEntries(entries) as any;
@@ -234,7 +239,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async checkDuplicateWordSpelling(this: Dictionary, name: string, excludedWordNumber?: number): Promise<boolean> {
-    let query = WordModel.findOneExist().where("dictionary", this).where("name", name);
+    let query = WordModel.findOne().where("dictionary", this).where("name", name);
     if (excludedWordNumber !== undefined) {
       query = query.ne("number", excludedWordNumber);
     }
@@ -244,7 +249,7 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async changeParamName(this: Dictionary, paramName: string): Promise<Dictionary> {
     if (paramName !== "") {
-      const formerDictionary = await DictionaryModel.findOneExist().where("paramName", paramName);
+      const formerDictionary = await DictionaryModel.findOne().where("paramName", paramName);
       if (formerDictionary && formerDictionary.id !== this.id) {
         throw new CustomError("duplicateDictionaryParamName");
       }
@@ -342,7 +347,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async fetchOneExampleByNumber(this: Dictionary, number: number): Promise<Example | null> {
-    const query = ExampleModel.findOneExist().where("dictionary", this).where("number", number);
+    const query = ExampleModel.findOne().where("dictionary", this).where("number", number);
     const example = await query.exec();
     return example;
   }
@@ -369,7 +374,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async fetchOneArticleByNumber(this: Dictionary, number: number): Promise<Article | null> {
-    const query = ArticleModel.findOneExist().where("dictionary", this).where("number", number);
+    const query = ArticleModel.findOne().where("dictionary", this).where("number", number);
     const article = await query.exec();
     return article;
   }
@@ -428,13 +433,13 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async searchArticles(this: Dictionary, range?: QueryRange): Promise<WithSize<Article>> {
-    const query = ArticleModel.findExist().where("dictionary", this).sort("-updatedDate");
+    const query = ArticleModel.find().where("dictionary", this).sort("-updatedDate");
     const examples = await QueryRange.restrictWithSize(query, range);
     return examples;
   }
 
-  public async fetchOldWords(this: Dictionary, wordNumber: number, range?: QueryRange): Promise<WithSize<Word>> {
-    const query = WordModel.where().ne("removedDate", undefined).where("dictionary", this).where("number", wordNumber).sort("-updatedDate");
+  public async fetchOldWords(this: Dictionary, wordNumber: number, range?: QueryRange): Promise<WithSize<OldWord>> {
+    const query = OldWordModel.find().where("dictionary", this).where("number", wordNumber).sort("-updatedDate");
     const words = await QueryRange.restrictWithSize(query, range);
     return words;
   }
@@ -457,7 +462,7 @@ export class DictionarySchema extends DiscardableSchema {
         return "";
       }
     })();
-    const titles = await WordModel.findExist().where("dictionary", this).distinct(key);
+    const titles = await WordModel.find().where("dictionary", this).distinct(key);
     const hitTitles = (() => {
       if (pattern !== "") {
         const fuse = new Fuse(titles, {threshold: 1, distance: 40});
@@ -470,24 +475,24 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async countWords(): Promise<number> {
-    const count = await WordModel.findExist().where("dictionary", this).countDocuments();
+    const count = await WordModel.find().where("dictionary", this).countDocuments();
     return count;
   }
 
   public async countExamples(): Promise<number> {
-    const count = await ExampleModel.findExist().where("dictionary", this).countDocuments();
+    const count = await ExampleModel.find().where("dictionary", this).countDocuments();
     return count;
   }
 
   public async calcWordSpellingFrequencies(): Promise<WordSpellingFrequencies> {
-    const query = WordModel.findExist().where("dictionary", this).select("name").lean().cursor();
+    const query = WordModel.find().where("dictionary", this).select("name").lean().cursor();
     const frequencies = await calcWordSpellingFrequencies(query);
     return frequencies;
   }
 
   public async calcStatistics(): Promise<DictionaryStatistics> {
-    const wordCursor = WordModel.findExist().where("dictionary", this).select(["name", "sections.equivalents", "sections.informations"]).lean().cursor();
-    const exampleCursor = ExampleModel.findExist().where("dictionary", this).select(["sentence"]).lean().cursor();
+    const wordCursor = WordModel.find().where("dictionary", this).select(["name", "sections.equivalents", "sections.informations"]).lean().cursor();
+    const exampleCursor = ExampleModel.find().where("dictionary", this).select(["sentence"]).lean().cursor();
     const statistics = await calcDictionaryStatistics(wordCursor, exampleCursor);
     return statistics;
   }
@@ -544,13 +549,15 @@ export class DictionarySchema extends DiscardableSchema {
     await MemberModel.discard(this, id);
   }
 
+  /** 次に辞書に割り振るべき番号を返します。
+   * すでに削除された辞書の番号と重複しないように、`olddictionaries` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
   private static async fetchNextNumber(): Promise<number> {
-    const dictionaries = await DictionaryModel.find().select("number").sort("-number").limit(1);
-    if (dictionaries.length > 0) {
-      return dictionaries[0].number + 1;
-    } else {
-      return 1;
-    }
+    const [dictionaries, oldDictionaries] = await Promise.all([
+      DictionaryModel.find().select("number").sort("-number").limit(1),
+      OldDictionaryModel.find().select("number").sort("-number").limit(1)
+    ]);
+    const maxNumber = Math.max(dictionaries[0]?.number ?? 0, oldDictionaries[0]?.number ?? 0);
+    return maxNumber + 1;
   }
 
 }

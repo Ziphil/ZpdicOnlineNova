@@ -8,9 +8,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
-import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
+import {OldExampleModel} from "/server/model/example/old-example";
 import {User} from "/server/model/user/user";
 import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {Word, WordModel} from "/server/model/word/word";
@@ -21,7 +21,7 @@ import {LinkedExampleOfferSchema} from "../example-offer/linked-example-offer";
 
 
 @modelOptions({schemaOptions: {collection: "examples"}})
-export class ExampleSchema extends DiscardableSchema {
+export class ExampleSchema {
 
   @prop({required: true, ref: "DictionarySchema"})
   public dictionary!: Ref<DictionarySchema>;
@@ -57,25 +57,25 @@ export class ExampleSchema extends DiscardableSchema {
   public updatedDate?: Date;
 
   public static async fetchByDictionary(dictionary: Dictionary, range?: QueryRange): Promise<WithSize<Example>> {
-    const query = ExampleModel.findExist().where("dictionary", dictionary).sort("-createdDate -number");
+    const query = ExampleModel.find().where("dictionary", dictionary).sort("-createdDate -number");
     const result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
 
   public static async fetchByWord(word: Word): Promise<Array<Example>> {
-    const query = ExampleModel.findExist().where("dictionary", word.dictionary).where("words.number", word.number).sort("-createdDate -number");
+    const query = ExampleModel.find().where("dictionary", word.dictionary).where("words.number", word.number).sort("-createdDate -number");
     const result = await query.exec();
     return result;
   }
 
   public static async fetchByOffer(dictionary: Dictionary | null, offer: {catalog: string, number: number}, range?: QueryRange): Promise<WithSize<Example>> {
     if (dictionary !== null) {
-      const query = ExampleModel.findExist().where("dictionary", dictionary).where("offer.catalog", offer.catalog).where("offer.number", offer.number).sort("-createdDate -number");
+      const query = ExampleModel.find().where("dictionary", dictionary).where("offer.catalog", offer.catalog).where("offer.number", offer.number).sort("-createdDate -number");
       const result = await QueryRange.restrictWithSize(query, range);
       return result;
     } else {
       console.log(dictionary, offer, range);
-      const aggregate = ExampleModel.aggregateExist().match({"offer.catalog": offer.catalog, "offer.number": offer.number}).lookup({
+      const aggregate = ExampleModel.aggregate().match({"offer.catalog": offer.catalog, "offer.number": offer.number}).lookup({
         from: "dictionaries",
         localField: "dictionary",
         foreignField: "_id",
@@ -87,7 +87,7 @@ export class ExampleSchema extends DiscardableSchema {
   }
 
   public static async edit(dictionary: Dictionary, example: EditableExample, user: User): Promise<Example> {
-    const currentExample = await ExampleModel.findOneExist().where("dictionary", dictionary).where("number", example.number);
+    const currentExample = await ExampleModel.findOne().where("dictionary", dictionary).where("number", example.number);
     let resultExample;
     if (currentExample) {
       resultExample = new ExampleModel(example);
@@ -96,7 +96,7 @@ export class ExampleSchema extends DiscardableSchema {
       resultExample.createdDate = currentExample.createdDate;
       resultExample.updatedDate = new Date();
       await this.filterWords(dictionary, resultExample);
-      await currentExample.flagDiscarded();
+      await currentExample.discardSoftly();
       await resultExample.save();
     } else {
       if (example.number === null) {
@@ -115,9 +115,9 @@ export class ExampleSchema extends DiscardableSchema {
   }
 
   public static async discard(dictionary: Dictionary, number: number): Promise<Example> {
-    const example = await ExampleModel.findOneExist().where("dictionary", dictionary).where("number", number);
+    const example = await ExampleModel.findOne().where("dictionary", dictionary).where("number", number);
     if (example) {
-      await example.flagDiscarded();
+      await example.discardSoftly();
     } else {
       throw new CustomError("noSuchExample");
     }
@@ -125,27 +125,28 @@ export class ExampleSchema extends DiscardableSchema {
     return example;
   }
 
-  /** 古い履歴データを完全に削除します。
-   * 論理削除ではなく物理削除を行うので、もとには戻せません。*/
-  public static async discardOlds(duration: number): Promise<void> {
-    const date = new Date(Date.now() - duration * 24 * 60 * 60 * 1000);
-    const result = await ExampleModel.deleteMany().lt("removedDate", date);
-    LogUtil.log("model/example/discardOld", {count: result.deletedCount});
+  public async discardSoftly(this: Example): Promise<void> {
+    const oldExample = new OldExampleModel(this.toObject({depopulate: true}));
+    oldExample.removedDate = new Date();
+    await oldExample.save();
+    await ExampleModel.deleteOne().where("_id", this["_id"]);
   }
 
   private static async filterWords(dictionary: Dictionary, example: Example): Promise<void> {
     const linkedNumbers = example.words.map((word) => word.number);
-    const linkedWords = await WordModel.findExist().where("dictionary", dictionary).where("number", linkedNumbers);
+    const linkedWords = await WordModel.find().where("dictionary", dictionary).where("number", linkedNumbers);
     example.words = example.words.filter((word) => linkedWords.some((linkedWord) => linkedWord.number === word.number));
   }
 
+  /** 指定された辞書において次に用例データに割り振るべき番号を返します。
+   * すでに削除された用例データの番号と重複しないように、`oldexamples` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
   private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
-    const examples = await ExampleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1);
-    if (examples.length > 0) {
-      return examples[0].number + 1;
-    } else {
-      return 1;
-    }
+    const [examples, oldExamples] = await Promise.all([
+      ExampleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1),
+      OldExampleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1)
+    ]);
+    const maxNumber = Math.max(examples[0]?.number ?? 0, oldExamples[0]?.number ?? 0);
+    return maxNumber + 1;
   }
 
 }

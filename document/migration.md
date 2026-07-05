@@ -178,3 +178,36 @@ db.dictionaries.find({"editUsers": {$exists: true}}).forEach(function (dictionar
 });
 db.dictionaries.updateMany({}, {$unset: {"editUsers": ""}});
 ```
+
+### → ver 3.27.0
+各種データの論理削除方式を変更しました。
+これまでは削除済みのデータもコレクション内に残して `removedDate` フィールドの有無で削除済みかどうかを判定していましたが、削除済みのデータを独立したコレクションに移動して管理するように変更しました。
+これに伴い、各コレクション内に残っている削除済み (`removedDate` が設定されている) のデータを、それぞれ対応する削除済みデータ用コレクションに移動する必要があります。
+この処理を行わなかった場合、削除済みのデータが通常のデータとして検索に表示されるようになってしまいます。
+なお、辞書データについては、万が一の復元に備えて `_id` を保持したまま移動します (`$merge` は既定で `_id` を突き合わせるため、下記の処理で `_id` は維持されます)。
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+db.words.aggregate([
+  {$match: {"removedDate": {$exists: true, $ne: null}}},
+  {$merge: {into: "oldwords", whenMatched: "replace", whenNotMatched: "insert"}}
+]);
+db.words.deleteMany({"removedDate": {$exists: true, $ne: null}});
+
+db.examples.aggregate([
+  {$match: {"removedDate": {$exists: true, $ne: null}}},
+  {$merge: {into: "oldexamples", whenMatched: "replace", whenNotMatched: "insert"}}
+]);
+db.examples.deleteMany({"removedDate": {$exists: true, $ne: null}});
+
+db.articles.aggregate([
+  {$match: {"removedDate": {$exists: true, $ne: null}}},
+  {$merge: {into: "oldarticles", whenMatched: "replace", whenNotMatched: "insert"}}
+]);
+db.articles.deleteMany({"removedDate": {$exists: true, $ne: null}});
+
+db.dictionaries.aggregate([
+  {$match: {"removedDate": {$exists: true, $ne: null}}},
+  {$merge: {into: "olddictionaries", whenMatched: "replace", whenNotMatched: "insert"}}
+]);
+db.dictionaries.deleteMany({"removedDate": {$exists: true, $ne: null}});
+```

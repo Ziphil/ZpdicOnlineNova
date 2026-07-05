@@ -7,7 +7,7 @@ import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/interna
 import {DictionaryCreator, DictionaryParameterCreator, MemberCreator, SuggestionCreator, TemplateWordCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {SOCKET_PATH_PREFIX} from "/server/internal/type/socket";
-import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
+import {DictionaryModel, ExampleModel, OldDictionaryModel, OldExampleModel, OldWordModel, UserModel, WordModel} from "/server/model";
 import {sanitizeFileName} from "/server/util/misc";
 import {toObjectId} from "/server/util/mongo";
 import {QueryRange} from "/server/util/query";
@@ -326,9 +326,15 @@ export class DictionaryRestController extends InternalRestController {
       if (model === UserModel) {
         const [count, {size}] = await Promise.all([model.estimatedDocumentCount(), model.collection.stats()]);
         return {count, wholeCount: count, size};
+      } else if (model === WordModel) {
+        const [count, oldCount, {size}, oldStats] = await Promise.all([WordModel.estimatedDocumentCount(), OldWordModel.estimatedDocumentCount(), WordModel.collection.stats(), OldWordModel.collection.stats()]);
+        return {count, wholeCount: count + oldCount, size: size + oldStats.size};
+      } else if (model === ExampleModel) {
+        const [count, oldCount, {size}, oldStats] = await Promise.all([ExampleModel.estimatedDocumentCount(), OldExampleModel.estimatedDocumentCount(), ExampleModel.collection.stats(), OldExampleModel.collection.stats()]);
+        return {count, wholeCount: count + oldCount, size: size + oldStats.size};
       } else {
-        const [count, wholeCount, {size}] = await Promise.all([model.findExist().countDocuments(), model.estimatedDocumentCount(), model.collection.stats()]);
-        return {count, wholeCount, size};
+        const [count, oldCount, {size}, oldStats] = await Promise.all([DictionaryModel.estimatedDocumentCount(), OldDictionaryModel.estimatedDocumentCount(), DictionaryModel.collection.stats(), OldDictionaryModel.collection.stats()]);
+        return {count, wholeCount: count + oldCount, size: size + oldStats.size};
       }
     }));
     const body = {dictionary, word, example, user};

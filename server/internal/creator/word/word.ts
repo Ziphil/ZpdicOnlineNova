@@ -10,13 +10,14 @@ import type {
 import {
   EditableWord,
   ExampleModel,
+  OldWord,
   Word
 } from "/server/model";
 
 
 export namespace WordCreator {
 
-  export function skeletonize(raw: Word): WordSkeleton {
+  export function skeletonize(raw: Word | OldWord): WordSkeleton {
     const skeleton = {
       id: raw.id || raw["_id"],
       number: raw.number,
