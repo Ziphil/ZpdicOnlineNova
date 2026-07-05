@@ -139,7 +139,7 @@ export class ExampleSchema {
   }
 
   /** 指定された辞書において次に用例データに割り振るべき番号を返します。
-   * すでに削除された用例データの番号と重複しないように、`oldexamples` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
+   * すでに削除された用例データの番号と重複しないように、`oldExamples` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
   private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
     const [examples, oldExamples] = await Promise.all([
       ExampleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1),

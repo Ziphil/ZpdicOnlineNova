@@ -14,7 +14,7 @@ import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {LogUtil} from "/server/util/log";
 
 
-@modelOptions({schemaOptions: {collection: "oldexamples"}})
+@modelOptions({schemaOptions: {collection: "oldExamples"}})
 export class OldExampleSchema {
 
   @prop({required: true, ref: "DictionarySchema"})

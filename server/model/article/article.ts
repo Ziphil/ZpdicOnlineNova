@@ -87,7 +87,7 @@ export class ArticleSchema {
   }
 
   /** 指定された辞書において次に記事データに割り振るべき番号を返します。
-   * すでに削除された記事データの番号と重複しないように、`oldarticles` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
+   * すでに削除された記事データの番号と重複しないように、`oldArticles` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
   private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
     const [articles, oldArticles] = await Promise.all([
       ArticleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1),

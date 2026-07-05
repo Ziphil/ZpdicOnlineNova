@@ -12,7 +12,7 @@ import {DictionarySettingsSchema} from "/server/model/dictionary/dictionary-sett
 import {UserSchema} from "/server/model/user/user";
 
 
-@modelOptions({schemaOptions: {collection: "olddictionaries", minimize: false}})
+@modelOptions({schemaOptions: {collection: "oldDictionaries", minimize: false}})
 export class OldDictionarySchema {
 
   @prop({required: true, ref: "UserSchema"})

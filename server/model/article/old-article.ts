@@ -12,7 +12,7 @@ import {User} from "/server/model/user/user";
 import {LogUtil} from "/server/util/log";
 
 
-@modelOptions({schemaOptions: {collection: "oldarticles"}})
+@modelOptions({schemaOptions: {collection: "oldArticles"}})
 export class OldArticleSchema {
 
   @prop({required: true, ref: "DictionarySchema"})

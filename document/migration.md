@@ -189,25 +189,25 @@ Mongo Shell で該当のデータベースを選択した後、以下を実行�
 ```js
 db.words.aggregate([
   {$match: {"removedDate": {$exists: true, $ne: null}}},
-  {$merge: {into: "oldwords", whenMatched: "replace", whenNotMatched: "insert"}}
+  {$merge: {into: "oldWords", whenMatched: "replace", whenNotMatched: "insert"}}
 ]);
 db.words.deleteMany({"removedDate": {$exists: true, $ne: null}});
 
 db.examples.aggregate([
   {$match: {"removedDate": {$exists: true, $ne: null}}},
-  {$merge: {into: "oldexamples", whenMatched: "replace", whenNotMatched: "insert"}}
+  {$merge: {into: "oldExamples", whenMatched: "replace", whenNotMatched: "insert"}}
 ]);
 db.examples.deleteMany({"removedDate": {$exists: true, $ne: null}});
 
 db.articles.aggregate([
   {$match: {"removedDate": {$exists: true, $ne: null}}},
-  {$merge: {into: "oldarticles", whenMatched: "replace", whenNotMatched: "insert"}}
+  {$merge: {into: "oldArticles", whenMatched: "replace", whenNotMatched: "insert"}}
 ]);
 db.articles.deleteMany({"removedDate": {$exists: true, $ne: null}});
 
 db.dictionaries.aggregate([
   {$match: {"removedDate": {$exists: true, $ne: null}}},
-  {$merge: {into: "olddictionaries", whenMatched: "replace", whenNotMatched: "insert"}}
+  {$merge: {into: "oldDictionaries", whenMatched: "replace", whenNotMatched: "insert"}}
 ]);
 db.dictionaries.deleteMany({"removedDate": {$exists: true, $ne: null}});
 ```

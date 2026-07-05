@@ -13,7 +13,7 @@ import {SectionSchema} from "/server/model/word/section";
 import {LogUtil} from "/server/util/log";
 
 
-@modelOptions({schemaOptions: {collection: "oldwords"}})
+@modelOptions({schemaOptions: {collection: "oldWords"}})
 export class OldWordSchema {
 
   @prop({required: true, ref: "DictionarySchema"})

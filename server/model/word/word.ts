@@ -195,7 +195,7 @@ export class WordSchema {
   }
 
   /** 指定された辞書において次に単語データに割り振るべき番号を返します。
-   * すでに削除された単語データの番号と重複しないように、`oldwords` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
+   * すでに削除された単語データの番号と重複しないように、`oldWords` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
   private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
     const [words, oldWords] = await Promise.all([
       WordModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1),

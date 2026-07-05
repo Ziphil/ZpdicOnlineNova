@@ -214,7 +214,7 @@ export class DictionarySchema {
   }
 
   /** この辞書を削除します。
-   * この辞書データを `dictionaries` コレクションから物理削除した上で、同じ内容に削除日時を付加した履歴データを `olddictionaries` コレクションに移動します。
+   * この辞書データを `dictionaries` コレクションから物理削除した上で、同じ内容に削除日時を付加した履歴データを `oldDictionaries` コレクションに移動します。
    * 万が一削除した辞書を復元する必要が生じたときに削除する直前の状態に戻せるように、`_id` を保持したまま移動し、また、この辞書に属する単語データなどの削除は行いません。*/
   public async discard(this: Dictionary): Promise<void> {
     await InvitationModel.deleteMany({}).where("dictionary", this);
@@ -550,7 +550,7 @@ export class DictionarySchema {
   }
 
   /** 次に辞書に割り振るべき番号を返します。
-   * すでに削除された辞書の番号と重複しないように、`olddictionaries` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
+   * すでに削除された辞書の番号と重複しないように、`oldDictionaries` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
   private static async fetchNextNumber(): Promise<number> {
     const [dictionaries, oldDictionaries] = await Promise.all([
       DictionaryModel.find().select("number").sort("-number").limit(1),
