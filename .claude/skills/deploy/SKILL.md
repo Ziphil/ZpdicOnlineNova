@@ -22,7 +22,8 @@ ZpDIC Online を新しいバージョンとしてリリースする。
 7. タグ付け
 8. origin への push
 9. `develop` に戻る
-10. リリース内容のお知らせ文をまとめて提案する
+10. Notion のマイルストーンのページを編集する (major / minor アップデートのときのみ)
+11. リリース内容のお知らせ文をまとめて提案する
 
 破壊的・外部反映を伴う操作 (マージ・タグ・push) に入る前に、後述の「実行前の最終確認」でユーザーに一度確認してから進めること。
 
@@ -144,7 +145,46 @@ git checkout develop
 
 最後に、リリースしたバージョン (`X.Y.Z`) と付けたタグ (`vX.Y.Z`) をユーザーに報告する。
 
-## Step 10: リリース内容のお知らせ文をまとめて提案する
+## Step 10: Notion のマイルストーンのページを編集する
+開発マイルストーンを管理している Notion のデータベースに、今回のリリースを反映する。
+Notion の操作には Notion の MCP ツール (`notion-query-data-sources`, `notion-update-page`, `notion-create-pages` など) を用いる。
+
+Step 3 で **major もしくは minor バージョンをインクリメントした場合のみ**行う。
+**patch アップデートの場合はこのステップをスキップ**し、そのまま Step 11 に進む。
+
+**対象のデータベース**:
+- マイルストーンのデータソース — `collection://08baa6dd-18b0-430a-83fb-5c4e0fd3a3ce`
+- 関連するプロパティ:
+  - **`名前` (タイトル)** — `ver X.Y.Z` の形式 (`ver` の後に半角スペース, 例: `ver 3.27.0`)
+  - **`ステータス` (select)** — `Released` を設定する
+  - **`リリース日` (date, 表示形式 `YYYY/MM/DD`)** — 更新・作成時は展開プロパティ `date:リリース日:start` に ISO 形式の日付 (`YYYY-MM-DD`) を渡す
+  - **`プロジェクト` (relation)** — 「ZpDIC Online (version 3)」プロジェクトのページ (`https://app.notion.com/d044b0bb27c3486a80a22e291fe99062`), 値は URL の JSON 配列文字列 `["https://app.notion.com/d044b0bb27c3486a80a22e291fe99062"]` で渡す。
+
+まず対象ページが既に存在するか確認する。
+`notion-query-data-sources` で、`プロジェクト` が「ZpDIC Online (version 3)」(`d044b0bb27c3486a80a22e291fe99062`) かつ `名前` が `ver X.Y.Z` のページを検索する。
+```sql
+SELECT url, "名前", "ステータス" FROM "collection://08baa6dd-18b0-430a-83fb-5c4e0fd3a3ce"
+WHERE "名前" = 'ver X.Y.Z' AND "プロジェクト" LIKE '%d044b0bb27c3486a80a22e291fe99062%'
+```
+ページが存在するかどうかに応じて、以下の操作を行う。
+
+### ページが存在する場合
+そのページを `notion-update-page` (`command: "update_properties"`) で更新する。
+「今日の日付」は実際の現在の日付を用いる。
+
+- `ステータス` = `Released`
+- `date:リリース日:start` = 今日の日付 (`YYYY-MM-DD`)
+
+### ページが存在しない場合
+`notion-create-pages` で新たにページを追加する (parent は `data_source_id: "08baa6dd-18b0-430a-83fb-5c4e0fd3a3ce"`)。
+「今日の日付」は実際の現在の日付を用いる。
+
+- `名前` = `ver X.Y.Z`
+- `ステータス` = `Released`
+- `date:リリース日:start` = 今日の日付 (`YYYY-MM-DD`)
+- `プロジェクト` = `["https://app.notion.com/d044b0bb27c3486a80a22e291fe99062"]`
+
+## Step 11: リリース内容のお知らせ文をまとめて提案する
 今回のリリースに含まれる変更内容を確認し、ユーザーが告知に使えるお知らせ文をまとめて提案する。
 
 変更内容は、前回のリリースタグから今回のタグまでの差分から把握する。
