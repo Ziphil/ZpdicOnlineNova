@@ -8,17 +8,17 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
-import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {User} from "/server/model/user/user";
+import {OldWordModel} from "/server/model/word/old-word";
 import {Relation} from "/server/model/word/relation";
 import {SectionModel, SectionSchema} from "/server/model/word/section";
 import {LogUtil} from "/server/util/log";
 
 
 @modelOptions({schemaOptions: {collection: "words"}})
-export class WordSchema extends DiscardableSchema {
+export class WordSchema {
 
   @prop({required: true, ref: "DictionarySchema"})
   public dictionary!: Ref<DictionarySchema>;
@@ -52,7 +52,7 @@ export class WordSchema extends DiscardableSchema {
    * そうでない場合は、渡された単語データを新しいデータとして追加します。
    * 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。*/
   public static async edit(dictionary: Dictionary, word: EditableWord, user: User): Promise<Word> {
-    const currentWord = (word.number !== null) ? await WordModel.findOneExist().where("dictionary", dictionary).where("number", word.number) : null;
+    const currentWord = (word.number !== null) ? await WordModel.findOne().where("dictionary", dictionary).where("number", word.number) : null;
     let resultWord;
     if (currentWord) {
       resultWord = new WordModel(word);
@@ -61,7 +61,7 @@ export class WordSchema extends DiscardableSchema {
       resultWord.createdDate = currentWord.createdDate;
       resultWord.updatedDate = new Date();
       await this.filterRelations(dictionary, resultWord);
-      await currentWord.flagDiscarded();
+      await currentWord.discardToOld();
       await resultWord.save();
       if (currentWord.name !== resultWord.name) {
         await this.correctRelationsByEdit(dictionary, resultWord);
@@ -83,9 +83,9 @@ export class WordSchema extends DiscardableSchema {
   }
 
   public static async discard(dictionary: Dictionary, number: number): Promise<Word> {
-    const word = await WordModel.findOneExist().where("dictionary", dictionary).where("number", number);
+    const word = await WordModel.findOne().where("dictionary", dictionary).where("number", number);
     if (word) {
-      await word.flagDiscarded();
+      await word.discardToOld();
       await this.correctRelationsByDiscard(dictionary, word);
     } else {
       throw new CustomError("noSuchWord");
@@ -98,7 +98,7 @@ export class WordSchema extends DiscardableSchema {
    * 指定された単語データにセクションが存在しない場合は、新たにセクションを作成し、そこに関連語を追加します。
    * 指定された単語データにセクションが存在する場合は、最初のセクションに関連語を追加します。 */
   public static async addRelation(dictionary: Dictionary, number: number, relation: Relation): Promise<Word | null> {
-    const currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", number);
+    const currentWord = await WordModel.findOne().where("dictionary", dictionary).where("number", number);
     if (currentWord) {
       const existRelation = currentWord.sections.some((existingSection) => existingSection.relations.some((existingRelation) => existingRelation.number === relation.number));
       if (!existRelation) {
@@ -111,7 +111,7 @@ export class WordSchema extends DiscardableSchema {
         }
         resultWord.createdDate = currentWord.createdDate;
         resultWord.updatedDate = new Date();
-        await currentWord.flagDiscarded();
+        await currentWord.discardToOld();
         await resultWord.save();
         LogUtil.log("model/word/addRelation", {number: dictionary.number, currentId: currentWord?.id, resultId: resultWord.id});
         return resultWord;
@@ -123,19 +123,11 @@ export class WordSchema extends DiscardableSchema {
     }
   }
 
-  /** 古い単語履歴データを完全に削除します。
-   * 論理削除ではなく物理削除を行うので、もとには戻せません。*/
-  public static async discardOlds(duration: number): Promise<void> {
-    const date = new Date(Date.now() - duration * 24 * 60 * 60 * 1000);
-    const result = await WordModel.deleteMany().lt("removedDate", date);
-    LogUtil.log("model/word/discardOld", {count: result.deletedCount});
-  }
-
   /** `word` に渡された単語データ内の関連語データのうち、現在存在していないものを削除します。
    * この処理は、`word` 内の関連語データを上書きします。*/
   private static async filterRelations(dictionary: Dictionary, word: Word): Promise<void> {
     const relationNumbers = word.sections.flatMap((section) => section.relations.map((relation) => relation.number));
-    const relationWords = await WordModel.findExist().where("dictionary", dictionary).where("number", relationNumbers);
+    const relationWords = await WordModel.find().where("dictionary", dictionary).where("number", relationNumbers);
     word.sections = word.sections.map((section) => {
       section.relations = section.relations.filter((relation) => relationWords.some((relationWord) => relationWord.number === relation.number));
       return section;
@@ -145,7 +137,7 @@ export class WordSchema extends DiscardableSchema {
   /** 単語データの編集によって単語の綴りが変化した場合に、それによって起こり得る関連語データの不整合を修正します。
    * この処理では、既存の単語データを上書きするので、編集履歴は残りません。*/
   private static async correctRelationsByEdit(dictionary: Dictionary, word: Word): Promise<void> {
-    const affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("sections.relations.number", word.number);
+    const affectedWords = await WordModel.find().where("dictionary", dictionary).where("sections.relations.number", word.number);
     for (const affectedWord of affectedWords) {
       for (const section of affectedWord.sections) {
         for (const relation of section.relations) {
@@ -163,7 +155,7 @@ export class WordSchema extends DiscardableSchema {
    * この処理では、修正が必要な既存の単語データを論理削除した上で、関連語データの不整合を修正した新しい単語データを作成します。
    * そのため、この処理の内容は、修正を行った単語データに編集履歴として残ります。*/
   private static async correctRelationsByDiscard(dictionary: Dictionary, word: Word): Promise<void> {
-    const affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("sections.relations.number", word.number);
+    const affectedWords = await WordModel.find().where("dictionary", dictionary).where("sections.relations.number", word.number);
     const changedWords = [];
     for (const affectedWord of affectedWords) {
       const changedWord = affectedWord.copy();
@@ -176,9 +168,29 @@ export class WordSchema extends DiscardableSchema {
     }
     LogUtil.log("model/word/correctRelationsByDiscard", {number: dictionary.number, affectedIds: affectedWords.map((word) => word.id)});
     await Promise.all([
-      ...affectedWords.map((affectedWord) => affectedWord.flagDiscarded()),
+      ...affectedWords.map((affectedWord) => affectedWord.discardToOld()),
       ...changedWords.map((changedWord) => changedWord.save())
     ]);
+  }
+
+  /** この単語データを論理削除します。
+   * この単語データを `words` コレクションから物理削除した上で、同じ内容に削除日時を付加した履歴データを `oldwords` コレクションに保存します。
+   * これにより、削除された単語データは通常の検索対象から外れ、過去の版 (編集履歴) としてのみ参照できるようになります。*/
+  public async discardToOld(this: Word): Promise<void> {
+    const oldWord = new OldWordModel({
+      dictionary: this.dictionary,
+      number: this.number,
+      name: this.name,
+      pronunciation: this.pronunciation,
+      tags: this.tags,
+      sections: this.sections.map((section) => new SectionModel(section)),
+      updatedUser: this.updatedUser,
+      createdDate: this.createdDate,
+      updatedDate: this.updatedDate,
+      removedDate: new Date()
+    });
+    await oldWord.save();
+    await WordModel.deleteOne().where("_id", this["_id"]);
   }
 
   /** この単語データをコピーした新しい単語データを返します。*/

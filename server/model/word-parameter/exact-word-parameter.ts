@@ -19,7 +19,7 @@ export class ExactWordParameter extends WordParameter {
   }
 
   public createQuery(dictionary: Dictionary): QueryLike<Array<Word>, Word> {
-    const query = WordModel.findExist().where("dictionary", dictionary).where("number", this.number);
+    const query = WordModel.find().where("dictionary", dictionary).where("number", this.number);
     return query;
   }
 

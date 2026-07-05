@@ -135,7 +135,7 @@ export class ExampleSchema extends DiscardableSchema {
 
   private static async filterWords(dictionary: Dictionary, example: Example): Promise<void> {
     const linkedNumbers = example.words.map((word) => word.number);
-    const linkedWords = await WordModel.findExist().where("dictionary", dictionary).where("number", linkedNumbers);
+    const linkedWords = await WordModel.find().where("dictionary", dictionary).where("number", linkedNumbers);
     example.words = example.words.filter((word) => linkedWords.some((linkedWord) => linkedWord.number === word.number));
   }
 

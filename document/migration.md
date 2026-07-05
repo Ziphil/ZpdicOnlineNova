@@ -178,3 +178,17 @@ db.dictionaries.find({"editUsers": {$exists: true}}).forEach(function (dictionar
 });
 db.dictionaries.updateMany({}, {$unset: {"editUsers": ""}});
 ```
+
+### → ver 3.27.0
+単語データの論理削除方式を変更しました。
+これまでは削除済みの単語データも `words` コレクション内に残し、`removedDate` フィールドの有無で削除済みかどうかを判定していましたが、削除済みの単語データを独立した `oldwords` コレクションに移動して管理するように変更しました。
+これに伴い、`words` コレクション内に残っている削除済み (`removedDate` が設定されている) の単語データを `oldwords` コレクションに移動する必要があります。
+この処理を行わなかった場合、削除済みの単語データが通常の単語データとして検索に表示されるようになってしまいます。
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+db.words.aggregate([
+  {$match: {"removedDate": {$exists: true, $ne: null}}},
+  {$merge: {into: "oldwords", whenMatched: "replace", whenNotMatched: "insert"}}
+]);
+db.words.deleteMany({"removedDate": {$exists: true, $ne: null}});
+```

@@ -19,7 +19,7 @@ export class AdvancedWordParameter extends WordParameter {
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>, Word> {
     const filters = this.elements.map((element) => element.createQuery(dictionary).getFilter());
-    const query = WordModel.findExist().and(filters);
+    const query = WordModel.find().and(filters);
     return query;
   }
 
@@ -64,7 +64,7 @@ export class AdvancedWordParameterElement extends WordParameter {
       const eachFilter = eachQuery.getFilter();
       return eachFilter;
     });
-    const query = WordModel.findExist().where("dictionary", dictionary).or(eachFilters);
+    const query = WordModel.find().where("dictionary", dictionary).or(eachFilters);
     return query;
   }
 

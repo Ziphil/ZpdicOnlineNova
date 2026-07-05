@@ -40,7 +40,7 @@ export class ZpdicSerializer extends Serializer {
 
   private writeWords(writer: WriteStream): Promise<void> {
     const promise = new Promise<void>((resolve, reject) => {
-      const stream = WordModel.findExist().where("dictionary", this.dictionary).lean().cursor();
+      const stream = WordModel.find().where("dictionary", this.dictionary).lean().cursor();
       let first = true;
       writer.write("[");
       stream.on("data", (word) => {

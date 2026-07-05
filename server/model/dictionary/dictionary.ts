@@ -24,6 +24,7 @@ import {InvitationModel} from "/server/model/invitation";
 import {Member, MemberModel} from "/server/model/member/member";
 import {EditableTemplateWord} from "/server/model/template-word/template-word";
 import {User, UserSchema} from "/server/model/user/user";
+import {OldWord, OldWordModel} from "/server/model/word/old-word";
 import {Relation} from "/server/model/word/relation";
 import {Suggestion} from "/server/model/word/suggestion";
 import {EditableWord, Word, WordModel} from "/server/model/word/word";
@@ -192,7 +193,7 @@ export class DictionarySchema extends DiscardableSchema {
     this.updatedDate = new Date();
     await this.save();
     await Promise.all([
-      WordModel.deleteManyExist().where("dictionary", this),
+      WordModel.deleteMany().where("dictionary", this),
       ExampleModel.deleteManyExist().where("dictionary", this)
     ]);
     LogUtil.log("model/dictionary/startUpload", {number: this.number});
@@ -220,13 +221,13 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async fetchOneWordByNumber(this: Dictionary, number: number): Promise<Word | null> {
-    const query = WordModel.findOneExist().where("dictionary", this).where("number", number);
+    const query = WordModel.findOne().where("dictionary", this).where("number", number);
     const word = await query.exec();
     return word;
   }
 
   public async fetchWordSpellings<N extends number>(this: Dictionary, numbers: Array<N>): Promise<Record<N, string | null>> {
-    const words = await WordModel.findExist().where("dictionary", this).where("number", numbers).select(["number", "name"]).lean();
+    const words = await WordModel.find().where("dictionary", this).where("number", numbers).select(["number", "name"]).lean();
     const spellingMap = new Map(words.map((word) => [word.number, word.name]));
     const entries = numbers.map((number) => [number, spellingMap.get(number) ?? null] as const);
     const names = Object.fromEntries(entries) as any;
@@ -234,7 +235,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async checkDuplicateWordSpelling(this: Dictionary, name: string, excludedWordNumber?: number): Promise<boolean> {
-    let query = WordModel.findOneExist().where("dictionary", this).where("name", name);
+    let query = WordModel.findOne().where("dictionary", this).where("name", name);
     if (excludedWordNumber !== undefined) {
       query = query.ne("number", excludedWordNumber);
     }
@@ -433,8 +434,8 @@ export class DictionarySchema extends DiscardableSchema {
     return examples;
   }
 
-  public async fetchOldWords(this: Dictionary, wordNumber: number, range?: QueryRange): Promise<WithSize<Word>> {
-    const query = WordModel.where().ne("removedDate", undefined).where("dictionary", this).where("number", wordNumber).sort("-updatedDate");
+  public async fetchOldWords(this: Dictionary, wordNumber: number, range?: QueryRange): Promise<WithSize<OldWord>> {
+    const query = OldWordModel.find().where("dictionary", this).where("number", wordNumber).sort("-updatedDate");
     const words = await QueryRange.restrictWithSize(query, range);
     return words;
   }
@@ -457,7 +458,7 @@ export class DictionarySchema extends DiscardableSchema {
         return "";
       }
     })();
-    const titles = await WordModel.findExist().where("dictionary", this).distinct(key);
+    const titles = await WordModel.find().where("dictionary", this).distinct(key);
     const hitTitles = (() => {
       if (pattern !== "") {
         const fuse = new Fuse(titles, {threshold: 1, distance: 40});
@@ -470,7 +471,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async countWords(): Promise<number> {
-    const count = await WordModel.findExist().where("dictionary", this).countDocuments();
+    const count = await WordModel.find().where("dictionary", this).countDocuments();
     return count;
   }
 
@@ -480,13 +481,13 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async calcWordSpellingFrequencies(): Promise<WordSpellingFrequencies> {
-    const query = WordModel.findExist().where("dictionary", this).select("name").lean().cursor();
+    const query = WordModel.find().where("dictionary", this).select("name").lean().cursor();
     const frequencies = await calcWordSpellingFrequencies(query);
     return frequencies;
   }
 
   public async calcStatistics(): Promise<DictionaryStatistics> {
-    const wordCursor = WordModel.findExist().where("dictionary", this).select(["name", "sections.equivalents", "sections.informations"]).lean().cursor();
+    const wordCursor = WordModel.find().where("dictionary", this).select(["name", "sections.equivalents", "sections.informations"]).lean().cursor();
     const exampleCursor = ExampleModel.findExist().where("dictionary", this).select(["sentence"]).lean().cursor();
     const statistics = await calcDictionaryStatistics(wordCursor, exampleCursor);
     return statistics;
