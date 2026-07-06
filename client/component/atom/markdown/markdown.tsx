@@ -1,6 +1,6 @@
 //
 
-import {ComponentProps, ReactElement, useCallback, useMemo} from "react";
+import {ComponentProps, HTMLAttributes, ReactElement, createElement, useCallback, useMemo} from "react";
 import {uriTransformer as defaultTransformUri} from "react-markdown";
 import remarkSupsub from "remark-supersub";
 import type {Pluggable} from "unified";
@@ -45,12 +45,12 @@ export const Markdown = create(
         disallowedElements={(mode === "normal") ? ["h1", "h2", "h3", "h4", "h5", "h6", "hr"] : ["hr"]}
         components={{
           a: MarkdownAnchor,
-          h1: (mode === "article") ? (props) => <MarkdownHeading level={1} {...props}/> : (props) => <h1 {...props}/>,
-          h2: (mode === "article") ? (props) => <MarkdownHeading level={2} {...props}/> : (props) => <h2 {...props}/>,
-          h3: (mode === "article") ? (props) => <MarkdownHeading level={3} {...props}/> : (props) => <h3 {...props}/>,
-          h4: (mode === "article") ? (props) => <MarkdownHeading level={4} {...props}/> : (props) => <h4 {...props}/>,
-          h5: (mode === "article") ? (props) => <MarkdownHeading level={5} {...props}/> : (props) => <h5 {...props}/>,
-          h6: (mode === "article") ? (props) => <MarkdownHeading level={6} {...props}/> : (props) => <h6 {...props}/>,
+          h1: createHeadingComponent(mode, 1),
+          h2: createHeadingComponent(mode, 2),
+          h3: createHeadingComponent(mode, 3),
+          h4: createHeadingComponent(mode, 4),
+          h5: createHeadingComponent(mode, 5),
+          h6: createHeadingComponent(mode, 6),
           ...components
         }}
         remarkPlugins={remarkPlugins}
@@ -133,6 +133,20 @@ function getAllFeaturePlugins(features: Array<Omit<MarkdownFeature, "basic">>): 
     const [rehypePlugins, remarkPlugins] = getFeaturePlugins(feature);
     return [[...accumRehypePlugins, ...rehypePlugins], [...accumRemarkPlugins, ...remarkPlugins]];
   }, [[], []]);
+}
+
+function createHeadingComponent(mode: "normal" | "article" | "document", level: 1 | 2 | 3 | 4 | 5 | 6): any {
+  if (mode === "article") {
+    const component = function (props: HTMLAttributes<HTMLHeadingElement>): ReactElement {
+      return <MarkdownHeading level={level} {...props}/>;
+    };
+    return component;
+  } else {
+    const component = function (props: HTMLAttributes<HTMLHeadingElement>): ReactElement {
+      return createElement(`h${level}`, props);
+    };
+    return component;
+  }
 }
 
 export type MarkdownSpecialPaths = {

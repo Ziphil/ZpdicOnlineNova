@@ -2,7 +2,8 @@
 
 import type {
   Article as ArticleSkeleton,
-  EditableArticle as EditableArticleSkeleton
+  EditableArticle as EditableArticleSkeleton,
+  ObjectId
 } from "/server/internal/skeleton";
 import {
   Article,
@@ -14,7 +15,7 @@ export namespace ArticleCreator {
 
   export function skeletonize(raw: Article): ArticleSkeleton {
     const skeleton = {
-      id: raw.id,
+      id: raw.id.toString() as ObjectId,
       number: raw.number,
       tags: raw.tags,
       title: raw.title,

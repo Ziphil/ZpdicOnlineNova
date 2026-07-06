@@ -324,17 +324,17 @@ export class DictionaryRestController extends InternalRestController {
     const models = [DictionaryModel, WordModel, ExampleModel, UserModel] as Array<any>;
     const [dictionary, word, example, user] = await Promise.all(models.map(async (model) => {
       if (model === UserModel) {
-        const [count, {size}] = await Promise.all([model.estimatedDocumentCount(), model.collection.stats()]);
-        return {count, wholeCount: count, size};
+        const count = await model.estimatedDocumentCount();
+        return {count, wholeCount: count};
       } else if (model === WordModel) {
-        const [count, oldCount, {size}, oldStats] = await Promise.all([WordModel.estimatedDocumentCount(), OldWordModel.estimatedDocumentCount(), WordModel.collection.stats(), OldWordModel.collection.stats()]);
-        return {count, wholeCount: count + oldCount, size: size + oldStats.size};
+        const [count, oldCount] = await Promise.all([WordModel.estimatedDocumentCount(), OldWordModel.estimatedDocumentCount()]);
+        return {count, wholeCount: count + oldCount};
       } else if (model === ExampleModel) {
-        const [count, oldCount, {size}, oldStats] = await Promise.all([ExampleModel.estimatedDocumentCount(), OldExampleModel.estimatedDocumentCount(), ExampleModel.collection.stats(), OldExampleModel.collection.stats()]);
-        return {count, wholeCount: count + oldCount, size: size + oldStats.size};
+        const [count, oldCount] = await Promise.all([ExampleModel.estimatedDocumentCount(), OldExampleModel.estimatedDocumentCount()]);
+        return {count, wholeCount: count + oldCount};
       } else {
-        const [count, oldCount, {size}, oldStats] = await Promise.all([DictionaryModel.estimatedDocumentCount(), OldDictionaryModel.estimatedDocumentCount(), DictionaryModel.collection.stats(), OldDictionaryModel.collection.stats()]);
-        return {count, wholeCount: count + oldCount, size: size + oldStats.size};
+        const [count, oldCount] = await Promise.all([DictionaryModel.estimatedDocumentCount(), OldDictionaryModel.estimatedDocumentCount()]);
+        return {count, wholeCount: count + oldCount};
       }
     }));
     const body = {dictionary, word, example, user};

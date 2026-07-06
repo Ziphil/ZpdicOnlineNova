@@ -11,7 +11,7 @@ import {Jsonify} from "jsonify-type";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {OldExampleModel} from "/server/model/example/old-example";
-import {User} from "/server/model/user/user";
+import {User, UserSchema} from "/server/model/user/user";
 import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {Word, WordModel} from "/server/model/word/word";
 import {LogUtil} from "/server/util/log";
@@ -48,7 +48,7 @@ export class ExampleSchema {
   public offer?: LinkedExampleOfferSchema;
 
   @prop({ref: "UserSchema"})
-  public updatedUser?: Ref<User>;
+  public updatedUser?: Ref<UserSchema>;
 
   @prop()
   public createdDate?: Date;

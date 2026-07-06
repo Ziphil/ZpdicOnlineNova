@@ -119,7 +119,7 @@ export class DictionarySchema {
     const meInvolvedDictionaryIds = (me !== null) ? await MemberModel.fetchDictionaryIdsByUser(me, "edit") : [];
     const dictionaries = await DictionaryModel.find().where("user", user).or([
       {"visibility": "public"},
-      {"user": me},
+      DictionaryModel.find().where("user", me).getFilter(),
       DictionaryModel.find().in("_id", meInvolvedDictionaryIds).getFilter()
     ]).sort({"updatedDate": -1, "number": -1}).exec();
     return dictionaries;
@@ -188,7 +188,7 @@ export class DictionarySchema {
     return this;
   }
 
-  private async startUpload(this: Dictionary): Promise<void> {
+  public async startUpload(this: Dictionary): Promise<void> {
     this.status = "saving";
     this.updatedDate = new Date();
     await this.save();
@@ -415,7 +415,7 @@ export class DictionarySchema {
       QueryRange.restrict(exactQuery, range),
       QueryRange.restrict(partQuery, range)
     ]);
-    const exactWordIds = new Set<number>(exactWords.map((word) => word.id));
+    const exactWordIds = new Set<string>(exactWords.map((word) => word.id));
     const words = [...exactWords, ...partWords.filter((word) => !exactWordIds.has(word.id))].slice(0, 50);
     return words;
   }
@@ -456,7 +456,7 @@ export class DictionarySchema {
         return "";
       }
     })();
-    const titles = await WordModel.find().where("dictionary", this).distinct(key);
+    const titles = await WordModel.find().where("dictionary", this).distinct<string, string>(key);
     const hitTitles = (() => {
       if (pattern !== "") {
         const fuse = new Fuse(titles, {threshold: 1, distance: 40});

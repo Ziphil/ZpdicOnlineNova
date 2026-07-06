@@ -10,7 +10,7 @@ import {
 import {Jsonify} from "jsonify-type";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
-import {User} from "/server/model/user/user";
+import {User, UserSchema} from "/server/model/user/user";
 import {OldWordModel} from "/server/model/word/old-word";
 import {Relation} from "/server/model/word/relation";
 import {SectionModel, SectionSchema} from "/server/model/word/section";
@@ -39,7 +39,7 @@ export class WordSchema {
   public sections!: Array<SectionSchema>;
 
   @prop({ref: "UserSchema"})
-  public updatedUser?: Ref<User>;
+  public updatedUser?: Ref<UserSchema>;
 
   @prop()
   public createdDate?: Date;

@@ -224,7 +224,7 @@ export class UserSchema {
 
   /** 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。
    * データベースへの保存は行わないので、別途保存処理を行ってください。*/
-  private async encryptPassword(password: string): Promise<void> {
+  public async encryptPassword(password: string): Promise<void> {
     if (!validatePassword(password)) {
       throw new CustomError("invalidUserPassword");
     } else {
@@ -233,7 +233,7 @@ export class UserSchema {
     }
   }
 
-  private comparePassword(password: string): boolean {
+  public comparePassword(password: string): boolean {
     return compareSync(password, this.hash);
   }
 

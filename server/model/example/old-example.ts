@@ -9,7 +9,7 @@ import {
 } from "@typegoose/typegoose";
 import {DictionarySchema} from "/server/model/dictionary/dictionary";
 import {LinkedExampleOfferSchema} from "/server/model/example-offer/linked-example-offer";
-import {User} from "/server/model/user/user";
+import {UserSchema} from "/server/model/user/user";
 import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {LogUtil} from "/server/util/log";
 
@@ -42,7 +42,7 @@ export class OldExampleSchema {
   public offer?: LinkedExampleOfferSchema;
 
   @prop({ref: "UserSchema"})
-  public updatedUser?: Ref<User>;
+  public updatedUser?: Ref<UserSchema>;
 
   @prop()
   public createdDate?: Date;

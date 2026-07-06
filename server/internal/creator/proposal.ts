@@ -1,6 +1,7 @@
 //
 
 import type {
+  ObjectId,
   Proposal as ProposalSkeleton
 } from "/server/internal/skeleton";
 import {
@@ -12,7 +13,7 @@ export namespace ProposalCreator {
 
   export function skeletonize(raw: Proposal): ProposalSkeleton {
     const skeleton = {
-      id: raw.id,
+      id: raw.id.toString() as ObjectId,
       name: raw.name,
       comment: raw.comment ?? "",
       createdDate: raw.createdDate.toISOString()

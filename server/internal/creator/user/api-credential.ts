@@ -1,7 +1,8 @@
 //
 
 import type {
-  ApiCredential as ApiCredentialSkeleton
+  ApiCredential as ApiCredentialSkeleton,
+  ObjectId
 } from "/server/internal/skeleton";
 import {
   ApiCredential
@@ -12,7 +13,7 @@ export namespace ApiCredentialCreator {
 
   export function skeletonize(raw: ApiCredential): ApiCredentialSkeleton {
     const skeleton = {
-      id: raw.id,
+      id: raw.id.toString() as ObjectId,
       limit: raw.limit,
       createdDate: raw.createdDate?.toISOString(),
       lastUsedDate: raw.lastUsedDate?.toISOString() ?? null

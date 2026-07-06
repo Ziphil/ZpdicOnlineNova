@@ -3,7 +3,8 @@
 import {isDocument} from "@typegoose/typegoose";
 import {DictionaryCreator} from "/server/internal/creator/dictionary/dictionary";
 import type {
-  Invitation as InvitationSkeleton
+  Invitation as InvitationSkeleton,
+  ObjectId
 } from "/server/internal/skeleton";
 import {
   Invitation
@@ -16,7 +17,7 @@ export namespace InvitationCreator {
     await raw.populate("dictionary");
     if (isDocument(raw.dictionary)) {
       const skeleton = {
-        id: raw.id,
+        id: raw.id.toString() as ObjectId,
         type: raw.type,
         dictionary: await DictionaryCreator.skeletonizeWithUser(raw.dictionary),
         createdDate: raw.createdDate.toISOString()

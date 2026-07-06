@@ -22,7 +22,7 @@
     "lint:fix": "eslint --fix client/**/*.ts client/**/*.tsx server/**/*.ts"
   },
   "engines": {
-    "node": "20.18.0",
+    "node": "20.19.0",
     "npm": "10.8.2"
   },
   "eslintConfig": {
@@ -71,13 +71,13 @@
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.4",
     "@sendgrid/mail": "^8.1.0",
-    "@typegoose/typegoose": "^9.5.0",
+    "@typegoose/typegoose": "^13.4.0",
     "agenda": "^5.0.0",
     "akrantiain": "^1.2.1",
     "bcrypt": "^5.0.1",
     "bocu-stream": "^1.0.0",
     "buffer": "^6.0.3",
-    "colorjs.io": "^0.5.0",
+    "colorjs.io": "^0.5.2",
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -96,7 +96,7 @@
     "jsonwebtoken": "^9.0.2",
     "lodash.merge": "^4.6.2",
     "markdown-truncate": "^1.1.1",
-    "mongoose": "^6.1.6",
+    "mongoose": "^9.7.3",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nanoid": "^3.2.0",
@@ -200,7 +200,7 @@
     "ts-loader": "^9.5.1",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^3.12.0",
-    "typescript": "^5.3.2",
+    "typescript": "^5.9.3",
     "webpack": "^5.89.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^5.1.4",

@@ -15,7 +15,7 @@ export namespace ExampleCreator {
 
   export function skeletonize(raw: Example): Example$Out {
     const skeleton = {
-      id: raw.id || raw["_id"],
+      id: (raw.id || raw["_id"]).toString(),
       number: raw.number,
       tags: raw.tags ?? [],
       words: raw.words.map(LinkedWordCreator.skeletonize),

@@ -2,7 +2,7 @@
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretRight} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement} from "react";
+import {AnchorHTMLAttributes, ReactElement, useCallback} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria, data} from "zographia";
 import {Markdown} from "/client/component/atom/markdown";
 import {WordCardAnchor} from "/client/component/compound/word-list/word-card-anchor";
@@ -22,6 +22,10 @@ export const WordCardPhraseList = create(
     section: Section,
     className?: string
   } & AdditionalProps): ReactElement | null {
+
+    const anchorComponent = useCallback(function (props: AnchorHTMLAttributes<HTMLAnchorElement>): ReactElement {
+      return <WordCardAnchor dictionary={dictionary} {...props}/>;
+    }, [dictionary]);
 
     return (section.phrases.length > 0) ? (
       <div styleName="root" {...rest}>
@@ -56,9 +60,7 @@ export const WordCardPhraseList = create(
                         compact={true}
                         specialPaths={getDictionarySpecialPaths(dictionary)}
                         features={dictionary.settings.markdownFeatures}
-                        components={{
-                          a: (props) => <WordCardAnchor dictionary={dictionary} {...props}/>
-                        }}
+                        components={{a: anchorComponent}}
                       >
                         {phrase.text}
                       </Markdown>

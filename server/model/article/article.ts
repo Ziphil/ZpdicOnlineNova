@@ -11,7 +11,7 @@ import {Jsonify} from "jsonify-type";
 import {OldArticleModel} from "/server/model/article/old-article";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
-import {User} from "/server/model/user/user";
+import {User, UserSchema} from "/server/model/user/user";
 import {LogUtil} from "/server/util/log";
 
 
@@ -34,7 +34,7 @@ export class ArticleSchema {
   public content!: string;
 
   @prop({required: true, ref: "UserSchema"})
-  public updatedUser!: Ref<User>;
+  public updatedUser!: Ref<UserSchema>;
 
   @prop({required: true})
   public createdDate!: Date;

@@ -8,7 +8,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {DictionarySchema} from "/server/model/dictionary/dictionary";
-import {User} from "/server/model/user/user";
+import {UserSchema} from "/server/model/user/user";
 import {SectionSchema} from "/server/model/word/section";
 import {LogUtil} from "/server/util/log";
 
@@ -35,7 +35,7 @@ export class OldWordSchema {
   public sections!: Array<SectionSchema>;
 
   @prop({ref: "UserSchema"})
-  public updatedUser?: Ref<User>;
+  public updatedUser?: Ref<UserSchema>;
 
   @prop()
   public createdDate?: Date;
