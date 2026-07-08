@@ -25,6 +25,9 @@
     "node": "20.19.0",
     "npm": "10.8.2"
   },
+  "volta": {
+    "node": "20.19.0"
+  },
   "eslintConfig": {
     "extends": [
       "ziphil",
