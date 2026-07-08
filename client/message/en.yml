@@ -314,6 +314,12 @@ addProposalDialog:
     nameRequired: >-
       Enter the word to request.
 apiCredentialList:
+  label:
+    limit: "{limit, number} {limit, plural, one {request/min} other {requests/min}}"
+  table:
+    createdDate: "Issued at"
+    lastUsedDate: "Last used at"
+    neverUsed: "Never used"
   button:
     copy: "Copy"
     discard: "Delete"
@@ -324,10 +330,6 @@ apiCredentialList:
         Any programs using this API key will no longer be able to access dictionaries.
         Are you sure?
       confirm: "Delete"
-  table:
-    createdDate: "Issued at"
-    lastUsedDate: "Last used at"
-    neverUsed: "Never used"
   caution: >-
     Please copy this key now and save it in a safe place, as you will not be able to see it later.
   empty: "You have not issued any API keys yet"

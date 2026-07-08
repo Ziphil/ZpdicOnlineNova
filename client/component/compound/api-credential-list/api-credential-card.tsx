@@ -55,6 +55,9 @@ export const ApiCredentialCard = create(
               {"•".repeat(40)}
             </pre>
           )}
+          <div styleName="limit">
+            {trans("label.limit", {limit: credential.limit})}
+          </div>
           <dl styleName="table">
             <dt styleName="table-label">{trans("table.createdDate")}</dt>
             <dd styleName="table-value"><time dateTime={dayjs(credential.createdDate).toISOString()}>{transDate(credential.createdDate)}</time></dd>
