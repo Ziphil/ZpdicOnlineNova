@@ -12,9 +12,6 @@ ZpDIC Online に緊急のバグ修正 (ホットフィックス) を施し、新
 各コミットメッセージ・マージメッセージ・タグメッセージは**固定の文言**を使う。
 勝手に言い換えたり、英語にしたりしないこと。
 
-このスキルは大半の手順を deploy スキルと共有している。
-バージョンインクリメント・確認ゲート・タグ付け・push まわりの細部は deploy スキルも参照すること。
-
 ## 全体の流れ
 1. 事前確認 (working tree)
 2. `master` ブランチをチェックアウト
@@ -42,7 +39,7 @@ git status
 **確認する内容**:
 - **working tree が clean であること**を確認する。未コミットの変更がある場合は中断してユーザーに報告する。
 
-deploy スキルと異なり、開始時のブランチは問わない (どのブランチにいても構わない)。
+開始時のブランチは問わない (どのブランチにいても構わない)。次の Step 2 で `master` に移る。
 working tree が clean である場合のみ次に進む。
 
 ## Step 2: `master` ブランチをチェックアウト
@@ -101,8 +98,6 @@ npm run build
 インクリメント後のバージョン番号 (以降この手順では `X.Y.Z` と表記) を確定させ、`package.json` の `version` の値だけを更新する。
 他のフィールドには触れない。
 
-deploy スキルの Step 3 と同様。
-
 ## Step 6: バージョン変更のコミット
 `package.json` の変更**のみ**を `hotfix/<yyyymmdd>` にコミットする。
 他のファイルを巻き込まないよう、明示的に `package.json` だけをステージする。
@@ -112,8 +107,6 @@ git commit -m "バージョン番号を変更"
 ```
 
 コミットメッセージは `バージョン番号を変更` で固定。
-
-deploy スキルの Step 4 と同様。
 
 ## Step 7: 実行前の最終確認 (確認ゲート)
 ここから先 (マージ・タグ・push) は取り消しが難しく、push は外部 (origin) への反映を伴う。
@@ -127,8 +120,6 @@ deploy スキルの Step 4 と同様。
 - これから `master` に `hotfix/<yyyymmdd>` をマージし、`vX.Y.Z` タグを付け、`develop` にも `hotfix/<yyyymmdd>` をマージした上で、`develop`・`master`・タグを `origin` に push すること。
 
 選択肢は「進める」「中止する」のような 2 択にし、ユーザーが「進める」を選んだ場合のみ次に進む。
-
-deploy スキルの Step 5 と同様。
 
 ## Step 8: `master` へのマージ
 `master` をチェックアウトし、`hotfix/<yyyymmdd>` を fast-forward なし (`--no-ff`) でマージする。
@@ -151,8 +142,6 @@ git tag -a vX.Y.Z -m "verX.Y.Zをリリース"
 **注意点**:
 - タグ名は `vX.Y.Z` (例: バージョンが `3.25.1` なら `v3.25.1`)。
 - タグメッセージは `verX.Y.Zをリリース` で固定 (例: `ver3.25.1をリリース`)。
-
-deploy スキルの Step 7 と同様。
 
 ## Step 10: `develop` に戻り `hotfix` ブランチをマージ
 `develop` をチェックアウトし、`hotfix/<yyyymmdd>` を fast-forward なし (`--no-ff`) でこちらにもマージする。
@@ -191,5 +180,3 @@ git push origin vX.Y.Z
 ```
 
 ローカル環境で実行している場合は、従来どおりタグも push する。
-
-deploy スキルの Step 8 と同様。
