@@ -38,7 +38,7 @@ export const WordList = create(
     const {trans} = useTrans("wordList");
 
     return (
-      <WordListDictionaryContext.Provider value={dictionary}>
+      <WordListDictionaryContext dictionary={dictionary}>
         <List styleName="root" items={words} pageSpec={pageSpec} {...rest}>
           <ListBody styleName="body">
             {(word) => (
@@ -80,7 +80,7 @@ export const WordList = create(
           </ListBody>
           <ListPagination styleName="pagination"/>
         </List>
-      </WordListDictionaryContext.Provider>
+      </WordListDictionaryContext>
     );
 
   }
