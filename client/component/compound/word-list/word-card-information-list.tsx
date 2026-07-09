@@ -1,6 +1,6 @@
 //
 
-import {AnchorHTMLAttributes, ReactElement, useCallback, useMemo} from "react";
+import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText} from "zographia";
 import {Markdown} from "/client/component/atom/markdown";
 import {create} from "/client/component/create";
@@ -23,10 +23,6 @@ export const WordCardInformationList = create(
 
     const visibleInformations = useMemo(() => section.informations.filter((information) => !information.hidden), [section.informations]);
 
-    const anchorComponent = useCallback(function (props: AnchorHTMLAttributes<HTMLAnchorElement>): ReactElement {
-      return <WordCardAnchor dictionary={dictionary} {...props}/>;
-    }, [dictionary]);
-
     return (visibleInformations.length > 0) ? (
       <div styleName="root" {...rest}>
         {visibleInformations.map((information, index) => (
@@ -43,7 +39,7 @@ export const WordCardInformationList = create(
                 compact={true}
                 specialPaths={getDictionarySpecialPaths(dictionary)}
                 features={dictionary.settings.markdownFeatures}
-                components={{a: anchorComponent}}
+                components={{a: WordCardAnchor}}
               >
                 {information.text}
               </Markdown>

@@ -5,21 +5,21 @@ import {Link} from "/client/component/atom/link";
 import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
 import {checkWordHref} from "/client/util/dictionary";
-import {DictionaryWithExecutors} from "/server/internal/skeleton";
+import {useWordListDictionary} from "./word-list-context";
 
 
 export const WordCardAnchor = create(
   null, "WordCardAnchor",
   function ({
-    dictionary,
     href,
     children,
     ...rest
   }: {
-    dictionary: DictionaryWithExecutors,
     href?: string,
     children?: ReactNode
   } & AnchorHTMLAttributes<HTMLAnchorElement>): ReactElement {
+
+    const dictionary = useWordListDictionary();
 
     const wordNumber = (href !== undefined) ? checkWordHref(dictionary, href) : undefined;
 
