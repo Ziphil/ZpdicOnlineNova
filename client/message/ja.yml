@@ -333,6 +333,7 @@ apiCredentialList:
   caution: >-
     API キーを後から確認することはできません。
     今の段階でコピーして保存しておいてください。
+  empty: "API キーは発行されていません"
   toast:
     copy: >-
       API キーをコピーしました。
