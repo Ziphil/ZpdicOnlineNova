@@ -333,6 +333,7 @@ apiCredentialList:
   caution: >-
     API キーを後から確認することはできません。
     今の段階でコピーして保存しておいてください。
+  empty: "<NOT SET>"
   toast:
     copy: >-
       API キーをコピーしました。
