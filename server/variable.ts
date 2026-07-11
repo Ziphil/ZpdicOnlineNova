@@ -1,9 +1,18 @@
 //
 
-import {loadVault} from "../secret";
+
+import {fromEnv, fromFile, injectEnv} from "multi-env-injector";
 
 
-loadVault();
+injectEnv([{
+  kind: "dotenv",
+  path: "./variable.env"
+}, {
+  kind: "keepass",
+  group: "ZpdicOnlineNova",
+  path: fromEnv("VAULT_DATABASE_PATH"),
+  password: fromFile(fromEnv("VAULT_SECRET_PATH"))
+}]);
 
 export const VERSION = process.env["npm_package_version"] || "?";
 export const PORT = process.env["PORT"] || 8050;

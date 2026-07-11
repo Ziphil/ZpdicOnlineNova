@@ -1,12 +1,20 @@
 //
 
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import {fromEnv, fromFile, injectEnv} from "multi-env-injector";
 import path from "path";
 import {EnvironmentPlugin} from "webpack";
-import {loadVault} from "./secret";
 
 
-loadVault();
+injectEnv([{
+  kind: "dotenv",
+  path: path.join(__dirname, "variable.env")
+}, {
+  kind: "keepass",
+  group: "ZpdicOnlineNova",
+  path: fromEnv("VAULT_DATABASE_PATH"),
+  password: fromFile(fromEnv("VAULT_SECRET_PATH"))
+}]);
 
 const config = {
   entry: ["babel-polyfill", "./client/index.tsx"],
