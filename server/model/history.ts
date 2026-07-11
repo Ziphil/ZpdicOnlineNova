@@ -4,6 +4,7 @@ import {
   DocumentType,
   Ref,
   getModelForClass,
+  index,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -13,6 +14,7 @@ import {QueryRange} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "histories"}})
+@index({"dictionary": 1, "date": -1})
 export class HistorySchema {
 
   @prop({required: true, ref: "DictionarySchema"})

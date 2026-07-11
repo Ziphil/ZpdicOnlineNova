@@ -4,6 +4,7 @@ import {
   DocumentType,
   Ref,
   getModelForClass,
+  index,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -14,6 +15,8 @@ import {User, UserSchema} from "/server/model/user/user";
 
 
 @modelOptions({schemaOptions: {collection: "members"}})
+@index({"dictionary": 1, "user": 1, "authority": 1})
+@index({"user": 1, "authority": 1})
 export class MemberSchema {
 
   @prop({required: true, ref: "DictionarySchema"})

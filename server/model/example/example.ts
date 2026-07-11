@@ -4,6 +4,7 @@ import {
   DocumentType,
   Ref,
   getModelForClass,
+  index,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -21,6 +22,10 @@ import {LinkedExampleOfferSchema} from "../example-offer/linked-example-offer";
 
 
 @modelOptions({schemaOptions: {collection: "examples"}})
+@index({"dictionary": 1, "number": 1})
+@index({"dictionary": 1, "createdDate": -1, "number": -1, "_id": -1})
+@index({"dictionary": 1, "words.number": 1})
+@index({"offer.catalog": 1, "offer.number": 1})
 export class ExampleSchema {
 
   @prop({required: true, ref: "DictionarySchema"})

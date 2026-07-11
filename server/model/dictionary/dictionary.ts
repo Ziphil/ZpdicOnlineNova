@@ -4,6 +4,7 @@ import {
   DocumentType,
   Ref,
   getModelForClass,
+  index,
   isDocument,
   modelOptions,
   prop
@@ -47,6 +48,9 @@ export const DictionaryVisibilityUtil = LiteralUtilType.create(DICTIONARY_VISIBI
 
 
 @modelOptions({schemaOptions: {collection: "dictionaries", minimize: false}})
+@index({"paramName": 1}, {"sparse": true})
+@index({"visibility": 1, "updatedDate": -1, "number": -1})
+@index({"user": 1})
 export class DictionarySchema {
 
   @prop({required: true, ref: "UserSchema"})

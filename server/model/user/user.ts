@@ -3,6 +3,7 @@
 import {
   DocumentType,
   getModelForClass,
+  index,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -18,6 +19,7 @@ import {EMAIL_REGEXP, IDENTIFIER_REGEXP, validatePassword} from "/server/util/va
 
 
 @modelOptions({schemaOptions: {collection: "users"}})
+@index({"email": 1})
 export class UserSchema {
 
   @prop({required: true, unique: true, validate: IDENTIFIER_REGEXP})
