@@ -1,4 +1,4 @@
-//
+/* eslint-disable @typescript-eslint/naming-convention */
 
 import {
   DocumentType,
@@ -23,7 +23,6 @@ import {LogUtil} from "/server/util/log";
 @index({"dictionary": 1, "name": 1, "_id": 1})
 @index({"dictionary": 1, "updatedDate": -1, "_id": -1})
 @index({"dictionary": 1, "createdDate": -1, "_id": -1})
-// eslint-disable-next-line @typescript-eslint/naming-convention
 @index({"dictionary": 1, "sections.relations.number": 1})
 export class WordSchema {
 
