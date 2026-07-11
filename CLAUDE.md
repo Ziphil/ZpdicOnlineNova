@@ -112,13 +112,11 @@ export const Foo = create(
 
 ## コーディング規約
 詳細な規約は `.claude/rules/` に定義されており、**Claude Code はこれらを必ず守る**こと:
-
 - @.claude/rules/typescript.md — 命名規則・TypeScript 共通スタイル (`*.ts`, `*.tsx`)
 - @.claude/rules/react.md — React 関連スタイル (`client/**/*.tsx`, `client/**/*.yml`)
 - @.claude/rules/css.md — SCSS スタイル (`client/**/*.scss`)
 
 上記に加えてリポジトリ固有の慣習:
-
 - ESLint は `eslint-config-ziphil`。コミット前に `npm run lint` で確認。
 - コメントは日本語。JSDoc 風の `/** ... */` でメソッドの意図を説明する形式だが、これは最低限に留める。指示がない限りコメントを付ける必要はない。
 - 多くのファイル先頭に `//` だけの行がある (既存の慣習)。新規ファイルでもこれに倣う。
@@ -129,5 +127,8 @@ git ワークツリーで作業していて、ワークツリーを使った作�
 特に、ワークツリーフォルダ自身は (エディタにロックされて詰まるのを避けるため) 削除せず、手動削除を促す。
 
 **機密ファイルは読み取り禁止**。
-リポジトリトップの `variable.env` (環境変数) と `secret.ts` は機密情報を含む。
-`Read` ツールでは `.claude/settings.json` の `deny` で遮断済みだが、`cat`, `Get-Content` 等の Bash 経由でも**絶対に内容を読み込まないこと**。
+例えば、以下を必ず守ること。
+- `*.env` ファイル (`variable.env` など) の内容を読まない。
+- KeepassXC のデータベース (`*.kdbx`) にアクセスしない。`keepassxc-cli` の実行も禁止。
+- パスワードが保存されていると思われるファイルを読み込まない。
+- これらに触れるコードを実行しない。認証情報が必要な動作確認はユーザーに依頼する。
