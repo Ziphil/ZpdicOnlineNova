@@ -18,7 +18,7 @@ export class ExactExampleParameter extends ExampleParameter {
   }
 
   public createQuery(dictionary: Dictionary): QueryLike<Array<Example>, Example> {
-    const query = ExampleModel.findExist().where("dictionary", dictionary).where("number", this.number);
+    const query = ExampleModel.find().where("dictionary", dictionary).where("number", this.number);
     return query;
   }
 

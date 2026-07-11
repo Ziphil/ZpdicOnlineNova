@@ -28,7 +28,7 @@ export class NormalExampleParameter extends ExampleParameter {
     const needle = ExampleParameter.createNeedle(this.text, this.type, this.options.ignore);
     const sortKey = "-createdDate -number _id";
     const disjunctFilters = keys.map((key) => ExampleModel.find().where(key, needle).getFilter());
-    const query = ExampleModel.findExist().where("dictionary", dictionary["_id"]).or(disjunctFilters).sort(sortKey);
+    const query = ExampleModel.find().where("dictionary", dictionary["_id"]).or(disjunctFilters).sort(sortKey);
     return query;
   }
 

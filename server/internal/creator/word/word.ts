@@ -4,27 +4,31 @@ import {ExampleCreator} from "/server/internal/creator/example/example";
 import {SectionCreator} from "/server/internal/creator/word/section";
 import type {
   EditableWord as EditableWordSkeleton,
+  ObjectId,
   Word as WordSkeleton,
   WordWithExamples as WordSkeletonWithExamples
 } from "/server/internal/skeleton";
 import {
   EditableWord,
   ExampleModel,
+  OldWord,
   Word
 } from "/server/model";
 
 
 export namespace WordCreator {
 
-  export function skeletonize(raw: Word): WordSkeleton {
+  export function skeletonize(raw: Word | OldWord): WordSkeleton {
     const skeleton = {
-      id: raw.id || raw["_id"],
+      id: (raw.id || raw["_id"]).toString() as ObjectId,
       number: raw.number,
       spelling: raw.name,
       pronunciation: raw.pronunciation ?? "",
       tags: raw.tags,
       sections: raw.sections.map(SectionCreator.skeletonize),
-      updatedUser: (raw.updatedUser !== undefined) ? {id: raw.updatedUser} : undefined,
+      updatedUser: (raw.updatedUser !== undefined) ? {
+        id: raw.updatedUser.toString() as ObjectId
+      } : undefined,
       createdDate: raw.createdDate?.toISOString() ?? undefined,
       updatedDate: raw.updatedDate?.toISOString() ?? undefined
     } satisfies WordSkeleton;

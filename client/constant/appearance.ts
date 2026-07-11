@@ -45,7 +45,7 @@ export const COLOR_DEFINITIONS = {
     backgroundDark: createColor("oklch(30% 10% 58)"),
     stainDark: createColor("black")
   }
-} satisfies Record<string, ColorDefinitions>;
+} as unknown as Record<string, ColorDefinitions>;
 
 export const STYLE_DEFINITIONS = {
   sans: {

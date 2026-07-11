@@ -314,6 +314,12 @@ addProposalDialog:
     nameRequired: >-
       Enigu la vorton kies kreadon vi petas.
 apiCredentialList:
+  label:
+    limit: "{limit, number} {limit, plural, one {peto/minuto} other {petoj/minuto}}"
+  table:
+    createdDate: "Eldonita je"
+    lastUsedDate: "Laste uzita je"
+    neverUsed: "Neniam uzita"
   button:
     copy: "Kopii"
     discard: "Forigi"
@@ -324,10 +330,6 @@ apiCredentialList:
         Programoj uzantaj tiun API-ŝlosilon ne plu povos aliri vortarojn.
         Ĉu vi certas?
       confirm: "Forigi"
-  table:
-    createdDate: "Eldonita je"
-    lastUsedDate: "Laste uzita je"
-    neverUsed: "Neniam uzita"
   caution: >-
     Bonvolu kopii tiun ŝlosilon nun kaj savi ĝin en sigura loko, ĉar vi ne povos vidi ĝin poste.
   empty: "Vi ankoraŭ ne eldonis iun ajn API-ŝlosilon"
@@ -608,6 +610,19 @@ invitationList:
   button:
     accept: "Akcepti"
     reject: "Malakcepti"
+issueUserResetTokenForm:
+  label:
+    name: "Salutnomo"
+    email: "Retpoŝta adreso"
+  error:
+    nameRequired: >-
+      Enigu salutnomon.
+    emailInvalid: >-
+      Enigu validan retpoŝtan adreson.
+    emailRequired: >-
+      Enigu retpoŝtan adreson.
+  button:
+    confirm: "Sendi"
 loginForm:
   label:
     name: "Salutnomo"
@@ -687,19 +702,6 @@ registerForm:
       Enigu pasvorton.
     agreeRequired: >-
       Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la privateca politiko.
-issueUserResetTokenForm:
-  label:
-    name: "Salutnomo"
-    email: "Retpoŝta adreso"
-  error:
-    nameRequired: >-
-      Enigu salutnomon.
-    emailInvalid: >-
-      Enigu validan retpoŝtan adreson.
-    emailRequired: >-
-      Enigu retpoŝtan adreson.
-  button:
-    confirm: "Sendi"
 resetUserPasswordForm:
   label:
     password: "Nova pasvorto"

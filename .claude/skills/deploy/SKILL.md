@@ -17,11 +17,13 @@ ZpDIC Online を新しいバージョンとしてリリースする。
 2. ビルドが通るかの確認
 3. バージョン番号のインクリメント
 4. バージョン変更のコミット
-5. `master` へのマージ
-6. タグ付け
-7. origin への push
-8. `develop` に戻る
-9. リリース内容のお知らせ文をまとめて提案する
+5. 実行前の最終確認 (確認ゲート)
+6. `master` へのマージ
+7. タグ付け
+8. origin への push
+9. `develop` に戻る
+10. Notion のマイルストーンのページを編集する (major / minor アップデートのときのみ)
+11. リリース内容のお知らせ文をまとめて提案する
 
 破壊的・外部反映を伴う操作 (マージ・タグ・push) に入る前に、後述の「実行前の最終確認」でユーザーに一度確認してから進めること。
 
@@ -37,6 +39,15 @@ git status
 
 両方を満たしている場合のみ次に進む。
 
+### クラウド環境で実行中の場合
+クラウド環境 (Claude Code on the web) では、セッションは `develop` ではなく自動生成された作業ブランチ (`claude/...`) 上で開始する。
+この場合に限り、以下の**両方**を満たすときは、確認を挟まずに自動的に `develop` に移動して手順を続行して良い。
+- クラウド環境で作業していること。
+- **現在のブランチと `develop` の間に差分がないこと** (現在のブランチの内容が `origin/develop` と一致していること)。まず `git fetch origin develop` してから比較する。
+
+この条件を満たす場合は、`develop` に移動し、ローカル `develop` が古ければ `origin/develop` に揃えて (fast-forward) 続行する。
+上記のいずれかを満たさない場合 (develop との間に差分がある, ローカル環境である, working tree が clean でない等) は、これまで通り中断してユーザーに確認する。
+
 ## Step 2: ビルドが通るかの確認
 リリース前に、本番ビルドが正常に通ることを確認する。
 ```bash
@@ -51,7 +62,7 @@ npm run build
 `package.json` の `version` フィールドを読み取る。
 値は semver 形式 (`X.Y.Z`)。
 
- `AskUserQuestion` を用いて、major, minor, patch のうちのどの部分をインクリメントするかをユーザーに確認する。
+`AskUserQuestion` を用いて、major, minor, patch のうちのどの部分をインクリメントするかをユーザーに確認する。
 
 - **major** (`X`) — `X.Y.Z` → `(X+1).0.0`
 - **minor** (`Y`) — `X.Y.Z` → `X.(Y+1).0`
@@ -70,7 +81,7 @@ git commit -m "バージョン番号を変更"
 
 コミットメッセージは `バージョン番号を変更` で固定。
 
-## 確認ゲート: 実行前の最終確認
+## Step 5: 実行前の最終確認 (確認ゲート)
 ここから先 (マージ・タグ・push) は取り消しが難しく、push は外部 (origin) への反映を伴う。
 実行前に、これから行う内容を簡潔にユーザーへ提示して一度確認を取る。
 
@@ -83,7 +94,7 @@ git commit -m "バージョン番号を変更"
 
 選択肢は「進める」「中止する」のような 2 択にし、ユーザーが「進める」を選んだ場合のみ次に進む。
 
-## Step 5: `master` へのマージ
+## Step 6: `master` へのマージ
 `master` をチェックアウトし、`develop` を fast-forward なし (`--no-ff`) でマージする。
 ```bash
 git checkout master
@@ -94,7 +105,7 @@ git merge --no-ff develop -m "developブランチをマージ"
 - `--no-ff` を必ず付け、マージコミットを作る (fast-forward させない)。
 - マージコミットメッセージは `developブランチをマージ` で固定。
 
-## Step 6: タグ付け
+## Step 7: タグ付け
 直前のマージコミットに注釈付きタグを付ける。
 ```bash
 git tag -a vX.Y.Z -m "verX.Y.Zをリリース"
@@ -104,14 +115,29 @@ git tag -a vX.Y.Z -m "verX.Y.Zをリリース"
 - タグ名は `vX.Y.Z` (例: バージョンが `3.25.0` なら `v3.25.0`)。
 - タグメッセージは `verX.Y.Zをリリース` で固定 (例: `ver3.25.0をリリース`)。
 
-## Step 7: origin への push
+## Step 8: origin への push
 `develop` ブランチ・`master` ブランチ・作成したタグを origin に push する。
 ```bash
 git push origin develop master
 git push origin vX.Y.Z
 ```
 
-## Step 8: `develop` に戻る
+### クラウド環境で実行中の場合
+クラウド環境では GitHub 連携 (GitHub App) の権限が作業ブランチへの push に限定されており、**タグ ref (`refs/tags/*`) の push は 403 Forbidden で失敗する可能性が高い** (ブランチの push は成功する)。
+これは一時的な問題ではなく恒常的な制約である。
+
+そのため、クラウド環境ではタグの push (`git push origin vX.Y.Z`) は**無理に試みず、スキップする**。
+ブランチ (`develop`・`master`) の push のみ行う。
+タグはローカルに作成したまま残し、最後にユーザーへ「タグはローカル権限のある環境で以下を実行して push してほしい」と、コマンドを添えて報告する。
+```bash
+git fetch origin master
+git tag -a vX.Y.Z origin/master -m "verX.Y.Zをリリース"
+git push origin vX.Y.Z
+```
+
+ローカル環境で実行している場合は、従来どおりタグも push する。
+
+## Step 9: `develop` に戻る
 作業ブランチを `develop` に戻して終了する。
 ```bash
 git checkout develop
@@ -119,7 +145,46 @@ git checkout develop
 
 最後に、リリースしたバージョン (`X.Y.Z`) と付けたタグ (`vX.Y.Z`) をユーザーに報告する。
 
-## Step 9: リリース内容のお知らせ文をまとめて提案する
+## Step 10: Notion のマイルストーンのページを編集する
+開発マイルストーンを管理している Notion のデータベースに、今回のリリースを反映する。
+Notion の操作には Notion の MCP ツール (`notion-query-data-sources`, `notion-update-page`, `notion-create-pages` など) を用いる。
+
+Step 3 で **major もしくは minor バージョンをインクリメントした場合のみ**行う。
+**patch アップデートの場合はこのステップをスキップ**し、そのまま Step 11 に進む。
+
+**対象のデータベース**:
+- マイルストーンのデータソース — `collection://08baa6dd-18b0-430a-83fb-5c4e0fd3a3ce`
+- 関連するプロパティ:
+  - **`名前` (タイトル)** — `ver X.Y.Z` の形式 (`ver` の後に半角スペース, 例: `ver 3.27.0`)
+  - **`ステータス` (select)** — `Released` を設定する
+  - **`リリース日` (date, 表示形式 `YYYY/MM/DD`)** — 更新・作成時は展開プロパティ `date:リリース日:start` に ISO 形式の日付 (`YYYY-MM-DD`) を渡す
+  - **`プロジェクト` (relation)** — 「ZpDIC Online (version 3)」プロジェクトのページ (`https://app.notion.com/d044b0bb27c3486a80a22e291fe99062`), 値は URL の JSON 配列文字列 `["https://app.notion.com/d044b0bb27c3486a80a22e291fe99062"]` で渡す。
+
+まず対象ページが既に存在するか確認する。
+`notion-query-data-sources` で、`プロジェクト` が「ZpDIC Online (version 3)」(`d044b0bb27c3486a80a22e291fe99062`) かつ `名前` が `ver X.Y.Z` のページを検索する。
+```sql
+SELECT url, "名前", "ステータス" FROM "collection://08baa6dd-18b0-430a-83fb-5c4e0fd3a3ce"
+WHERE "名前" = 'ver X.Y.Z' AND "プロジェクト" LIKE '%d044b0bb27c3486a80a22e291fe99062%'
+```
+ページが存在するかどうかに応じて、以下の操作を行う。
+
+### ページが存在する場合
+そのページを `notion-update-page` (`command: "update_properties"`) で更新する。
+「今日の日付」は実際の現在の日付を用いる。
+
+- `ステータス` = `Released`
+- `date:リリース日:start` = 今日の日付 (`YYYY-MM-DD`)
+
+### ページが存在しない場合
+`notion-create-pages` で新たにページを追加する (parent は `data_source_id: "08baa6dd-18b0-430a-83fb-5c4e0fd3a3ce"`)。
+「今日の日付」は実際の現在の日付を用いる。
+
+- `名前` = `ver X.Y.Z`
+- `ステータス` = `Released`
+- `date:リリース日:start` = 今日の日付 (`YYYY-MM-DD`)
+- `プロジェクト` = `["https://app.notion.com/d044b0bb27c3486a80a22e291fe99062"]`
+
+## Step 11: リリース内容のお知らせ文をまとめて提案する
 今回のリリースに含まれる変更内容を確認し、ユーザーが告知に使えるお知らせ文をまとめて提案する。
 
 変更内容は、前回のリリースタグから今回のタグまでの差分から把握する。

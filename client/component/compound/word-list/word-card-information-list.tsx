@@ -39,9 +39,7 @@ export const WordCardInformationList = create(
                 compact={true}
                 specialPaths={getDictionarySpecialPaths(dictionary)}
                 features={dictionary.settings.markdownFeatures}
-                components={{
-                  a: (props) => <WordCardAnchor dictionary={dictionary} {...props}/>
-                }}
+                components={{a: WordCardAnchor}}
               >
                 {information.text}
               </Markdown>

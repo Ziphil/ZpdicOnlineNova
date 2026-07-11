@@ -2,6 +2,7 @@
 
 import {UserSocialCreator} from "/server/internal/creator/user/user-social";
 import type {
+  ObjectId,
   User as UserSkeleton,
   UserWithDetail as UserSkeletonWithDetail
 } from "/server/internal/skeleton";
@@ -14,7 +15,7 @@ export namespace UserCreator {
 
   export function skeletonize(raw: User): UserSkeleton {
     const skeleton = {
-      id: raw.id,
+      id: raw.id.toString() as ObjectId,
       name: raw.name,
       screenName: raw.screenName,
       socials: (raw.socials ?? []).map(UserSocialCreator.skeletonize)

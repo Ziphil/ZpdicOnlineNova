@@ -1,7 +1,8 @@
 //
 
 import type {
-  Notification as NotificationSkeleton
+  Notification as NotificationSkeleton,
+  ObjectId
 } from "/server/internal/skeleton";
 import {
   Notification
@@ -12,7 +13,7 @@ export namespace NotificationCreator {
 
   export function skeletonize(raw: Notification): NotificationSkeleton {
     const skeleton = {
-      id: raw.id,
+      id: raw.id.toString() as ObjectId,
       type: raw.type,
       date: raw.date.toISOString(),
       title: raw.title,

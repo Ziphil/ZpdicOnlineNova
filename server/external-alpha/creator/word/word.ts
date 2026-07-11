@@ -18,7 +18,7 @@ export namespace WordCreator {
 
   export function skeletonize(raw: Word): Word$Out {
     const skeleton = {
-      id: raw.id || raw["_id"],
+      id: (raw.id || raw["_id"]).toString(),
       number: raw.number,
       spelling: raw.name,
       pronunciation: raw.pronunciation ?? "",

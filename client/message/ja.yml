@@ -314,6 +314,12 @@ addProposalDialog:
     nameRequired: >-
       単語を入力してください。
 apiCredentialList:
+  label:
+    limit: "{limit, number} リクエスト/分"
+  table:
+    createdDate: "発行日時"
+    lastUsedDate: "最終使用日時"
+    neverUsed: "未使用"
   button:
     copy: "コピー"
     discard: "削除"
@@ -324,14 +330,10 @@ apiCredentialList:
         この API キーを使用しているプログラムからは辞書にアクセスできなくなります。
         本当によろしいですか?
       confirm: "削除"
-  table:
-    createdDate: "発行日時"
-    lastUsedDate: "最終使用日時"
-    neverUsed: "未使用"
   caution: >-
     API キーを後から確認することはできません。
     今の段階でコピーして保存しておいてください。
-  empty: "まだ API キーを発行していません"
+  empty: "API キーは発行されていません"
   toast:
     copy: >-
       API キーをコピーしました。
@@ -609,6 +611,19 @@ invitationList:
   button:
     accept: "承認"
     reject: "拒否"
+issueUserResetTokenForm:
+  label:
+    name: "ユーザー ID"
+    email: "メールアドレス"
+  error:
+    nameRequired: >-
+      ユーザー ID を入力してください。
+    emailInvalid: >-
+      正しい形式のメールアドレスを入力してください。
+    emailRequired: >-
+      メールアドレスを入力してください。
+  button:
+    confirm: "送信"
 loginForm:
   label:
     name: "ユーザー ID"
@@ -687,19 +702,6 @@ registerForm:
       パスワードを入力してください。
     agreeRequired: >-
       このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
-issueUserResetTokenForm:
-  label:
-    name: "ユーザー ID"
-    email: "メールアドレス"
-  error:
-    nameRequired: >-
-      ユーザー ID を入力してください。
-    emailInvalid: >-
-      正しい形式のメールアドレスを入力してください。
-    emailRequired: >-
-      メールアドレスを入力してください。
-  button:
-    confirm: "送信"
 resetUserPasswordForm:
   label:
     password: "新しいパスワード"

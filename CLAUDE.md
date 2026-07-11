@@ -32,7 +32,7 @@
 `npm run start:worker` (`worker/` 内のスクリプトを実行) も存在するが、現状ワーカーは未使用 (中身が空)。
 当面はワーカーを用意する計画はない。
 
-実行環境は Node 20.18.0, npm 10.8.2 を想定。
+実行環境は Node 20.19.0, npm 10.8.2 を想定。
 別途 MongoDB のローカル起動が必要。
 
 環境変数はリポジトリトップの `variable.env` と KeePassXC から読み込まれる ([document/variable.md](document/variable.md) 参照)。
@@ -59,7 +59,7 @@ API は 3 系統に分かれており、それぞれ `controller`, `creator`, `s
 - **`language/`** — サーバー側 i18n (`ja.yml`, `en.yml`)。
 
 #### 層の役割 (重要)
-- **model** (`server/model/`) — Typegoose の `XxxSchema` クラス。`@prop` でフィールド定義、static/instance メソッドにビジネスロジック。`export type Xxx = DocumentType<XxxSchema>`、`export const XxxModel = getModelForClass(XxxSchema)` の形。
+- **model** (`server/model/`) — Typegoose の `XxxSchema` クラス。`@prop` でフィールド定義、メソッドにビジネスロジック。`export type Xxx = DocumentType<XxxSchema>`、`export const XxxModel = getModelForClass(XxxSchema)` の形。
 - **skeleton** (`server/internal/skeleton/`) — API でやり取りする**プレーンな DTO 型**。DB のドキュメント型とは別物。
 - **creator** (`server/internal/creator/`) — model ↔ skeleton の変換。`skeletonize()` (model→DTO)と `enflesh()` (DTO→model) を提供する namespace。
 - **controller** (`server/internal/controller/rest/`) — HTTP ハンドラ。
@@ -68,7 +68,7 @@ API は 3 系統に分かれており、それぞれ `controller`, `creator`, `s
 > 変換は必ず creator を通す。
 
 #### REST コントローラの書き方
-`@post("/processName")` のパスは型契約の **ProcessName** と一致させる。
+`@post("/processName")` のパスは型契約の **`ProcessName` と一致させる**。
 ハンドラのメソッド名は `[Symbol()]` を使う (名前を持たせない)。
 認証・辞書取得は `@before(checkMe(), checkDictionary("edit"))` のようにミドルウェアで宣言。
 レスポンスは `InternalRestController.respond(response, body)`, `respondError`, `respondByCustomError`。
@@ -120,7 +120,7 @@ export const Foo = create(
 上記に加えてリポジトリ固有の慣習:
 
 - ESLint は `eslint-config-ziphil`。コミット前に `npm run lint` で確認。
-- コメント・ドキュメントは日本語。既存のスタイル (JSDoc 風の `/** ... */` でメソッドの意図を説明) に合わせる。
+- コメントは日本語。JSDoc 風の `/** ... */` でメソッドの意図を説明する形式だが、これは最低限に留める。指示がない限りコメントを付ける必要はない。
 - 多くのファイル先頭に `//` だけの行がある (既存の慣習)。新規ファイルでもこれに倣う。
 - 既存の命名・ファイル分割パターン (model, creator, skeleton, controller の 4 層) を踏襲する。
 

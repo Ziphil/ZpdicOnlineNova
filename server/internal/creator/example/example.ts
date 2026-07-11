@@ -6,7 +6,8 @@ import {LinkedWordCreator} from "/server/internal/creator/word/linked-word";
 import type {
   EditableExample as EditableExampleSkeleton,
   Example as ExampleSkeleton,
-  ExampleWithDictionary as ExampleSkeletonWithDictionary
+  ExampleWithDictionary as ExampleSkeletonWithDictionary,
+  ObjectId
 } from "/server/internal/skeleton";
 import {
   EditableExample,
@@ -18,7 +19,7 @@ export namespace ExampleCreator {
 
   export function skeletonize(raw: Example): ExampleSkeleton {
     const skeleton = {
-      id: raw.id || raw["_id"],
+      id: (raw.id || raw["_id"]).toString() as ObjectId,
       number: raw.number,
       tags: raw.tags ?? [],
       words: raw.words.map(LinkedWordCreator.skeletonize),
@@ -26,7 +27,9 @@ export namespace ExampleCreator {
       translation: raw.translation,
       supplement: raw.supplement ?? "",
       offer: raw.offer ?? null,
-      updatedUser: (raw.updatedUser !== undefined) ? {id: raw.updatedUser} : undefined,
+      updatedUser: (raw.updatedUser !== undefined) ? {
+        id: raw.updatedUser.toString() as ObjectId
+      } : undefined,
       createdDate: raw.createdDate?.toISOString() ?? undefined,
       updatedDate: raw.updatedDate?.toISOString() ?? undefined
     } satisfies ExampleSkeleton;

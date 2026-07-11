@@ -48,6 +48,7 @@ export interface ApiCredential {
 
   id: ObjectId;
   key?: string;
+  limit: number;
   createdDate?: DateString;
   lastUsedDate: DateString | null;
 

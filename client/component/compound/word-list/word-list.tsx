@@ -8,6 +8,7 @@ import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/server/internal/skeleton";
 import {WordCard} from "./word-card";
+import {WordListDictionaryContext} from "./word-list-context";
 
 
 export const WordList = create(
@@ -37,47 +38,49 @@ export const WordList = create(
     const {trans} = useTrans("wordList");
 
     return (
-      <List styleName="root" items={words} pageSpec={pageSpec} {...rest}>
-        <ListBody styleName="body">
-          {(word) => (
-            <WordCard
-              key={word.id}
-              dictionary={dictionary}
-              word={word}
-              showHeader={showHeader}
-              showInfo={showInfo}
-              showSelectButton={showSelectButton}
-              onSelect={onSelect}
-            />
-          )}
-          <ListLoadingView/>
-          {(emptyType !== "none") ? (
-            <ListEmptyView styleName="empty">
-              <span>
-                {trans("empty")}
-              </span>
-              {(emptyType === "create") ? (
-                <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
-                  <Button scheme="gray" variant="light">
-                    <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-                    {trans("button.create")}
-                  </Button>
-                )}/>
-              ) : (emptyType === "proposal" && dictionary.settings.enableProposal) ? (
-                <AddProposalDialog dictionary={dictionary} trigger={(
-                  <Button scheme="gray" variant="light">
-                    <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
-                    {trans("button.proposal")}
-                  </Button>
-                )}/>
-              ) : null}
-            </ListEmptyView>
-          ) : (
-            <div/>
-          )}
-        </ListBody>
-        <ListPagination styleName="pagination"/>
-      </List>
+      <WordListDictionaryContext dictionary={dictionary}>
+        <List styleName="root" items={words} pageSpec={pageSpec} {...rest}>
+          <ListBody styleName="body">
+            {(word) => (
+              <WordCard
+                key={word.id}
+                dictionary={dictionary}
+                word={word}
+                showHeader={showHeader}
+                showInfo={showInfo}
+                showSelectButton={showSelectButton}
+                onSelect={onSelect}
+              />
+            )}
+            <ListLoadingView/>
+            {(emptyType !== "none") ? (
+              <ListEmptyView styleName="empty">
+                <span>
+                  {trans("empty")}
+                </span>
+                {(emptyType === "create") ? (
+                  <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
+                    <Button scheme="gray" variant="light">
+                      <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+                      {trans("button.create")}
+                    </Button>
+                  )}/>
+                ) : (emptyType === "proposal" && dictionary.settings.enableProposal) ? (
+                  <AddProposalDialog dictionary={dictionary} trigger={(
+                    <Button scheme="gray" variant="light">
+                      <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
+                      {trans("button.proposal")}
+                    </Button>
+                  )}/>
+                ) : null}
+              </ListEmptyView>
+            ) : (
+              <div/>
+            )}
+          </ListBody>
+          <ListPagination styleName="pagination"/>
+        </List>
+      </WordListDictionaryContext>
     );
 
   }

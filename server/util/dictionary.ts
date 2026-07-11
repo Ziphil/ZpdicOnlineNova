@@ -2,13 +2,20 @@
 
 import {Cursor} from "mongoose";
 import {DictionaryStatistics, StringLengths, WholeAverage, WordSpellingFrequencies, WordSpellingFrequency} from "/server/internal/skeleton";
-import {Example, Word} from "/server/model";
 
+
+type DictionaryStatisticsWordSource = {
+  name: string,
+  sections: Array<{
+    equivalents: Array<{names: Array<string>}>,
+    informations: Array<{text: string}>
+  }>
+};
 
 /** 辞書の統計情報を計算します。
  * `wordCursor` には、`name`, `sections.equivalents`, `sections.informations` を含むフィールドを持つ `Word` のカーソルを指定してください (それ以外のフィールドは使いません)。
  * `exampleCursor` には、任意の `Example` のカーソルを指定できます (中身を使いません)。 */
-export async function calcDictionaryStatistics(wordCursor: Cursor<Word, any>, exampleCursor: Cursor<Example, any>): Promise<DictionaryStatistics> {
+export async function calcDictionaryStatistics<W extends DictionaryStatisticsWordSource>(wordCursor: Cursor<W, any>, exampleCursor: Cursor<unknown, any>): Promise<DictionaryStatistics> {
   let rawWordCount = 0;
   const wholeWordSpellingLengths = {kept: 0, nfd: 0, nfc: 0};
   let wholeEquivalentTermCount = 0;
@@ -63,10 +70,14 @@ function calcWordCount(rawWordCount: number): DictionaryStatistics["wordCount"] 
   return {raw, tokipona, logTokipona, ctwi, coverage};
 };
 
-export async function calcWordSpellingFrequencies(query: Cursor<Word, any>): Promise<WordSpellingFrequencies> {
+type WordSpellingFrequenciesWordSource = {
+  name: string
+};
+
+export async function calcWordSpellingFrequencies<W extends WordSpellingFrequenciesWordSource>(cursor: Cursor<W, any>): Promise<WordSpellingFrequencies> {
   const wholeFrequency = {all: 0, word: 0};
   const charFrequencies = new Map<string, WordSpellingFrequency>();
-  for await (const word of query) {
+  for await (const word of cursor) {
     const countedChars = new Set<string>();
     for (const char of word.name) {
       const frequency = charFrequencies.get(char) ?? {all: 0, word: 0};

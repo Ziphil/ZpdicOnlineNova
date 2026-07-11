@@ -178,3 +178,52 @@ db.dictionaries.find({"editUsers": {$exists: true}}).forEach(function (dictionar
 });
 db.dictionaries.updateMany({}, {$unset: {"editUsers": ""}});
 ```
+
+### → ver 3.27.0
+各種データの論理削除方式を変更しました。
+これまでは削除済みのデータもコレクション内に残して `removedDate` フィールドの有無で削除済みかどうかを判定していましたが、削除済みのデータを独立したコレクションに移動して管理するように変更しました。
+これに伴い、各コレクション内に残っている削除済み (`removedDate` が設定されている) のデータを、それぞれ対応する削除済みデータ用コレクションに移動する必要があります。
+この処理を行わなかった場合、削除済みのデータが通常のデータとして検索に表示されるようになってしまいます。
+また、移動先のコレクションでは削除日時のフィールド名を `removedDate` から `deletedDate` に変更したため、移動時にフィールド名も変換します。
+なお、辞書データについては、万が一の復元に備えて `_id` を保持したまま移動します (`$merge` は既定で `_id` を突き合わせるため、下記の処理で `_id` は維持されます)。
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+db.words.aggregate([
+  {$match: {"removedDate": {$exists: true, $ne: null}}},
+  {$set: {"deletedDate": "$removedDate"}},
+  {$unset: "removedDate"},
+  {$merge: {into: "oldWords", whenMatched: "replace", whenNotMatched: "insert"}}
+]);
+db.words.deleteMany({"removedDate": {$exists: true, $ne: null}});
+
+db.examples.aggregate([
+  {$match: {"removedDate": {$exists: true, $ne: null}}},
+  {$set: {"deletedDate": "$removedDate"}},
+  {$unset: "removedDate"},
+  {$merge: {into: "oldExamples", whenMatched: "replace", whenNotMatched: "insert"}}
+]);
+db.examples.deleteMany({"removedDate": {$exists: true, $ne: null}});
+
+db.articles.aggregate([
+  {$match: {"removedDate": {$exists: true, $ne: null}}},
+  {$set: {"deletedDate": "$removedDate"}},
+  {$unset: "removedDate"},
+  {$merge: {into: "oldArticles", whenMatched: "replace", whenNotMatched: "insert"}}
+]);
+db.articles.deleteMany({"removedDate": {$exists: true, $ne: null}});
+
+db.dictionaries.aggregate([
+  {$match: {"removedDate": {$exists: true, $ne: null}}},
+  {$set: {"deletedDate": "$removedDate"}},
+  {$unset: "removedDate"},
+  {$merge: {into: "oldDictionaries", whenMatched: "replace", whenNotMatched: "insert"}}
+]);
+db.dictionaries.deleteMany({"removedDate": {$exists: true, $ne: null}});
+```
+
+また、外部 API の呼び出し制限を API キーごとに設定できるように変更し、API キーデータに呼び出し制限を表す `limit` フィールド (1 分あたりの呼び出し回数の上限) を追加しました。
+このフィールドは必須であり、値をもたない API キーによるリクエストはエラーになります。
+既存の API キーに既定の呼び出し制限 (10 回) を設定するため、Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+db.apiCredentials.updateMany({"limit": {$exists: false}}, {$set: {"limit": 10}});
+```

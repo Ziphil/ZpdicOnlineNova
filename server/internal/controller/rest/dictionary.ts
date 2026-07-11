@@ -7,7 +7,7 @@ import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/interna
 import {DictionaryCreator, DictionaryParameterCreator, MemberCreator, SuggestionCreator, TemplateWordCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {SOCKET_PATH_PREFIX} from "/server/internal/type/socket";
-import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
+import {DictionaryModel, ExampleModel, OldDictionaryModel, OldExampleModel, OldWordModel, UserModel, WordModel} from "/server/model";
 import {sanitizeFileName} from "/server/util/misc";
 import {toObjectId} from "/server/util/mongo";
 import {QueryRange} from "/server/util/query";
@@ -324,11 +324,17 @@ export class DictionaryRestController extends InternalRestController {
     const models = [DictionaryModel, WordModel, ExampleModel, UserModel] as Array<any>;
     const [dictionary, word, example, user] = await Promise.all(models.map(async (model) => {
       if (model === UserModel) {
-        const [count, {size}] = await Promise.all([model.estimatedDocumentCount(), model.collection.stats()]);
-        return {count, wholeCount: count, size};
+        const count = await model.estimatedDocumentCount();
+        return {count, wholeCount: count};
+      } else if (model === WordModel) {
+        const [count, oldCount] = await Promise.all([WordModel.estimatedDocumentCount(), OldWordModel.estimatedDocumentCount()]);
+        return {count, wholeCount: count + oldCount};
+      } else if (model === ExampleModel) {
+        const [count, oldCount] = await Promise.all([ExampleModel.estimatedDocumentCount(), OldExampleModel.estimatedDocumentCount()]);
+        return {count, wholeCount: count + oldCount};
       } else {
-        const [count, wholeCount, {size}] = await Promise.all([model.findExist().countDocuments(), model.estimatedDocumentCount(), model.collection.stats()]);
-        return {count, wholeCount, size};
+        const [count, oldCount] = await Promise.all([DictionaryModel.estimatedDocumentCount(), OldDictionaryModel.estimatedDocumentCount()]);
+        return {count, wholeCount: count + oldCount};
       }
     }));
     const body = {dictionary, word, example, user};

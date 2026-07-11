@@ -21,6 +21,11 @@ export interface MiddlewareBody {
    * このプロパティは、`parseMe`, `login` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
   me?: User | null;
 
+  /** リクエストに使用された API キーに設定された、1 分あたりの呼び出し回数の上限です。
+   * このプロパティは、`parseMe` ミドルウェアが呼び出された場合にのみ、値が格納されます。
+   * 有効な API キーが指定されなかった場合は `null` になります。*/
+  limit?: number | null;
+
   /** リクエストに関連する辞書データです。
    * このプロパティは、`parseDictionary` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
   dictionary?: Dictionary | null;

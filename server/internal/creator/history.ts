@@ -1,7 +1,8 @@
 //
 
 import type {
-  History as HistorySkeleton
+  History as HistorySkeleton,
+  ObjectId
 } from "/server/internal/skeleton";
 import {
   History
@@ -12,7 +13,7 @@ export namespace HistoryCreator {
 
   export function skeletonize(raw: History): HistorySkeleton {
     const skeleton = {
-      id: raw.id,
+      id: raw.id.toString() as ObjectId,
       date: raw.date.toISOString(),
       wordSize: raw.wordSize
     } satisfies HistorySkeleton;

@@ -6,7 +6,8 @@ import {UserCreator} from "/server/internal/creator/user/user";
 import type {
   Dictionary as DictionarySkeleton,
   DictionaryWithAuthorities as DictionarySkeletonWithAuthorities,
-  DictionaryWithUser as DictionarySkeletonWithUser
+  DictionaryWithUser as DictionarySkeletonWithUser,
+  ObjectId
 } from "/server/internal/skeleton";
 import {
   Dictionary,
@@ -18,7 +19,7 @@ export namespace DictionaryCreator {
 
   export function skeletonize(raw: Dictionary): DictionarySkeleton {
     const skeleton = {
-      id: raw.id || raw["_id"],
+      id: (raw.id || raw["_id"]).toString() as ObjectId,
       number: raw.number,
       paramName: raw.paramName,
       name: raw.name,

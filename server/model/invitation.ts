@@ -91,14 +91,14 @@ export class InvitationSchema {
     }
   }
 
-  private async respondEdit(this: Invitation, user: User): Promise<void> {
+  public async respondEdit(this: Invitation, user: User): Promise<void> {
     await this.populate("dictionary");
     if (isDocument(this.dictionary)) {
       await MemberModel.add(this.dictionary, user, "edit");
     }
   }
 
-  private async respondTransfer(this: Invitation, user: User): Promise<void> {
+  public async respondTransfer(this: Invitation, user: User): Promise<void> {
     await this.populate("dictionary");
     if (isDocument(this.dictionary)) {
       await this.dictionary.populate("user");
