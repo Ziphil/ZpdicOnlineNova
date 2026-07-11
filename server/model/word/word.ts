@@ -1,9 +1,10 @@
-//
+/* eslint-disable @typescript-eslint/naming-convention */
 
 import {
   DocumentType,
   Ref,
   getModelForClass,
+  index,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -18,6 +19,11 @@ import {LogUtil} from "/server/util/log";
 
 
 @modelOptions({schemaOptions: {collection: "words"}})
+@index({"dictionary": 1, "number": 1})
+@index({"dictionary": 1, "name": 1, "_id": 1})
+@index({"dictionary": 1, "updatedDate": -1, "_id": -1})
+@index({"dictionary": 1, "createdDate": -1, "_id": -1})
+@index({"dictionary": 1, "sections.relations.number": 1})
 export class WordSchema {
 
   @prop({required: true, ref: "DictionarySchema"})

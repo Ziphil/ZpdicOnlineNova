@@ -4,6 +4,7 @@ import {
   DocumentType,
   Ref,
   getModelForClass,
+  index,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -13,6 +14,8 @@ import {LogUtil} from "/server/util/log";
 
 
 @modelOptions({schemaOptions: {collection: "oldArticles"}})
+@index({"dictionary": 1, "number": 1})
+@index({"deletedDate": 1})
 export class OldArticleSchema {
 
   @prop({required: true, ref: "DictionarySchema"})

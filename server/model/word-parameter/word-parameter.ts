@@ -73,13 +73,13 @@ export abstract class WordParameter {
     const mode = order.mode;
     const directionSign = (order.direction === "ascending") ? "" : "-";
     if (mode === "unicode") {
-      return `${directionSign}name _id`;
+      return `${directionSign}name ${directionSign}_id`;
     } else if (mode === "custom") {
-      return `${directionSign}sortString _id`;
+      return `${directionSign}sortString ${directionSign}_id`;
     } else if (mode === "updatedDate") {
-      return `${directionSign}updatedDate _id`;
+      return `${directionSign}updatedDate ${directionSign}_id`;
     } else if (mode === "createdDate") {
-      return `${directionSign}createdDate _id`;
+      return `${directionSign}createdDate ${directionSign}_id`;
     } else {
       const dummy = mode satisfies never;
       throw new Error("cannot happen");
