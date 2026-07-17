@@ -15,7 +15,7 @@ import {LogUtil} from "/server/util/log";
 
 
 @modelOptions({schemaOptions: {collection: "oldWords"}})
-@index({"dictionary": 1, "number": 1})
+@index({"dictionary": 1, "number": 1, "updatedDate": -1})
 @index({"deletedDate": 1})
 export class OldWordSchema {
 

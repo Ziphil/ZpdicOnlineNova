@@ -3,6 +3,7 @@
 import {
   DocumentType,
   getModelForClass,
+  index,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -15,6 +16,7 @@ import {QueryRange, WithSize} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "exampleOffers"}})
+@index({"catalog": 1, "number": 1, "_id": 1})
 export class ExampleOfferSchema {
 
   @prop({required: true})
