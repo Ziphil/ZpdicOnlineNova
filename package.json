@@ -127,7 +127,7 @@
     "rison": "^0.1.1",
     "seedrandom": "^3.0.5",
     "socket.io": "^4.7.5",
-    "socket.io-client": "^4.7.5",
+    "socket.io-client": "^4.8.3",
     "stream-browserify": "^3.0.0",
     "stream-chain": "^2.2.5",
     "stream-json": "^1.7.3",
