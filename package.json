@@ -141,7 +141,7 @@
     "zographia": "^0.21.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.18.5",
+    "@babel/core": "^7.29.6",
     "@redocly/cli": "^1.34.17",
     "@svgr/webpack": "^6.5.1",
     "@types/bcrypt": "^5.0.0",
