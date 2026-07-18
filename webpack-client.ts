@@ -133,11 +133,10 @@ const config = {
     static: {
       directory: path.join(__dirname, "dist", "client")
     },
-    proxy: {
-      "/internal": "http://localhost:8050",
-      "/static": "http://localhost:8050",
-      "/socket.io": {target: "http://localhost:8050", ws: true}
-    }
+    proxy: [
+      {context: ["/internal", "/static"], target: "http://localhost:8050"},
+      {context: ["/socket.io"], target: "http://localhost:8050", ws: true}
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
