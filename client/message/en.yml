@@ -1061,8 +1061,9 @@ changeDictionaryShowNumbersForm:
   label:
     section: "For sections"
     equivalent: "For translations"
-    true: "Show"
-    false: "Don’t show"
+    show: "Show"
+    onlyNecessary: "Show only when there is more than one"
+    hide: "Don’t show"
 changeDictionarySlimeTitlesForm:
   label:
     pronunciation: "For pronunciations"

@@ -1060,8 +1060,9 @@ changeDictionaryShowNumbersForm:
   label:
     section: "セクション"
     equivalent: "訳語"
-    true: "表示する"
-    false: "表示しない"
+    show: "表示する"
+    onlyNecessary: "複数あるときのみ表示する"
+    hide: "表示しない"
 changeDictionarySlimeTitlesForm:
   label:
     pronunciation: "発音"

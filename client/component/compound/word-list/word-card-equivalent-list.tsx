@@ -21,11 +21,14 @@ export const WordCardEquivalentList = create(
 
     const visibleEquivalents = useMemo(() => section.equivalents.filter((equivalent) => !equivalent.hidden), [section.equivalents]);
 
+    const equivalentNumberMode = dictionary.settings.showEquivalentNumber;
+    const showEquivalentNumber = equivalentNumberMode === "show" || (equivalentNumberMode === "onlyNecessary" && visibleEquivalents.length >= 2);
+
     return (visibleEquivalents.length > 0) ? (
       <div styleName="root" {...rest}>
         {visibleEquivalents.map((equivalent, index) => (
           <li styleName="item" key={index}>
-            {(dictionary.settings.showEquivalentNumber) && (
+            {(showEquivalentNumber) && (
               <span styleName="number" {...aria({hidden: true})}>
                 {index + 1}
               </span>

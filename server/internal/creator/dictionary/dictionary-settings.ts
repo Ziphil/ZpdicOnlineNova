@@ -31,7 +31,7 @@ export namespace DictionarySettingsCreator {
       showVariationPronunciation: raw.showVariationPronunciation ?? true,
       showOrdinarySpelling: raw.showOrdinarySpelling ?? false,
       showEquivalentNumber: raw.showEquivalentNumber,
-      showSectionNumber: raw.showSectionNumber ?? true
+      showSectionNumber: raw.showSectionNumber ?? "show"
     } satisfies DictionarySettingsSkeleton;
     return skeleton;
   }

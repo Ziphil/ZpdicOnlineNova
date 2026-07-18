@@ -3,6 +3,12 @@
 import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
 import {DictionaryFontModel, DictionaryFontSchema} from "/server/model/dictionary/dictionary-font";
 import {TemplateWordSchema} from "/server/model/template-word/template-word";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
+
+
+export const DICTIONARY_NUMBER_MODES = ["show", "onlyNecessary", "hide"] as const;
+export type DictionaryNumberMode = LiteralType<typeof DICTIONARY_NUMBER_MODES>;
+export const DictionaryNumberModeUtil = LiteralUtilType.create(DICTIONARY_NUMBER_MODES);
 
 
 @modelOptions({schemaOptions: {autoCreate: false, collection: "dictionarySettings"}})
@@ -56,11 +62,11 @@ export class DictionarySettingsSchema {
   @prop()
   public showOrdinarySpelling?: boolean;
 
-  @prop({required: true})
-  public showEquivalentNumber!: boolean;
+  @prop({required: true, enum: DICTIONARY_NUMBER_MODES})
+  public showEquivalentNumber!: DictionaryNumberMode;
 
-  @prop()
-  public showSectionNumber?: boolean;
+  @prop({enum: DICTIONARY_NUMBER_MODES})
+  public showSectionNumber?: DictionaryNumberMode;
 
   public static createDefault(): DictionarySettings {
     const settings = new DictionarySettingsModel({
@@ -77,8 +83,8 @@ export class DictionarySettingsSchema {
       enableDuplicateName: true,
       showVariationPronunciation: true,
       showOrdinarySpelling: false,
-      showEquivalentNumber: false,
-      showSectionNumber: true
+      showEquivalentNumber: "hide",
+      showSectionNumber: "show"
     });
     return settings;
   }

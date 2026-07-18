@@ -1061,8 +1061,9 @@ changeDictionaryShowNumbersForm:
   label:
     section: "Por sekcioj"
     equivalent: "Por tradukaĵoj"
-    true: "Montri"
-    false: "Ne montri"
+    show: "Montri"
+    onlyNecessary: "Montri nur kiam estas pluraj"
+    hide: "Ne montri"
 changeDictionarySlimeTitlesForm:
   label:
     pronunciation: "Por elparoloj"

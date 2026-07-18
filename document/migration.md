@@ -227,3 +227,24 @@ db.dictionaries.deleteMany({"removedDate": {$exists: true, $ne: null}});
 ```js
 db.apiCredentials.updateMany({"limit": {$exists: false}}, {$set: {"limit": 10}});
 ```
+
+### → ver 3.28.0
+辞書設定の `showEquivalentNumber` と `showSectionNumber` の型を、真偽値から `"show"`, `"onlyNecessary"`, `"hide"` の 3 値の文字列に変更しました。
+これまでの `true` は `"show"` に、`false` は `"hide"` に対応します (`"onlyNecessary"` は「項目が複数あるときのみ表示する」を表す新設の値です)。
+既存のデータを変換するため、Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+なお、削除済み辞書の復元に備えて、`oldDictionaries` コレクションについても同様の変換を行います。
+```js
+db.dictionaries.updateMany({"settings.showEquivalentNumber": {$type: "bool"}}, [{$set: {
+  "settings.showEquivalentNumber": {$cond: ["$settings.showEquivalentNumber", "show", "hide"]}
+}}]);
+db.dictionaries.updateMany({"settings.showSectionNumber": {$type: "bool"}}, [{$set: {
+  "settings.showSectionNumber": {$cond: ["$settings.showSectionNumber", "show", "hide"]}
+}}]);
+
+db.oldDictionaries.updateMany({"settings.showEquivalentNumber": {$type: "bool"}}, [{$set: {
+  "settings.showEquivalentNumber": {$cond: ["$settings.showEquivalentNumber", "show", "hide"]}
+}}]);
+db.oldDictionaries.updateMany({"settings.showSectionNumber": {$type: "bool"}}, [{$set: {
+  "settings.showSectionNumber": {$cond: ["$settings.showSectionNumber", "show", "hide"]}
+}}]);
+```

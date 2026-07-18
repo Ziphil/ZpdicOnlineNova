@@ -67,6 +67,9 @@ export const WordCard = create(
     const screenshotFileName = `${word.spelling}.png`;
     const markdownText = getShareMarkdownText(word, dictionary);
 
+    const sectionNumberMode = dictionary.settings.showSectionNumber;
+    const showSectionNumber = dictionary.settings.enableAdvancedWord && (sectionNumberMode === "show" || (sectionNumberMode === "onlyNecessary" && word.sections.length >= 2));
+
     const discardWord = useDiscardWord(dictionary, word);
 
     const handleSelect = useCallback(function (): void {
@@ -83,10 +86,10 @@ export const WordCard = create(
           <div styleName="section-list">
             {word.sections.map((section, index) => (
               <div styleName="section-item" key={index}>
-                {(dictionary.settings.enableAdvancedWord && dictionary.settings.showSectionNumber) && (
+                {(showSectionNumber) && (
                   <div styleName="section-number">{toLatinNumeral(index + 1)}</div>
                 )}
-                <div styleName="section-main" {...data({hasNumber: dictionary.settings.enableAdvancedWord && dictionary.settings.showSectionNumber})}>
+                <div styleName="section-main" {...data({hasNumber: showSectionNumber})}>
                   <WordCardEquivalentList dictionary={dictionary} section={section}/>
                   <WordCardInformationList dictionary={dictionary} section={section}/>
                   <WordCardPhraseList dictionary={dictionary} section={section}/>
