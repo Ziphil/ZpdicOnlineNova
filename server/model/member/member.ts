@@ -15,7 +15,7 @@ import {User, UserSchema} from "/server/model/user/user";
 
 
 @modelOptions({schemaOptions: {collection: "members"}})
-@index({"dictionary": 1, "user": 1, "authority": 1})
+@index({"dictionary": 1, "authority": 1, "user": 1})
 @index({"user": 1, "authority": 1})
 export class MemberSchema {
 

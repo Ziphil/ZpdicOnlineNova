@@ -18,7 +18,7 @@ export class NormalExampleOfferParameter extends ExampleOfferParameter {
 
   public createQuery(): QueryLike<Array<ExampleOffer>, ExampleOffer> {
     if (this.catalog !== null) {
-      const sortKey = (this.catalog === "zpdicDaily") ? "catalog -number _id" : "catalog number _id";
+      const sortKey = (this.catalog === "zpdicDaily") ? "catalog -number -_id" : "catalog number _id";
       const query = ExampleOfferModel.where("catalog", this.catalog).sort(sortKey);
       return query;
     } else {

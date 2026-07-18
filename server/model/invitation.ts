@@ -4,6 +4,7 @@ import {
   DocumentType,
   Ref,
   getModelForClass,
+  index,
   isDocument,
   modelOptions,
   prop
@@ -21,6 +22,8 @@ export const InvitationTypeUtil = LiteralUtilType.create(INVITATION_TYPES);
 
 
 @modelOptions({schemaOptions: {collection: "invitations"}})
+@index({"dictionary": 1, "user": 1, "type": 1})
+@index({"type": 1, "user": 1, "createdDate": -1})
 export class InvitationSchema {
 
   @prop({required: true, enum: INVITATION_TYPES})

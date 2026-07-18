@@ -4,6 +4,7 @@ import {
   DocumentType,
   Ref,
   getModelForClass,
+  index,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -17,6 +18,7 @@ const DEFAULT_API_CREDENTIAL_LIMIT = 10;
 
 
 @modelOptions({schemaOptions: {collection: "apiCredentials"}})
+@index({"user": 1})
 export class ApiCredentialSchema {
 
   @prop({required: true, ref: "UserSchema"})

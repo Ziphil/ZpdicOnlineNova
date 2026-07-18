@@ -50,6 +50,9 @@ export const DictionaryVisibilityUtil = LiteralUtilType.create(DICTIONARY_VISIBI
 @modelOptions({schemaOptions: {collection: "dictionaries", minimize: false}})
 @index({"paramName": 1}, {"sparse": true})
 @index({"visibility": 1, "updatedDate": -1, "number": -1})
+@index({"visibility": 1, "createdDate": -1, "updatedDate": -1, "number": -1})
+@index({"visibility": 1, "updatedDate": -1, "_id": -1})
+@index({"visibility": 1, "createdDate": -1, "_id": -1})
 @index({"user": 1})
 export class DictionarySchema {
 

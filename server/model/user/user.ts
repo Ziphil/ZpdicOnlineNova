@@ -1,4 +1,4 @@
-//
+/* eslint-disable @typescript-eslint/naming-convention */
 
 import {
   DocumentType,
@@ -20,6 +20,8 @@ import {EMAIL_REGEXP, IDENTIFIER_REGEXP, validatePassword} from "/server/util/va
 
 @modelOptions({schemaOptions: {collection: "users"}})
 @index({"email": 1})
+@index({"activateToken.name": 1}, {"sparse": true})
+@index({"resetToken.name": 1}, {"sparse": true})
 export class UserSchema {
 
   @prop({required: true, unique: true, validate: IDENTIFIER_REGEXP})
