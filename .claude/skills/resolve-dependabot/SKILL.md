@@ -13,6 +13,10 @@ dependabot が作成した依存パッケージ更新の PR を調査し、ユ�
 マージ時のコミットメッセージは**固定の文言**を使う (後述)。
 勝手に言い換えたり英語にしたりしないこと。
 
+> ⚠️ **commit や push して良いのは「dependabot に従った `package.json` と `package-lock.json` の書き換え」だけ**。
+> 更新に伴ってソースコードの修正 (設定ファイルの移行、breaking change への追従など) が必要になった場合、修正作業自体を頼まれていたとしても、その変更を**勝手に commit や push してはならない**。
+> 修正はワークツリー上に留め、内容をユーザーに提示して、commit や push の可否を必ず確認すること。
+
 ## 前提
 - 対象リポジトリは `ziphil/ZpdicOnlineNova` (GitHub ツールの `owner` = `ziphil`, `repo` = `zpdiconlinenova`)。
 - dependabot PR のベースブランチは `develop`。
@@ -136,11 +140,14 @@ npm の dependabot PR はどれも `package-lock.json` を変更するため、1
 
 ## Step 6: ローカルに反映
 マージが一段落したら、ローカルの `develop` に取り込む。
-
 ```bash
 git checkout develop
 git pull --rebase origin develop
 ```
+
+ワークツリーに未コミットの変更 (更新に伴うソースコードの修正など) がある場合でも、pull を通すためにそれを**勝手に commit してはならない**。
+`git stash` で退避してから pull し、その後 `git stash pop` で戻すこと。
+その変更を commit・push するかどうかは、内容をユーザーに提示して判断を仰ぐ。
 
 ### クラウド環境で実行中の場合
 クラウド環境 (Claude Code on the web) では、セッションは自動生成された作業ブランチ (`claude/...`) 上で始まる。
@@ -155,5 +162,5 @@ git fetch origin develop
 ## Step 7: 最後の報告
 以下をユーザーに報告して終了する。
 - マージした PR の一覧 (番号・パッケージ)。
-- rebase 待ち等でマージできなかった PR があれば、その一覧と理由。マージできなかった PR は、dependabot の rebase が終わってから再度この skill を実行すればよい旨も添える。
+- rebase 待ち等でマージできなかった PR があれば、その一覧と理由。マージできなかった PR は、dependabot の rebase が終わってから再度この skill を実行すれば良い旨も添える。
 - ローカルの `develop` への反映状況。
