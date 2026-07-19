@@ -18,9 +18,11 @@ dependabot が作成した依存パッケージ更新の PR を調査し、ユ�
 > 修正はワークツリー上に留め、内容をユーザーに提示して、commit や push の可否を必ず確認すること。
 
 ## 前提
-- 対象リポジトリは `ziphil/ZpdicOnlineNova` (GitHub ツールの `owner` = `ziphil`, `repo` = `zpdiconlinenova`)。
+- 対象リポジトリは `ziphil/ZpdicOnlineNova`。
 - dependabot PR のベースブランチは `develop`。
-- GitHub 操作は `mcp__github__*` ツールを用いる (`gh` CLI は使わない)。
+- GitHub 操作は `gh` CLI (`gh pr ...`) を用いる。以降のコマンド例では `--repo ziphil/ZpdicOnlineNova` を明示する。
+  - このスキルはローカル実行が主で、その環境では GitHub MCP が使えないことが多いため、`gh` を用いる。
+  - `gh` はあらかじめ認証済みであることを前提とする。未認証・未インストールの場合はその旨をユーザーに伝えて中断する。
 
 ## 全体の流れ
 1. dependabot の open PR を全て取得する
@@ -34,17 +36,20 @@ dependabot が作成した依存パッケージ更新の PR を調査し、ユ�
 マージ (Step 5) は外部 (origin) への反映を伴い取り消しが難しいので、必ず Step 4 の確認を経てから実行すること。
 
 ## Step 1: dependabot の open PR を取得
-`mcp__github__search_pull_requests` で dependabot が作成した open PR を取得する。
+`gh pr list` で dependabot が作成した open PR を取得する。
+本文まで取ると出力が大きくなるため、一覧では番号・タイトル・ブランチだけを取得する。
+コマンドは 1 行で書く (PowerShell・Git Bash のどちらでも動くように複数行に分ける記法は使わない)。
 ```
-query: "repo:ziphil/zpdiconlinenova is:pr is:open author:app/dependabot"
+gh pr list --repo ziphil/ZpdicOnlineNova --search "author:app/dependabot" --state open --json number,title,headRefName,baseRefName
 ```
 
 各 PR について、少なくとも以下を把握する。
-- PR 番号
-- タイトル (`Bump <package> from <old> to <new>` の形式が多い)
-- head ブランチ (`dependabot/...`) と base ブランチ (`develop`)
+- PR 番号 (`number`)
+- タイトル (`title`, `Bump <package> from <old> to <new>` の形式が多い)
+- head ブランチ (`headRefName`, `dependabot/...`) と base ブランチ (`baseRefName`, `develop`)
 
-**注意**: dependabot の PR 本文には長大な changelog や release notes が含まれるため、一覧取得の出力が大きくなりがちである。
+**注意**:
+dependabot の PR 本文には長大な changelog や release notes が含まれるため、`body` まで取得すると出力が大きくなりがちである。
 一覧では番号・タイトル・ブランチだけを押さえ、本文の詳細は Step 2 で PR ごとに取得する。
 
 open な dependabot PR が 1 件もない場合は、その旨をユーザーに報告して終了する。
@@ -76,7 +81,10 @@ require("<package>")
 利用箇所が多かったり中核的な処理で使われていたりするものほど、更新の影響が大きい。
 
 ### 2-4: changelog と breaking change の確認
-`mcp__github__pull_request_read` (`method: "get"`) で PR 本文を取得する。
+`gh pr view` で PR 本文を取得する。
+```
+gh pr view <PR番号> --repo ziphil/ZpdicOnlineNova --json title,body,url
+```
 dependabot の本文には changelog・release notes・commits・互換性スコア (compatibility score) が含まれる。
 major 更新や、changelog に breaking change や deprecation の記載がある場合は、それを影響として明記する。
 
@@ -110,27 +118,34 @@ major 更新や、changelog に breaking change や deprecation の記載があ�
 
 ## Step 5: squash マージ
 確定したマージ対象の PR を、1 件ずつ順番に squash マージする。
-`mcp__github__merge_pull_request` を用いる。
+`gh pr merge` を用いる。
+1 行で書く。
 ```
-merge_method: "squash"
-commit_title:  "依存パッケージのバージョンをdependabotに従って変更"
-commit_message: ""
+gh pr merge <PR番号> --repo ziphil/ZpdicOnlineNova --squash --subject "依存パッケージのバージョンをdependabotに従って変更" --body ""
 ```
 
 **固定ルール**:
-- `merge_method` は必ず `"squash"`。
-- `commit_title` は内容によらず一律 `依存パッケージのバージョンをdependabotに従って変更` で固定。
-- `commit_message` は空にして、dependabot の元コミット一覧などが本文に紛れ込まないようにする。
+- マージ方式は必ず `--squash`。
+- `--subject` (コミットタイトル) は内容によらず一律 `依存パッケージのバージョンをdependabotに従って変更` で固定。
+- `--body ""` で本文を空にして、dependabot の元コミット一覧などが本文に紛れ込まないようにする。
+- `--subject` と `--body` は必ず明示する。省くとエディタが開いたり、dependabot 由来の別文言がコミットメッセージになったりするため。
 
 ### コンフリクト・ビハインドへの対応
 npm の dependabot PR はどれも `package-lock.json` を変更するため、1 件マージすると残りの PR が `develop` に対してコンフリクトやビハインドになることがある。
 
 マージが失敗した (mergeable でない) PR については、以下の手順で `@dependabot rebase` により追従させる。
-1. `mcp__github__add_issue_comment` でその PR に `@dependabot rebase` とコメントする (`issue_number` に PR 番号を渡す)。
+1. `gh pr comment` でその PR に `@dependabot rebase` とコメントする。
+   ```
+   gh pr comment <PR番号> --repo ziphil/ZpdicOnlineNova --body "@dependabot rebase"
+   ```
    同じ PR に二重にコメントしない。
 2. dependabot がブランチを rebase し直す (force-push する) のを待つ。
    数分かかることがある。
-   foreground の `sleep` は使えないため、`Monitor` ツールで PR の mergeable 状態が整うのを待つか、一定間隔をおいて `mcp__github__pull_request_read` (`method: "get"`) を再取得して `mergeable` と `mergeable_state` を確認する。
+   foreground の `sleep` は使えないため、一定間隔をおいて `gh pr view` で PR の状態を再取得し、`mergeable` と `mergeStateStatus` を確認する。
+   ```
+   gh pr view <PR番号> --repo ziphil/ZpdicOnlineNova --json mergeable,mergeStateStatus
+   ```
+   `Monitor` ツールでこのコマンドの出力が整うまで待たせても良い。
 3. mergeable になったら、改めて同じ固定メッセージで squash マージする。
 
 `develop` が進んだだけでコンフリクトの無い (“behind”) PR は、GitHub 側のサーバーマージで問題なくマージできることも多い。
