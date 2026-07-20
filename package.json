@@ -117,7 +117,7 @@
     "react-intl": "^6.5.5",
     "react-markdown": "^8.0.3",
     "react-query": "^3.39.1",
-    "react-router-dom": "^6.21.1",
+    "react-router-dom": "^7.18.1",
     "react-use": "^17.6.1",
     "recharts": "^2.10.3",
     "recoil": "^0.7.7",
