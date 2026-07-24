@@ -1,4 +1,4 @@
-/* eslint-disable no-useless-computed-key */
+//
 
 import {ComponentProps, ReactElement, ReactNode, Ref, useCallback} from "react";
 import {Path, Link as RouterLink} from "react-router-dom";
@@ -23,7 +23,7 @@ export const LinkTab = createWithRef(
 
     const renderComponent = useCallback(function (props: any): ReactElement {
       return (
-        <RouterLink {...getRouterLinkProps(href, useTransition)} {...props}/>
+        <RouterLink to={href} viewTransition={useTransition} {...props}/>
       );
     }, [href, useTransition]);
 
@@ -35,12 +35,3 @@ export const LinkTab = createWithRef(
 
   }
 );
-
-
-function getRouterLinkProps(href: string | Partial<Path>, useTransition: boolean): any {
-  const props = {
-    to: href,
-    ["viewTransition"]: useTransition
-  };
-  return props;
-};

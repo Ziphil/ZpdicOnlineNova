@@ -1,8 +1,7 @@
-/* eslint-disable no-useless-computed-key */
+//
 
 import {ReactElement, ReactNode} from "react";
 import {FieldPath, UseFormReturn} from "react-hook-form";
-import {Path} from "react-router-dom";
 import {ControlErrorMessage as ZographiaControlErrorMessage} from "zographia";
 import {create} from "/client/component/create";
 
@@ -33,12 +32,3 @@ export const ControlErrorMessage = create(
 
   }
 );
-
-
-function getRouterLinkProps(href: string | Partial<Path>, useTransition: boolean): any {
-  const props = {
-    to: href,
-    ["viewTransition"]: useTransition
-  };
-  return props;
-};

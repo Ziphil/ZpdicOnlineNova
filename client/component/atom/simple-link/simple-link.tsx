@@ -1,4 +1,4 @@
-/* eslint-disable no-useless-computed-key */
+//
 
 import {ReactElement, ReactNode, Ref} from "react";
 import {Path, Link as RouterLink} from "react-router-dom";
@@ -23,7 +23,8 @@ export const SimpleLink = createWithRef(
     return (
       <RouterLink
         styleName="root"
-        {...getRouterLinkProps(href, useTransition)}
+        to={href}
+        viewTransition={useTransition}
         {...rest}
       >
         {children}
@@ -32,12 +33,3 @@ export const SimpleLink = createWithRef(
 
   }
 );
-
-
-function getRouterLinkProps(href: string | Partial<Path>, useTransition: boolean): any {
-  const props = {
-    to: href,
-    ["viewTransition"]: useTransition
-  };
-  return props;
-};
