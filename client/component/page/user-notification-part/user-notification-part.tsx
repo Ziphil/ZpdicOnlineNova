@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {useParams} from "react-router-dom";
+import {useParams} from "react-router";
 import {AdditionalProps} from "zographia";
 import {InvitationList} from "/client/component/compound/invitation-list";
 import {create} from "/client/component/create";

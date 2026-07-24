@@ -1,7 +1,7 @@
 //
 
 import {ReactElement, ReactNode, Ref} from "react";
-import {Path, Link as RouterLink} from "react-router-dom";
+import {Path, Link as RouterLink} from "react-router";
 import {createWithRef} from "/client/component/create";
 
 

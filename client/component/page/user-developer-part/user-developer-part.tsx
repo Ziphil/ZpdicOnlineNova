@@ -1,7 +1,7 @@
 //
 
 import {ReactElement, useMemo} from "react";
-import {useParams} from "react-router-dom";
+import {useParams} from "react-router";
 import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {ApiCredentialList} from "/client/component/compound/api-credential-list";

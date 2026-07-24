@@ -3,7 +3,7 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleInfo, faEdit, faHandPointRight, faShare, faTrashAlt, faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, useRef} from "react";
-import {useHref} from "react-router-dom";
+import {useHref} from "react-router";
 import {
   AdditionalProps,
   Button,

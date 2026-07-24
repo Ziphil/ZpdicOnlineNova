@@ -1,7 +1,7 @@
 //
 
 import {useCallback} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 import {useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";

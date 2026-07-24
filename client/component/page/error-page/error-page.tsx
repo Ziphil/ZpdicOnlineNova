@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {isRouteErrorResponse, useRouteError} from "react-router-dom";
+import {isRouteErrorResponse, useRouteError} from "react-router";
 import {AdditionalProps} from "zographia";
 import {Header} from "/client/component/compound/header";
 import {MainContainer, Page} from "/client/component/compound/page";

@@ -3,7 +3,7 @@
 import {faArrowUpRightFromSquare, faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, MouseEvent, ReactElement, Ref, RefObject, cloneElement, isValidElement, useCallback, useRef, useState} from "react";
 import {UseFormReturn} from "react-hook-form";
-import {useHref} from "react-router-dom";
+import {useHref} from "react-router";
 import rison from "rison";
 import {
   Button,

@@ -1,7 +1,8 @@
 //
 
 import {ReactElement} from "react";
-import {Route, RouterProvider, createBrowserRouter, createRoutesFromElements} from "react-router-dom";
+import {Route, createBrowserRouter, createRoutesFromElements} from "react-router";
+import {RouterProvider} from "react-router/dom";
 import {create} from "/client/component/create";
 import {ErrorPage} from "/client/component/page/error-page";
 import {ToplevelRoute} from "./toplevel-route";

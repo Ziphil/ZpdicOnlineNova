@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {useParams} from "react-router-dom";
+import {useParams} from "react-router";
 import {AdditionalProps, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {ChangeAppearanceForm} from "/client/component/form/change-appearance-form";

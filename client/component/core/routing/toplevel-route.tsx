@@ -1,7 +1,7 @@
 //
 
 import {ReactElement, Suspense, useEffect} from "react";
-import {Outlet, useLocation} from "react-router-dom";
+import {Outlet, useLocation} from "react-router";
 import {create} from "/client/component/create";
 import {LoadingPage} from "/client/component/page/loading-page";
 import {sendAnalyticsEvent} from "/client/util/gtag";

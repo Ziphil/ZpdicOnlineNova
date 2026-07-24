@@ -2,7 +2,7 @@
 
 import {faCircleCheck, faDownload, faExclamation, faLeft} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {useParams} from "react-router-dom";
+import {useParams} from "react-router";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, Link, LinkIconbag, LoadingIcon, MultiLineText, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useDownloadDictionary} from "./download-dictionary-form-hook";

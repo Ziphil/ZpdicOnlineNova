@@ -1,6 +1,6 @@
 //
 
-import {LoaderFunctionArgs} from "react-router-dom";
+import {LoaderFunctionArgs} from "react-router";
 import rison from "rison";
 import {EditExampleInitialData} from "/client/component/compound/edit-example-form";
 import {fetchResponse} from "/client/hook/request";

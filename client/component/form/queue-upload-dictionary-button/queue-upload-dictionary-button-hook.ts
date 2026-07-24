@@ -1,7 +1,7 @@
 //
 
 import {BaseSyntheticEvent, useCallback} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 import {Asserts, mixed, object} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {useRequestFile} from "/client/hook/request";

@@ -1,7 +1,7 @@
 //
 
 import {ComponentProps, ReactElement, ReactNode, Ref, useCallback} from "react";
-import {Path, Link as RouterLink} from "react-router-dom";
+import {Path, Link as RouterLink} from "react-router";
 import {Link as ZographiaLink} from "zographia";
 import {createWithRef} from "/client/component/create";
 
