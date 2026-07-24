@@ -3,7 +3,7 @@
 import {faSearch} from "@fortawesome/sharp-regular-svg-icons";
 import merge from "lodash.merge";
 import {Dispatch, ReactElement, SetStateAction, useCallback} from "react";
-import {DeepPartial} from "react-hook-form/dist/types/utils";
+import {DeepPartial} from "react-hook-form";
 import {AdditionalProps, CheckableContainer, CheckableLabel, Checkbox, GeneralIcon, Input, InputAddon, useTrans} from "zographia";
 import {ExampleModeSelect} from "/client/component/atom/example-mode-select";
 import {ExampleTypeSelect} from "/client/component/atom/example-type-select";

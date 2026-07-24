@@ -6,6 +6,7 @@
       "/client*": ["client*"],
       "/server*": ["server*"],
       "/worker*": ["worker*"],
+      "react-router/dom": ["node_modules/react-router/dist/development/dom-export"],
     },
     "module": "commonjs",
     "target": "es2023",
