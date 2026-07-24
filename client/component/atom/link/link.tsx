@@ -44,7 +44,7 @@ export const Link = createWithRef(
 function getRouterLinkProps(href: string | Partial<Path>, useTransition: boolean): any {
   const props = {
     to: href,
-    ["unstable_viewTransition"]: useTransition
+    ["viewTransition"]: useTransition
   };
   return props;
 };
