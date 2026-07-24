@@ -15,12 +15,10 @@ import http, {Server as HttpServer} from "http";
 import mongoose from "mongoose";
 import morgan from "morgan";
 import multer from "multer";
-import {Server} from "socket.io";
 import * as externalAlphaRest from "/server/external-alpha/controller/rest";
 import * as externalPreviewRest from "/server/external-preview/controller/rest";
 import * as internalJob from "/server/internal/controller/job";
 import * as internalRest from "/server/internal/controller/rest";
-import * as internalSocket from "/server/internal/controller/socket";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
 import {jsonifyRequest} from "/server/util/request";
@@ -35,13 +33,11 @@ export class Main {
 
   private application: Express;
   private httpServer: HttpServer;
-  private server: Server;
   private agenda: Agenda;
 
   public constructor() {
     this.application = express();
     this.httpServer = this.createHttpServer();
-    this.server = this.createSocketServer();
     this.agenda = this.createAgenda();
   }
 
@@ -67,12 +63,6 @@ export class Main {
     const application = this.application;
     const httpServer = http.createServer(application);
     return httpServer;
-  }
-
-  private createSocketServer(): Server {
-    const httpServer = this.httpServer;
-    const server = new Server(httpServer, {cors: {origin: "*"}});
-    return server;
   }
 
   private createAgenda(): Agenda {
@@ -144,10 +134,9 @@ export class Main {
   /** ルーターの設定を行います。
    * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
   private useControllers(): void {
-    internalRest.use(this.application, this.server, this.agenda);
-    externalPreviewRest.use(this.application, this.server, this.agenda);
-    externalAlphaRest.use(this.application, this.server, this.agenda);
-    internalSocket.use(this.application, this.server, this.agenda);
+    internalRest.use(this.application, this.agenda);
+    externalPreviewRest.use(this.application, this.agenda);
+    externalAlphaRest.use(this.application, this.agenda);
     internalJob.use(this.agenda);
   }
 

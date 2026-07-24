@@ -6,7 +6,6 @@ import {FilledRequest, InternalRestController, Request, Response} from "/server/
 import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
 import {DictionaryCreator, DictionaryParameterCreator, MemberCreator, SuggestionCreator, TemplateWordCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
-import {SOCKET_PATH_PREFIX} from "/server/internal/type/socket";
 import {DictionaryModel, ExampleModel, OldDictionaryModel, OldExampleModel, OldWordModel, UserModel, WordModel} from "/server/model";
 import {sanitizeFileName} from "/server/util/misc";
 import {toObjectId} from "/server/util/mongo";
@@ -14,7 +13,7 @@ import {QueryRange} from "/server/util/query";
 import {mapWithSizeAsync} from "/server/util/with-size";
 
 
-@restController(SERVER_PATH_PREFIX, SOCKET_PATH_PREFIX)
+@restController(SERVER_PATH_PREFIX)
 export class DictionaryRestController extends InternalRestController {
 
   @post("/createDictionary")
