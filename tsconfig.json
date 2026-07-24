@@ -6,13 +6,12 @@
       "/client*": ["client*"],
       "/server*": ["server*"],
       "/worker*": ["worker*"],
-      "react-router/dom": ["node_modules/react-router/dist/development/dom-export"],
     },
-    "module": "commonjs",
+    "module": "esnext",
     "target": "es2023",
     "lib": ["es2015", "esnext", "dom"],
     "jsx": "react-jsx",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "sourceMap": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
@@ -29,5 +28,11 @@
     "server/**/*",
     "worker/**/*",
     ".claude/skills/**/*"
-  ]
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs",
+      "moduleResolution": "node"
+    }
+  }
 }

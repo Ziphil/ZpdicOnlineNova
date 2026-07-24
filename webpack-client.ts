@@ -32,10 +32,7 @@ const config = {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: "ts-loader",
-          options: {
-            configFile: "tsconfig-esnext.json"
-          }
+          loader: "ts-loader"
         }
       },
       {
