@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {ReactElement} from "react";
-import {useOutletContext} from "react-router-dom";
+import {useOutletContext} from "react-router";
 import {AdditionalProps, MultiLineText, data, useTrans} from "zographia";
 import {MemberList} from "/client/component/compound/member-list";
 import {create} from "/client/component/create";

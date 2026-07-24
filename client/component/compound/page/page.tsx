@@ -1,7 +1,7 @@
 //
 
 import {ReactElement, ReactNode} from "react";
-import {ScrollRestoration} from "react-router-dom";
+import {ScrollRestoration} from "react-router";
 import {AdditionalProps, data} from "zographia";
 import {Title} from "/client/component/atom/title";
 import {Footer} from "/client/component/compound/footer";

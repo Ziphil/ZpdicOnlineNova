@@ -2,7 +2,7 @@
 
 import {faDisplay, faFile, faMemo, faPen, faSliders, faUsers} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {Outlet, useMatch} from "react-router-dom";
+import {Outlet, useMatch} from "react-router";
 import {AdditionalProps, GeneralIcon, TabIconbag, TabList, useTrans} from "zographia";
 import {LinkTab} from "/client/component/atom/tab";
 import {create} from "/client/component/create";

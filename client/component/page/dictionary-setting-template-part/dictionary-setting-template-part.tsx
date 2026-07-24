@@ -2,7 +2,7 @@
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {useOutletContext} from "react-router-dom";
+import {useOutletContext} from "react-router";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {EditTemplateWordDialog} from "/client/component/compound/edit-word-dialog";
 import {TemplateWordList} from "/client/component/compound/template-word-list";

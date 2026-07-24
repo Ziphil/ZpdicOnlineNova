@@ -2,7 +2,7 @@
 
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {useLoaderData} from "react-router-dom";
+import {useLoaderData} from "react-router";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {EditExampleForm, useEditExample} from "/client/component/compound/edit-example-form";
 import {Header} from "/client/component/compound/header";

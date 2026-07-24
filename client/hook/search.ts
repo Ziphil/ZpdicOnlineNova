@@ -1,7 +1,7 @@
 //
 
 import {Dispatch, SetStateAction, useCallback, useEffect, useRef, useState} from "react";
-import {useSearchParams as useRawSearch} from "react-router-dom";
+import {useSearchParams as useRawSearch} from "react-router";
 import {useDebouncedCallback} from "zographia";
 import {resolveStateAction} from "/client/util/misc";
 

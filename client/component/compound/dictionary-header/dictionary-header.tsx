@@ -2,7 +2,7 @@
 
 import {faBook, faCircleInfo, faCog, faImage, faListCheck, faQuotes, faScroll} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {useMatch} from "react-router-dom";
+import {useMatch} from "react-router";
 import {AdditionalProps, GeneralIcon, Indicator, TabIconbag, TabList, useTrans} from "zographia";
 import {LinkTab} from "/client/component/atom/tab";
 import {MainContainer} from "/client/component/compound/page";
