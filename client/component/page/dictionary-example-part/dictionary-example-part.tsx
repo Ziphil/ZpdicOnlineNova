@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {ReactElement, SetStateAction, useCallback} from "react";
+import {ReactElement, useCallback, useMemo} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, Indicator, LoadingIcon, SingleLineText, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {fakQuotesCirclePlus} from "/client/component/atom/icon";
@@ -11,8 +11,8 @@ import {SearchExampleForm} from "/client/component/compound/search-example-form"
 import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
 import {useResponse, useSuspenseResponse} from "/client/hook/request";
-import {Search, useSearchState} from "/client/hook/search";
-import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
+import {Search, useSearch} from "/client/hook/search";
+import {calcOffsetSpec} from "/client/util/misc";
 import {ExampleParameter, NormalExampleOfferParameter} from "/server/internal/skeleton";
 
 
@@ -31,30 +31,32 @@ export const DictionaryExamplePart = create(
     const [authorities] = useSuspenseResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
     const canEdit = authorities?.includes("edit");
 
-    const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [[hitExamples, hitSize], {isFetching}] = useSuspenseResponse("searchExamples", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
+    const [search, setSearch] = useSearch();
+    const query = useMemo(() => deserializeQuery(search), [search]);
+    const [[hitExamples, hitSize], {isFetching}] = useSuspenseResponse("searchExamples", {number: dictionary.number, parameter: query.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
 
     const [[offers] = []] = useResponse("searchExampleOffers", (canEdit) && {parameter: NormalExampleOfferParameter.DAILY, size: 1, offset: 0});
     const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (canEdit && offers !== undefined && offers.length > 0) && {number: dictionary.number, offer: offers[0], size: 1, offset: 0});
     const showOffer = canEdit && offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
 
-    const handleParameterSet = useCallback(function (parameter: SetStateAction<ExampleParameter>): void {
-      setQuery((prevQuery) => {
-        const nextParameter = resolveStateAction(parameter, prevQuery.parameter);
-        return {parameter: nextParameter, page: 0, showExplanation: false};
-      });
-    }, [setQuery]);
+    const handleParameterCommit = useCallback(function (parameter: ExampleParameter): void {
+      setSearch(serializeQuery({parameter, page: 0}), {replace: true});
+    }, [setSearch]);
 
     const handlePageSet = useCallback(function (page: number): void {
-      setQuery({...query, page});
+      setSearch((prevSearch) => {
+        const nextSearch = new URLSearchParams(prevSearch);
+        nextSearch.set("page", page.toString());
+        return nextSearch;
+      });
       window.scrollTo(0, 0);
-    }, [query, setQuery]);
+    }, [setSearch]);
 
     return (
       <div styleName="root" {...rest}>
         <div styleName="left">
           <div styleName="sticky">
-            <SearchExampleForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
+            <SearchExampleForm styleName="form" parameter={query.parameter} onParameterCommit={handleParameterCommit}/>
             {(showOffer) && (
               <section styleName="section">
                 <SingleLineText styleName="heading" is="h3">

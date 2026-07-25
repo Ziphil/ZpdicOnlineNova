@@ -126,17 +126,6 @@ function resetShuffleSeed(form: UseFormReturn<SearchWordFormValue>, name: string
   }
 }
 
-type SearchWordFormValue = {
-  text: string,
-  mode: WordMode,
-  type: WordType,
-  ignoreCase: boolean,
-  orderMode: WordOrderMode,
-  orderDirection: WordOrderDirection,
-  shuffleSeed: string | null,
-  enableSuggestions: boolean
-};
-
 function toFormValue(parameter: WordParameter): SearchWordFormValue {
   const normalParameter = WordParameter.toNormal(parameter);
   const value = {
@@ -167,3 +156,14 @@ function fromFormValue(value: SearchWordFormValue): NormalWordParameter {
   } satisfies NormalWordParameter;
   return parameter;
 }
+
+type SearchWordFormValue = {
+  text: string,
+  mode: WordMode,
+  type: WordType,
+  ignoreCase: boolean,
+  orderMode: WordOrderMode,
+  orderDirection: WordOrderDirection,
+  shuffleSeed: string | null,
+  enableSuggestions: boolean
+};

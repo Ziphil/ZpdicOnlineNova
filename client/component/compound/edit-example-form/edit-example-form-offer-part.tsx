@@ -1,12 +1,12 @@
 //
 
-import {ReactElement, SetStateAction, useCallback, useState} from "react";
+import {ReactElement, useCallback, useState} from "react";
 import {AdditionalProps} from "zographia";
 import {ExampleOfferList} from "/client/component/compound/example-offer-list";
 import {SearchExampleOfferForm} from "/client/component/compound/search-example-offer-form";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
+import {calcOffsetSpec} from "/client/util/misc";
 import {DictionaryWithExecutors, ExampleOffer, ExampleOfferParameter, NormalExampleOfferParameter} from "/server/internal/skeleton";
 import {EditExampleSpec} from "./edit-example-form-hook";
 
@@ -30,11 +30,8 @@ export const EditExampleFormOfferPart = create(
     const [query, setQuery] = useState<ExampleOfferQuery>({parameter: NormalExampleOfferParameter.DAILY, page: 0});
     const [[offers, hitSize] = []] = useResponse("searchExampleOffers", {parameter: query.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
 
-    const handleParameterSet = useCallback(function (parameter: SetStateAction<ExampleOfferParameter>): void {
-      setQuery((prevQuery) => {
-        const nextParameter = resolveStateAction(parameter, prevQuery.parameter);
-        return {parameter: nextParameter, page: 0};
-      });
+    const handleParameterCommit = useCallback(function (parameter: ExampleOfferParameter): void {
+      setQuery({parameter, page: 0});
     }, [setQuery]);
 
     const handlePageSet = useCallback(function (page: number): void {
@@ -49,7 +46,7 @@ export const EditExampleFormOfferPart = create(
 
     return (
       <div styleName="root" {...rest}>
-        <SearchExampleOfferForm parameter={query.parameter} onParameterSet={handleParameterSet}/>
+        <SearchExampleOfferForm parameter={query.parameter} onParameterCommit={handleParameterCommit}/>
         <ExampleOfferList offers={offers} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}} showSupplement={true} showSelectButton={true} onSelect={handleSelect}/>
       </div>
     );
