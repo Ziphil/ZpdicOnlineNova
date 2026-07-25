@@ -1,12 +1,12 @@
 //
 
 import {Dispatch, SetStateAction, useCallback, useEffect, useRef, useState} from "react";
-import {useSearchParams as useRawSearch} from "react-router";
+import {SetURLSearchParams, useSearchParams as useRawSearch} from "react-router";
 import {useDebouncedCallback} from "zographia";
 import {resolveStateAction} from "/client/util/misc";
 
 
-export function useSearch(): [Search, Dispatch<SetStateAction<Search>>] {
+export function useSearch(): [Search, SetSearch] {
   const [search, setSearch] = useRawSearch();
   return [search, setSearch];
 }
@@ -39,6 +39,7 @@ export function useSearchState<S>({serialize, deserialize}: SearchConverter<S>, 
 }
 
 export type Search = URLSearchParams;
+export type SetSearch = SetURLSearchParams;
 
 export type SearchConverter<S> = {
   serialize: (state: S) => URLSearchParams,
