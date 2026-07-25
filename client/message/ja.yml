@@ -1060,9 +1060,15 @@ changeDictionaryShowNumbersForm:
   label:
     section: "セクション"
     equivalent: "訳語"
-    show: "表示する"
-    onlyNecessary: "複数あるときのみ表示する"
+    show: "常に表示する"
+    onlyNecessary: "必要なら表示する"
     hide: "表示しない"
+  labelHelper:
+    onlyNecessary:
+      section: >-
+        セクションが複数ある場合にのみ番号を表示し、1 つしかない場合は表示しません。
+      equivalent: >-
+        訳語が複数ある場合にのみ番号を表示し、1 つしかない場合は表示しません。
 changeDictionarySlimeTitlesForm:
   label:
     pronunciation: "発音"

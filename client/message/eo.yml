@@ -1061,9 +1061,15 @@ changeDictionaryShowNumbersForm:
   label:
     section: "Por sekcioj"
     equivalent: "Por tradukaĵoj"
-    show: "Montri"
-    onlyNecessary: "Montri nur kiam estas pluraj"
+    show: "Ĉiam montri"
+    onlyNecessary: "Montri laŭbezone"
     hide: "Ne montri"
+  labelHelper:
+    onlyNecessary:
+      section: >-
+        Numeroj estas montrataj nur kiam estas pluraj sekcioj, kaj kaŝataj kiam estas nur unu.
+      equivalent: >-
+        Numeroj estas montrataj nur kiam estas pluraj tradukaĵoj, kaj kaŝataj kiam estas nur unu.
 changeDictionarySlimeTitlesForm:
   label:
     pronunciation: "Por elparoloj"
