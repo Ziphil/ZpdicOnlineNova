@@ -14,7 +14,7 @@
 }
 
 .sticky {
-  inset-block-start: calc(24zu + 1zx);
+  inset-block-start: calc(22zu + 1zx);
   row-gap: 6zu;
   display: flex;
   flex-direction: column;
@@ -26,7 +26,11 @@
   align-self: stretch;
 }
 
-.right {
+.adsense {
+  margin-block-end: 6zu;
+}
+
+.content {
   row-gap: 3zu;
   display: flex;
   flex-direction: column;

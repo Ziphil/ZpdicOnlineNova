@@ -586,6 +586,7 @@ footer:
 header:
   link:
     dictionary: "Dictionaries"
+    searchWordsGlobally: "Search all words"
     exampleOffer: "Sentences"
     login: "Sign in"
   userPage: "User page"
@@ -1416,7 +1417,7 @@ resetUserPasswordPage:
     issue: "Reset password"
     reset: "Reset password"
 searchWordsGloballyPage:
-  title: "All words"
+  title: "Search all words"
 topPage:
   button:
     login: "Sign in · Sign up"

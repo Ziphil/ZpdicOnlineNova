@@ -587,6 +587,7 @@ footer:
 header:
   link:
     dictionary: "辞書一覧"
+    searchWordsGlobally: "辞書横断検索"
     exampleOffer: "例文集"
     login: "ログイン"
   userPage: "ユーザーページ"
@@ -1419,7 +1420,7 @@ resetUserPasswordPage:
     issue: "パスワードリセット"
     reset: "パスワードリセット"
 searchWordsGloballyPage:
-  title: "全単語検索"
+  title: "辞書横断検索"
 topPage:
   button:
     login: "ログイン · 新規登録"

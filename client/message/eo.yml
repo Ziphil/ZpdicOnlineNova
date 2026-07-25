@@ -586,6 +586,7 @@ footer:
 header:
   link:
     dictionary: "Vortaroj"
+    searchWordsGlobally: "Serĉi ĉiujn vortojn"
     exampleOffer: "Frazoj"
     login: "Ensaluti"
   userPage: "Uzanta paĝo"
@@ -1416,7 +1417,7 @@ resetUserPasswordPage:
     issue: "Restarigi pasvorton"
     reset: "Restarigi pasvorton"
 searchWordsGloballyPage:
-  title: "Ĉiuj vortoj"
+  title: "Serĉi ĉiujn vortojn"
 topPage:
   button:
     login: "Ensaluti · Enskribiĝi"

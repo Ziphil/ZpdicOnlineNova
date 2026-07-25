@@ -2,6 +2,7 @@
 
 import {ReactElement, useCallback} from "react";
 import {AdditionalProps, LoadingIcon, useTrans} from "zographia";
+import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {Header} from "/client/component/compound/header";
 import {MainContainer, Page} from "/client/component/compound/page";
 import {SimpleSearchWordForm} from "/client/component/compound/simple-search-word-form";
@@ -46,15 +47,18 @@ export const SearchWordsGloballyPage = create(
             </div>
           </div>
           <div styleName="right">
-            <div styleName="header">
-              <div styleName="size">
-                {(isFetching) ? <LoadingIcon/> : (showHitSizeCap) ? <>{transNumber(50)}+</> : transNumber(hitSize)}
+            <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
+            <div styleName="content">
+              <div styleName="header">
+                <div styleName="size">
+                  {(isFetching) ? <LoadingIcon/> : (showHitSizeCap) ? <>{transNumber(50)}+</> : transNumber(hitSize)}
+                </div>
               </div>
+              <SimpleWordList
+                words={hitWords}
+                pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}
+              />
             </div>
-            <SimpleWordList
-              words={hitWords}
-              pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}
-            />
           </div>
         </MainContainer>
       </Page>

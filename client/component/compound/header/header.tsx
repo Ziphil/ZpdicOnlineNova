@@ -1,6 +1,6 @@
 //
 
-import {faBook, faQuotes, faSignInAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {faBook, faMagnifyingGlass, faQuotes, faSignInAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, LinkIconbag, useResponsiveDevice, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
@@ -38,6 +38,10 @@ export const Header = create(
               <Link styleName="link" href="/dictionary" variant="unstyledUnderline">
                 <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
                 {trans("link.dictionary")}
+              </Link>
+              <Link styleName="link" href="/all-words" variant="unstyledUnderline">
+                <LinkIconbag><GeneralIcon icon={faMagnifyingGlass}/></LinkIconbag>
+                {trans("link.searchWordsGlobally")}
               </Link>
               <Link styleName="link" href="/sentence" variant="unstyledUnderline">
                 <LinkIconbag><GeneralIcon icon={faQuotes}/></LinkIconbag>

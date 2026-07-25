@@ -2,6 +2,7 @@
 
 import {ReactElement, useCallback} from "react";
 import {AdditionalProps} from "zographia";
+import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {DictionaryList} from "/client/component/compound/dictionary-list";
 import {Header} from "/client/component/compound/header";
 import {MainContainer, Page} from "/client/component/compound/page";
@@ -42,6 +43,7 @@ export const DictionaryListPage = create(
             </div>
           </div>
           <div styleName="right">
+            <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
             <DictionaryList dictionaries={hitDictionaries} type="all" pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}} showUser={true} showChart={true}/>
           </div>
         </MainContainer>
