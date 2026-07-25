@@ -1,6 +1,6 @@
 //
 
-import {ReactElement, useCallback, useMemo} from "react";
+import {ReactElement, useCallback} from "react";
 import {AdditionalProps, useTrans} from "zographia";
 import {ExampleOfferList} from "/client/component/compound/example-offer-list";
 import {Header} from "/client/component/compound/header";
@@ -8,7 +8,7 @@ import {MainContainer, Page} from "/client/component/compound/page";
 import {SearchExampleOfferForm} from "/client/component/compound/search-example-offer-form";
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
-import {Search, useSearch} from "/client/hook/search";
+import {Search, useSearchQuery} from "/client/hook/search";
 import {calcOffsetSpec} from "/client/util/misc";
 import {ExampleOfferParameter} from "/server/internal/skeleton";
 
@@ -23,22 +23,17 @@ export const ExampleOfferListPage = create(
 
     const {trans} = useTrans("exampleOfferListPage");
 
-    const [search, setSearch] = useSearch();
-    const query = useMemo(() => deserializeQuery(search), [search]);
+    const [query, setQuery] = useSearchQuery({serializeQuery, deserializeQuery});
     const [[hitOffers, hitSize]] = useSuspenseResponse("searchExampleOffers", {parameter: query.parameter, ...calcOffsetSpec(query.page, 10)}, {keepPreviousData: true});
 
     const handleParameterCommit = useCallback(function (parameter: ExampleOfferParameter): void {
-      setSearch(serializeQuery({parameter, page: 0}), {replace: true});
-    }, [setSearch]);
+      setQuery({parameter, page: 0}, {replace: true});
+    }, [setQuery]);
 
     const handlePageSet = useCallback(function (page: number): void {
-      setSearch((prevSearch) => {
-        const nextSearch = new URLSearchParams(prevSearch);
-        nextSearch.set("page", page.toString());
-        return nextSearch;
-      });
+      setQuery((prevQuery) => ({...prevQuery, page}));
       window.scrollTo(0, 0);
-    }, [setSearch]);
+    }, [setQuery]);
 
     return (
       <Page title={trans("title")} headerNode={<Header/>} {...rest}>

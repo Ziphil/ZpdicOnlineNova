@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faCommentQuestion} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback, useMemo} from "react";
+import {ReactElement, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, LoadingIcon, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {Markdown} from "/client/component/atom/markdown";
@@ -12,7 +12,7 @@ import {WordList} from "/client/component/compound/word-list";
 import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
 import {useSuspenseResponse} from "/client/hook/request";
-import {Search, useSearch} from "/client/hook/search";
+import {Search, useSearchQuery} from "/client/hook/search";
 import {getDictionarySpecialPaths} from "/client/util/dictionary";
 import {calcOffsetSpec} from "/client/util/misc";
 import {WordParameter} from "/server/internal/skeleton";
@@ -33,8 +33,7 @@ export const DictionaryMainPart = create(
 
     const [authorities] = useSuspenseResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
-    const [search, setSearch] = useSearch();
-    const query = useMemo(() => deserializeQuery(search), [search]);
+    const [query, setQuery] = useSearchQuery({serializeQuery, deserializeQuery});
     const [hitResult, {isFetching}] = useSuspenseResponse("searchWords", {number: dictionary.number, parameter: query.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
@@ -42,17 +41,13 @@ export const DictionaryMainPart = create(
     const showHitSizeCap = query.parameter.kind === "normal" && query.parameter.options.shuffleSeed !== null && hitSize >= 50;
 
     const handleParameterCommit = useCallback(function (parameter: WordParameter): void {
-      setSearch(serializeQuery({parameter, page: 0, showExplanation: false}), {replace: true});
-    }, [setSearch]);
+      setQuery({parameter, page: 0, showExplanation: false}, {replace: true});
+    }, [setQuery]);
 
     const handlePageSet = useCallback(function (page: number): void {
-      setSearch((prevSearch) => {
-        const nextSearch = new URLSearchParams(prevSearch);
-        nextSearch.set("page", page.toString());
-        return nextSearch;
-      });
+      setQuery((prevQuery) => ({...prevQuery, page}));
       window.scrollTo(0, 0);
-    }, [setSearch]);
+    }, [setQuery]);
 
     return (
       <div styleName="root" {...rest}>

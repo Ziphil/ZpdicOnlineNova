@@ -1,6 +1,6 @@
 //
 
-import {ReactElement, useCallback, useMemo} from "react";
+import {ReactElement, useCallback} from "react";
 import {AdditionalProps} from "zographia";
 import {DictionaryList} from "/client/component/compound/dictionary-list";
 import {Header} from "/client/component/compound/header";
@@ -8,7 +8,7 @@ import {MainContainer, Page} from "/client/component/compound/page";
 import {SearchDictionaryForm} from "/client/component/compound/search-dictionary-form";
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
-import {Search, useSearch} from "/client/hook/search";
+import {Search, useSearchQuery} from "/client/hook/search";
 import {calcOffsetSpec} from "/client/util/misc";
 import {DictionaryParameter} from "/server/internal/skeleton";
 
@@ -21,22 +21,17 @@ export const DictionaryListPage = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const [search, setSearch] = useSearch();
-    const query = useMemo(() => deserializeQuery(search), [search]);
+    const [query, setQuery] = useSearchQuery({serializeQuery, deserializeQuery});
     const [[hitDictionaries, hitSize]] = useSuspenseResponse("searchDictionaries", {parameter: query.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
 
     const handleParameterCommit = useCallback(function (parameter: DictionaryParameter): void {
-      setSearch(serializeQuery({parameter, page: 0}), {replace: true});
-    }, [setSearch]);
+      setQuery({parameter, page: 0}, {replace: true});
+    }, [setQuery]);
 
     const handlePageSet = useCallback(function (page: number): void {
-      setSearch((prevSearch) => {
-        const nextSearch = new URLSearchParams(prevSearch);
-        nextSearch.set("page", page.toString());
-        return nextSearch;
-      });
+      setQuery((prevQuery) => ({...prevQuery, page}));
       window.scrollTo(0, 0);
-    }, [setSearch]);
+    }, [setQuery]);
 
     return (
       <Page headerNode={<Header/>} {...rest}>

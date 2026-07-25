@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {ReactElement, useCallback, useMemo} from "react";
+import {ReactElement, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, Indicator, LoadingIcon, SingleLineText, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {fakQuotesCirclePlus} from "/client/component/atom/icon";
@@ -11,7 +11,7 @@ import {SearchExampleForm} from "/client/component/compound/search-example-form"
 import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
 import {useResponse, useSuspenseResponse} from "/client/hook/request";
-import {Search, useSearch} from "/client/hook/search";
+import {Search, useSearchQuery} from "/client/hook/search";
 import {calcOffsetSpec} from "/client/util/misc";
 import {ExampleParameter, NormalExampleOfferParameter} from "/server/internal/skeleton";
 
@@ -31,8 +31,7 @@ export const DictionaryExamplePart = create(
     const [authorities] = useSuspenseResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
     const canEdit = authorities?.includes("edit");
 
-    const [search, setSearch] = useSearch();
-    const query = useMemo(() => deserializeQuery(search), [search]);
+    const [query, setQuery] = useSearchQuery({serializeQuery, deserializeQuery});
     const [[hitExamples, hitSize], {isFetching}] = useSuspenseResponse("searchExamples", {number: dictionary.number, parameter: query.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
 
     const [[offers] = []] = useResponse("searchExampleOffers", (canEdit) && {parameter: NormalExampleOfferParameter.DAILY, size: 1, offset: 0});
@@ -40,17 +39,13 @@ export const DictionaryExamplePart = create(
     const showOffer = canEdit && offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
 
     const handleParameterCommit = useCallback(function (parameter: ExampleParameter): void {
-      setSearch(serializeQuery({parameter, page: 0}), {replace: true});
-    }, [setSearch]);
+      setQuery({parameter, page: 0}, {replace: true});
+    }, [setQuery]);
 
     const handlePageSet = useCallback(function (page: number): void {
-      setSearch((prevSearch) => {
-        const nextSearch = new URLSearchParams(prevSearch);
-        nextSearch.set("page", page.toString());
-        return nextSearch;
-      });
+      setQuery((prevQuery) => ({...prevQuery, page}));
       window.scrollTo(0, 0);
-    }, [setSearch]);
+    }, [setQuery]);
 
     return (
       <div styleName="root" {...rest}>
