@@ -776,7 +776,9 @@ shareMenu:
     screenshot: |-
       Saved the screenshot.
 simpleWordList:
-  empty: "No matching words were found"
+  empty:
+    normal: "No matching words were found"
+    noText: "Enter a search term in the search box"
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"

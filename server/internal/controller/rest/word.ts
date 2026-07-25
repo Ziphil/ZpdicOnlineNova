@@ -3,7 +3,7 @@
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkDictionary, checkMe, parseMe} from "/server/internal/controller/rest/middleware";
-import {RelationCreator, SuggestionCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
+import {NormalWordParameterCreator, RelationCreator, SuggestionCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {DictionaryModel} from "/server/model";
 import {QueryRange} from "/server/util/query";
@@ -136,7 +136,7 @@ export class WordRestController extends InternalRestController {
   @post("/searchWordsGlobally")
   public async [Symbol()](request: Request<"searchWordsGlobally">, response: Response<"searchWordsGlobally">): Promise<void> {
     const {offset, size} = request.body;
-    const parameter = WordParameterCreator.enflesh(request.body.parameter);
+    const parameter = NormalWordParameterCreator.enflesh(request.body.parameter);
     const range = new QueryRange(offset, size);
     const hitResult = await DictionaryModel.searchWordsGlobally(parameter, range);
     const body = await mapWithSizeAsync(hitResult, ({dictionary, word}) => WordCreator.skeletonizeWithExamplesAndDictionary(word, dictionary));

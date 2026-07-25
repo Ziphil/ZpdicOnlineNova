@@ -11,10 +11,12 @@ export const SimpleWordList = create(
   require("./simple-word-list.scss"), "SimpleWordList",
   function ({
     words,
+    emptyType,
     pageSpec,
     ...rest
   }: {
     words?: Array<WordWithDictionary>,
+    emptyType: "normal" | "noText",
     pageSpec: PageSpec,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -30,7 +32,7 @@ export const SimpleWordList = create(
           <ListLoadingView/>
           <ListEmptyView styleName="empty">
             <span>
-              {trans("empty")}
+              {trans(`empty.${emptyType}`)}
             </span>
           </ListEmptyView>
         </ListBody>

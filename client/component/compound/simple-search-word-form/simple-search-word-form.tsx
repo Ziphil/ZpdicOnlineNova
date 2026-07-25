@@ -9,7 +9,7 @@ import {WordTypeSelect} from "/client/component/atom/word-type-select";
 import {create} from "/client/component/create";
 import {useSearchForm} from "/client/hook/search-form";
 import {preventDefault} from "/client/util/form";
-import {NormalWordParameter, WordMode, WordParameter, WordType} from "/server/internal/skeleton";
+import {NormalWordParameter, WordMode, WordType} from "/server/internal/skeleton";
 
 
 export const SimpleSearchWordForm = create(
@@ -19,8 +19,8 @@ export const SimpleSearchWordForm = create(
     onParameterCommit,
     ...rest
   }: {
-    parameter: WordParameter,
-    onParameterCommit: (parameter: WordParameter) => void,
+    parameter: NormalWordParameter,
+    onParameterCommit: (parameter: NormalWordParameter) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -49,15 +49,14 @@ export const SimpleSearchWordForm = create(
 );
 
 
-const FORM_WORD_MODES = ["both", "spelling", "term"] as const;
-const FORM_WORD_TYPES = ["prefix", "exact"] as const;
+const FORM_WORD_MODES = ["both", "spelling", "term"] as ReadonlyArray<WordMode>;
+const FORM_WORD_TYPES = ["prefix", "exact"] as ReadonlyArray<WordType>;
 
-function toFormValue(parameter: WordParameter): SimpleSearchWordFormValue {
-  const normalParameter = WordParameter.toNormal(parameter);
-  const mode = ((FORM_WORD_MODES as ReadonlyArray<WordMode>).includes(normalParameter.mode)) ? normalParameter.mode : "both";
-  const type = ((FORM_WORD_TYPES as ReadonlyArray<WordType>).includes(normalParameter.type)) ? normalParameter.type : "prefix";
+function toFormValue(parameter: NormalWordParameter): SimpleSearchWordFormValue {
+  const mode = (FORM_WORD_MODES.includes(parameter.mode)) ? parameter.mode : "both";
+  const type = (FORM_WORD_TYPES.includes(parameter.type)) ? parameter.type : "prefix";
   const value = {
-    text: normalParameter.text,
+    text: parameter.text,
     mode,
     type
   } satisfies SimpleSearchWordFormValue;

@@ -776,7 +776,9 @@ shareMenu:
     screenshot: |-
       スクリーンショットを保存しました。
 simpleWordList:
-  empty: "該当する単語は見つかりませんでした"
+  empty:
+    normal: "該当する単語は見つかりませんでした"
+    noText: "検索欄に検索内容を入力してください"
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"

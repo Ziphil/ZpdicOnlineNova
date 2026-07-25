@@ -11,7 +11,7 @@ import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
 import {Search, useSearchQuery} from "/client/hook/search";
 import {calcOffsetSpec} from "/client/util/misc";
-import {WordParameter} from "/server/internal/skeleton";
+import {NormalWordParameter} from "/server/internal/skeleton";
 
 
 export const SearchWordsGloballyPage = create(
@@ -27,9 +27,7 @@ export const SearchWordsGloballyPage = create(
     const [query, setQuery] = useSearchQuery({serializeQuery, deserializeQuery});
     const [[hitWords, hitSize], {isFetching}] = useSuspenseResponse("searchWordsGlobally", {parameter: query.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
 
-    const showHitSizeCap = query.parameter.kind === "normal" && query.parameter.options.shuffleSeed !== null && hitSize >= 50;
-
-    const handleParameterCommit = useCallback(function (parameter: WordParameter): void {
+    const handleParameterCommit = useCallback(function (parameter: NormalWordParameter): void {
       setQuery({parameter, page: 0}, {replace: true});
     }, [setQuery]);
 
@@ -51,11 +49,12 @@ export const SearchWordsGloballyPage = create(
             <div styleName="content">
               <div styleName="header">
                 <div styleName="size">
-                  {(isFetching) ? <LoadingIcon/> : (showHitSizeCap) ? <>{transNumber(50)}+</> : transNumber(hitSize)}
+                  {(isFetching) ? <LoadingIcon/> : transNumber(hitSize)}
                 </div>
               </div>
               <SimpleWordList
                 words={hitWords}
+                emptyType={(query.parameter.text.length > 0) ? "normal" : "noText"}
                 pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}
               />
             </div>
@@ -69,15 +68,15 @@ export const SearchWordsGloballyPage = create(
 
 
 function serializeQuery(query: WordQuery): Search {
-  const search = WordParameter.serialize(query.parameter);
+  const search = NormalWordParameter.serialize(query.parameter);
   search.set("page", query.page.toString());
   return search;
 }
 
 function deserializeQuery(search: Search): WordQuery {
-  const parameter = WordParameter.deserialize(search);
+  const parameter = NormalWordParameter.deserialize(search);
   const page = (search.get("page") !== null) ? +search.get("page")! : 0;
   return {parameter, page};
 }
 
-type WordQuery = {parameter: WordParameter, page: number};
+type WordQuery = {parameter: NormalWordParameter, page: number};

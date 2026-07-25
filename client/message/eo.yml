@@ -776,7 +776,9 @@ shareMenu:
     screenshot: |-
       La ekrankopio estas konservita.
 simpleWordList:
-  empty: "Neniuj kongruaj vortoj estis trovitaj"
+  empty:
+    normal: "Neniuj kongruaj vortoj estis trovitaj"
+    noText: "Enigu serĉvorton en la serĉkampon"
 suggestionCard:
   maybe: "Ĉu vi celas…"
   message: "{title} <mute>de</mute> {nameNode}"

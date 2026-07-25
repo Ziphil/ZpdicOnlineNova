@@ -149,14 +149,19 @@ export class DictionarySchema {
     return dictionaries;
   }
 
-  /** 公開されている全ての辞書を横断し、与えられた検索パラメータにヒットした単語のリストを、各単語が属する辞書とともに返します。*/
-  public static async searchWordsGlobally(parameter: WordParameter, range?: QueryRange): Promise<WithSize<{dictionary: Dictionary, word: Word}>> {
-    const dictionaries = await DictionaryModel.find().where("visibility", "public");
-    const dictionaryMap = new Map(dictionaries.map((dictionary) => [dictionary.id, dictionary] as const));
-    const query = parameter.createQuery(dictionaries);
-    const [words, size] = await QueryRange.restrictWithSize(query, range);
-    const hitResults = words.map((word) => ({dictionary: dictionaryMap.get(word.dictionary.toString())!, word}));
-    return [hitResults, size];
+  /** 公開されている全ての辞書を横断し、与えられた検索パラメータにヒットした単語のリストを、各単語が属する辞書とともに返します。
+   * 検索文字列が空の場合は、全単語がヒットしてしまうのを避けるため、DB を検索せずに空のリストを返します。*/
+  public static async searchWordsGlobally(parameter: NormalWordParameter, range?: QueryRange): Promise<WithSize<{dictionary: Dictionary, word: Word}>> {
+    if (parameter.text.length > 0) {
+      const dictionaries = await DictionaryModel.find().where("visibility", "public");
+      const dictionaryMap = new Map(dictionaries.map((dictionary) => [dictionary.id, dictionary] as const));
+      const query = parameter.createQuery(dictionaries);
+      const [words, size] = await QueryRange.restrictWithSize(query, range);
+      const hitResults = words.map((word) => ({dictionary: dictionaryMap.get(word.dictionary.toString())!, word}));
+      return [hitResults, size];
+    } else {
+      return [[], 0];
+    }
   }
 
   /** この辞書に登録されているデータを全て削除し、ファイルから読み込んだデータを代わりに保存します。

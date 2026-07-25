@@ -26,6 +26,7 @@ import type {
   Invitation,
   InvitationType,
   Member,
+  NormalWordParameter,
   Notification,
   ObjectId,
   Proposal,
@@ -216,7 +217,7 @@ type ServerSpecs = {
     }
   },
   searchWordsGlobally: {
-    request: {parameter: WordParameter, offset?: number, size?: number},
+    request: {parameter: NormalWordParameter, offset?: number, size?: number},
     response: {
       success: WithSize<WordWithDictionary>,
       error: never
