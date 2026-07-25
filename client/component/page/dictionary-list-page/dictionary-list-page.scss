@@ -21,3 +21,19 @@
 .adsense {
   margin-block-end: 6zu;
 }
+
+.content {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.size {
+  color: var(--glob-mute-text-color);
+}

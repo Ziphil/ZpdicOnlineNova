@@ -1,7 +1,7 @@
 //
 
 import {ReactElement, useCallback} from "react";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, LoadingIcon, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {DictionaryList} from "/client/component/compound/dictionary-list";
 import {Header} from "/client/component/compound/header";
@@ -22,8 +22,10 @@ export const DictionaryListPage = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const {transNumber} = useTrans("dictionaryListPage");
+
     const [query, setQuery] = useSearchQuery({serializeQuery, deserializeQuery});
-    const [[hitDictionaries, hitSize]] = useSuspenseResponse("searchDictionaries", {parameter: query.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
+    const [[hitDictionaries, hitSize], {isFetching}] = useSuspenseResponse("searchDictionaries", {parameter: query.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
 
     const handleParameterCommit = useCallback(function (parameter: DictionaryParameter): void {
       setQuery({parameter, page: 0}, {replace: true});
@@ -44,7 +46,14 @@ export const DictionaryListPage = create(
           </div>
           <div styleName="right">
             <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
-            <DictionaryList dictionaries={hitDictionaries} type="all" pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}} showUser={true} showChart={true}/>
+            <div styleName="content">
+              <div styleName="header">
+                <div styleName="size">
+                  {(isFetching) ? <LoadingIcon/> : transNumber(hitSize)}
+                </div>
+              </div>
+              <DictionaryList dictionaries={hitDictionaries} type="all" pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}} showUser={true} showChart={true}/>
+            </div>
           </div>
         </MainContainer>
       </Page>
