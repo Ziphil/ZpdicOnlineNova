@@ -1,14 +1,17 @@
 //
 
+import {DictionaryCreator} from "/server/internal/creator/dictionary/dictionary";
 import {ExampleCreator} from "/server/internal/creator/example/example";
 import {SectionCreator} from "/server/internal/creator/word/section";
 import type {
   EditableWord as EditableWordSkeleton,
   ObjectId,
   Word as WordSkeleton,
+  WordWithDictionary as WordSkeletonWithDictionary,
   WordWithExamples as WordSkeletonWithExamples
 } from "/server/internal/skeleton";
 import {
+  Dictionary,
   EditableWord,
   ExampleModel,
   OldWord,
@@ -39,6 +42,13 @@ export namespace WordCreator {
     const base = skeletonize(raw);
     const examples = await ExampleModel.fetchByWord(raw).then((rawExamples) => rawExamples.map(ExampleCreator.skeletonize));
     const skeleton = {...base, examples};
+    return skeleton;
+  }
+
+  export async function skeletonizeWithExamplesAndDictionary(raw: Word, rawDictionary: Dictionary): Promise<WordSkeletonWithDictionary> {
+    const base = await skeletonizeWithExamples(raw);
+    const dictionary = DictionaryCreator.skeletonize(rawDictionary);
+    const skeleton = {...base, dictionary};
     return skeleton;
   }
 

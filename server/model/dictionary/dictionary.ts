@@ -149,6 +149,16 @@ export class DictionarySchema {
     return dictionaries;
   }
 
+  /** 公開されている全ての辞書を横断し、与えられた検索パラメータにヒットした単語のリストを、各単語が属する辞書とともに返します。*/
+  public static async searchWordsGlobally(parameter: WordParameter, range?: QueryRange): Promise<WithSize<{dictionary: Dictionary, word: Word}>> {
+    const dictionaries = await DictionaryModel.find().where("visibility", "public");
+    const dictionaryMap = new Map(dictionaries.map((dictionary) => [dictionary.id, dictionary] as const));
+    const query = parameter.createQuery(dictionaries);
+    const [words, size] = await QueryRange.restrictWithSize(query, range);
+    const hitResults = words.map((word) => ({dictionary: dictionaryMap.get(word.dictionary.toString())!, word}));
+    return [hitResults, size];
+  }
+
   /** この辞書に登録されているデータを全て削除し、ファイルから読み込んだデータを代わりに保存します。
    * 辞書の内部データも、ファイルから読み込んだものに更新されます。
    * `deserializer` にはデシリアライズ開始前 (`start` メソッドを呼ぶ前) のデシリアライザを渡してください。 */
@@ -403,8 +413,8 @@ export class DictionarySchema {
 
   /** 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。*/
   public async searchWords(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
-    const query = parameter.createQuery(this);
-    const suggestionQuery = parameter.createSuggestionQuery(this);
+    const query = parameter.createQuery([this]);
+    const suggestionQuery = parameter.createSuggestionQuery([this]);
     const [words, suggestions] = await Promise.all([
       QueryRange.restrictWithSize(query, range),
       suggestionQuery?.then((suggestions) => suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word))) ?? Promise.resolve([])
@@ -416,8 +426,8 @@ export class DictionarySchema {
     const range = new QueryRange(0, 50);
     const exactParameter = new NormalWordParameter(pattern, "both", "exact", {mode: "unicode", direction: "ascending"}, {ignore: {case: true}, shuffleSeed: null, enableSuggestions: false});
     const partParameter = new NormalWordParameter(pattern, "both", "part", {mode: "unicode", direction: "ascending"}, {ignore: {case: true}, shuffleSeed: null, enableSuggestions: false});
-    const exactQuery = exactParameter.createQuery(this);
-    const partQuery = partParameter.createQuery(this);
+    const exactQuery = exactParameter.createQuery([this]);
+    const partQuery = partParameter.createQuery([this]);
     const [exactWords, partWords] = await Promise.all([
       QueryRange.restrict(exactQuery, range),
       QueryRange.restrict(partQuery, range)

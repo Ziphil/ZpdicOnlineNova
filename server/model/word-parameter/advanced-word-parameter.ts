@@ -17,13 +17,13 @@ export class AdvancedWordParameter extends WordParameter {
     this.elements = elements;
   }
 
-  public createQuery(dictionary: Dictionary): Query<Array<Word>, Word> {
-    const filters = this.elements.map((element) => element.createQuery(dictionary).getFilter());
+  public createQuery(dictionaries: Array<Dictionary>): Query<Array<Word>, Word> {
+    const filters = this.elements.map((element) => element.createQuery(dictionaries).getFilter());
     const query = WordModel.find().and(filters);
     return query;
   }
 
-  public createSuggestionQuery(dictionary: Dictionary): null {
+  public createSuggestionQuery(dictionaries: Array<Dictionary>): null {
     return null;
   }
 
@@ -45,7 +45,7 @@ export class AdvancedWordParameterElement extends WordParameter {
     this.type = type;
   }
 
-  public createQuery(dictionary: Dictionary): Query<Array<Word>, Word> {
+  public createQuery(dictionaries: Array<Dictionary>): Query<Array<Word>, Word> {
     const keys = WordParameter.createKeys(this.mode);
     const needle = WordParameter.createNeedle(this.text, this.type, {case: false});
     const eachFilters = keys.map((key) => {
@@ -64,11 +64,11 @@ export class AdvancedWordParameterElement extends WordParameter {
       const eachFilter = eachQuery.getFilter();
       return eachFilter;
     });
-    const query = WordModel.find().where("dictionary", dictionary).or(eachFilters);
+    const query = WordModel.find().in("dictionary", dictionaries.map((dictionary) => dictionary.id)).or(eachFilters);
     return query;
   }
 
-  public createSuggestionQuery(dictionary: Dictionary): null {
+  public createSuggestionQuery(dictionaries: Array<Dictionary>): null {
     return null;
   }
 

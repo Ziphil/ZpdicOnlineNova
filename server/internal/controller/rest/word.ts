@@ -3,10 +3,11 @@
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkDictionary, checkMe, parseMe} from "/server/internal/controller/rest/middleware";
-import {RelationCreator, WordCreator} from "/server/internal/creator";
+import {RelationCreator, SuggestionCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
+import {DictionaryModel} from "/server/model";
 import {QueryRange} from "/server/util/query";
-import {mapWithSize} from "/server/util/with-size";
+import {mapWithSize, mapWithSizeAsync} from "/server/util/with-size";
 
 
 @restController(SERVER_PATH_PREFIX)
@@ -104,6 +105,41 @@ export class WordRestController extends InternalRestController {
     const {name, excludedWordNumber} = request.body;
     const duplicate = await dictionary.checkDuplicateWordSpelling(name, excludedWordNumber);
     const body = {duplicate};
+    InternalRestController.respond(response, body);
+  }
+
+  @post("/searchWords")
+  @before(parseMe(), checkDictionary("view"))
+  public async [Symbol()](request: Request<"searchWords">, response: Response<"searchWords">): Promise<void> {
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+    const {offset, size} = request.body;
+    const parameter = WordParameterCreator.enflesh(request.body.parameter);
+    const range = new QueryRange(offset, size);
+    const hitResult = await dictionary.searchWords(parameter, range);
+    const body = {
+      words: await mapWithSizeAsync(hitResult.words, WordCreator.skeletonizeWithExamples),
+      suggestions: hitResult.suggestions.map(SuggestionCreator.skeletonize)
+    };
+    InternalRestController.respond(response, body);
+  }
+
+  @post("/searchRelationWords")
+  @before(parseMe(), checkDictionary("view"))
+  public async [Symbol()](request: Request<"searchRelationWords">, response: Response<"searchRelationWords">): Promise<void> {
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+    const {pattern} = request.body;
+    const hitWords = await dictionary.searchRelationWords(pattern);
+    const body = hitWords.map(WordCreator.skeletonize);
+    InternalRestController.respond(response, body);
+  }
+
+  @post("/searchWordsGlobally")
+  public async [Symbol()](request: Request<"searchWordsGlobally">, response: Response<"searchWordsGlobally">): Promise<void> {
+    const {offset, size} = request.body;
+    const parameter = WordParameterCreator.enflesh(request.body.parameter);
+    const range = new QueryRange(offset, size);
+    const hitResult = await DictionaryModel.searchWordsGlobally(parameter, range);
+    const body = await mapWithSizeAsync(hitResult, ({dictionary, word}) => WordCreator.skeletonizeWithExamplesAndDictionary(word, dictionary));
     InternalRestController.respond(response, body);
   }
 

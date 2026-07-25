@@ -18,12 +18,12 @@ export class ExactWordParameter extends WordParameter {
     this.number = number;
   }
 
-  public createQuery(dictionary: Dictionary): QueryLike<Array<Word>, Word> {
-    const query = WordModel.find().where("dictionary", dictionary).where("number", this.number);
+  public createQuery(dictionaries: Array<Dictionary>): QueryLike<Array<Word>, Word> {
+    const query = WordModel.find().in("dictionary", dictionaries.map((dictionary) => dictionary.id)).where("number", this.number);
     return query;
   }
 
-  public createSuggestionQuery(dictionary: Dictionary): Aggregate<Array<RawSuggestion>> | null {
+  public createSuggestionQuery(dictionaries: Array<Dictionary>): Aggregate<Array<RawSuggestion>> | null {
     return null;
   }
 

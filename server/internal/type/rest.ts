@@ -37,6 +37,7 @@ import type {
   Word,
   WordParameter,
   WordSpellingFrequencies,
+  WordWithDictionary,
   WordWithExamples
 } from "/server/internal/skeleton";
 import type {WithRecaptcha} from "/server/internal/type/common";
@@ -212,6 +213,13 @@ type ServerSpecs = {
     response: {
       success: {words: WithSize<WordWithExamples>, suggestions: Array<Suggestion>},
       error: CustomError<"noSuchDictionary">
+    }
+  },
+  searchWordsGlobally: {
+    request: {parameter: WordParameter, offset?: number, size?: number},
+    response: {
+      success: WithSize<WordWithDictionary>,
+      error: never
     }
   },
   searchRelationWords: {
