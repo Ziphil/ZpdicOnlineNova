@@ -3,7 +3,7 @@
 import {Fragment, ReactElement, useMemo} from "react";
 import {AdditionalProps, data} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Variation} from "/server/internal/skeleton";
+import {Dictionary, DictionaryWithExecutors, Variation} from "/server/internal/skeleton";
 
 
 export const WordCardVariationView = create(
@@ -14,7 +14,7 @@ export const WordCardVariationView = create(
     index,
     ...rest
   }: {
-    dictionary: DictionaryWithExecutors,
+    dictionary: Dictionary | DictionaryWithExecutors,
     variation: Variation,
     index: number,
     className?: string
@@ -41,7 +41,8 @@ export const WordCardVariationView = create(
 );
 
 
-function getPronunciation(dictionary: DictionaryWithExecutors, variation: Variation): string | undefined {
+function getPronunciation(dictionary: Dictionary | DictionaryWithExecutors, variation: Variation): string | undefined {
+  const akrantiain = ("akrantiain" in dictionary) ? dictionary.akrantiain : null;
   if (!!variation.pronunciation) {
     if (variation.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
       return variation.pronunciation.trim();
@@ -49,9 +50,9 @@ function getPronunciation(dictionary: DictionaryWithExecutors, variation: Variat
       return "/" + variation.pronunciation.trim() + "/";
     }
   } else {
-    if (dictionary.akrantiain !== null) {
+    if (akrantiain !== null) {
       try {
-        const pronunciation = dictionary.akrantiain.convert(variation.spelling);
+        const pronunciation = akrantiain.convert(variation.spelling);
         return "/" + pronunciation.trim() + "/";
       } catch (error) {
         console.error(error);

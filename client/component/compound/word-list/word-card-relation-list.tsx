@@ -8,7 +8,7 @@ import {Link} from "/client/component/atom/link";
 import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
 import {getWordHref} from "/client/util/dictionary";
-import {DictionaryWithExecutors, Relation, Section} from "/server/internal/skeleton";
+import {Dictionary, DictionaryWithExecutors, Relation, Section, Word} from "/server/internal/skeleton";
 
 
 export const WordCardRelationList = create(
@@ -16,10 +16,12 @@ export const WordCardRelationList = create(
   function ({
     dictionary,
     section,
+    showPopover = true,
     ...rest
   }: {
-    dictionary: DictionaryWithExecutors,
+    dictionary: Dictionary | DictionaryWithExecutors,
     section: Section,
+    showPopover?: boolean,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
@@ -39,13 +41,17 @@ export const WordCardRelationList = create(
               {relations.map((relation, index) => ("spelling" in relation) && (
                 <Fragment key={index}>
                   {(index > 0) && <span styleName="punctuation">, </span>}
-                  <WordPopover dictionary={dictionary} word={relation} trigger={(
-                    <span>
-                      <Link href={getWordHref(dictionary, relation.number)} scheme="secondary" variant="underline">
-                        <span className="dictionary-custom-font" {...data({target: "relation"})}>{relation.spelling}</span>
-                      </Link>
-                    </span>
-                  )}/>
+                  <WordPopoverIfPossible
+                    dictionary={(showPopover && "akrantiain" in dictionary) ? dictionary : null}
+                    word={relation}
+                    trigger={(
+                      <span>
+                        <Link href={getWordHref(dictionary, relation.number)} scheme="secondary" variant="underline">
+                          <span className="dictionary-custom-font" {...data({target: "relation"})}>{relation.spelling}</span>
+                        </Link>
+                      </span>
+                    )}
+                  />
                 </Fragment>
               ))}
             </MultiLineText>
@@ -56,6 +62,28 @@ export const WordCardRelationList = create(
 
   },
   {memo: true}
+);
+
+
+const WordPopoverIfPossible = create(
+  null, "WordPopoverIfPossible",
+  function ({
+    dictionary,
+    word,
+    trigger
+  }: {
+    dictionary: DictionaryWithExecutors | null,
+    word: Word | {number: number} | null,
+    trigger: ReactElement
+  }): ReactElement {
+
+    return (dictionary !== null && word !== null) ? (
+      <WordPopover dictionary={dictionary} word={word} trigger={trigger}/>
+    ) : (
+      trigger
+    );
+
+  }
 );
 
 

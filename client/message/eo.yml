@@ -774,6 +774,8 @@ shareMenu:
       La ligilo estas kopiita.
     screenshot: |-
       La ekrankopio estas konservita.
+simpleWordList:
+  empty: "Neniuj kongruaj vortoj estis trovitaj"
 suggestionCard:
   maybe: "Ĉu vi celas…"
   message: "{title} <mute>de</mute> {nameNode}"
@@ -1413,6 +1415,8 @@ resetUserPasswordPage:
   heading:
     issue: "Restarigi pasvorton"
     reset: "Restarigi pasvorton"
+searchWordsGloballyPage:
+  title: "Ĉiuj vortoj"
 topPage:
   button:
     login: "Ensaluti · Enskribiĝi"

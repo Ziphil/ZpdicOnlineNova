@@ -774,6 +774,8 @@ shareMenu:
       リンクをコピーしました。
     screenshot: |-
       スクリーンショットを保存しました。
+simpleWordList:
+  empty: "該当する単語は見つかりませんでした"
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"
@@ -1416,6 +1418,8 @@ resetUserPasswordPage:
   heading:
     issue: "パスワードリセット"
     reset: "パスワードリセット"
+searchWordsGloballyPage:
+  title: "全単語検索"
 topPage:
   button:
     login: "ログイン · 新規登録"

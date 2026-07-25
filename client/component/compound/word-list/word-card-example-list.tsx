@@ -5,7 +5,7 @@ import {ReactElement, useCallback, useMemo, useState} from "react";
 import {AdditionalProps, Button, GeneralIcon, data, useTrans} from "zographia";
 import {WordCardExampleItem} from "/client/component/compound/word-list/word-card-example-item";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
+import {Dictionary, DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
 
 
 export const WordCardExampleList = create(
@@ -13,10 +13,12 @@ export const WordCardExampleList = create(
   function ({
     dictionary,
     word,
+    showPopover = true,
     ...rest
   }: {
-    dictionary: DictionaryWithExecutors,
+    dictionary: Dictionary | DictionaryWithExecutors,
     word: Word | WordWithExamples,
+    showPopover?: boolean,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
@@ -37,7 +39,7 @@ export const WordCardExampleList = create(
           </h4>
           <ul styleName="list">
             {shownExamples.map((example, index) => (
-              <WordCardExampleItem key={index} dictionary={dictionary} example={example}/>
+              <WordCardExampleItem key={index} dictionary={dictionary} example={example} showPopover={showPopover}/>
             ))}
           </ul>
           {(word.examples.length > 3) && (

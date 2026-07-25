@@ -774,6 +774,8 @@ shareMenu:
       Copied the link.
     screenshot: |-
       Saved the screenshot.
+simpleWordList:
+  empty: "No matching words were found"
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"
@@ -1413,6 +1415,8 @@ resetUserPasswordPage:
   heading:
     issue: "Reset password"
     reset: "Reset password"
+searchWordsGloballyPage:
+  title: "All words"
 topPage:
   button:
     login: "Sign in · Sign up"

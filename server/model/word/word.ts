@@ -24,6 +24,9 @@ import {LogUtil} from "/server/util/log";
 @index({"dictionary": 1, "updatedDate": -1, "_id": -1})
 @index({"dictionary": 1, "createdDate": -1, "_id": -1})
 @index({"dictionary": 1, "sections.relations.number": 1})
+@index({"name": 1})
+@index({"sections.equivalents.names": 1})
+@index({"sections.phrases.terms": 1})
 export class WordSchema {
 
   @prop({required: true, ref: "DictionarySchema"})

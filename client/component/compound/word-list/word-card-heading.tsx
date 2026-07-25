@@ -3,8 +3,7 @@
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, data} from "zographia";
 import {create} from "/client/component/create";
-import {shouldShowOrdinaryHeadwordSpelling} from "/client/util/dictionary";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
+import {Dictionary, DictionaryWithExecutors, Word, WordWithExamples} from "/server/internal/skeleton";
 
 
 export const WordCardHeading = create(
@@ -14,16 +13,13 @@ export const WordCardHeading = create(
     word,
     ...rest
   }: {
-    dictionary: DictionaryWithExecutors,
+    dictionary: Dictionary | DictionaryWithExecutors,
     word: Word | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    const showOrdinarySpelling = useMemo(
-      () => shouldShowOrdinaryHeadwordSpelling(dictionary.settings),
-      [dictionary.settings]
-    );
     const pronunciation = useMemo(() => getPronunciation(dictionary, word), [dictionary, word]);
+    const showOrdinarySpelling = dictionary.settings.showOrdinarySpelling && dictionary.settings.font.kind !== "none" && dictionary.settings.fontTargets.includes("heading");
 
     return (word.tags.length > 0 || !!word.spelling) ? (
       <div styleName="root" {...rest}>
@@ -58,7 +54,8 @@ export const WordCardHeading = create(
 );
 
 
-function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | WordWithExamples): string | undefined {
+function getPronunciation(dictionary: Dictionary | DictionaryWithExecutors, word: Word | WordWithExamples): string | undefined {
+  const akrantiain = ("akrantiain" in dictionary) ? dictionary.akrantiain : null;
   if (!!word.pronunciation) {
     if (word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
       return word.pronunciation.trim();
@@ -66,9 +63,9 @@ function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | Word
       return "/" + word.pronunciation.trim() + "/";
     }
   } else {
-    if (dictionary.akrantiain !== null) {
+    if (akrantiain !== null) {
       try {
-        const pronunciation = dictionary.akrantiain.convert(word.spelling);
+        const pronunciation = akrantiain.convert(word.spelling);
         return "/" + pronunciation.trim() + "/";
       } catch (error) {
         console.error(error);

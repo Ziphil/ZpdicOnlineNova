@@ -67,8 +67,7 @@ export const WordCard = create(
     const screenshotFileName = `${word.spelling}.png`;
     const markdownText = getShareMarkdownText(word, dictionary);
 
-    const sectionNumberMode = dictionary.settings.showSectionNumber;
-    const showSectionNumber = dictionary.settings.enableAdvancedWord && (sectionNumberMode === "show" || (sectionNumberMode === "onlyNecessary" && word.sections.length >= 2));
+    const showSectionNumber = dictionary.settings.enableAdvancedWord && (dictionary.settings.showSectionNumber === "show" || (dictionary.settings.showSectionNumber === "onlyNecessary" && word.sections.length >= 2));
 
     const discardWord = useDiscardWord(dictionary, word);
 

@@ -5,7 +5,7 @@ import {AdditionalProps, MultiLineText} from "zographia";
 import {Markdown} from "/client/component/atom/markdown";
 import {create} from "/client/component/create";
 import {getDictionarySpecialPaths} from "/client/util/dictionary";
-import {DictionaryWithExecutors, Section} from "/server/internal/skeleton";
+import {Dictionary, DictionaryWithExecutors, Section} from "/server/internal/skeleton";
 import {WordCardAnchor} from "./word-card-anchor";
 
 
@@ -14,10 +14,12 @@ export const WordCardInformationList = create(
   function ({
     dictionary,
     section,
+    showPopover = true,
     ...rest
   }: {
-    dictionary: DictionaryWithExecutors,
+    dictionary: Dictionary | DictionaryWithExecutors,
     section: Section,
+    showPopover?: boolean,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
@@ -39,7 +41,7 @@ export const WordCardInformationList = create(
                 compact={true}
                 specialPaths={getDictionarySpecialPaths(dictionary)}
                 features={dictionary.settings.markdownFeatures}
-                components={{a: WordCardAnchor}}
+                components={(showPopover) ? {a: WordCardAnchor} : undefined}
               >
                 {information.text}
               </Markdown>
