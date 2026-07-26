@@ -3,8 +3,6 @@ title: Uzkondiĉoj
 ---
 
 
-Tiuj ĉi uzkondiĉoj ekvalidos la 13an de julio 2026.
-
 ## Artikolo 1 — Superrigardo
 Tiuj uzkondiĉoj (ĉi-poste nomataj “tiuj kondiĉoj”) difinas la kondiĉojn por uzi la diversajn servojn de ZpDIC Online (ĉi-poste nomata “tiu aplikaĵo”).
 Ĉiuj kiuj uzas tiun aplikaĵon (ĉi-poste nomataj “la uzanto”) uzu ĝin nur post konsento pri tiuj kondiĉoj.
