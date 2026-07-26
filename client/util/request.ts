@@ -125,7 +125,16 @@ async function createResponseData(response: Response, responseType?: "blob" | "j
   if (responseType === "blob") {
     return await response.blob();
   } else {
-    return await response.json();
+    const text = await response.text();
+    if (text === "") {
+      return undefined;
+    } else {
+      try {
+        return JSON.parse(text);
+      } catch (error) {
+        return undefined;
+      }
+    }
   }
 }
 
