@@ -585,8 +585,8 @@ footer:
     privacy: "Privateca politiko"
 header:
   link:
-    dictionary: "Vortaroj"
-    searchWordsGlobally: "Serĉi ĉiujn vortojn"
+    dictionary: "Ĉiuj vortaroj"
+    searchWordsGlobally: "Transvortara serĉo"
     exampleOffer: "Frazoj"
     login: "Ensaluti"
   userPage: "Uzanta paĝo"
@@ -1244,6 +1244,8 @@ dictionaryInformationPart:
       La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
     wordNameFrequency: >-
       La jena diagramo montras kiom ofta ĉiu signo aperas en la kapvortoj en tiu vortaro.
+dictionaryListPage:
+  title: "Ĉiuj vortaroj"
 dictionaryMainPart:
   button:
     addWord: "Krei vorton"
@@ -1419,11 +1421,12 @@ resetUserPasswordPage:
     issue: "Restarigi pasvorton"
     reset: "Restarigi pasvorton"
 searchWordsGloballyPage:
-  title: "Serĉi ĉiujn vortojn"
+  title: "Transvortara serĉo"
 topPage:
   button:
     login: "Ensaluti · Enskribiĝi"
-    dictionary: "Listo de vortaroj"
+    dictionary: "Ĉiuj vortaroj"
+    searchWordsGlobally: "Transvortara serĉo"
     userPage: "Uzanta paĝo"
   aggregation:
     dictionary: "{count, plural, one {Vortaro} other {Vortaroj}}"

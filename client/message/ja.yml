@@ -1246,6 +1246,8 @@ dictionaryInformationPart:
       単語数は毎日 23 時 30 分頃に記録されます。
     wordNameFrequency: >-
       見出し語に使われている各文字の出現頻度です。
+dictionaryListPage:
+  title: "辞書一覧"
 dictionaryMainPart:
   button:
     addWord: "単語を作成"
@@ -1427,6 +1429,7 @@ topPage:
   button:
     login: "ログイン · 新規登録"
     dictionary: "辞書一覧"
+    searchWordsGlobally: "辞書横断検索"
     userPage: "ユーザーページ"
   aggregation:
     dictionary: "辞書"

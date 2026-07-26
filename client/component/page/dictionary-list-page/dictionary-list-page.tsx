@@ -22,7 +22,7 @@ export const DictionaryListPage = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {transNumber} = useTrans("dictionaryListPage");
+    const {trans, transNumber} = useTrans("dictionaryListPage");
 
     const [query, setQuery] = useSearchQuery({serializeQuery, deserializeQuery});
     const [[hitDictionaries, hitSize], {isFetching}] = useSuspenseResponse("searchDictionaries", {parameter: query.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
@@ -37,7 +37,7 @@ export const DictionaryListPage = create(
     }, [setQuery]);
 
     return (
-      <Page headerNode={<Header/>} {...rest}>
+      <Page title={trans("title")} headerNode={<Header/>} {...rest}>
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
             <div styleName="sticky">
