@@ -25,7 +25,7 @@ Kiam la uzanto registriĝas, ri devas sendi la sekvajn informojn.
 Tiuj informoj estos konservitaj en datumbazo administrata de tiu aplikaĵo, kaj estos uzataj por kontroli uzantajn informojn.
 La pasvorto estos konservita en haketita formato per kiu la origina signoĉeno ne povas esti reakirita.
 La retpoŝta adreso estos uzata por restarigi la pasvorton kiam la uzanto forgesos ĝin, kaj por sendi retpoŝtojn por sciigi la uzanton pri informoj en tiu aplikaĵo.
-Notu ke tiu aplikaĵo uzas [SendGrid](https://sendgrid.com/), eksteran servon, por sendi retpoŝtojn, kaj la retpoŝta adreso estas sendata al SendGrid kiam retpoŝto estas sendata.
+Notu ke tiu aplikaĵo uzas [Amazon SES](https://aws.amazon.com/ses/), provizatan de Amazon, por sendi retpoŝtojn, kaj la retpoŝta adreso estas sendata al Amazon SES kiam retpoŝto estas sendata.
 
 ### Kontaktado
 En tiu aplikaĵo, la uzanto povas esti petita sendi la sekvajn informojn kiam ri kontaktas nin per la kontakta formularo.
@@ -106,3 +106,4 @@ En la okazo de iu ajn malkongruo inter tiu ĉi dokumento kaj la japana versio, l
 - Parte reviziita la 28an de januaro 2022
 - Parte reviziita la 15an de junio 2022
 - Parte reviziita la 13an de julio 2026 (aldono de priskriboj pri Amazon S3 kaj SendGrid, kaj transmeto de la malgarantio al la uzkondiĉoj)
+- Parte reviziita la 26an de julio 2026 (ŝanĝo de la retpoŝtosenda servo de SendGrid al Amazon SES)
