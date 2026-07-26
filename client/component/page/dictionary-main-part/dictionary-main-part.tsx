@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faCommentQuestion} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, SetStateAction, useCallback} from "react";
+import {ReactElement, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, LoadingIcon, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {Markdown} from "/client/component/atom/markdown";
@@ -12,9 +12,9 @@ import {WordList} from "/client/component/compound/word-list";
 import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
 import {useSuspenseResponse} from "/client/hook/request";
-import {Search, useSearchState} from "/client/hook/search";
+import {Search, useSearchQuery} from "/client/hook/search";
 import {getDictionarySpecialPaths} from "/client/util/dictionary";
-import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
+import {calcOffsetSpec} from "/client/util/misc";
 import {WordParameter} from "/server/internal/skeleton";
 import {AddWordButton} from "./add-word-button";
 
@@ -33,35 +33,32 @@ export const DictionaryMainPart = create(
 
     const [authorities] = useSuspenseResponse("fecthMyDictionaryAuthorities", {identifier: dictionary.number});
 
-    const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [hitResult, {isFetching}] = useSuspenseResponse("searchWords", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
+    const [query, setQuery] = useSearchQuery({serializeQuery, deserializeQuery});
+    const [hitResult, {isFetching}] = useSuspenseResponse("searchWords", {number: dictionary.number, parameter: query.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
 
-    const showHitSizeCap = debouncedQuery.parameter.kind === "normal" && debouncedQuery.parameter.options.shuffleSeed !== null && hitSize >= 50;
+    const showHitSizeCap = query.parameter.kind === "normal" && query.parameter.options.shuffleSeed !== null && hitSize >= 50;
 
-    const handleParameterSet = useCallback(function (parameter: SetStateAction<WordParameter>): void {
-      setQuery((prevQuery) => {
-        const nextParameter = resolveStateAction(parameter, prevQuery.parameter);
-        return {parameter: nextParameter, page: 0, showExplanation: false};
-      });
+    const handleParameterCommit = useCallback(function (parameter: WordParameter): void {
+      setQuery({parameter, page: 0, showExplanation: false}, {replace: true});
     }, [setQuery]);
 
     const handlePageSet = useCallback(function (page: number): void {
-      setQuery({...query, page});
+      setQuery((prevQuery) => ({...prevQuery, page}));
       window.scrollTo(0, 0);
-    }, [query, setQuery]);
+    }, [setQuery]);
 
     return (
       <div styleName="root" {...rest}>
         <div styleName="left">
           <div styleName="sticky">
-            <SearchWordForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
+            <SearchWordForm styleName="form" parameter={query.parameter} onParameterCommit={handleParameterCommit}/>
           </div>
         </div>
         <div styleName="right">
           <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
-          {(debouncedQuery.showExplanation && !!dictionary.explanation) && (
+          {(query.showExplanation && !!dictionary.explanation) && (
             <Markdown styleName="explanation" mode="article" specialPaths={getDictionarySpecialPaths(dictionary)} features={dictionary.settings.markdownFeatures}>
               {dictionary.explanation}
             </Markdown>

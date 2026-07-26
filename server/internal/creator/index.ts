@@ -24,6 +24,7 @@ export * from "./word/section";
 export * from "./word/suggestion";
 export * from "./word/variation";
 export * from "./word/word";
+export * from "./word-parameter/normal-word-parameter";
 export * from "./word-parameter/word-parameter";
 export * from "./article";
 export * from "./proposal";

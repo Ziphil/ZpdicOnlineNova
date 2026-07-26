@@ -2,7 +2,7 @@
 
 import {faLeft} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {useMatch, useParams} from "react-router-dom";
+import {useMatch, useParams} from "react-router";
 import {AdditionalProps, GeneralIcon, LinkIconbag, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {Link} from "/client/component/atom/link";

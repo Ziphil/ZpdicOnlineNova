@@ -172,34 +172,37 @@ git status --short client/message/
 ```
 
 ### 変更が全くない場合 (未設定キーもなく並び替えも不要だった場合)
-- 整備の必要がなかった旨をユーザーに報告する。
-- Step 2 で作ったブランチを破棄して `develop` に戻る。
-  ```bash
-  git switch develop
-  git branch -D maintenance/messages-<yyyymmdd>
-  ```
-- これで終了 (PR は作らない)。
+整備の必要がなかった旨をユーザーに報告する。
+その後、Step 2 で作ったブランチを破棄して `develop` に戻る。
+```bash
+git switch develop
+git branch -D maintenance/messages-<yyyymmdd>
+```
+
+これで終了 (PR は作らない)。
 
 ### 変更がある場合
-- 変更をコミットする。
-  ```bash
-  git add client/message/
-  git commit -m "メッセージファイルを体裁に則る形に変更"
-  ```
-- ブランチを push して PR を作成する (base は `develop`)。
-  `<yyyymmdd>` には Step 2 で求めたものと同じ日付 (JST) を入れる。
-  ```bash
-  git push -u origin maintenance/messages-<yyyymmdd>
-  gh pr create --base develop --title "メッセージファイル整備: <yyyymmdd>" --body "<本文>"
-  ```
-- PR 本文には次を含める (日本語)。
-  - 未設定だったため追加したキーの一覧 (`<NOT SET>` で追加したものと翻訳して追加したものを区別して書く)
-  - **`<NOT SET>` のままのキーは別途実際のメッセージに置き換える必要がある**旨
-  - 並び替え (セクション順・アルファベット順) を行ったこと
-- PR 作成後は作業ブランチを `develop` に戻して終了する (整備用ブランチは PR マージ後に削除されるのでここでは消さない)。
-  ```bash
-  git switch develop
-  ```
+変更をコミットする。
+```bash
+git add client/message/
+git commit -m "メッセージファイルを体裁に則る形に変更"
+```
+
+ブランチを push して PR を作成する (base は `develop`)。
+`<yyyymmdd>` には Step 2 で求めたものと同じ日付 (JST) を入れる。
+```bash
+git push -u origin maintenance/messages-<yyyymmdd>
+gh pr create --base develop --title "メッセージファイル整備: <yyyymmdd>" --body "<本文>"
+```
+PR 本文には次を含める (日本語)。
+- 未設定だったため追加したキーの一覧 (`<NOT SET>` で追加したものと翻訳して追加したものを区別して書く)
+- **`<NOT SET>` のままのキーは別途実際のメッセージに置き換える必要がある**旨
+- 並び替え (セクション順・アルファベット順) を行ったこと
+
+PR 作成後は作業ブランチを `develop` に戻して終了する (整備用ブランチは PR マージ後に削除されるのでここでは消さない)。
+```bash
+git switch develop
+```
 
 ## Step 8: 手動確認事項の報告
 最後に、自動では対応しきれなかった項目をユーザーに報告する。

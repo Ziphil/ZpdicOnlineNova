@@ -1,15 +1,16 @@
 //
 
-import {ReactElement, SetStateAction, useCallback} from "react";
-import {AdditionalProps} from "zographia";
+import {ReactElement, useCallback} from "react";
+import {AdditionalProps, LoadingIcon, useTrans} from "zographia";
+import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {DictionaryList} from "/client/component/compound/dictionary-list";
 import {Header} from "/client/component/compound/header";
 import {MainContainer, Page} from "/client/component/compound/page";
 import {SearchDictionaryForm} from "/client/component/compound/search-dictionary-form";
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
-import {Search, useSearchState} from "/client/hook/search";
-import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
+import {Search, useSearchQuery} from "/client/hook/search";
+import {calcOffsetSpec} from "/client/util/misc";
 import {DictionaryParameter} from "/server/internal/skeleton";
 
 
@@ -21,31 +22,38 @@ export const DictionaryListPage = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [[hitDictionaries, hitSize]] = useSuspenseResponse("searchDictionaries", {parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
+    const {trans, transNumber} = useTrans("dictionaryListPage");
 
-    const handleParameterSet = useCallback(function (parameter: SetStateAction<DictionaryParameter>): void {
-      setQuery((prevQuery) => {
-        const nextParameter = resolveStateAction(parameter, prevQuery.parameter);
-        return {parameter: nextParameter, page: 0};
-      });
+    const [query, setQuery] = useSearchQuery({serializeQuery, deserializeQuery});
+    const [[hitDictionaries, hitSize], {isFetching}] = useSuspenseResponse("searchDictionaries", {parameter: query.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
+
+    const handleParameterCommit = useCallback(function (parameter: DictionaryParameter): void {
+      setQuery({parameter, page: 0}, {replace: true});
     }, [setQuery]);
 
     const handlePageSet = useCallback(function (page: number): void {
-      setQuery({...query, page});
+      setQuery((prevQuery) => ({...prevQuery, page}));
       window.scrollTo(0, 0);
-    }, [query, setQuery]);
+    }, [setQuery]);
 
     return (
-      <Page headerNode={<Header/>} {...rest}>
+      <Page title={trans("title")} headerNode={<Header/>} {...rest}>
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
             <div styleName="sticky">
-              <SearchDictionaryForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
+              <SearchDictionaryForm styleName="form" parameter={query.parameter} onParameterCommit={handleParameterCommit}/>
             </div>
           </div>
           <div styleName="right">
-            <DictionaryList dictionaries={hitDictionaries} type="all" pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}} showUser={true} showChart={true}/>
+            <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
+            <div styleName="content">
+              <div styleName="header">
+                <div styleName="size">
+                  {(isFetching) ? <LoadingIcon/> : transNumber(hitSize)}
+                </div>
+              </div>
+              <DictionaryList dictionaries={hitDictionaries} type="all" pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}} showUser={true} showChart={true}/>
+            </div>
           </div>
         </MainContainer>
       </Page>

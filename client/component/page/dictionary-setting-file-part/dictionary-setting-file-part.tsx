@@ -2,7 +2,7 @@
 
 import {faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {useOutletContext} from "react-router-dom";
+import {useOutletContext} from "react-router";
 import {AdditionalProps, Callout, CalloutBody, CalloutIconContainer, GeneralIcon, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";

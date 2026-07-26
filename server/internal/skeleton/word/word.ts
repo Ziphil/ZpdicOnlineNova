@@ -1,6 +1,7 @@
 //
 
 import {DateString, ObjectId} from "/server/internal/skeleton/common";
+import {Dictionary} from "/server/internal/skeleton/dictionary/dictionary";
 import {Example} from "/server/internal/skeleton/example/example";
 import {Section} from "/server/internal/skeleton/word/section";
 
@@ -54,5 +55,12 @@ export interface OldWord extends Word {
 export interface WordWithExamples extends Word {
 
   examples: Array<Example>;
+
+}
+
+
+export interface WordWithDictionary extends WordWithExamples {
+
+  dictionary: Dictionary;
 
 }

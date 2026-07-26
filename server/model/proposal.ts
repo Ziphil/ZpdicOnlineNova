@@ -4,6 +4,7 @@ import {
   DocumentType,
   Ref,
   getModelForClass,
+  index,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -12,6 +13,7 @@ import {QueryRange, WithSize} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "commissions"}})
+@index({"dictionary": 1, "createdDate": -1, "_id": -1})
 export class ProposalSchema {
 
   @prop({required: true, ref: "DictionarySchema"})

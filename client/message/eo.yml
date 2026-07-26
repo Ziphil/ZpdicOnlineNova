@@ -585,7 +585,8 @@ footer:
     privacy: "Privateca politiko"
 header:
   link:
-    dictionary: "Vortaroj"
+    dictionary: "Ĉiuj vortaroj"
+    searchWordsGlobally: "Transvortara serĉo"
     exampleOffer: "Frazoj"
     login: "Ensaluti"
   userPage: "Uzanta paĝo"
@@ -774,6 +775,10 @@ shareMenu:
       La ligilo estas kopiita.
     screenshot: |-
       La ekrankopio estas konservita.
+simpleWordList:
+  empty:
+    normal: "Neniuj kongruaj vortoj estis trovitaj"
+    noText: "Enigu serĉvorton en la serĉkampon"
 suggestionCard:
   maybe: "Ĉu vi celas…"
   message: "{title} <mute>de</mute> {nameNode}"
@@ -1061,8 +1066,15 @@ changeDictionaryShowNumbersForm:
   label:
     section: "Por sekcioj"
     equivalent: "Por tradukaĵoj"
-    true: "Montri"
-    false: "Ne montri"
+    show: "Ĉiam montri"
+    onlyNecessary: "Montri laŭbezone"
+    hide: "Ne montri"
+  labelHelper:
+    onlyNecessary:
+      section: >-
+        Numeroj estas montrataj nur kiam estas pluraj sekcioj, kaj kaŝataj kiam estas nur unu.
+      equivalent: >-
+        Numeroj estas montrataj nur kiam estas pluraj tradukaĵoj, kaj kaŝataj kiam estas nur unu.
 changeDictionarySlimeTitlesForm:
   label:
     pronunciation: "Por elparoloj"
@@ -1232,6 +1244,8 @@ dictionaryInformationPart:
       La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
     wordNameFrequency: >-
       La jena diagramo montras kiom ofta ĉiu signo aperas en la kapvortoj en tiu vortaro.
+dictionaryListPage:
+  title: "Ĉiuj vortaroj"
 dictionaryMainPart:
   button:
     addWord: "Krei vorton"
@@ -1406,10 +1420,13 @@ resetUserPasswordPage:
   heading:
     issue: "Restarigi pasvorton"
     reset: "Restarigi pasvorton"
+searchWordsGloballyPage:
+  title: "Transvortara serĉo"
 topPage:
   button:
     login: "Ensaluti · Enskribiĝi"
-    dictionary: "Listo de vortaroj"
+    dictionary: "Ĉiuj vortaroj"
+    searchWordsGlobally: "Transvortara serĉo"
     userPage: "Uzanta paĝo"
   aggregation:
     dictionary: "{count, plural, one {Vortaro} other {Vortaroj}}"

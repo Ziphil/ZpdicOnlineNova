@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {useOutletContext} from "react-router-dom";
+import {useOutletContext} from "react-router";
 import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {ChangeDictionaryFontForm} from "/client/component/form/change-dictionary-font-form";

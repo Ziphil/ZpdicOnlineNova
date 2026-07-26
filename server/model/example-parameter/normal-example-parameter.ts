@@ -26,7 +26,7 @@ export class NormalExampleParameter extends ExampleParameter {
   public createQuery(dictionary: Dictionary): QueryLike<Array<Example>, Example> {
     const keys = ExampleParameter.createKeys(this.mode);
     const needle = ExampleParameter.createNeedle(this.text, this.type, this.options.ignore);
-    const sortKey = "-createdDate -number _id";
+    const sortKey = "-createdDate -number -_id";
     const disjunctFilters = keys.map((key) => ExampleModel.find().where(key, needle).getFilter());
     const query = ExampleModel.find().where("dictionary", dictionary["_id"]).or(disjunctFilters).sort(sortKey);
     return query;

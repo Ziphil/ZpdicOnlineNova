@@ -1,9 +1,8 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faMagnifyingGlassPlus, faSearch, faShuffle} from "@fortawesome/sharp-regular-svg-icons";
-import merge from "lodash.merge";
-import {Dispatch, ReactElement, SetStateAction, useCallback} from "react";
-import {DeepPartial} from "ts-essentials";
+import {ReactElement, useCallback} from "react";
+import {Controller} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -19,115 +18,91 @@ import {
 } from "zographia";
 import {WordModeSelect} from "/client/component/atom/word-mode-select";
 import {WordTypeSelect} from "/client/component/atom/word-type-select";
-import {OrderDirection, OrderDirectionSelect} from "/client/component/compound/order-direction-select";
+import {OrderDirectionSelect} from "/client/component/compound/order-direction-select";
 import {OrderModeSelect} from "/client/component/compound/order-mode-select";
 import {SearchWordAdvancedDialog} from "/client/component/compound/search-word-advanced-dialog";
 import {create} from "/client/component/create";
+import {UseFormReturn} from "/client/hook/form";
+import {useSearchForm} from "/client/hook/search-form";
 import {preventDefault} from "/client/util/form";
-import {NormalWordParameter, WordModeUtil, WordOrderMode, WordParameter, WordTypeUtil} from "/server/internal/skeleton";
+import {resolveStateAction} from "/client/util/misc";
+import {
+  NormalWordParameter,
+  WordMode,
+  WordOrderDirection,
+  WordOrderMode,
+  WordParameter,
+  WordType
+} from "/server/internal/skeleton";
 
 
 export const SearchWordForm = create(
   require("./search-word-form.scss"), "SearchWordForm",
   function ({
     parameter,
-    onParameterSet,
+    onParameterCommit,
     ...rest
   }: {
     parameter: WordParameter,
-    onParameterSet?: Dispatch<SetStateAction<WordParameter>>,
+    onParameterCommit: (parameter: WordParameter) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("searchWordForm");
 
-    const actualParameter = WordParameter.toNormal(parameter);
+    const {form, commit} = useSearchForm({parameter, debouncedNames: ["text"], toFormValue, fromFormValue, onCommit: onParameterCommit, onChange: resetShuffleSeed});
+    const {register, control, setValue} = form;
 
-    const handleSet = useCallback(function (parameter: DeepPartial<NormalWordParameter>): void {
-      onParameterSet?.((prevParameter) => {
-        const prevNormalParameter = WordParameter.toNormal(prevParameter);
-        if (parameter.options?.shuffleSeed !== undefined) {
-          const nextParameter = merge({}, prevNormalParameter, parameter);
-          return nextParameter;
-        } else {
-          const nextParameter = merge({}, prevNormalParameter, parameter, {options: {shuffleSeed: null}});
-          return nextParameter;
-        }
-      });
-    }, [onParameterSet]);
+    const shuffle = useCallback(function (): void {
+      setValue("shuffleSeed", Date.now().toString());
+      commit();
+    }, [setValue, commit]);
 
-    const handleTextSet = useCallback(function (text: string): void {
-      handleSet({text});
-    }, [handleSet]);
-
-    const handleModeSet = useCallback(function (mode: string): void {
-      handleSet({mode: WordModeUtil.cast(mode)});
-    }, [handleSet]);
-
-    const handleTypeSet = useCallback(function (type: string): void {
-      handleSet({type: WordTypeUtil.cast(type)});
-    }, [handleSet]);
-
-    const handleIgnoreCaseSet = useCallback(function (ignoreCase: boolean): void {
-      handleSet({options: {ignore: {case: ignoreCase}}});
-    }, [handleSet]);
-
-    const handleOrderModeSet = useCallback(function (orderMode: WordOrderMode): void {
-      handleSet({order: {mode: orderMode}});
-    }, [handleSet]);
-
-    const handleOrderDirectionSet = useCallback(function (orderDirection: OrderDirection): void {
-      handleSet({order: {direction: orderDirection}});
-    }, [handleSet]);
-
-    const shuffleResult = useCallback(function (): void {
-      handleSet({options: {shuffleSeed: Date.now().toString()}});
-    }, [handleSet]);
+    const handleAdvancedSet = useCallback(function (action: WordParameter | ((prevParameter: WordParameter) => WordParameter)): void {
+      onParameterCommit(resolveStateAction(action, parameter));
+    }, [onParameterCommit, parameter]);
 
     return (
       <form styleName="root" onSubmit={preventDefault} {...rest}>
-        <Input
-          styleName="input"
-          type="search"
-          value={actualParameter.text}
-          onSet={handleTextSet}
-        >
+        <Input styleName="input" type="search" {...register("text")}>
           <InputAddon position="left">
             <GeneralIcon styleName="icon" icon={faSearch}/>
           </InputAddon>
         </Input>
         <div styleName="select-group">
-          <WordModeSelect optionModes={FORM_WORD_MODES} kind="flexible" mode={actualParameter.mode} onSet={handleModeSet}/>
-          <WordTypeSelect optionTypes={FORM_WORD_TYPES} kind="flexible" type={actualParameter.type} onSet={handleTypeSet}/>
+          <Controller name="mode" control={control} render={({field}) => (
+            <WordModeSelect optionModes={FORM_WORD_MODES} kind="flexible" mode={field.value} onSet={field.onChange}/>
+          )}/>
+          <Controller name="type" control={control} render={({field}) => (
+            <WordTypeSelect optionTypes={FORM_WORD_TYPES} kind="flexible" type={field.value} onSet={field.onChange}/>
+          )}/>
         </div>
         <div styleName="row">
           <CheckableContainer>
-            <Checkbox checked={actualParameter.options.ignore.case} onSet={handleIgnoreCaseSet}/>
+            <Controller name="ignoreCase" control={control} render={({field}) => (
+              <Checkbox checked={field.value} onSet={field.onChange}/>
+            )}/>
             <CheckableLabel>{trans("label.ignoreCase")}</CheckableLabel>
           </CheckableContainer>
         </div>
         <div styleName="row">
           <ControlGroup>
-            <OrderModeSelect
-              optionOrderModes={FORM_WORD_ORDER_MODES}
-              unicodeAlt="wordName"
-              orderMode={actualParameter.order.mode}
-              onSet={handleOrderModeSet}
-            />
-            <OrderDirectionSelect
-              orderDirection={actualParameter.order.direction}
-              onSet={handleOrderDirectionSet}
-            />
+            <Controller name="orderMode" control={control} render={({field}) => (
+              <OrderModeSelect optionOrderModes={FORM_WORD_ORDER_MODES} unicodeAlt="wordName" orderMode={field.value} onSet={field.onChange}/>
+            )}/>
+            <Controller name="orderDirection" control={control} render={({field}) => (
+              <OrderDirectionSelect orderDirection={field.value} onSet={field.onChange}/>
+            )}/>
           </ControlGroup>
         </div>
         <div styleName="row">
-          <Button scheme="secondary" variant="underline" onClick={shuffleResult}>
+          <Button scheme="secondary" variant="underline" onClick={shuffle}>
             <ButtonIconbag><GeneralIcon icon={faShuffle}/></ButtonIconbag>
             {trans("button.shuffleResult")}
           </Button>
         </div>
         <div styleName="row">
-          <SearchWordAdvancedDialog parameter={parameter} onParameterSet={onParameterSet} trigger={(
+          <SearchWordAdvancedDialog parameter={parameter} onParameterSet={handleAdvancedSet} trigger={(
             <Button scheme="secondary" variant="underline">
               <ButtonIconbag><GeneralIcon icon={faMagnifyingGlassPlus}/></ButtonIconbag>
               {trans("button.advancedSearch")}
@@ -144,3 +119,51 @@ export const SearchWordForm = create(
 const FORM_WORD_MODES = ["both", "spelling", "term", "tag", "content"] as const;
 const FORM_WORD_TYPES = ["prefix", "part", "exact", "regular"] as const;
 const FORM_WORD_ORDER_MODES = ["unicode", "updatedDate", "createdDate"] as const;
+
+function resetShuffleSeed(form: UseFormReturn<SearchWordFormValue>, name: string | undefined): void {
+  if (name !== "shuffleSeed" && form.getValues("shuffleSeed") !== null) {
+    form.setValue("shuffleSeed", null);
+  }
+}
+
+function toFormValue(parameter: WordParameter): SearchWordFormValue {
+  const normalParameter = WordParameter.toNormal(parameter);
+  const value = {
+    text: normalParameter.text,
+    mode: normalParameter.mode,
+    type: normalParameter.type,
+    ignoreCase: normalParameter.options.ignore.case,
+    orderMode: normalParameter.order.mode,
+    orderDirection: normalParameter.order.direction,
+    shuffleSeed: normalParameter.options.shuffleSeed,
+    enableSuggestions: normalParameter.options.enableSuggestions
+  } satisfies SearchWordFormValue;
+  return value;
+}
+
+function fromFormValue(value: SearchWordFormValue): NormalWordParameter {
+  const parameter = {
+    kind: "normal",
+    text: value.text,
+    mode: value.mode,
+    type: value.type,
+    order: {mode: value.orderMode, direction: value.orderDirection},
+    options: {
+      ignore: {case: value.ignoreCase},
+      shuffleSeed: value.shuffleSeed,
+      enableSuggestions: value.enableSuggestions
+    }
+  } satisfies NormalWordParameter;
+  return parameter;
+}
+
+type SearchWordFormValue = {
+  text: string,
+  mode: WordMode,
+  type: WordType,
+  ignoreCase: boolean,
+  orderMode: WordOrderMode,
+  orderDirection: WordOrderDirection,
+  shuffleSeed: string | null,
+  enableSuggestions: boolean
+};

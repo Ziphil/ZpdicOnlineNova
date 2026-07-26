@@ -3,9 +3,6 @@ title: Privacy policy
 ---
 
 
-This privacy policy takes effect on 13 July 2026.
-Until then, the previous privacy policy applies.
-
 ## Overview
 This privacy policy explains the policies to which ZpDIC Online (hereinafter referred to as ‘this application’) adheres when handling personal information of the users of this application (hereinafter referred to as ‘the users’) in its various services.
 

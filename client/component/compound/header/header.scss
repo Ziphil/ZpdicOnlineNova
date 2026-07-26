@@ -30,15 +30,10 @@
 }
 
 .left {
+  column-gap: 6zu;
   display: flex;
   align-items: center;
   flex: 0 1 auto;
-  @include device("desktop") {
-    column-gap: 6zu;
-  }
-  @include device("mobile") {
-    column-gap: 4zu;
-  }
 }
 
 .logo {
@@ -48,13 +43,19 @@
 }
 
 .navigation {
-  column-gap: 4zu;
   display: flex;
   align-items: center;
+  @include device("desktop") {
+    column-gap: 4zu;
+  }
+  @include device("mobile") {
+    column-gap: 4zu;
+  }
 }
 
 .link {
   color: var(--link-text-color);
+  white-space: nowrap;
   &:hover {
     color: var(--link-hover-text-color);
   }

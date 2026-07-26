@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {Fragment, ReactElement, Suspense} from "react";
-import {Outlet, useMatch, useParams} from "react-router-dom";
+import {Outlet, useMatch, useParams} from "react-router";
 import {AdditionalProps, LoadingIcon} from "zographia";
 import {Header} from "/client/component/compound/header";
 import {MainContainer, Page} from "/client/component/compound/page";

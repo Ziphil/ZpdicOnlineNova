@@ -10,11 +10,11 @@ import {QueryLike} from "/server/util/query";
 
 export abstract class WordParameter {
 
-  public abstract createQuery(dictionary: Dictionary): QueryLike<Array<Word>, Word>;
+  public abstract createQuery(dictionaries: Array<Dictionary>): QueryLike<Array<Word>, Word>;
 
   /** この検索パラメータからサジェストされる単語を検索するためのクエリを返します。
    * 何もサジェストする必要がない場合は `null` を返します。*/
-  public abstract createSuggestionQuery(dictionary: Dictionary): Aggregate<Array<RawSuggestion>> | null;
+  public abstract createSuggestionQuery(dictionaries: Array<Dictionary>): Aggregate<Array<RawSuggestion>> | null;
 
   protected static createKeys(mode: WordMode): Array<string> {
     if (mode === "spelling") {
@@ -73,13 +73,13 @@ export abstract class WordParameter {
     const mode = order.mode;
     const directionSign = (order.direction === "ascending") ? "" : "-";
     if (mode === "unicode") {
-      return `${directionSign}name _id`;
+      return `${directionSign}name ${directionSign}_id`;
     } else if (mode === "custom") {
-      return `${directionSign}sortString _id`;
+      return `${directionSign}sortString ${directionSign}_id`;
     } else if (mode === "updatedDate") {
-      return `${directionSign}updatedDate _id`;
+      return `${directionSign}updatedDate ${directionSign}_id`;
     } else if (mode === "createdDate") {
-      return `${directionSign}createdDate _id`;
+      return `${directionSign}createdDate ${directionSign}_id`;
     } else {
       const dummy = mode satisfies never;
       throw new Error("cannot happen");

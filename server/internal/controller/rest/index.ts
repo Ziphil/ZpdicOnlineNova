@@ -2,7 +2,6 @@
 
 import {Agenda} from "agenda";
 import {Express} from "express";
-import {Server} from "socket.io";
 import {ArticleRestController} from "./article";
 import {DebugRestController} from "./debug";
 import {DictionaryRestController} from "./dictionary";
@@ -17,17 +16,17 @@ import {UserRestController} from "./user";
 import {WordRestController} from "./word";
 
 
-export function use(application: Express, server: Server, agenda: Agenda): void {
-  ProposalRestController.use(application, server, agenda);
-  DictionaryRestController.use(application, server, agenda);
-  ExampleRestController.use(application, server, agenda);
-  ArticleRestController.use(application, server, agenda);
-  HistoryRestController.use(application, server, agenda);
-  InvitationRestController.use(application, server, agenda);
-  NotificationRestController.use(application, server, agenda);
-  OtherRestController.use(application, server, agenda);
-  ResourceRestController.use(application, server, agenda);
-  UserRestController.use(application, server, agenda);
-  WordRestController.use(application, server, agenda);
-  DebugRestController.use(application, server, agenda);
+export function use(application: Express, agenda: Agenda): void {
+  ProposalRestController.use(application, agenda);
+  DictionaryRestController.use(application, agenda);
+  ExampleRestController.use(application, agenda);
+  ArticleRestController.use(application, agenda);
+  HistoryRestController.use(application, agenda);
+  InvitationRestController.use(application, agenda);
+  NotificationRestController.use(application, agenda);
+  OtherRestController.use(application, agenda);
+  ResourceRestController.use(application, agenda);
+  UserRestController.use(application, agenda);
+  WordRestController.use(application, agenda);
+  DebugRestController.use(application, agenda);
 }

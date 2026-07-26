@@ -1,7 +1,7 @@
-/* eslint-disable no-useless-computed-key */
+//
 
 import {ComponentProps, ReactElement, ReactNode, Ref, useCallback} from "react";
-import {Path, Link as RouterLink} from "react-router-dom";
+import {Path, Link as RouterLink} from "react-router";
 import {Link as ZographiaLink} from "zographia";
 import {createWithRef} from "/client/component/create";
 
@@ -23,7 +23,7 @@ export const Link = createWithRef(
 
     const renderComponent = useCallback(function (props: any): ReactElement {
       return (
-        <RouterLink {...getRouterLinkProps(href, useTransition)} {...props}/>
+        <RouterLink to={href} viewTransition={useTransition} {...props}/>
       );
     }, [href, useTransition]);
 
@@ -39,12 +39,3 @@ export const Link = createWithRef(
 
   }
 );
-
-
-function getRouterLinkProps(href: string | Partial<Path>, useTransition: boolean): any {
-  const props = {
-    to: href,
-    ["unstable_viewTransition"]: useTransition
-  };
-  return props;
-};

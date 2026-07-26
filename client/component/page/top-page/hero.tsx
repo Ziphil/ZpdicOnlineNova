@@ -1,6 +1,6 @@
 //
 
-import {faBook, faSignInAlt, faUser} from "@fortawesome/sharp-regular-svg-icons";
+import {faBinoculars, faBook, faSignInAlt, faUser} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, LinkIconbag, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
@@ -45,6 +45,10 @@ export const Hero = create(
           <Link styleName="link" href="/dictionary" variant="simple">
             <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
             {trans("button.dictionary")}
+          </Link>
+          <Link styleName="link" href="/all-words" variant="simple">
+            <LinkIconbag><GeneralIcon icon={faBinoculars}/></LinkIconbag>
+            {trans("button.searchWordsGlobally")}
           </Link>
         </div>
       </div>

@@ -1,7 +1,8 @@
 //
 
 import {ReactElement} from "react";
-import {Route, RouterProvider, createBrowserRouter, createRoutesFromElements} from "react-router-dom";
+import {Route, createBrowserRouter, createRoutesFromElements} from "react-router";
+import {RouterProvider} from "react-router/dom";
 import {create} from "/client/component/create";
 import {ErrorPage} from "/client/component/page/error-page";
 import {ToplevelRoute} from "./toplevel-route";
@@ -11,6 +12,7 @@ const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<ToplevelRoute/>} errorElement={<ErrorPage/>}>
     <Route path="/" lazy={() => import("/client/component/page/top-page")}/>
     <Route path="/dictionary" lazy={() => import("/client/component/page/dictionary-list-page")}/>
+    <Route path="/all-words" lazy={() => import("/client/component/page/search-words-globally-page")}/>
     <Route path="/dictionary/:identifier" lazy={() => import("/client/component/page/dictionary-page")}>
       <Route index={true} lazy={() => import("/client/component/page/dictionary-main-part")}/>
       <Route path="sentences" lazy={() => import("/client/component/page/dictionary-example-part")}/>

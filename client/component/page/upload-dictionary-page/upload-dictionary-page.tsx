@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {useParams} from "react-router-dom";
+import {useParams} from "react-router";
 import {AdditionalProps} from "zographia";
 import {Header} from "/client/component/compound/header";
 import {MainContainer, Page} from "/client/component/compound/page";

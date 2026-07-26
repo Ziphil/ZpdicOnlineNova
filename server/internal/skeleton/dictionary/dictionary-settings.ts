@@ -23,11 +23,15 @@ export interface DictionarySettings {
   enableDuplicateName: boolean;
   showVariationPronunciation: boolean;
   showOrdinarySpelling: boolean;
-  showEquivalentNumber: boolean;
-  showSectionNumber: boolean;
+  showEquivalentNumber: DictionaryNumberMode;
+  showSectionNumber: DictionaryNumberMode;
 
 }
 
+
+export const DICTIONARY_NUMBER_MODES = ["show", "onlyNecessary", "hide"] as const;
+export type DictionaryNumberMode = LiteralType<typeof DICTIONARY_NUMBER_MODES>;
+export const DictionaryNumberModeUtil = LiteralUtilType.create(DICTIONARY_NUMBER_MODES);
 
 export const DICTIONARY_FONT_TARGET = ["heading", "phrase", "variation", "relation", "example", "text"] as const;
 export type DictionaryFontTarget = LiteralType<typeof DICTIONARY_FONT_TARGET>;

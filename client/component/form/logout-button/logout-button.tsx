@@ -2,7 +2,7 @@
 
 import {faSignOutAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useLogoutRequest} from "/client/hook/auth";

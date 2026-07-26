@@ -4,7 +4,7 @@ import {faEdit, faRight, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons"
 import dayjs from "dayjs";
 import truncateMarkdown from "markdown-truncate";
 import {ReactElement} from "react";
-import {useMatch} from "react-router-dom";
+import {useMatch} from "react-router";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, Collapsible, CollapsibleBody, GeneralIcon, LinkIconbag, MultiLineText, Tag, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {Markdown} from "/client/component/atom/markdown";

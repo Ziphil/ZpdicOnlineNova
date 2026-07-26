@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {useParams} from "react-router-dom";
+import {useParams} from "react-router";
 import {AdditionalProps} from "zographia";
 import {DictionaryList} from "/client/component/compound/dictionary-list";
 import {create} from "/client/component/create";

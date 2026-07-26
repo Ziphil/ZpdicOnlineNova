@@ -3,9 +3,6 @@ title: Privateca politiko
 ---
 
 
-Tiu ĉi privateca politiko ekvalidos la 13an de julio 2026.
-Ĝis tiam validas la antaŭa privateca politiko.
-
 ## Superrigardo 
 Tiu privateca politiko klarigas la politikojn al kiuj ZpDIC Online (ĉi-poste nomata “tiu aplikaĵo”) aliĝas dum traktado de personaj informoj de la uzantoj de tiu aplikaĵo (ĉi-poste nomataj “la uzantoj”) en ĝiaj diversaj servoj.
 

@@ -587,6 +587,7 @@ footer:
 header:
   link:
     dictionary: "辞書一覧"
+    searchWordsGlobally: "辞書横断検索"
     exampleOffer: "例文集"
     login: "ログイン"
   userPage: "ユーザーページ"
@@ -774,6 +775,10 @@ shareMenu:
       リンクをコピーしました。
     screenshot: |-
       スクリーンショットを保存しました。
+simpleWordList:
+  empty:
+    normal: "該当する単語は見つかりませんでした"
+    noText: "検索欄に検索内容を入力してください"
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"
@@ -1060,8 +1065,15 @@ changeDictionaryShowNumbersForm:
   label:
     section: "セクション"
     equivalent: "訳語"
-    true: "表示する"
-    false: "表示しない"
+    show: "常に表示する"
+    onlyNecessary: "必要なら表示する"
+    hide: "表示しない"
+  labelHelper:
+    onlyNecessary:
+      section: >-
+        セクションが複数ある場合にのみ番号を表示し、1 つしかない場合は表示しません。
+      equivalent: >-
+        訳語が複数ある場合にのみ番号を表示し、1 つしかない場合は表示しません。
 changeDictionarySlimeTitlesForm:
   label:
     pronunciation: "発音"
@@ -1234,6 +1246,8 @@ dictionaryInformationPart:
       単語数は毎日 23 時 30 分頃に記録されます。
     wordNameFrequency: >-
       見出し語に使われている各文字の出現頻度です。
+dictionaryListPage:
+  title: "辞書一覧"
 dictionaryMainPart:
   button:
     addWord: "単語を作成"
@@ -1409,10 +1423,13 @@ resetUserPasswordPage:
   heading:
     issue: "パスワードリセット"
     reset: "パスワードリセット"
+searchWordsGloballyPage:
+  title: "辞書横断検索"
 topPage:
   button:
     login: "ログイン · 新規登録"
     dictionary: "辞書一覧"
+    searchWordsGlobally: "辞書横断検索"
     userPage: "ユーザーページ"
   aggregation:
     dictionary: "辞書"

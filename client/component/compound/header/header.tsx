@@ -1,6 +1,6 @@
 //
 
-import {faBook, faQuotes, faSignInAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {faBinoculars, faBook, faQuotes, faSignInAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, LinkIconbag, useResponsiveDevice, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
@@ -35,13 +35,35 @@ export const Header = create(
               <Logo type={(device === "desktop") ? "full" : "symbol"}/>
             </SimpleLink>
             <nav styleName="navigation">
-              <Link styleName="link" href="/dictionary" variant="unstyledUnderline">
-                <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
-                {trans("link.dictionary")}
+              <Link styleName="link" href="/dictionary" variant="unstyledUnderline" aria-label={(device !== "desktop") ? trans("link.dictionary") : undefined}>
+                {(device === "desktop") ? (
+                  <Fragment>
+                    <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
+                    {trans("link.dictionary")}
+                  </Fragment>
+                ) : (
+                  <GeneralIcon icon={faBook}/>
+                )}
               </Link>
-              <Link styleName="link" href="/sentence" variant="unstyledUnderline">
-                <LinkIconbag><GeneralIcon icon={faQuotes}/></LinkIconbag>
-                {trans("link.exampleOffer")}
+              <Link styleName="link" href="/all-words" variant="unstyledUnderline" aria-label={(device !== "desktop") ? trans("link.searchWordsGlobally") : undefined}>
+                {(device === "desktop") ? (
+                  <Fragment>
+                    <LinkIconbag><GeneralIcon icon={faBinoculars}/></LinkIconbag>
+                    {trans("link.searchWordsGlobally")}
+                  </Fragment>
+                ) : (
+                  <GeneralIcon icon={faBinoculars}/>
+                )}
+              </Link>
+              <Link styleName="link" href="/sentence" variant="unstyledUnderline" aria-label={(device !== "desktop") ? trans("link.exampleOffer") : undefined}>
+                {(device === "desktop") ? (
+                  <Fragment>
+                    <LinkIconbag><GeneralIcon icon={faQuotes}/></LinkIconbag>
+                    {trans("link.exampleOffer")}
+                  </Fragment>
+                ) : (
+                  <GeneralIcon icon={faQuotes}/>
+                )}
               </Link>
             </nav>
           </div>

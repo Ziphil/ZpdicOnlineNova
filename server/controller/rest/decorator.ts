@@ -17,15 +17,14 @@ type RequestHandlerSpec = {
   afters: Array<RequestHandlerParams<any>>
 };
 
-export function restController(restPath: string, socketPath?: string): ClassDecorator {
+export function restController(restPath: string): ClassDecorator {
   const decorator = function (clazz: typeof RestController): void {
     const metadata = (Reflect.getMetadata(REST_METADATA_KEY, clazz.prototype) ?? []) as RestMetadata;
     const originalPrepare = clazz.prepare;
     const originalSetup = clazz.prototype.setup;
-    clazz.prepare = function (this: typeof RestController, application: any, server: any, agenda: any): void {
-      originalPrepare.call(this, application, server, agenda);
+    clazz.prepare = function (this: typeof RestController, application: any, agenda: any): void {
+      originalPrepare.call(this, application, agenda);
       this.router = Router();
-      this.namespace = (socketPath !== undefined) ? server.of(socketPath) : undefined;
     };
     clazz.prototype.setup = function (this: RestController): void {
       originalSetup.call(this);

@@ -7,7 +7,7 @@ import {AdditionalProps, MultiLineText, aria, data} from "zographia";
 import {ExamplePopover} from "/client/component/compound/example-popover";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, Example} from "/server/internal/skeleton";
+import {Dictionary, DictionaryWithExecutors, Example} from "/server/internal/skeleton";
 
 
 export const WordCardExampleItem = create(
@@ -15,10 +15,12 @@ export const WordCardExampleItem = create(
   function ({
     dictionary,
     example,
+    showPopover = true,
     ...rest
   }: {
-    dictionary: DictionaryWithExecutors,
+    dictionary: Dictionary | DictionaryWithExecutors,
     example: Example,
+    showPopover?: boolean,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -29,7 +31,7 @@ export const WordCardExampleItem = create(
         <span styleName="icon" {...aria({hidden: true})}>
           <FontAwesomeIcon icon={faCaretRight}/>
         </span>
-        <ExamplePopover dictionary={dictionary} example={example} trigger={(
+        <ExamplePopoverIfPossible dictionary={(showPopover && "akrantiain" in dictionary) ? dictionary : null} example={example} trigger={(
           <MultiLineText styleName="text" is="span">
             <span>
               <span className="dictionary-custom-font" {...data({target: "example"})}>{example.sentence}</span>
@@ -41,6 +43,28 @@ export const WordCardExampleItem = create(
           </MultiLineText>
         )}/>
       </li>
+    );
+
+  }
+);
+
+
+const ExamplePopoverIfPossible = create(
+  null, "ExamplePopoverIfPossible",
+  function ({
+    dictionary,
+    example,
+    trigger
+  }: {
+    dictionary: DictionaryWithExecutors | null,
+    example: Example | null,
+    trigger: ReactElement
+  }): ReactElement {
+
+    return (dictionary !== null && example !== null) ? (
+      <ExamplePopover dictionary={dictionary} example={example} trigger={trigger}/>
+    ) : (
+      trigger
     );
 
   }

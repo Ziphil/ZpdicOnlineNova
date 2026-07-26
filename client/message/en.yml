@@ -585,7 +585,8 @@ footer:
     privacy: "Privacy policy"
 header:
   link:
-    dictionary: "Dictionaries"
+    dictionary: "All dictionaries"
+    searchWordsGlobally: "Cross-dictionary search"
     exampleOffer: "Sentences"
     login: "Sign in"
   userPage: "User page"
@@ -774,6 +775,10 @@ shareMenu:
       Copied the link.
     screenshot: |-
       Saved the screenshot.
+simpleWordList:
+  empty:
+    normal: "No matching words were found"
+    noText: "Enter a search term in the search box"
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"
@@ -1061,8 +1066,15 @@ changeDictionaryShowNumbersForm:
   label:
     section: "For sections"
     equivalent: "For translations"
-    true: "Show"
-    false: "Don’t show"
+    show: "Always show"
+    onlyNecessary: "Show when necessary"
+    hide: "Don’t show"
+  labelHelper:
+    onlyNecessary:
+      section: >-
+        Numbers are shown only when there is more than one section, and hidden when there is only one.
+      equivalent: >-
+        Numbers are shown only when there is more than one translation, and hidden when there is only one.
 changeDictionarySlimeTitlesForm:
   label:
     pronunciation: "For pronunciations"
@@ -1232,6 +1244,8 @@ dictionaryInformationPart:
       The word count is recorded every day at around 14:30 (UTC).
     wordNameFrequency: >-
       The chart below shows how frequent each character appears in the headwords in this dictionary.
+dictionaryListPage:
+  title: "All dictionaries"
 dictionaryMainPart:
   button:
     addWord: "Create word"
@@ -1406,10 +1420,13 @@ resetUserPasswordPage:
   heading:
     issue: "Reset password"
     reset: "Reset password"
+searchWordsGloballyPage:
+  title: "Cross-dictionary search"
 topPage:
   button:
     login: "Sign in · Sign up"
-    dictionary: "List of dictionaries"
+    dictionary: "All dictionaries"
+    searchWordsGlobally: "Cross-dictionary search"
     userPage: "User page"
   aggregation:
     dictionary: "{count, plural, one {Dictionary} other {Dictionaries}}"

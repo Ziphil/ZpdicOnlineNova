@@ -1,6 +1,6 @@
 //
 
-import {LoaderFunctionArgs, ShouldRevalidateFunctionArgs} from "react-router-dom";
+import {LoaderFunctionArgs, ShouldRevalidateFunctionArgs} from "react-router";
 import {fetchResponse} from "/client/hook/request";
 import {ResponseError} from "/client/util/response-error";
 

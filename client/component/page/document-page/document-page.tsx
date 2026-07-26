@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {useParams} from "react-router-dom";
+import {useParams} from "react-router";
 import {AdditionalProps, useLocale} from "zographia";
 import {Markdown} from "/client/component/atom/markdown";
 import {Header} from "/client/component/compound/header";

@@ -5,11 +5,10 @@ import {RestController} from "/server/controller/rest/controller";
 import {CustomErrorCreator} from "/server/internal/creator/error";
 import type {CustomErrorType} from "/server/internal/skeleton";
 import {ErrorResponseData, ProcessName, RequestData, ResponseData, SuccessResponseData} from "/server/internal/type/rest";
-import {SocketEventsFromClient, SocketEventsFromServer} from "/server/internal/type/socket";
 import {CustomError, Dictionary, User} from "/server/model";
 
 
-export class InternalRestController extends RestController<[SocketEventsFromClient, SocketEventsFromServer]> {
+export class InternalRestController extends RestController {
 
   protected static respond<N extends ProcessName>(response: Response<N>, body: SuccessResponseData<N>): void {
     response.json(body).end();

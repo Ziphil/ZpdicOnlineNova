@@ -8,7 +8,7 @@ import {Markdown} from "/client/component/atom/markdown";
 import {WordCardAnchor} from "/client/component/compound/word-list/word-card-anchor";
 import {create} from "/client/component/create";
 import {createTermNode, getDictionarySpecialPaths} from "/client/util/dictionary";
-import {DictionaryWithExecutors, Section} from "/server/internal/skeleton";
+import {Dictionary, DictionaryWithExecutors, Section} from "/server/internal/skeleton";
 
 
 export const WordCardPhraseList = create(
@@ -16,10 +16,12 @@ export const WordCardPhraseList = create(
   function ({
     dictionary,
     section,
+    showPopover = true,
     ...rest
   }: {
-    dictionary: DictionaryWithExecutors,
+    dictionary: Dictionary | DictionaryWithExecutors,
     section: Section,
+    showPopover?: boolean,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
@@ -56,7 +58,7 @@ export const WordCardPhraseList = create(
                         compact={true}
                         specialPaths={getDictionarySpecialPaths(dictionary)}
                         features={dictionary.settings.markdownFeatures}
-                        components={{a: WordCardAnchor}}
+                        components={(showPopover) ? {a: WordCardAnchor} : undefined}
                       >
                         {phrase.text}
                       </Markdown>

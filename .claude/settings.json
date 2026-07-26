@@ -11,10 +11,14 @@
       "Bash(git show:*)"
     ],
     "deny": [
-      "Read(./variable.env)",
-      "Read(./secret.ts)",
-      "Read(**/variable.env)",
-      "Read(**/secret.ts)"
+      "Read(**/*.env)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.kdbx)",
+      "Bash(keepassxc-cli *)",
+      "Bash(*keepassxc-cli*)",
+      "PowerShell(keepassxc-cli *)",
+      "PowerShell(*keepassxc-cli*)"
     ]
   }
 }

@@ -4,9 +4,8 @@ import dayjs from "dayjs";
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledRequest, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
-import {DictionaryCreator, DictionaryParameterCreator, MemberCreator, SuggestionCreator, TemplateWordCreator, WordCreator, WordParameterCreator} from "/server/internal/creator";
+import {DictionaryCreator, DictionaryParameterCreator, MemberCreator, TemplateWordCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
-import {SOCKET_PATH_PREFIX} from "/server/internal/type/socket";
 import {DictionaryModel, ExampleModel, OldDictionaryModel, OldExampleModel, OldWordModel, UserModel, WordModel} from "/server/model";
 import {sanitizeFileName} from "/server/util/misc";
 import {toObjectId} from "/server/util/mongo";
@@ -14,7 +13,7 @@ import {QueryRange} from "/server/util/query";
 import {mapWithSizeAsync} from "/server/util/with-size";
 
 
-@restController(SERVER_PATH_PREFIX, SOCKET_PATH_PREFIX)
+@restController(SERVER_PATH_PREFIX)
 export class DictionaryRestController extends InternalRestController {
 
   @post("/createDictionary")
@@ -141,31 +140,6 @@ export class DictionaryRestController extends InternalRestController {
     const range = new QueryRange(offset, size);
     const hitResult = await DictionaryModel.search(parameter, range);
     const body = await mapWithSizeAsync(hitResult, DictionaryCreator.skeletonizeWithUser);
-    InternalRestController.respond(response, body);
-  }
-
-  @post("/searchWords")
-  @before(parseMe(), checkDictionary("view"))
-  public async [Symbol()](request: FilledRequest<"searchWords", "dictionary">, response: Response<"searchWords">): Promise<void> {
-    const {dictionary} = request.middlewareBody;
-    const {offset, size} = request.body;
-    const parameter = WordParameterCreator.enflesh(request.body.parameter);
-    const range = new QueryRange(offset, size);
-    const hitResult = await dictionary.searchWords(parameter, range);
-    const body = {
-      words: await mapWithSizeAsync(hitResult.words, WordCreator.skeletonizeWithExamples),
-      suggestions: hitResult.suggestions.map(SuggestionCreator.skeletonize)
-    };
-    InternalRestController.respond(response, body);
-  }
-
-  @post("/searchRelationWords")
-  @before(parseMe(), checkDictionary("view"))
-  public async [Symbol()](request: FilledRequest<"searchRelationWords", "dictionary">, response: Response<"searchRelationWords">): Promise<void> {
-    const {dictionary} = request.middlewareBody;
-    const {pattern} = request.body;
-    const hitWords = await dictionary.searchRelationWords(pattern);
-    const body = hitWords.map(WordCreator.skeletonize);
     InternalRestController.respond(response, body);
   }
 

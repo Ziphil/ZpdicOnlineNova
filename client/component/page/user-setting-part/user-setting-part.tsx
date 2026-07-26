@@ -2,7 +2,7 @@
 
 import {faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {useParams} from "react-router-dom";
+import {useParams} from "react-router";
 import {AdditionalProps, Callout, CalloutBody, CalloutIconContainer, GeneralIcon, MultiLineText, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {ChangeMyAvatarForm} from "/client/component/form/change-my-avatar-form";

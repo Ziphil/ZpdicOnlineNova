@@ -13,9 +13,9 @@ export abstract class DictionaryParameter {
     const mode = order.mode;
     const directionSign = (order.direction === "ascending") ? "" : "-";
     if (mode === "updatedDate") {
-      return `${directionSign}updatedDate _id`;
+      return `${directionSign}updatedDate ${directionSign}_id`;
     } else if (mode === "createdDate") {
-      return `${directionSign}createdDate _id`;
+      return `${directionSign}createdDate ${directionSign}_id`;
     } else {
       const dummy = mode satisfies never;
       throw new Error("cannot happen");

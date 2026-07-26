@@ -1,12 +1,20 @@
 //
 
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import {fromEnv, fromFile, injectEnv} from "multi-env-injector";
 import path from "path";
 import {EnvironmentPlugin} from "webpack";
-import {loadVault} from "./secret";
 
 
-loadVault();
+injectEnv([{
+  kind: "dotenv",
+  path: path.join(__dirname, "variable.env")
+}, {
+  kind: "keepass",
+  group: "ZpdicOnlineNova",
+  path: fromEnv("VAULT_DATABASE_PATH"),
+  password: fromFile(fromEnv("VAULT_SECRET_PATH"))
+}]);
 
 const config = {
   entry: ["babel-polyfill", "./client/index.tsx"],
@@ -24,10 +32,7 @@ const config = {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: "ts-loader",
-          options: {
-            configFile: "tsconfig-esnext.json"
-          }
+          loader: "ts-loader"
         }
       },
       {
@@ -125,11 +130,10 @@ const config = {
     static: {
       directory: path.join(__dirname, "dist", "client")
     },
-    proxy: {
-      "/internal": "http://localhost:8050",
-      "/static": "http://localhost:8050",
-      "/socket.io": {target: "http://localhost:8050", ws: true}
-    }
+    proxy: [
+      {context: ["/internal", "/static"], target: "http://localhost:8050"},
+      {context: ["/socket.io"], target: "http://localhost:8050", ws: true}
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
