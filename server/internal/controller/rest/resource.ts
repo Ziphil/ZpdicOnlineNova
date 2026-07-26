@@ -4,8 +4,8 @@ import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
 import {checkDictionary, checkMe, checkRecaptcha} from "/server/internal/controller/rest/middleware";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
-import {deleteStorageFile, getStorageFileNames, getStorageUploadFilePost} from "/server/util/aws";
 import {QueryRange} from "/server/util/query";
+import {deleteStorageFile, getStorageFileNames, getStorageUploadFilePost} from "/server/util/storage";
 
 
 @restController(SERVER_PATH_PREFIX)

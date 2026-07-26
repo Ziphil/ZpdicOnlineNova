@@ -1,6 +1,5 @@
 //
 
-import sendgrid from "@sendgrid/mail";
 import * as typegoose from "@typegoose/typegoose";
 import Agenda from "agenda";
 import cookieParser from "cookie-parser";
@@ -22,7 +21,7 @@ import * as internalRest from "/server/internal/controller/rest";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
 import {jsonifyRequest} from "/server/util/request";
-import {COOKIE_SECRET, MONGO_URI, PORT, SENDGRID_KEY} from "/server/variable";
+import {COOKIE_SECRET, MONGO_URI, PORT} from "/server/variable";
 
 
 dayjs.extend(utc);
@@ -49,7 +48,6 @@ export class Main {
     this.addCustomMiddlewares();
     this.setupCors();
     this.setupMongo();
-    this.setupSendgrid();
     this.setupDirectories();
     this.useControllers();
     this.setupAgenda();
@@ -120,10 +118,6 @@ export class Main {
     setMongoCheckRequired("String");
     mongoose.connect(MONGO_URI);
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
-  }
-
-  private setupSendgrid(): void {
-    sendgrid.setApiKey(SENDGRID_KEY);
   }
 
   /** 内部処理で用いるディレクトリを用意します。*/
