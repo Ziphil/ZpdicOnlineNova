@@ -274,7 +274,8 @@ export class DictionaryRestController extends InternalRestController {
   public async [Symbol()](request: FilledRequest<"fetchMembers", "dictionary">, response: Response<"fetchMembers">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const members = await dictionary.fetchMembers();
-    const body = await Promise.all(members.map((member) => MemberCreator.skeletonize(member)));
+    const rawBody = await Promise.all(members.map((member) => MemberCreator.skeletonize(member)));
+    const body = rawBody.filter((member) => member !== null);
     InternalRestController.respond(response, body);
   }
 
