@@ -31,7 +31,7 @@ export class NormalWordParameter extends WordParameter {
     const needle = WordParameter.createNeedle(this.text, this.type, this.options.ignore);
     const sortKey = WordParameter.createSortKey(this.order);
     const disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
-    const query = WordModel.find().in("dictionary", dictionaries.map((dictionary) => dictionary.id)).or(disjunctFilters).sort(sortKey);
+    const query = WordModel.find().in("dictionary", dictionaries.map((dictionary) => dictionary["_id"])).or(disjunctFilters).sort(sortKey);
     if (this.options.shuffleSeed !== null) {
       const aggregate = WordModel.aggregate().match(query.getFilter()).sample(50);
       return aggregate;
@@ -47,7 +47,7 @@ export class NormalWordParameter extends WordParameter {
       if ((mode === "spelling" || mode === "both") && (type === "exact" || type === "prefix")) {
         const needle = WordParameter.createNeedle(this.text, "exact", {case: false});
         const aggregate = WordModel.aggregate()
-          .match(WordModel.find().in("dictionary", dictionaries.map((dictionary) => dictionary.id)).where("sections.variations.name", needle).getFilter())
+          .match(WordModel.find().in("dictionary", dictionaries.map((dictionary) => dictionary["_id"])).where("sections.variations.name", needle).getFilter())
           .addFields({"oldVariations": "$sections.variations"})
           .unwind("$oldVariations")
           .unwind("$oldVariations")
