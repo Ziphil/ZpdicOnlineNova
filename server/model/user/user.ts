@@ -11,6 +11,7 @@ import {compareSync, hashSync} from "bcrypt";
 import Fuse from "fuse.js";
 import {DictionaryModel} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
+import {MemberModel} from "/server/model/member/member";
 import {ApiCredentialModel} from "/server/model/user/api-credential";
 import {ResetTokenModel, ResetTokenSchema} from "/server/model/user/reset-token";
 import {TermsAgreementSchema} from "/server/model/user/terms-agreement";
@@ -155,11 +156,12 @@ export class UserSchema {
   }
 
   /** このユーザーを削除します。
-   * 同時に、このユーザーが所有する辞書、および発行済みの API 認証情報も全て削除します。*/
+   * 同時に、このユーザーが所有する辞書、発行済みの API 認証情報、および他の辞書への参加情報 (メンバー) も全て削除します。*/
   public async discard(this: User): Promise<User> {
     const dictionaries = await DictionaryModel.find().where("user", this);
     await Promise.all(dictionaries.map((dictionary) => dictionary.discard()));
     await ApiCredentialModel.deleteMany().where("user", this);
+    await MemberModel.deleteMany().where("user", this);
     await this.deleteOne();
     return this;
   }

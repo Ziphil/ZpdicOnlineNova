@@ -13,7 +13,7 @@ import {
 
 export namespace MemberCreator {
 
-  export async function skeletonize(raw: Member): Promise<MemberSkeleton> {
+  export async function skeletonize(raw: Member): Promise<MemberSkeleton | null> {
     await raw.populate("user");
     if (isDocument(raw.user)) {
       const skeleton = {
@@ -24,7 +24,7 @@ export namespace MemberCreator {
       } satisfies MemberSkeleton;
       return skeleton;
     } else {
-      throw new Error("cannot happen");
+      return null;
     }
   }
 
