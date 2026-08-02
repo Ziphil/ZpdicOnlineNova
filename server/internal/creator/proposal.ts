@@ -14,7 +14,7 @@ export namespace ProposalCreator {
   export function skeletonize(raw: Proposal): ProposalSkeleton {
     const skeleton = {
       id: raw.id.toString() as ObjectId,
-      name: raw.name,
+      term: raw.name,
       comment: raw.comment ?? "",
       createdDate: raw.createdDate.toISOString()
     } satisfies ProposalSkeleton;
