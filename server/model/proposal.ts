@@ -8,7 +8,9 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
+import {PROPOSAL_LIMITS} from "/server/model/constant";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
+import {CustomError} from "/server/model/error";
 import {QueryRange, WithSize} from "/server/util/query";
 
 
@@ -19,10 +21,10 @@ export class ProposalSchema {
   @prop({required: true, ref: "DictionarySchema"})
   public dictionary!: Ref<DictionarySchema>;
 
-  @prop({required: true})
+  @prop({required: true, maxlength: PROPOSAL_LIMITS.termLength})
   public name!: string;
 
-  @prop({})
+  @prop({maxlength: PROPOSAL_LIMITS.commentLength})
   public comment?: string;
 
   @prop({required: true})
@@ -42,8 +44,22 @@ export class ProposalSchema {
   public static async add(dictionary: Dictionary, name: string, comment?: string): Promise<Proposal> {
     const createdDate = new Date();
     const proposal = new ProposalModel({dictionary, name, comment, createdDate});
+    await this.assertFields(proposal);
     await proposal.save();
     return proposal;
+  }
+
+  /** 提案データの各フィールドが上限を超えていないか検査します。*/
+  private static async assertFields(proposal: Proposal): Promise<void> {
+    try {
+      await proposal.validate();
+    } catch (error) {
+      if (error instanceof Error && error.name === "ValidationError") {
+        throw new CustomError("invalidProposal");
+      } else {
+        throw error;
+      }
+    }
   }
 
   public async discard(this: Proposal): Promise<void> {

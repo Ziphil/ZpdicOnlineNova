@@ -37,6 +37,11 @@ export const EXAMPLE_LIMITS = {
   wordCount: 200
 } as const;
 
+export const PROPOSAL_LIMITS = {
+  termLength: 200,
+  commentLength: 1000
+} as const;
+
 export const ARTICLE_LIMITS = {
   size: 128 * 1024,
   titleLength: 200,

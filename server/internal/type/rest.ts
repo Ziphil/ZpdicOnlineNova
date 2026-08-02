@@ -185,7 +185,7 @@ type ServerSpecs = {
     request: WithRecaptcha<{number: number, name: string, comment?: string}>,
     response: {
       success: Proposal,
-      error: CustomError<"noSuchDictionary" | "emptyProposalName">
+      error: CustomError<"noSuchDictionary" | "emptyProposalName" | "invalidProposal">
     }
   },
   discardProposal: {
