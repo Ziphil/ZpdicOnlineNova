@@ -21,9 +21,13 @@ export class DictionaryRestController extends InternalRestController {
   public async [Symbol()](request: FilledRequest<"createDictionary", "me">, response: Response<"createDictionary">): Promise<void> {
     const {me} = request.middlewareBody ;
     const {name} = request.body;
-    const dictionary = await DictionaryModel.addEmpty(name, me);
-    const body = DictionaryCreator.skeletonize(dictionary);
-    InternalRestController.respond(response, body);
+    try {
+      const dictionary = await DictionaryModel.addEmpty(name, me);
+      const body = DictionaryCreator.skeletonize(dictionary);
+      InternalRestController.respond(response, body);
+    } catch (error) {
+      InternalRestController.respondByCustomError(response, ["dictionaryCountExceeded"], error);
+    }
   }
 
   @post("/discardDictionary")

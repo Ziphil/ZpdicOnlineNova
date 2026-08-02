@@ -9,6 +9,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
+import {DICTIONARY_LIMITS, EXAMPLE_LIMITS} from "/server/model/constant";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {OldExampleModel} from "/server/model/example/old-example";
@@ -18,6 +19,7 @@ import {Word, WordModel} from "/server/model/word/word";
 import {LogUtil} from "/server/util/log";
 import {WithSize} from "/server/util/query";
 import {QueryRange} from "/server/util/query";
+import {calcDataSize, createMaxCountValidator} from "/server/util/validation";
 import {LinkedExampleOfferSchema} from "../example-offer/linked-example-offer";
 
 
@@ -34,19 +36,19 @@ export class ExampleSchema {
   @prop({required: true})
   public number!: number;
 
-  @prop({type: String})
+  @prop({type: String, innerOptions: {maxlength: EXAMPLE_LIMITS.tagLength}, outerOptions: {validate: createMaxCountValidator(EXAMPLE_LIMITS.tagCount)}})
   public tags?: Array<string>;
 
-  @prop({required: true, type: LinkedWordSchema})
+  @prop({required: true, type: LinkedWordSchema, outerOptions: {validate: createMaxCountValidator(EXAMPLE_LIMITS.wordCount)}})
   public words!: Array<LinkedWordSchema>;
 
-  @prop({required: true})
+  @prop({required: true, maxlength: EXAMPLE_LIMITS.sentenceLength})
   public sentence!: string;
 
-  @prop({required: true})
+  @prop({required: true, maxlength: EXAMPLE_LIMITS.translationLength})
   public translation!: string;
 
-  @prop()
+  @prop({maxlength: EXAMPLE_LIMITS.supplementLength})
   public supplement?: string;
 
   @prop()
@@ -92,6 +94,7 @@ export class ExampleSchema {
   }
 
   public static async edit(dictionary: Dictionary, example: EditableExample, user: User): Promise<Example> {
+    this.assertSize(example);
     const currentExample = await ExampleModel.findOne().where("dictionary", dictionary).where("number", example.number);
     let resultExample;
     if (currentExample) {
@@ -101,9 +104,11 @@ export class ExampleSchema {
       resultExample.createdDate = currentExample.createdDate;
       resultExample.updatedDate = new Date();
       await this.filterWords(dictionary, resultExample);
+      await this.assertFields(resultExample);
       await currentExample.deleteOneSoftly();
       await resultExample.save();
     } else {
+      await this.assertCount(dictionary);
       if (example.number === null) {
         example.number = await this.fetchNextNumber(dictionary);
       }
@@ -113,6 +118,7 @@ export class ExampleSchema {
       resultExample.createdDate = new Date();
       resultExample.updatedDate = new Date();
       await this.filterWords(dictionary, resultExample);
+      await this.assertFields(resultExample);
       await resultExample.save();
     }
     LogUtil.log("model/example/edit", {number: dictionary.number, currentId: currentExample?.id, resultId: resultExample.id});
@@ -136,15 +142,47 @@ export class ExampleSchema {
     example.words = example.words.filter((word) => linkedWords.some((linkedWord) => linkedWord.number === word.number));
   }
 
+  /** 例文データ全体の大きさが上限を超えていないか検査します。*/
+  private static assertSize(example: EditableExample | Example): void {
+    if (calcDataSize(example) > EXAMPLE_LIMITS.size) {
+      throw new CustomError("exampleSizeExceeded");
+    }
+  }
+
+  /** 辞書に登録されている例文数が上限に達していないか検査します。
+   * 例文データを新たに追加する場合にのみ呼び出します。*/
+  private static async assertCount(dictionary: Dictionary): Promise<void> {
+    const count = await dictionary.countExamples();
+    if (count >= DICTIONARY_LIMITS.exampleCountPerDictionary) {
+      throw new CustomError("exampleCountExceeded");
+    }
+  }
+
+  /** 例文データの各フィールドが上限を超えていないか検査します。
+   * 既存の例文データを論理削除する前に検査することで、上限違反によって保存に失敗したときにデータが失われるのを防ぎます。*/
+  private static async assertFields(example: Example): Promise<void> {
+    try {
+      await example.validate();
+    } catch (error) {
+      if (error instanceof Error && error.name === "ValidationError") {
+        throw new CustomError("invalidExample");
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  /** この例文データを論理削除します。
+   * 履歴データは上限の検査対象外とするため、履歴データの検証は行いません。*/
   public async deleteOneSoftly(this: Example): Promise<void> {
     const oldExample = new OldExampleModel(this.toObject({depopulate: true}));
     oldExample.deletedDate = new Date();
-    await oldExample.save();
+    await oldExample.save({validateBeforeSave: false});
     await ExampleModel.deleteOne().where("_id", this["_id"]);
   }
 
-  /** 指定された辞書において次に用例データに割り振るべき番号を返します。
-   * すでに削除された用例データの番号と重複しないように、`oldExamples` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
+  /** 指定された辞書において次に例文データに割り振るべき番号を返します。
+   * すでに削除された例文データの番号と重複しないように、`oldExamples` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
   private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
     const [examples, oldExamples] = await Promise.all([
       ExampleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1),

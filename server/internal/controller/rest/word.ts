@@ -23,7 +23,7 @@ export class WordRestController extends InternalRestController {
       const body = WordCreator.skeletonize(resultWord);
       InternalRestController.respond(response, body);
     } catch (error) {
-      InternalRestController.respondByCustomError(response, ["dictionarySaving"], error);
+      InternalRestController.respondByCustomError(response, ["dictionarySaving", "wordCountExceeded", "wordSizeExceeded", "invalidWord"], error);
     }
   }
 
@@ -59,7 +59,7 @@ export class WordRestController extends InternalRestController {
         throw rejectedResult.reason;
       }
     } catch (error) {
-      InternalRestController.respondByCustomError(response, ["failAddRelations"], error);
+      InternalRestController.respondByCustomError(response, ["failAddRelations", "wordSizeExceeded", "invalidWord"], error);
     }
   }
 

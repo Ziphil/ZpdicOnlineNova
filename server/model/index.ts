@@ -47,6 +47,7 @@ export * from "./member/member";
 export * from "./article/article";
 export * from "./article/old-article";
 export * from "./proposal";
+export * from "./constant";
 export * from "./error";
 export * from "./history";
 export * from "./invitation";

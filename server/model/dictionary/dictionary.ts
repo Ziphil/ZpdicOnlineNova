@@ -12,6 +12,7 @@ import {
 import Fuse from "fuse.js";
 import type {DictionaryStatistics, WordSpellingFrequencies} from "/server/internal/skeleton";
 import {Article, ArticleModel, EditableArticle} from "/server/model/article/article";
+import {USER_LIMITS} from "/server/model/constant";
 import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
@@ -87,6 +88,7 @@ export class DictionarySchema {
   public updatedDate?: Date;
 
   public static async addEmpty(name: string, user: User): Promise<Dictionary> {
+    await this.assertCount(user);
     const dictionary = new DictionaryModel({
       user,
       number: await DictionaryModel.fetchNextNumber(),
@@ -498,6 +500,20 @@ export class DictionarySchema {
   public async countExamples(): Promise<number> {
     const count = await ExampleModel.find().where("dictionary", this).countDocuments();
     return count;
+  }
+
+  public async countArticles(): Promise<number> {
+    const count = await ArticleModel.find().where("dictionary", this).countDocuments();
+    return count;
+  }
+
+  /** ユーザーが作成した辞書数が上限に達していないか検査します。
+   * 辞書を新たに作成する場合にのみ呼び出します。*/
+  private static async assertCount(user: User): Promise<void> {
+    const count = await DictionaryModel.find().where("user", user).countDocuments();
+    if (count >= USER_LIMITS.dictionaryCountPerUser) {
+      throw new CustomError("dictionaryCountExceeded");
+    }
   }
 
   public async calcWordSpellingFrequencies(): Promise<WordSpellingFrequencies> {

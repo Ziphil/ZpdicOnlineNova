@@ -23,7 +23,7 @@ export class ExampleRestController extends InternalRestController {
       const body = ExampleCreator.skeletonize(resultExample);
       InternalRestController.respond(response, body);
     } catch (error) {
-      InternalRestController.respondByCustomError(response, ["dictionarySaving"], error);
+      InternalRestController.respondByCustomError(response, ["dictionarySaving", "exampleCountExceeded", "exampleSizeExceeded", "invalidExample"], error);
     }
   }
 

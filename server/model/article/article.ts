@@ -10,6 +10,7 @@ import {
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
 import {OldArticleModel} from "/server/model/article/old-article";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {User, UserSchema} from "/server/model/user/user";
@@ -57,6 +58,7 @@ export class ArticleSchema {
       await currentArticle.deleteOneSoftly();
       await resultArticle.save();
     } else {
+      await this.assertCount(dictionary);
       if (article.number === null) {
         article.number = await this.fetchNextNumber(dictionary);
       }
@@ -82,10 +84,21 @@ export class ArticleSchema {
     return example;
   }
 
+  /** 辞書に登録されている記事数が上限に達していないか検査します。
+   * 記事データを新たに追加する場合にのみ呼び出します。*/
+  private static async assertCount(dictionary: Dictionary): Promise<void> {
+    const count = await dictionary.countArticles();
+    if (count >= DICTIONARY_LIMITS.articleCountPerDictionary) {
+      throw new CustomError("articleCountExceeded");
+    }
+  }
+
+  /** この記事データを論理削除します。
+   * 履歴データは上限の検査対象外とするため、履歴データの検証は行いません。*/
   public async deleteOneSoftly(this: Article): Promise<void> {
     const oldArticle = new OldArticleModel(this.toObject({depopulate: true}));
     oldArticle.deletedDate = new Date();
-    await oldArticle.save();
+    await oldArticle.save({validateBeforeSave: false});
     await ArticleModel.deleteOne().where("_id", this["_id"]);
   }
 

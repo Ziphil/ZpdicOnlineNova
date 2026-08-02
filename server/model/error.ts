@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-as-const */
 
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
+
 
 export class CustomError<E extends string> extends Error {
 
@@ -16,3 +18,17 @@ export class CustomError<E extends string> extends Error {
   }
 
 }
+
+
+export const LIMIT_ERROR_TYPES = [
+  "dictionaryCountExceeded",
+  "wordCountExceeded",
+  "wordSizeExceeded",
+  "invalidWord",
+  "exampleCountExceeded",
+  "exampleSizeExceeded",
+  "invalidExample",
+  "articleCountExceeded"
+] as const;
+export type LimitErrorType = LiteralType<typeof LIMIT_ERROR_TYPES>;
+export const LimitErrorTypeUtil = LiteralUtilType.create(LIMIT_ERROR_TYPES);
