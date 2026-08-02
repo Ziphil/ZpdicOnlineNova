@@ -36,3 +36,11 @@ export const EXAMPLE_LIMITS = {
   tagLength: 100,
   wordCount: 200
 } as const;
+
+export const ARTICLE_LIMITS = {
+  size: 128 * 1024,
+  titleLength: 200,
+  contentLength: 100000,
+  tagCount: 10,
+  tagLength: 100
+} as const;

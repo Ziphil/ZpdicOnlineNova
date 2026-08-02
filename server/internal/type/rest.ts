@@ -171,7 +171,7 @@ type ServerSpecs = {
     request: {number: number, article: EditableArticle},
     response: {
       success: Article,
-      error: CustomError<"noSuchDictionary" | "dictionarySaving" | "articleCountExceeded">
+      error: CustomError<"noSuchDictionary" | "dictionarySaving" | "articleCountExceeded" | "articleSizeExceeded" | "invalidArticle">
     }
   },
   discardArticle: {

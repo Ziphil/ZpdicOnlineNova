@@ -28,7 +28,9 @@ export const LIMIT_ERROR_TYPES = [
   "exampleCountExceeded",
   "exampleSizeExceeded",
   "invalidExample",
-  "articleCountExceeded"
+  "articleCountExceeded",
+  "articleSizeExceeded",
+  "invalidArticle"
 ] as const;
 export type LimitErrorType = LiteralType<typeof LIMIT_ERROR_TYPES>;
 export const LimitErrorTypeUtil = LiteralUtilType.create(LIMIT_ERROR_TYPES);

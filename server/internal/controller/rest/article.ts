@@ -22,7 +22,7 @@ export class ArticleRestController extends InternalRestController {
       const body = ArticleCreator.skeletonize(resultArticle);
       InternalRestController.respond(response, body);
     } catch (error) {
-      InternalRestController.respondByCustomError(response, ["dictionarySaving", "articleCountExceeded"], error);
+      InternalRestController.respondByCustomError(response, ["dictionarySaving", "articleCountExceeded", "articleSizeExceeded", "invalidArticle"], error);
     }
   }
 

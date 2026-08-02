@@ -10,11 +10,12 @@ import {
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
 import {OldArticleModel} from "/server/model/article/old-article";
-import {DICTIONARY_LIMITS} from "/server/model/constant";
+import {ARTICLE_LIMITS, DICTIONARY_LIMITS} from "/server/model/constant";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {User, UserSchema} from "/server/model/user/user";
 import {LogUtil} from "/server/util/log";
+import {calcDataSize, createMaxCountValidator} from "/server/util/validation";
 
 
 @modelOptions({schemaOptions: {collection: "articles"}})
@@ -28,13 +29,13 @@ export class ArticleSchema {
   @prop({required: true})
   public number!: number;
 
-  @prop({type: String})
+  @prop({type: String, innerOptions: {maxlength: ARTICLE_LIMITS.tagLength}, outerOptions: {validate: createMaxCountValidator(ARTICLE_LIMITS.tagCount)}})
   public tags!: Array<string>;
 
-  @prop({required: true})
+  @prop({required: true, maxlength: ARTICLE_LIMITS.titleLength})
   public title!: string;
 
-  @prop({required: true})
+  @prop({required: true, maxlength: ARTICLE_LIMITS.contentLength})
   public content!: string;
 
   @prop({required: true, ref: "UserSchema"})
@@ -47,6 +48,7 @@ export class ArticleSchema {
   public updatedDate!: Date;
 
   public static async edit(dictionary: Dictionary, article: EditableArticle, user: User): Promise<Article> {
+    this.assertSize(article);
     const currentArticle = await ArticleModel.findOne().where("dictionary", dictionary).where("number", article.number);
     let resultArticle;
     if (currentArticle) {
@@ -55,6 +57,7 @@ export class ArticleSchema {
       resultArticle.updatedUser = user;
       resultArticle.createdDate = currentArticle.createdDate;
       resultArticle.updatedDate = new Date();
+      await this.assertFields(resultArticle);
       await currentArticle.deleteOneSoftly();
       await resultArticle.save();
     } else {
@@ -67,6 +70,7 @@ export class ArticleSchema {
       resultArticle.updatedUser = user;
       resultArticle.createdDate = new Date();
       resultArticle.updatedDate = new Date();
+      await this.assertFields(resultArticle);
       await resultArticle.save();
     }
     LogUtil.log("model/article/edit", {number: dictionary.number, currentId: currentArticle?.id, resultId: resultArticle.id});
@@ -84,12 +88,33 @@ export class ArticleSchema {
     return example;
   }
 
+  /** 記事データ全体の大きさが上限を超えていないか検査します。*/
+  private static assertSize(article: EditableArticle | Article): void {
+    if (calcDataSize(article) > ARTICLE_LIMITS.size) {
+      throw new CustomError("articleSizeExceeded");
+    }
+  }
+
   /** 辞書に登録されている記事数が上限に達していないか検査します。
    * 記事データを新たに追加する場合にのみ呼び出します。*/
   private static async assertCount(dictionary: Dictionary): Promise<void> {
     const count = await dictionary.countArticles();
     if (count >= DICTIONARY_LIMITS.articleCountPerDictionary) {
       throw new CustomError("articleCountExceeded");
+    }
+  }
+
+  /** 記事データの各フィールドが上限を超えていないか検査します。
+   * 既存の記事データを論理削除する前に検査することで、上限違反によって保存に失敗したときにデータが失われるのを防ぎます。*/
+  private static async assertFields(article: Article): Promise<void> {
+    try {
+      await article.validate();
+    } catch (error) {
+      if (error instanceof Error && error.name === "ValidationError") {
+        throw new CustomError("invalidArticle");
+      } else {
+        throw error;
+      }
     }
   }
 
