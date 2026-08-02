@@ -2,7 +2,7 @@ openapi: "3.0.3"
 
 info:
   title: "ZpDIC Online API"
-  version: "0.2.0"
+  version: "0.3.0"
   description: |-
     ### ベース URL
     全ての API のベース URL は `https://zpdic.ziphil.com/api` です。
@@ -133,7 +133,7 @@ paths:
         401:
           $ref: "#/components/responses/generalUnauthorized"
         400:
-          $ref: "#/components/responses/generalBadRequest"
+          $ref: "#/components/responses/addWordBadRequest"
         429:
           $ref: "#/components/responses/generalTooManyRequests"
 
@@ -217,7 +217,7 @@ paths:
         401:
           $ref: "#/components/responses/generalUnauthorized"
         400:
-          $ref: "#/components/responses/generalBadRequest"
+          $ref: "#/components/responses/editWordBadRequest"
         429:
           $ref: "#/components/responses/generalTooManyRequests"
     delete:
@@ -352,7 +352,7 @@ paths:
         401:
           $ref: "#/components/responses/generalUnauthorized"
         400:
-          $ref: "#/components/responses/generalBadRequest"
+          $ref: "#/components/responses/addExampleBadRequest"
         429:
           $ref: "#/components/responses/generalTooManyRequests"
 
@@ -436,7 +436,7 @@ paths:
         401:
           $ref: "#/components/responses/generalUnauthorized"
         400:
-          $ref: "#/components/responses/generalBadRequest"
+          $ref: "#/components/responses/editExampleBadRequest"
         429:
           $ref: "#/components/responses/generalTooManyRequests"
     delete:
@@ -1424,8 +1424,75 @@ components:
           type: string
           enum: ["dictionarySaving"]
           example: "dictionarySaving"
-  
-  
+
+    Error#invalidRequest:
+      type: object
+      properties:
+        error:
+          type: string
+          enum: ["invalidRequest"]
+          example: "invalidRequest"
+        message:
+          type: string
+          description: "リクエストの誤りの内容"
+          example: "text is a required field"
+      description: "リクエストの内容が誤っている場合"
+
+    Error#wordCountExceeded:
+      type: object
+      properties:
+        error:
+          type: string
+          enum: ["wordCountExceeded"]
+          example: "wordCountExceeded"
+      description: "辞書に登録できる単語数の上限に達している場合"
+
+    Error#wordSizeExceeded:
+      type: object
+      properties:
+        error:
+          type: string
+          enum: ["wordSizeExceeded"]
+          example: "wordSizeExceeded"
+      description: "単語データ 1 件の大きさが上限を超えている場合"
+
+    Error#invalidWord:
+      type: object
+      properties:
+        error:
+          type: string
+          enum: ["invalidWord"]
+          example: "invalidWord"
+      description: "単語データのいずれかの項目が文字数もしくは個数の上限を超えている場合"
+
+    Error#exampleCountExceeded:
+      type: object
+      properties:
+        error:
+          type: string
+          enum: ["exampleCountExceeded"]
+          example: "exampleCountExceeded"
+      description: "辞書に登録できる例文数の上限に達している場合"
+
+    Error#exampleSizeExceeded:
+      type: object
+      properties:
+        error:
+          type: string
+          enum: ["exampleSizeExceeded"]
+          example: "exampleSizeExceeded"
+      description: "例文データ 1 件の大きさが上限を超えている場合"
+
+    Error#invalidExample:
+      type: object
+      properties:
+        error:
+          type: string
+          enum: ["invalidExample"]
+          example: "invalidExample"
+      description: "例文データのいずれかの項目が文字数もしくは個数の上限を超えている場合"
+
+
   responses:
     generalUnauthorized:
       description: "API キーが正しくない (もしくは存在しない) 場合"
@@ -1443,16 +1510,45 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              error:
-                type: string
-                enum: ["invalidRequest"]
-                example: "invalidRequest"
-              message:
-                type: string
-                description: "リクエストの誤りの内容"
-                example: "text is a required field"
+            $ref: "#/components/schemas/Error#invalidRequest"
+    addWordBadRequest:
+      description: "リクエストの内容が誤っている場合 or 保存できるデータの上限を超えている場合"
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/Error#invalidRequest"
+              - $ref: "#/components/schemas/Error#wordCountExceeded"
+              - $ref: "#/components/schemas/Error#wordSizeExceeded"
+              - $ref: "#/components/schemas/Error#invalidWord"
+    editWordBadRequest:
+      description: "リクエストの内容が誤っている場合 or 保存できるデータの上限を超えている場合"
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/Error#invalidRequest"
+              - $ref: "#/components/schemas/Error#wordSizeExceeded"
+              - $ref: "#/components/schemas/Error#invalidWord"
+    addExampleBadRequest:
+      description: "リクエストの内容が誤っている場合 or 保存できるデータの上限を超えている場合"
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/Error#invalidRequest"
+              - $ref: "#/components/schemas/Error#exampleCountExceeded"
+              - $ref: "#/components/schemas/Error#exampleSizeExceeded"
+              - $ref: "#/components/schemas/Error#invalidExample"
+    editExampleBadRequest:
+      description: "リクエストの内容が誤っている場合 or 保存できるデータの上限を超えている場合"
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: "#/components/schemas/Error#invalidRequest"
+              - $ref: "#/components/schemas/Error#exampleSizeExceeded"
+              - $ref: "#/components/schemas/Error#invalidExample"
     generalTooManyRequests:
       description: "呼び出し回数の上限に達している場合"
       content:
