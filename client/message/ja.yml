@@ -178,10 +178,33 @@ toast:
       双方向の関連語の登録に失敗しました。
     dictionarySizeTooLarge: |-
       ファイルのサイズが大きすぎます。
+    dictionaryCountExceeded: |-
+      これ以上辞書を作成することはできません。
     noSuchWord: |-
       この単語は存在しません。
+    wordCountExceeded: |-
+      この辞書にこれ以上単語を追加することはできません。
+    wordSizeExceeded: |-
+      単語のデータが大きすぎます。
+      内容を減らしてからもう一度お試しください。
+    invalidWord: |-
+      単語のいずれかの項目が上限を超えています。
     noSuchExample: |-
       この例文は存在しません。
+    exampleCountExceeded: |-
+      この辞書にこれ以上例文を追加することはできません。
+    exampleSizeExceeded: |-
+      例文のデータが大きすぎます。
+      内容を減らしてからもう一度お試しください。
+    invalidExample: |-
+      例文のいずれかの項目が上限を超えています。
+    articleCountExceeded: |-
+      この辞書にこれ以上記事を追加することはできません。
+    articleSizeExceeded: |-
+      記事のデータが大きすぎます。
+      内容を減らしてからもう一度お試しください。
+    invalidArticle: |-
+      記事のいずれかの項目が上限を超えています。
     resourceCountExceeded: |-
       これ以上ファイルをアップロードすることはできません。
     resourceSizeTooLarge: |-
@@ -204,6 +227,8 @@ toast:
       造語依頼する単語が空です。
     noSuchProposal: |-
       その造語依頼は存在しません。
+    invalidProposal: |-
+      造語依頼のいずれかの項目が上限を超えています。
     emptyContactText: |-
       お問い合わせ内容が空です。
     administratorNotFound: |-

@@ -178,10 +178,33 @@ toast:
       Failed to create the mutual relations.
     dictionarySizeTooLarge: |-
       The file is too large.
+    dictionaryCountExceeded: |-
+      No more dictionaries can be created.
     noSuchWord: |-
       This word does not exist.
+    wordCountExceeded: |-
+      No more words can be added to this dictionary.
+    wordSizeExceeded: |-
+      The data of the word is too large.
+      Reduce its content and try again.
+    invalidWord: |-
+      One of the fields of the word exceeds its limit.
     noSuchExample: |-
       This example sentence does not exist.
+    exampleCountExceeded: |-
+      No more example sentences can be added to this dictionary.
+    exampleSizeExceeded: |-
+      The data of the example sentence is too large.
+      Reduce its content and try again.
+    invalidExample: |-
+      One of the fields of the example sentence exceeds its limit.
+    articleCountExceeded: |-
+      No more articles can be added to this dictionary.
+    articleSizeExceeded: |-
+      The data of the article is too large.
+      Reduce its content and try again.
+    invalidArticle: |-
+      One of the fields of the article exceeds its limit.
     resourceCountExceeded: |-
       No more files can be uploaded.
     resourceSizeTooLarge: |-
@@ -204,6 +227,8 @@ toast:
       The word to request is empty.
     noSuchProposal: |-
       This request does not exist.
+    invalidProposal: |-
+      One of the fields of the request exceeds its limit.
     emptyContactText: |-
       The message is empty.
     administratorNotFound: |-

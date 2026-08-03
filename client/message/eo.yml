@@ -69,9 +69,9 @@ toast:
       La artikolo redaktitas.
     discardArticle: |-
       La artikolo forigitas.
-    addCommission: |-
+    addProposal: |-
       Nova peto kreitas.
-    discardCommission: |-
+    discardProposal: |-
       La peto forigitas.
     addResource: |-
       La bildo alŝutitas.
@@ -178,10 +178,33 @@ toast:
       Malsukcesis krei la reciprokaj rilatojn.
     dictionarySizeTooLarge: |-
       La dosiero estas tro granda.
+    dictionaryCountExceeded: |-
+      Vi ne povas krei pliajn vortarojn.
     noSuchWord: |-
       Ne ekzistas tiu vorto.
+    wordCountExceeded: |-
+      Vi ne povas aldoni pliajn vortojn al tiu vortaro.
+    wordSizeExceeded: |-
+      La datumo de la vorto estas tro granda.
+      Bonvolu redukti la enhavon kaj reprovi.
+    invalidWord: |-
+      Iu kampo de la vorto superas sian limon.
     noSuchExample: |-
       Ne ekzistas tiu ekzempla frazo.
+    exampleCountExceeded: |-
+      Vi ne povas aldoni pliajn ekzemplajn frazojn al tiu vortaro.
+    exampleSizeExceeded: |-
+      La datumo de la ekzempla frazo estas tro granda.
+      Bonvolu redukti la enhavon kaj reprovi.
+    invalidExample: |-
+      Iu kampo de la ekzempla frazo superas sian limon.
+    articleCountExceeded: |-
+      Vi ne povas aldoni pliajn artikolojn al tiu vortaro.
+    articleSizeExceeded: |-
+      La datumo de la artikolo estas tro granda.
+      Bonvolu redukti la enhavon kaj reprovi.
+    invalidArticle: |-
+      Iu kampo de la artikolo superas sian limon.
     resourceCountExceeded: |-
       Ne eblas alŝuti pli da dosieroj.
     resourceSizeTooLarge: |-
@@ -200,10 +223,12 @@ toast:
       Ne ekzistas tiu invito.
     noSuchMember: |-
       La uzanto ne havas la permeson.
-    emptyCommissionName: |-
+    emptyProposalName: |-
       La vorto por peti estas malplena.
-    noSuchCommission: |-
+    noSuchProposal: |-
       Ne ekzistas tiu peto.
+    invalidProposal: |-
+      Iu kampo de la peto superas sian limon.
     emptyContactText: |-
       La mesaĝo estas malplena.
     administratorNotFound: |-
