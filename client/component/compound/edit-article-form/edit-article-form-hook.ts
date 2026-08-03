@@ -1,26 +1,29 @@
 //
 
 import {BaseSyntheticEvent, useMemo} from "react";
+import {Asserts, array, number, object, string} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
 import {Article, Dictionary, EditableArticle} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
+import {ARTICLE_LIMITS} from "/server/model/constant";
 
 
+const SCHEMA = object({
+  number: number().nullable().defined(),
+  tags: array(string().defined()).max(ARTICLE_LIMITS.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= ARTICLE_LIMITS.tagLength) ?? true).defined(),
+  title: string().max(ARTICLE_LIMITS.titleLength, "titleTooLong").defined(),
+  content: string().max(ARTICLE_LIMITS.contentLength, "contentTooLong").defined()
+});
 const DEFAULT_VALUE = {
   number: null,
   tags: [],
   title: "",
   content: ""
 } satisfies FormValue;
-type FormValue = {
-  number: number | null,
-  tags: Array<string>,
-  title: string,
-  content: string
-};
+type FormValue = Asserts<typeof SCHEMA>;
 
 export type EditArticleSpec = {
   form: UseFormReturn<FormValue>,
@@ -31,7 +34,7 @@ export type EditArticleInitialData = {type: "article", article: Article} | {type
 export const getEditArticleFormValue = getFormValue;
 
 export function useEditArticle(dictionary: Dictionary, initialData: EditArticleInitialData | null, onSubmit?: (article: EditableArticle) => unknown): EditArticleSpec {
-  const form = useForm<FormValue>(getFormValue(initialData), {});
+  const form = useForm<FormValue>(SCHEMA, getFormValue(initialData), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {

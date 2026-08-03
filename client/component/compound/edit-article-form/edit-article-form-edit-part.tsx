@@ -3,6 +3,7 @@
 import {ReactElement} from "react";
 import {Controller} from "react-hook-form";
 import {AdditionalProps, ControlContainer, ControlLabel, Input, TagInput, Textarea, useTrans} from "zographia";
+import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {preventDefault} from "/client/util/form";
 import {Dictionary} from "/server/internal/skeleton";
@@ -24,7 +25,7 @@ export const EditArticleFormEditPart = create(
     const {trans} = useTrans("editArticleForm");
 
     const {form} = formSpec;
-    const {register, control} = form;
+    const {register, control, getFieldState, formState: {errors}} = form;
 
     return (
       <form styleName="root" onSubmit={preventDefault} {...rest}>
@@ -33,16 +34,19 @@ export const EditArticleFormEditPart = create(
             <ControlContainer>
               <ControlLabel>{trans("label.tags")}</ControlLabel>
               <Controller name="tags" control={control} render={({field}) => (
-                <TagInput tagVariant="solid" values={field.value} onSet={field.onChange}/>
+                <TagInput tagVariant="solid" error={!!getFieldState("tags").error} values={field.value} onSet={field.onChange}/>
               )}/>
+              <ControlErrorMessage name="tags" form={form} trans={trans}/>
             </ControlContainer>
             <ControlContainer>
               <ControlLabel>{trans("label.title")}</ControlLabel>
-              <Input {...register("title")}/>
+              <Input error={!!getFieldState("title").error} {...register("title")}/>
+              <ControlErrorMessage name="title" form={form} trans={trans}/>
             </ControlContainer>
             <ControlContainer>
               <ControlLabel>{trans("label.content")}</ControlLabel>
-              <Textarea styleName="textarea" {...register("content")}/>
+              <Textarea styleName="textarea" error={!!getFieldState("content").error} {...register("content")}/>
+              <ControlErrorMessage name="content" form={form} trans={trans}/>
             </ControlContainer>
           </div>
         </div>

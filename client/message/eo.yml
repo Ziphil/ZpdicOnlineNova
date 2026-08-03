@@ -313,6 +313,10 @@ addProposalDialog:
   error:
     nameRequired: >-
       Enigu la vorton kies kreadon vi petas.
+    nameTooLong: >-
+      La vorto devas enhavi maksimume 200 signojn.
+    commentTooLong: >-
+      La komento devas enhavi maksimume 1,000 signojn.
 apiCredentialList:
   label:
     limit: "{limit, number} {limit, plural, one {peto/minuto} other {petoj/minuto}}"
@@ -441,6 +445,15 @@ editArticleForm:
     content: "Enhavo"
   button:
     confirm: "Konfirmi"
+  error:
+    titleTooLong: >-
+      La titolo devas enhavi maksimume 200 signojn.
+    contentTooLong: >-
+      La enhavo devas enhavi maksimume 100,000 signojn.
+    tagsTooMany: >-
+      Vi povas agordi maksimume 10 etikedojn.
+    tagTooLong: >-
+      Ĉiu etikedo devas enhavi maksimume 100 signojn.
 editExampleDialog:
   button:
     confirm: "Konfirmi"
@@ -467,6 +480,17 @@ editExampleForm:
     add:
       word: "Aldoni enhavitan vorton"
     confirm: "Konfirmi"
+  error:
+    sentenceTooLong: >-
+      La ekzempla frazo devas enhavi maksimume 5,000 signojn.
+    translationTooLong: >-
+      La traduko devas enhavi maksimume 5,000 signojn.
+    supplementTooLong: >-
+      La suplementa klarigo devas enhavi maksimume 5,000 signojn.
+    tagsTooMany: >-
+      Vi povas agordi maksimume 10 etikedojn.
+    tagTooLong: >-
+      Ĉiu etikedo devas enhavi maksimume 100 signojn.
 editWordDialog:
   button:
     confirm: "Konfirmi"

@@ -313,6 +313,10 @@ addProposalDialog:
   error:
     nameRequired: >-
       Enter the word to request.
+    nameTooLong: >-
+      The word must be at most 200 characters long.
+    commentTooLong: >-
+      The comment must be at most 1,000 characters long.
 apiCredentialList:
   label:
     limit: "{limit, number} {limit, plural, one {request/min} other {requests/min}}"
@@ -441,6 +445,15 @@ editArticleForm:
     content: "Content"
   button:
     confirm: "Confirm"
+  error:
+    titleTooLong: >-
+      The title must be at most 200 characters long.
+    contentTooLong: >-
+      The content must be at most 100,000 characters long.
+    tagsTooMany: >-
+      You can set at most 10 tags.
+    tagTooLong: >-
+      Each tag must be at most 100 characters long.
 editExampleDialog:
   button:
     confirm: "Confirm"
@@ -467,6 +480,17 @@ editExampleForm:
     add:
       word: "Add included words"
     confirm: "Confirm"
+  error:
+    sentenceTooLong: >-
+      The example sentence must be at most 5,000 characters long.
+    translationTooLong: >-
+      The translation must be at most 5,000 characters long.
+    supplementTooLong: >-
+      The supplementary explanation must be at most 5,000 characters long.
+    tagsTooMany: >-
+      You can set at most 10 tags.
+    tagTooLong: >-
+      Each tag must be at most 100 characters long.
 editWordDialog:
   button:
     confirm: "Confirm"

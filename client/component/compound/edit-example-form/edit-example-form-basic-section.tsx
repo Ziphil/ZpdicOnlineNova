@@ -3,6 +3,7 @@
 import {ReactElement} from "react";
 import {Controller} from "react-hook-form";
 import {AdditionalProps, ControlContainer, ControlLabel, TagInput, Textarea, TextareaAddon, useTrans} from "zographia";
+import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
@@ -24,7 +25,7 @@ export const EditExampleFormBasicSection = create(
 
     const {trans} = useTrans("editExampleForm");
 
-    const {register, control} = form;
+    const {register, control, getFieldState, formState: {errors}} = form;
 
     const linkedOffer = form.watch("offer");
     const [offer] = useResponse("fetchExampleOfferOrNull", (linkedOffer) && linkedOffer);
@@ -36,12 +37,14 @@ export const EditExampleFormBasicSection = create(
           <ControlContainer>
             <ControlLabel>{trans("label.tags")}</ControlLabel>
             <Controller name="tags" control={control} render={({field}) => (
-              <TagInput tagVariant="solid" values={field.value} onSet={field.onChange}/>
+              <TagInput tagVariant="solid" error={!!getFieldState("tags").error} values={field.value} onSet={field.onChange}/>
             )}/>
+            <ControlErrorMessage name="tags" form={form} trans={trans}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.sentence")}</ControlLabel>
-            <Textarea styleName="textarea" {...register("sentence")}/>
+            <Textarea styleName="textarea" error={!!getFieldState("sentence").error} {...register("sentence")}/>
+            <ControlErrorMessage name="sentence" form={form} trans={trans}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.translation")}</ControlLabel>
@@ -52,12 +55,14 @@ export const EditExampleFormBasicSection = create(
                 </TextareaAddon>
               </Textarea>
             ) : (
-              <Textarea styleName="textarea" {...register("translation")}/>
+              <Textarea styleName="textarea" error={!!getFieldState("translation").error} {...register("translation")}/>
             )}
+            <ControlErrorMessage name="translation" form={form} trans={trans}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.supplement")}</ControlLabel>
-            <Textarea styleName="textarea-supplement" {...register("supplement")}/>
+            <Textarea styleName="textarea-supplement" error={!!getFieldState("supplement").error} {...register("supplement")}/>
+            <ControlErrorMessage name="supplement" form={form} trans={trans}/>
           </ControlContainer>
         </div>
       </section>

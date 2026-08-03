@@ -313,6 +313,10 @@ addProposalDialog:
   error:
     nameRequired: >-
       単語を入力してください。
+    nameTooLong: >-
+      単語は 200 文字以内で入力してください。
+    commentTooLong: >-
+      コメントは 1,000 文字以内で入力してください。
 apiCredentialList:
   label:
     limit: "{limit, number} リクエスト/分"
@@ -442,6 +446,15 @@ editArticleForm:
     content: "本文"
   button:
     confirm: "決定"
+  error:
+    titleTooLong: >-
+      タイトルは 200 文字以内で入力してください。
+    contentTooLong: >-
+      本文は 100,000 文字以内で入力してください。
+    tagsTooMany: >-
+      タグは 10 個以内で設定してください。
+    tagTooLong: >-
+      各タグは 100 文字以内で入力してください。
 editExampleDialog:
   button:
     confirm: "決定"
@@ -468,6 +481,17 @@ editExampleForm:
     add:
       word: "使用単語を追加"
     confirm: "決定"
+  error:
+    sentenceTooLong: >-
+      例文は 5,000 文字以内で入力してください。
+    translationTooLong: >-
+      自然言語訳は 5,000 文字以内で入力してください。
+    supplementTooLong: >-
+      補足説明は 5,000 文字以内で入力してください。
+    tagsTooMany: >-
+      タグは 10 個以内で設定してください。
+    tagTooLong: >-
+      各タグは 100 文字以内で入力してください。
 editWordDialog:
   button:
     confirm: "決定"
