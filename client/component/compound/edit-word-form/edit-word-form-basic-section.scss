@@ -37,8 +37,10 @@
   }
 }
 
-.helper {
-  grid-column: 2 / -1;
+.control-container {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;
 }
 
 .row {

@@ -536,6 +536,19 @@ editWordForm:
     resource: "画像"
     generate: "生成"
     confirm: "決定"
+  error:
+    spellingTooLong: >-
+      綴りは 200 文字以内で入力してください。
+    pronunciationTooLong: >-
+      発音記号は 200 文字以内で入力してください。
+    tagsTooMany: >-
+      タグは 20 個以内で設定してください。
+    tagTooLong: >-
+      各タグは 100 文字以内で入力してください。
+    informationTitleTooLong: >-
+      見出しは 100 文字以内で入力してください。
+    informationTextTooLong: >-
+      内容は 20,000 文字以内で入力してください。
 exampleList:
   empty: "該当する例文は見つかりませんでした"
   noWord: "使用単語が登録されていません"

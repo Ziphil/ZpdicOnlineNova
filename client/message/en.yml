@@ -535,6 +535,19 @@ editWordForm:
     resource: "Images"
     generate: "Generate"
     confirm: "Confirm"
+  error:
+    spellingTooLong: >-
+      The spelling must be at most 200 characters long.
+    pronunciationTooLong: >-
+      The pronunciation must be at most 200 characters long.
+    tagsTooMany: >-
+      You can set at most 20 tags.
+    tagTooLong: >-
+      Each tag must be at most 100 characters long.
+    informationTitleTooLong: >-
+      The title must be at most 100 characters long.
+    informationTextTooLong: >-
+      The content must be at most 20,000 characters long.
 exampleList:
   empty: "No matching example sentences were found"
   noWord: "No words specified"

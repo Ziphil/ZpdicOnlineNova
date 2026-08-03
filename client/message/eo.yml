@@ -535,6 +535,19 @@ editWordForm:
     resource: "Bildoj"
     generate: "Generi"
     confirm: "Konfirmi"
+  error:
+    spellingTooLong: >-
+      La literumo devas enhavi maksimume 200 signojn.
+    pronunciationTooLong: >-
+      La prononco devas enhavi maksimume 200 signojn.
+    tagsTooMany: >-
+      Vi povas agordi maksimume 20 etikedojn.
+    tagTooLong: >-
+      Ĉiu etikedo devas enhavi maksimume 100 signojn.
+    informationTitleTooLong: >-
+      La titolo devas enhavi maksimume 100 signojn.
+    informationTextTooLong: >-
+      La enhavo devas enhavi maksimume 20,000 signojn.
 exampleList:
   empty: "Neniuj kongruaj ekzemplaj frazoj estis trovitaj"
   noWord: "Neniuj vortoj specifitaj"

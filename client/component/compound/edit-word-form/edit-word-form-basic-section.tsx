@@ -17,6 +17,7 @@ import {
   useDebouncedCallback,
   useTrans
 } from "zographia";
+import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
@@ -39,7 +40,7 @@ export const EditWordFormBasicSection = create(
     const {trans} = useTrans("editWordForm");
 
     const [duplicateSpelling, setDuplicateSpelling] = useState(false);
-    const {register, control} = form;
+    const {register, control, getFieldState, formState: {errors}} = form;
 
     const generateSpelling = useCallback(function (): void {
       if (dictionary.zatlin !== null) {
@@ -97,38 +98,47 @@ export const EditWordFormBasicSection = create(
         <div styleName="field-list">
           <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.spelling")}</ControlLabel>
-            <div styleName="row">
-              <Input {...register("spelling", {onChange: handleSpellingChange})}/>
-              {(dictionary.zatlin !== null) && (
-                <Button scheme="gray" onClick={generateSpelling}>
-                  <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
-                  {trans("button.generate")}
-                </Button>
+            <div styleName="control-container">
+              <div styleName="row">
+                <Input error={!!getFieldState("spelling").error} {...register("spelling", {onChange: handleSpellingChange})}/>
+                {(dictionary.zatlin !== null) && (
+                  <Button scheme="gray" onClick={generateSpelling}>
+                    <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
+                    {trans("button.generate")}
+                  </Button>
+                )}
+              </div>
+              {(duplicateSpelling) && (
+                <ControlHelper>
+                  {trans("duplicateSpelling")}
+                </ControlHelper>
               )}
+              <ControlErrorMessage name="spelling" form={form} trans={trans}/>
             </div>
-            {(duplicateSpelling) && (
-              <ControlHelper styleName="helper">
-                {trans("duplicateSpelling")}
-              </ControlHelper>
-            )}
           </ControlContainer>
           <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.pronunciation")}</ControlLabel>
-            <div styleName="row">
-              <Input {...register("pronunciation")}/>
-              {(dictionary.akrantiain !== null) && (
-                <Button scheme="primary" variant="light" onClick={generatePronunciation}>
-                  <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
-                  {trans("button.generate")}
-                </Button>
-              )}
+            <div styleName="control-container">
+              <div styleName="row">
+                <Input error={!!getFieldState("pronunciation").error} {...register("pronunciation")}/>
+                {(dictionary.akrantiain !== null) && (
+                  <Button scheme="primary" variant="light" onClick={generatePronunciation}>
+                    <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
+                    {trans("button.generate")}
+                  </Button>
+                )}
+              </div>
+              <ControlErrorMessage name="pronunciation" form={form} trans={trans}/>
             </div>
           </ControlContainer>
           <ControlContainer styleName="field-item">
             <ControlLabel>{trans("label.tags")}</ControlLabel>
-            <Controller name="tags" control={control} render={({field}) => (
-              <TagInput tagVariant="solid" values={field.value ?? []} suggest={suggestTag} onSet={field.onChange}/>
-            )}/>
+            <div styleName="control-container">
+              <Controller name="tags" control={control} render={({field}) => (
+                <TagInput tagVariant="solid" error={!!getFieldState("tags").error} values={field.value ?? []} suggest={suggestTag} onSet={field.onChange}/>
+              )}/>
+              <ControlErrorMessage name="tags" form={form} trans={trans}/>
+            </div>
           </ControlContainer>
         </div>
       </section>

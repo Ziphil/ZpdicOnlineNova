@@ -14,6 +14,7 @@ import {ResourceListDialog} from "/client/component/compound/resource-list-dialo
 import {create} from "/client/component/create";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
+import {WORD_LIMITS} from "/server/model/constant";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordFormValue} from "./edit-word-form-hook";
@@ -49,6 +50,8 @@ export const EditWordFormInformationSection = create(
 
     const informations = informationFieldArraySpec.fields;
 
+    const canAdd = informations.length < WORD_LIMITS.informationCountPerSection;
+
     const addInformation = useCallback(function (): void {
       informationOperations.append({title: "", text: "", hidden: false});
     }, [informationOperations]);
@@ -70,6 +73,7 @@ export const EditWordFormInformationSection = create(
                     key={information.id}
                     dictionary={dictionary}
                     form={form}
+                    canAdd={canAdd}
                     informationOperations={informationOperations as any}
                     dndId={information.id}
                     sectionIndex={sectionIndex}
@@ -84,7 +88,7 @@ export const EditWordFormInformationSection = create(
             </p>
           )}
           <div styleName="plus">
-            <Button scheme="gray" variant="light" onClick={addInformation}>
+            <Button scheme="gray" variant="light" disabled={!canAdd} onClick={addInformation}>
               <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
               {trans("button.add.information")}
             </Button>

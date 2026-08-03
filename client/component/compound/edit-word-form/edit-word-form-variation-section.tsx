@@ -13,6 +13,7 @@ import {
 import {create} from "/client/component/create";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
+import {WORD_LIMITS} from "/server/model/constant";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordFormValue} from "./edit-word-form-hook";
@@ -48,6 +49,8 @@ export const EditWordFormVariationSection = create(
 
     const variations = variationFieldArraySpec.fields;
 
+    const canAdd = variations.length < WORD_LIMITS.variationCountPerSection;
+
     const addVariation = useCallback(function (): void {
       variationOperations.append({title: "", spelling: "", pronunciation: ""});
     }, [variationOperations]);
@@ -69,6 +72,7 @@ export const EditWordFormVariationSection = create(
                     key={variation.id}
                     dictionary={dictionary}
                     form={form}
+                    canAdd={canAdd}
                     variationOperations={variationOperations as any}
                     dndId={variation.id}
                     sectionIndex={sectionIndex}
@@ -83,7 +87,7 @@ export const EditWordFormVariationSection = create(
             </p>
           )}
           <div styleName="plus">
-            <Button scheme="gray" variant="light" onClick={addVariation}>
+            <Button scheme="gray" variant="light" disabled={!canAdd} onClick={addVariation}>
               <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
               {trans("button.add.variation")}
             </Button>
