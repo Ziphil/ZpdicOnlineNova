@@ -37,6 +37,10 @@ export const EXAMPLE_LIMITS = {
   wordCount: 200
 } as const;
 
+export const TEMPLATE_WORD_LIMITS = {
+  titleLength: 100
+} as const;
+
 export const PROPOSAL_LIMITS = {
   termLength: 200,
   commentLength: 1000

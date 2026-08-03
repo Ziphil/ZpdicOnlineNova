@@ -118,9 +118,13 @@ export class DictionaryRestController extends InternalRestController {
   public async [Symbol()](request: FilledRequest<"editDictionaryTemplateWord", "me" | "dictionary">, response: Response<"editDictionaryTemplateWord">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const word = TemplateWordCreator.enflesh(request.body.word);
-    await dictionary.editTemplateWord(word);
-    const body = DictionaryCreator.skeletonize(dictionary);
-    InternalRestController.respond(response, body);
+    try {
+      await dictionary.editTemplateWord(word);
+      const body = DictionaryCreator.skeletonize(dictionary);
+      InternalRestController.respond(response, body);
+    } catch (error) {
+      InternalRestController.respondByCustomError(response, ["wordSizeExceeded", "invalidWord"], error);
+    }
   }
 
   @post("/discardDictionaryTemplateWord")

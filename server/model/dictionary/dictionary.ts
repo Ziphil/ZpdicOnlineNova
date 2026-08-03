@@ -12,7 +12,7 @@ import {
 import Fuse from "fuse.js";
 import type {DictionaryStatistics, WordSpellingFrequencies} from "/server/internal/skeleton";
 import {Article, ArticleModel, EditableArticle} from "/server/model/article/article";
-import {USER_LIMITS} from "/server/model/constant";
+import {USER_LIMITS, WORD_LIMITS} from "/server/model/constant";
 import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
@@ -36,7 +36,7 @@ import {calcDictionaryStatistics, calcWordSpellingFrequencies} from "/server/uti
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 import {LogUtil} from "/server/util/log";
 import {QueryRange, WithSize} from "/server/util/query";
-import {IDENTIFIER_REGEXP} from "/server/util/validation";
+import {IDENTIFIER_REGEXP, calcDataSize} from "/server/util/validation";
 
 
 export const DICTIONARY_STATUSES = ["ready", "saving", "error"] as const;
@@ -315,6 +315,7 @@ export class DictionarySchema {
   }
 
   public async editTemplateWord(this: Dictionary, word: EditableTemplateWord): Promise<Dictionary> {
+    DictionarySchema.assertTemplateWordSize(word);
     const currentTemplateWords = this.settings.templateWords ?? [];
     const index = currentTemplateWords.findIndex((currentTemplateWord) => (currentTemplateWord as any)["_id"].toString() === word.id);
     if (index >= 0) {
@@ -323,8 +324,31 @@ export class DictionarySchema {
       currentTemplateWords.push(word);
     }
     this.settings.templateWords = currentTemplateWords;
+    await DictionarySchema.assertTemplateWordFields(this);
     await this.save();
     return this;
+  }
+
+  /** テンプレート単語データ全体の大きさが上限を超えていないか検査します。
+   * 上限は通常の単語データと共通です。*/
+  private static assertTemplateWordSize(word: EditableTemplateWord): void {
+    if (calcDataSize(word) > WORD_LIMITS.size) {
+      throw new CustomError("wordSizeExceeded");
+    }
+  }
+
+  /** テンプレート単語データの各フィールドが上限を超えていないか検査します。
+   * 辞書データ全体ではなくテンプレート単語のみを検証することで、無関係なフィールドの不備が上限違反として報告されるのを防ぎます。*/
+  private static async assertTemplateWordFields(dictionary: Dictionary): Promise<void> {
+    try {
+      await dictionary.validate(["settings.templateWords"]);
+    } catch (error) {
+      if (error instanceof Error && error.name === "ValidationError") {
+        throw new CustomError("invalidWord");
+      } else {
+        throw error;
+      }
+    }
   }
 
   public async discardTemplateWord(this: Dictionary, id: string): Promise<Dictionary> {

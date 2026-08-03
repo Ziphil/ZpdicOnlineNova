@@ -101,7 +101,7 @@ type ServerSpecs = {
     request: {number: number, word: EditableTemplateWord},
     response: {
       success: Dictionary,
-      error: CustomError<"noSuchDictionary">
+      error: CustomError<"noSuchDictionary" | "wordSizeExceeded" | "invalidWord">
     }
   },
   discardDictionaryTemplateWord: {
