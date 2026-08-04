@@ -12,7 +12,7 @@ import {
 import Fuse from "fuse.js";
 import type {DictionaryStatistics, WordSpellingFrequencies} from "/server/internal/skeleton";
 import {Article, ArticleModel, EditableArticle} from "/server/model/article/article";
-import {USER_LIMITS, WORD_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS, USER_LIMITS, WORD_LIMITS} from "/server/model/constant";
 import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
@@ -36,6 +36,7 @@ import {calcDictionaryStatistics, calcWordSpellingFrequencies} from "/server/uti
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 import {LogUtil} from "/server/util/log";
 import {QueryRange, WithSize} from "/server/util/query";
+import {createSequentialQueue} from "/server/util/queue";
 import {IDENTIFIER_REGEXP, calcDataSize} from "/server/util/validation";
 
 
@@ -166,25 +167,77 @@ export class DictionarySchema {
     }
   }
 
+  /** ファイルから読み込んだデータが各種の上限に違反していないか検査します。
+   * `upload` の内部から、既存のデータを削除する前に呼び出されます。
+   * このメソッドは DB への書き込みを一切行いません。
+   * `deserializer` にはデシリアライズ開始前 (`start` メソッドを呼ぶ前) のデシリアライザを渡してください。*/
+  public async assertUploadable(this: Dictionary, deserializer: Deserializer): Promise<void> {
+    await new Promise<void>((resolve, reject) => {
+      const counts = {word: 0, example: 0};
+      const queue = createSequentialQueue();
+      deserializer.on("words", (words) => {
+        counts.word += words.length;
+        const count = counts.word;
+        queue.enqueue(async () => {
+          if (count > DICTIONARY_LIMITS.wordCountPerDictionary) {
+            throw new CustomError("wordCountExceeded");
+          }
+          for (const word of words) {
+            await WordModel.assertLimits(word);
+          }
+        });
+      });
+      deserializer.on("examples", (examples) => {
+        counts.example += examples.length;
+        const count = counts.example;
+        queue.enqueue(async () => {
+          if (count > DICTIONARY_LIMITS.exampleCountPerDictionary) {
+            throw new CustomError("exampleCountExceeded");
+          }
+          for (const example of examples) {
+            await ExampleModel.assertLimits(example);
+          }
+        });
+      });
+      deserializer.on("end", () => {
+        queue.settle().then(resolve, reject);
+      });
+      deserializer.on("error", (error) => {
+        LogUtil.error("model/dictionary/assertUploadable", null, error);
+        reject(error);
+      });
+      deserializer.start();
+    });
+    LogUtil.log("model/dictionary/assertUploadable", {number: this.number});
+  }
+
   /** この辞書に登録されているデータを全て削除し、ファイルから読み込んだデータを代わりに保存します。
    * 辞書の内部データも、ファイルから読み込んだものに更新されます。
-   * `deserializer` にはデシリアライズ開始前 (`start` メソッドを呼ぶ前) のデシリアライザを渡してください。 */
-  public async upload(this: Dictionary, deserializer: Deserializer): Promise<Dictionary> {
+   * 既存のデータの削除は、`assertUploadable` による検査を通過した後に行われるので、上限に違反したファイルによってデータが失われることはありません。
+   * ファイルを 2 回読み込むため、`createDeserializer` にはデシリアライザを生成する関数を渡してください。 */
+  public async upload(this: Dictionary, createDeserializer: () => Deserializer): Promise<Dictionary> {
+    await this.assertUploadable(createDeserializer());
+    const deserializer = createDeserializer();
     await this.startUpload();
     const settings = this.settings as any;
     await new Promise<Dictionary>((resolve, reject) => {
       const counts = {word: 0, example: 0};
+      const queue = createSequentialQueue();
       deserializer.on("words", (words) => {
-        WordModel.insertMany(words).catch(reject);
-        counts.word += words.length;
-        LogUtil.log("model/dictionary/upload", {number: this.number, counts});
-        LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
+        queue.enqueue(async () => {
+          await WordModel.insertMany(words);
+          counts.word += words.length;
+          LogUtil.log("model/dictionary/upload", {number: this.number, counts});
+          LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
+        });
       });
       deserializer.on("examples", (examples) => {
-        ExampleModel.insertMany(examples).catch(reject);;
-        counts.example += examples.length;
-        LogUtil.log("model/dictionary/upload", {number: this.number, counts});
-        LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
+        queue.enqueue(async () => {
+          await ExampleModel.insertMany(examples);
+          counts.example += examples.length;
+          LogUtil.log("model/dictionary/upload", {number: this.number, counts});
+          LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
+        });
       });
       deserializer.on("property", (key, value) => {
         if (value !== undefined) {
@@ -197,9 +250,15 @@ export class DictionarySchema {
         }
       });
       deserializer.on("end", () => {
-        this.status = "ready";
-        this.settings = settings;
-        resolve(this);
+        queue.settle().then(() => {
+          this.status = "ready";
+          this.settings = settings;
+          resolve(this);
+        }, (error) => {
+          this.status = "error";
+          LogUtil.error("model/dictionary/upload", null, error);
+          reject(error);
+        });
       });
       deserializer.on("error", (error) => {
         this.status = "error";

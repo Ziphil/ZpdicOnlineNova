@@ -140,6 +140,13 @@ export class WordSchema {
     }
   }
 
+  /** 単語データが各種の上限に違反していないか検査します。
+   * 辞書のインポートのように、`edit` を経由せずに単語データを保存する処理から呼び出します。*/
+  public static async assertLimits(word: Word): Promise<void> {
+    this.assertSize(word);
+    await this.assertFields(word);
+  }
+
   /** 単語データ全体の大きさが上限を超えていないか検査します。*/
   private static assertSize(word: EditableWord | Word): void {
     if (calcDataSize(word) > WORD_LIMITS.size) {

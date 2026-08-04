@@ -142,6 +142,13 @@ export class ExampleSchema {
     example.words = example.words.filter((word) => linkedWords.some((linkedWord) => linkedWord.number === word.number));
   }
 
+  /** 例文データが各種の上限に違反していないか検査します。
+   * 辞書のインポートのように、`edit` を経由せずに例文データを保存する処理から呼び出します。*/
+  public static async assertLimits(example: Example): Promise<void> {
+    this.assertSize(example);
+    await this.assertFields(example);
+  }
+
   /** 例文データ全体の大きさが上限を超えていないか検査します。*/
   private static assertSize(example: EditableExample | Example): void {
     if (calcDataSize(example) > EXAMPLE_LIMITS.size) {
