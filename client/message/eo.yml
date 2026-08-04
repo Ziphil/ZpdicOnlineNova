@@ -1262,7 +1262,7 @@ queueUploadDictionaryButton:
       Elektu dosieron.
     tooLarge: >-
       La dosiero estas tro granda.
-      Vi ne povas alŝuti dosierojn pli grandajn ol 5 MB.
+      Vi ne povas alŝuti dosierojn pli grandajn ol 32 MB.
 uploadDictionaryForm:
   button:
     back: "Reiri al paĝo de vortaro"

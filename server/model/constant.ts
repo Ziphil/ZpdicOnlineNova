@@ -6,6 +6,7 @@ export const USER_LIMITS = {
 } as const;
 
 export const DICTIONARY_LIMITS = {
+  uploadFileSize: 32 * 1024 * 1024,
   wordCountPerDictionary: 15000,
   exampleCountPerDictionary: 2000,
   articleCountPerDictionary: 200

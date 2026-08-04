@@ -1262,7 +1262,7 @@ queueUploadDictionaryButton:
       Select a file.
     tooLarge: >-
       The file is too large.
-      You cannot upload files larger than 5 MB.
+      You cannot upload files larger than 32 MB.
 uploadDictionaryForm:
   button:
     back: "Back to dictionary page"

@@ -1263,7 +1263,7 @@ queueUploadDictionaryButton:
       ファイルを選択してください。
     tooLarge: >-
       ファイルのサイズが大きすぎます。
-      5 MB より大きなファイルはアップロードすることができません。
+      32 MB より大きなファイルはアップロードすることができません。
 uploadDictionaryForm:
   button:
     back: "辞書ページに戻る"
