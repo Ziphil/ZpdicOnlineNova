@@ -585,6 +585,8 @@ editWordForm:
     generate: "Generate"
     confirm: "Confirm"
   error:
+    titleTooLong: >-
+      The template name must be at most 100 characters long.
     spellingTooLong: >-
       The spelling must be at most 200 characters long.
     pronunciationTooLong: >-

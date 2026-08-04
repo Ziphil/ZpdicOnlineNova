@@ -40,6 +40,7 @@ export const EditTemplateWordFormRelationItem = create(
     dndId,
     sectionIndex,
     relationIndex,
+    canAdd,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
@@ -48,6 +49,7 @@ export const EditTemplateWordFormRelationItem = create(
     dndId: string,
     sectionIndex: number,
     relationIndex: number,
+    canAdd: boolean,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -115,7 +117,7 @@ export const EditTemplateWordFormRelationItem = create(
                 {trans("menu.moveDown")}
               </MenuItem>
               <MenuSeparator/>
-              <MenuItem onClick={duplicate}>
+              <MenuItem disabled={!canAdd} onClick={duplicate}>
                 <MenuItemIconbag><GeneralIcon icon={faClone}/></MenuItemIconbag>
                 {trans("menu.duplicate")}
               </MenuItem>

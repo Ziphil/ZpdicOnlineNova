@@ -585,6 +585,8 @@ editWordForm:
     generate: "Generi"
     confirm: "Konfirmi"
   error:
+    titleTooLong: >-
+      La ŝablona nomo devas enhavi maksimume 100 signojn.
     spellingTooLong: >-
       La literumo devas enhavi maksimume 200 signojn.
     pronunciationTooLong: >-

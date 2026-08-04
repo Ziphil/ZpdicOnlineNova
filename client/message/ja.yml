@@ -586,6 +586,8 @@ editWordForm:
     generate: "生成"
     confirm: "決定"
   error:
+    titleTooLong: >-
+      テンプレート名は 100 文字以内で入力してください。
     spellingTooLong: >-
       綴りは 200 文字以内で入力してください。
     pronunciationTooLong: >-
