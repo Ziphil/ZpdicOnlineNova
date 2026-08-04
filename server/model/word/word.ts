@@ -9,7 +9,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
-import {DICTIONARY_LIMITS, WORD_LIMITS} from "/server/model/constant";
+import {WORD_LIMITS} from "/server/model/constant";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {User, UserSchema} from "/server/model/user/user";
@@ -63,7 +63,6 @@ export class WordSchema {
    * そうでない場合は、渡された単語データを新しいデータとして追加します。
    * 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。*/
   public static async edit(dictionary: Dictionary, word: EditableWord, user: User): Promise<Word> {
-    this.assertSize(word);
     const currentWord = (word.number !== null) ? await WordModel.findOne().where("dictionary", dictionary).where("number", word.number) : null;
     let resultWord;
     if (currentWord) {
@@ -73,14 +72,14 @@ export class WordSchema {
       resultWord.createdDate = currentWord.createdDate;
       resultWord.updatedDate = new Date();
       await this.filterRelations(dictionary, resultWord);
-      await this.assertFields(resultWord);
+      await resultWord.assertLimits();
       await currentWord.deleteOneSoftly();
       await resultWord.save();
       if (currentWord.name !== resultWord.name) {
         await this.correctRelationsByEdit(dictionary, resultWord);
       }
     } else {
-      await this.assertCount(dictionary);
+      await dictionary.assertWordCount();
       if (word.number === null) {
         word.number = await this.fetchNextNumber(dictionary);
       }
@@ -90,7 +89,7 @@ export class WordSchema {
       resultWord.createdDate = new Date();
       resultWord.updatedDate = new Date();
       await this.filterRelations(dictionary, resultWord);
-      await this.assertFields(resultWord);
+      await resultWord.assertLimits();
       await resultWord.save();
     }
     LogUtil.log("model/word/edit", {number: dictionary.number, currentId: currentWord?.id, resultId: resultWord.id});
@@ -126,8 +125,7 @@ export class WordSchema {
         }
         resultWord.createdDate = currentWord.createdDate;
         resultWord.updatedDate = new Date();
-        this.assertSize(resultWord);
-        await this.assertFields(resultWord);
+        await resultWord.assertLimits();
         await currentWord.deleteOneSoftly();
         await resultWord.save();
         LogUtil.log("model/word/addRelation", {number: dictionary.number, currentId: currentWord?.id, resultId: resultWord.id});
@@ -140,34 +138,25 @@ export class WordSchema {
     }
   }
 
-  /** 単語データが各種の上限に違反していないか検査します。
-   * 辞書のインポートのように、`edit` を経由せずに単語データを保存する処理から呼び出します。*/
-  public static async assertLimits(word: Word): Promise<void> {
-    this.assertSize(word);
-    await this.assertFields(word);
+  /** この単語データが各種の上限に違反していないか検査します。
+   * 保存する前にこのメソッドを呼び出します。*/
+  public async assertLimits(this: Word): Promise<void> {
+    this.assertSize();
+    await this.assertFields();
   }
 
-  /** 単語データ全体の大きさが上限を超えていないか検査します。*/
-  private static assertSize(word: EditableWord | Word): void {
-    if (calcDataSize(word) > WORD_LIMITS.size) {
+  /** この単語データ全体の大きさが上限を超えていないか検査します。*/
+  public assertSize(this: Word): void {
+    if (calcDataSize(this) > WORD_LIMITS.size) {
       throw new CustomError("wordSizeExceeded");
     }
   }
 
-  /** 辞書に登録されている単語数が上限に達していないか検査します。
-   * 単語データを新たに追加する場合にのみ呼び出します。*/
-  private static async assertCount(dictionary: Dictionary): Promise<void> {
-    const count = await dictionary.countWords();
-    if (count >= DICTIONARY_LIMITS.wordCountPerDictionary) {
-      throw new CustomError("wordCountExceeded");
-    }
-  }
-
-  /** 単語データの各フィールドが上限を超えていないか検査します。
+  /** この単語データの各フィールドが上限を超えていないか検査します。
    * 既存の単語データを論理削除する前に検査することで、上限違反によって保存に失敗したときにデータが失われるのを防ぎます。*/
-  private static async assertFields(word: Word): Promise<void> {
+  public async assertFields(this: Word): Promise<void> {
     try {
-      await word.validate();
+      await this.validate();
     } catch (error) {
       if (error instanceof Error && error.name === "ValidationError") {
         throw new CustomError("invalidWord");

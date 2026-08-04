@@ -44,15 +44,15 @@ export class ProposalSchema {
   public static async add(dictionary: Dictionary, name: string, comment?: string): Promise<Proposal> {
     const createdDate = new Date();
     const proposal = new ProposalModel({dictionary, name, comment, createdDate});
-    await this.assertFields(proposal);
+    await proposal.assertFields();
     await proposal.save();
     return proposal;
   }
 
-  /** 提案データの各フィールドが上限を超えていないか検査します。*/
-  private static async assertFields(proposal: Proposal): Promise<void> {
+  /** この提案データの各フィールドが上限を超えていないか検査します。*/
+  public async assertFields(this: Proposal): Promise<void> {
     try {
-      await proposal.validate();
+      await this.validate();
     } catch (error) {
       if (error instanceof Error && error.name === "ValidationError") {
         throw new CustomError("invalidProposal");

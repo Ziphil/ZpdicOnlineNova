@@ -9,7 +9,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
-import {DICTIONARY_LIMITS, EXAMPLE_LIMITS} from "/server/model/constant";
+import {EXAMPLE_LIMITS} from "/server/model/constant";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {OldExampleModel} from "/server/model/example/old-example";
@@ -94,7 +94,6 @@ export class ExampleSchema {
   }
 
   public static async edit(dictionary: Dictionary, example: EditableExample, user: User): Promise<Example> {
-    this.assertSize(example);
     const currentExample = await ExampleModel.findOne().where("dictionary", dictionary).where("number", example.number);
     let resultExample;
     if (currentExample) {
@@ -104,11 +103,11 @@ export class ExampleSchema {
       resultExample.createdDate = currentExample.createdDate;
       resultExample.updatedDate = new Date();
       await this.filterWords(dictionary, resultExample);
-      await this.assertFields(resultExample);
+      await resultExample.assertLimits();
       await currentExample.deleteOneSoftly();
       await resultExample.save();
     } else {
-      await this.assertCount(dictionary);
+      await dictionary.assertExampleCount();
       if (example.number === null) {
         example.number = await this.fetchNextNumber(dictionary);
       }
@@ -118,7 +117,7 @@ export class ExampleSchema {
       resultExample.createdDate = new Date();
       resultExample.updatedDate = new Date();
       await this.filterWords(dictionary, resultExample);
-      await this.assertFields(resultExample);
+      await resultExample.assertLimits();
       await resultExample.save();
     }
     LogUtil.log("model/example/edit", {number: dictionary.number, currentId: currentExample?.id, resultId: resultExample.id});
@@ -142,34 +141,25 @@ export class ExampleSchema {
     example.words = example.words.filter((word) => linkedWords.some((linkedWord) => linkedWord.number === word.number));
   }
 
-  /** 例文データが各種の上限に違反していないか検査します。
-   * 辞書のインポートのように、`edit` を経由せずに例文データを保存する処理から呼び出します。*/
-  public static async assertLimits(example: Example): Promise<void> {
-    this.assertSize(example);
-    await this.assertFields(example);
+  /** この例文データが各種の上限に違反していないか検査します。
+   * 保存する前にこのメソッドを呼び出します。*/
+  public async assertLimits(this: Example): Promise<void> {
+    this.assertSize();
+    await this.assertFields();
   }
 
-  /** 例文データ全体の大きさが上限を超えていないか検査します。*/
-  private static assertSize(example: EditableExample | Example): void {
-    if (calcDataSize(example) > EXAMPLE_LIMITS.size) {
+  /** この例文データ全体の大きさが上限を超えていないか検査します。*/
+  public assertSize(this: Example): void {
+    if (calcDataSize(this) > EXAMPLE_LIMITS.size) {
       throw new CustomError("exampleSizeExceeded");
     }
   }
 
-  /** 辞書に登録されている例文数が上限に達していないか検査します。
-   * 例文データを新たに追加する場合にのみ呼び出します。*/
-  private static async assertCount(dictionary: Dictionary): Promise<void> {
-    const count = await dictionary.countExamples();
-    if (count >= DICTIONARY_LIMITS.exampleCountPerDictionary) {
-      throw new CustomError("exampleCountExceeded");
-    }
-  }
-
-  /** 例文データの各フィールドが上限を超えていないか検査します。
+  /** この例文データの各フィールドが上限を超えていないか検査します。
    * 既存の例文データを論理削除する前に検査することで、上限違反によって保存に失敗したときにデータが失われるのを防ぎます。*/
-  private static async assertFields(example: Example): Promise<void> {
+  public async assertFields(this: Example): Promise<void> {
     try {
-      await example.validate();
+      await this.validate();
     } catch (error) {
       if (error instanceof Error && error.name === "ValidationError") {
         throw new CustomError("invalidExample");
