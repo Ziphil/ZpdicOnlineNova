@@ -315,7 +315,7 @@ export class DictionarySchema {
   }
 
   public async editTemplateWord(this: Dictionary, word: EditableTemplateWord): Promise<Dictionary> {
-    DictionarySchema.assertTemplateWordSize(word);
+    this.assertTemplateWordSize(word);
     const currentTemplateWords = this.settings.templateWords ?? [];
     const index = currentTemplateWords.findIndex((currentTemplateWord) => (currentTemplateWord as any)["_id"].toString() === word.id);
     if (index >= 0) {
@@ -324,14 +324,14 @@ export class DictionarySchema {
       currentTemplateWords.push(word);
     }
     this.settings.templateWords = currentTemplateWords;
-    await DictionarySchema.assertTemplateWordFields(this);
+    await this.assertTemplateWordFields();
     await this.save();
     return this;
   }
 
   /** テンプレート単語データ全体の大きさが上限を超えていないか検査します。
    * 上限は通常の単語データと共通です。*/
-  private static assertTemplateWordSize(word: EditableTemplateWord): void {
+  public assertTemplateWordSize(word: EditableTemplateWord): void {
     if (calcDataSize(word) > WORD_LIMITS.size) {
       throw new CustomError("wordSizeExceeded");
     }
@@ -339,9 +339,9 @@ export class DictionarySchema {
 
   /** テンプレート単語データの各フィールドが上限を超えていないか検査します。
    * 辞書データ全体ではなくテンプレート単語のみを検証することで、無関係なフィールドの不備が上限違反として報告されるのを防ぎます。*/
-  private static async assertTemplateWordFields(dictionary: Dictionary): Promise<void> {
+  public async assertTemplateWordFields(this: Dictionary): Promise<void> {
     try {
-      await dictionary.validate(["settings.templateWords"]);
+      await this.validate(["settings.templateWords"]);
     } catch (error) {
       if (error instanceof Error && error.name === "ValidationError") {
         throw new CustomError("invalidWord");
