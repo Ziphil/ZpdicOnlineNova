@@ -1,6 +1,11 @@
 //
 
 
+export const RETENTION_PERIODS = {
+  history: 120 * 24 * 60 * 60,
+  oldData: 90 * 24 * 60 * 60
+} as const;
+
 export const USER_LIMITS = {
   dictionaryCountPerUser: 50
 } as const;

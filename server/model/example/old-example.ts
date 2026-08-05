@@ -8,16 +8,16 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
+import {RETENTION_PERIODS} from "/server/model/constant";
 import {DictionarySchema} from "/server/model/dictionary/dictionary";
 import {LinkedExampleOfferSchema} from "/server/model/example-offer/linked-example-offer";
 import {UserSchema} from "/server/model/user/user";
 import {LinkedWordSchema} from "/server/model/word/linked-word";
-import {LogUtil} from "/server/util/log";
 
 
 @modelOptions({schemaOptions: {collection: "oldExamples"}})
 @index({"dictionary": 1, "number": 1})
-@index({"deletedDate": 1})
+@index({"deletedDate": 1}, {expireAfterSeconds: RETENTION_PERIODS.oldData})
 export class OldExampleSchema {
 
   @prop({required: true, ref: "DictionarySchema"})
@@ -55,14 +55,6 @@ export class OldExampleSchema {
 
   @prop({required: true})
   public deletedDate!: Date;
-
-  /** 古い用例履歴データを完全に削除します。
-   * 論理削除ではなく物理削除を行うので、もとには戻せません。*/
-  public static async discardOlds(duration: number): Promise<void> {
-    const date = new Date(Date.now() - duration * 24 * 60 * 60 * 1000);
-    const result = await OldExampleModel.deleteMany().lt("deletedDate", date);
-    LogUtil.log("model/old-example/discardOld", {count: result.deletedCount});
-  }
 
 }
 

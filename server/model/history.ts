@@ -8,6 +8,7 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
+import {RETENTION_PERIODS} from "/server/model/constant";
 import {Dictionary, DictionaryModel, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {LogUtil} from "/server/util/log";
 import {QueryRange} from "/server/util/query";
@@ -15,6 +16,7 @@ import {QueryRange} from "/server/util/query";
 
 @modelOptions({schemaOptions: {collection: "histories"}})
 @index({"dictionary": 1, "date": -1})
+@index({"date": 1}, {expireAfterSeconds: RETENTION_PERIODS.history})
 export class HistorySchema {
 
   @prop({required: true, ref: "DictionarySchema"})

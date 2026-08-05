@@ -248,3 +248,32 @@ db.oldDictionaries.updateMany({"settings.showSectionNumber": {$type: "bool"}}, [
   "settings.showSectionNumber": {$cond: ["$settings.showSectionNumber", "show", "hide"]}
 }}]);
 ```
+
+### → ver 3.29.0
+編集履歴データ (`oldWords`, `oldExamples`, `oldArticles`) の削除を、日次ジョブから TTL インデックスに変更しました。
+既存の `deletedDate` のインデックスには有効期限が設定されていないため、そのままでは同名のインデックスを作り直せず、有効期限が反映されません。
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+保持期間は従来のジョブと同じ 90 日です。
+```js
+db.runCommand({collMod: "oldWords", index: {name: "deletedDate_1", expireAfterSeconds: 7776000}});
+db.runCommand({collMod: "oldExamples", index: {name: "deletedDate_1", expireAfterSeconds: 7776000}});
+db.runCommand({collMod: "oldArticles", index: {name: "deletedDate_1", expireAfterSeconds: 7776000}});
+```
+インデックス名が上記と異なる場合は、`db.oldWords.getIndexes()` などで確認して読み替えてください。
+
+併せて、統計データ (`histories`) にも保持期間 120 日の TTL インデックスを追加しました。
+こちらは新規のインデックスなので手動の操作は必要ありませんが、アップデート直後に大半のドキュメントが削除対象になるため、負荷の低い時間帯にデプロイすることを推奨します。
+なお、WiredTiger (MongoDB のストレージエンジン) は削除によって空いた領域を OS に返さないので、ディスク使用量を実際に減らすには別途 `compact` が必要です。
+TTL による削除は 60 秒間隔のバッチで進むため、削除が落ち着いたことを確認してから、Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+function printHistoriesStorage(label) {
+  const stats = db.histories.aggregate([{$collStats: {storageStats: {}}}]).toArray()[0].storageStats;
+  print(label + ": 実容量 " + Math.round(stats.storageSize / 1048576) + " MiB / 空き " + Math.round((stats.freeStorageSize || 0) / 1048576) + " MiB");
+}
+
+printHistoriesStorage("実行前");
+db.runCommand({compact: "histories"});
+printHistoriesStorage("実行後");
+```
+`compact` はレプリケーションされないため、レプリカセットを構成している場合はメンバーごとに実行してください。
+また、ホスティング環境によっては権限がなく実行できないことがあります。
