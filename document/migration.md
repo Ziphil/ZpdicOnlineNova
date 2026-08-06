@@ -250,6 +250,43 @@ db.oldDictionaries.updateMany({"settings.showSectionNumber": {$type: "bool"}}, [
 ```
 
 ### → ver 3.29.0
+### 番号の払い出し方法の変更に伴う処理
+辞書データに割り振り済みの最大番号を表す `maxNumbers` フィールド (`word`, `example`, `article` の 3 つの数値をもつオブジェクト) を追加し、実際に存在するデータとは独立に番号を管理するようにしました。
+デプロイ前に、Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+なお、既存の履歴データの番号が再利用されないように、履歴データの番号も最大値の計算に含めます。
+```js
+const maxNumbers = {};
+
+function collectMaxNumbers(collectionName, kind) {
+  db.getCollection(collectionName).aggregate([
+    {$group: {_id: "$dictionary", maxNumber: {$max: "$number"}}}
+  ]).forEach(function (result) {
+    const id = String(result._id);
+    if (maxNumbers[id] === undefined) {
+      maxNumbers[id] = {word: 0, example: 0, article: 0};
+    }
+    if (result.maxNumber > maxNumbers[id][kind]) {
+      maxNumbers[id][kind] = result.maxNumber;
+    }
+  });
+}
+
+collectMaxNumbers("words", "word");
+collectMaxNumbers("oldWords", "word");
+collectMaxNumbers("examples", "example");
+collectMaxNumbers("oldExamples", "example");
+collectMaxNumbers("articles", "article");
+collectMaxNumbers("oldArticles", "article");
+
+["dictionaries", "oldDictionaries"].forEach(function (collectionName) {
+  db.getCollection(collectionName).find({}, {_id: 1}).forEach(function (dictionary) {
+    const value = maxNumbers[String(dictionary._id)] || {word: 0, example: 0, article: 0};
+    db.getCollection(collectionName).updateOne({_id: dictionary._id}, {$set: {maxNumbers: value}});
+  });
+});
+```
+
+#### TTL インデックス導入に伴う処理
 編集履歴データ (`oldWords`, `oldExamples`, `oldArticles`) の削除を、日次ジョブから TTL インデックスに変更しました。
 既存の `deletedDate` のインデックスには有効期限が設定されていないため、そのままでは同名のインデックスを作り直せず、有効期限が反映されません。
 Mongo Shell で該当のデータベースを選択した後、以下を実行してください。

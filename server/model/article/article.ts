@@ -62,7 +62,9 @@ export class ArticleSchema {
     } else {
       await dictionary.assertArticleCount();
       if (article.number === null) {
-        article.number = await this.fetchNextNumber(dictionary);
+        article.number = await dictionary.issueNextNumber("article");
+      } else {
+        await dictionary.raiseMaxNumber("article", article.number);
       }
       resultArticle = new ArticleModel(article);
       resultArticle.dictionary = dictionary;
@@ -122,17 +124,6 @@ export class ArticleSchema {
     oldArticle.deletedDate = new Date();
     await oldArticle.save({validateBeforeSave: false});
     await ArticleModel.deleteOne().where("_id", this["_id"]);
-  }
-
-  /** 指定された辞書において次に記事データに割り振るべき番号を返します。
-   * すでに削除された記事データの番号と重複しないように、`oldArticles` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
-  private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
-    const [articles, oldArticles] = await Promise.all([
-      ArticleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1),
-      OldArticleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1)
-    ]);
-    const maxNumber = Math.max(articles[0]?.number ?? 0, oldArticles[0]?.number ?? 0);
-    return maxNumber + 1;
   }
 
 }

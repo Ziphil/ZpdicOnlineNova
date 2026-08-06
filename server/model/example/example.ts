@@ -109,7 +109,9 @@ export class ExampleSchema {
     } else {
       await dictionary.assertExampleCount();
       if (example.number === null) {
-        example.number = await this.fetchNextNumber(dictionary);
+        example.number = await dictionary.issueNextNumber("example");
+      } else {
+        await dictionary.raiseMaxNumber("example", example.number);
       }
       resultExample = new ExampleModel(example);
       resultExample.dictionary = dictionary;
@@ -176,17 +178,6 @@ export class ExampleSchema {
     oldExample.deletedDate = new Date();
     await oldExample.save({validateBeforeSave: false});
     await ExampleModel.deleteOne().where("_id", this["_id"]);
-  }
-
-  /** 指定された辞書において次に例文データに割り振るべき番号を返します。
-   * すでに削除された例文データの番号と重複しないように、`oldExamples` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
-  private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
-    const [examples, oldExamples] = await Promise.all([
-      ExampleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1),
-      OldExampleModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1)
-    ]);
-    const maxNumber = Math.max(examples[0]?.number ?? 0, oldExamples[0]?.number ?? 0);
-    return maxNumber + 1;
   }
 
 }

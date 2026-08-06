@@ -4,6 +4,7 @@ export * from "./dictionary/deserializer";
 export * from "./dictionary/serializer";
 export * from "./dictionary/dictionary-authority";
 export * from "./dictionary/dictionary-font";
+export * from "./dictionary/dictionary-max-numbers";
 export * from "./dictionary/dictionary-settings";
 export * from "./dictionary/dictionary";
 export * from "./dictionary/old-dictionary";

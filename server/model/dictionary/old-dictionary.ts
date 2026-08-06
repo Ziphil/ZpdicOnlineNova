@@ -8,6 +8,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import type {DictionaryStatus, DictionaryVisibility} from "/server/model/dictionary/dictionary";
+import {DictionaryMaxNumbersSchema} from "/server/model/dictionary/dictionary-max-numbers";
 import {DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
 import {UserSchema} from "/server/model/user/user";
 
@@ -38,6 +39,9 @@ export class OldDictionarySchema {
 
   @prop({required: true})
   public settings!: DictionarySettingsSchema;
+
+  @prop({required: true})
+  public maxNumbers!: DictionaryMaxNumbersSchema;
 
   @prop()
   public createdDate?: Date;

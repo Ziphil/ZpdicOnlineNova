@@ -15,6 +15,7 @@ import {Article, ArticleModel, EditableArticle} from "/server/model/article/arti
 import {DICTIONARY_LIMITS, USER_LIMITS, WORD_LIMITS} from "/server/model/constant";
 import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
+import {DictionaryMaxNumbersModel, DictionaryMaxNumbersSchema} from "/server/model/dictionary/dictionary-max-numbers";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
 import {OldDictionaryModel} from "/server/model/dictionary/old-dictionary";
 import {Serializer} from "/server/model/dictionary/serializer";
@@ -82,6 +83,9 @@ export class DictionarySchema {
   @prop({required: true})
   public settings!: DictionarySettingsSchema;
 
+  @prop({required: true})
+  public maxNumbers!: DictionaryMaxNumbersSchema;
+
   @prop()
   public createdDate?: Date;
 
@@ -97,6 +101,7 @@ export class DictionarySchema {
       status: "ready",
       visibility: "public",
       settings: DictionarySettingsModel.createDefault(),
+      maxNumbers: DictionaryMaxNumbersModel.createDefault(),
       createdDate: new Date(),
       updatedDate: new Date()
     });
@@ -214,11 +219,14 @@ export class DictionarySchema {
   /** この辞書に登録されているデータを全て削除し、ファイルから読み込んだデータを代わりに保存します。
    * 辞書の内部データも、ファイルから読み込んだものに更新されます。
    * 既存のデータの削除は、`assertUploadable` による検査を通過した後に行われるので、上限に違反したファイルによってデータが失われることはありません。
+   * ファイルから読み込んだデータの番号はそのまま使うので、保持している最大番号も併せて更新します。
+   * ただし、履歴データの番号と重複しないように、最大番号は減少させません。
    * ファイルを 2 回読み込むため、`createDeserializer` にはデシリアライザを生成する関数を渡してください。 */
   public async upload(this: Dictionary, createDeserializer: () => Deserializer): Promise<Dictionary> {
     await this.assertUploadable(createDeserializer());
     const deserializer = createDeserializer();
     await this.startUpload();
+    const maxNumbers = {word: this.maxNumbers.word, example: this.maxNumbers.example};
     const settings = this.settings as any;
     await new Promise<Dictionary>((resolve, reject) => {
       const counts = {word: 0, example: 0};
@@ -227,6 +235,7 @@ export class DictionarySchema {
         queue.enqueue(async () => {
           await WordModel.insertMany(words);
           counts.word += words.length;
+          maxNumbers.word = Math.max(maxNumbers.word, ...words.map((word) => word.number));
           LogUtil.log("model/dictionary/upload", {number: this.number, counts});
           LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
         });
@@ -235,6 +244,7 @@ export class DictionarySchema {
         queue.enqueue(async () => {
           await ExampleModel.insertMany(examples);
           counts.example += examples.length;
+          maxNumbers.example = Math.max(maxNumbers.example, ...examples.map((example) => example.number));
           LogUtil.log("model/dictionary/upload", {number: this.number, counts});
           LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
         });
@@ -253,6 +263,8 @@ export class DictionarySchema {
         queue.settle().then(() => {
           this.status = "ready";
           this.settings = settings;
+          this.maxNumbers.word = maxNumbers.word;
+          this.maxNumbers.example = maxNumbers.example;
           resolve(this);
         }, (error) => {
           this.status = "error";
@@ -588,6 +600,25 @@ export class DictionarySchema {
   public async countArticles(): Promise<number> {
     const count = await ArticleModel.find().where("dictionary", this).countDocuments();
     return count;
+  }
+
+  /** この辞書において、次に単語・例文・記事のデータに割り振るべき番号を払い出します。
+   * 同時に呼び出されても同じ番号を返さないように、`$inc` によって原子的に最大番号を更新します。
+   * 実際に存在するデータではなく辞書が保持している最大番号を基準にするので、履歴データが自動削除された後でも番号が再利用されることはありません。*/
+  public async issueNextNumber(this: Dictionary, kind: "word" | "example" | "article"): Promise<number> {
+    const dictionary = await DictionaryModel.findOneAndUpdate({"_id": this["_id"]}, {"$inc": {[`maxNumbers.${kind}`]: 1}}, {returnDocument: "after"});
+    if (dictionary !== null) {
+      return dictionary.maxNumbers[kind];
+    } else {
+      throw new CustomError("noSuchDictionary");
+    }
+  }
+
+  /** この辞書が保持している最大番号を、指定された番号まで引き上げます。
+   * すでに指定された番号以上である場合は何もしません。
+   * データの番号が外部から与えられる場合に、その番号が後から再利用されるのを防ぐために呼び出します。*/
+  public async raiseMaxNumber(this: Dictionary, kind: "word" | "example" | "article", number: number): Promise<void> {
+    await DictionaryModel.updateOne({"_id": this["_id"]}, {"$max": {[`maxNumbers.${kind}`]: number}});
   }
 
   /** この辞書に登録されている単語数が上限に達していないか検査します。

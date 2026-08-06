@@ -81,7 +81,9 @@ export class WordSchema {
     } else {
       await dictionary.assertWordCount();
       if (word.number === null) {
-        word.number = await this.fetchNextNumber(dictionary);
+        word.number = await dictionary.issueNextNumber("word");
+      } else {
+        await dictionary.raiseMaxNumber("word", word.number);
       }
       resultWord = new WordModel(word);
       resultWord.dictionary = dictionary;
@@ -237,17 +239,6 @@ export class WordSchema {
     oldWord.deletedDate = new Date();
     await oldWord.save({validateBeforeSave: false});
     await WordModel.deleteOne().where("_id", this["_id"]);
-  }
-
-  /** 指定された辞書において次に単語データに割り振るべき番号を返します。
-   * すでに削除された単語データの番号と重複しないように、`oldWords` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
-  private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
-    const [words, oldWords] = await Promise.all([
-      WordModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1),
-      OldWordModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1)
-    ]);
-    const maxNumber = Math.max(words[0]?.number ?? 0, oldWords[0]?.number ?? 0);
-    return maxNumber + 1;
   }
 
 }
