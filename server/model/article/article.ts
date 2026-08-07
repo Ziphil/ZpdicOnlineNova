@@ -51,13 +51,13 @@ export class ArticleSchema {
     const currentArticle = await ArticleModel.findOne().where("dictionary", dictionary).where("number", article.number);
     let resultArticle;
     if (currentArticle) {
-      resultArticle = new ArticleModel(article);
-      resultArticle.dictionary = dictionary;
+      resultArticle = currentArticle;
+      resultArticle.tags = article.tags;
+      resultArticle.title = article.title;
+      resultArticle.content = article.content;
       resultArticle.updatedUser = user;
-      resultArticle.createdDate = currentArticle.createdDate;
       resultArticle.updatedDate = new Date();
       await resultArticle.assertLimits();
-      await currentArticle.deleteOneSoftly();
       await resultArticle.save();
     } else {
       await dictionary.assertArticleCount();
@@ -79,14 +79,14 @@ export class ArticleSchema {
   }
 
   public static async discard(dictionary: Dictionary, number: number): Promise<Article> {
-    const example = await ArticleModel.findOne().where("dictionary", dictionary).where("number", number);
-    if (example) {
-      await example.deleteOneSoftly();
+    const article = await ArticleModel.findOne().where("dictionary", dictionary).where("number", number);
+    if (article) {
+      await article.deleteOne();
     } else {
       throw new CustomError("noSuchArticle");
     }
-    LogUtil.log("model/article/discard", {number: dictionary.number, currentId: example.id});
-    return example;
+    LogUtil.log("model/article/discard", {number: dictionary.number, currentId: article.id});
+    return article;
   }
 
   /** この記事データが各種の上限に違反していないか検査します。
@@ -118,7 +118,8 @@ export class ArticleSchema {
   }
 
   /** この記事データを論理削除します。
-   * 履歴データは上限の検査対象外とするため、履歴データの検証は行いません。*/
+   * 履歴データは上限の検査対象外とするため、履歴データの検証は行いません。
+   * 現在は未使用ですが、論理削除に戻す可能性を考えて残してあります。*/
   public async deleteOneSoftly(this: Article): Promise<void> {
     const oldArticle = new OldArticleModel(this.toObject({depopulate: true}));
     oldArticle.deletedDate = new Date();
