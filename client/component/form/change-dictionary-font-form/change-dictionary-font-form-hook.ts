@@ -20,7 +20,7 @@ const SCHEMA = object({
     is: "local",
     then: (schema) => schema.required("nameRequired")
   }),
-  file: mixed<File>().test(testFileSize(1, "fileTooLarge")),
+  file: mixed<File>().test(testFileSize(1024 * 1024, "fileTooLarge")),
   targets: array(string().oneOf(DICTIONARY_FONT_TARGET).required()).required(),
   showOrdinarySpelling: string().oneOf(["true", "false"]).required()
 });

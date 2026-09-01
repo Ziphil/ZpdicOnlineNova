@@ -1,6 +1,5 @@
 //
 
-import sendgrid from "@sendgrid/mail";
 import * as typegoose from "@typegoose/typegoose";
 import Agenda from "agenda";
 import cookieParser from "cookie-parser";
@@ -19,10 +18,11 @@ import * as externalAlphaRest from "/server/external-alpha/controller/rest";
 import * as externalPreviewRest from "/server/external-preview/controller/rest";
 import * as internalJob from "/server/internal/controller/job";
 import * as internalRest from "/server/internal/controller/rest";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
 import {jsonifyRequest} from "/server/util/request";
-import {COOKIE_SECRET, MONGO_URI, PORT, SENDGRID_KEY} from "/server/variable";
+import {COOKIE_SECRET, MONGO_URI, PORT} from "/server/variable";
 
 
 dayjs.extend(utc);
@@ -49,7 +49,6 @@ export class Main {
     this.addCustomMiddlewares();
     this.setupCors();
     this.setupMongo();
-    this.setupSendgrid();
     this.setupDirectories();
     this.useControllers();
     this.setupAgenda();
@@ -83,9 +82,11 @@ export class Main {
   }
 
   /** ファイルをアップロードする処理を行う Multer の設定をします。
-   * アップロードされたファイルは upload フォルダ内に保存するようにしています。*/
+   * アップロードされたファイルは upload フォルダ内に保存するようにしています。
+   * サイズの上限を設定しているのは、これを超えたファイルがディスクに書き込まれる前に読み込みを中断させるためです。
+   * この上限はアップロードを行う全てのエンドポイントに共通なので、最も大きなファイルを受け取る辞書のインポートに合わせています。*/
   private addFileMiddleware(): void {
-    const middleware = multer({dest: "./dist/upload/"}).single("file");
+    const middleware = multer({dest: "./dist/upload/", limits: {fileSize: DICTIONARY_LIMITS.uploadFileSize}}).single("file");
     this.application.use("/internal*", middleware);
   }
 
@@ -120,10 +121,6 @@ export class Main {
     setMongoCheckRequired("String");
     mongoose.connect(MONGO_URI);
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
-  }
-
-  private setupSendgrid(): void {
-    sendgrid.setApiKey(SENDGRID_KEY);
   }
 
   /** 内部処理で用いるディレクトリを用意します。*/

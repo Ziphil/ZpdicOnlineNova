@@ -25,6 +25,7 @@ export const EditWordFormSectionSection = create(
     dndId,
     sectionIndex,
     multiple,
+    canAdd,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
@@ -32,7 +33,8 @@ export const EditWordFormSectionSection = create(
     sectionOperations: Pick<UseFieldArrayReturn<any, "sections">, "append" | "insert" | "update" | "remove">,
     dndId: string,
     sectionIndex: number,
-    multiple: boolean
+    multiple: boolean,
+    canAdd: boolean
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
@@ -73,7 +75,7 @@ export const EditWordFormSectionSection = create(
                     {trans("menu.moveDown")}
                   </MenuItem>
                   <MenuSeparator/>
-                  <MenuItem onClick={duplicate}>
+                  <MenuItem disabled={!canAdd} onClick={duplicate}>
                     <MenuItemIconbag><GeneralIcon icon={faClone}/></MenuItemIconbag>
                     {trans("menu.duplicate")}
                   </MenuItem>

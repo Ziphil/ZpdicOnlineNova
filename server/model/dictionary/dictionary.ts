@@ -12,8 +12,10 @@ import {
 import Fuse from "fuse.js";
 import type {DictionaryStatistics, WordSpellingFrequencies} from "/server/internal/skeleton";
 import {Article, ArticleModel, EditableArticle} from "/server/model/article/article";
+import {DICTIONARY_LIMITS, USER_LIMITS, WORD_LIMITS} from "/server/model/constant";
 import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
+import {DictionaryMaxNumbersModel, DictionaryMaxNumbersSchema} from "/server/model/dictionary/dictionary-max-numbers";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
 import {OldDictionaryModel} from "/server/model/dictionary/old-dictionary";
 import {Serializer} from "/server/model/dictionary/serializer";
@@ -35,7 +37,8 @@ import {calcDictionaryStatistics, calcWordSpellingFrequencies} from "/server/uti
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 import {LogUtil} from "/server/util/log";
 import {QueryRange, WithSize} from "/server/util/query";
-import {IDENTIFIER_REGEXP} from "/server/util/validation";
+import {createSequentialQueue} from "/server/util/queue";
+import {IDENTIFIER_REGEXP, calcDataSize} from "/server/util/validation";
 
 
 export const DICTIONARY_STATUSES = ["ready", "saving", "error"] as const;
@@ -80,6 +83,9 @@ export class DictionarySchema {
   @prop({required: true})
   public settings!: DictionarySettingsSchema;
 
+  @prop({required: true})
+  public maxNumbers!: DictionaryMaxNumbersSchema;
+
   @prop()
   public createdDate?: Date;
 
@@ -87,6 +93,7 @@ export class DictionarySchema {
   public updatedDate?: Date;
 
   public static async addEmpty(name: string, user: User): Promise<Dictionary> {
+    await this.assertCountPerUser(user);
     const dictionary = new DictionaryModel({
       user,
       number: await DictionaryModel.fetchNextNumber(),
@@ -94,6 +101,7 @@ export class DictionarySchema {
       status: "ready",
       visibility: "public",
       settings: DictionarySettingsModel.createDefault(),
+      maxNumbers: DictionaryMaxNumbersModel.createDefault(),
       createdDate: new Date(),
       updatedDate: new Date()
     });
@@ -164,25 +172,82 @@ export class DictionarySchema {
     }
   }
 
+  /** ファイルから読み込んだデータが各種の上限に違反していないか検査します。
+   * `upload` の内部から、既存のデータを削除する前に呼び出されます。
+   * このメソッドは DB への書き込みを一切行いません。
+   * `deserializer` にはデシリアライズ開始前 (`start` メソッドを呼ぶ前) のデシリアライザを渡してください。*/
+  public async assertUploadable(this: Dictionary, deserializer: Deserializer): Promise<void> {
+    await new Promise<void>((resolve, reject) => {
+      const counts = {word: 0, example: 0};
+      const queue = createSequentialQueue();
+      deserializer.on("words", (words) => {
+        counts.word += words.length;
+        const count = counts.word;
+        queue.enqueue(async () => {
+          if (count > DICTIONARY_LIMITS.wordCountPerDictionary) {
+            throw new CustomError("wordCountExceeded");
+          }
+          for (const word of words) {
+            await word.assertLimits();
+          }
+        });
+      });
+      deserializer.on("examples", (examples) => {
+        counts.example += examples.length;
+        const count = counts.example;
+        queue.enqueue(async () => {
+          if (count > DICTIONARY_LIMITS.exampleCountPerDictionary) {
+            throw new CustomError("exampleCountExceeded");
+          }
+          for (const example of examples) {
+            await example.assertLimits();
+          }
+        });
+      });
+      deserializer.on("end", () => {
+        queue.settle().then(resolve, reject);
+      });
+      deserializer.on("error", (error) => {
+        LogUtil.error("model/dictionary/assertUploadable", null, error);
+        reject(error);
+      });
+      deserializer.start();
+    });
+    LogUtil.log("model/dictionary/assertUploadable", {number: this.number});
+  }
+
   /** この辞書に登録されているデータを全て削除し、ファイルから読み込んだデータを代わりに保存します。
    * 辞書の内部データも、ファイルから読み込んだものに更新されます。
-   * `deserializer` にはデシリアライズ開始前 (`start` メソッドを呼ぶ前) のデシリアライザを渡してください。 */
-  public async upload(this: Dictionary, deserializer: Deserializer): Promise<Dictionary> {
+   * 既存のデータの削除は、`assertUploadable` による検査を通過した後に行われるので、上限に違反したファイルによってデータが失われることはありません。
+   * ファイルから読み込んだデータの番号はそのまま使うので、保持している最大番号も併せて更新します。
+   * ただし、履歴データの番号と重複しないように、最大番号は減少させません。
+   * ファイルを 2 回読み込むため、`createDeserializer` にはデシリアライザを生成する関数を渡してください。 */
+  public async upload(this: Dictionary, createDeserializer: () => Deserializer): Promise<Dictionary> {
+    await this.assertUploadable(createDeserializer());
+    const deserializer = createDeserializer();
     await this.startUpload();
+    const maxNumbers = {word: this.maxNumbers.word, example: this.maxNumbers.example};
     const settings = this.settings as any;
     await new Promise<Dictionary>((resolve, reject) => {
       const counts = {word: 0, example: 0};
+      const queue = createSequentialQueue();
       deserializer.on("words", (words) => {
-        WordModel.insertMany(words).catch(reject);
-        counts.word += words.length;
-        LogUtil.log("model/dictionary/upload", {number: this.number, counts});
-        LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
+        queue.enqueue(async () => {
+          await WordModel.insertMany(words);
+          counts.word += words.length;
+          maxNumbers.word = Math.max(maxNumbers.word, ...words.map((word) => word.number));
+          LogUtil.log("model/dictionary/upload", {number: this.number, counts});
+          LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
+        });
       });
       deserializer.on("examples", (examples) => {
-        ExampleModel.insertMany(examples).catch(reject);;
-        counts.example += examples.length;
-        LogUtil.log("model/dictionary/upload", {number: this.number, counts});
-        LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
+        queue.enqueue(async () => {
+          await ExampleModel.insertMany(examples);
+          counts.example += examples.length;
+          maxNumbers.example = Math.max(maxNumbers.example, ...examples.map((example) => example.number));
+          LogUtil.log("model/dictionary/upload", {number: this.number, counts});
+          LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
+        });
       });
       deserializer.on("property", (key, value) => {
         if (value !== undefined) {
@@ -195,9 +260,17 @@ export class DictionarySchema {
         }
       });
       deserializer.on("end", () => {
-        this.status = "ready";
-        this.settings = settings;
-        resolve(this);
+        queue.settle().then(() => {
+          this.status = "ready";
+          this.settings = settings;
+          this.maxNumbers.word = maxNumbers.word;
+          this.maxNumbers.example = maxNumbers.example;
+          resolve(this);
+        }, (error) => {
+          this.status = "error";
+          LogUtil.error("model/dictionary/upload", null, error);
+          reject(error);
+        });
       });
       deserializer.on("error", (error) => {
         this.status = "error";
@@ -313,6 +386,7 @@ export class DictionarySchema {
   }
 
   public async editTemplateWord(this: Dictionary, word: EditableTemplateWord): Promise<Dictionary> {
+    this.assertTemplateWordSize(word);
     const currentTemplateWords = this.settings.templateWords ?? [];
     const index = currentTemplateWords.findIndex((currentTemplateWord) => (currentTemplateWord as any)["_id"].toString() === word.id);
     if (index >= 0) {
@@ -321,8 +395,31 @@ export class DictionarySchema {
       currentTemplateWords.push(word);
     }
     this.settings.templateWords = currentTemplateWords;
+    await this.assertTemplateWordFields();
     await this.save();
     return this;
+  }
+
+  /** テンプレート単語データ全体の大きさが上限を超えていないか検査します。
+   * 上限は通常の単語データと共通です。*/
+  public assertTemplateWordSize(word: EditableTemplateWord): void {
+    if (calcDataSize(word) > WORD_LIMITS.size) {
+      throw new CustomError("wordSizeExceeded");
+    }
+  }
+
+  /** テンプレート単語データの各フィールドが上限を超えていないか検査します。
+   * 辞書データ全体ではなくテンプレート単語のみを検証することで、無関係なフィールドの不備が上限違反として報告されるのを防ぎます。*/
+  public async assertTemplateWordFields(this: Dictionary): Promise<void> {
+    try {
+      await this.validate(["settings.templateWords"]);
+    } catch (error) {
+      if (error instanceof Error && error.name === "ValidationError") {
+        throw new CustomError("invalidWord");
+      } else {
+        throw error;
+      }
+    }
   }
 
   public async discardTemplateWord(this: Dictionary, id: string): Promise<Dictionary> {
@@ -498,6 +595,67 @@ export class DictionarySchema {
   public async countExamples(): Promise<number> {
     const count = await ExampleModel.find().where("dictionary", this).countDocuments();
     return count;
+  }
+
+  public async countArticles(): Promise<number> {
+    const count = await ArticleModel.find().where("dictionary", this).countDocuments();
+    return count;
+  }
+
+  /** この辞書において、次に単語・例文・記事のデータに割り振るべき番号を払い出します。
+   * 同時に呼び出されても同じ番号を返さないように、`$inc` によって原子的に最大番号を更新します。
+   * 実際に存在するデータではなく辞書が保持している最大番号を基準にするので、履歴データが自動削除された後でも番号が再利用されることはありません。*/
+  public async issueNextNumber(this: Dictionary, kind: "word" | "example" | "article"): Promise<number> {
+    const dictionary = await DictionaryModel.findOneAndUpdate({"_id": this["_id"]}, {"$inc": {[`maxNumbers.${kind}`]: 1}}, {returnDocument: "after"});
+    if (dictionary !== null) {
+      return dictionary.maxNumbers[kind];
+    } else {
+      throw new CustomError("noSuchDictionary");
+    }
+  }
+
+  /** この辞書が保持している最大番号を、指定された番号まで引き上げます。
+   * すでに指定された番号以上である場合は何もしません。
+   * データの番号が外部から与えられる場合に、その番号が後から再利用されるのを防ぐために呼び出します。*/
+  public async raiseMaxNumber(this: Dictionary, kind: "word" | "example" | "article", number: number): Promise<void> {
+    await DictionaryModel.updateOne({"_id": this["_id"]}, {"$max": {[`maxNumbers.${kind}`]: number}});
+  }
+
+  /** この辞書に登録されている単語数が上限に達していないか検査します。
+   * 単語データを新たに追加する場合にのみ呼び出します。*/
+  public async assertWordCount(this: Dictionary): Promise<void> {
+    const count = await this.countWords();
+    if (count >= DICTIONARY_LIMITS.wordCountPerDictionary) {
+      throw new CustomError("wordCountExceeded");
+    }
+  }
+
+  /** この辞書に登録されている例文数が上限に達していないか検査します。
+   * 例文データを新たに追加する場合にのみ呼び出します。*/
+  public async assertExampleCount(this: Dictionary): Promise<void> {
+    const count = await this.countExamples();
+    if (count >= DICTIONARY_LIMITS.exampleCountPerDictionary) {
+      throw new CustomError("exampleCountExceeded");
+    }
+  }
+
+  /** この辞書に登録されている記事数が上限に達していないか検査します。
+   * 記事データを新たに追加する場合にのみ呼び出します。*/
+  public async assertArticleCount(this: Dictionary): Promise<void> {
+    const count = await this.countArticles();
+    if (count >= DICTIONARY_LIMITS.articleCountPerDictionary) {
+      throw new CustomError("articleCountExceeded");
+    }
+  }
+
+  /** 指定されたユーザーが作成した辞書数が上限に達していないか検査します。
+   * 辞書を新たに作成する場合にのみ呼び出します。
+   * 検査の対象が辞書ではなくユーザーなので、他の `assert` 系メソッドと異なり static になっています。*/
+  private static async assertCountPerUser(user: User): Promise<void> {
+    const count = await DictionaryModel.find().where("user", user).countDocuments();
+    if (count >= USER_LIMITS.dictionaryCountPerUser) {
+      throw new CustomError("dictionaryCountExceeded");
+    }
   }
 
   public async calcWordSpellingFrequencies(): Promise<WordSpellingFrequencies> {

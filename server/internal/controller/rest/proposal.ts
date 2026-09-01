@@ -19,9 +19,13 @@ export class ProposalRestController extends InternalRestController {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {name, comment} = request.body;
     if (name !== "") {
-      const proposal = await ProposalModel.add(dictionary, name, comment);
-      const body = ProposalCreator.skeletonize(proposal);
-      InternalRestController.respond(response, body);
+      try {
+        const proposal = await ProposalModel.add(dictionary, name, comment);
+        const body = ProposalCreator.skeletonize(proposal);
+        InternalRestController.respond(response, body);
+      } catch (error) {
+        InternalRestController.respondByCustomError(response, ["invalidProposal"], error);
+      }
     } else {
       InternalRestController.respondError(response, "emptyProposalName");
     }

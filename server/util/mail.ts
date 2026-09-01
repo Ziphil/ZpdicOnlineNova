@@ -1,10 +1,17 @@
 //
 
-import {ClientResponse} from "@sendgrid/client/src/response";
-import {EmailData} from "@sendgrid/helpers/classes/email-address";
-import sendgrid from "@sendgrid/mail";
+import {SESv2Client, SendEmailCommand} from "@aws-sdk/client-sesv2";
 import {INTLS} from "/server/language";
+import {AWS_KEY, AWS_REGION, AWS_SECRET} from "/server/variable";
 
+
+const client = new SESv2Client({
+  region: AWS_REGION,
+  credentials: {
+    accessKeyId: AWS_KEY,
+    secretAccessKey: AWS_SECRET
+  }
+});
 
 export function getMailSubject(type: string, values?: Record<string, string>): string {
   const intl = INTLS[0];
@@ -20,10 +27,16 @@ export function getMailText(type: string, values?: Record<string, string>): stri
   return wholeText;
 }
 
-export async function sendMail(to: EmailData, subject: string, text: string): Promise<ClientResponse> {
-  const from = {name: "ZpDIC Online", email: "zpdic@ziphil.com"};
-  const trackingSettings = {clickTracking: {enable: false, enableText: false}};
-  const message = {to, from, subject, text, trackingSettings};
-  const response = await sendgrid.send(message);
-  return response[0];
+export async function sendMail(to: string, subject: string, text: string): Promise<void> {
+  const command = new SendEmailCommand({
+    "FromEmailAddress": "ZpDIC Online <noreply@zpdic.ziphil.com>",
+    "Destination": {"ToAddresses": [to]},
+    "Content": {
+      "Simple": {
+        "Subject": {"Data": subject, "Charset": "UTF-8"},
+        "Body": {"Text": {"Data": text, "Charset": "UTF-8"}}
+      }
+    }
+  });
+  await client.send(command);
 }

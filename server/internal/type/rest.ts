@@ -52,7 +52,7 @@ type ServerSpecs = {
     request: {name: string},
     response: {
       success: Dictionary,
-      error: never
+      error: CustomError<"dictionaryCountExceeded">
     }
   },
   discardDictionary: {
@@ -101,7 +101,7 @@ type ServerSpecs = {
     request: {number: number, word: EditableTemplateWord},
     response: {
       success: Dictionary,
-      error: CustomError<"noSuchDictionary">
+      error: CustomError<"noSuchDictionary" | "wordSizeExceeded" | "invalidWord">
     }
   },
   discardDictionaryTemplateWord: {
@@ -136,7 +136,7 @@ type ServerSpecs = {
     request: {number: number, word: EditableWord},
     response: {
       success: Word,
-      error: CustomError<"noSuchDictionary" | "dictionarySaving">
+      error: CustomError<"noSuchDictionary" | "dictionarySaving" | "wordCountExceeded" | "wordSizeExceeded" | "invalidWord">
     }
   },
   discardWord: {
@@ -150,14 +150,14 @@ type ServerSpecs = {
     request: {number: number, specs: Array<{wordNumber: number, relation: Relation}>},
     response: {
       success: null,
-      error: CustomError<"noSuchDictionary" | "failAddRelations">
+      error: CustomError<"noSuchDictionary" | "failAddRelations" | "wordSizeExceeded" | "invalidWord">
     }
   },
   editExample: {
     request: {number: number, example: EditableExample},
     response: {
       success: Example,
-      error: CustomError<"noSuchDictionary" | "dictionarySaving">
+      error: CustomError<"noSuchDictionary" | "dictionarySaving" | "exampleCountExceeded" | "exampleSizeExceeded" | "invalidExample">
     }
   },
   discardExample: {
@@ -171,7 +171,7 @@ type ServerSpecs = {
     request: {number: number, article: EditableArticle},
     response: {
       success: Article,
-      error: CustomError<"noSuchDictionary" | "dictionarySaving">
+      error: CustomError<"noSuchDictionary" | "dictionarySaving" | "articleCountExceeded" | "articleSizeExceeded" | "invalidArticle">
     }
   },
   discardArticle: {
@@ -185,7 +185,7 @@ type ServerSpecs = {
     request: WithRecaptcha<{number: number, name: string, comment?: string}>,
     response: {
       success: Proposal,
-      error: CustomError<"noSuchDictionary" | "emptyProposalName">
+      error: CustomError<"noSuchDictionary" | "emptyProposalName" | "invalidProposal">
     }
   },
   discardProposal: {

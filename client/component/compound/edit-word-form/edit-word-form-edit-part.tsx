@@ -8,6 +8,7 @@ import {create} from "/client/component/create";
 import {preventDefault} from "/client/util/form";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
+import {WORD_LIMITS} from "/server/model/constant";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
 import {EditWordSpec} from "./edit-word-form-hook";
 import {EditWordFormSectionSection} from "./edit-word-form-section-section";
@@ -40,6 +41,8 @@ export const EditWordFormEditPart = create(
 
     const sections = sectionFieldArraySpec.fields;
 
+    const canAdd = sections.length < WORD_LIMITS.sectionCount;
+
     const setSections = useCallback(function (update: (sections: Array<any>) => Array<any>): void {
       setValue("sections", update(sections));
     }, [sections, setValue]);
@@ -70,11 +73,12 @@ export const EditWordFormEditPart = create(
                     dndId={section.id}
                     sectionIndex={sectionIndex}
                     multiple={true}
+                    canAdd={canAdd}
                   />
                 ))}
               </SwapAnimationContext>
               <div styleName="section-plus">
-                <Button scheme="gray" variant="solid" onClick={addSection}>
+                <Button scheme="gray" variant="solid" disabled={!canAdd} onClick={addSection}>
                   <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
                   {trans("button.add.section")}
                 </Button>
@@ -91,6 +95,7 @@ export const EditWordFormEditPart = create(
                   dndId={sections[0].id}
                   sectionIndex={0}
                   multiple={false}
+                  canAdd={canAdd}
                 />
               </SwapAnimationContext>
             </div>

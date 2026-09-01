@@ -13,6 +13,7 @@ import {
 import {create} from "/client/component/create";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
+import {WORD_LIMITS} from "/server/model/constant";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordFormValue} from "./edit-word-form-hook";
@@ -48,6 +49,8 @@ export const EditWordFormPhraseSection = create(
 
     const phrases = phraseFieldArraySpec.fields;
 
+    const canAdd = phrases.length < WORD_LIMITS.phraseCountPerSection;
+
     const addPhrase = useCallback(function (): void {
       phraseOperations.append({titles: [], expression: "", termString: "", text: "", hidden: false});
     }, [phraseOperations]);
@@ -69,6 +72,7 @@ export const EditWordFormPhraseSection = create(
                     key={phrase.id}
                     dictionary={dictionary}
                     form={form}
+                    canAdd={canAdd}
                     phraseOperations={phraseOperations as any}
                     dndId={phrase.id}
                     sectionIndex={sectionIndex}
@@ -83,7 +87,7 @@ export const EditWordFormPhraseSection = create(
             </p>
           )}
           <div styleName="plus">
-            <Button scheme="gray" variant="light" onClick={addPhrase}>
+            <Button scheme="gray" variant="light" disabled={!canAdd} onClick={addPhrase}>
               <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
               {trans("button.add.phrase")}
             </Button>

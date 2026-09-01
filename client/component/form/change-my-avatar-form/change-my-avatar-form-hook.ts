@@ -14,7 +14,7 @@ import {UserWithDetail} from "/server/internal/skeleton";
 
 
 const SCHEMA = object({
-  file: mixed<File>().required("required").test(testFileSize(1, "tooLarge"))
+  file: mixed<File>().required("required").test(testFileSize(1024 * 1024, "tooLarge"))
 });
 const DEFAULT_VALUE = {
   file: undefined as any

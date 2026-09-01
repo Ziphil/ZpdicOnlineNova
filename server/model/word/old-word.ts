@@ -8,15 +8,15 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
+import {RETENTION_PERIODS} from "/server/model/constant";
 import {DictionarySchema} from "/server/model/dictionary/dictionary";
 import {UserSchema} from "/server/model/user/user";
 import {SectionSchema} from "/server/model/word/section";
-import {LogUtil} from "/server/util/log";
 
 
 @modelOptions({schemaOptions: {collection: "oldWords"}})
 @index({"dictionary": 1, "number": 1, "updatedDate": -1})
-@index({"deletedDate": 1})
+@index({"deletedDate": 1}, {expireAfterSeconds: RETENTION_PERIODS.oldData})
 export class OldWordSchema {
 
   @prop({required: true, ref: "DictionarySchema"})
@@ -48,14 +48,6 @@ export class OldWordSchema {
 
   @prop({required: true})
   public deletedDate!: Date;
-
-  /** 古い単語履歴データを完全に削除します。
-   * 論理削除ではなく物理削除を行うので、もとには戻せません。*/
-  public static async discardOlds(duration: number): Promise<void> {
-    const date = new Date(Date.now() - duration * 24 * 60 * 60 * 1000);
-    const result = await OldWordModel.deleteMany().lt("deletedDate", date);
-    LogUtil.log("model/old-word/discardOld", {count: result.deletedCount});
-  }
 
 }
 

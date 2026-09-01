@@ -43,6 +43,7 @@ export const EditWordFormPhraseItem = create(
     dndId,
     sectionIndex,
     phraseIndex,
+    canAdd,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
@@ -51,6 +52,7 @@ export const EditWordFormPhraseItem = create(
     dndId: string,
     sectionIndex: number,
     phraseIndex: number,
+    canAdd: boolean,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -130,7 +132,7 @@ export const EditWordFormPhraseItem = create(
                 {trans("menu.moveDown")}
               </MenuItem>
               <MenuSeparator/>
-              <MenuItem onClick={duplicate}>
+              <MenuItem disabled={!canAdd} onClick={duplicate}>
                 <MenuItemIconbag><GeneralIcon icon={faClone}/></MenuItemIconbag>
                 {trans("menu.duplicate")}
               </MenuItem>

@@ -6,7 +6,7 @@ import {FilledRequest, InternalRestController, Request, Response} from "/server/
 import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
 import {DictionaryCreator, DictionaryParameterCreator, MemberCreator, TemplateWordCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
-import {DictionaryModel, ExampleModel, OldDictionaryModel, OldExampleModel, OldWordModel, UserModel, WordModel} from "/server/model";
+import {DICTIONARY_LIMITS, DictionaryModel, ExampleModel, OldDictionaryModel, OldExampleModel, OldWordModel, UserModel, WordModel} from "/server/model";
 import {sanitizeFileName} from "/server/util/misc";
 import {toObjectId} from "/server/util/mongo";
 import {QueryRange} from "/server/util/query";
@@ -21,9 +21,13 @@ export class DictionaryRestController extends InternalRestController {
   public async [Symbol()](request: FilledRequest<"createDictionary", "me">, response: Response<"createDictionary">): Promise<void> {
     const {me} = request.middlewareBody ;
     const {name} = request.body;
-    const dictionary = await DictionaryModel.addEmpty(name, me);
-    const body = DictionaryCreator.skeletonize(dictionary);
-    InternalRestController.respond(response, body);
+    try {
+      const dictionary = await DictionaryModel.addEmpty(name, me);
+      const body = DictionaryCreator.skeletonize(dictionary);
+      InternalRestController.respond(response, body);
+    } catch (error) {
+      InternalRestController.respondByCustomError(response, ["dictionaryCountExceeded"], error);
+    }
   }
 
   @post("/discardDictionary")
@@ -114,9 +118,13 @@ export class DictionaryRestController extends InternalRestController {
   public async [Symbol()](request: FilledRequest<"editDictionaryTemplateWord", "me" | "dictionary">, response: Response<"editDictionaryTemplateWord">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const word = TemplateWordCreator.enflesh(request.body.word);
-    await dictionary.editTemplateWord(word);
-    const body = DictionaryCreator.skeletonize(dictionary);
-    InternalRestController.respond(response, body);
+    try {
+      await dictionary.editTemplateWord(word);
+      const body = DictionaryCreator.skeletonize(dictionary);
+      InternalRestController.respond(response, body);
+    } catch (error) {
+      InternalRestController.respondByCustomError(response, ["wordSizeExceeded", "invalidWord"], error);
+    }
   }
 
   @post("/discardDictionaryTemplateWord")
@@ -151,7 +159,7 @@ export class DictionaryRestController extends InternalRestController {
     if (file !== undefined) {
       const path = file.path;
       const originalPath = file.originalname;
-      if (file.size <= 5 * 1024 * 1024) {
+      if (file.size <= DICTIONARY_LIMITS.uploadFileSize) {
         const number = dictionary.number;
         const job = await this.agenda.now("uploadDictionary", {number, path, originalPath});
         const body = {id: job.attrs["_id"].toString()};

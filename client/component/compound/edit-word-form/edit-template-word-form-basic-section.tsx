@@ -12,6 +12,7 @@ import {
   data,
   useTrans
 } from "zographia";
+import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
@@ -33,7 +34,7 @@ export const EditTemplateWordFormBasicSection = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {register, control} = form;
+    const {register, control, getFieldState, formState: {errors}} = form;
 
     const suggestTag = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
@@ -57,7 +58,10 @@ export const EditTemplateWordFormBasicSection = create(
           <div styleName="field-list" {...data({vertical: true})}>
             <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.title")}</ControlLabel>
-              <Input {...register("title")}/>
+              <div styleName="control-container">
+                <Input error={!!getFieldState("title").error} {...register("title")}/>
+                <ControlErrorMessage name="title" form={form} trans={trans}/>
+              </div>
             </ControlContainer>
           </div>
         </section>
@@ -66,17 +70,26 @@ export const EditTemplateWordFormBasicSection = create(
           <div styleName="field-list">
             <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.spelling")}</ControlLabel>
-              <Input {...register("spelling")}/>
+              <div styleName="control-container">
+                <Input error={!!getFieldState("spelling").error} {...register("spelling")}/>
+                <ControlErrorMessage name="spelling" form={form} trans={trans}/>
+              </div>
             </ControlContainer>
             <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.pronunciation")}</ControlLabel>
-              <Input {...register("pronunciation")}/>
+              <div styleName="control-container">
+                <Input error={!!getFieldState("pronunciation").error} {...register("pronunciation")}/>
+                <ControlErrorMessage name="pronunciation" form={form} trans={trans}/>
+              </div>
             </ControlContainer>
             <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.tags")}</ControlLabel>
-              <Controller name="tags" control={control} render={({field}) => (
-                <TagInput tagVariant="solid" values={field.value ?? []} suggest={suggestTag} onSet={field.onChange}/>
-              )}/>
+              <div styleName="control-container">
+                <Controller name="tags" control={control} render={({field}) => (
+                  <TagInput tagVariant="solid" error={!!getFieldState("tags").error} values={field.value ?? []} suggest={suggestTag} onSet={field.onChange}/>
+                )}/>
+                <ControlErrorMessage name="tags" form={form} trans={trans}/>
+              </div>
             </ControlContainer>
           </div>
         </section>

@@ -69,9 +69,9 @@ toast:
       La artikolo redaktitas.
     discardArticle: |-
       La artikolo forigitas.
-    addCommission: |-
+    addProposal: |-
       Nova peto kreitas.
-    discardCommission: |-
+    discardProposal: |-
       La peto forigitas.
     addResource: |-
       La bildo alŝutitas.
@@ -178,10 +178,33 @@ toast:
       Malsukcesis krei la reciprokaj rilatojn.
     dictionarySizeTooLarge: |-
       La dosiero estas tro granda.
+    dictionaryCountExceeded: |-
+      Vi ne povas krei pliajn vortarojn.
     noSuchWord: |-
       Ne ekzistas tiu vorto.
+    wordCountExceeded: |-
+      Vi ne povas aldoni pliajn vortojn al tiu vortaro.
+    wordSizeExceeded: |-
+      La datumo de la vorto estas tro granda.
+      Bonvolu redukti la enhavon kaj reprovi.
+    invalidWord: |-
+      Iu kampo de la vorto superas sian limon.
     noSuchExample: |-
       Ne ekzistas tiu ekzempla frazo.
+    exampleCountExceeded: |-
+      Vi ne povas aldoni pliajn ekzemplajn frazojn al tiu vortaro.
+    exampleSizeExceeded: |-
+      La datumo de la ekzempla frazo estas tro granda.
+      Bonvolu redukti la enhavon kaj reprovi.
+    invalidExample: |-
+      Iu kampo de la ekzempla frazo superas sian limon.
+    articleCountExceeded: |-
+      Vi ne povas aldoni pliajn artikolojn al tiu vortaro.
+    articleSizeExceeded: |-
+      La datumo de la artikolo estas tro granda.
+      Bonvolu redukti la enhavon kaj reprovi.
+    invalidArticle: |-
+      Iu kampo de la artikolo superas sian limon.
     resourceCountExceeded: |-
       Ne eblas alŝuti pli da dosieroj.
     resourceSizeTooLarge: |-
@@ -200,10 +223,12 @@ toast:
       Ne ekzistas tiu invito.
     noSuchMember: |-
       La uzanto ne havas la permeson.
-    emptyCommissionName: |-
+    emptyProposalName: |-
       La vorto por peti estas malplena.
-    noSuchCommission: |-
+    noSuchProposal: |-
       Ne ekzistas tiu peto.
+    invalidProposal: |-
+      Iu kampo de la peto superas sian limon.
     emptyContactText: |-
       La mesaĝo estas malplena.
     administratorNotFound: |-
@@ -313,6 +338,10 @@ addProposalDialog:
   error:
     nameRequired: >-
       Enigu la vorton kies kreadon vi petas.
+    nameTooLong: >-
+      La vorto devas enhavi maksimume 200 signojn.
+    commentTooLong: >-
+      La komento devas enhavi maksimume 1,000 signojn.
 apiCredentialList:
   label:
     limit: "{limit, number} {limit, plural, one {peto/minuto} other {petoj/minuto}}"
@@ -441,6 +470,15 @@ editArticleForm:
     content: "Enhavo"
   button:
     confirm: "Konfirmi"
+  error:
+    titleTooLong: >-
+      La titolo devas enhavi maksimume 200 signojn.
+    contentTooLong: >-
+      La enhavo devas enhavi maksimume 100,000 signojn.
+    tagsTooMany: >-
+      Vi povas agordi maksimume 10 etikedojn.
+    tagTooLong: >-
+      Ĉiu etikedo devas enhavi maksimume 100 signojn.
 editExampleDialog:
   button:
     confirm: "Konfirmi"
@@ -467,6 +505,17 @@ editExampleForm:
     add:
       word: "Aldoni enhavitan vorton"
     confirm: "Konfirmi"
+  error:
+    sentenceTooLong: >-
+      La ekzempla frazo devas enhavi maksimume 5,000 signojn.
+    translationTooLong: >-
+      La traduko devas enhavi maksimume 5,000 signojn.
+    supplementTooLong: >-
+      La suplementa klarigo devas enhavi maksimume 5,000 signojn.
+    tagsTooMany: >-
+      Vi povas agordi maksimume 10 etikedojn.
+    tagTooLong: >-
+      Ĉiu etikedo devas enhavi maksimume 100 signojn.
 editWordDialog:
   button:
     confirm: "Konfirmi"
@@ -535,6 +584,21 @@ editWordForm:
     resource: "Bildoj"
     generate: "Generi"
     confirm: "Konfirmi"
+  error:
+    titleTooLong: >-
+      La ŝablona nomo devas enhavi maksimume 100 signojn.
+    spellingTooLong: >-
+      La literumo devas enhavi maksimume 200 signojn.
+    pronunciationTooLong: >-
+      La prononco devas enhavi maksimume 200 signojn.
+    tagsTooMany: >-
+      Vi povas agordi maksimume 20 etikedojn.
+    tagTooLong: >-
+      Ĉiu etikedo devas enhavi maksimume 100 signojn.
+    informationTitleTooLong: >-
+      La titolo devas enhavi maksimume 100 signojn.
+    informationTextTooLong: >-
+      La enhavo devas enhavi maksimume 20,000 signojn.
 exampleList:
   empty: "Neniuj kongruaj ekzemplaj frazoj estis trovitaj"
   noWord: "Neniuj vortoj specifitaj"
@@ -1198,7 +1262,7 @@ queueUploadDictionaryButton:
       Elektu dosieron.
     tooLarge: >-
       La dosiero estas tro granda.
-      Vi ne povas alŝuti dosierojn pli grandajn ol 5 MB.
+      Vi ne povas alŝuti dosierojn pli grandajn ol 32 MB.
 uploadDictionaryForm:
   button:
     back: "Reiri al paĝo de vortaro"

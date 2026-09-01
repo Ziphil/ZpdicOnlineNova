@@ -14,11 +14,10 @@ export function testIdentifier(message?: string): TestConfig<string | undefined>
   return {name: "identifier", message, test};
 }
 
-export function testFileSize(limitSizeInMb: number, message?: string): TestConfig<File | undefined> {
+export function testFileSize(limitSize: number, message?: string): TestConfig<File | undefined> {
   const test = function (file: File | undefined): boolean {
     if (file !== undefined) {
-      const sizeInMb = file.size / 1024 / 1024;
-      return sizeInMb <= limitSizeInMb;
+      return file.size <= limitSize;
     } else {
       return true;
     }

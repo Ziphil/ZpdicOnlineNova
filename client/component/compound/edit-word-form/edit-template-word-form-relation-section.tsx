@@ -12,6 +12,7 @@ import {
 } from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
+import {WORD_LIMITS} from "/server/model/constant";
 import {EditTemplateWordSpec} from "./edit-template-word-form-hook";
 import {EditTemplateWordFormRelationItem} from "./edit-template-word-form-relation-item";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
@@ -38,6 +39,8 @@ export const EditTemplateWordFormRelationSection = create(
     const {control, getValues} = form;
     const {fields: relations, ...relationOperations} = useFieldArray({control, name: `sections.${sectionIndex}.relations`});
 
+    const canAdd = relations.length < WORD_LIMITS.relationCountPerSection;
+
     const addRelation = useCallback(function (): void {
       relationOperations.append({
         titles: []
@@ -60,6 +63,7 @@ export const EditTemplateWordFormRelationSection = create(
                   key={relation.id}
                   dictionary={dictionary}
                   form={form}
+                  canAdd={canAdd}
                   relationOperations={relationOperations as any}
                   dndId={relation.id}
                   sectionIndex={sectionIndex}
@@ -73,7 +77,7 @@ export const EditTemplateWordFormRelationSection = create(
             </p>
           )}
           <div styleName="plus">
-            <Button scheme="gray" variant="light" onClick={addRelation}>
+            <Button scheme="gray" variant="light" disabled={!canAdd} onClick={addRelation}>
               <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
               {trans("button.add.relation")}
             </Button>

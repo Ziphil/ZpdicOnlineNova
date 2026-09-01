@@ -3,13 +3,23 @@
 import {ParamsDictionary as ExpressParamsDictionary, Request as ExpressRequest, Response as ExpressResponse} from "express-serve-static-core";
 import {RestController} from "/server/controller/rest/controller";
 import {ProcessName, RequestData, ResponseCode, ResponseData} from "/server/external-alpha/type/rest";
-import {Dictionary, User} from "/server/model";
+import {CustomError, Dictionary, LimitErrorTypeUtil, User} from "/server/model";
 
 
 export class ExternalRestController extends RestController {
 
   protected static respond<N extends ProcessName, T extends ResponseCode>(response: Response<N>, status: T, body: ResponseData<N, T>): void {
     response.status(status).json(body as any).end();
+  }
+
+  /** `error` に指定された値がデータの上限を超えたことを表す `CustomError` オブジェクトであった場合に限り、そのタイプをステータスコード 400 のレスポンスとして送ります。
+   * それ以外の場合は、`error` を例外として投げます。*/
+  protected static respondByLimitError<N extends ProcessName>(response: Response<N>, error: unknown): void {
+    if (CustomError.isCustomError(error) && LimitErrorTypeUtil.is(error.type)) {
+      this.respond(response, 400, {error: error.type});
+    } else {
+      throw error;
+    }
   }
 
 }

@@ -25,7 +25,7 @@ When registering, the user will need to send the following information.
 This information will be stored in a database managed by this application, and will be used to verify user information.
 The password will be stored in a hashed format by which the original string cannot be recovered.
 The email address will be used to reset the password in case the user forgets it, and to send emails to notify the user of information in this application.
-Note that this application uses [SendGrid](https://sendgrid.com/), an external service, to send emails, and the email address is sent to SendGrid when an email is sent.
+Note that this application uses [Amazon SES](https://aws.amazon.com/ses/), provided by Amazon, to send emails, and the email address is sent to Amazon SES when an email is sent.
 
 ### Contact
 In this application, the user may be asked to send the following information when they contact us via the contact form.
@@ -106,3 +106,4 @@ In the event of any discrepancy between this document and the Japanese version, 
 - Partially revised on 28 January 2022
 - Partially revised on 15 June 2022
 - Partially revised on 13 July 2026 (added descriptions about Amazon S3 and SendGrid, and moved the disclaimer to the terms of service)
+- Partially revised on 26 July 2026 (changed the email sending service from SendGrid to Amazon SES)

@@ -6,8 +6,8 @@ import {checkMe, checkRecaptcha, login, logout} from "/server/internal/controlle
 import {ApiCredentialCreator, UserCreator, UserSocialCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {ApiCredentialModel, UserModel} from "/server/model";
-import {getStorageUploadFilePost} from "/server/util/aws";
 import {getMailSubject, getMailText, sendMail} from "/server/util/mail";
+import {getStorageUploadFilePost} from "/server/util/storage";
 
 
 @restController(SERVER_PATH_PREFIX)

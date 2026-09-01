@@ -4,7 +4,7 @@ import {Job} from "agenda";
 import fs from "fs/promises";
 import {JobController} from "/server/controller/job/controller";
 import {job, jobController} from "/server/controller/job/decorator";
-import {DictionaryModel, createDeserializer, createSerializer} from "/server/model";
+import {CustomError, DictionaryModel, createDeserializer, createSerializer} from "/server/model";
 import {LogUtil} from "/server/util/log";
 
 
@@ -18,8 +18,7 @@ export class DictionaryJobController extends JobController {
     try {
       const dictionary = await DictionaryModel.fetchOneByNumber(number);
       if (dictionary !== null) {
-        const deserializer = createDeserializer(path, originalPath, dictionary);
-        await dictionary.upload(deserializer);
+        await dictionary.upload(() => createDeserializer(path, originalPath, dictionary));
         await fs.unlink(path).catch(() => null);
         job.attrs.data.status = "success";
         await job.save();
@@ -31,7 +30,7 @@ export class DictionaryJobController extends JobController {
       }
     } catch (error) {
       job.attrs.data.status = "error";
-      job.attrs.data.errorCode = error.message;
+      job.attrs.data.errorCode = (CustomError.isCustomError(error)) ? error.type : error.message;
       await job.save();
       throw error;
     }

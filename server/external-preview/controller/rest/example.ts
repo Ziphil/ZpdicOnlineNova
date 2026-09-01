@@ -56,7 +56,7 @@ export class ExampleExternalRestController extends ExternalRestController {
       if (CustomError.isCustomError(error, "dictionarySaving")) {
         ExternalRestController.respond(response, 409, {error: "dictionarySaving"});
       } else {
-        throw error;
+        ExternalRestController.respondByLimitError(response, error);
       }
     }
   }
@@ -80,7 +80,7 @@ export class ExampleExternalRestController extends ExternalRestController {
       if (CustomError.isCustomError(error, "dictionarySaving")) {
         ExternalRestController.respond(response, 409, {error: "dictionarySaving"});
       } else {
-        throw error;
+        ExternalRestController.respondByLimitError(response, error);
       }
     }
   }

@@ -9,6 +9,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
+import {WORD_LIMITS} from "/server/model/constant";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {User, UserSchema} from "/server/model/user/user";
@@ -16,6 +17,7 @@ import {OldWordModel} from "/server/model/word/old-word";
 import {Relation} from "/server/model/word/relation";
 import {SectionModel, SectionSchema} from "/server/model/word/section";
 import {LogUtil} from "/server/util/log";
+import {calcDataSize, createMaxCountValidator} from "/server/util/validation";
 
 
 @modelOptions({schemaOptions: {collection: "words"}})
@@ -35,16 +37,16 @@ export class WordSchema {
   @prop({required: true})
   public number!: number;
 
-  @prop({required: true})
+  @prop({required: true, maxlength: WORD_LIMITS.spellingLength})
   public name!: string;
 
-  @prop()
+  @prop({maxlength: WORD_LIMITS.pronunciationLength})
   public pronunciation?: string;
 
-  @prop({required: true, type: String})
+  @prop({required: true, type: String, innerOptions: {maxlength: WORD_LIMITS.tagLength}, outerOptions: {validate: createMaxCountValidator(WORD_LIMITS.tagCount)}})
   public tags!: Array<string>;
 
-  @prop({required: true, type: SectionSchema})
+  @prop({required: true, type: SectionSchema, outerOptions: {validate: createMaxCountValidator(WORD_LIMITS.sectionCount)}})
   public sections!: Array<SectionSchema>;
 
   @prop({ref: "UserSchema"})
@@ -70,14 +72,18 @@ export class WordSchema {
       resultWord.createdDate = currentWord.createdDate;
       resultWord.updatedDate = new Date();
       await this.filterRelations(dictionary, resultWord);
+      await resultWord.assertLimits();
       await currentWord.deleteOneSoftly();
       await resultWord.save();
       if (currentWord.name !== resultWord.name) {
         await this.correctRelationsByEdit(dictionary, resultWord);
       }
     } else {
+      await dictionary.assertWordCount();
       if (word.number === null) {
-        word.number = await this.fetchNextNumber(dictionary);
+        word.number = await dictionary.issueNextNumber("word");
+      } else {
+        await dictionary.raiseMaxNumber("word", word.number);
       }
       resultWord = new WordModel(word);
       resultWord.dictionary = dictionary;
@@ -85,6 +91,7 @@ export class WordSchema {
       resultWord.createdDate = new Date();
       resultWord.updatedDate = new Date();
       await this.filterRelations(dictionary, resultWord);
+      await resultWord.assertLimits();
       await resultWord.save();
     }
     LogUtil.log("model/word/edit", {number: dictionary.number, currentId: currentWord?.id, resultId: resultWord.id});
@@ -120,6 +127,7 @@ export class WordSchema {
         }
         resultWord.createdDate = currentWord.createdDate;
         resultWord.updatedDate = new Date();
+        await resultWord.assertLimits();
         await currentWord.deleteOneSoftly();
         await resultWord.save();
         LogUtil.log("model/word/addRelation", {number: dictionary.number, currentId: currentWord?.id, resultId: resultWord.id});
@@ -129,6 +137,34 @@ export class WordSchema {
       }
     } else {
       throw new CustomError("noSuchWord");
+    }
+  }
+
+  /** この単語データが各種の上限に違反していないか検査します。
+   * 保存する前にこのメソッドを呼び出します。*/
+  public async assertLimits(this: Word): Promise<void> {
+    this.assertSize();
+    await this.assertFields();
+  }
+
+  /** この単語データ全体の大きさが上限を超えていないか検査します。*/
+  public assertSize(this: Word): void {
+    if (calcDataSize(this) > WORD_LIMITS.size) {
+      throw new CustomError("wordSizeExceeded");
+    }
+  }
+
+  /** この単語データの各フィールドが上限を超えていないか検査します。
+   * 既存の単語データを論理削除する前に検査することで、上限違反によって保存に失敗したときにデータが失われるのを防ぎます。*/
+  public async assertFields(this: Word): Promise<void> {
+    try {
+      await this.validate();
+    } catch (error) {
+      if (error instanceof Error && error.name === "ValidationError") {
+        throw new CustomError("invalidWord");
+      } else {
+        throw error;
+      }
     }
   }
 
@@ -157,7 +193,7 @@ export class WordSchema {
       }
     }
     LogUtil.log("model/word/correctRelationsByEdit", {number: dictionary.number, affectedIds: affectedWords.map((word) => word.id)});
-    await Promise.all(affectedWords.map((affectedWord) => affectedWord.save()));
+    await Promise.all(affectedWords.map((affectedWord) => affectedWord.save({validateBeforeSave: false})));
   }
 
   /** 単語データを削除した場合に、それによって起こり得る関連語データの不整合を修正します。
@@ -178,7 +214,7 @@ export class WordSchema {
     LogUtil.log("model/word/correctRelationsByDiscard", {number: dictionary.number, affectedIds: affectedWords.map((word) => word.id)});
     await Promise.all([
       ...affectedWords.map((affectedWord) => affectedWord.deleteOneSoftly()),
-      ...changedWords.map((changedWord) => changedWord.save())
+      ...changedWords.map((changedWord) => changedWord.save({validateBeforeSave: false}))
     ]);
   }
 
@@ -196,22 +232,13 @@ export class WordSchema {
     return word;
   }
 
+  /** この単語データを論理削除します。
+   * 履歴データは上限の検査対象外とするため、履歴データの検証は行いません。*/
   public async deleteOneSoftly(this: Word): Promise<void> {
     const oldWord = new OldWordModel(this.toObject({depopulate: true}));
     oldWord.deletedDate = new Date();
-    await oldWord.save();
+    await oldWord.save({validateBeforeSave: false});
     await WordModel.deleteOne().where("_id", this["_id"]);
-  }
-
-  /** 指定された辞書において次に単語データに割り振るべき番号を返します。
-   * すでに削除された単語データの番号と重複しないように、`oldWords` コレクション内の履歴データも含めた最大番号に 1 を加えた値を返します。*/
-  private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
-    const [words, oldWords] = await Promise.all([
-      WordModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1),
-      OldWordModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1)
-    ]);
-    const maxNumber = Math.max(words[0]?.number ?? 0, oldWords[0]?.number ?? 0);
-    return maxNumber + 1;
   }
 
 }

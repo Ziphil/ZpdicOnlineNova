@@ -35,7 +35,7 @@ export const ProposalCard = create(
             <time dateTime={dayjs(proposal.createdDate).toISOString()}>{transDate(proposal.createdDate)}</time>
           </div>
           <MultiLineText styleName="name">
-            {proposal.name}
+            {proposal.term}
           </MultiLineText>
           {(!!proposal.comment) && (
             <MultiLineText styleName="comment">
@@ -69,7 +69,7 @@ function getWord(proposal: Proposal): EditableWord {
     pronunciation: "",
     tags: [],
     sections: [{
-      equivalents: [{titles: [], terms: [proposal.name], termString: proposal.name, hidden: false}],
+      equivalents: [{titles: [], terms: [proposal.term], termString: proposal.term, hidden: false}],
       informations: [],
       phrases: [],
       variations: [],

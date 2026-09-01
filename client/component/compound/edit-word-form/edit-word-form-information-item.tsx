@@ -28,6 +28,7 @@ import {
   data,
   useTrans
 } from "zographia";
+import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
@@ -47,6 +48,7 @@ export const EditWordFormInformationItem = create(
     dndId,
     sectionIndex,
     informationIndex,
+    canAdd,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
@@ -55,12 +57,13 @@ export const EditWordFormInformationItem = create(
     dndId: string,
     sectionIndex: number,
     informationIndex: number,
+    canAdd: boolean,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
-    const {register, getValues} = form;
+    const {register, getValues, getFieldState, formState: {errors}} = form;
     const {paneProps, paneRef, gripProps, dragging} = useEditWordFormDndItem(dndId);
 
     const {ref: swapRef, props: swapProps, canMoveUp, canMoveDown, moveUp, moveDown} = useSwapAnimationItem(dndId);
@@ -99,11 +102,25 @@ export const EditWordFormInformationItem = create(
           <fieldset styleName="field-list">
             <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.information.title")}</ControlLabel>
-              <Input suggest={suggestInformationTitle} {...register(`sections.${sectionIndex}.informations.${informationIndex}.title`)}/>
+              <div styleName="control-container">
+                <Input
+                  error={!!getFieldState(`sections.${sectionIndex}.informations.${informationIndex}.title`).error}
+                  suggest={suggestInformationTitle}
+                  {...register(`sections.${sectionIndex}.informations.${informationIndex}.title`)}
+                />
+                <ControlErrorMessage name={`sections.${sectionIndex}.informations.${informationIndex}.title`} form={form} trans={trans}/>
+              </div>
             </ControlContainer>
             <ControlContainer styleName="field-item">
               <ControlLabel>{trans("label.information.text")}</ControlLabel>
-              <Textarea styleName="textarea" {...register(`sections.${sectionIndex}.informations.${informationIndex}.text`)}/>
+              <div styleName="control-container">
+                <Textarea
+                  styleName="textarea"
+                  error={!!getFieldState(`sections.${sectionIndex}.informations.${informationIndex}.text`).error}
+                  {...register(`sections.${sectionIndex}.informations.${informationIndex}.text`)}
+                />
+                <ControlErrorMessage name={`sections.${sectionIndex}.informations.${informationIndex}.text`} form={form} trans={trans}/>
+              </div>
             </ControlContainer>
             <ControlContainer styleName="field-item" {...data({checkable: true})}>
               <CheckableContainer>
@@ -130,7 +147,7 @@ export const EditWordFormInformationItem = create(
                 {trans("menu.moveDown")}
               </MenuItem>
               <MenuSeparator/>
-              <MenuItem onClick={duplicate}>
+              <MenuItem disabled={!canAdd} onClick={duplicate}>
                 <MenuItemIconbag><GeneralIcon icon={faClone}/></MenuItemIconbag>
                 {trans("menu.duplicate")}
               </MenuItem>

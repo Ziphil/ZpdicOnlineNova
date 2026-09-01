@@ -248,3 +248,69 @@ db.oldDictionaries.updateMany({"settings.showSectionNumber": {$type: "bool"}}, [
   "settings.showSectionNumber": {$cond: ["$settings.showSectionNumber", "show", "hide"]}
 }}]);
 ```
+
+### → ver 3.29.0
+### 番号の払い出し方法の変更に伴う処理
+辞書データに割り振り済みの最大番号を表す `maxNumbers` フィールド (`word`, `example`, `article` の 3 つの数値をもつオブジェクト) を追加し、実際に存在するデータとは独立に番号を管理するようにしました。
+デプロイ前に、Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+なお、既存の履歴データの番号が再利用されないように、履歴データの番号も最大値の計算に含めます。
+```js
+const maxNumbers = {};
+
+function collectMaxNumbers(collectionName, kind) {
+  db.getCollection(collectionName).aggregate([
+    {$group: {_id: "$dictionary", maxNumber: {$max: "$number"}}}
+  ]).forEach(function (result) {
+    const id = String(result._id);
+    if (maxNumbers[id] === undefined) {
+      maxNumbers[id] = {word: 0, example: 0, article: 0};
+    }
+    if (result.maxNumber > maxNumbers[id][kind]) {
+      maxNumbers[id][kind] = result.maxNumber;
+    }
+  });
+}
+
+collectMaxNumbers("words", "word");
+collectMaxNumbers("oldWords", "word");
+collectMaxNumbers("examples", "example");
+collectMaxNumbers("oldExamples", "example");
+collectMaxNumbers("articles", "article");
+collectMaxNumbers("oldArticles", "article");
+
+["dictionaries", "oldDictionaries"].forEach(function (collectionName) {
+  db.getCollection(collectionName).find({}, {_id: 1}).forEach(function (dictionary) {
+    const value = maxNumbers[String(dictionary._id)] || {word: 0, example: 0, article: 0};
+    db.getCollection(collectionName).updateOne({_id: dictionary._id}, {$set: {maxNumbers: value}});
+  });
+});
+```
+
+#### TTL インデックス導入に伴う処理
+編集履歴データ (`oldWords`, `oldExamples`, `oldArticles`) の削除を、日次ジョブから TTL インデックスに変更しました。
+既存の `deletedDate` のインデックスには有効期限が設定されていないため、そのままでは同名のインデックスを作り直せず、有効期限が反映されません。
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+保持期間は従来のジョブと同じ 90 日です。
+```js
+db.runCommand({collMod: "oldWords", index: {name: "deletedDate_1", expireAfterSeconds: 7776000}});
+db.runCommand({collMod: "oldExamples", index: {name: "deletedDate_1", expireAfterSeconds: 7776000}});
+db.runCommand({collMod: "oldArticles", index: {name: "deletedDate_1", expireAfterSeconds: 7776000}});
+```
+インデックス名が上記と異なる場合は、`db.oldWords.getIndexes()` などで確認して読み替えてください。
+
+併せて、統計データ (`histories`) にも保持期間 120 日の TTL インデックスを追加しました。
+こちらは新規のインデックスなので手動の操作は必要ありませんが、アップデート直後に大半のドキュメントが削除対象になるため、負荷の低い時間帯にデプロイすることを推奨します。
+なお、WiredTiger (MongoDB のストレージエンジン) は削除によって空いた領域を OS に返さないので、ディスク使用量を実際に減らすには別途 `compact` が必要です。
+TTL による削除は 60 秒間隔のバッチで進むため、削除が落ち着いたことを確認してから、Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+function printHistoriesStorage(label) {
+  const stats = db.histories.aggregate([{$collStats: {storageStats: {}}}]).toArray()[0].storageStats;
+  print(label + ": 実容量 " + Math.round(stats.storageSize / 1048576) + " MiB / 空き " + Math.round((stats.freeStorageSize || 0) / 1048576) + " MiB");
+}
+
+printHistoriesStorage("実行前");
+db.runCommand({compact: "histories"});
+printHistoriesStorage("実行後");
+```
+`compact` はレプリケーションされないため、レプリカセットを構成している場合はメンバーごとに実行してください。
+また、ホスティング環境によっては権限がなく実行できないことがあります。

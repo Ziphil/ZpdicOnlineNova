@@ -34,6 +34,12 @@
   font-weight: normal;
 }
 
+.control-container {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;
+}
+
 .row {
   column-gap: 2zu;
   display: flex;

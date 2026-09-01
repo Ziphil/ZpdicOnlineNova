@@ -1,6 +1,7 @@
 //
 
 import {BaseSyntheticEvent, useMemo} from "react";
+import {Asserts, array, mixed, number, object, string} from "yup";
 import {RelationWord} from "/client/component/atom/relation-word-select";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
@@ -8,8 +9,18 @@ import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
 import {Dictionary, EditableExample, Example, ExampleOffer, LinkedExampleOffer} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
+import {EXAMPLE_LIMITS} from "/server/model/constant";
 
 
+const SCHEMA = object({
+  number: number().nullable().defined(),
+  sentence: string().max(EXAMPLE_LIMITS.sentenceLength, "sentenceTooLong").defined(),
+  translation: string().max(EXAMPLE_LIMITS.translationLength, "translationTooLong").defined(),
+  supplement: string().max(EXAMPLE_LIMITS.supplementLength, "supplementTooLong").defined(),
+  tags: array(string().defined()).max(EXAMPLE_LIMITS.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= EXAMPLE_LIMITS.tagLength) ?? true).defined(),
+  words: array(mixed<RelationWord>().nullable().defined()).defined(),
+  offer: mixed<LinkedExampleOffer>().nullable().defined()
+});
 const DEFAULT_VALUE = {
   number: null,
   sentence: "",
@@ -19,15 +30,7 @@ const DEFAULT_VALUE = {
   words: [],
   offer: null
 } satisfies FormValue;
-type FormValue = {
-  number: number | null,
-  sentence: string,
-  translation: string,
-  supplement: string,
-  tags: Array<string>,
-  words: Array<RelationWord | null>,
-  offer: LinkedExampleOffer | null
-};
+type FormValue = Asserts<typeof SCHEMA>;
 
 export type EditExampleSpec = {
   form: UseFormReturn<FormValue>,
@@ -38,7 +41,7 @@ export type EditExampleInitialData = {type: "example", example: Example} | {type
 export const getEditExampleFormValue = getFormValue;
 
 export function useEditExample(dictionary: Dictionary, initialData: EditExampleInitialData | null, onSubmit?: (example: EditableExample) => unknown): EditExampleSpec {
-  const form = useForm<FormValue>(getFormValue(initialData), {});
+  const form = useForm<FormValue>(SCHEMA, getFormValue(initialData), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -107,7 +110,7 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editEx
       supplement: value.supplement,
       tags: value.tags,
       words: value.words.filter((rawWord) => rawWord !== null).map((rawWord) => ({
-        number: rawWord!.number
+        number: rawWord.number
       })),
       offer: (value.offer !== null) ? value.offer : null
     }

@@ -13,6 +13,7 @@ import {
 import {create} from "/client/component/create";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
+import {WORD_LIMITS} from "/server/model/constant";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordSpec} from "./edit-word-form-hook";
 import {EditWordFormRelationItem} from "./edit-word-form-relation-item";
@@ -47,6 +48,8 @@ export const EditWordFormRelationSection = create(
 
     const relations = relationFieldArraySpec.fields;
 
+    const canAdd = relations.length < WORD_LIMITS.relationCountPerSection;
+
     const addRelation = useCallback(function (): void {
       relationOperations.append({titles: [], word: null, mutual: false});
     }, [relationOperations]);
@@ -68,6 +71,7 @@ export const EditWordFormRelationSection = create(
                     key={relation.id}
                     dictionary={dictionary}
                     form={form}
+                    canAdd={canAdd}
                     relationOperations={relationOperations as any}
                     dndId={relation.id}
                     sectionIndex={sectionIndex}
@@ -82,7 +86,7 @@ export const EditWordFormRelationSection = create(
             </p>
           )}
           <div styleName="plus">
-            <Button scheme="gray" variant="light" onClick={addRelation}>
+            <Button scheme="gray" variant="light" disabled={!canAdd} onClick={addRelation}>
               <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
               {trans("button.add.relation")}
             </Button>

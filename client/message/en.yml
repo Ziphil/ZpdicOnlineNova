@@ -178,10 +178,33 @@ toast:
       Failed to create the mutual relations.
     dictionarySizeTooLarge: |-
       The file is too large.
+    dictionaryCountExceeded: |-
+      No more dictionaries can be created.
     noSuchWord: |-
       This word does not exist.
+    wordCountExceeded: |-
+      No more words can be added to this dictionary.
+    wordSizeExceeded: |-
+      The data of the word is too large.
+      Reduce its content and try again.
+    invalidWord: |-
+      One of the fields of the word exceeds its limit.
     noSuchExample: |-
       This example sentence does not exist.
+    exampleCountExceeded: |-
+      No more example sentences can be added to this dictionary.
+    exampleSizeExceeded: |-
+      The data of the example sentence is too large.
+      Reduce its content and try again.
+    invalidExample: |-
+      One of the fields of the example sentence exceeds its limit.
+    articleCountExceeded: |-
+      No more articles can be added to this dictionary.
+    articleSizeExceeded: |-
+      The data of the article is too large.
+      Reduce its content and try again.
+    invalidArticle: |-
+      One of the fields of the article exceeds its limit.
     resourceCountExceeded: |-
       No more files can be uploaded.
     resourceSizeTooLarge: |-
@@ -204,6 +227,8 @@ toast:
       The word to request is empty.
     noSuchProposal: |-
       This request does not exist.
+    invalidProposal: |-
+      One of the fields of the request exceeds its limit.
     emptyContactText: |-
       The message is empty.
     administratorNotFound: |-
@@ -313,6 +338,10 @@ addProposalDialog:
   error:
     nameRequired: >-
       Enter the word to request.
+    nameTooLong: >-
+      The word must be at most 200 characters long.
+    commentTooLong: >-
+      The comment must be at most 1,000 characters long.
 apiCredentialList:
   label:
     limit: "{limit, number} {limit, plural, one {request/min} other {requests/min}}"
@@ -441,6 +470,15 @@ editArticleForm:
     content: "Content"
   button:
     confirm: "Confirm"
+  error:
+    titleTooLong: >-
+      The title must be at most 200 characters long.
+    contentTooLong: >-
+      The content must be at most 100,000 characters long.
+    tagsTooMany: >-
+      You can set at most 10 tags.
+    tagTooLong: >-
+      Each tag must be at most 100 characters long.
 editExampleDialog:
   button:
     confirm: "Confirm"
@@ -467,6 +505,17 @@ editExampleForm:
     add:
       word: "Add included words"
     confirm: "Confirm"
+  error:
+    sentenceTooLong: >-
+      The example sentence must be at most 5,000 characters long.
+    translationTooLong: >-
+      The translation must be at most 5,000 characters long.
+    supplementTooLong: >-
+      The supplementary explanation must be at most 5,000 characters long.
+    tagsTooMany: >-
+      You can set at most 10 tags.
+    tagTooLong: >-
+      Each tag must be at most 100 characters long.
 editWordDialog:
   button:
     confirm: "Confirm"
@@ -535,6 +584,21 @@ editWordForm:
     resource: "Images"
     generate: "Generate"
     confirm: "Confirm"
+  error:
+    titleTooLong: >-
+      The template name must be at most 100 characters long.
+    spellingTooLong: >-
+      The spelling must be at most 200 characters long.
+    pronunciationTooLong: >-
+      The pronunciation must be at most 200 characters long.
+    tagsTooMany: >-
+      You can set at most 20 tags.
+    tagTooLong: >-
+      Each tag must be at most 100 characters long.
+    informationTitleTooLong: >-
+      The title must be at most 100 characters long.
+    informationTextTooLong: >-
+      The content must be at most 20,000 characters long.
 exampleList:
   empty: "No matching example sentences were found"
   noWord: "No words specified"
@@ -1198,7 +1262,7 @@ queueUploadDictionaryButton:
       Select a file.
     tooLarge: >-
       The file is too large.
-      You cannot upload files larger than 5 MB.
+      You cannot upload files larger than 32 MB.
 uploadDictionaryForm:
   button:
     back: "Back to dictionary page"
