@@ -254,36 +254,71 @@ db.oldDictionaries.updateMany({"settings.showSectionNumber": {$type: "bool"}}, [
 辞書データに割り振り済みの最大番号を表す `maxNumbers` フィールド (`word`, `example`, `article` の 3 つの数値をもつオブジェクト) を追加し、実際に存在するデータとは独立に番号を管理するようにしました。
 デプロイ前に、Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
 なお、既存の履歴データの番号が再利用されないように、履歴データの番号も最大値の計算に含めます。
+データ量が多いと時間がかかるため、集計結果を一時コレクション `tempMaxNumbers` に保存する形にして、分割実行と再実行ができるようにしています。
+
+以下の手順は、集計と書き込みの間にデータが増えると取りこぼす可能性があるため、書き込みが止まっている状態で実行してください。
+
+まず、各コレクションの最大番号を集計します。
+以下の関数を定義してください。
 ```js
-const maxNumbers = {};
-
-function collectMaxNumbers(collectionName, kind) {
+function collectMaxNumbers(collectionName, kind, hint) {
+  const projectStage = {$project: {}};
+  const setStage = {$set: {}};
+  projectStage.$project[kind] = "$maxNumber";
+  setStage.$set[kind] = {$max: ["$" + kind, "$$new." + kind]};
   db.getCollection(collectionName).aggregate([
-    {$group: {_id: "$dictionary", maxNumber: {$max: "$number"}}}
-  ]).forEach(function (result) {
-    const id = String(result._id);
-    if (maxNumbers[id] === undefined) {
-      maxNumbers[id] = {word: 0, example: 0, article: 0};
-    }
-    if (result.maxNumber > maxNumbers[id][kind]) {
-      maxNumbers[id][kind] = result.maxNumber;
-    }
-  });
+    {$group: {_id: "$dictionary", maxNumber: {$max: "$number"}}},
+    projectStage,
+    {$merge: {into: "tempMaxNumbers", on: "_id", whenMatched: [setStage], whenNotMatched: "insert"}}
+  ], {hint: hint});
+  print(collectionName + ": 完了");
 }
+```
+その上で、以下を 1 行ずつ実行します。
+各行は独立しているので、間隔を空けて実行しても構いません。
+また、`$max` によるマージなので、同じ行を複数回実行しても結果は変わりません。
+```js
+collectMaxNumbers("words", "word", {dictionary: 1, number: 1});
+collectMaxNumbers("oldWords", "word", {dictionary: 1, number: 1, updatedDate: -1});
+collectMaxNumbers("examples", "example", {dictionary: 1, number: 1});
+collectMaxNumbers("oldExamples", "example", {dictionary: 1, number: 1});
+collectMaxNumbers("articles", "article", {dictionary: 1, number: 1});
+collectMaxNumbers("oldArticles", "article", {dictionary: 1, number: 1});
+```
+エラーが出る場合は、そのコレクションのみ `{hint: hint}` を外して実行してください。
 
-collectMaxNumbers("words", "word");
-collectMaxNumbers("oldWords", "word");
-collectMaxNumbers("examples", "example");
-collectMaxNumbers("oldExamples", "example");
-collectMaxNumbers("articles", "article");
-collectMaxNumbers("oldArticles", "article");
-
-["dictionaries", "oldDictionaries"].forEach(function (collectionName) {
-  db.getCollection(collectionName).find({}, {_id: 1}).forEach(function (dictionary) {
-    const value = maxNumbers[String(dictionary._id)] || {word: 0, example: 0, article: 0};
-    db.getCollection(collectionName).updateOne({_id: dictionary._id}, {$set: {maxNumbers: value}});
+次に、集計結果を辞書データに書き込みます。
+以下の関数を定義してください。
+```js
+function applyMaxNumbers(collectionName, limit) {
+  const collection = db.getCollection(collectionName);
+  const ids = collection.find({maxNumbers: {$exists: false}}, {_id: 1}).limit(limit).toArray().map(function (dictionary) {
+    return dictionary._id;
   });
-});
+  if (ids.length > 0) {
+    const maxNumbers = {};
+    db.tempMaxNumbers.find({_id: {$in: ids}}).forEach(function (result) {
+      maxNumbers[String(result._id)] = result;
+    });
+    const operations = ids.map(function (id) {
+      const result = maxNumbers[String(id)] || {};
+      const value = {word: result.word || 0, example: result.example || 0, article: result.article || 0};
+      return {updateOne: {filter: {_id: id}, update: {$set: {maxNumbers: value}}}};
+    });
+    collection.bulkWrite(operations, {ordered: false});
+  }
+  print(collectionName + ": 残り " + collection.countDocuments({maxNumbers: {$exists: false}}));
+}
+```
+その上で、以下を「残り 0」と表示されるまで繰り返し実行します。
+```js
+applyMaxNumbers("dictionaries", 500);
+applyMaxNumbers("oldDictionaries", 500);
+```
+
+最後に、一時コレクションを削除します。
+```js
+db.tempMaxNumbers.drop();
 ```
 
 #### TTL インデックス導入に伴う処理
