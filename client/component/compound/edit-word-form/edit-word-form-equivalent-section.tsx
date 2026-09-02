@@ -7,7 +7,7 @@ import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zog
 import {create} from "/client/component/create";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
-import {WORD_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordFormEquivalentItem} from "./edit-word-form-equivalent-item";
@@ -43,7 +43,7 @@ export const EditWordFormEquivalentSection = create(
 
     const equivalents = equivalentFieldArraySpec.fields;
 
-    const canAdd = equivalents.length < WORD_LIMITS.equivalentCountPerSection;
+    const canAdd = equivalents.length < DICTIONARY_LIMITS.word.equivalentCountPerSection;
 
     const setEquivalents = useCallback(function (update: (equivalents: Array<any>) => Array<any>): void {
       sectionOperations.update(sectionIndex, {...getValues(`sections.${sectionIndex}`), equivalents: update(getValues(`sections.${sectionIndex}.equivalents`))});

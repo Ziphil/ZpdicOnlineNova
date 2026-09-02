@@ -349,3 +349,10 @@ printHistoriesStorage("実行後");
 ```
 `compact` はレプリケーションされないため、レプリカセットを構成している場合はメンバーごとに実行してください。
 また、ホスティング環境によっては権限がなく実行できないことがあります。
+
+### → ver 3.30.0
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```js
+db.dictionaries.updateMany({"limits": {$exists: false}}, {$set: {"limits": {}}});
+db.oldDictionaries.updateMany({"limits": {$exists: false}}, {$set: {"limits": {}}});
+```

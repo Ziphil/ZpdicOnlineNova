@@ -9,15 +9,15 @@ import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
 import {Dictionary, EditableExample, Example, ExampleOffer, LinkedExampleOffer} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
-import {EXAMPLE_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 
 
 const SCHEMA = object({
   number: number().nullable().defined(),
-  sentence: string().max(EXAMPLE_LIMITS.sentenceLength, "sentenceTooLong").defined(),
-  translation: string().max(EXAMPLE_LIMITS.translationLength, "translationTooLong").defined(),
-  supplement: string().max(EXAMPLE_LIMITS.supplementLength, "supplementTooLong").defined(),
-  tags: array(string().defined()).max(EXAMPLE_LIMITS.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= EXAMPLE_LIMITS.tagLength) ?? true).defined(),
+  sentence: string().max(DICTIONARY_LIMITS.example.sentenceLength, "sentenceTooLong").defined(),
+  translation: string().max(DICTIONARY_LIMITS.example.translationLength, "translationTooLong").defined(),
+  supplement: string().max(DICTIONARY_LIMITS.example.supplementLength, "supplementTooLong").defined(),
+  tags: array(string().defined()).max(DICTIONARY_LIMITS.example.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= DICTIONARY_LIMITS.example.tagLength) ?? true).defined(),
   words: array(mixed<RelationWord>().nullable().defined()).defined(),
   offer: mixed<LinkedExampleOffer>().nullable().defined()
 });

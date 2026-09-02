@@ -13,7 +13,7 @@ import {DICTIONARY_LIMITS} from "/server/model/constant";
 
 
 const SCHEMA = object({
-  file: mixed<File>().required("required").test(testFileSize(DICTIONARY_LIMITS.uploadFileSize, "tooLarge"))
+  file: mixed<File>().required("required").test(testFileSize(DICTIONARY_LIMITS.dictionary.uploadFileSize, "tooLarge"))
 });
 const DEFAULT_VALUE = {
   file: undefined as any

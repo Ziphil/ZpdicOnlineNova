@@ -12,14 +12,14 @@ import {escapeRegexp} from "/client/util/misc";
 import {switchResponse} from "/client/util/response";
 import {Dictionary, EditableWord, Relation, TemplateWord, Word} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
-import {WORD_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 
 
 const SCHEMA = object({
   number: number().nullable().defined(),
-  spelling: string().max(WORD_LIMITS.spellingLength, "spellingTooLong").defined(),
-  pronunciation: string().max(WORD_LIMITS.pronunciationLength, "pronunciationTooLong").defined(),
-  tags: array(string().defined()).max(WORD_LIMITS.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= WORD_LIMITS.tagLength) ?? true).defined(),
+  spelling: string().max(DICTIONARY_LIMITS.word.spellingLength, "spellingTooLong").defined(),
+  pronunciation: string().max(DICTIONARY_LIMITS.word.pronunciationLength, "pronunciationTooLong").defined(),
+  tags: array(string().defined()).max(DICTIONARY_LIMITS.word.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= DICTIONARY_LIMITS.word.tagLength) ?? true).defined(),
   sections: array(object({
     equivalents: array(object({
       titles: array(string().defined()).defined(),
@@ -27,8 +27,8 @@ const SCHEMA = object({
       hidden: boolean().defined()
     })).defined(),
     informations: array(object({
-      title: string().max(WORD_LIMITS.informationTitleLength, "informationTitleTooLong").defined(),
-      text: string().max(WORD_LIMITS.informationTextLength, "informationTextTooLong").defined(),
+      title: string().max(DICTIONARY_LIMITS.word.informationTitleLength, "informationTitleTooLong").defined(),
+      text: string().max(DICTIONARY_LIMITS.word.informationTextLength, "informationTextTooLong").defined(),
       hidden: boolean().defined()
     })).defined(),
     phrases: array(object({

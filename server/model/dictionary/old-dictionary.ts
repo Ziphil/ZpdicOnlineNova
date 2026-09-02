@@ -10,6 +10,7 @@ import {
 import type {DictionaryStatus, DictionaryVisibility} from "/server/model/dictionary/dictionary";
 import {DictionaryMaxNumbersSchema} from "/server/model/dictionary/dictionary-max-numbers";
 import {DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
+import {DictionaryLimitsSchema} from "/server/model/dictionary/limits/dictionary-limits";
 import {UserSchema} from "/server/model/user/user";
 
 
@@ -42,6 +43,9 @@ export class OldDictionarySchema {
 
   @prop({required: true})
   public maxNumbers!: DictionaryMaxNumbersSchema;
+
+  @prop({required: true})
+  public limits!: DictionaryLimitsSchema;
 
   @prop()
   public createdDate?: Date;

@@ -86,7 +86,7 @@ export class Main {
    * サイズの上限を設定しているのは、これを超えたファイルがディスクに書き込まれる前に読み込みを中断させるためです。
    * この上限はアップロードを行う全てのエンドポイントに共通なので、最も大きなファイルを受け取る辞書のインポートに合わせています。*/
   private addFileMiddleware(): void {
-    const middleware = multer({dest: "./dist/upload/", limits: {fileSize: DICTIONARY_LIMITS.uploadFileSize}}).single("file");
+    const middleware = multer({dest: "./dist/upload/", limits: {fileSize: DICTIONARY_LIMITS.dictionary.uploadFileSize}}).single("file");
     this.application.use("/internal*", middleware);
   }
 

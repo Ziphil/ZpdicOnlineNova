@@ -12,11 +12,12 @@ import {
 import Fuse from "fuse.js";
 import type {DictionaryStatistics, WordSpellingFrequencies} from "/server/internal/skeleton";
 import {Article, ArticleModel, EditableArticle} from "/server/model/article/article";
-import {DICTIONARY_LIMITS, USER_LIMITS, WORD_LIMITS} from "/server/model/constant";
+import {USER_LIMITS} from "/server/model/constant";
 import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
 import {DictionaryMaxNumbersModel, DictionaryMaxNumbersSchema} from "/server/model/dictionary/dictionary-max-numbers";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
+import {DictionaryLimitsModel, DictionaryLimitsSchema} from "/server/model/dictionary/limits/dictionary-limits";
 import {OldDictionaryModel} from "/server/model/dictionary/old-dictionary";
 import {Serializer} from "/server/model/dictionary/serializer";
 import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
@@ -86,6 +87,9 @@ export class DictionarySchema {
   @prop({required: true})
   public maxNumbers!: DictionaryMaxNumbersSchema;
 
+  @prop({required: true})
+  public limits!: DictionaryLimitsSchema;
+
   @prop()
   public createdDate?: Date;
 
@@ -102,6 +106,7 @@ export class DictionarySchema {
       visibility: "public",
       settings: DictionarySettingsModel.createDefault(),
       maxNumbers: DictionaryMaxNumbersModel.createDefault(),
+      limits: DictionaryLimitsModel.createDefault(),
       createdDate: new Date(),
       updatedDate: new Date()
     });
@@ -177,6 +182,7 @@ export class DictionarySchema {
    * このメソッドは DB への書き込みを一切行いません。
    * `deserializer` にはデシリアライズ開始前 (`start` メソッドを呼ぶ前) のデシリアライザを渡してください。*/
   public async assertUploadable(this: Dictionary, deserializer: Deserializer): Promise<void> {
+    const limits = this.limits.resolve();
     await new Promise<void>((resolve, reject) => {
       const counts = {word: 0, example: 0};
       const queue = createSequentialQueue();
@@ -184,11 +190,11 @@ export class DictionarySchema {
         counts.word += words.length;
         const count = counts.word;
         queue.enqueue(async () => {
-          if (count > DICTIONARY_LIMITS.wordCountPerDictionary) {
+          if (count > limits.dictionary.wordCountPerDictionary) {
             throw new CustomError("wordCountExceeded");
           }
           for (const word of words) {
-            await word.assertLimits();
+            await word.assertLimits(limits.word);
           }
         });
       });
@@ -196,11 +202,11 @@ export class DictionarySchema {
         counts.example += examples.length;
         const count = counts.example;
         queue.enqueue(async () => {
-          if (count > DICTIONARY_LIMITS.exampleCountPerDictionary) {
+          if (count > limits.dictionary.exampleCountPerDictionary) {
             throw new CustomError("exampleCountExceeded");
           }
           for (const example of examples) {
-            await example.assertLimits();
+            await example.assertLimits(limits.example);
           }
         });
       });
@@ -402,8 +408,8 @@ export class DictionarySchema {
 
   /** テンプレート単語データ全体の大きさが上限を超えていないか検査します。
    * 上限は通常の単語データと共通です。*/
-  public assertTemplateWordSize(word: EditableTemplateWord): void {
-    if (calcDataSize(word) > WORD_LIMITS.size) {
+  public assertTemplateWordSize(this: Dictionary, word: EditableTemplateWord): void {
+    if (calcDataSize(word) > this.limits.resolve().word.size) {
       throw new CustomError("wordSizeExceeded");
     }
   }
@@ -625,7 +631,7 @@ export class DictionarySchema {
    * 単語データを新たに追加する場合にのみ呼び出します。*/
   public async assertWordCount(this: Dictionary): Promise<void> {
     const count = await this.countWords();
-    if (count >= DICTIONARY_LIMITS.wordCountPerDictionary) {
+    if (count >= this.limits.resolve().dictionary.wordCountPerDictionary) {
       throw new CustomError("wordCountExceeded");
     }
   }
@@ -634,7 +640,7 @@ export class DictionarySchema {
    * 例文データを新たに追加する場合にのみ呼び出します。*/
   public async assertExampleCount(this: Dictionary): Promise<void> {
     const count = await this.countExamples();
-    if (count >= DICTIONARY_LIMITS.exampleCountPerDictionary) {
+    if (count >= this.limits.resolve().dictionary.exampleCountPerDictionary) {
       throw new CustomError("exampleCountExceeded");
     }
   }
@@ -643,7 +649,7 @@ export class DictionarySchema {
    * 記事データを新たに追加する場合にのみ呼び出します。*/
   public async assertArticleCount(this: Dictionary): Promise<void> {
     const count = await this.countArticles();
-    if (count >= DICTIONARY_LIMITS.articleCountPerDictionary) {
+    if (count >= this.limits.resolve().dictionary.articleCountPerDictionary) {
       throw new CustomError("articleCountExceeded");
     }
   }

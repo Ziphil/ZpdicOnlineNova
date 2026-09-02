@@ -9,8 +9,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
-import {WORD_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
+import {ResolvedDictionaryWordLimits} from "/server/model/dictionary/limits/dictionary-word-limits";
 import {CustomError} from "/server/model/error";
 import {User, UserSchema} from "/server/model/user/user";
 import {OldWordModel} from "/server/model/word/old-word";
@@ -37,16 +38,16 @@ export class WordSchema {
   @prop({required: true})
   public number!: number;
 
-  @prop({required: true, maxlength: WORD_LIMITS.spellingLength})
+  @prop({required: true, maxlength: DICTIONARY_LIMITS.word.spellingLength})
   public name!: string;
 
-  @prop({maxlength: WORD_LIMITS.pronunciationLength})
+  @prop({maxlength: DICTIONARY_LIMITS.word.pronunciationLength})
   public pronunciation?: string;
 
-  @prop({required: true, type: String, innerOptions: {maxlength: WORD_LIMITS.tagLength}, outerOptions: {validate: createMaxCountValidator(WORD_LIMITS.tagCount)}})
+  @prop({required: true, type: String, innerOptions: {maxlength: DICTIONARY_LIMITS.word.tagLength}, outerOptions: {validate: createMaxCountValidator(DICTIONARY_LIMITS.word.tagCount)}})
   public tags!: Array<string>;
 
-  @prop({required: true, type: SectionSchema, outerOptions: {validate: createMaxCountValidator(WORD_LIMITS.sectionCount)}})
+  @prop({required: true, type: SectionSchema, outerOptions: {validate: createMaxCountValidator(DICTIONARY_LIMITS.word.sectionCount)}})
   public sections!: Array<SectionSchema>;
 
   @prop({ref: "UserSchema"})
@@ -63,6 +64,7 @@ export class WordSchema {
    * そうでない場合は、渡された単語データを新しいデータとして追加します。
    * 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。*/
   public static async edit(dictionary: Dictionary, word: EditableWord, user: User): Promise<Word> {
+    const limits = dictionary.limits.resolve().word;
     const currentWord = (word.number !== null) ? await WordModel.findOne().where("dictionary", dictionary).where("number", word.number) : null;
     let resultWord;
     if (currentWord) {
@@ -72,7 +74,7 @@ export class WordSchema {
       resultWord.createdDate = currentWord.createdDate;
       resultWord.updatedDate = new Date();
       await this.filterRelations(dictionary, resultWord);
-      await resultWord.assertLimits();
+      await resultWord.assertLimits(limits);
       await currentWord.deleteOneSoftly();
       await resultWord.save();
       if (currentWord.name !== resultWord.name) {
@@ -91,7 +93,7 @@ export class WordSchema {
       resultWord.createdDate = new Date();
       resultWord.updatedDate = new Date();
       await this.filterRelations(dictionary, resultWord);
-      await resultWord.assertLimits();
+      await resultWord.assertLimits(limits);
       await resultWord.save();
     }
     LogUtil.log("model/word/edit", {number: dictionary.number, currentId: currentWord?.id, resultId: resultWord.id});
@@ -114,6 +116,7 @@ export class WordSchema {
    * 指定された単語データにセクションが存在しない場合は、新たにセクションを作成し、そこに関連語を追加します。
    * 指定された単語データにセクションが存在する場合は、最初のセクションに関連語を追加します。 */
   public static async addRelation(dictionary: Dictionary, number: number, relation: Relation): Promise<Word | null> {
+    const limits = dictionary.limits.resolve().word;
     const currentWord = await WordModel.findOne().where("dictionary", dictionary).where("number", number);
     if (currentWord) {
       const existRelation = currentWord.sections.some((existingSection) => existingSection.relations.some((existingRelation) => existingRelation.number === relation.number));
@@ -127,7 +130,7 @@ export class WordSchema {
         }
         resultWord.createdDate = currentWord.createdDate;
         resultWord.updatedDate = new Date();
-        await resultWord.assertLimits();
+        await resultWord.assertLimits(limits);
         await currentWord.deleteOneSoftly();
         await resultWord.save();
         LogUtil.log("model/word/addRelation", {number: dictionary.number, currentId: currentWord?.id, resultId: resultWord.id});
@@ -142,14 +145,14 @@ export class WordSchema {
 
   /** この単語データが各種の上限に違反していないか検査します。
    * 保存する前にこのメソッドを呼び出します。*/
-  public async assertLimits(this: Word): Promise<void> {
-    this.assertSize();
+  public async assertLimits(this: Word, limits: ResolvedDictionaryWordLimits): Promise<void> {
+    this.assertSize(limits);
     await this.assertFields();
   }
 
   /** この単語データ全体の大きさが上限を超えていないか検査します。*/
-  public assertSize(this: Word): void {
-    if (calcDataSize(this) > WORD_LIMITS.size) {
+  public assertSize(this: Word, limits: ResolvedDictionaryWordLimits): void {
+    if (calcDataSize(this) > limits.size) {
       throw new CustomError("wordSizeExceeded");
     }
   }

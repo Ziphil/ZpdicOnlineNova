@@ -8,7 +8,7 @@ import {create} from "/client/component/create";
 import {preventDefault} from "/client/util/form";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
-import {WORD_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 import {EditTemplateWordFormBasicSection} from "./edit-template-word-form-basic-section";
 import {EditTemplateWordSpec} from "./edit-template-word-form-hook";
 import {EditTemplateWordFormSectionSection} from "./edit-template-word-form-section-section";
@@ -41,7 +41,7 @@ export const EditTemplateWordFormEditPart = create(
 
     const sections = sectionFieldArraySpec.fields;
 
-    const canAdd = sections.length < WORD_LIMITS.sectionCount;
+    const canAdd = sections.length < DICTIONARY_LIMITS.word.sectionCount;
 
     const setSections = useCallback(function (update: (sections: Array<any>) => Array<any>): void {
       setValue("sections", update(sections));

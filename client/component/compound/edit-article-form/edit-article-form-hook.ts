@@ -8,14 +8,14 @@ import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
 import {Article, Dictionary, EditableArticle} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
-import {ARTICLE_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 
 
 const SCHEMA = object({
   number: number().nullable().defined(),
-  tags: array(string().defined()).max(ARTICLE_LIMITS.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= ARTICLE_LIMITS.tagLength) ?? true).defined(),
-  title: string().max(ARTICLE_LIMITS.titleLength, "titleTooLong").defined(),
-  content: string().max(ARTICLE_LIMITS.contentLength, "contentTooLong").defined()
+  tags: array(string().defined()).max(DICTIONARY_LIMITS.article.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= DICTIONARY_LIMITS.article.tagLength) ?? true).defined(),
+  title: string().max(DICTIONARY_LIMITS.article.titleLength, "titleTooLong").defined(),
+  content: string().max(DICTIONARY_LIMITS.article.contentLength, "contentTooLong").defined()
 });
 const DEFAULT_VALUE = {
   number: null,

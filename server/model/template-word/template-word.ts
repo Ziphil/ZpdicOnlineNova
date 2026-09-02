@@ -2,7 +2,7 @@
 
 import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
-import {TEMPLATE_WORD_LIMITS, WORD_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS, TEMPLATE_WORD_LIMITS} from "/server/model/constant";
 import {TemplateSectionSchema} from "/server/model/template-word/template-section";
 import {createMaxCountValidator} from "/server/util/validation";
 
@@ -13,16 +13,16 @@ export class TemplateWordSchema {
   @prop({required: true, maxlength: TEMPLATE_WORD_LIMITS.titleLength})
   public title!: string;
 
-  @prop({required: true, maxlength: WORD_LIMITS.spellingLength})
+  @prop({required: true, maxlength: DICTIONARY_LIMITS.word.spellingLength})
   public name!: string;
 
-  @prop({required: true, maxlength: WORD_LIMITS.pronunciationLength})
+  @prop({required: true, maxlength: DICTIONARY_LIMITS.word.pronunciationLength})
   public pronunciation!: string;
 
-  @prop({required: true, type: String, innerOptions: {maxlength: WORD_LIMITS.tagLength}, outerOptions: {validate: createMaxCountValidator(WORD_LIMITS.tagCount)}})
+  @prop({required: true, type: String, innerOptions: {maxlength: DICTIONARY_LIMITS.word.tagLength}, outerOptions: {validate: createMaxCountValidator(DICTIONARY_LIMITS.word.tagCount)}})
   public tags!: Array<string>;
 
-  @prop({required: true, type: TemplateSectionSchema, outerOptions: {validate: createMaxCountValidator(WORD_LIMITS.sectionCount)}})
+  @prop({required: true, type: TemplateSectionSchema, outerOptions: {validate: createMaxCountValidator(DICTIONARY_LIMITS.word.sectionCount)}})
   public sections!: Array<TemplateSectionSchema>;
 
 }
