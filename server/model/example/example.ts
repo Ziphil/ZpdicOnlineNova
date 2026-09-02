@@ -150,9 +150,10 @@ export class ExampleSchema {
     await this.assertFields();
   }
 
-  /** この例文データ全体の大きさが上限を超えていないか検査します。*/
+  /** この例文データ全体の大きさが上限を超えていないか検査します。
+   * populate されている辞書データなどが計算に含まれないように、参照を解除したプレーンなデータに変換してから大きさを求めます。*/
   public assertSize(this: Example): void {
-    if (calcDataSize(this) > EXAMPLE_LIMITS.size) {
+    if (calcDataSize(this.toObject({depopulate: true})) > EXAMPLE_LIMITS.size) {
       throw new CustomError("exampleSizeExceeded");
     }
   }
