@@ -150,9 +150,10 @@ export class WordSchema {
     await this.assertFields();
   }
 
-  /** この単語データ全体の大きさが上限を超えていないか検査します。*/
+  /** この単語データ全体の大きさが上限を超えていないか検査します。
+   * populate されている辞書データなどが計算に含まれないように、参照を解除したプレーンなデータに変換してから大きさを求めます。*/
   public assertSize(this: Word, limits: ResolvedDictionaryWordLimits): void {
-    if (calcDataSize(this) > limits.size) {
+    if (calcDataSize(this.toObject({depopulate: true})) > limits.size) {
       throw new CustomError("wordSizeExceeded");
     }
   }
