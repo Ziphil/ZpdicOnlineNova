@@ -9,11 +9,11 @@ import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {switchResponse} from "/client/util/response";
 import {testFileSize} from "/client/util/validation";
 import {Dictionary} from "/server/internal/skeleton";
-import {DICTIONARY_LIMITS} from "/server/model/constant";
+import {SERVER_LIMITS} from "/server/model/constant";
 
 
 const SCHEMA = object({
-  file: mixed<File>().required("required").test(testFileSize(DICTIONARY_LIMITS.dictionary.uploadFileSize, "tooLarge"))
+  file: mixed<File>().required("required").test(testFileSize(SERVER_LIMITS.uploadFileSize, "tooLarge"))
 });
 const DEFAULT_VALUE = {
   file: undefined as any

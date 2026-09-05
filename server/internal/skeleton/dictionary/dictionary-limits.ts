@@ -4,7 +4,6 @@
 export interface DictionaryLimits {
 
   dictionary: {
-    uploadFileSize: number,
     wordCountPerDictionary: number,
     exampleCountPerDictionary: number,
     articleCountPerDictionary: number

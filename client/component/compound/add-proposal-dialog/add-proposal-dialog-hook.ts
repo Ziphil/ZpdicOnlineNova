@@ -8,12 +8,12 @@ import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
 import {Dictionary} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
-import {PROPOSAL_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 
 
 const SCHEMA = object({
-  name: string().max(PROPOSAL_LIMITS.termLength, "nameTooLong").required("nameRequired"),
-  comment: string().max(PROPOSAL_LIMITS.commentLength, "commentTooLong")
+  name: string().max(DICTIONARY_LIMITS.proposal.termLength, "nameTooLong").required("nameRequired"),
+  comment: string().max(DICTIONARY_LIMITS.proposal.commentLength, "commentTooLong")
 });
 const DEFAULT_VALUE = {
   name: ""

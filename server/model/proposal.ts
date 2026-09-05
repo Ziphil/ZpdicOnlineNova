@@ -8,7 +8,7 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import {PROPOSAL_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {QueryRange, WithSize} from "/server/util/query";
@@ -21,10 +21,10 @@ export class ProposalSchema {
   @prop({required: true, ref: "DictionarySchema"})
   public dictionary!: Ref<DictionarySchema>;
 
-  @prop({required: true, maxlength: PROPOSAL_LIMITS.termLength})
+  @prop({required: true, maxlength: DICTIONARY_LIMITS.proposal.termLength})
   public name!: string;
 
-  @prop({maxlength: PROPOSAL_LIMITS.commentLength})
+  @prop({maxlength: DICTIONARY_LIMITS.proposal.commentLength})
   public comment?: string;
 
   @prop({required: true})

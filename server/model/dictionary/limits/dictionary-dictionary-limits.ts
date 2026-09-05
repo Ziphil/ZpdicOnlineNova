@@ -7,9 +7,6 @@ import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
 export class DictionaryDictionaryLimitsSchema {
 
   @prop()
-  public uploadFileSize?: number;
-
-  @prop()
   public wordCountPerDictionary?: number;
 
   @prop()

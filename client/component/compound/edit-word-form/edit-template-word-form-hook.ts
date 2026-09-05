@@ -7,12 +7,12 @@ import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
 import {Dictionary, EditableTemplateWord, ObjectId, TemplateWord} from "/server/internal/skeleton";
-import {DICTIONARY_LIMITS, TEMPLATE_WORD_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 
 
 const SCHEMA = object({
   id: mixed<ObjectId>().nullable().defined(),
-  title: string().max(TEMPLATE_WORD_LIMITS.titleLength, "titleTooLong").defined(),
+  title: string().max(DICTIONARY_LIMITS.templateWord.titleLength, "titleTooLong").defined(),
   spelling: string().max(DICTIONARY_LIMITS.word.spellingLength, "spellingTooLong").defined(),
   pronunciation: string().max(DICTIONARY_LIMITS.word.pronunciationLength, "pronunciationTooLong").defined(),
   tags: array(string().defined()).max(DICTIONARY_LIMITS.word.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= DICTIONARY_LIMITS.word.tagLength) ?? true).defined(),

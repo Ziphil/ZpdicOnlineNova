@@ -6,7 +6,7 @@ import {FilledRequest, InternalRestController, Request, Response} from "/server/
 import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
 import {DictionaryCreator, DictionaryParameterCreator, MemberCreator, TemplateWordCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
-import {DictionaryModel, ExampleModel, OldDictionaryModel, OldExampleModel, OldWordModel, UserModel, WordModel} from "/server/model";
+import {DictionaryModel, ExampleModel, OldDictionaryModel, OldExampleModel, OldWordModel, SERVER_LIMITS, UserModel, WordModel} from "/server/model";
 import {sanitizeFileName} from "/server/util/misc";
 import {toObjectId} from "/server/util/mongo";
 import {QueryRange} from "/server/util/query";
@@ -159,7 +159,7 @@ export class DictionaryRestController extends InternalRestController {
     if (file !== undefined) {
       const path = file.path;
       const originalPath = file.originalname;
-      if (file.size <= dictionary.limits.resolve().dictionary.uploadFileSize) {
+      if (file.size <= SERVER_LIMITS.uploadFileSize) {
         const number = dictionary.number;
         const job = await this.agenda.now("uploadDictionary", {number, path, originalPath});
         const body = {id: job.attrs["_id"].toString()};

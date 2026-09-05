@@ -2,7 +2,7 @@
 
 import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
-import {DICTIONARY_LIMITS, TEMPLATE_WORD_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 import {TemplateSectionSchema} from "/server/model/template-word/template-section";
 import {createMaxCountValidator} from "/server/util/validation";
 
@@ -10,7 +10,7 @@ import {createMaxCountValidator} from "/server/util/validation";
 @modelOptions({schemaOptions: {autoCreate: false, collection: "templateWords"}})
 export class TemplateWordSchema {
 
-  @prop({required: true, maxlength: TEMPLATE_WORD_LIMITS.titleLength})
+  @prop({required: true, maxlength: DICTIONARY_LIMITS.templateWord.titleLength})
   public title!: string;
 
   @prop({required: true, maxlength: DICTIONARY_LIMITS.word.spellingLength})

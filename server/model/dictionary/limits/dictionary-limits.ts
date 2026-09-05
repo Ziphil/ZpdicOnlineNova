@@ -29,7 +29,6 @@ export class DictionaryLimitsSchema {
   public resolve(this: DictionaryLimits): ResolvedDictionaryLimits {
     const resolvedLimits = {
       dictionary: {
-        uploadFileSize: this.dictionary?.uploadFileSize ?? DEFAULT_DICTIONARY_LIMITS.dictionary.uploadFileSize,
         wordCountPerDictionary: this.dictionary?.wordCountPerDictionary ?? DEFAULT_DICTIONARY_LIMITS.dictionary.wordCountPerDictionary,
         exampleCountPerDictionary: this.dictionary?.exampleCountPerDictionary ?? DEFAULT_DICTIONARY_LIMITS.dictionary.exampleCountPerDictionary,
         articleCountPerDictionary: this.dictionary?.articleCountPerDictionary ?? DEFAULT_DICTIONARY_LIMITS.dictionary.articleCountPerDictionary

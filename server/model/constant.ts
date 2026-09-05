@@ -6,15 +6,10 @@ export const RETENTION_PERIODS = {
   oldData: 90 * 24 * 60 * 60
 } as const;
 
-export const USER_LIMITS = {
-  dictionaryCountPerUser: 50
-} as const;
-
 /** 辞書に登録されるデータの上限値のうち、システム全体で共通のものです。
  * スキーマ定義に直接埋め込まれるため辞書ごとに変えることはできず、辞書ごとに設定できる上限値の上界として機能します。*/
 export const DICTIONARY_LIMITS = {
   dictionary: {
-    uploadFileSize: 32 * 1024 * 1024,
     wordCountPerDictionary: 15000,
     exampleCountPerDictionary: 2000,
     articleCountPerDictionary: 200
@@ -49,12 +44,18 @@ export const DICTIONARY_LIMITS = {
     contentLength: 100000,
     tagCount: 10,
     tagLength: 100
+  },
+  templateWord: {
+    titleLength: 100
+  },
+  proposal: {
+    termLength: 200,
+    commentLength: 1000
   }
 } as const;
 
 export const DEFAULT_DICTIONARY_LIMITS = {
   dictionary: {
-    uploadFileSize: 32 * 1024 * 1024,
     wordCountPerDictionary: 15000,
     exampleCountPerDictionary: 2000,
     articleCountPerDictionary: 200
@@ -92,11 +93,10 @@ export const DEFAULT_DICTIONARY_LIMITS = {
   }
 } as const;
 
-export const TEMPLATE_WORD_LIMITS = {
-  titleLength: 100
+export const USER_LIMITS = {
+  dictionaryCountPerUser: 50
 } as const;
 
-export const PROPOSAL_LIMITS = {
-  termLength: 200,
-  commentLength: 1000
+export const SERVER_LIMITS = {
+  uploadFileSize: 32 * 1024 * 1024
 } as const;
