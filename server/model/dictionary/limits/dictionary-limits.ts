@@ -9,9 +9,6 @@ import {DictionaryExampleLimitsSchema} from "/server/model/dictionary/limits/dic
 import {DictionaryWordLimitsSchema} from "/server/model/dictionary/limits/dictionary-word-limits";
 
 
-/** 辞書ごとに設定される各種データの上限値です。
- * 全ての項目が省略可能で、省略された項目には `DEFAULT_DICTIONARY_LIMITS` の値が使われます。
- * したがって、上限値を変更していない辞書はこのオブジェクトが空になります。*/
 @modelOptions({schemaOptions: {autoCreate: false, collection: "dictionaryLimits"}})
 export class DictionaryLimitsSchema {
 

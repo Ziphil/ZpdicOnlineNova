@@ -18,6 +18,7 @@ import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil} fr
 import {DictionaryMaxNumbersModel, DictionaryMaxNumbersSchema} from "/server/model/dictionary/dictionary-max-numbers";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
 import {DictionaryLimitsModel, DictionaryLimitsSchema} from "/server/model/dictionary/limits/dictionary-limits";
+import {ResolvedDictionaryWordLimits} from "/server/model/dictionary/limits/dictionary-word-limits";
 import {OldDictionaryModel} from "/server/model/dictionary/old-dictionary";
 import {Serializer} from "/server/model/dictionary/serializer";
 import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
@@ -97,7 +98,7 @@ export class DictionarySchema {
   public updatedDate?: Date;
 
   public static async addEmpty(name: string, user: User): Promise<Dictionary> {
-    await this.assertCountPerUser(user);
+    await this.assertCountPerUserLimits(user);
     const dictionary = new DictionaryModel({
       user,
       number: await DictionaryModel.fetchNextNumber(),
@@ -392,7 +393,9 @@ export class DictionarySchema {
   }
 
   public async editTemplateWord(this: Dictionary, word: EditableTemplateWord): Promise<Dictionary> {
-    this.assertTemplateWordSize(word);
+    const limits = this.limits.resolve().word;
+    this.assertTemplateWordSizeLimits(word, limits);
+    this.assertTemplateWordFieldLimits(word, limits);
     const currentTemplateWords = this.settings.templateWords ?? [];
     const index = currentTemplateWords.findIndex((currentTemplateWord) => (currentTemplateWord as any)["_id"].toString() === word.id);
     if (index >= 0) {
@@ -401,22 +404,46 @@ export class DictionarySchema {
       currentTemplateWords.push(word);
     }
     this.settings.templateWords = currentTemplateWords;
-    await this.assertTemplateWordFields();
+    await this.assertTemplateWordSchema();
     await this.save();
     return this;
   }
 
   /** テンプレート単語データ全体の大きさが上限を超えていないか検査します。
    * 上限は通常の単語データと共通です。*/
-  public assertTemplateWordSize(this: Dictionary, word: EditableTemplateWord): void {
-    if (calcDataSize(word) > this.limits.resolve().word.size) {
+  public assertTemplateWordSizeLimits(word: EditableTemplateWord, limits: ResolvedDictionaryWordLimits): void {
+    if (calcDataSize(word) > limits.size) {
       throw new CustomError("wordSizeExceeded");
     }
   }
 
-  /** テンプレート単語データの各フィールドが上限を超えていないか検査します。
+  /** テンプレート単語データの各フィールドが辞書ごとの上限を超えていないか検査します。
+   * 見出しの長さを除いて、上限は通常の単語データと共通です。*/
+  public assertTemplateWordFieldLimits(word: EditableTemplateWord, limits: ResolvedDictionaryWordLimits): void {
+    const valid = (
+      word.name.length <= limits.spellingLength &&
+      word.pronunciation.length <= limits.pronunciationLength &&
+      word.tags.length <= limits.tagCount &&
+      word.tags.every((tag) => tag.length <= limits.tagLength) &&
+      word.sections.length <= limits.sectionCount &&
+      word.sections.every((section) => (
+        section.equivalents.length <= limits.equivalentCountPerSection &&
+        section.informations.length <= limits.informationCountPerSection &&
+        section.informations.every((information) => information.title.length <= limits.informationTitleLength && information.text.length <= limits.informationTextLength) &&
+        section.phrases.length <= limits.phraseCountPerSection &&
+        section.variations.length <= limits.variationCountPerSection &&
+        section.relations.length <= limits.relationCountPerSection
+      ))
+    );
+    if (!valid) {
+      throw new CustomError("invalidWord");
+    }
+  }
+
+  /** テンプレート単語データがスキーマの制約を満たしているか検査します。
+   * スキーマに設定されている上限は辞書ごとの上限の上界にあたるので、この検査は最後の防波堤として機能します。
    * 辞書データ全体ではなくテンプレート単語のみを検証することで、無関係なフィールドの不備が上限違反として報告されるのを防ぎます。*/
-  public async assertTemplateWordFields(this: Dictionary): Promise<void> {
+  public async assertTemplateWordSchema(this: Dictionary): Promise<void> {
     try {
       await this.validate(["settings.templateWords"]);
     } catch (error) {
@@ -629,7 +656,7 @@ export class DictionarySchema {
 
   /** この辞書に登録されている単語数が上限に達していないか検査します。
    * 単語データを新たに追加する場合にのみ呼び出します。*/
-  public async assertWordCount(this: Dictionary): Promise<void> {
+  public async assertWordCountLimits(this: Dictionary): Promise<void> {
     const count = await this.countWords();
     if (count >= this.limits.resolve().dictionary.wordCountPerDictionary) {
       throw new CustomError("wordCountExceeded");
@@ -638,7 +665,7 @@ export class DictionarySchema {
 
   /** この辞書に登録されている例文数が上限に達していないか検査します。
    * 例文データを新たに追加する場合にのみ呼び出します。*/
-  public async assertExampleCount(this: Dictionary): Promise<void> {
+  public async assertExampleCountLimits(this: Dictionary): Promise<void> {
     const count = await this.countExamples();
     if (count >= this.limits.resolve().dictionary.exampleCountPerDictionary) {
       throw new CustomError("exampleCountExceeded");
@@ -647,7 +674,7 @@ export class DictionarySchema {
 
   /** この辞書に登録されている記事数が上限に達していないか検査します。
    * 記事データを新たに追加する場合にのみ呼び出します。*/
-  public async assertArticleCount(this: Dictionary): Promise<void> {
+  public async assertArticleCountLimits(this: Dictionary): Promise<void> {
     const count = await this.countArticles();
     if (count >= this.limits.resolve().dictionary.articleCountPerDictionary) {
       throw new CustomError("articleCountExceeded");
@@ -657,7 +684,7 @@ export class DictionarySchema {
   /** 指定されたユーザーが作成した辞書数が上限に達していないか検査します。
    * 辞書を新たに作成する場合にのみ呼び出します。
    * 検査の対象が辞書ではなくユーザーなので、他の `assert` 系メソッドと異なり static になっています。*/
-  private static async assertCountPerUser(user: User): Promise<void> {
+  private static async assertCountPerUserLimits(user: User): Promise<void> {
     const count = await DictionaryModel.find().where("user", user).countDocuments();
     if (count >= USER_LIMITS.dictionaryCountPerUser) {
       throw new CustomError("dictionaryCountExceeded");

@@ -62,7 +62,7 @@ export class ArticleSchema {
       await resultArticle.assertLimits(limits);
       await resultArticle.save();
     } else {
-      await dictionary.assertArticleCount();
+      await dictionary.assertArticleCountLimits();
       if (article.number === null) {
         article.number = await dictionary.issueNextNumber("article");
       } else {
@@ -91,24 +91,31 @@ export class ArticleSchema {
     return article;
   }
 
-  /** この記事データが各種の上限に違反していないか検査します。
-   * 保存する前にこのメソッドを呼び出します。*/
   public async assertLimits(this: Article, limits: ResolvedDictionaryArticleLimits): Promise<void> {
-    this.assertSize(limits);
-    await this.assertFields();
+    this.assertSizeLimits(limits);
+    this.assertFieldLimits(limits);
+    await this.assertSchema();
   }
 
-  /** この記事データ全体の大きさが上限を超えていないか検査します。
-   * populate されている辞書データなどが計算に含まれないように、参照を解除したプレーンなデータに変換してから大きさを求めます。*/
-  public assertSize(this: Article, limits: ResolvedDictionaryArticleLimits): void {
+  public assertSizeLimits(this: Article, limits: ResolvedDictionaryArticleLimits): void {
     if (calcDataSize(this.toObject({depopulate: true})) > limits.size) {
       throw new CustomError("articleSizeExceeded");
     }
   }
 
-  /** この記事データの各フィールドが上限を超えていないか検査します。
-   * 既存の記事データを論理削除する前に検査することで、上限違反によって保存に失敗したときにデータが失われるのを防ぎます。*/
-  public async assertFields(this: Article): Promise<void> {
+  public assertFieldLimits(this: Article, limits: ResolvedDictionaryArticleLimits): void {
+    const valid = (
+      this.title.length <= limits.titleLength &&
+      this.content.length <= limits.contentLength &&
+      this.tags.length <= limits.tagCount &&
+      this.tags.every((tag) => tag.length <= limits.tagLength)
+    );
+    if (!valid) {
+      throw new CustomError("invalidArticle");
+    }
+  }
+
+  public async assertSchema(this: Article): Promise<void> {
     try {
       await this.validate();
     } catch (error) {

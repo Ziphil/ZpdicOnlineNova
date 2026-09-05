@@ -81,7 +81,7 @@ export class WordSchema {
         await this.correctRelationsByEdit(dictionary, resultWord);
       }
     } else {
-      await dictionary.assertWordCount();
+      await dictionary.assertWordCountLimits();
       if (word.number === null) {
         word.number = await dictionary.issueNextNumber("word");
       } else {
@@ -143,24 +143,40 @@ export class WordSchema {
     }
   }
 
-  /** この単語データが各種の上限に違反していないか検査します。
-   * 保存する前にこのメソッドを呼び出します。*/
   public async assertLimits(this: Word, limits: ResolvedDictionaryWordLimits): Promise<void> {
-    this.assertSize(limits);
-    await this.assertFields();
+    this.assertSizeLimits(limits);
+    this.assertFieldLimits(limits);
+    await this.assertSchema();
   }
 
-  /** この単語データ全体の大きさが上限を超えていないか検査します。
-   * populate されている辞書データなどが計算に含まれないように、参照を解除したプレーンなデータに変換してから大きさを求めます。*/
-  public assertSize(this: Word, limits: ResolvedDictionaryWordLimits): void {
+  public assertSizeLimits(this: Word, limits: ResolvedDictionaryWordLimits): void {
     if (calcDataSize(this.toObject({depopulate: true})) > limits.size) {
       throw new CustomError("wordSizeExceeded");
     }
   }
 
-  /** この単語データの各フィールドが上限を超えていないか検査します。
-   * 既存の単語データを論理削除する前に検査することで、上限違反によって保存に失敗したときにデータが失われるのを防ぎます。*/
-  public async assertFields(this: Word): Promise<void> {
+  public assertFieldLimits(this: Word, limits: ResolvedDictionaryWordLimits): void {
+    const valid = (
+      this.name.length <= limits.spellingLength &&
+      (this.pronunciation ?? "").length <= limits.pronunciationLength &&
+      this.tags.length <= limits.tagCount &&
+      this.tags.every((tag) => tag.length <= limits.tagLength) &&
+      this.sections.length <= limits.sectionCount &&
+      this.sections.every((section) => (
+        section.equivalents.length <= limits.equivalentCountPerSection &&
+        section.informations.length <= limits.informationCountPerSection &&
+        section.informations.every((information) => information.title.length <= limits.informationTitleLength && information.text.length <= limits.informationTextLength) &&
+        (section.phrases ?? []).length <= limits.phraseCountPerSection &&
+        section.variations.length <= limits.variationCountPerSection &&
+        section.relations.length <= limits.relationCountPerSection
+      ))
+    );
+    if (!valid) {
+      throw new CustomError("invalidWord");
+    }
+  }
+
+  public async assertSchema(this: Word): Promise<void> {
     try {
       await this.validate();
     } catch (error) {

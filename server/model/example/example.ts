@@ -109,7 +109,7 @@ export class ExampleSchema {
       await currentExample.deleteOneSoftly();
       await resultExample.save();
     } else {
-      await dictionary.assertExampleCount();
+      await dictionary.assertExampleCountLimits();
       if (example.number === null) {
         example.number = await dictionary.issueNextNumber("example");
       } else {
@@ -145,24 +145,33 @@ export class ExampleSchema {
     example.words = example.words.filter((word) => linkedWords.some((linkedWord) => linkedWord.number === word.number));
   }
 
-  /** この例文データが各種の上限に違反していないか検査します。
-   * 保存する前にこのメソッドを呼び出します。*/
   public async assertLimits(this: Example, limits: ResolvedDictionaryExampleLimits): Promise<void> {
-    this.assertSize(limits);
-    await this.assertFields();
+    this.assertSizeLimits(limits);
+    this.assertFieldLimits(limits);
+    await this.assertSchema();
   }
 
-  /** この例文データ全体の大きさが上限を超えていないか検査します。
-   * populate されている辞書データなどが計算に含まれないように、参照を解除したプレーンなデータに変換してから大きさを求めます。*/
-  public assertSize(this: Example, limits: ResolvedDictionaryExampleLimits): void {
+  public assertSizeLimits(this: Example, limits: ResolvedDictionaryExampleLimits): void {
     if (calcDataSize(this.toObject({depopulate: true})) > limits.size) {
       throw new CustomError("exampleSizeExceeded");
     }
   }
 
-  /** この例文データの各フィールドが上限を超えていないか検査します。
-   * 既存の例文データを論理削除する前に検査することで、上限違反によって保存に失敗したときにデータが失われるのを防ぎます。*/
-  public async assertFields(this: Example): Promise<void> {
+  public assertFieldLimits(this: Example, limits: ResolvedDictionaryExampleLimits): void {
+    const valid = (
+      this.sentence.length <= limits.sentenceLength &&
+      this.translation.length <= limits.translationLength &&
+      (this.supplement ?? "").length <= limits.supplementLength &&
+      (this.tags ?? []).length <= limits.tagCount &&
+      (this.tags ?? []).every((tag) => tag.length <= limits.tagLength) &&
+      this.words.length <= limits.wordCount
+    );
+    if (!valid) {
+      throw new CustomError("invalidExample");
+    }
+  }
+
+  public async assertSchema(this: Example): Promise<void> {
     try {
       await this.validate();
     } catch (error) {
