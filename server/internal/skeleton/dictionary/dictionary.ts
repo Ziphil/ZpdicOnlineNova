@@ -3,6 +3,7 @@
 import {Akrantiain} from "akrantiain";
 import {Zatlin} from "zatlin";
 import {ObjectId} from "/server/internal/skeleton/common";
+import {DictionaryLimits} from "/server/internal/skeleton/dictionary/dictionary-limits";
 import {DictionarySettings} from "/server/internal/skeleton/dictionary/dictionary-settings";
 import {User} from "/server/internal/skeleton/user";
 import type {DictionaryAuthority} from "/server/model";
@@ -19,6 +20,7 @@ export interface Dictionary {
   visibility: DictionaryVisibility;
   explanation?: string;
   settings: DictionarySettings;
+  limits: DictionaryLimits;
   createdDate?: string;
   updatedDate?: string;
 

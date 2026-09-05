@@ -1,6 +1,7 @@
 //
 
 import {isDocument} from "@typegoose/typegoose";
+import {DictionaryLimitsCreator} from "/server/internal/creator/dictionary/dictionary-limits";
 import {DictionarySettingsCreator} from "/server/internal/creator/dictionary/dictionary-settings";
 import {UserCreator} from "/server/internal/creator/user/user";
 import type {
@@ -27,6 +28,7 @@ export namespace DictionaryCreator {
       visibility: raw.visibility,
       explanation: raw.explanation,
       settings: DictionarySettingsCreator.skeletonize(raw.settings),
+      limits: DictionaryLimitsCreator.skeletonize(raw.limits),
       createdDate: raw.createdDate?.toISOString() ?? undefined,
       updatedDate: raw.updatedDate?.toISOString() ?? undefined
     } satisfies DictionarySkeleton;

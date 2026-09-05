@@ -1,5 +1,6 @@
 //
 
+export * from "./dictionary/dictionary-limits";
 export * from "./dictionary/dictionary-settings";
 export * from "./dictionary/dictionary";
 export * from "./dictionary-parameter/dictionary-parameter";
