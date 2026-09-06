@@ -8,7 +8,6 @@ import {create} from "/client/component/create";
 import {preventDefault} from "/client/util/form";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
-import {DICTIONARY_LIMITS} from "/server/model/constant";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
 import {EditWordSpec} from "./edit-word-form-hook";
 import {EditWordFormSectionSection} from "./edit-word-form-section-section";
@@ -41,7 +40,7 @@ export const EditWordFormEditPart = create(
 
     const sections = sectionFieldArraySpec.fields;
 
-    const canAdd = sections.length < DICTIONARY_LIMITS.word.sectionCount;
+    const canAdd = sections.length < dictionary.limits.word.sectionCount;
 
     const setSections = useCallback(function (update: (sections: Array<any>) => Array<any>): void {
       setValue("sections", update(sections));

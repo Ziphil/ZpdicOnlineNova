@@ -1,49 +1,15 @@
 //
 
 import {BaseSyntheticEvent, useMemo} from "react";
-import {Asserts, array, boolean, mixed, object, string} from "yup";
+import {ObjectSchema, array, boolean, mixed, object, string} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
-import {Dictionary, EditableTemplateWord, ObjectId, TemplateWord} from "/server/internal/skeleton";
+import {Dictionary, DictionaryLimits, EditableTemplateWord, ObjectId, TemplateWord} from "/server/internal/skeleton";
 import {DICTIONARY_LIMITS} from "/server/model/constant";
 
 
-const SCHEMA = object({
-  id: mixed<ObjectId>().nullable().defined(),
-  title: string().max(DICTIONARY_LIMITS.templateWord.titleLength, "titleTooLong").defined(),
-  spelling: string().max(DICTIONARY_LIMITS.word.spellingLength, "spellingTooLong").defined(),
-  pronunciation: string().max(DICTIONARY_LIMITS.word.pronunciationLength, "pronunciationTooLong").defined(),
-  tags: array(string().defined()).max(DICTIONARY_LIMITS.word.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= DICTIONARY_LIMITS.word.tagLength) ?? true).defined(),
-  sections: array(object({
-    equivalents: array(object({
-      titles: array(string().defined()).defined(),
-      termString: string().defined(),
-      hidden: boolean().defined()
-    })).defined(),
-    informations: array(object({
-      title: string().max(DICTIONARY_LIMITS.word.informationTitleLength, "informationTitleTooLong").defined(),
-      text: string().max(DICTIONARY_LIMITS.word.informationTextLength, "informationTextTooLong").defined(),
-      hidden: boolean().defined()
-    })).defined(),
-    phrases: array(object({
-      titles: array(string().defined()).defined(),
-      expression: string().defined(),
-      termString: string().defined(),
-      text: string().defined(),
-      hidden: boolean().defined()
-    })).defined(),
-    variations: array(object({
-      title: string().defined(),
-      spelling: string().defined(),
-      pronunciation: string().defined()
-    })).defined(),
-    relations: array(object({
-      titles: array(string().defined()).defined()
-    })).defined()
-  })).defined()
-});
 const DEFAULT_VALUE = {
   id: null,
   title: "",
@@ -62,7 +28,40 @@ const DEFAULT_VALUE = {
     relations: []
   }]
 } satisfies FormValue;
-type FormValue = Asserts<typeof SCHEMA>;
+type FormValue = {
+  id: ObjectId | null,
+  title: string,
+  spelling: string,
+  pronunciation: string,
+  tags: Array<string>,
+  sections: Array<{
+    equivalents: Array<{
+      titles: Array<string>,
+      termString: string,
+      hidden: boolean
+    }>,
+    informations: Array<{
+      title: string,
+      text: string,
+      hidden: boolean
+    }>,
+    phrases: Array<{
+      titles: Array<string>,
+      expression: string,
+      termString: string,
+      text: string,
+      hidden: boolean
+    }>,
+    variations: Array<{
+      title: string,
+      spelling: string,
+      pronunciation: string
+    }>,
+    relations: Array<{
+      titles: Array<string>
+    }>
+  }>
+};
 
 export type EditTemplateWordSpec = {
   form: UseFormReturn<FormValue>,
@@ -73,7 +72,8 @@ export type EditTemplateWordInitialData = ({type: "word", word: TemplateWord | E
 export const getEditTemplateWordFormValue = getFormValue;
 
 export function useEditTemplateWord(dictionary: Dictionary, initialData: EditTemplateWordInitialData | null, onSubmit?: () => unknown): EditTemplateWordSpec {
-  const form = useForm<FormValue>(SCHEMA, getFormValue(initialData), {});
+  const schema = useMemo(() => createSchema(dictionary.limits.word), [dictionary.limits.word]);
+  const form = useForm<FormValue>(schema, getFormValue(initialData), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -88,6 +88,44 @@ export function useEditTemplateWord(dictionary: Dictionary, initialData: EditTem
     });
   }), [dictionary, onSubmit, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};
+}
+
+function createSchema(limits: DictionaryLimits["word"]): ObjectSchema<FormValue> {
+  const schema = object({
+    id: mixed<ObjectId>().nullable().defined(),
+    title: string().max(DICTIONARY_LIMITS.templateWord.titleLength, "titleTooLong").defined(),
+    spelling: string().max(limits.spellingLength, "spellingTooLong").defined(),
+    pronunciation: string().max(limits.pronunciationLength, "pronunciationTooLong").defined(),
+    tags: array(string().defined()).max(limits.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= limits.tagLength) ?? true).defined(),
+    sections: array(object({
+      equivalents: array(object({
+        titles: array(string().defined()).defined(),
+        termString: string().defined(),
+        hidden: boolean().defined()
+      })).defined(),
+      informations: array(object({
+        title: string().max(limits.informationTitleLength, "informationTitleTooLong").defined(),
+        text: string().max(limits.informationTextLength, "informationTextTooLong").defined(),
+        hidden: boolean().defined()
+      })).defined(),
+      phrases: array(object({
+        titles: array(string().defined()).defined(),
+        expression: string().defined(),
+        termString: string().defined(),
+        text: string().defined(),
+        hidden: boolean().defined()
+      })).defined(),
+      variations: array(object({
+        title: string().defined(),
+        spelling: string().defined(),
+        pronunciation: string().defined()
+      })).defined(),
+      relations: array(object({
+        titles: array(string().defined()).defined()
+      })).defined()
+    })).defined()
+  });
+  return schema;
 }
 
 function getFormValue<D extends EditTemplateWordInitialData | null>(initialData: D): FormValue {

@@ -12,7 +12,6 @@ import {
 } from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
-import {DICTIONARY_LIMITS} from "/server/model/constant";
 import {EditTemplateWordSpec} from "./edit-template-word-form-hook";
 import {EditTemplateWordFormRelationItem} from "./edit-template-word-form-relation-item";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
@@ -39,7 +38,7 @@ export const EditTemplateWordFormRelationSection = create(
     const {control, getValues} = form;
     const {fields: relations, ...relationOperations} = useFieldArray({control, name: `sections.${sectionIndex}.relations`});
 
-    const canAdd = relations.length < DICTIONARY_LIMITS.word.relationCountPerSection;
+    const canAdd = relations.length < dictionary.limits.word.relationCountPerSection;
 
     const addRelation = useCallback(function (): void {
       relationOperations.append({
