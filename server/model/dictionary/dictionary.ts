@@ -191,7 +191,7 @@ export class DictionarySchema {
         counts.word += words.length;
         const count = counts.word;
         queue.enqueue(async () => {
-          if (count > limits.dictionary.wordCountPerDictionary) {
+          if (count > limits.dictionary.wordCount) {
             throw new CustomError("wordCountExceeded");
           }
           for (const word of words) {
@@ -203,7 +203,7 @@ export class DictionarySchema {
         counts.example += examples.length;
         const count = counts.example;
         queue.enqueue(async () => {
-          if (count > limits.dictionary.exampleCountPerDictionary) {
+          if (count > limits.dictionary.exampleCount) {
             throw new CustomError("exampleCountExceeded");
           }
           for (const example of examples) {
@@ -658,7 +658,7 @@ export class DictionarySchema {
    * 単語データを新たに追加する場合にのみ呼び出します。*/
   public async assertWordCountLimits(this: Dictionary): Promise<void> {
     const count = await this.countWords();
-    if (count >= this.limits.resolve().dictionary.wordCountPerDictionary) {
+    if (count >= this.limits.resolve().dictionary.wordCount) {
       throw new CustomError("wordCountExceeded");
     }
   }
@@ -667,7 +667,7 @@ export class DictionarySchema {
    * 例文データを新たに追加する場合にのみ呼び出します。*/
   public async assertExampleCountLimits(this: Dictionary): Promise<void> {
     const count = await this.countExamples();
-    if (count >= this.limits.resolve().dictionary.exampleCountPerDictionary) {
+    if (count >= this.limits.resolve().dictionary.exampleCount) {
       throw new CustomError("exampleCountExceeded");
     }
   }
@@ -676,7 +676,7 @@ export class DictionarySchema {
    * 記事データを新たに追加する場合にのみ呼び出します。*/
   public async assertArticleCountLimits(this: Dictionary): Promise<void> {
     const count = await this.countArticles();
-    if (count >= this.limits.resolve().dictionary.articleCountPerDictionary) {
+    if (count >= this.limits.resolve().dictionary.articleCount) {
       throw new CustomError("articleCountExceeded");
     }
   }

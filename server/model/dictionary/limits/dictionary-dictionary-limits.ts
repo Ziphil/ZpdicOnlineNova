@@ -7,13 +7,13 @@ import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
 export class DictionaryDictionaryLimitsSchema {
 
   @prop()
-  public wordCountPerDictionary?: number;
+  public wordCount?: number;
 
   @prop()
-  public exampleCountPerDictionary?: number;
+  public exampleCount?: number;
 
   @prop()
-  public articleCountPerDictionary?: number;
+  public articleCount?: number;
 
 }
 

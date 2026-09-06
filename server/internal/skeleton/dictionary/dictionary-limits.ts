@@ -4,9 +4,9 @@
 export interface DictionaryLimits {
 
   dictionary: {
-    wordCountPerDictionary: number,
-    exampleCountPerDictionary: number,
-    articleCountPerDictionary: number
+    wordCount: number,
+    exampleCount: number,
+    articleCount: number
   };
   word: {
     size: number,
