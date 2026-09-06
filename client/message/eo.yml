@@ -472,13 +472,13 @@ editArticleForm:
     confirm: "Konfirmi"
   error:
     titleTooLong: >-
-      La titolo devas enhavi maksimume 200 signojn.
+      La titolo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     contentTooLong: >-
-      La enhavo devas enhavi maksimume 100,000 signojn.
+      La enhavo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     tagsTooMany: >-
-      Vi povas agordi maksimume 10 etikedojn.
+      Vi povas agordi maksimume {max, plural, one {# etikedon} other {# etikedojn}}.
     tagTooLong: >-
-      Ĉiu etikedo devas enhavi maksimume 100 signojn.
+      Ĉiu etikedo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
 editExampleDialog:
   button:
     confirm: "Konfirmi"
@@ -507,15 +507,15 @@ editExampleForm:
     confirm: "Konfirmi"
   error:
     sentenceTooLong: >-
-      La ekzempla frazo devas enhavi maksimume 5,000 signojn.
+      La ekzempla frazo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     translationTooLong: >-
-      La traduko devas enhavi maksimume 5,000 signojn.
+      La traduko devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     supplementTooLong: >-
-      La suplementa klarigo devas enhavi maksimume 5,000 signojn.
+      La suplementa klarigo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     tagsTooMany: >-
-      Vi povas agordi maksimume 10 etikedojn.
+      Vi povas agordi maksimume {max, plural, one {# etikedon} other {# etikedojn}}.
     tagTooLong: >-
-      Ĉiu etikedo devas enhavi maksimume 100 signojn.
+      Ĉiu etikedo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
 editWordDialog:
   button:
     confirm: "Konfirmi"
@@ -586,19 +586,19 @@ editWordForm:
     confirm: "Konfirmi"
   error:
     titleTooLong: >-
-      La ŝablona nomo devas enhavi maksimume 100 signojn.
+      La ŝablona nomo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     spellingTooLong: >-
-      La literumo devas enhavi maksimume 200 signojn.
+      La literumo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     pronunciationTooLong: >-
-      La prononco devas enhavi maksimume 200 signojn.
+      La prononco devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     tagsTooMany: >-
-      Vi povas agordi maksimume 20 etikedojn.
+      Vi povas agordi maksimume {max, plural, one {# etikedon} other {# etikedojn}}.
     tagTooLong: >-
-      Ĉiu etikedo devas enhavi maksimume 100 signojn.
+      Ĉiu etikedo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     informationTitleTooLong: >-
-      La titolo devas enhavi maksimume 100 signojn.
+      La titolo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     informationTextTooLong: >-
-      La enhavo devas enhavi maksimume 20,000 signojn.
+      La enhavo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
 exampleList:
   empty: "Neniuj kongruaj ekzemplaj frazoj estis trovitaj"
   noWord: "Neniuj vortoj specifitaj"

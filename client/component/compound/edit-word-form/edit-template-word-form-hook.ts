@@ -6,6 +6,7 @@ import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
+import {testArrayStringLength} from "/client/util/validation";
 import {Dictionary, DictionaryLimits, EditableTemplateWord, ObjectId, TemplateWord} from "/server/internal/skeleton";
 import {DICTIONARY_LIMITS} from "/server/model/constant";
 
@@ -96,7 +97,7 @@ function createSchema(limits: DictionaryLimits["word"]): ObjectSchema<FormValue>
     title: string().max(DICTIONARY_LIMITS.templateWord.titleLength, "titleTooLong").defined(),
     spelling: string().max(limits.spellingLength, "spellingTooLong").defined(),
     pronunciation: string().max(limits.pronunciationLength, "pronunciationTooLong").defined(),
-    tags: array(string().defined()).max(limits.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= limits.tagLength) ?? true).defined(),
+    tags: array(string().defined()).max(limits.tagCount, "tagsTooMany").test(testArrayStringLength(limits.tagLength, "tagTooLong")).defined(),
     sections: array(object({
       equivalents: array(object({
         titles: array(string().defined()).defined(),

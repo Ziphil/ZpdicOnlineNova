@@ -6,6 +6,7 @@ import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
+import {testArrayStringLength} from "/client/util/validation";
 import {Article, Dictionary, DictionaryLimits, EditableArticle} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
 
@@ -56,7 +57,7 @@ export function useEditArticle(dictionary: Dictionary, initialData: EditArticleI
 function createSchema(limits: DictionaryLimits["article"]): ObjectSchema<FormValue> {
   const schema = object({
     number: number().nullable().defined(),
-    tags: array(string().defined()).max(limits.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= limits.tagLength) ?? true).defined(),
+    tags: array(string().defined()).max(limits.tagCount, "tagsTooMany").test(testArrayStringLength(limits.tagLength, "tagTooLong")).defined(),
     title: string().max(limits.titleLength, "titleTooLong").defined(),
     content: string().max(limits.contentLength, "contentTooLong").defined()
   });

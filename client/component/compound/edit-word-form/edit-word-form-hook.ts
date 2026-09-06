@@ -10,6 +10,7 @@ import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {escapeRegexp} from "/client/util/misc";
 import {switchResponse} from "/client/util/response";
+import {testArrayStringLength} from "/client/util/validation";
 import {Dictionary, DictionaryLimits, EditableWord, Relation, TemplateWord, Word} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
 
@@ -103,7 +104,7 @@ function createSchema(limits: DictionaryLimits["word"]): ObjectSchema<FormValue>
     number: number().nullable().defined(),
     spelling: string().max(limits.spellingLength, "spellingTooLong").defined(),
     pronunciation: string().max(limits.pronunciationLength, "pronunciationTooLong").defined(),
-    tags: array(string().defined()).max(limits.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= limits.tagLength) ?? true).defined(),
+    tags: array(string().defined()).max(limits.tagCount, "tagsTooMany").test(testArrayStringLength(limits.tagLength, "tagTooLong")).defined(),
     sections: array(object({
       equivalents: array(object({
         titles: array(string().defined()).defined(),

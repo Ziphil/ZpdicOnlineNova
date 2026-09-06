@@ -7,6 +7,7 @@ import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
+import {testArrayStringLength} from "/client/util/validation";
 import {Dictionary, DictionaryLimits, EditableExample, Example, ExampleOffer, LinkedExampleOffer} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
 
@@ -68,7 +69,7 @@ function createSchema(limits: DictionaryLimits["example"]): ObjectSchema<FormVal
     sentence: string().max(limits.sentenceLength, "sentenceTooLong").defined(),
     translation: string().max(limits.translationLength, "translationTooLong").defined(),
     supplement: string().max(limits.supplementLength, "supplementTooLong").defined(),
-    tags: array(string().defined()).max(limits.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= limits.tagLength) ?? true).defined(),
+    tags: array(string().defined()).max(limits.tagCount, "tagsTooMany").test(testArrayStringLength(limits.tagLength, "tagTooLong")).defined(),
     words: array(mixed<RelationWord>().nullable().defined()).defined(),
     offer: mixed<LinkedExampleOffer>().nullable().defined()
   });

@@ -472,13 +472,13 @@ editArticleForm:
     confirm: "Confirm"
   error:
     titleTooLong: >-
-      The title must be at most 200 characters long.
+      The title must be at most {max, plural, one {# character} other {# characters}} long.
     contentTooLong: >-
-      The content must be at most 100,000 characters long.
+      The content must be at most {max, plural, one {# character} other {# characters}} long.
     tagsTooMany: >-
-      You can set at most 10 tags.
+      You can set at most {max, plural, one {# tag} other {# tags}}.
     tagTooLong: >-
-      Each tag must be at most 100 characters long.
+      Each tag must be at most {max, plural, one {# character} other {# characters}} long.
 editExampleDialog:
   button:
     confirm: "Confirm"
@@ -507,15 +507,15 @@ editExampleForm:
     confirm: "Confirm"
   error:
     sentenceTooLong: >-
-      The example sentence must be at most 5,000 characters long.
+      The example sentence must be at most {max, plural, one {# character} other {# characters}} long.
     translationTooLong: >-
-      The translation must be at most 5,000 characters long.
+      The translation must be at most {max, plural, one {# character} other {# characters}} long.
     supplementTooLong: >-
-      The supplementary explanation must be at most 5,000 characters long.
+      The supplementary explanation must be at most {max, plural, one {# character} other {# characters}} long.
     tagsTooMany: >-
-      You can set at most 10 tags.
+      You can set at most {max, plural, one {# tag} other {# tags}}.
     tagTooLong: >-
-      Each tag must be at most 100 characters long.
+      Each tag must be at most {max, plural, one {# character} other {# characters}} long.
 editWordDialog:
   button:
     confirm: "Confirm"
@@ -586,19 +586,19 @@ editWordForm:
     confirm: "Confirm"
   error:
     titleTooLong: >-
-      The template name must be at most 100 characters long.
+      The template name must be at most {max, plural, one {# character} other {# characters}} long.
     spellingTooLong: >-
-      The spelling must be at most 200 characters long.
+      The spelling must be at most {max, plural, one {# character} other {# characters}} long.
     pronunciationTooLong: >-
-      The pronunciation must be at most 200 characters long.
+      The pronunciation must be at most {max, plural, one {# character} other {# characters}} long.
     tagsTooMany: >-
-      You can set at most 20 tags.
+      You can set at most {max, plural, one {# tag} other {# tags}}.
     tagTooLong: >-
-      Each tag must be at most 100 characters long.
+      Each tag must be at most {max, plural, one {# character} other {# characters}} long.
     informationTitleTooLong: >-
-      The title must be at most 100 characters long.
+      The title must be at most {max, plural, one {# character} other {# characters}} long.
     informationTextTooLong: >-
-      The content must be at most 20,000 characters long.
+      The content must be at most {max, plural, one {# character} other {# characters}} long.
 exampleList:
   empty: "No matching example sentences were found"
   noWord: "No words specified"

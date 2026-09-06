@@ -473,13 +473,13 @@ editArticleForm:
     confirm: "決定"
   error:
     titleTooLong: >-
-      タイトルは 200 文字以内で入力してください。
+      タイトルは {max, number} 文字以内で入力してください。
     contentTooLong: >-
-      本文は 100,000 文字以内で入力してください。
+      本文は {max, number} 文字以内で入力してください。
     tagsTooMany: >-
-      タグは 10 個以内で設定してください。
+      タグは {max, number} 個以内で設定してください。
     tagTooLong: >-
-      各タグは 100 文字以内で入力してください。
+      各タグは {max, number} 文字以内で入力してください。
 editExampleDialog:
   button:
     confirm: "決定"
@@ -508,15 +508,15 @@ editExampleForm:
     confirm: "決定"
   error:
     sentenceTooLong: >-
-      例文は 5,000 文字以内で入力してください。
+      例文は {max, number} 文字以内で入力してください。
     translationTooLong: >-
-      自然言語訳は 5,000 文字以内で入力してください。
+      自然言語訳は {max, number} 文字以内で入力してください。
     supplementTooLong: >-
-      補足説明は 5,000 文字以内で入力してください。
+      補足説明は {max, number} 文字以内で入力してください。
     tagsTooMany: >-
-      タグは 10 個以内で設定してください。
+      タグは {max, number} 個以内で設定してください。
     tagTooLong: >-
-      各タグは 100 文字以内で入力してください。
+      各タグは {max, number} 文字以内で入力してください。
 editWordDialog:
   button:
     confirm: "決定"
@@ -587,19 +587,19 @@ editWordForm:
     confirm: "決定"
   error:
     titleTooLong: >-
-      テンプレート名は 100 文字以内で入力してください。
+      テンプレート名は {max, number} 文字以内で入力してください。
     spellingTooLong: >-
-      綴りは 200 文字以内で入力してください。
+      綴りは {max, number} 文字以内で入力してください。
     pronunciationTooLong: >-
-      発音記号は 200 文字以内で入力してください。
+      発音記号は {max, number} 文字以内で入力してください。
     tagsTooMany: >-
-      タグは 20 個以内で設定してください。
+      タグは {max, number} 個以内で設定してください。
     tagTooLong: >-
-      各タグは 100 文字以内で入力してください。
+      各タグは {max, number} 文字以内で入力してください。
     informationTitleTooLong: >-
-      見出しは 100 文字以内で入力してください。
+      見出しは {max, number} 文字以内で入力してください。
     informationTextTooLong: >-
-      内容は 20,000 文字以内で入力してください。
+      内容は {max, number} 文字以内で入力してください。
 exampleList:
   empty: "該当する例文は見つかりませんでした"
   noWord: "使用単語が登録されていません"
