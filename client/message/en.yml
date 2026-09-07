@@ -179,7 +179,7 @@ toast:
     dictionarySizeTooLarge: |-
       The file is too large.
     dictionaryCountExceeded: |-
-      No more dictionaries can be created.
+      No more dictionaries can be owned.
     noSuchWord: |-
       This word does not exist.
     wordCountExceeded: |-

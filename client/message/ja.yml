@@ -179,7 +179,7 @@ toast:
     dictionarySizeTooLarge: |-
       ファイルのサイズが大きすぎます。
     dictionaryCountExceeded: |-
-      これ以上辞書を作成することはできません。
+      これ以上辞書を所有することはできません。
     noSuchWord: |-
       この単語は存在しません。
     wordCountExceeded: |-

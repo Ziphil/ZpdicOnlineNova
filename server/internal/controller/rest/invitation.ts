@@ -45,7 +45,7 @@ export class InvitationRestController extends InternalRestController {
         if (CustomError.isCustomError(error, "forbidden")) {
           InternalRestController.respondForbiddenError(response);
         } else {
-          throw error;
+          InternalRestController.respondByCustomError(response, ["dictionaryCountExceeded"], error);
         }
       }
     } else {

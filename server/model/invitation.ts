@@ -102,6 +102,7 @@ export class InvitationSchema {
   }
 
   public async respondTransfer(this: Invitation, user: User): Promise<void> {
+    await user.assertDictionaryCountLimits();
     await this.populate("dictionary");
     if (isDocument(this.dictionary)) {
       await this.dictionary.populate("user");

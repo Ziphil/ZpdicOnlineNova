@@ -129,7 +129,7 @@ type ServerSpecs = {
     request: {id: ObjectId, accept: boolean},
     response: {
       success: Invitation,
-      error: CustomError<"noSuchInvitation">
+      error: CustomError<"noSuchInvitation" | "dictionaryCountExceeded">
     }
   },
   editWord: {
