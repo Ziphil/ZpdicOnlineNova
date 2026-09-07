@@ -33,6 +33,7 @@ export * from "./user/api-credential";
 export * from "./user/reset-token";
 export * from "./user/terms-agreement";
 export * from "./user/user";
+export * from "./user/user-limits";
 export * from "./user/user-social";
 export * from "./word/equivalent";
 export * from "./word/information";

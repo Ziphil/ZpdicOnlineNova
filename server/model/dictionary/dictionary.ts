@@ -12,7 +12,6 @@ import {
 import Fuse from "fuse.js";
 import type {DictionaryStatistics, WordSpellingFrequencies} from "/server/internal/skeleton";
 import {Article, ArticleModel, EditableArticle} from "/server/model/article/article";
-import {USER_LIMITS} from "/server/model/constant";
 import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil} from "/server/model/dictionary/dictionary-authority";
 import {DictionaryMaxNumbersModel, DictionaryMaxNumbersSchema} from "/server/model/dictionary/dictionary-max-numbers";
@@ -686,7 +685,7 @@ export class DictionarySchema {
    * 検査の対象が辞書ではなくユーザーなので、他の `assert` 系メソッドと異なり static になっています。*/
   private static async assertCountPerUserLimits(user: User): Promise<void> {
     const count = await DictionaryModel.find().where("user", user).countDocuments();
-    if (count >= USER_LIMITS.dictionaryCount) {
+    if (count >= user.limits.resolve().dictionaryCount) {
       throw new CustomError("dictionaryCountExceeded");
     }
   }

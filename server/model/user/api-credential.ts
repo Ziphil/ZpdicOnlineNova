@@ -13,7 +13,6 @@ import {User, UserSchema} from "/server/model/user/user";
 import {createRandomString} from "/server/util/misc";
 
 
-const MAX_API_CREDENTIAL_COUNT = 1;
 const DEFAULT_API_CREDENTIAL_LIMIT = 10;
 
 
@@ -40,7 +39,7 @@ export class ApiCredentialSchema {
    * すでにそのユーザーが保持している API キーの数が上限に達している場合は、`apiCredentialCountExceeded` エラーを発生させます。*/
   public static async issue(user: User): Promise<ApiCredential> {
     const count = await ApiCredentialModel.countDocuments().where("user", user);
-    if (count < MAX_API_CREDENTIAL_COUNT) {
+    if (count < user.limits.resolve().apiCredentialCount) {
       const key = createRandomString(64, false);
       const limit = DEFAULT_API_CREDENTIAL_LIMIT;
       const createdDate = new Date();

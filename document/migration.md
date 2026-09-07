@@ -355,4 +355,5 @@ Mongo Shell で該当のデータベースを選択した後、以下を実行�
 ```js
 db.dictionaries.updateMany({"limits": {$exists: false}}, {$set: {"limits": {}}});
 db.oldDictionaries.updateMany({"limits": {$exists: false}}, {$set: {"limits": {}}});
+db.users.updateMany({"limits": {$exists: false}}, {$set: {"limits": {}}});
 ```

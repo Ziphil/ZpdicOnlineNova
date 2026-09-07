@@ -86,8 +86,11 @@ export const DEFAULT_DICTIONARY_LIMITS = {
   }
 } as const;
 
-export const USER_LIMITS = {
-  dictionaryCount: 50
+/** ユーザーごとの上限値が設定されていない場合に使われる既定値です。
+ * データの個数の上限はスキーマ定義で表現できないため、これを上界とする全体の上限は存在しません。*/
+export const DEFAULT_USER_LIMITS = {
+  dictionaryCount: 50,
+  apiCredentialCount: 1
 } as const;
 
 export const SERVER_LIMITS = {
