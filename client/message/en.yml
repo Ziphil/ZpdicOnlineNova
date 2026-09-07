@@ -688,6 +688,9 @@ issueUserResetTokenForm:
       Enter an email address.
   button:
     confirm: "Send"
+limitView:
+  value: "<largeNumber>{current, number}</largeNumber><slash>/</slash><smallNumber>{max, number}</smallNumber>"
+  percent: "<number>{percent, number, ::.00}</number><unit>%</unit>"
 loginForm:
   label:
     name: "Username"
@@ -1191,6 +1194,11 @@ changeMySocialsForm:
 commonForm:
   button:
     change: "Change"
+dictionaryLimitsView:
+  label:
+    wordCount: "Words"
+    exampleCount: "Example sentences"
+    articleCount: "Articles"
 discardDictionaryButton:
   button:
     submit: "Delete"
@@ -1422,7 +1430,7 @@ dictionarySettingGeneralPart:
       Please be certain, as there is no going back.
 dictionarySettingLimitPart:
   heading:
-    limits: "Usage limits"
+    usage: "Usage"
 dictionarySettingPart:
   tab:
     general: "General"

@@ -688,6 +688,9 @@ issueUserResetTokenForm:
       Enigu retpoŝtan adreson.
   button:
     confirm: "Sendi"
+limitView:
+  value: "<largeNumber>{current, number}</largeNumber><slash>/</slash><smallNumber>{max, number}</smallNumber>"
+  percent: "<number>{percent, number, ::.00}</number><unit>%</unit>"
 loginForm:
   label:
     name: "Salutnomo"
@@ -1191,6 +1194,11 @@ changeMySocialsForm:
 commonForm:
   button:
     change: "Ŝanĝi"
+dictionaryLimitsView:
+  label:
+    wordCount: "Vortoj"
+    exampleCount: "Ekzemplaj frazoj"
+    articleCount: "Artikoloj"
 discardDictionaryButton:
   button:
     submit: "Forigi"
@@ -1422,7 +1430,7 @@ dictionarySettingGeneralPart:
       Bonvolu esti certa, ĉar ne estas reiro.
 dictionarySettingLimitPart:
   heading:
-    limits: "Uzadaj limoj"
+    usage: "Uzado"
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"

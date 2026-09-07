@@ -23,7 +23,7 @@ export const DictionarySettingLimitPart = create(
     return (
       <div styleName="root" {...rest}>
         <section styleName="section">
-          <h3 styleName="heading">{trans("heading.limits")}</h3>
+          <h3 styleName="heading">{trans("heading.usage")}</h3>
           <DictionaryLimitsView dictionary={dictionary}/>
         </section>
       </div>

@@ -4,60 +4,10 @@
 
 
 .root {
-  @include theme("light") {
-    --meter-bar-color: #{leveled-color("primary", 5)};
-    --meter-background-color: #{leveled-color("gray", 1)};
-  }
 }
 
 .list {
   row-gap: 3zu;
   display: flex;
   flex-direction: column;
-}
-
-.meter-info {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-}
-
-.meter-info-left {
-}
-
-.meter-info-right {
-}
-
-.meter {
-  height: 2zu;
-  border-radius: 2zu;
-  background-color: var(--meter-background-color);
-  overflow: hidden;
-}
-
-.meter-bar {
-  height: 100%;
-  border-radius: 8zu;
-  background-color: var(--meter-bar-color);
-}
-
-.large-number {
-  font-size: 6zu;
-}
-
-.small-number {
-  font-size: 4zu;
-  color: var(--glob-mute-text-color);
-}
-
-.slash {
-  margin-inline: var(--glob-blank-gap);
-  font-size: 4zu;  
-  color: var(--glob-mute-text-color);
-}
-
-.unit {
-  margin-inline-start: var(--glob-blank-gap);
-  font-size: 4zu;
-  color: var(--glob-mute-text-color);
 }
