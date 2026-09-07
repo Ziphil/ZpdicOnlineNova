@@ -87,7 +87,7 @@ export const DEFAULT_DICTIONARY_LIMITS = {
 } as const;
 
 export const USER_LIMITS = {
-  dictionaryCountPerUser: 50
+  dictionaryCount: 50
 } as const;
 
 export const SERVER_LIMITS = {
