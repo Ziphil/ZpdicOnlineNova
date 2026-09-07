@@ -1190,6 +1190,19 @@ changeMySocialsForm:
 commonForm:
   button:
     change: "変更"
+dictionaryLimitsView:
+  label:
+    wordCount: "単語数"
+    exampleCount: "例文数"
+    articleCount: "記事数"
+  value:
+    wordCount: "<largeNumber>{current, number}</largeNumber><slash>/</slash><smallNumber>{max, number}</smallNumber>"
+    exampleCount: "<largeNumber>{current, number}</largeNumber><slash>/</slash><smallNumber>{max, number}</smallNumber>"
+    articleCount: "<largeNumber>{current, number}</largeNumber><slash>/</slash><smallNumber>{max, number}</smallNumber>"
+  percent:
+    wordCount: "<number>{percent, number, ::.00}</number><unit>%</unit>"
+    exampleCount: "<number>{percent, number, ::.00}</number><unit>%</unit>"
+    articleCount: "<number>{percent, number, ::.00}</number><unit>%</unit>"
 discardDictionaryButton:
   button:
     submit: "削除"

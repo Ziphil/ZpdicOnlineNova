@@ -45,7 +45,8 @@ export function useEditArticle(dictionary: Dictionary, initialData: EditArticleI
       form.setValue("number", article.number);
       await Promise.all([
         invalidateResponses("searchArticles", (query) => query.number === dictionary.number),
-        invalidateResponses("fetchArticle", (query) => query.number === dictionary.number && query.articleNumber === article.number)
+        invalidateResponses("fetchArticle", (query) => query.number === dictionary.number && query.articleNumber === article.number),
+        invalidateResponses("fetchDictionarySizes", (query) => query.number === dictionary.number)
       ]);
       await onSubmit?.(query.article);
       dispatchSuccessToast((adding) ? "addArticle" : "changeArticle");

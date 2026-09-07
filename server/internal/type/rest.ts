@@ -296,7 +296,7 @@ type ServerSpecs = {
   fetchDictionarySizes: {
     request: {number: number},
     response: {
-      success: {word: number, example: number},
+      success: {word: number, example: number, article: number},
       error: CustomError<"noSuchDictionary">
     }
   },

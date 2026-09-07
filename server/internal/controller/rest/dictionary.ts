@@ -246,8 +246,8 @@ export class DictionaryRestController extends InternalRestController {
   @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchDictionarySizes", "dictionary">, response: Response<"fetchDictionarySizes">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const [wordCount, exampleCount] = await Promise.all([dictionary.countWords(), dictionary.countExamples()]);
-    const body = {word: wordCount, example: exampleCount};
+    const [wordCount, exampleCount, articleCount] = await Promise.all([dictionary.countWords(), dictionary.countExamples(), dictionary.countArticles()]);
+    const body = {word: wordCount, example: exampleCount, article: articleCount};
     InternalRestController.respond(response, body);
   }
 
