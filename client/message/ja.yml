@@ -883,8 +883,6 @@ userHeader:
     dictionary: "辞書"
     notification: "通知"
     setting: "設定"
-    appearance: "外観"
-    developer: "開発向け"
   button:
     issueActivateToken: "メールを再送信"
   callout:
@@ -1284,6 +1282,11 @@ uploadDictionaryForm:
     error: >-
       インポートに失敗しました。
 
+userLimitsView:
+  label:
+    dictionaryCount: "辞書数"
+    apiCredentialCount: "API キー数"
+
 # page
 contactPage:
   title: "お問い合わせ"
@@ -1560,7 +1563,7 @@ userDeveloperPart:
     apiKey: >-
       API 機能は試験運用中です。
       予告なしに挙動が変更される可能性があります。
-userSettingPart:
+userSettingGeneralPart:
   heading:
     screenName: "ニックネーム"
     avatar: "アイコン"
@@ -1573,6 +1576,15 @@ userSettingPart:
     discard: >-
       アカウントを削除すると、所有している辞書も全て削除されます。
       後からデータを復元することはできないので、慎重に行ってください。
+userSettingLimitPart:
+  heading:
+    usage: "利用状況"
+userSettingPart:
+  tab:
+    general: "一般"
+    appearance: "外観"
+    developer: "開発向け"
+    limit: "利用制限"
 
 # other
 alert:

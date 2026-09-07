@@ -4,11 +4,10 @@
 
 
 .root {
-  display: flex;
-  flex-direction: column;
 }
 
-.tab-list {
-  margin-block-start: 4zu;
-  margin-block-end: 10zu;
+.list {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
 }

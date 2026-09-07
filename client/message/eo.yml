@@ -883,8 +883,6 @@ userHeader:
     dictionary: "Vortaroj"
     notification: "Sciigoj"
     setting: "Agordoj"
-    appearance: "Šajno"
-    developer: "Programado"
   button:
     issueActivateToken: "Resendi retpoŝton"
   callout:
@@ -1283,6 +1281,11 @@ uploadDictionaryForm:
     error: >-
       Malsukcesis importi vian dosieron.
 
+userLimitsView:
+  label:
+    dictionaryCount: "Vortaroj"
+    apiCredentialCount: "API-ŝlosiloj"
+
 # page
 contactPage:
   title: "Kontakti"
@@ -1557,7 +1560,7 @@ userDeveloperPart:
     apiKey: >-
       Tiu funkcio estas ankoraŭ en testado.
       Bonvolu noti, ke la konduto povas ŝanĝiĝi sen antaŭa averto.
-userSettingPart:
+userSettingGeneralPart:
   heading:
     screenName: "Kromnomo"
     avatar: "Bildeto"
@@ -1570,6 +1573,15 @@ userSettingPart:
     discard: >-
       Forigi vian konton ankaŭ forigos ĉiujn vortarojn kiujn vi posedas.
       Bonvolu esti certa, ĉar ne estas reiro.
+userSettingLimitPart:
+  heading:
+    usage: "Uzado"
+userSettingPart:
+  tab:
+    general: "Ĝenerala"
+    appearance: "Aspekto"
+    developer: "Programisto"
+    limit: "Limoj"
 
 # other
 alert:

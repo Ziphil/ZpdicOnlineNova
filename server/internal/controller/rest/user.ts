@@ -238,6 +238,15 @@ export class UserRestController extends InternalRestController {
     }
   }
 
+  @post("/fetchMySizes")
+  @before(checkMe())
+  public async [Symbol()](request: Request<"fetchMySizes">, response: Response<"fetchMySizes">): Promise<void> {
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
+    const [dictionaryCount, apiCredentialCount] = await Promise.all([me.countDictionaries(), me.countApiCredentials()]);
+    const body = {dictionary: dictionaryCount, apiCredential: apiCredentialCount};
+    InternalRestController.respond(response, body);
+  }
+
   @post("/fetchMyApiCredentials")
   @before(checkMe())
   public async [Symbol()](request: Request<"fetchMyApiCredentials">, response: Response<"fetchMyApiCredentials">): Promise<void> {

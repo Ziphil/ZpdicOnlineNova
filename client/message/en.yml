@@ -883,8 +883,6 @@ userHeader:
     dictionary: "Dictionaries"
     notification: "Notifications"
     setting: "Settings"
-    appearance: "Appearance"
-    developer: "Developer"
   button:
     issueActivateToken: "Resend email"
   callout:
@@ -1283,6 +1281,11 @@ uploadDictionaryForm:
     error: >-
       Failed to import your file.
 
+userLimitsView:
+  label:
+    dictionaryCount: "Dictionaries"
+    apiCredentialCount: "API keys"
+
 # page
 contactPage:
   title: "Contact"
@@ -1557,7 +1560,7 @@ userDeveloperPart:
     apiKey: >-
       This feature is under testing.
       Please note that the behaviour may change without prior notice.
-userSettingPart:
+userSettingGeneralPart:
   heading:
     screenName: "Nickname"
     avatar: "Avatar icon"
@@ -1570,6 +1573,15 @@ userSettingPart:
     discard: >-
       Deleting your account will also delete all the dictionaries you own.
       Please be certain, as there is no going back.
+userSettingLimitPart:
+  heading:
+    usage: "Usage"
+userSettingPart:
+  tab:
+    general: "General"
+    appearance: "Appearance"
+    developer: "Developer"
+    limit: "Limits"
 
 # other
 alert:

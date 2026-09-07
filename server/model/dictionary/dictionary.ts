@@ -684,7 +684,7 @@ export class DictionarySchema {
    * 辞書を新たに作成する場合にのみ呼び出します。
    * 検査の対象が辞書ではなくユーザーなので、他の `assert` 系メソッドと異なり static になっています。*/
   private static async assertCountPerUserLimits(user: User): Promise<void> {
-    const count = await DictionaryModel.find().where("user", user).countDocuments();
+    const count = await user.countDictionaries();
     if (count >= user.limits.resolve().dictionaryCount) {
       throw new CustomError("dictionaryCountExceeded");
     }

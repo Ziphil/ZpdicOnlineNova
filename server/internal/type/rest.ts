@@ -580,6 +580,13 @@ type ServerSpecs = {
       error: CustomError<"apiCredentialCountExceeded">
     }
   },
+  fetchMySizes: {
+    request: {},
+    response: {
+      success: {dictionary: number, apiCredential: number},
+      error: never
+    }
+  },
   fetchMyApiCredentials: {
     request: {},
     response: {

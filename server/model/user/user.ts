@@ -233,6 +233,16 @@ export class UserSchema {
     return this;
   }
 
+  public async countDictionaries(this: User): Promise<number> {
+    const count = await DictionaryModel.find().where("user", this).countDocuments();
+    return count;
+  }
+
+  public async countApiCredentials(this: User): Promise<number> {
+    const count = await ApiCredentialModel.find().where("user", this).countDocuments();
+    return count;
+  }
+
   /** 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。
    * データベースへの保存は行わないので、別途保存処理を行ってください。*/
   public async encryptPassword(password: string): Promise<void> {

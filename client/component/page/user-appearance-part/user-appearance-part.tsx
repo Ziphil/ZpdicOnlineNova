@@ -1,11 +1,9 @@
 //
 
 import {ReactElement} from "react";
-import {useParams} from "react-router";
 import {AdditionalProps, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {ChangeAppearanceForm} from "/client/component/form/change-appearance-form";
-import {useMe} from "/client/hook/auth";
 
 
 export const UserAppearancePart = create(
@@ -14,21 +12,18 @@ export const UserAppearancePart = create(
     ...rest
   }: {
     className?: string
-  } & AdditionalProps): ReactElement | null {
+  } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("userAppearancePart");
 
-    const me = useMe();
-    const {name} = useParams();
-
-    return (me !== null && me.name === name) ? (
+    return (
       <div styleName="root" {...rest}>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.appearance")}</h3>
           <ChangeAppearanceForm/>
         </section>
       </div>
-    ) : null;
+    );
 
   }
 );
