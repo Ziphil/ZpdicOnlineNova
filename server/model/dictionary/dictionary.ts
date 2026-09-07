@@ -97,7 +97,7 @@ export class DictionarySchema {
   public updatedDate?: Date;
 
   public static async addEmpty(name: string, user: User): Promise<Dictionary> {
-    await this.assertCountPerUserLimits(user);
+    await user.assertDictionaryCountLimits();
     const dictionary = new DictionaryModel({
       user,
       number: await DictionaryModel.fetchNextNumber(),
@@ -677,16 +677,6 @@ export class DictionarySchema {
     const count = await this.countArticles();
     if (count >= this.limits.resolve().dictionary.articleCount) {
       throw new CustomError("articleCountExceeded");
-    }
-  }
-
-  /** 指定されたユーザーが作成した辞書数が上限に達していないか検査します。
-   * 辞書を新たに作成する場合にのみ呼び出します。
-   * 検査の対象が辞書ではなくユーザーなので、他の `assert` 系メソッドと異なり static になっています。*/
-  private static async assertCountPerUserLimits(user: User): Promise<void> {
-    const count = await user.countDictionaries();
-    if (count >= user.limits.resolve().dictionaryCount) {
-      throw new CustomError("dictionaryCountExceeded");
     }
   }
 

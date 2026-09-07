@@ -243,6 +243,20 @@ export class UserSchema {
     return count;
   }
 
+  public async assertDictionaryCountLimits(this: User): Promise<void> {
+    const count = await this.countDictionaries();
+    if (count >= this.limits.resolve().dictionaryCount) {
+      throw new CustomError("dictionaryCountExceeded");
+    }
+  }
+
+  public async assertApiCredentialCountLimits(this: User): Promise<void> {
+    const count = await this.countApiCredentials();
+    if (count >= this.limits.resolve().apiCredentialCount) {
+      throw new CustomError("apiCredentialCountExceeded");
+    }
+  }
+
   /** 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。
    * データベースへの保存は行わないので、別途保存処理を行ってください。*/
   public async encryptPassword(password: string): Promise<void> {
