@@ -28,6 +28,7 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path="editing" lazy={() => import("/client/component/page/dictionary-setting-editing-part")}/>
         <Route path="template" lazy={() => import("/client/component/page/dictionary-setting-template-part")}/>
         <Route path="file" lazy={() => import("/client/component/page/dictionary-setting-file-part")}/>
+        <Route path="limits" lazy={() => import("/client/component/page/dictionary-setting-limit-part")}/>
         <Route path="permissions" lazy={() => import("/client/component/page/dictionary-setting-authority-part")}/>
       </Route>
     </Route>

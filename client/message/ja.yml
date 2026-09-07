@@ -1423,6 +1423,9 @@ dictionarySettingGeneralPart:
     discard: >-
       この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。
       後からデータを復元することはできないので、慎重に行ってください。
+dictionarySettingLimitPart:
+  heading:
+    limits: "利用上限値"
 dictionarySettingPart:
   tab:
     general: "一般"
@@ -1431,6 +1434,7 @@ dictionarySettingPart:
     template: "テンプレート"
     authority: "権限"
     file: "ファイル"
+    limit: "利用制限"
 dictionarySettingTemplatePart:
   heading:
     templateWords: "テンプレート"

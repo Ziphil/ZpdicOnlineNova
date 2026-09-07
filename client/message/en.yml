@@ -1420,6 +1420,9 @@ dictionarySettingGeneralPart:
     discard: >-
       Deleting this dictionary will also delete all the relevant data, including words and example sentences.
       Please be certain, as there is no going back.
+dictionarySettingLimitPart:
+  heading:
+    limits: "Usage limits"
 dictionarySettingPart:
   tab:
     general: "General"
@@ -1427,7 +1430,8 @@ dictionarySettingPart:
     editing: "Editing"
     template: "Templates"
     authority: "Permissions"
-    file: "File"
+    file: "Files"
+    limit: "Limits"
 dictionarySettingTemplatePart:
   heading:
     templateWords: "Templates"

@@ -1420,6 +1420,9 @@ dictionarySettingGeneralPart:
     discard: >-
       Forigi tiun vortaron ankaŭ forigos ĉiujn rilatajn datumojn, inkluzive de vortoj kaj ekzemplaj frazoj.
       Bonvolu esti certa, ĉar ne estas reiro.
+dictionarySettingLimitPart:
+  heading:
+    limits: "Uzadaj limoj"
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"
@@ -1427,7 +1430,8 @@ dictionarySettingPart:
     editing: "Redaktado"
     template: "Ŝablonoj"
     authority: "Permesoj"
-    file: "Dosiero"
+    file: "Dosieroj"
+    limit: "Limoj"
 dictionarySettingTemplatePart:
   heading:
     templateWords: "Ŝablonoj"
