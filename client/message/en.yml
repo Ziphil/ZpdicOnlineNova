@@ -51,6 +51,9 @@ toast:
       The template has been deleted.
     discardMember: |-
       The permission has been revoked.
+    applyIncreaseDictionaryLimit: |-
+      Your application for a limit increase has been submitted.
+      A confirmation email has been sent to you.
     addWord: |-
       A new word has been created.
     changeWord: |-
@@ -262,6 +265,9 @@ toast:
     messageNotFound: |-
       There is no message configured for this popup.
       Please notify the administrator.
+    rateLimitExceeded: |-
+      This operation has been repeated too many times in a short period, so it was not accepted.
+      Please wait a while and try again.
     unexpected: |-
       An unexpected error occurred.
       Please notify the administrator.
@@ -365,6 +371,29 @@ apiCredentialList:
   toast:
     copy: >-
       Copied your API key.
+applyIncreaseDictionaryLimitDialog:
+  heading: "Application for a limit increase"
+  message:
+    - >-
+      Applying is free of charge.
+      The administrator will review the content and respond to you individually.
+    - >-
+      We would also be encouraged if you would consider supporting us from the "Send gift" button below.
+      Please rest assured that whether or not you offer support has no effect on whether the limit is increased or on the order in which applications are handled.
+  label:
+    kind:
+      label: "Item to increase"
+      wordCount: "Words"
+      exampleCount: "Example sentences"
+      articleCount: "Articles"
+      change: "{current, number}<arrow>→</arrow>{after, number}"
+    message: "Reason for the application"
+  button:
+    gift: "Send gift"
+    confirm: "Apply"
+  error:
+    messageRequired: >-
+      Please enter the reason for the application.
 articleList:
   empty: "No articles are created"
   button:
@@ -1197,6 +1226,8 @@ dictionaryLimitsView:
     wordCount: "Words"
     exampleCount: "Example sentences"
     articleCount: "Articles"
+  button:
+    apply: "Apply for an increase"
 discardDictionaryButton:
   button:
     submit: "Delete"

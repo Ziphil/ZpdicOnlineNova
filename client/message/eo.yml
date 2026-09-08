@@ -51,6 +51,9 @@ toast:
       La ŝablono forigitas.
     discardMember: |-
       La permeso revokitas.
+    applyIncreaseDictionaryLimit: |-
+      Via peto por plialtigo de la limo estas sendita.
+      Konfirma retmesaĝo estas sendita al vi.
     addWord: |-
       Nova vorto kreitas.
     changeWord: |-
@@ -262,6 +265,9 @@ toast:
     messageNotFound: |-
       Ne estas mesaĝo agordita por tiu ŝprucfenestro.
       Bonvolu sciigi la administranton.
+    rateLimitExceeded: |-
+      Ĉi tiu operacio estas ripetita tro multfoje en mallonga tempo, do ĝi ne estas akceptita.
+      Bonvolu atendi iom da tempo kaj reprovi.
     unexpected: |-
       Neatendita eraro okazis.
       Bonvolu sciigi la administranton.
@@ -365,6 +371,29 @@ apiCredentialList:
   toast:
     copy: >-
       Via API-ŝlosilo estas kopiita.
+applyIncreaseDictionaryLimitDialog:
+  heading: "Peto por plialtigo de limo"
+  message:
+    - >-
+      La peto estas senpaga.
+      La administranto kontrolos la enhavon kaj respondos al vi individue.
+    - >-
+      Ni ankaŭ ĝojus, se vi konsiderus subteni nin per la butono "Sendi donacon" sube.
+      Bonvolu esti trankvila, ĉar la subteno neniel influas, ĉu la limo estas plialtigita aŭ en kiu ordo la petoj estas traktataj.
+  label:
+    kind:
+      label: "Plialtigota ero"
+      wordCount: "Vortoj"
+      exampleCount: "Ekzemplaj frazoj"
+      articleCount: "Artikoloj"
+      change: "{current, number}<arrow>→</arrow>{after, number}"
+    message: "Kialo de la peto"
+  button:
+    gift: "Sendi donacon"
+    confirm: "Peti"
+  error:
+    messageRequired: >-
+      Bonvolu enigi la kialon de la peto.
 articleList:
   empty: "Neniuj artikoloj estas kreitaj"
   button:
@@ -1197,6 +1226,8 @@ dictionaryLimitsView:
     wordCount: "Vortoj"
     exampleCount: "Ekzemplaj frazoj"
     articleCount: "Artikoloj"
+  button:
+    apply: "Peti plialtigon"
 discardDictionaryButton:
   button:
     submit: "Forigi"

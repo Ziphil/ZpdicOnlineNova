@@ -84,6 +84,12 @@ export function determineErrorToastType<N extends ProcessName>(response: Pick<Co
     return "serverNotFound";
   } else if (status === 408) {
     return "requestTimeout";
+  } else if (status === 429) {
+    if (typeof body === "object" && body !== null && "error" in body && "type" in body && typeof body.type === "string") {
+      return body.type;
+    } else {
+      return "rateLimitExceeded";
+    }
   } else if (status === 500 || status === 503) {
     return "serverError";
   } else if (status === 504) {
