@@ -743,7 +743,7 @@ issueUserResetTokenForm:
     confirm: "Send"
 limitView:
   value: "<largeNumber>{current, number}</largeNumber><slash>/</slash><smallNumber>{max, number}</smallNumber>"
-  percent: "<number>{percent, number, ::.00}</number><unit>%</unit>"
+  percent: "<number>{percent, number, ::.00}</number><unit>% used</unit>"
 loginForm:
   label:
     name: "Username"

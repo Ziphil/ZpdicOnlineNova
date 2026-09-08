@@ -744,7 +744,7 @@ issueUserResetTokenForm:
     confirm: "送信"
 limitView:
   value: "<largeNumber>{current, number}</largeNumber><slash>/</slash><smallNumber>{max, number}</smallNumber>"
-  percent: "<number>{percent, number, ::.00}</number><unit>%</unit>"
+  percent: "<number>{percent, number, ::.00}</number><unit>% 使用中</unit>"
 loginForm:
   label:
     name: "ユーザー ID"
