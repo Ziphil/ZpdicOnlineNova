@@ -1,7 +1,9 @@
 //
 
+import {faUp} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, ControlContainer, ControlLabel, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, ControlContainer, ControlLabel, GeneralIcon, useTrans} from "zographia";
+import {ApplyIncreaseUserLimitDialog} from "/client/component/compound/apply-increase-user-limit-dialog";
 import {LimitView} from "/client/component/compound/limit-view";
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
@@ -24,15 +26,24 @@ export const UserLimitsView = create(
 
     return (
       <div styleName="root" {...rest}>
-        <div styleName="list">
-          <ControlContainer label={false}>
-            <ControlLabel>{trans("label.dictionaryCount")}</ControlLabel>
-            <LimitView current={sizes.dictionary} max={me.limits.dictionaryCount}/>
-          </ControlContainer>
-          <ControlContainer label={false}>
-            <ControlLabel>{trans("label.apiCredentialCount")}</ControlLabel>
-            <LimitView current={sizes.apiCredential} max={me.limits.apiCredentialCount}/>
-          </ControlContainer>
+        <ControlContainer label={false}>
+          <ControlLabel>{trans("label.dictionaryCount")}</ControlLabel>
+          <LimitView current={sizes.dictionary} max={me.limits.dictionaryCount}/>
+        </ControlContainer>
+        <ControlContainer label={false}>
+          <ControlLabel>{trans("label.apiCredentialCount")}</ControlLabel>
+          <LimitView current={sizes.apiCredential} max={me.limits.apiCredentialCount}/>
+        </ControlContainer>
+        <div styleName="button">
+          <ApplyIncreaseUserLimitDialog
+            me={me}
+            trigger={(
+              <Button variant="light">
+                <ButtonIconbag><GeneralIcon icon={faUp}/></ButtonIconbag>
+                {trans("button.apply")}
+              </Button>
+            )}
+          />
         </div>
       </div>
     );

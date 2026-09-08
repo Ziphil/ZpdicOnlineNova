@@ -1,13 +1,4 @@
 @charset "utf-8";
 
 @use "zographia/source/component/function.scss" as *;
-
-
-.root {
-}
-
-.list {
-  row-gap: 3zu;
-  display: flex;
-  flex-direction: column;
-}
+@forward "../common.scss";

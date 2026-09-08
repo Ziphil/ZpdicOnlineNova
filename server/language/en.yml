@@ -54,6 +54,29 @@ mail:
       If you like, please consider supporting the development from the page below.
       Please rest assured that whether or not you offer support has no effect on whether the limit is increased or on the order in which applications are handled.
       ・ https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L
+  notifyIncreaseUserLimit:
+    subject: "Application for a limit increase: @{userName}"
+    text: |
+      This is an application from the limit increase form.
+      ・ Applicant: @{userName} ({email})
+      ・ Item: {kind, select, dictionaryCount {number of dictionaries} apiCredentialCount {number of API keys} other {}}
+      ・ Current count: {count, number} / {limit, number}
+      {message}
+  receiveIncreaseUserLimit:
+    subject: "Your application for a limit increase has been received"
+    text: |
+      Your application for a limit increase has been received with the following content.
+      ・ Item: {kind, select, dictionaryCount {number of dictionaries} apiCredentialCount {number of API keys} other {}}
+      ・ Current limit: {limit, number}
+      {message}
+
+      The developer will review the content and respond individually.
+      As this service is run by an individual, it may take some time before you hear back.
+
+      ZpDIC Online is developed and maintained by an individual, and it costs tens of thousands of yen per year just to keep the service running.
+      If you like, please consider supporting the development from the page below.
+      Please rest assured that whether or not you offer support has no effect on whether the limit is increased or on the order in which applications are handled.
+      ・ https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L
   footer: |
     ────────────────────
     ZpDIC Online

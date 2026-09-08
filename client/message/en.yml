@@ -54,6 +54,9 @@ toast:
     applyIncreaseDictionaryLimit: |-
       Your application for a limit increase has been submitted.
       A confirmation email has been sent to you.
+    applyIncreaseUserLimit: |-
+      Your application for a limit increase has been submitted.
+      A confirmation email has been sent to you.
     addWord: |-
       A new word has been created.
     changeWord: |-
@@ -386,6 +389,27 @@ applyIncreaseDictionaryLimitDialog:
       wordCount: "Words"
       exampleCount: "Example sentences"
       articleCount: "Articles"
+      change: "{current, number}<arrow>→</arrow>{after, number}"
+    message: "Reason for the application"
+  button:
+    gift: "Send gift"
+    confirm: "Apply"
+  error:
+    messageRequired: >-
+      Please enter the reason for the application.
+applyIncreaseUserLimitDialog:
+  heading: "Application for a limit increase"
+  message:
+    - >-
+      Applying is free of charge.
+      The administrator will review the content and respond to you individually.
+    - >-
+      We would also be encouraged if you would consider supporting us from the "Send gift" button below.
+      Please rest assured that whether or not you offer support has no effect on whether the limit is increased or on the order in which applications are handled.
+  label:
+    kind:
+      label: "Item to increase"
+      dictionaryCount: "Dictionaries"
       change: "{current, number}<arrow>→</arrow>{after, number}"
     message: "Reason for the application"
   button:
@@ -1316,6 +1340,8 @@ userLimitsView:
   label:
     dictionaryCount: "Dictionaries"
     apiCredentialCount: "API keys"
+  button:
+    apply: "Apply for an increase"
 
 # page
 contactPage:

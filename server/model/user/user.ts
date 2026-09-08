@@ -243,6 +243,18 @@ export class UserSchema {
     return count;
   }
 
+  public async fetchCountWithLimit(this: User, kind: "dictionaryCount" | "apiCredentialCount"): Promise<{count: number, limit: number}> {
+    const count = await (async () => {
+      if (kind === "dictionaryCount") {
+        return await this.countDictionaries();
+      } else {
+        return await this.countApiCredentials();
+      }
+    })();
+    const limit = this.limits.resolve()[kind];
+    return {count, limit};
+  }
+
   public async assertDictionaryCountLimits(this: User): Promise<void> {
     const count = await this.countDictionaries();
     if (count >= this.limits.resolve().dictionaryCount) {

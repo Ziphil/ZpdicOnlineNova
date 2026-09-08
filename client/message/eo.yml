@@ -54,6 +54,9 @@ toast:
     applyIncreaseDictionaryLimit: |-
       Via peto por plialtigo de la limo estas sendita.
       Konfirma retmesaĝo estas sendita al vi.
+    applyIncreaseUserLimit: |-
+      Via peto por plialtigo de la limo estas sendita.
+      Konfirma retmesaĝo estas sendita al vi.
     addWord: |-
       Nova vorto kreitas.
     changeWord: |-
@@ -386,6 +389,27 @@ applyIncreaseDictionaryLimitDialog:
       wordCount: "Vortoj"
       exampleCount: "Ekzemplaj frazoj"
       articleCount: "Artikoloj"
+      change: "{current, number}<arrow>→</arrow>{after, number}"
+    message: "Kialo de la peto"
+  button:
+    gift: "Sendi donacon"
+    confirm: "Peti"
+  error:
+    messageRequired: >-
+      Bonvolu enigi la kialon de la peto.
+applyIncreaseUserLimitDialog:
+  heading: "Peto por plialtigo de limo"
+  message:
+    - >-
+      La peto estas senpaga.
+      La administranto kontrolos la enhavon kaj respondos al vi individue.
+    - >-
+      Ni ankaŭ ĝojus, se vi konsiderus subteni nin per la butono "Sendi donacon" sube.
+      Bonvolu esti trankvila, ĉar la subteno neniel influas, ĉu la limo estas plialtigita aŭ en kiu ordo la petoj estas traktataj.
+  label:
+    kind:
+      label: "Plialtigota ero"
+      dictionaryCount: "Vortaroj"
       change: "{current, number}<arrow>→</arrow>{after, number}"
     message: "Kialo de la peto"
   button:
@@ -1316,6 +1340,8 @@ userLimitsView:
   label:
     dictionaryCount: "Vortaroj"
     apiCredentialCount: "API-ŝlosiloj"
+  button:
+    apply: "Peti plialtigon"
 
 # page
 contactPage:

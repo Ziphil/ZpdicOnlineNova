@@ -594,6 +594,13 @@ type ServerSpecs = {
       error: never
     }
   },
+  applyIncreaseUserLimit: {
+    request: {kind: "dictionaryCount", message: string},
+    response: {
+      success: null,
+      error: CustomError<"administratorNotFound">
+    }
+  },
   fetchMyApiCredentials: {
     request: {},
     response: {

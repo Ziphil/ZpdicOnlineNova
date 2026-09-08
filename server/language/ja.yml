@@ -54,6 +54,29 @@ mail:
       もしよろしければ、以下のページから支援をご検討いただけると励みになります。
       なお、支援の有無は上限引き上げの可否や対応の順序には影響しませんので、ご安心ください。
       ・ https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L
+  notifyIncreaseUserLimit:
+    subject: "利用上限の引き上げの申請: @{userName}"
+    text: |
+      利用上限の引き上げの申請フォームから申請がありました。
+      ・ 申請者: @{userName} ({email})
+      ・ 項目: {kind, select, dictionaryCount {辞書数} apiCredentialCount {API キー数} other {}}
+      ・ 現在の個数: {count, number} / {limit, number}
+      {message}
+  receiveIncreaseUserLimit:
+    subject: "利用上限の引き上げの申請を受け付けました"
+    text: |
+      以下の内容で、利用上限の引き上げの申請を受け付けました。
+      ・ 項目: {kind, select, dictionaryCount {辞書数} apiCredentialCount {API キー数} other {}}
+      ・ 現在の上限値: {limit, number}
+      {message}
+
+      内容を確認の上、開発者が個別に対応いたします。
+      個人で運営しているため、対応までしばらくお時間をいただく場合がありますので、ご了承ください。
+
+      ZpDIC Online は個人によって開発および保守されており、サービスの維持だけで年間数万円ほどかかってしまいます。
+      もしよろしければ、以下のページから支援をご検討いただけると励みになります。
+      なお、支援の有無は上限引き上げの可否や対応の順序には影響しませんので、ご安心ください。
+      ・ https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L
   footer: |
     ────────────────────
     ZpDIC Online
