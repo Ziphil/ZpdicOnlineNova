@@ -97,6 +97,13 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
+  applyIncreaseDictionaryLimit: {
+    request: {number: number, kind: "wordCount" | "exampleCount" | "articleCount", message: string},
+    response: {
+      success: null,
+      error: CustomError<"noSuchDictionary" | "administratorNotFound">
+    }
+  },
   editDictionaryTemplateWord: {
     request: {number: number, word: EditableTemplateWord},
     response: {

@@ -29,6 +29,31 @@ mail:
       ・ メールアドレス: {email}
       ・ 件名: {subject}
       {text}
+  notifyIncreaseDictionaryLimit:
+    subject: "上限引き上げの申請: {dictionaryName}"
+    text: |
+      上限引き上げの申請フォームから申請がありました。
+      ・ 申請者: @{userName} ({email})
+      ・ 辞書: {dictionaryName} (#{dictionaryNumber})
+      ・ 項目: {kind, select, wordCount {単語数} exampleCount {例文数} articleCount {記事数} other {}}
+      ・ 現在の個数: {count, number} / {limit, number}
+      {message}
+  receiveIncreaseDictionaryLimit:
+    subject: "上限引き上げの申請を受け付けました"
+    text: |
+      以下の内容で、上限引き上げの申請を受け付けました。
+      ・ 辞書: {dictionaryName}
+      ・ 項目: {kind, select, wordCount {単語数} exampleCount {例文数} articleCount {記事数} other {}}
+      ・ 現在の上限値: {limit, number}
+      {message}
+
+      内容を確認の上、開発者が個別に対応いたします。
+      個人で運営しているため、対応までしばらくお時間をいただく場合がありますので、ご了承ください。
+
+      ZpDIC Online は個人によって開発および保守されており、サービスの維持だけで年間数万円ほどかかってしまいます。
+      もしよろしければ、以下のページから支援をご検討いただけると励みになります。
+      なお、支援の有無は、上限引き上げの可否や対応の順序には一切影響しません。
+      ・ https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L
   footer: |
     ────────────────────
     ZpDIC Online

@@ -634,6 +634,20 @@ export class DictionarySchema {
     return count;
   }
 
+  public async fetchCountWithLimit(this: Dictionary, kind: "wordCount" | "exampleCount" | "articleCount"): Promise<{count: number, limit: number}> {
+    const count = await (async () => {
+      if (kind === "wordCount") {
+        return await this.countWords();
+      } else if (kind === "exampleCount") {
+        return await this.countExamples();
+      } else {
+        return await this.countArticles();
+      }
+    })();
+    const limit = this.limits.resolve().dictionary[kind];
+    return {count, limit};
+  }
+
   /** この辞書において、次に単語・例文・記事のデータに割り振るべき番号を払い出します。
    * 同時に呼び出されても同じ番号を返さないように、`$inc` によって原子的に最大番号を更新します。
    * 実際に存在するデータではなく辞書が保持している最大番号を基準にするので、履歴データが自動削除された後でも番号が再利用されることはありません。*/

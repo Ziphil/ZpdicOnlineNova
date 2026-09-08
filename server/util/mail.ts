@@ -13,13 +13,13 @@ const client = new SESv2Client({
   }
 });
 
-export function getMailSubject(type: string, values?: Record<string, string>): string {
+export function getMailSubject(type: string, values?: Record<string, string | number>): string {
   const intl = INTLS[0];
   const title = intl.formatMessage({id: `mail.${type}.subject`}, values);
   return title;
 }
 
-export function getMailText(type: string, values?: Record<string, string>): string {
+export function getMailText(type: string, values?: Record<string, string | number>): string {
   const intl = INTLS[0];
   const text = intl.formatMessage({id: `mail.${type}.text`}, values);
   const footer = intl.formatMessage({id: "mail.footer"});

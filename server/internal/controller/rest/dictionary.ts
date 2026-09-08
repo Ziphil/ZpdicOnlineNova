@@ -3,10 +3,11 @@
 import dayjs from "dayjs";
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledRequest, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
-import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
+import {checkDictionary, checkMe, checkRateLimit, checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
 import {DictionaryCreator, DictionaryParameterCreator, MemberCreator, TemplateWordCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
 import {DictionaryModel, ExampleModel, OldDictionaryModel, OldExampleModel, OldWordModel, SERVER_LIMITS, UserModel, WordModel} from "/server/model";
+import {getMailSubject, getMailText, sendMail} from "/server/util/mail";
 import {sanitizeFileName} from "/server/util/misc";
 import {toObjectId} from "/server/util/mongo";
 import {QueryRange} from "/server/util/query";
@@ -111,6 +112,32 @@ export class DictionaryRestController extends InternalRestController {
     await dictionary.changeSettings(settings);
     const body = DictionaryCreator.skeletonize(dictionary);
     InternalRestController.respond(response, body);
+  }
+
+  @post("/applyIncreaseDictionaryLimit")
+  @before(checkMe(), checkRateLimit({limit: 3, windowInMinute: 60 * 24}), checkDictionary("own"))
+  public async [Symbol()](request: FilledRequest<"applyIncreaseDictionaryLimit", "me" | "dictionary">, response: Response<"applyIncreaseDictionaryLimit">): Promise<void> {
+    const {me, dictionary} = request.middlewareBody;
+    const {kind, message} = request.body;
+    const administrator = await UserModel.fetchOneAdministrator();
+    if (administrator !== null) {
+      const {count, limit} = await dictionary.fetchCountWithLimit(kind);
+      const values = {
+        userName: me.name,
+        email: me.email,
+        dictionaryName: dictionary.name,
+        dictionaryNumber: dictionary.number,
+        kind,
+        count,
+        limit,
+        message
+      };
+      await sendMail(administrator.email, getMailSubject("notifyIncreaseDictionaryLimit", values), getMailText("notifyIncreaseDictionaryLimit", values));
+      await sendMail(me.email, getMailSubject("receiveIncreaseDictionaryLimit", values), getMailText("receiveIncreaseDictionaryLimit", values));
+      InternalRestController.respond(response, null);
+    } else {
+      InternalRestController.respondError(response, "administratorNotFound");
+    }
   }
 
   @post("/editDictionaryTemplateWord")
