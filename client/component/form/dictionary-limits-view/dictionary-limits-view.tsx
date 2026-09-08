@@ -2,7 +2,7 @@
 
 import {faUp} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, ControlContainer, ControlLabel, GeneralIcon, useTrans} from "zographia";
 import {ApplyIncreaseDictionaryLimitDialog} from "/client/component/compound/apply-increase-dictionary-limit-dialog";
 import {LimitView} from "/client/component/compound/limit-view";
 import {create} from "/client/component/create";
@@ -26,9 +26,18 @@ export const DictionaryLimitsView = create(
 
     return (
       <div styleName="root" {...rest}>
-        <LimitView label={trans("label.wordCount")} current={sizes.word} max={dictionary.limits.dictionary.wordCount}/>
-        <LimitView label={trans("label.exampleCount")} current={sizes.example} max={dictionary.limits.dictionary.exampleCount}/>
-        <LimitView label={trans("label.articleCount")} current={sizes.article} max={dictionary.limits.dictionary.articleCount}/>
+        <ControlContainer label={false}>
+          <ControlLabel>{trans("label.wordCount")}</ControlLabel>
+          <LimitView current={sizes.word} max={dictionary.limits.dictionary.wordCount}/>
+        </ControlContainer>
+        <ControlContainer label={false}>
+          <ControlLabel>{trans("label.exampleCount")}</ControlLabel>
+          <LimitView current={sizes.example} max={dictionary.limits.dictionary.exampleCount}/>
+        </ControlContainer>
+        <ControlContainer label={false}>
+          <ControlLabel>{trans("label.articleCount")}</ControlLabel>
+          <LimitView current={sizes.article} max={dictionary.limits.dictionary.articleCount}/>
+        </ControlContainer>
         <div styleName="button">
           <ApplyIncreaseDictionaryLimitDialog
             dictionary={dictionary}

@@ -25,11 +25,8 @@ import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {useDialogOpen} from "/client/hook/dialog";
 import {Dictionary} from "/server/internal/skeleton";
-import type {SuccessResponseData} from "/server/internal/type/rest";
 import {useApplyIncreaseDictionaryLimit} from "./apply-increase-dictionary-limit-dialog-hook";
 
-
-type DictionarySizes = SuccessResponseData<"fetchDictionarySizes">;
 
 const AFTER_LIMITS = {
   wordCount: 50000,

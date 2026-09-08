@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps, useTrans} from "zographia";
+import {AdditionalProps, ControlContainer, ControlLabel, useTrans} from "zographia";
 import {LimitView} from "/client/component/compound/limit-view";
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
@@ -25,8 +25,14 @@ export const UserLimitsView = create(
     return (
       <div styleName="root" {...rest}>
         <div styleName="list">
-          <LimitView label={trans("label.dictionaryCount")} current={sizes.dictionary} max={me.limits.dictionaryCount}/>
-          <LimitView label={trans("label.apiCredentialCount")} current={sizes.apiCredential} max={me.limits.apiCredentialCount}/>
+          <ControlContainer label={false}>
+            <ControlLabel>{trans("label.dictionaryCount")}</ControlLabel>
+            <LimitView current={sizes.dictionary} max={me.limits.dictionaryCount}/>
+          </ControlContainer>
+          <ControlContainer label={false}>
+            <ControlLabel>{trans("label.apiCredentialCount")}</ControlLabel>
+            <LimitView current={sizes.apiCredential} max={me.limits.apiCredentialCount}/>
+          </ControlContainer>
         </div>
       </div>
     );
