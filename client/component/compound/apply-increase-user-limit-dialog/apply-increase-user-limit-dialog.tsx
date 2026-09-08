@@ -48,7 +48,7 @@ export const ApplyIncreaseUserLimitDialog = create(
 
     const {form, handleSubmit} = useApplyIncreaseUserLimit();
     const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen({handleSubmit, onOpen: form.resetAll});
-    const {register, getFieldState} = form;
+    const {register, getFieldState, formState: {errors}} = form;
 
     return (
       <Fragment>

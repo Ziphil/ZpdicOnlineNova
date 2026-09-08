@@ -50,7 +50,7 @@ export const ApplyIncreaseDictionaryLimitDialog = create(
 
     const {form, handleSubmit} = useApplyIncreaseDictionaryLimit(dictionary);
     const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen({handleSubmit, onOpen: form.resetAll});
-    const {register, getFieldState} = form;
+    const {register, getFieldState, formState: {errors}} = form;
 
     return (
       <Fragment>
