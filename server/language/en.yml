@@ -53,7 +53,7 @@ mail:
       ZpDIC Online is developed and maintained by an individual, and it costs tens of thousands of yen per year just to keep the service running.
       If you like, please consider supporting the development from the page below.
       Please rest assured that whether or not you offer support has no effect on whether the limit is increased or on the order in which applications are handled.
-      ・ https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L
+      ・ {giftUrl}
   notifyIncreaseUserLimit:
     subject: "Application for a limit increase: @{userName}"
     text: |
@@ -76,7 +76,7 @@ mail:
       ZpDIC Online is developed and maintained by an individual, and it costs tens of thousands of yen per year just to keep the service running.
       If you like, please consider supporting the development from the page below.
       Please rest assured that whether or not you offer support has no effect on whether the limit is increased or on the order in which applications are handled.
-      ・ https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L
+      ・ {giftUrl}
   footer: |
     ────────────────────
     ZpDIC Online

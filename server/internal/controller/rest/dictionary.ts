@@ -6,7 +6,7 @@ import {FilledRequest, InternalRestController, Request, Response} from "/server/
 import {checkDictionary, checkMe, checkRateLimit, checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
 import {DictionaryCreator, DictionaryParameterCreator, MemberCreator, TemplateWordCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
-import {DictionaryModel, ExampleModel, OldDictionaryModel, OldExampleModel, OldWordModel, SERVER_LIMITS, UserModel, WordModel} from "/server/model";
+import {DictionaryModel, ExampleModel, GIFT_URL, OldDictionaryModel, OldExampleModel, OldWordModel, SERVER_LIMITS, UserModel, WordModel} from "/server/model";
 import {getMailSubject, getMailText, sendMail} from "/server/util/mail";
 import {sanitizeFileName} from "/server/util/misc";
 import {toObjectId} from "/server/util/mongo";
@@ -130,7 +130,8 @@ export class DictionaryRestController extends InternalRestController {
         kind,
         count,
         limit,
-        message
+        message,
+        giftUrl: GIFT_URL
       };
       await sendMail(administrator.email, getMailSubject("notifyIncreaseDictionaryLimit", values), getMailText("notifyIncreaseDictionaryLimit", values));
       await sendMail(me.email, getMailSubject("receiveIncreaseDictionaryLimit", values), getMailText("receiveIncreaseDictionaryLimit", values));

@@ -5,7 +5,7 @@ import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/
 import {checkMe, checkRateLimit, checkRecaptcha, login, logout} from "/server/internal/controller/rest/middleware";
 import {ApiCredentialCreator, UserCreator, UserSocialCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
-import {ApiCredentialModel, UserModel} from "/server/model";
+import {ApiCredentialModel, GIFT_URL, UserModel} from "/server/model";
 import {getMailSubject, getMailText, sendMail} from "/server/util/mail";
 import {getStorageUploadFilePost} from "/server/util/storage";
 
@@ -261,7 +261,8 @@ export class UserRestController extends InternalRestController {
         kind,
         count,
         limit,
-        message
+        message,
+        giftUrl: GIFT_URL
       };
       await sendMail(administrator.email, getMailSubject("notifyIncreaseUserLimit", values), getMailText("notifyIncreaseUserLimit", values));
       await sendMail(me.email, getMailSubject("receiveIncreaseUserLimit", values), getMailText("receiveIncreaseUserLimit", values));

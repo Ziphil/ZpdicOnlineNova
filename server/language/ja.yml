@@ -53,7 +53,7 @@ mail:
       ZpDIC Online は個人によって開発および保守されており、サービスの維持だけで年間数万円ほどかかってしまいます。
       もしよろしければ、以下のページから支援をご検討いただけると励みになります。
       なお、支援の有無は上限引き上げの可否や対応の順序には影響しませんので、ご安心ください。
-      ・ https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L
+      ・ {giftUrl}
   notifyIncreaseUserLimit:
     subject: "利用上限の引き上げの申請: @{userName}"
     text: |
@@ -76,7 +76,7 @@ mail:
       ZpDIC Online は個人によって開発および保守されており、サービスの維持だけで年間数万円ほどかかってしまいます。
       もしよろしければ、以下のページから支援をご検討いただけると励みになります。
       なお、支援の有無は上限引き上げの可否や対応の順序には影響しませんので、ご安心ください。
-      ・ https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L
+      ・ {giftUrl}
   footer: |
     ────────────────────
     ZpDIC Online

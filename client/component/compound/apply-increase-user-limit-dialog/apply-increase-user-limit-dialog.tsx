@@ -25,6 +25,7 @@ import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {useDialogOpen} from "/client/hook/dialog";
 import {UserWithDetail} from "/server/internal/skeleton";
+import {GIFT_URL} from "/server/model/constant";
 import {useApplyIncreaseUserLimit} from "./apply-increase-user-limit-dialog-hook";
 
 
@@ -104,7 +105,7 @@ export const ApplyIncreaseUserLimitDialog = create(
                 </ControlContainer>
               </div>
               <div styleName="button">
-                <Link href="https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L?ref_=wl_share" target="_blank" variant="light">
+                <Link href={GIFT_URL} target="_blank" variant="light">
                   <LinkIconbag><GeneralIcon icon={faGift}/></LinkIconbag>
                   {trans("button.gift")}
                 </Link>

@@ -1,6 +1,8 @@
 //
 
 
+export const GIFT_URL = "https://www.amazon.co.jp/hz/wishlist/ls/2WIWDYWRY374L?type=wishlist&filter=unpurchased&sort=custom&viewType=list";
+
 export const RETENTION_PERIODS = {
   history: 120 * 24 * 60 * 60,
   oldData: 90 * 24 * 60 * 60
