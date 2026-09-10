@@ -13,7 +13,6 @@ import {
 import {create} from "/client/component/create";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
-import {WORD_LIMITS} from "/server/model/constant";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordSpec} from "./edit-word-form-hook";
 import {EditWordFormRelationItem} from "./edit-word-form-relation-item";
@@ -48,7 +47,7 @@ export const EditWordFormRelationSection = create(
 
     const relations = relationFieldArraySpec.fields;
 
-    const canAdd = relations.length < WORD_LIMITS.relationCountPerSection;
+    const canAdd = relations.length < dictionary.limits.word.relationCountPerSection;
 
     const addRelation = useCallback(function (): void {
       relationOperations.append({titles: [], word: null, mutual: false});

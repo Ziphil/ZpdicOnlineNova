@@ -15,6 +15,7 @@ import {MemberModel} from "/server/model/member/member";
 import {ApiCredentialModel} from "/server/model/user/api-credential";
 import {ResetTokenModel, ResetTokenSchema} from "/server/model/user/reset-token";
 import {TermsAgreementSchema} from "/server/model/user/terms-agreement";
+import {UserLimitsModel, UserLimitsSchema} from "/server/model/user/user-limits";
 import {UserSocialSchema} from "/server/model/user/user-social";
 import {EMAIL_REGEXP, IDENTIFIER_REGEXP, validatePassword} from "/server/util/validation";
 
@@ -55,6 +56,9 @@ export class UserSchema {
   @prop()
   public termsAgreement?: TermsAgreementSchema;
 
+  @prop({required: true})
+  public limits!: UserLimitsSchema;
+
   /** 渡された情報からユーザーを作成し、データベースに保存します。
    * このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
    * 渡されたパスワードは自動的にハッシュ化されます。*/
@@ -69,7 +73,8 @@ export class UserSchema {
       const screenName = "@" + name;
       const activated = false;
       const termsAgreement = {version: 1, date: new Date()};
-      const user = new UserModel({name, screenName, email, activated, termsAgreement});
+      const limits = UserLimitsModel.createDefault();
+      const user = new UserModel({name, screenName, email, activated, termsAgreement, limits});
       const key = await user.issueActivateToken();
       await user.encryptPassword(password);
       await user.validate();
@@ -226,6 +231,42 @@ export class UserSchema {
     this.socials = socials;
     await this.save();
     return this;
+  }
+
+  public async countDictionaries(this: User): Promise<number> {
+    const count = await DictionaryModel.find().where("user", this).countDocuments();
+    return count;
+  }
+
+  public async countApiCredentials(this: User): Promise<number> {
+    const count = await ApiCredentialModel.find().where("user", this).countDocuments();
+    return count;
+  }
+
+  public async fetchCountWithLimit(this: User, kind: "dictionaryCount" | "apiCredentialCount"): Promise<{count: number, limit: number}> {
+    const count = await (async () => {
+      if (kind === "dictionaryCount") {
+        return await this.countDictionaries();
+      } else {
+        return await this.countApiCredentials();
+      }
+    })();
+    const limit = this.limits.resolve()[kind];
+    return {count, limit};
+  }
+
+  public async assertDictionaryCountLimits(this: User): Promise<void> {
+    const count = await this.countDictionaries();
+    if (count >= this.limits.resolve().dictionaryCount) {
+      throw new CustomError("dictionaryCountExceeded");
+    }
+  }
+
+  public async assertApiCredentialCountLimits(this: User): Promise<void> {
+    const count = await this.countApiCredentials();
+    if (count >= this.limits.resolve().apiCredentialCount) {
+      throw new CustomError("apiCredentialCountExceeded");
+    }
   }
 
   /** 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。

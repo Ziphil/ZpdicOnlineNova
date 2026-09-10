@@ -1,29 +1,28 @@
 //
 
 import {BaseSyntheticEvent, useMemo} from "react";
-import {Asserts, array, number, object, string} from "yup";
+import {ObjectSchema, array, number, object, string} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
-import {Article, Dictionary, EditableArticle} from "/server/internal/skeleton";
+import {testArrayStringLength} from "/client/util/validation";
+import {Article, Dictionary, DictionaryLimits, EditableArticle} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
-import {ARTICLE_LIMITS} from "/server/model/constant";
 
 
-const SCHEMA = object({
-  number: number().nullable().defined(),
-  tags: array(string().defined()).max(ARTICLE_LIMITS.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= ARTICLE_LIMITS.tagLength) ?? true).defined(),
-  title: string().max(ARTICLE_LIMITS.titleLength, "titleTooLong").defined(),
-  content: string().max(ARTICLE_LIMITS.contentLength, "contentTooLong").defined()
-});
 const DEFAULT_VALUE = {
   number: null,
   tags: [],
   title: "",
   content: ""
 } satisfies FormValue;
-type FormValue = Asserts<typeof SCHEMA>;
+type FormValue = {
+  number: number | null,
+  tags: Array<string>,
+  title: string,
+  content: string
+};
 
 export type EditArticleSpec = {
   form: UseFormReturn<FormValue>,
@@ -34,7 +33,8 @@ export type EditArticleInitialData = {type: "article", article: Article} | {type
 export const getEditArticleFormValue = getFormValue;
 
 export function useEditArticle(dictionary: Dictionary, initialData: EditArticleInitialData | null, onSubmit?: (article: EditableArticle) => unknown): EditArticleSpec {
-  const form = useForm<FormValue>(SCHEMA, getFormValue(initialData), {});
+  const schema = useMemo(() => createSchema(dictionary.limits.article), [dictionary.limits.article]);
+  const form = useForm<FormValue>(schema, getFormValue(initialData), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -45,13 +45,24 @@ export function useEditArticle(dictionary: Dictionary, initialData: EditArticleI
       form.setValue("number", article.number);
       await Promise.all([
         invalidateResponses("searchArticles", (query) => query.number === dictionary.number),
-        invalidateResponses("fetchArticle", (query) => query.number === dictionary.number && query.articleNumber === article.number)
+        invalidateResponses("fetchArticle", (query) => query.number === dictionary.number && query.articleNumber === article.number),
+        invalidateResponses("fetchDictionarySizes", (query) => query.number === dictionary.number)
       ]);
       await onSubmit?.(query.article);
       dispatchSuccessToast((adding) ? "addArticle" : "changeArticle");
     });
   }), [dictionary, onSubmit, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};
+}
+
+function createSchema(limits: DictionaryLimits["article"]): ObjectSchema<FormValue> {
+  const schema = object({
+    number: number().nullable().defined(),
+    tags: array(string().defined()).max(limits.tagCount, "tagsTooMany").test(testArrayStringLength(limits.tagLength, "tagTooLong")).defined(),
+    title: string().max(limits.titleLength, "titleTooLong").defined(),
+    content: string().max(limits.contentLength, "contentTooLong").defined()
+  });
+  return schema;
 }
 
 function getFormValue(initialData: EditArticleInitialData | null): FormValue {

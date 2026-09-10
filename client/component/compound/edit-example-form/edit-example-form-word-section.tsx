@@ -13,7 +13,6 @@ import {
 import {create} from "/client/component/create";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
-import {EXAMPLE_LIMITS} from "/server/model/constant";
 import {EditExampleFormDndContext} from "./edit-example-form-dnd";
 import {EditExampleSpec} from "./edit-example-form-hook";
 import {EditExampleFormWordItem} from "./edit-example-form-word-item";
@@ -36,7 +35,7 @@ export const EditExampleFormWordSection = create(
     const {control, getValues, setValue} = form;
     const {fields: words, ...wordOperations} = useFieldArray({control, name: "words"});
 
-    const canAdd = words.length < EXAMPLE_LIMITS.wordCount;
+    const canAdd = words.length < dictionary.limits.example.wordCount;
 
     const addWord = useCallback(function (): void {
       wordOperations.append(null);

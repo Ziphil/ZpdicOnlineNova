@@ -9,8 +9,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
-import {EXAMPLE_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
+import {ResolvedDictionaryExampleLimits} from "/server/model/dictionary/limits/dictionary-example-limits";
 import {CustomError} from "/server/model/error";
 import {OldExampleModel} from "/server/model/example/old-example";
 import {User, UserSchema} from "/server/model/user/user";
@@ -36,19 +37,19 @@ export class ExampleSchema {
   @prop({required: true})
   public number!: number;
 
-  @prop({type: String, innerOptions: {maxlength: EXAMPLE_LIMITS.tagLength}, outerOptions: {validate: createMaxCountValidator(EXAMPLE_LIMITS.tagCount)}})
+  @prop({type: String, innerOptions: {maxlength: DICTIONARY_LIMITS.example.tagLength}, outerOptions: {validate: createMaxCountValidator(DICTIONARY_LIMITS.example.tagCount)}})
   public tags?: Array<string>;
 
-  @prop({required: true, type: LinkedWordSchema, outerOptions: {validate: createMaxCountValidator(EXAMPLE_LIMITS.wordCount)}})
+  @prop({required: true, type: LinkedWordSchema, outerOptions: {validate: createMaxCountValidator(DICTIONARY_LIMITS.example.wordCount)}})
   public words!: Array<LinkedWordSchema>;
 
-  @prop({required: true, maxlength: EXAMPLE_LIMITS.sentenceLength})
+  @prop({required: true, maxlength: DICTIONARY_LIMITS.example.sentenceLength})
   public sentence!: string;
 
-  @prop({required: true, maxlength: EXAMPLE_LIMITS.translationLength})
+  @prop({required: true, maxlength: DICTIONARY_LIMITS.example.translationLength})
   public translation!: string;
 
-  @prop({maxlength: EXAMPLE_LIMITS.supplementLength})
+  @prop({maxlength: DICTIONARY_LIMITS.example.supplementLength})
   public supplement?: string;
 
   @prop()
@@ -94,6 +95,7 @@ export class ExampleSchema {
   }
 
   public static async edit(dictionary: Dictionary, example: EditableExample, user: User): Promise<Example> {
+    const limits = dictionary.limits.resolve().example;
     const currentExample = await ExampleModel.findOne().where("dictionary", dictionary).where("number", example.number);
     let resultExample;
     if (currentExample) {
@@ -103,11 +105,11 @@ export class ExampleSchema {
       resultExample.createdDate = currentExample.createdDate;
       resultExample.updatedDate = new Date();
       await this.filterWords(dictionary, resultExample);
-      await resultExample.assertLimits();
+      await resultExample.assertLimits(limits);
       await currentExample.deleteOneSoftly();
       await resultExample.save();
     } else {
-      await dictionary.assertExampleCount();
+      await dictionary.assertExampleCountLimits();
       if (example.number === null) {
         example.number = await dictionary.issueNextNumber("example");
       } else {
@@ -119,7 +121,7 @@ export class ExampleSchema {
       resultExample.createdDate = new Date();
       resultExample.updatedDate = new Date();
       await this.filterWords(dictionary, resultExample);
-      await resultExample.assertLimits();
+      await resultExample.assertLimits(limits);
       await resultExample.save();
     }
     LogUtil.log("model/example/edit", {number: dictionary.number, currentId: currentExample?.id, resultId: resultExample.id});
@@ -143,24 +145,33 @@ export class ExampleSchema {
     example.words = example.words.filter((word) => linkedWords.some((linkedWord) => linkedWord.number === word.number));
   }
 
-  /** この例文データが各種の上限に違反していないか検査します。
-   * 保存する前にこのメソッドを呼び出します。*/
-  public async assertLimits(this: Example): Promise<void> {
-    this.assertSize();
-    await this.assertFields();
+  public async assertLimits(this: Example, limits: ResolvedDictionaryExampleLimits): Promise<void> {
+    this.assertSizeLimits(limits);
+    this.assertFieldLimits(limits);
+    await this.assertSchema();
   }
 
-  /** この例文データ全体の大きさが上限を超えていないか検査します。
-   * populate されている辞書データなどが計算に含まれないように、参照を解除したプレーンなデータに変換してから大きさを求めます。*/
-  public assertSize(this: Example): void {
-    if (calcDataSize(this.toObject({depopulate: true})) > EXAMPLE_LIMITS.size) {
+  public assertSizeLimits(this: Example, limits: ResolvedDictionaryExampleLimits): void {
+    if (calcDataSize(this.toObject({depopulate: true})) > limits.size) {
       throw new CustomError("exampleSizeExceeded");
     }
   }
 
-  /** この例文データの各フィールドが上限を超えていないか検査します。
-   * 既存の例文データを論理削除する前に検査することで、上限違反によって保存に失敗したときにデータが失われるのを防ぎます。*/
-  public async assertFields(this: Example): Promise<void> {
+  public assertFieldLimits(this: Example, limits: ResolvedDictionaryExampleLimits): void {
+    const valid = (
+      this.sentence.length <= limits.sentenceLength &&
+      this.translation.length <= limits.translationLength &&
+      (this.supplement ?? "").length <= limits.supplementLength &&
+      (this.tags ?? []).length <= limits.tagCount &&
+      (this.tags ?? []).every((tag) => tag.length <= limits.tagLength) &&
+      this.words.length <= limits.wordCount
+    );
+    if (!valid) {
+      throw new CustomError("invalidExample");
+    }
+  }
+
+  public async assertSchema(this: Example): Promise<void> {
     try {
       await this.validate();
     } catch (error) {

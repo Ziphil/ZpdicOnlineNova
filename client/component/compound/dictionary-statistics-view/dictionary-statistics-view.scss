@@ -52,7 +52,7 @@
   margin-inline-start: var(--glob-blank-gap);
   color: var(--glob-mute-text-color);
   .value:not([data-size="large"]) & {
-    font-size: 3zu;
+    font-size: 3.5zu;
   }
   .value[data-size="large"] & {
     font-size: 5zu;

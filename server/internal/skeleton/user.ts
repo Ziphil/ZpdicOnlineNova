@@ -19,6 +19,15 @@ export interface UserWithDetail extends User {
   email: string;
   activated: boolean;
   termsAgreement: TermsAgreement;
+  limits: UserLimits;
+
+}
+
+
+export interface UserLimits {
+
+  dictionaryCount: number;
+  apiCredentialCount: number;
 
 }
 

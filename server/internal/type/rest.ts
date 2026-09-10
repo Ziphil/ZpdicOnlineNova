@@ -97,6 +97,13 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
+  applyIncreaseDictionaryLimit: {
+    request: {number: number, kind: "wordCount" | "exampleCount" | "articleCount", message: string},
+    response: {
+      success: null,
+      error: CustomError<"noSuchDictionary" | "administratorNotFound">
+    }
+  },
   editDictionaryTemplateWord: {
     request: {number: number, word: EditableTemplateWord},
     response: {
@@ -129,7 +136,7 @@ type ServerSpecs = {
     request: {id: ObjectId, accept: boolean},
     response: {
       success: Invitation,
-      error: CustomError<"noSuchInvitation">
+      error: CustomError<"noSuchInvitation" | "dictionaryCountExceeded">
     }
   },
   editWord: {
@@ -296,7 +303,7 @@ type ServerSpecs = {
   fetchDictionarySizes: {
     request: {number: number},
     response: {
-      success: {word: number, example: number},
+      success: {word: number, example: number, article: number},
       error: CustomError<"noSuchDictionary">
     }
   },
@@ -578,6 +585,20 @@ type ServerSpecs = {
     response: {
       success: ApiCredential,
       error: CustomError<"apiCredentialCountExceeded">
+    }
+  },
+  fetchMySizes: {
+    request: {},
+    response: {
+      success: {dictionary: number, apiCredential: number},
+      error: never
+    }
+  },
+  applyIncreaseUserLimit: {
+    request: {kind: "dictionaryCount", message: string},
+    response: {
+      success: null,
+      error: CustomError<"administratorNotFound">
     }
   },
   fetchMyApiCredentials: {

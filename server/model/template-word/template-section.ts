@@ -1,7 +1,7 @@
 //
 
 import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
-import {WORD_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 import {TemplateEquivalentSchema} from "/server/model/template-word/template-equivalent";
 import {TemplatePhraseSchema} from "/server/model/template-word/template-phrase";
 import {TemplateRelationSchema} from "/server/model/template-word/template-relation";
@@ -13,19 +13,19 @@ import {createMaxCountValidator} from "/server/util/validation";
 @modelOptions({schemaOptions: {autoCreate: false, collection: "templateSections"}})
 export class TemplateSectionSchema {
 
-  @prop({required: true, type: TemplateEquivalentSchema, outerOptions: {validate: createMaxCountValidator(WORD_LIMITS.equivalentCountPerSection)}})
+  @prop({required: true, type: TemplateEquivalentSchema, outerOptions: {validate: createMaxCountValidator(DICTIONARY_LIMITS.word.equivalentCountPerSection)}})
   public equivalents!: Array<TemplateEquivalentSchema>;
 
-  @prop({required: true, type: InformationSchema, outerOptions: {validate: createMaxCountValidator(WORD_LIMITS.informationCountPerSection)}})
+  @prop({required: true, type: InformationSchema, outerOptions: {validate: createMaxCountValidator(DICTIONARY_LIMITS.word.informationCountPerSection)}})
   public informations!: Array<InformationSchema>;
 
-  @prop({required: true, type: TemplatePhraseSchema, outerOptions: {validate: createMaxCountValidator(WORD_LIMITS.phraseCountPerSection)}})
+  @prop({required: true, type: TemplatePhraseSchema, outerOptions: {validate: createMaxCountValidator(DICTIONARY_LIMITS.word.phraseCountPerSection)}})
   public phrases!: Array<TemplatePhraseSchema>;
 
-  @prop({required: true, type: VariationSchema, outerOptions: {validate: createMaxCountValidator(WORD_LIMITS.variationCountPerSection)}})
+  @prop({required: true, type: VariationSchema, outerOptions: {validate: createMaxCountValidator(DICTIONARY_LIMITS.word.variationCountPerSection)}})
   public variations!: Array<VariationSchema>;
 
-  @prop({required: true, type: TemplateRelationSchema, outerOptions: {validate: createMaxCountValidator(WORD_LIMITS.relationCountPerSection)}})
+  @prop({required: true, type: TemplateRelationSchema, outerOptions: {validate: createMaxCountValidator(DICTIONARY_LIMITS.word.relationCountPerSection)}})
   public relations!: Array<TemplateRelationSchema>;
 
 }

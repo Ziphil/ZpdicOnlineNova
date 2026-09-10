@@ -51,6 +51,12 @@ toast:
       La ŝablono forigitas.
     discardMember: |-
       La permeso revokitas.
+    applyIncreaseDictionaryLimit: |-
+      Via peto por plialtigo de la limo estas sendita.
+      Konfirma retmesaĝo estas sendita al vi.
+    applyIncreaseUserLimit: |-
+      Via peto por plialtigo de la limo estas sendita.
+      Konfirma retmesaĝo estas sendita al vi.
     addWord: |-
       Nova vorto kreitas.
     changeWord: |-
@@ -179,7 +185,7 @@ toast:
     dictionarySizeTooLarge: |-
       La dosiero estas tro granda.
     dictionaryCountExceeded: |-
-      Vi ne povas krei pliajn vortarojn.
+      Vi ne povas posedi pliajn vortarojn.
     noSuchWord: |-
       Ne ekzistas tiu vorto.
     wordCountExceeded: |-
@@ -262,6 +268,9 @@ toast:
     messageNotFound: |-
       Ne estas mesaĝo agordita por tiu ŝprucfenestro.
       Bonvolu sciigi la administranton.
+    rateLimitExceeded: |-
+      Ĉi tiu operacio estas ripetita tro multfoje en mallonga tempo, do ĝi ne estas akceptita.
+      Bonvolu atendi iom da tempo kaj reprovi.
     unexpected: |-
       Neatendita eraro okazis.
       Bonvolu sciigi la administranton.
@@ -365,6 +374,50 @@ apiCredentialList:
   toast:
     copy: >-
       Via API-ŝlosilo estas kopiita.
+applyIncreaseDictionaryLimitDialog:
+  heading: "Peto por plialtigo de limo"
+  message:
+    - >-
+      La peto estas senpaga.
+      La administranto kontrolos la enhavon kaj respondos al vi individue.
+    - >-
+      Ni ankaŭ ĝojus, se vi konsiderus subteni nin per la butono "Sendi donacon" sube.
+      Bonvolu esti trankvila, ĉar la subteno neniel influas, ĉu la limo estas plialtigita aŭ en kiu ordo la petoj estas traktataj.
+  label:
+    kind:
+      label: "Plialtigota ero"
+      wordCount: "Vortoj"
+      exampleCount: "Ekzemplaj frazoj"
+      articleCount: "Artikoloj"
+      change: "{current, number}<arrow>→</arrow>{after, number}"
+    message: "Kialo de la peto"
+  button:
+    gift: "Sendi donacon"
+    confirm: "Peti"
+  error:
+    messageRequired: >-
+      Bonvolu enigi la kialon de la peto.
+applyIncreaseUserLimitDialog:
+  heading: "Peto por plialtigo de limo"
+  message:
+    - >-
+      La peto estas senpaga.
+      La administranto kontrolos la enhavon kaj respondos al vi individue.
+    - >-
+      Ni ankaŭ ĝojus, se vi konsiderus subteni nin per la butono "Sendi donacon" sube.
+      Bonvolu esti trankvila, ĉar la subteno neniel influas, ĉu la limo estas plialtigita aŭ en kiu ordo la petoj estas traktataj.
+  label:
+    kind:
+      label: "Plialtigota ero"
+      dictionaryCount: "Vortaroj"
+      change: "{current, number}<arrow>→</arrow>{after, number}"
+    message: "Kialo de la peto"
+  button:
+    gift: "Sendi donacon"
+    confirm: "Peti"
+  error:
+    messageRequired: >-
+      Bonvolu enigi la kialon de la peto.
 articleList:
   empty: "Neniuj artikoloj estas kreitaj"
   button:
@@ -472,13 +525,13 @@ editArticleForm:
     confirm: "Konfirmi"
   error:
     titleTooLong: >-
-      La titolo devas enhavi maksimume 200 signojn.
+      La titolo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     contentTooLong: >-
-      La enhavo devas enhavi maksimume 100,000 signojn.
+      La enhavo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     tagsTooMany: >-
-      Vi povas agordi maksimume 10 etikedojn.
+      Vi povas agordi maksimume {max, plural, one {# etikedon} other {# etikedojn}}.
     tagTooLong: >-
-      Ĉiu etikedo devas enhavi maksimume 100 signojn.
+      Ĉiu etikedo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
 editExampleDialog:
   button:
     confirm: "Konfirmi"
@@ -507,15 +560,15 @@ editExampleForm:
     confirm: "Konfirmi"
   error:
     sentenceTooLong: >-
-      La ekzempla frazo devas enhavi maksimume 5,000 signojn.
+      La ekzempla frazo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     translationTooLong: >-
-      La traduko devas enhavi maksimume 5,000 signojn.
+      La traduko devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     supplementTooLong: >-
-      La suplementa klarigo devas enhavi maksimume 5,000 signojn.
+      La suplementa klarigo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     tagsTooMany: >-
-      Vi povas agordi maksimume 10 etikedojn.
+      Vi povas agordi maksimume {max, plural, one {# etikedon} other {# etikedojn}}.
     tagTooLong: >-
-      Ĉiu etikedo devas enhavi maksimume 100 signojn.
+      Ĉiu etikedo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
 editWordDialog:
   button:
     confirm: "Konfirmi"
@@ -586,19 +639,19 @@ editWordForm:
     confirm: "Konfirmi"
   error:
     titleTooLong: >-
-      La ŝablona nomo devas enhavi maksimume 100 signojn.
+      La ŝablona nomo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     spellingTooLong: >-
-      La literumo devas enhavi maksimume 200 signojn.
+      La literumo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     pronunciationTooLong: >-
-      La prononco devas enhavi maksimume 200 signojn.
+      La prononco devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     tagsTooMany: >-
-      Vi povas agordi maksimume 20 etikedojn.
+      Vi povas agordi maksimume {max, plural, one {# etikedon} other {# etikedojn}}.
     tagTooLong: >-
-      Ĉiu etikedo devas enhavi maksimume 100 signojn.
+      Ĉiu etikedo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     informationTitleTooLong: >-
-      La titolo devas enhavi maksimume 100 signojn.
+      La titolo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
     informationTextTooLong: >-
-      La enhavo devas enhavi maksimume 20,000 signojn.
+      La enhavo devas enhavi maksimume {max, plural, one {# signon} other {# signojn}}.
 exampleList:
   empty: "Neniuj kongruaj ekzemplaj frazoj estis trovitaj"
   noWord: "Neniuj vortoj specifitaj"
@@ -688,6 +741,9 @@ issueUserResetTokenForm:
       Enigu retpoŝtan adreson.
   button:
     confirm: "Sendi"
+limitView:
+  value: "<largeNumber>{current, number}</largeNumber><slash>/</slash><smallNumber>{max, number}</smallNumber>"
+  percent: "<number>{percent, number, ::.00}</number><unit>% uzita</unit>"
 loginForm:
   label:
     name: "Salutnomo"
@@ -880,8 +936,6 @@ userHeader:
     dictionary: "Vortaroj"
     notification: "Sciigoj"
     setting: "Agordoj"
-    appearance: "Šajno"
-    developer: "Programado"
   button:
     issueActivateToken: "Resendi retpoŝton"
   callout:
@@ -1191,6 +1245,13 @@ changeMySocialsForm:
 commonForm:
   button:
     change: "Ŝanĝi"
+dictionaryLimitsView:
+  label:
+    wordCount: "Vortoj"
+    exampleCount: "Ekzemplaj frazoj"
+    articleCount: "Artikoloj"
+  button:
+    apply: "Peti plialtigon"
 discardDictionaryButton:
   button:
     submit: "Forigi"
@@ -1274,6 +1335,13 @@ uploadDictionaryForm:
       Via dosiero estas importita.
     error: >-
       Malsukcesis importi vian dosieron.
+
+userLimitsView:
+  label:
+    dictionaryCount: "Vortaroj"
+    apiCredentialCount: "API-ŝlosiloj"
+  button:
+    apply: "Peti plialtigon"
 
 # page
 contactPage:
@@ -1420,6 +1488,9 @@ dictionarySettingGeneralPart:
     discard: >-
       Forigi tiun vortaron ankaŭ forigos ĉiujn rilatajn datumojn, inkluzive de vortoj kaj ekzemplaj frazoj.
       Bonvolu esti certa, ĉar ne estas reiro.
+dictionarySettingLimitPart:
+  heading:
+    usage: "Uzado"
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"
@@ -1427,7 +1498,8 @@ dictionarySettingPart:
     editing: "Redaktado"
     template: "Ŝablonoj"
     authority: "Permesoj"
-    file: "Dosiero"
+    file: "Dosieroj"
+    limit: "Limoj"
 dictionarySettingTemplatePart:
   heading:
     templateWords: "Ŝablonoj"
@@ -1545,7 +1617,7 @@ userDeveloperPart:
     apiKey: >-
       Tiu funkcio estas ankoraŭ en testado.
       Bonvolu noti, ke la konduto povas ŝanĝiĝi sen antaŭa averto.
-userSettingPart:
+userSettingGeneralPart:
   heading:
     screenName: "Kromnomo"
     avatar: "Bildeto"
@@ -1558,6 +1630,15 @@ userSettingPart:
     discard: >-
       Forigi vian konton ankaŭ forigos ĉiujn vortarojn kiujn vi posedas.
       Bonvolu esti certa, ĉar ne estas reiro.
+userSettingLimitPart:
+  heading:
+    usage: "Uzado"
+userSettingPart:
+  tab:
+    general: "Ĝenerala"
+    appearance: "Aspekto"
+    developer: "Programisto"
+    limit: "Limoj"
 
 # other
 alert:

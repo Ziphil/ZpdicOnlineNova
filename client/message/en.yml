@@ -51,6 +51,12 @@ toast:
       The template has been deleted.
     discardMember: |-
       The permission has been revoked.
+    applyIncreaseDictionaryLimit: |-
+      Your application for a limit increase has been submitted.
+      A confirmation email has been sent to you.
+    applyIncreaseUserLimit: |-
+      Your application for a limit increase has been submitted.
+      A confirmation email has been sent to you.
     addWord: |-
       A new word has been created.
     changeWord: |-
@@ -179,7 +185,7 @@ toast:
     dictionarySizeTooLarge: |-
       The file is too large.
     dictionaryCountExceeded: |-
-      No more dictionaries can be created.
+      No more dictionaries can be owned.
     noSuchWord: |-
       This word does not exist.
     wordCountExceeded: |-
@@ -262,6 +268,9 @@ toast:
     messageNotFound: |-
       There is no message configured for this popup.
       Please notify the administrator.
+    rateLimitExceeded: |-
+      This operation has been repeated too many times in a short period, so it was not accepted.
+      Please wait a while and try again.
     unexpected: |-
       An unexpected error occurred.
       Please notify the administrator.
@@ -365,6 +374,50 @@ apiCredentialList:
   toast:
     copy: >-
       Copied your API key.
+applyIncreaseDictionaryLimitDialog:
+  heading: "Application for a limit increase"
+  message:
+    - >-
+      Applying is free of charge.
+      The administrator will review the content and respond to you individually.
+    - >-
+      We would also be encouraged if you would consider supporting us from the "Send gift" button below.
+      Please rest assured that whether or not you offer support has no effect on whether the limit is increased or on the order in which applications are handled.
+  label:
+    kind:
+      label: "Item to increase"
+      wordCount: "Words"
+      exampleCount: "Example sentences"
+      articleCount: "Articles"
+      change: "{current, number}<arrow>→</arrow>{after, number}"
+    message: "Reason for the application"
+  button:
+    gift: "Send gift"
+    confirm: "Apply"
+  error:
+    messageRequired: >-
+      Please enter the reason for the application.
+applyIncreaseUserLimitDialog:
+  heading: "Application for a limit increase"
+  message:
+    - >-
+      Applying is free of charge.
+      The administrator will review the content and respond to you individually.
+    - >-
+      We would also be encouraged if you would consider supporting us from the "Send gift" button below.
+      Please rest assured that whether or not you offer support has no effect on whether the limit is increased or on the order in which applications are handled.
+  label:
+    kind:
+      label: "Item to increase"
+      dictionaryCount: "Dictionaries"
+      change: "{current, number}<arrow>→</arrow>{after, number}"
+    message: "Reason for the application"
+  button:
+    gift: "Send gift"
+    confirm: "Apply"
+  error:
+    messageRequired: >-
+      Please enter the reason for the application.
 articleList:
   empty: "No articles are created"
   button:
@@ -472,13 +525,13 @@ editArticleForm:
     confirm: "Confirm"
   error:
     titleTooLong: >-
-      The title must be at most 200 characters long.
+      The title must be at most {max, plural, one {# character} other {# characters}} long.
     contentTooLong: >-
-      The content must be at most 100,000 characters long.
+      The content must be at most {max, plural, one {# character} other {# characters}} long.
     tagsTooMany: >-
-      You can set at most 10 tags.
+      You can set at most {max, plural, one {# tag} other {# tags}}.
     tagTooLong: >-
-      Each tag must be at most 100 characters long.
+      Each tag must be at most {max, plural, one {# character} other {# characters}} long.
 editExampleDialog:
   button:
     confirm: "Confirm"
@@ -507,15 +560,15 @@ editExampleForm:
     confirm: "Confirm"
   error:
     sentenceTooLong: >-
-      The example sentence must be at most 5,000 characters long.
+      The example sentence must be at most {max, plural, one {# character} other {# characters}} long.
     translationTooLong: >-
-      The translation must be at most 5,000 characters long.
+      The translation must be at most {max, plural, one {# character} other {# characters}} long.
     supplementTooLong: >-
-      The supplementary explanation must be at most 5,000 characters long.
+      The supplementary explanation must be at most {max, plural, one {# character} other {# characters}} long.
     tagsTooMany: >-
-      You can set at most 10 tags.
+      You can set at most {max, plural, one {# tag} other {# tags}}.
     tagTooLong: >-
-      Each tag must be at most 100 characters long.
+      Each tag must be at most {max, plural, one {# character} other {# characters}} long.
 editWordDialog:
   button:
     confirm: "Confirm"
@@ -586,19 +639,19 @@ editWordForm:
     confirm: "Confirm"
   error:
     titleTooLong: >-
-      The template name must be at most 100 characters long.
+      The template name must be at most {max, plural, one {# character} other {# characters}} long.
     spellingTooLong: >-
-      The spelling must be at most 200 characters long.
+      The spelling must be at most {max, plural, one {# character} other {# characters}} long.
     pronunciationTooLong: >-
-      The pronunciation must be at most 200 characters long.
+      The pronunciation must be at most {max, plural, one {# character} other {# characters}} long.
     tagsTooMany: >-
-      You can set at most 20 tags.
+      You can set at most {max, plural, one {# tag} other {# tags}}.
     tagTooLong: >-
-      Each tag must be at most 100 characters long.
+      Each tag must be at most {max, plural, one {# character} other {# characters}} long.
     informationTitleTooLong: >-
-      The title must be at most 100 characters long.
+      The title must be at most {max, plural, one {# character} other {# characters}} long.
     informationTextTooLong: >-
-      The content must be at most 20,000 characters long.
+      The content must be at most {max, plural, one {# character} other {# characters}} long.
 exampleList:
   empty: "No matching example sentences were found"
   noWord: "No words specified"
@@ -688,6 +741,9 @@ issueUserResetTokenForm:
       Enter an email address.
   button:
     confirm: "Send"
+limitView:
+  value: "<largeNumber>{current, number}</largeNumber><slash>/</slash><smallNumber>{max, number}</smallNumber>"
+  percent: "<number>{percent, number, ::.00}</number><unit>% used</unit>"
 loginForm:
   label:
     name: "Username"
@@ -880,8 +936,6 @@ userHeader:
     dictionary: "Dictionaries"
     notification: "Notifications"
     setting: "Settings"
-    appearance: "Appearance"
-    developer: "Developer"
   button:
     issueActivateToken: "Resend email"
   callout:
@@ -1191,6 +1245,13 @@ changeMySocialsForm:
 commonForm:
   button:
     change: "Change"
+dictionaryLimitsView:
+  label:
+    wordCount: "Words"
+    exampleCount: "Example sentences"
+    articleCount: "Articles"
+  button:
+    apply: "Apply for an increase"
 discardDictionaryButton:
   button:
     submit: "Delete"
@@ -1274,6 +1335,13 @@ uploadDictionaryForm:
       Your file has been imported.
     error: >-
       Failed to import your file.
+
+userLimitsView:
+  label:
+    dictionaryCount: "Dictionaries"
+    apiCredentialCount: "API keys"
+  button:
+    apply: "Apply for an increase"
 
 # page
 contactPage:
@@ -1420,6 +1488,9 @@ dictionarySettingGeneralPart:
     discard: >-
       Deleting this dictionary will also delete all the relevant data, including words and example sentences.
       Please be certain, as there is no going back.
+dictionarySettingLimitPart:
+  heading:
+    usage: "Usage"
 dictionarySettingPart:
   tab:
     general: "General"
@@ -1427,7 +1498,8 @@ dictionarySettingPart:
     editing: "Editing"
     template: "Templates"
     authority: "Permissions"
-    file: "File"
+    file: "Files"
+    limit: "Limits"
 dictionarySettingTemplatePart:
   heading:
     templateWords: "Templates"
@@ -1545,7 +1617,7 @@ userDeveloperPart:
     apiKey: >-
       This feature is under testing.
       Please note that the behaviour may change without prior notice.
-userSettingPart:
+userSettingGeneralPart:
   heading:
     screenName: "Nickname"
     avatar: "Avatar icon"
@@ -1558,6 +1630,15 @@ userSettingPart:
     discard: >-
       Deleting your account will also delete all the dictionaries you own.
       Please be certain, as there is no going back.
+userSettingLimitPart:
+  heading:
+    usage: "Usage"
+userSettingPart:
+  tab:
+    general: "General"
+    appearance: "Appearance"
+    developer: "Developer"
+    limit: "Limits"
 
 # other
 alert:

@@ -3,10 +3,11 @@
 import dayjs from "dayjs";
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledRequest, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
-import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
+import {checkDictionary, checkMe, checkRateLimit, checkRecaptcha, parseMe} from "/server/internal/controller/rest/middleware";
 import {DictionaryCreator, DictionaryParameterCreator, MemberCreator, TemplateWordCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
-import {DICTIONARY_LIMITS, DictionaryModel, ExampleModel, OldDictionaryModel, OldExampleModel, OldWordModel, UserModel, WordModel} from "/server/model";
+import {DictionaryModel, ExampleModel, GIFT_URL, OldDictionaryModel, OldExampleModel, OldWordModel, SERVER_LIMITS, UserModel, WordModel} from "/server/model";
+import {getMailSubject, getMailText, sendMail} from "/server/util/mail";
 import {sanitizeFileName} from "/server/util/misc";
 import {toObjectId} from "/server/util/mongo";
 import {QueryRange} from "/server/util/query";
@@ -113,6 +114,33 @@ export class DictionaryRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
+  @post("/applyIncreaseDictionaryLimit")
+  @before(checkMe(), checkRateLimit({limit: 3, windowInMinute: 60 * 24}), checkDictionary("own"))
+  public async [Symbol()](request: FilledRequest<"applyIncreaseDictionaryLimit", "me" | "dictionary">, response: Response<"applyIncreaseDictionaryLimit">): Promise<void> {
+    const {me, dictionary} = request.middlewareBody;
+    const {kind, message} = request.body;
+    const administrator = await UserModel.fetchOneAdministrator();
+    if (administrator !== null) {
+      const {count, limit} = await dictionary.fetchCountWithLimit(kind);
+      const values = {
+        userName: me.name,
+        email: me.email,
+        dictionaryName: dictionary.name,
+        dictionaryNumber: dictionary.number,
+        kind,
+        count,
+        limit,
+        message,
+        giftUrl: GIFT_URL
+      };
+      await sendMail(administrator.email, getMailSubject("notifyIncreaseDictionaryLimit", values), getMailText("notifyIncreaseDictionaryLimit", values));
+      await sendMail(me.email, getMailSubject("receiveIncreaseDictionaryLimit", values), getMailText("receiveIncreaseDictionaryLimit", values));
+      InternalRestController.respond(response, null);
+    } else {
+      InternalRestController.respondError(response, "administratorNotFound");
+    }
+  }
+
   @post("/editDictionaryTemplateWord")
   @before(checkMe(), checkDictionary("own"))
   public async [Symbol()](request: FilledRequest<"editDictionaryTemplateWord", "me" | "dictionary">, response: Response<"editDictionaryTemplateWord">): Promise<void> {
@@ -159,7 +187,7 @@ export class DictionaryRestController extends InternalRestController {
     if (file !== undefined) {
       const path = file.path;
       const originalPath = file.originalname;
-      if (file.size <= DICTIONARY_LIMITS.uploadFileSize) {
+      if (file.size <= SERVER_LIMITS.uploadFileSize) {
         const number = dictionary.number;
         const job = await this.agenda.now("uploadDictionary", {number, path, originalPath});
         const body = {id: job.attrs["_id"].toString()};
@@ -246,8 +274,8 @@ export class DictionaryRestController extends InternalRestController {
   @before(parseMe(), checkDictionary("view"))
   public async [Symbol()](request: FilledRequest<"fetchDictionarySizes", "dictionary">, response: Response<"fetchDictionarySizes">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const [wordCount, exampleCount] = await Promise.all([dictionary.countWords(), dictionary.countExamples()]);
-    const body = {word: wordCount, example: exampleCount};
+    const [wordCount, exampleCount, articleCount] = await Promise.all([dictionary.countWords(), dictionary.countExamples(), dictionary.countArticles()]);
+    const body = {word: wordCount, example: exampleCount, article: articleCount};
     InternalRestController.respond(response, body);
   }
 

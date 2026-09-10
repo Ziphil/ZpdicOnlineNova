@@ -14,7 +14,6 @@ import {ResourceListDialog} from "/client/component/compound/resource-list-dialo
 import {create} from "/client/component/create";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
-import {WORD_LIMITS} from "/server/model/constant";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordFormValue} from "./edit-word-form-hook";
@@ -50,7 +49,7 @@ export const EditWordFormInformationSection = create(
 
     const informations = informationFieldArraySpec.fields;
 
-    const canAdd = informations.length < WORD_LIMITS.informationCountPerSection;
+    const canAdd = informations.length < dictionary.limits.word.informationCountPerSection;
 
     const addInformation = useCallback(function (): void {
       informationOperations.append({title: "", text: "", hidden: false});

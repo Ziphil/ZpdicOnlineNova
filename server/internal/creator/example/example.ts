@@ -10,6 +10,7 @@ import type {
   ObjectId
 } from "/server/internal/skeleton";
 import {
+  DictionaryModel,
   EditableExample,
   Example
 } from "/server/model";
@@ -40,7 +41,7 @@ export namespace ExampleCreator {
     const base = skeletonize(raw);
     const [dictionary] = await Promise.all([(async () => {
       if ("popluatedDictionary" in raw) {
-        return DictionaryCreator.skeletonize(raw.popluatedDictionary as any);
+        return DictionaryCreator.skeletonize(DictionaryModel.hydrate(raw.popluatedDictionary as any));
       } else {
         await raw.populate("dictionary");
         if (isDocument(raw.dictionary)) {

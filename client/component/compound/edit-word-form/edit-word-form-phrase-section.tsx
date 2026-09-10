@@ -13,7 +13,6 @@ import {
 import {create} from "/client/component/create";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
-import {WORD_LIMITS} from "/server/model/constant";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordFormValue} from "./edit-word-form-hook";
@@ -49,7 +48,7 @@ export const EditWordFormPhraseSection = create(
 
     const phrases = phraseFieldArraySpec.fields;
 
-    const canAdd = phrases.length < WORD_LIMITS.phraseCountPerSection;
+    const canAdd = phrases.length < dictionary.limits.word.phraseCountPerSection;
 
     const addPhrase = useCallback(function (): void {
       phraseOperations.append({titles: [], expression: "", termString: "", text: "", hidden: false});

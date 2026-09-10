@@ -28,6 +28,7 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path="editing" lazy={() => import("/client/component/page/dictionary-setting-editing-part")}/>
         <Route path="template" lazy={() => import("/client/component/page/dictionary-setting-template-part")}/>
         <Route path="file" lazy={() => import("/client/component/page/dictionary-setting-file-part")}/>
+        <Route path="limits" lazy={() => import("/client/component/page/dictionary-setting-limit-part")}/>
         <Route path="permissions" lazy={() => import("/client/component/page/dictionary-setting-authority-part")}/>
       </Route>
     </Route>
@@ -42,9 +43,13 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/user/:name" lazy={() => import("/client/component/page/user-page")}>
       <Route index={true} lazy={() => import("/client/component/page/user-dictionary-part")}/>
       <Route path="notifications" lazy={() => import("/client/component/page/user-notification-part")}/>
-      <Route path="settings" lazy={() => import("/client/component/page/user-setting-part")}/>
-      <Route path="appearance" lazy={() => import("/client/component/page/user-appearance-part")}/>
-      <Route path="developer" lazy={() => import("/client/component/page/user-developer-part")}/>
+      <Route path="settings" lazy={() => import("/client/component/page/user-setting-part")}>
+        <Route index={true} lazy={() => import("/client/component/page/user-setting-general-part")}/>
+        <Route path="general" lazy={() => import("/client/component/page/user-setting-general-part")}/>
+        <Route path="appearance" lazy={() => import("/client/component/page/user-appearance-part")}/>
+        <Route path="developer" lazy={() => import("/client/component/page/user-developer-part")}/>
+        <Route path="limits" lazy={() => import("/client/component/page/user-setting-limit-part")}/>
+      </Route>
     </Route>
     <Route path="/sentence" lazy={() => import("/client/component/page/example-offer-list-page")}/>
     <Route path="/notification" lazy={() => import("/client/component/page/notification-list-page")}/>

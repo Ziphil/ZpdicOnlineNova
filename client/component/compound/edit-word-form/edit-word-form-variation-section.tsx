@@ -13,7 +13,6 @@ import {
 import {create} from "/client/component/create";
 import {SwapAnimationContext} from "/client/util/swap-animation";
 import {DictionaryWithExecutors} from "/server/internal/skeleton";
-import {WORD_LIMITS} from "/server/model/constant";
 import {EditTemplateWordFormValue} from "./edit-template-word-form-hook";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordFormValue} from "./edit-word-form-hook";
@@ -49,7 +48,7 @@ export const EditWordFormVariationSection = create(
 
     const variations = variationFieldArraySpec.fields;
 
-    const canAdd = variations.length < WORD_LIMITS.variationCountPerSection;
+    const canAdd = variations.length < dictionary.limits.word.variationCountPerSection;
 
     const addVariation = useCallback(function (): void {
       variationOperations.append({title: "", spelling: "", pronunciation: ""});

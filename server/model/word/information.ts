@@ -1,16 +1,16 @@
 //
 
 import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
-import {WORD_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 
 
 @modelOptions({schemaOptions: {autoCreate: false, collection: "informations"}})
 export class InformationSchema {
 
-  @prop({required: true, maxlength: WORD_LIMITS.informationTitleLength})
+  @prop({required: true, maxlength: DICTIONARY_LIMITS.word.informationTitleLength})
   public title!: string;
 
-  @prop({required: true, maxlength: WORD_LIMITS.informationTextLength})
+  @prop({required: true, maxlength: DICTIONARY_LIMITS.word.informationTextLength})
   public text!: string;
 
   @prop()

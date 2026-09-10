@@ -3,53 +3,18 @@
 import {RE2JS as Re2} from "re2js";
 import {BaseSyntheticEvent, useMemo} from "react";
 import {noop} from "ts-essentials";
-import {Asserts, array, boolean, mixed, number, object, string} from "yup";
+import {ObjectSchema, array, boolean, mixed, number, object, string} from "yup";
 import {RelationWord} from "/client/component/atom/relation-word-select";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {escapeRegexp} from "/client/util/misc";
 import {switchResponse} from "/client/util/response";
-import {Dictionary, EditableWord, Relation, TemplateWord, Word} from "/server/internal/skeleton";
+import {testArrayStringLength} from "/client/util/validation";
+import {Dictionary, DictionaryLimits, EditableWord, Relation, TemplateWord, Word} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
-import {WORD_LIMITS} from "/server/model/constant";
 
 
-const SCHEMA = object({
-  number: number().nullable().defined(),
-  spelling: string().max(WORD_LIMITS.spellingLength, "spellingTooLong").defined(),
-  pronunciation: string().max(WORD_LIMITS.pronunciationLength, "pronunciationTooLong").defined(),
-  tags: array(string().defined()).max(WORD_LIMITS.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= WORD_LIMITS.tagLength) ?? true).defined(),
-  sections: array(object({
-    equivalents: array(object({
-      titles: array(string().defined()).defined(),
-      termString: string().defined(),
-      hidden: boolean().defined()
-    })).defined(),
-    informations: array(object({
-      title: string().max(WORD_LIMITS.informationTitleLength, "informationTitleTooLong").defined(),
-      text: string().max(WORD_LIMITS.informationTextLength, "informationTextTooLong").defined(),
-      hidden: boolean().defined()
-    })).defined(),
-    phrases: array(object({
-      titles: array(string().defined()).defined(),
-      expression: string().defined(),
-      termString: string().defined(),
-      text: string().defined(),
-      hidden: boolean().defined()
-    })).defined(),
-    variations: array(object({
-      title: string().defined(),
-      spelling: string().defined(),
-      pronunciation: string().defined()
-    })).defined(),
-    relations: array(object({
-      titles: array(string().defined()).defined(),
-      word: mixed<RelationWord & {spelling: string}>().nullable().defined(),
-      mutual: boolean().defined()
-    })).defined()
-  })).defined()
-});
 const DEFAULT_VALUE = {
   number: null,
   spelling: "",
@@ -67,7 +32,41 @@ const DEFAULT_VALUE = {
     relations: []
   }]
 } satisfies FormValue;
-type FormValue = Asserts<typeof SCHEMA>;
+type FormValue = {
+  number: number | null,
+  spelling: string,
+  pronunciation: string,
+  tags: Array<string>,
+  sections: Array<{
+    equivalents: Array<{
+      titles: Array<string>,
+      termString: string,
+      hidden: boolean
+    }>,
+    informations: Array<{
+      title: string,
+      text: string,
+      hidden: boolean
+    }>,
+    phrases: Array<{
+      titles: Array<string>,
+      expression: string,
+      termString: string,
+      text: string,
+      hidden: boolean
+    }>,
+    variations: Array<{
+      title: string,
+      spelling: string,
+      pronunciation: string
+    }>,
+    relations: Array<{
+      titles: Array<string>,
+      word: RelationWord & {spelling: string} | null,
+      mutual: boolean
+    }>
+  }>
+};
 
 export type EditWordSpec = {
   form: UseFormReturn<FormValue>,
@@ -78,7 +77,8 @@ export type EditWordInitialData = ({type: "word", word: Word | EditableWord} | {
 export const getEditWordFormValue = getFormValue;
 
 export function useEditWord(dictionary: Dictionary, initialData: EditWordInitialData | null, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
-  const form = useForm<FormValue>(SCHEMA, getFormValue(initialData), {});
+  const schema = useMemo(() => createSchema(dictionary.limits.word), [dictionary.limits.word]);
+  const form = useForm<FormValue>(schema, getFormValue(initialData), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -97,6 +97,45 @@ export function useEditWord(dictionary: Dictionary, initialData: EditWordInitial
     });
   }), [dictionary, onSubmit, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};
+}
+
+function createSchema(limits: DictionaryLimits["word"]): ObjectSchema<FormValue> {
+  const schema = object({
+    number: number().nullable().defined(),
+    spelling: string().max(limits.spellingLength, "spellingTooLong").defined(),
+    pronunciation: string().max(limits.pronunciationLength, "pronunciationTooLong").defined(),
+    tags: array(string().defined()).max(limits.tagCount, "tagsTooMany").test(testArrayStringLength(limits.tagLength, "tagTooLong")).defined(),
+    sections: array(object({
+      equivalents: array(object({
+        titles: array(string().defined()).defined(),
+        termString: string().defined(),
+        hidden: boolean().defined()
+      })).defined(),
+      informations: array(object({
+        title: string().max(limits.informationTitleLength, "informationTitleTooLong").defined(),
+        text: string().max(limits.informationTextLength, "informationTextTooLong").defined(),
+        hidden: boolean().defined()
+      })).defined(),
+      phrases: array(object({
+        titles: array(string().defined()).defined(),
+        expression: string().defined(),
+        termString: string().defined(),
+        text: string().defined(),
+        hidden: boolean().defined()
+      })).defined(),
+      variations: array(object({
+        title: string().defined(),
+        spelling: string().defined(),
+        pronunciation: string().defined()
+      })).defined(),
+      relations: array(object({
+        titles: array(string().defined()).defined(),
+        word: mixed<RelationWord & {spelling: string}>().nullable().defined(),
+        mutual: boolean().defined()
+      })).defined()
+    })).defined()
+  });
+  return schema;
 }
 
 function getFormValue<D extends EditWordInitialData | null>(initialData: D): FormValue {

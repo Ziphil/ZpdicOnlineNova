@@ -2,10 +2,10 @@
 
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/internal/controller/rest/base";
-import {checkMe, checkRecaptcha, login, logout} from "/server/internal/controller/rest/middleware";
+import {checkMe, checkRateLimit, checkRecaptcha, login, logout} from "/server/internal/controller/rest/middleware";
 import {ApiCredentialCreator, UserCreator, UserSocialCreator} from "/server/internal/creator";
 import {SERVER_PATH_PREFIX} from "/server/internal/type/rest";
-import {ApiCredentialModel, UserModel} from "/server/model";
+import {ApiCredentialModel, GIFT_URL, UserModel} from "/server/model";
 import {getMailSubject, getMailText, sendMail} from "/server/util/mail";
 import {getStorageUploadFilePost} from "/server/util/storage";
 
@@ -235,6 +235,40 @@ export class UserRestController extends InternalRestController {
       InternalRestController.respond(response, body);
     } catch (error) {
       InternalRestController.respondByCustomError(response, ["apiCredentialCountExceeded"], error);
+    }
+  }
+
+  @post("/fetchMySizes")
+  @before(checkMe())
+  public async [Symbol()](request: Request<"fetchMySizes">, response: Response<"fetchMySizes">): Promise<void> {
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
+    const [dictionaryCount, apiCredentialCount] = await Promise.all([me.countDictionaries(), me.countApiCredentials()]);
+    const body = {dictionary: dictionaryCount, apiCredential: apiCredentialCount};
+    InternalRestController.respond(response, body);
+  }
+
+  @post("/applyIncreaseUserLimit")
+  @before(checkMe(), checkRateLimit({limit: 3, windowInMinute: 60 * 24}))
+  public async [Symbol()](request: Request<"applyIncreaseUserLimit">, response: Response<"applyIncreaseUserLimit">): Promise<void> {
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
+    const {kind, message} = request.body;
+    const administrator = await UserModel.fetchOneAdministrator();
+    if (administrator !== null) {
+      const {count, limit} = await me.fetchCountWithLimit(kind);
+      const values = {
+        userName: me.name,
+        email: me.email,
+        kind,
+        count,
+        limit,
+        message,
+        giftUrl: GIFT_URL
+      };
+      await sendMail(administrator.email, getMailSubject("notifyIncreaseUserLimit", values), getMailText("notifyIncreaseUserLimit", values));
+      await sendMail(me.email, getMailSubject("receiveIncreaseUserLimit", values), getMailText("receiveIncreaseUserLimit", values));
+      InternalRestController.respond(response, null);
+    } else {
+      InternalRestController.respondError(response, "administratorNotFound");
     }
   }
 

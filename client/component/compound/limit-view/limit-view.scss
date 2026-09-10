@@ -1,0 +1,71 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  @include theme("light") {
+    --background-color: #{leveled-color("gray", 1)};
+    --normal-bar-color: #{leveled-color("primary", 5)};
+    --danger-bar-color: #{leveled-color("red", 5)};
+  }
+}
+
+.root {
+  row-gap: 1.5zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.info {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.info-left {
+}
+
+.info-right {
+}
+
+.meter {
+  height: 2zu;
+  border-radius: 2zu;
+  background-color: var(--background-color);
+  overflow: hidden;
+}
+
+.meter-bar {
+  height: 100%;
+  border-radius: 8zu;
+  &[data-type="danger"] {
+    background-color: var(--danger-bar-color);
+  }
+  &[data-type="normal"] {
+    background-color: var(--normal-bar-color);
+  }
+}
+
+.large-number {
+  font-size: 5zu;
+  &[data-type="danger"] {
+    color: var(--danger-bar-color);
+  }
+}
+
+.small-number {
+  font-size: 4zu;
+}
+
+.slash {
+  margin-inline: var(--glob-blank-gap);
+  font-size: 4zu;  
+  color: var(--glob-mute-text-color);
+}
+
+.unit {
+  margin-inline-start: var(--glob-blank-gap);
+  font-size: 3.5zu;
+  color: var(--glob-mute-text-color);
+}

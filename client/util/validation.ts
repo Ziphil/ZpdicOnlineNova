@@ -14,6 +14,17 @@ export function testIdentifier(message?: string): TestConfig<string | undefined>
   return {name: "identifier", message, test};
 }
 
+export function testArrayStringLength(limitLength: number, message?: string): TestConfig<Array<string> | undefined> {
+  const test = function (strings: Array<string> | undefined): boolean {
+    if (strings !== undefined) {
+      return strings.every((string) => string.length <= limitLength);
+    } else {
+      return true;
+    }
+  };
+  return {name: "arrayStringLength", message, params: {max: limitLength}, test};
+}
+
 export function testFileSize(limitSize: number, message?: string): TestConfig<File | undefined> {
   const test = function (file: File | undefined): boolean {
     if (file !== undefined) {

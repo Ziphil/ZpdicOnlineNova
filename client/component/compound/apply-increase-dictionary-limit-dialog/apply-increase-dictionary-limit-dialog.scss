@@ -1,0 +1,75 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.heading {
+  @include bold-font;
+  margin-block-end: 6zu;
+  font-size: 6zu;
+  color: var(--glob-secondary-heading-text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.message-group {
+  margin-block-end: 4zu;
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+}
+
+.control {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-group {
+  column-gap: 2.5zu;
+  row-gap: 2.5zu;
+  display: grid;
+  @include device("desktop") {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include device("mobile") {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.card-body {
+  row-gap: 2.5zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  row-gap: 1.5zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.label-change {
+  font-size: 4zu;
+}
+
+.button {
+  margin-block-start: 4zu;
+  column-gap: 4zu;
+  display: flex;
+  justify-content: center;
+}
+
+.textarea {
+  height: 24zu;
+}
+
+.arrow {
+  font-size: 3.5zu;
+  margin-inline: var(--glob-blank-gap);
+  color: var(--glob-mute-text-color);
+}

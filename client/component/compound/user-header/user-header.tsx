@@ -1,6 +1,6 @@
 //
 
-import {faBell, faBook, faCode, faCog, faPalette} from "@fortawesome/sharp-regular-svg-icons";
+import {faBell, faBook, faCog} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Badge, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
 import {LinkTab} from "/client/component/atom/tab";
@@ -79,18 +79,6 @@ export const UserHeader = create(
               </LinkTab>
             )}
             {(user.id === me?.id) && (
-              <LinkTab value="developer" href={`/user/${user.name}/developer`}>
-                <TabIconbag><GeneralIcon icon={faCode}/></TabIconbag>
-                {trans("tab.developer")}
-              </LinkTab>
-            )}
-            {(user.id === me?.id) && (
-              <LinkTab value="appearance" href={`/user/${user.name}/appearance`}>
-                <TabIconbag><GeneralIcon icon={faPalette}/></TabIconbag>
-                {trans("tab.appearance")}
-              </LinkTab>
-            )}
-            {(user.id === me?.id) && (
               <LinkTab value="setting" href={`/user/${user.name}/settings`}>
                 <TabIconbag><GeneralIcon icon={faCog}/></TabIconbag>
                 {trans("tab.setting")}
@@ -105,4 +93,4 @@ export const UserHeader = create(
 );
 
 
-export type UserHeaderTabValue = "dictionary" | "notification" | "setting" | "appearance" | "developer" | null;
+export type UserHeaderTabValue = "dictionary" | "notification" | "setting" | null;

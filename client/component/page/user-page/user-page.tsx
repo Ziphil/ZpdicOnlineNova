@@ -21,11 +21,12 @@ export const UserPage = create(
     const {name} = useParams();
     const [user] = useSuspenseResponse("fetchUser", {name: name!});
 
-    const match = useMatch("/user/:name/:tabPath");
+    const match = useMatch("/user/:name/:tabPath/:subTabPath?");
     const tabValue = getTabValue(match?.params.tabPath);
+    const insertTopPadding = tabValue !== "setting";
 
     return (
-      <Page title={user?.screenName} {...rest} headerNode={(
+      <Page title={user?.screenName} insertPadding={{top: insertTopPadding, bottom: true, horizontal: true}} {...rest} headerNode={(
         <Fragment>
           <Header/>
           <UserHeader user={user} tabValue={tabValue}/>
@@ -54,10 +55,6 @@ function getTabValue(tabPath: string | undefined): UserHeaderTabValue {
     return "notification";
   } else if (tabPath === "settings") {
     return "setting";
-  } else if (tabPath === "appearance") {
-    return "appearance";
-  } else if (tabPath === "developer") {
-    return "developer";
   } else {
     return null;
   }

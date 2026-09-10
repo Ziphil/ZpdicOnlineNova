@@ -5,6 +5,7 @@ import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, LinkIconbag, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
+import {GIFT_URL} from "/server/model/constant";
 
 
 export const GiftView = create(
@@ -26,7 +27,7 @@ export const GiftView = create(
           {trans("message.giftSub")}
         </MultiLineText>
         <div styleName="button">
-          <Link href="https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L?ref_=wl_share" target="_blank" variant="solid">
+          <Link href={GIFT_URL} target="_blank" variant="solid">
             <LinkIconbag><GeneralIcon icon={faGift}/></LinkIconbag>
             {trans("subbutton.gift")}
           </Link>

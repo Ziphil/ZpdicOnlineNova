@@ -1,26 +1,17 @@
 //
 
 import {BaseSyntheticEvent, useMemo} from "react";
-import {Asserts, array, mixed, number, object, string} from "yup";
+import {ObjectSchema, array, mixed, number, object, string} from "yup";
 import {RelationWord} from "/client/component/atom/relation-word-select";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
-import {Dictionary, EditableExample, Example, ExampleOffer, LinkedExampleOffer} from "/server/internal/skeleton";
+import {testArrayStringLength} from "/client/util/validation";
+import {Dictionary, DictionaryLimits, EditableExample, Example, ExampleOffer, LinkedExampleOffer} from "/server/internal/skeleton";
 import type {RequestData} from "/server/internal/type/rest";
-import {EXAMPLE_LIMITS} from "/server/model/constant";
 
 
-const SCHEMA = object({
-  number: number().nullable().defined(),
-  sentence: string().max(EXAMPLE_LIMITS.sentenceLength, "sentenceTooLong").defined(),
-  translation: string().max(EXAMPLE_LIMITS.translationLength, "translationTooLong").defined(),
-  supplement: string().max(EXAMPLE_LIMITS.supplementLength, "supplementTooLong").defined(),
-  tags: array(string().defined()).max(EXAMPLE_LIMITS.tagCount, "tagsTooMany").test("tagLength", "tagTooLong", (tags) => tags?.every((tag) => tag.length <= EXAMPLE_LIMITS.tagLength) ?? true).defined(),
-  words: array(mixed<RelationWord>().nullable().defined()).defined(),
-  offer: mixed<LinkedExampleOffer>().nullable().defined()
-});
 const DEFAULT_VALUE = {
   number: null,
   sentence: "",
@@ -30,7 +21,15 @@ const DEFAULT_VALUE = {
   words: [],
   offer: null
 } satisfies FormValue;
-type FormValue = Asserts<typeof SCHEMA>;
+type FormValue = {
+  number: number | null,
+  sentence: string,
+  translation: string,
+  supplement: string,
+  tags: Array<string>,
+  words: Array<RelationWord | null>,
+  offer: LinkedExampleOffer | null
+};
 
 export type EditExampleSpec = {
   form: UseFormReturn<FormValue>,
@@ -41,7 +40,8 @@ export type EditExampleInitialData = {type: "example", example: Example} | {type
 export const getEditExampleFormValue = getFormValue;
 
 export function useEditExample(dictionary: Dictionary, initialData: EditExampleInitialData | null, onSubmit?: (example: EditableExample) => unknown): EditExampleSpec {
-  const form = useForm<FormValue>(SCHEMA, getFormValue(initialData), {});
+  const schema = useMemo(() => createSchema(dictionary.limits.example), [dictionary.limits.example]);
+  const form = useForm<FormValue>(schema, getFormValue(initialData), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -61,6 +61,19 @@ export function useEditExample(dictionary: Dictionary, initialData: EditExampleI
     });
   }), [dictionary, onSubmit, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};
+}
+
+function createSchema(limits: DictionaryLimits["example"]): ObjectSchema<FormValue> {
+  const schema = object({
+    number: number().nullable().defined(),
+    sentence: string().max(limits.sentenceLength, "sentenceTooLong").defined(),
+    translation: string().max(limits.translationLength, "translationTooLong").defined(),
+    supplement: string().max(limits.supplementLength, "supplementTooLong").defined(),
+    tags: array(string().defined()).max(limits.tagCount, "tagsTooMany").test(testArrayStringLength(limits.tagLength, "tagTooLong")).defined(),
+    words: array(mixed<RelationWord>().nullable().defined()).defined(),
+    offer: mixed<LinkedExampleOffer>().nullable().defined()
+  });
+  return schema;
 }
 
 function getFormValue(initialData: EditExampleInitialData | null): FormValue {

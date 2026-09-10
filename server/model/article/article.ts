@@ -10,8 +10,9 @@ import {
 } from "@typegoose/typegoose";
 import {Jsonify} from "jsonify-type";
 import {OldArticleModel} from "/server/model/article/old-article";
-import {ARTICLE_LIMITS} from "/server/model/constant";
+import {DICTIONARY_LIMITS} from "/server/model/constant";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
+import {ResolvedDictionaryArticleLimits} from "/server/model/dictionary/limits/dictionary-article-limits";
 import {CustomError} from "/server/model/error";
 import {User, UserSchema} from "/server/model/user/user";
 import {LogUtil} from "/server/util/log";
@@ -29,13 +30,13 @@ export class ArticleSchema {
   @prop({required: true})
   public number!: number;
 
-  @prop({type: String, innerOptions: {maxlength: ARTICLE_LIMITS.tagLength}, outerOptions: {validate: createMaxCountValidator(ARTICLE_LIMITS.tagCount)}})
+  @prop({type: String, innerOptions: {maxlength: DICTIONARY_LIMITS.article.tagLength}, outerOptions: {validate: createMaxCountValidator(DICTIONARY_LIMITS.article.tagCount)}})
   public tags!: Array<string>;
 
-  @prop({required: true, maxlength: ARTICLE_LIMITS.titleLength})
+  @prop({required: true, maxlength: DICTIONARY_LIMITS.article.titleLength})
   public title!: string;
 
-  @prop({required: true, maxlength: ARTICLE_LIMITS.contentLength})
+  @prop({required: true, maxlength: DICTIONARY_LIMITS.article.contentLength})
   public content!: string;
 
   @prop({required: true, ref: "UserSchema"})
@@ -48,6 +49,7 @@ export class ArticleSchema {
   public updatedDate!: Date;
 
   public static async edit(dictionary: Dictionary, article: EditableArticle, user: User): Promise<Article> {
+    const limits = dictionary.limits.resolve().article;
     const currentArticle = await ArticleModel.findOne().where("dictionary", dictionary).where("number", article.number);
     let resultArticle;
     if (currentArticle) {
@@ -57,10 +59,10 @@ export class ArticleSchema {
       resultArticle.content = article.content;
       resultArticle.updatedUser = user;
       resultArticle.updatedDate = new Date();
-      await resultArticle.assertLimits();
+      await resultArticle.assertLimits(limits);
       await resultArticle.save();
     } else {
-      await dictionary.assertArticleCount();
+      await dictionary.assertArticleCountLimits();
       if (article.number === null) {
         article.number = await dictionary.issueNextNumber("article");
       } else {
@@ -71,7 +73,7 @@ export class ArticleSchema {
       resultArticle.updatedUser = user;
       resultArticle.createdDate = new Date();
       resultArticle.updatedDate = new Date();
-      await resultArticle.assertLimits();
+      await resultArticle.assertLimits(limits);
       await resultArticle.save();
     }
     LogUtil.log("model/article/edit", {number: dictionary.number, currentId: currentArticle?.id, resultId: resultArticle.id});
@@ -89,24 +91,31 @@ export class ArticleSchema {
     return article;
   }
 
-  /** この記事データが各種の上限に違反していないか検査します。
-   * 保存する前にこのメソッドを呼び出します。*/
-  public async assertLimits(this: Article): Promise<void> {
-    this.assertSize();
-    await this.assertFields();
+  public async assertLimits(this: Article, limits: ResolvedDictionaryArticleLimits): Promise<void> {
+    this.assertSizeLimits(limits);
+    this.assertFieldLimits(limits);
+    await this.assertSchema();
   }
 
-  /** この記事データ全体の大きさが上限を超えていないか検査します。
-   * populate されている辞書データなどが計算に含まれないように、参照を解除したプレーンなデータに変換してから大きさを求めます。*/
-  public assertSize(this: Article): void {
-    if (calcDataSize(this.toObject({depopulate: true})) > ARTICLE_LIMITS.size) {
+  public assertSizeLimits(this: Article, limits: ResolvedDictionaryArticleLimits): void {
+    if (calcDataSize(this.toObject({depopulate: true})) > limits.size) {
       throw new CustomError("articleSizeExceeded");
     }
   }
 
-  /** この記事データの各フィールドが上限を超えていないか検査します。
-   * 既存の記事データを論理削除する前に検査することで、上限違反によって保存に失敗したときにデータが失われるのを防ぎます。*/
-  public async assertFields(this: Article): Promise<void> {
+  public assertFieldLimits(this: Article, limits: ResolvedDictionaryArticleLimits): void {
+    const valid = (
+      this.title.length <= limits.titleLength &&
+      this.content.length <= limits.contentLength &&
+      this.tags.length <= limits.tagCount &&
+      this.tags.every((tag) => tag.length <= limits.tagLength)
+    );
+    if (!valid) {
+      throw new CustomError("invalidArticle");
+    }
+  }
+
+  public async assertSchema(this: Article): Promise<void> {
     try {
       await this.validate();
     } catch (error) {
