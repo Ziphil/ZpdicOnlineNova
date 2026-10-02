@@ -106,7 +106,7 @@
     "nanoid": "^3.3.18",
     "node-cron": "^3.0.2",
     "nprogress": "^0.2.0",
-    "query-string": "^7.1.0",
+    "query-string": "^9.5.0",
     "re2js": "^2.8.6",
     "react": "^18.2.0",
     "react-css-modules": "^4.7.11",
