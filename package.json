@@ -128,7 +128,7 @@
     "seedrandom": "^3.0.5",
     "stream-browserify": "^3.0.0",
     "stream-chain": "^2.2.5",
-    "stream-json": "^1.7.3",
+    "stream-json": "^3.5.0",
     "ts-essentials": "^9.1.2",
     "typescript-tuple": "^5.0.1",
     "unist-util-visit": "^4.1.2",
