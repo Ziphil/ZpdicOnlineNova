@@ -1335,7 +1335,6 @@ uploadDictionaryForm:
       Your file has been imported.
     error: >-
       Failed to import your file.
-
 userLimitsView:
   label:
     dictionaryCount: "Dictionaries"
