@@ -22,11 +22,8 @@
     "lint:fix": "eslint --fix client/**/*.ts client/**/*.tsx server/**/*.ts"
   },
   "engines": {
-    "node": "20.19.0",
-    "npm": "10.8.2"
-  },
-  "volta": {
-    "node": "20.19.0"
+    "node": "26.x",
+    "npm": "12.x"
   },
   "eslintConfig": {
     "extends": [
