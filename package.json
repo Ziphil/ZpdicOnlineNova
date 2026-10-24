@@ -207,5 +207,8 @@
     "webpack-dev-server": "^5.2.5",
     "webpack-node-externals": "^3.0.0",
     "yaml-flat-loader": "^1.0.2"
+  },
+  "overrides": {
+    "mobx": "6.16.1"
   }
 }
