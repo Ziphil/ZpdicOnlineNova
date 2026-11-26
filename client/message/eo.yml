@@ -1335,7 +1335,6 @@ uploadDictionaryForm:
       Via dosiero estas importita.
     error: >-
       Malsukcesis importi vian dosieron.
-
 userLimitsView:
   label:
     dictionaryCount: "Vortaroj"

@@ -1336,7 +1336,6 @@ uploadDictionaryForm:
       インポートが完了しました。
     error: >-
       インポートに失敗しました。
-
 userLimitsView:
   label:
     dictionaryCount: "辞書数"
