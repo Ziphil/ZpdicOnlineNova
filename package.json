@@ -96,7 +96,7 @@
     "jsonwebtoken": "^9.0.2",
     "lodash.merge": "^4.6.2",
     "markdown-truncate": "^1.1.1",
-    "mongoose": "^9.7.3",
+    "mongoose": "^9.11.4",
     "morgan": "^1.12.1",
     "multer": "^2.2.0",
     "multi-env-injector": "^1.1.1",
